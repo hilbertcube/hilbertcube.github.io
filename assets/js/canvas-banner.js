@@ -5,12 +5,12 @@ function canvas() {
     const ctx = canvas.getContext('2d');
 
     const svgUrls = [
-        '../public/banner-svg/matrix.svg',
-        '../public/banner-svg/stokes.svg',
-        '../public/banner-svg/laplace.svg',
-        '../public/banner-svg/discrete-fourier.svg',
-        '../public/banner-svg/cauchy.svg',
-        '../public/banner-svg/black-body.svg'
+        '/website-test/public/banner-svg/matrix.svg',
+        '/website-test/public/banner-svg/stokes.svg',
+        '/website-test/public/banner-svg/laplace.svg',
+        '/website-test/public/banner-svg/discrete-fourier.svg',
+        '/website-test/public/banner-svg/cauchy.svg',
+        '/website-test/public/banner-svg/black-body.svg'
     ];
     const svgImages = [];
     const numSvgs = svgUrls.length;
