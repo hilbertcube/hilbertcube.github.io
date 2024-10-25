@@ -9,7 +9,7 @@ MathJax = {
 // TAB ICON
 const link = document.createElement('link');
 link.rel = 'icon';
-link.href = '/public/Images/Logo/pendulum_trace.PNG';
+link.href = '/website-test/public/Images/Logo/pendulum_trace.PNG';
 link.type = 'image/png';
 document.head.appendChild(link);
 
@@ -155,11 +155,11 @@ document.addEventListener('DOMContentLoaded', applyDropdownDelays);
 
 
 // ARTICLES
-const image_root = "/public/Images/";
+const image_root = "/website-test/public/Images/";
 
 function article(NUM_ARTICLE, des, random_article){
 
-    fetch('/assets/json/suggestions.json')
+    fetch('/website-test/assets/json/suggestions.json')
         .then(response => response.json())
         .then(data => {
             // Access the articles array within the fetched JSON data
@@ -289,7 +289,7 @@ function changeTab(evt, nav_item_name, switch_target) {
 
 // LOAD SUGGESTIONS ON SIDE NAV
 function loadAndSetupSuggestions() {
-    fetch('/assets/json/suggestions.json')
+    fetch('/website-test/assets/json/suggestions.json')
         .then(response => response.json())
         .then(data => {
             const articles = data.articles;
