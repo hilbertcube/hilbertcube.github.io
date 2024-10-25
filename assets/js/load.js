@@ -179,7 +179,7 @@ function SearchBar() {
                             div.className = 'autocomplete-item';
                             div.addEventListener('click', function () {
                                 searchBar.value = item.title;
-                                window.open(item.link, '_blank'); // Open in new tab
+                                window.open(baseLink + item.link, '_blank'); // Open in new tab
                                 searchBar.value = ''; // Clear the search bar
                                 dropdown.innerHTML = '';
                                 dropdown.style.display = 'none';

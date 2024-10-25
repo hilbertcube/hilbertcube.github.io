@@ -4,14 +4,16 @@ function canvas() {
     const canvas = document.getElementById('bannerCanvas');
     const ctx = canvas.getContext('2d');
 
-    const svgUrls = [
-        '/website-test/public/banner-svg/matrix.svg',
-        '/website-test/public/banner-svg/stokes.svg',
-        '/website-test/public/banner-svg/laplace.svg',
-        '/website-test/public/banner-svg/discrete-fourier.svg',
-        '/website-test/public/banner-svg/cauchy.svg',
-        '/website-test/public/banner-svg/black-body.svg'
+    const svgFileNames = [
+        'matrix.svg',
+        'stokes.svg',
+        'laplace.svg',
+        'discrete-fourier.svg',
+        'cauchy.svg',
+        'black-body.svg'
     ];
+    
+    const svgUrls = svgFileNames.map(fileName => `${baseLink}/public/banner-svg/${fileName}`);
     const svgImages = [];
     const numSvgs = svgUrls.length;
 
