@@ -400,7 +400,7 @@ $(document).ready(function() {
     $(".highlights-and-attribute").load(baseLink + "/assets/source/highlights-and-attribute.html", function(){
         loadAndSetupSuggestions();
     });
-    $("#logo").load(baseLink + "assets/source/logo.html");
+    $("#logo").load(baseLink + "/assets/source/logo.html");
     $(".footer").load(baseLink + "/assets/source/footer.html",  function() {
         currentYear();
     });
