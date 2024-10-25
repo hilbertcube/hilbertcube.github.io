@@ -1,0 +1,54 @@
+body{
+    position: relative;
+    background-color: black;
+    background-image: url('../../public/blade-runner.png');
+    background-attachment:fixed;
+    background-size: cover;
+    background-repeat:   no-repeat;
+    background-position: top center;
+    font-family: "VT323", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+.lonely{
+    position: absolute;
+    color: white;
+    right: 20vw;
+    top: 10vh;
+    font-size: 3.5rem;
+}
+.inner{
+    font-size: 2rem;
+    text-align: right;
+}
+.yesno{
+    text-align: right;
+    margin-top: 30px;
+}
+.yesno a{
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+.yesno a:hover{
+    color: rgb(238, 0, 255);
+}
+.yesno {
+margin-top: 20px; /* Space between text and options */
+transition: opacity 0.5s ease, visibility 0.5s ease; /* Transition for fade effect */
+opacity: 0; /* Start as invisible */
+visibility: hidden; /* Hide initially */
+}
+
+.yesno.visible {
+    opacity: 1; /* Make visible */
+    visibility: visible; /* Set visibility to visible */
+}
+@media all and (max-width: 1080px){
+    body{
+        background-image: url('../../public/blade-runner-mobile.png');
+    }
+    .lonely{
+        right: 2vw
+    }
+}

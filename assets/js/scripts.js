@@ -6,7 +6,7 @@ MathJax = {
     }
 };
 
-const baseLink = '/website-test';
+const baseLink = '/neumanncondition';
 
 // TAB ICON
 const link = document.createElement('link');
@@ -302,7 +302,7 @@ function loadAndSetupSuggestions() {
                 if (article) {
                     // Create a link element for the image
                     const articleLink = document.createElement('a');
-                    articleLink.href = article.link;
+                    articleLink.href = baseLink + article.link;
                     articleLink.target = "_blank"; // Open link in a new tab (optional)
                     articleLink.className = 'recommend-img';
 
@@ -530,3 +530,6 @@ class equation extends HTMLElement {
   solutions.forEach((solution) => {
       solution.setAttribute('open', '');
   });
+
+
+

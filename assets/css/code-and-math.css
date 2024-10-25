@@ -55,6 +55,7 @@ body.dark-mode{
 }
 
 pre{
+    border: 1px solid var(--box-border);
     border-radius: 7px;
     padding: 0;
     margin: 0;
