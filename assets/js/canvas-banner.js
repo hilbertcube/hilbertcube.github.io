@@ -191,7 +191,7 @@ function canvas() {
 
 // Load the banner and start the canvas animation
 $(function() {
-    $(".home-banner").load("../assets/source/home-banner.html", function() {
+    $(".home-banner").load("/website/assets/source/home-banner.html", function() {
         canvas();
     });
 });
