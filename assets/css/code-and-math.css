@@ -1,0 +1,194 @@
+:root {
+    --code-box-color: #fff;
+    --inline-code-color: rgb(226, 226, 226);
+    --box-border: #ddd;
+    --pre-color: #f7f7f7;
+}
+.inline-code{
+    font-size: 13px;
+    background-color: var(--inline-code-color);
+}
+
+/*code box font*/
+/* General code block styles */
+code[class*="language-"],
+pre[class*="language-"] {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Light mode specific styles */
+body.light-mode code[class*="language-"],
+body.light-mode pre[class*="language-"] {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Dark mode specific styles */
+body.dark-mode code[class*="language-"],
+body.dark-mode pre[class*="language-"] {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+body.dark-mode{
+    --box-border: #424242;
+}
+.box {
+    position: relative;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 10px;
+    min-height: 10px;
+    padding: 15px;
+    border: 1px solid var(--box-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--code-box-color);
+    border-radius: 4px;
+}
+/* This can be removed if `.box` handles positioning */
+.code-container {
+    position: relative; 
+    width: 100%;
+    height: 100%;
+}
+
+pre{
+    border-radius: 7px;
+    padding: 0;
+    margin: 0;
+}
+
+.console{
+    line-height: 2; overflow-x: auto; background-color: var(--pre-color); font-size: 12px; text-align: left;
+}
+
+.equation{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space:nowrap;
+}
+mjx-container[jax="CHTML"][display="true"] {
+    margin: 0.5em 0;
+
+}
+.MathJax{
+    font-size: 18px !important;
+}
+
+/* .theorem{
+    border: 2px solid var(--box-border);
+    border-radius: 4px;
+    margin: 20px 0;
+    padding: 1rem;
+}
+
+.theorem::before{
+    counter-increment: theorem;
+    content: "Theorem " counter(theorem) attr(data-theorem-name)  ". ";
+    font-weight: bold;
+} */
+body{
+    counter-reset: fig table_ theorem problem;
+}
+
+
+.theorem, .problem {
+    position: relative;
+    border-radius: 4px;
+    margin: 30px 0;
+    padding: 1rem;
+    padding-top: 3.5rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.theorem::before, .problem::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.theorem{
+    border: 1px solid #008195; /*#00b8d4*/
+}
+
+.theorem::before{
+    counter-increment: theorem;
+    background-color: rgba(0, 184, 212, 0.2);
+    content: "Theorem " counter(theorem) attr(data-theorem-name) ". ";
+}
+
+.problem{
+    border: 1px solid rgba(113, 0, 212);
+}
+
+.problem::before{
+    counter-increment: problem;
+    background-color: rgba(113, 0, 212, 0.2);
+    content: "Problem " counter(problem)". ";
+}
+
+.solution{
+    border: 1px solid #5b5b5b; /* rgb(0, 97, 0) */
+    border-radius: 4px;
+    box-sizing: border-box;
+    position: relative;
+}
+.solution > *:not(summary) {
+    padding: 0 1rem 1rem 1rem; 
+    
+}
+
+.solution summary{
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.solution > div{
+    line-height: 1.6;
+}
+
+.solution summary::after{
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: url('../../public/Icons/arrow.svg') no-repeat;
+    background-size: 100% 100%;
+    margin-left: .75em;
+    transition: 0.2s;
+}
+
+.solution[open] > summary::after {
+    transform: rotate(180deg);
+}
+  
+.solution summary::-webkit-details-marker {
+display: none;
+}
+  
+
+  
+.solution[open] summary {border-radius: 4px 4px 0 0;}
+.solution ol,
+.solution ul {
+    margin-left: 2rem; /* Adjust this value as needed */
+    padding-left: 0;
+}
+
+.solution li {
+    padding-left: 0.5rem; /* Optional: Indent the bullet/number */
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chladni Patterns, Part 3</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="subject" content='Vibration and standing waves'>
+    <meta name="description" content="Describing Chladni patterns using the regular and biharmonic wave equations" />
+    <meta name="keywords" content="Wave equation, python, eigenvalue,  boundary conditions" />
+    <meta name="author" content="Don Le, ledongduu@gmail.com"/>
+    <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style>
+        .front-img{
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+            height: auto; 
+            margin: auto;
+        }
+        #circular-plate{width: 80%;}
+        @media all and (max-width: 580px){
+            #circular-plate{width: 100%; margin: 0;}
+        }
+        .image-block{
+            width: 65%;
+        }
+        #square-wave-table, #circle-wave-table{
+            width: 80%;
+        }
+        .tab-button{
+            -webkit-border-radius: 4px 4px 0px 0px;
+            border-radius: 4px 4px 0px 0px; 
+            background-color: var(--pre-color);
+            border: 0px;
+            border-bottom: 1px solid var(--pre-color);
+            min-width: 80px;
+            font-size: 14px;
+            padding: 0.3rem;
+            color: inherit;
+        }
+        .tab-effect{
+            font-weight: bold;
+            border-bottom: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body class="nav-open light-mode">
+    \[
+    \newcommand{\lbrac}{\left(}
+    \newcommand{\rbrac}{\right)}
+\]        
+    <div class = "top-nav"></div> <!-- TOP NAV-->   
+    <nav class="navbar open" id="navbar"> <!-- SIDE BAR -->
+        <div id="logo"></div>
+        <div class = "side-nav-container"></div> <!--open attribute - default-->
+        <div class="line-3"></div>
+        <header class="major"><h2>Table of Contents</h2></header>   <!-- TABLE OF CONTENTS -->
+        <div class = "toc">
+            <ul>
+                <li>Review of Part 1</li>
+                <li>Generate Patterns in Python
+                    <ul>
+                        <li>Code for the Square Plate</li>
+                        <li>Code for the Circular Plate</li>
+                    </ul>
+                </li>
+                <li>Theoretical, Experimental Results and Data Analysis
+                    <ul>
+                        <li>Chladni's law</li>
+                        <li>Circular domain</li>
+                    </ul>
+                </li>
+                <li><a href="#Appendix">Appendix</a></li>
+                <li><a href="#References">References</a></li>
+            </ul>
+        </div>
+        <div class = "highlights-and-attribute"></div>
+    </nav>
+
+    <!--Master grid starts here -->
+    <div class="content-grid">
+        
+        <!-- CONTENTS -->
+        <div class = "general-wrapper">
+            <div class = "topic">
+                Topics: Mathematics/Physics/Standing Waves/Python
+            </div>
+            
+            <div>
+                <h1 class = "title">
+                    The Quest to Finding Chladni Patterns, Part 3
+                </h1>
+                <div class="date">
+                    Updated June 14, 2024.
+                </div>
+            </div>
+           
+            <figure style="margin: 0;">
+                <img class = "front-img" src = "../blogs/chladni-patterns/Chladni_patterns_2.png">
+            </figure>
+
+            <div class="Quote">
+                <div class="Quote-content">&#8220That there are such limits to our knowledge of nature, must be borne with patience by every sound mind whether he be a scientist or a workman.&#8221</div>
+                <div class="Author">- Gustav Robert Kirchhoff</div>
+            </div>
+            
+            <h2 id= "Introduction">Review of Part 2</h2>
+           
+
+<h2 id = "References">References</h2>
+
+    <ol class = "reference">
+        <li>Linqi. Shao. Modeling a square vibrating plate. University of Waterloo, pages 1-58, 2018.</li>
+        <li>Lord Rayleigh. Vibration of Plates, pages 352-361. Princeton University Press, New York, NY, 1894.</li>
+        <li>John M. Davis. Introduction to Applied Partial Differential Equation. W. H. Freeman, New York City, 1st edition, 2012.</li>
+        <li>Richard. Haberman. Applied Partial Differential Equations with Fourier Series and Boundary Value Problems. Pearson, New York City, 5th edition, 2018.</li>
+        <li>Rudolph. Szilard. Theories and Applications of Plates Analysis. John Wiley and Sons, Inc., 111 River Street Hoboken, NJ 07030-5774, 2004</li>
+        <li>Dispersion of flexural waves. <a href="https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html" class="url">https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html</a>, 2004. Accessed: 2024-05-26</li>
+        <li>Thomas D. Rossing and Neville H. Fletcher. Two-Dimensional Systems: Membranes and Plates, pages 65-94. Springer New York, New York, 2004.</li>
+        <li>Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Stable and accurate numerical methods for generalized kirchhoff-love plates, 2020. Accessed: 2024-05-26.
+        </li>
+    </ol>
+
+    <div class="line-1"></div>
+    <header>
+        <h3>More Articles</h3>
+    </header>
+    <div id="rec-article-container"></div>
+            
+
+        </div> <!--general wrapper ends here-->
+    </div>
+    <!--Master grid ends here -->
+
+<div class="footer"></div>
+<script src="../assets/js/scripts.js"></script>
+<script src="../assets/js/load.js"></script>
+<script src="../assets/js/blogpage-setting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
+</body>
+</html>

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Hessian Matrix</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="subject" content='Multivariable calculus'>
+    <meta name="description" content="Utilizing the Hessian to find maximum and minimum of a function" />
+    <meta name="keywords" content="Hessian Matrix, Sylvester Criterion, Maximum, Minimum of a function" />
+    <meta name="author" content="Don Le, ledongduu@gmail.com"/>
+    <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style>
+        .front-img{
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+            height: auto; 
+            margin: auto;
+        }
+        #circular-plate{width: 80%;}
+        @media all and (max-width: 580px){
+            #circular-plate{width: 100%; margin: 0;}
+        }
+        .image-block{
+            width: 65%;
+        }
+        .p-table{
+            width: 90%; margin: 30px auto; text-align: center; border: 1px solid;
+        }
+        .p-table td{
+            border-left: 1px solid;
+        }
+    </style>
+</head>
+
+<body class="nav-open light-mode">
+    \[
+        \newcommand{\R}{\mathbb{R}}
+        \newcommand{\Z}{\mathbb{Z}}
+        \newcommand{\lbrac}{\left(}
+        \newcommand{\rbrac}{\right)}
+        \newcommand\pd[2]{\displaystyle\frac{\partial #1}{\partial #2}}
+    \]        
+    <div class = "top-nav"></div> <!-- TOP NAV-->   
+    <nav class="navbar open" id="navbar"> <!-- SIDE BAR -->
+        <div id="logo"></div>
+        <div class = "side-nav-container"></div> <!--open attribute - default-->
+        <div class="line-3"></div>
+        <header class="major"><h2>Table of Contents</h2></header>   <!-- TABLE OF CONTENTS -->
+        <div class = "toc">
+            <ul>
+                <li>Local Maximum, Local Minimum, and Extremum</li>
+                <li>Stationary Points, Critical Points, and Saddle Points</li>
+                <li>The Hessian Matrix and the Sylvester Criterion</li>
+                <li>The Maximum/Minimum Algorithm for an n-Variable Function
+                    <ul>
+                        <li>The General Case</li>
+                        <li>The Special Case: $n=2$</li>
+                    </ul>
+                </li>
+                <li>Example Problems</li>
+                <li><a href="#Appendix">Appendix</a></li>
+                <li><a href="#References">References</a></li>
+            </ul>
+        </div>
+        <div class = "highlights-and-attribute"></div>
+    </nav>
+
+    <!--Master grid starts here -->
+    <div class="content-grid">
+        
+        <!-- CONTENTS -->
+        <div class = "general-wrapper">
+            <div class = "topic">
+                Topics: Mathematics/Physics/Standing Waves/Python
+            </div>
+            
+            <div>
+                <h1 class = "title">
+                    How to find Maxima and Minima of an n-th Dimensional Function
+                </h1>
+                <div class="date">
+                    Updated June 14, 2024.
+                </div>
+            </div>
+           
+            <figure style="margin: 0;">
+                <img class = "front-img" src = "../blogs/max-and-min/banner.png">
+            </figure>
+
+            <div class="Quote">
+                <div class="Quote-content">&#8220As you will find in multivariable calculus, there is often a number of solutions for any given problem.&#8221</div>
+                <div class="Author">- John Nash</div>
+            </div>
+            
+            <h2 id= "Introduction">Local Maximum, Local Minimum, and Extremum</h2>
+
+
+            <p>
+                Consider an $n$-dimensional function $z=f(\mathbf{x})$ defined by $f: D\subseteq \R^n \to \R$, where $\mathbf{x}=(x_1, x_2, \ldots, x_n)$ is an $n$-tuple of real numbers. Also consider a point $\mathbf{a} = (a_1, a_2, \ldots, a_n)$ defined in the domain $D\subseteq\R^n$.
+                <ol type="a" style="line-height: 1.6;">
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        <strong>Local Maximum.</strong> The function $z=f(\mathbf{x})$ attains its local maximum at $\mathbf{a}$ if there exists a neighborhood $N_\varepsilon(\mathbf{a})\in D$ of $\mathbf{a}$ such that $f(\mathbf{x})\leq f(\mathbf{a})$, $\forall \mathbf{x}\in N_\varepsilon(\mathbf{a}) \backslash \{\mathbf{a}\}$. We call the plural of maximum maxima.</li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        <strong>Local Minimum.</strong>
+                        The function $z=f(\mathbf{x})$ attains its local minimum at $\mathbf{a}$ if there exists a neighborhood $N_\varepsilon(\mathbf{a})\in D$ of $\mathbf{a}$ such that $f(\mathbf{x})\geq f(\mathbf{a})$, $\forall \mathbf{x}\in N_\varepsilon(\mathbf{a}) \backslash \{\mathbf{a}\}$. We call the plural of minimum minima.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        <strong>Extremum.</strong>
+                        The function $z=f(\mathbf{x})$ attains its maximum, or minimum at point $\mathbf{a}$ is generally called an extremum at point $\mathbf{a}$. Point $\mathbf{a}$ might sometimes be called the extreme point of the function and $f(\mathbf{a})$ is called the extreme value of the function $z=f(\mathbf{x})$. We call the plural of extremum extrema.
+                    </li>
+                </ol>
+            </p>
+
+            <p>
+                <div class="theorem" data-theorem-name=" (Fermat's Theorem)">
+                    If the function $z=f(\mathbf{x})$ has continuous first partial derivatives in some neighborhood of point $\mathbf{a}$ and obtain its extrema at $\mathbf{a}$, then
+                    <div class="equation">
+                        $$\pd{f}{x_i}(a_1,a_2,...,a_n)=\pd{f(\mathbf{a})}{x_i}=0\quad\text{for}\; i=1,2,...,n$$
+                    </div>
+                    That is, for each first partial derivative of $f$,
+                    <div class="equation">
+                        \[
+                        \left\{
+                            \begin{array}{cc}
+                                \pd{f(\mathbf{a})}{x_1}=f_{x_1}(a_1,a_2,...,a_n)=0 \\[0.1em]
+                                \pd{f(\mathbf{a})}{x_2}=f_{x_2}(a_1,a_2,...,a_n)=0 \\[0.1em]
+                                \vdots \\[-0.1em]
+                                \pd{f(\mathbf{a})}{x_n}=f_{x_n}(a_1,a_2,...,a_n)=0
+                            \end{array}
+                        \right.,
+                        \]
+                    </div>
+                </div>
+            </p>
+
+            <h2 id= "#">Stationary Points, Critical Points, and Saddle Points</h2>
+            <p>
+                Consider an $n$-dimensional function $z=f(\mathbf{x})$, $f: D\subseteq \R^n \to \R$, where $\mathbf{x}=(x_1, x_2, \ldots, x_n)$ is an $n$-tuple of real numbers. Assume that the function is defined at a point $\mathbf{a} = (a_1, a_2, \ldots, a_n)\in D\subseteq\R^n$.
+            </p>
+
+            <ol type="a" style="line-height: 1.6;">
+                <li style="margin: var(--in-page-li-spacing) 0;"><strong>Stationary Point.</strong>
+                    The points where all of the partial derivatives of $f$ equals 0 is called the stationary points of $f$. That is,
+                    <div class="equation">
+                        $$\pd{f}{x_i}(a_1,a_2,...,a_n)=\pd{f(\mathbf{a})}{x_i}=0\quad\text{for\;all}\; i=1,2,...,n$$
+                    </div>
+                </li>
+                <li style="margin: var(--in-page-li-spacing) 0;"><strong>Critical Point.</strong>
+                    The point $\mathbf{a}=(a_1, a_2, \ldots ,a_n)\in D$ is called a critical point if at least one of the partial derivatives of $f$ at that point equals 0 or undefined.
+                </li>
+                <li style="margin: var(--in-page-li-spacing) 0;"><strong>Saddle Point.</strong>
+                    The point $\mathbf{a}=(a_1,a_2,\ldots,a_n)\in D$ is called a saddle point if it is a stationary point and for all $V_\varepsilon(\mathbf{a})$, and there exists $\mathbf{y}=(y_1, y_2,\ldots,y_n)\in V_\varepsilon$ and $\mathbf{z}=(z_1,z_2,\ldots,z_n)\in V_\varepsilon$ such that 
+                    $$f(\mathbf{y})< f(\mathbf{a})< f(\mathbf{z}).$$
+                </li>
+            </ol>
+
+            <h2>The Hessian Matrix and the Sylvester Criterion</h2>
+
+            <p>
+                <strong>The Hessian Matrix.</strong> Consider a function $z=f(\mathbf{x})$ and $\mathbf{x}$ defined as before, and let $f$ be a function whose second partial derivatives are continuous on its domain $D$. Consider also a point $\mathbf{a}=(a_1,a_2,...,a_n)\in D\subseteq \R^n$. By then, the matrix
+            </p>
+            <div class="equation">
+                $$H_f(\mathbf{a})=
+                \begin{bmatrix}
+                f_{x_1x_1}(\mathbf{a}) & f_{x_1x_2}(\mathbf{a}) & \cdots & f_{x_1x_n}(\mathbf{a})\\
+                f_{x_2x_1}(\mathbf{a}) & f_{x_2x_2}(\mathbf{a}) & \cdots & f_{x_2x_n}(\mathbf{a})\\
+                \vdots & \vdots & \ddots & \vdots\\
+                f_{x_nx_1}(\mathbf{a}) & f_{x_nx_2}(\mathbf{a}) & \cdots & f_{x_nx_n}(\mathbf{a})
+                \end{bmatrix}$$
+            </div>
+            <p>
+                is called the Hessian matrix of the function $f$ at point $\mathbf{a}$. Since $f$ has continuous second partial derivatives, $H_f(M)$ must be a symmetric square matrix; that is, $H_f(\mathbf{a})=H_f(\mathbf{a})^{\mathsf{T}}$.
+            </p>
+
+            <p>
+                <strong>Quadratic Form.</strong> A quadratic form, to put simply, is just a second-degree multi-variable polynomial such as
+            </p>
+            <div class="equation">
+                $$\phi(x,y,z) = ax^2 + bxy + cy^2 + dyz + ez^2 + fxz.$$
+            </div>
+            <p>
+                One interesting about quadratic forms is that every symmetric matrix defines a quadratic form; that is, given that $\mathbf{A} = [a]_{ij}$, the polynomial
+                <div class="equation">
+                    $$\phi(\mathbf{x}) = \sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}x_ix_j = \mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}$$
+                </div>
+            </p>
+            <p>
+                will results in a quadratic form without requiring us to combining terms. Therefore, $H_f(\mathbf{a})$ can most definitely be treated as a matrix associated with a quadratic form.
+            </p>
+
+            <p>
+                <strong>Definite Matrix.</strong> A symmetric real matrix $\mathbf{A}$ is called positive definite if the associated quadratic form
+                $$\phi( \mathbf{x})=\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}$$
+                is positive for every column ($n\times 1$), non-zero vector $\mathbf{x}$ in $\R^n$. Similarly, if $\phi(\mathbf{x})$ only yields negative values, then $\mathbf{A}$ is called negative definite. Finally, if $\phi$ produces both negative and positive values, then $\mathbf{A}$ is said to be indefinite. There are also other cases such as positive semi-definite or negative semi-definite matrices. In general,
+                <ol type="i" style="line-height: 1.6;">
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        $\mathbf{A}$ is positive-definite if and only if $\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}>0,\;\forall \mathbf{x}\in\R^n \backslash\{\mathbf{0}\}$.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        $\mathbf{A}$ is negative-definite if and only if $\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}< 0,\;\forall \mathbf{x}\in\R^n \backslash\{\mathbf{0}\}$.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        $\mathbf{A}$ is semi-positive-definite if and only if $\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}\geq 0,\;\forall \mathbf{x}\in\R^n$.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        $\mathbf{A}$ is semi-negative-definite if and only if $\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}\leq 0,\;\forall \mathbf{x}\in\R^n$.
+                    </li>
+                </ol>
+            </p>
+
+            <p>
+                <strong>Sub-matrices.</strong> Given an $n\times n$ matrix $\mathbf{A}$ with $(i,j)$-th entry, where $a_{ij}=a_{ji}$. Let $A^{(k)}$ denote the $k\times k$ submatrix taken from the top left corner of $\mathbf{A}$. These matrices are called major sub-matrices of $A$. That is,
+                <div class="equation">
+                    $$\mathbf{A}^{(k)}=
+                    \begin{bmatrix}
+                    a_{11} & a_{12} & \cdots & a_{1k} \\
+                    a_{21} & a_{22} & \cdots & a_{2k} \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    a_{k1} & a_{k2} & \cdots & a_{kk}
+                    \end{bmatrix},\quad 1\leq k\leq n$$
+                </div>
+            </p>
+            <p>In particular,</p>
+            <div class="equation">
+                $$\mathbf{A}^{(1)}=
+                \begin{bmatrix}
+                a_{11}
+                \end{bmatrix},\quad 
+                \mathbf{A}^{(2)}=
+                \begin{bmatrix}
+                a_{11} & a_{12}\\
+                a_{21} & a_{22}\\
+                \end{bmatrix}, \quad 
+                \mathbf{A}^{(3)}=
+                \begin{bmatrix}
+                a_{11} & a_{12} & a_{13}\\
+                a_{21} & a_{22} & a_{23}\\
+                a_{31} & a_{32} & a_{33}
+                \end{bmatrix},\cdots,
+                \mathbf{A}^{(n)}=\mathbf{A}
+                $$
+            </div>
+            <p>
+                Let $\Delta_k=\det(\mathbf{A}^{k})\;,1\leq k\leq n$. For instance, $\Delta_1=a_{11}$ and $\Delta_n =\det(\mathbf{A})$.
+            </p>
+
+            <p>
+                <div class="theorem" data-theorem-name=" (Silvester's Criterion)">
+                    Let $\mathbf{A}$ be an $n\times n$ symmetric matrix. Then,
+                    <ol type="i" style="line-height: 1.6;">
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            $\mathbf{A}$ is positive definite, denote $\mathbf{A}\succ 0$ if and only if $\Delta_1>0,\Delta_2>0,...,\Delta_n>0$.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            $\mathbf{A}$ is negative definite, denote $\mathbf{A}\prec 0$ if and only if the signs of $\Delta_i$ alternates, with $\Delta_1 < 0$; that is,
+                            <div class="equation">
+                                $$(-1)^1\Delta_1>0, \;(-1)^2\Delta_2>0,\ldots,\;(-1)^n\Delta_n>0.$$
+                            </div>
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            $\mathbf{A}$ is indefinite if there exists a $\Delta_k$ that breaks both patterns above such that $\Delta_k$ is in the wrong sign.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            The Sylvester criterion is inconclusive ($\mathbf{A}$ can be either positive or negative definite, or indefinite) if there exists a $\Delta_k$ that breaks the first two patterns such that $\Delta_k=0$.
+                        </li>
+                    </ol>
+                </div>
+            </p>
+
+
+        <h2>The Maximum/Minimum Algorithm for an n-Variable Function</h2>
+            <h3>The General Case</h3>
+            <p>
+                <strong>The General Second Derivative Test.</strong> To identify all the stationary (and critical points) of $f(\mathbf{x})$ and test if they are the extrema of $f$, we follow the following procedure:
+                <ol class="steps">
+                    <li class="step">Find $D(f)$, the domain of $f(\mathbf{x})$. This is for us to determine whether to keep a critical point or not.</li>
+                    <li class="step">
+                        Solve the equation $\nabla f(\mathbf{x})=\mathbf{0}$; that is, solve the system of $n$-equations
+                        <div class="equation">
+                            \[
+                            \left\{
+                                \begin{array}{cc}
+                                    \pd{f(\mathbf{x})}{x_1}=f_{x_1}(x_1,x_2,...,x_n)=0 \\[0.1em]
+                                    \pd{f(\mathbf{x})}{x_2}=f_{x_2}(x_1,x_2,...,x_n)=0 \\[0.1em]
+                                    \vdots \\[-0.1em]
+                                    \pd{f(\mathbf{x})}{x_n}=f_{x_n}(x_1,x_2,...,x_n)=0
+                                \end{array}
+                            \right.,
+                            \]
+                        </div>
+                        to find all stationary points of $f(\mathbf{x})$ (if they exist). Label these points, for instance, $\mathbf{a}_0=(a_1^0, \;a_2^0,...,\;a_n^0)$, $\mathbf{a}_1=(a_1^1,\;a_2^1,\ldots,\;a_n^1),\ldots$. Next, find all points where the partial derivatives $f_{x_1}(\mathbf{x}), f_{x_2}(\mathbf{x}),...,f_{x_n}(\mathbf{x})$ are undefined, we now have the set of all critical points of $f(\mathbf{x})$. <br><br>
+
+                        <strong>Remark.</strong> One reminder to note is that all critical points that need to be considered must lie inside the domain $D$. If not, just discard them.
+                    </li>
+                    <li class="step">
+                        If $\mathbf{a_0}$ is a stationary point, calculate its Hessian matrix at $\mathbf{a_0}$; that is, find $H_f(\mathbf{a_0})$. After that, apply Sylvester's Criterion on $H_f(\mathbf{a_0})$ by calculating the values of $\Delta_1,\Delta_2,...,\Delta_n$ at $\mathbf{a_0}$.
+                        <ol type="i" style="line-height: 1.6;">
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                If $\mathrm{H}_f(\mathbf{a_0})\succ 0$, then $\mathbf{a_0}$ is a minimum of the function $f(\mathbf{x})$.
+                            </li style="margin: var(--in-page-li-spacing) 0;">
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                If $\mathrm{H}_f(\mathbf{a_0})\prec 0$, then $\mathbf{a_0}$ is a maximum of the function $f(\mathbf{x})$.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                If $\det (\Delta_k)\neq 0,\;1\leq k\leq n,$ but $\mathrm{H}_f(\mathbf{a_0})$ itself is neither positive nor negative definite, then $\mathbf{a_0}$ is not an extremum. A similar statement is that if there exist two points $\mathbf{y}=(y_1,y_2,...,y_n)$ and $\mathbf{z}=(z_1,z_2,...,z_n)$ such that $\mathbf{y}\mathrm{H}_f(\mathbf{a_0})\mathbf{y}^{\mathrm{T}}>0$ and $\mathbf{z}\mathrm{H}_f(\mathbf{a_0})\mathbf{z}^{\mathrm{T}}< 0$, then $\mathbf{a_0}$ is not an extremum of $f(\mathbf{x})$. 
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                If there exists a point $\mathbf{y}=(y_1,y_2,...,y_n)$ such that $\mathbf{y}^{\mathrm{T}}\mathrm{H}_f(\mathbf{a_0})\mathbf{y}=0$; that is, there is at least one major sub-matrix of $\mathrm{H}_f(\mathbf{a_0})$ is equal to 0,  then the test is inconclusive.
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="step">
+                        Repeat the same process again for the stationary point $\mathbf{a_1}$.
+                    </li>
+                </ol>
+            </p>
+
+
+            <h3>The Special Case: $n=2$</h3>
+        <h2>Example Problems</h2>
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y)=x^2-xy+y^2-2x+y$$
+        </div>
+
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                We first need to find the domain of $f$, which is just simply $D=\R^2$. We then solve for $\nabla f(x,y)=(0,0)$, that is, solve for the system of equations
+                <div class="equation">
+                \begin{equation*}
+                \begin{cases}
+                    f_x(x,y)=2x-y-2=0\\[0.5em]
+                    f_y(x,y)=2y-x+1=0
+                \end{cases}
+                \Rightarrow\;
+                \begin{cases}
+                    x=1\\[0.5em]
+                    y=0
+                \end{cases}
+                \end{equation*}
+                </div>
+                The function $f$ has one critical point $(x,y)=(1,0)$. We then find second partial derivatives of $f$:
+                $$f_{xx}(x,y)=2, \;f_{xy}(x,y)=1,\;\text{and}\;f_{yy}(x,y)=2$$
+                At $(1,0)$, we have $f_{xx}(1,0)=2$, $f_{xy}(1,0)=1$ and $f_{yy}(1,0)=2$, Since, $\Delta_2(1,0)=f_{xx}f_{yy}-f_{xy}^2=3>0$ and $f_{xx}(1,0)=2>0$, therefore, $(1,0)$ is a minimum of $f(x,y)$ and $f_{\min} =-1$.
+            </div>
+        </details>
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y)=\sqrt{x^2+y^2}$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                Domain of $f: D=\R^2$. We then solve for $\nabla f(x,y)=(0,0)$
+                <div class="equation">
+                    \begin{equation*}
+                    \begin{cases}
+                        f_x(x,y)=\dfrac{x}{\sqrt{x^2+y^2}}=0\\[0.5em]
+                        f_y(x,y)=\dfrac{y}{\sqrt{x^2+y^2}}=0\\[0.5em]
+                        \text{Condition:} \;(x,y)\neq (0,0)
+                    \end{cases}
+                    \quad\Rightarrow\quad
+                    \begin{cases}
+                        (x,y)=(0,0)\Rightarrow\text{Reject}\\[0.5em]
+                        \text{Condition:} \;(x,y)\neq (0,0)
+                    \end{cases}
+                    \end{equation*}
+                </div>
+                Based on the condition of the system of equations, the function $f$ has no stationary point, but it has one critical point $(0,0)$. Notice that $f(x,y)=\sqrt{x^2+y^2}\geq f(0,0)=0,\;\forall (x,y)\in\R^2$. Therefore, by definition, $(0,0)$ is the minimum of the function and $f_{\min}=0$.
+            </div>
+        </details>
+
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y)=xy+\dfrac{50}{x}+\dfrac{20}{y}$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                Domain of $f$: $D=\R^2\backslash\{(0,0)\}$. We then solve for $\nabla f(x,y)=(0,0)$
+                <div class="equation">
+                    \[
+                    \begin{cases}
+                        f_x(x,y)=y-\dfrac{50}{x^2}=0\\[1em]
+                        f_y(x,y)=x-\dfrac{20}{y^2}=0
+                    \end{cases}
+                    \xRightarrow{(x,y)\neq (0,0)}
+                    \begin{cases}
+                        x^2y=50\\
+                        xy^2=20
+                    \end{cases}
+                    \Rightarrow x\left(\frac{50}{x^2}\right)^2=\frac{50^2}{x^3}=20\;\Rightarrow 
+                    \begin{cases}
+                        x=50\\
+                        y=2
+                    \end{cases}
+                    \]
+                </div>
+                Partial derivatives of $f$:
+                <div class="equation">$$f_{xx}=\frac{100}{x^3},\;f_{xy}=1,\;f_{yy}=\frac{40}{y^3}$$</div>
+                At $(5,2)$, $f_{xx}=4/5$, $f_{xy}=1$, $f_{yy}=5$, and thus $\Delta_2=3>0$. Therefore, $(5,2)$ is a local minimum of $f$ and $f_{\min}=30$.
+            </div>
+        </details>
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y)=xy\ln(x^2+y^2)$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                Domain of $f$: $D=\R^2\backslash\{(0,0)\}$. We then solve for $\nabla f(x,y)=(0,0)$
+                <div class="equation">
+                    \begin{equation*}
+                    \begin{cases}
+                        f_x(x,y)=y\left(\ln(x^2+y^2)+\dfrac{2x^2}{x^2+y^2}\right)=0\quad (1)\\[1em] %%%
+                        f_y(x,y)=x\left(\ln(x^2+y^2)+\dfrac{2y^2}{x^2+y^2}\right)=0\quad (2)
+                    \end{cases}
+                    \end{equation*}
+                </div>
+                This system branches out to several solutions:
+                <ol type="i" style="line-height: 1.6;">
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        If $y=0$, substitute into equation (2), we obtain $x\ln(x^2)=0$, and thus $x=0$ (Reject since $(0,0)\notin D$) or $\ln(x^2)=0$, which gives two stationary points $(1,0)$ and $(-1,0)$.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        If $x=0$, substitute into equation (1), we obtain $y\ln(y^2)=0$, and thus $y=0$ (Reject since $(0,0)\notin D$) or $\ln(y^2)=0$, which gives two more stationary points $(0,1)$ and $(0,-1)$.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        If $x\neq 0$ and $y\neq 0$, the system of equations above is equivalent to
+                        <div class="equation">
+                            \begin{equation*}
+                            \begin{cases}
+                            \ln(x^2+y^2)+\dfrac{2x^2}{x^2+y^2}=0\quad (3)\\[1em] %%%
+                            \ln(x^2+y^2)+\dfrac{2y^2}{x^2+y^2}=0\quad (4)
+                            \end{cases}
+                            \end{equation*}
+                        </div>
+                        Adding $(3)$ and $(4)$, we obtain $2\ln(x^2+y^2)+2=0\;\Rightarrow\; x^2+y^2=\dfrac{1}{e}$. Substitute this into (3) (or (4)), we obtain the quadratic equation
+                        <div class="equation">
+                            $$-1+2ex^2=0\quad\Rightarrow\quad x = \pm \frac{1}{\sqrt{2e}}$$
+                        </div>
+                        If we substitute these solutions to the equation $x^2+y^2=\dfrac{1}{e}$, we can obtain the $y$'s:
+                        If $x = 1/\sqrt{2e}$, then
+                        <div class="equation">
+                            $$y = \pm \dfrac{1}{\sqrt{2e}},$$
+                        </div>
+                        similarly, if $x = -1/\sqrt{2e}$, then we have two more of the same $y$
+                        <div class="equation">
+                            $$y = \pm \dfrac{1}{\sqrt{2e}},$$
+                        </div>
+
+                        This gives four more stationary points: 
+
+                        <div class="equation">
+                            $$\left(\dfrac{1}{\sqrt{2e}},\dfrac{1}{\sqrt{2e}}\right),\;\left(\dfrac{1}{\sqrt{2e}},-\dfrac{1}{\sqrt{2e}}\right),\;\left(-\dfrac{1}{\sqrt{2e}},\dfrac{1}{\sqrt{2e}}\right),\; \text{and} \;\left(-\dfrac{1}{\sqrt{2e}},-\dfrac{1}{\sqrt{2e}}\right).$$
+                        </div>
+                    </li>
+                </ol>
+                We now have a total of eight stationary points. Now let's find the second partial derivatives of $f$ and $\Delta_2(x,y)$.
+                <div class="equation">
+                    $$f_{xx}=\frac{2x^3+6xy^3}{(x^2+y^2)^2},\;f_{xy}=\ln(x^2+y^2)+\frac{2y^2}{x^2+y^2}+\frac{2x^4-2xy^2}{(x^2+y^2)^2},\;\text{and}\;f_{yy}=\frac{6yx^3+2xy^3}{(x^2+y^2)^2}$$
+                </div>
+                For this problem, it is easier to calculate each second partial derivative at a point independently (just use a good and modern calculator). We now set up a table:
+                <div class="table-wrapper">
+                    <table class="p-table">
+                        <tr>
+                            <td><strong>Points</strong></td>
+                            <td>$f_{xx}(x_0,y_0)$</td>
+                            <td>$f_{xy}(x_0,y_0)$</td>
+                            <td>$f_{yy}(x_0,y_0)$</td>
+                            <td>$\Delta_2=f_{xx}f_{yy}-f_{xy}^2$</td>
+                            <td><strong>Conclusion</strong></td>
+                        </tr>
+                        <tr>
+                            <td>$(0,1)$</td>
+                            <td>$0$</td>
+                            <td>$2$</td>
+                            <td>$0$</td>
+                            <td>$-4&lt;0$</td>
+                            <td>Saddle point at $(0,1,0)$</td>
+                        </tr>
+                        <tr>
+                            <td>$(0,-1)$</td>
+                            <td>$0$</td>
+                            <td>$2$</td>
+                            <td>$0$</td>
+                            <td>$-4&lt;0$</td>
+                            <td>Saddle point at $(0,-1,0)$</td>
+                        </tr>
+                        <tr>
+                            <td>$(1,0)$</td>
+                            <td>$0$</td>
+                            <td>$2$</td>
+                            <td>$0$</td>
+                            <td>$-4&lt;0$</td>
+                            <td>Saddle point at $(1,0,0)$</td>
+                        </tr>
+                        <tr>
+                            <td>$(-1,0)$</td>
+                            <td>$0$</td>
+                            <td>$2$</td>
+                            <td>$0$</td>
+                            <td>$-4&lt;0$</td>
+                            <td>Saddle point at $(-1,0,0)$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(\dfrac{1}{\sqrt{2e}},\dfrac{1}{\sqrt{2e}}\right)$</td>
+                            <td>$2&gt;0$</td>
+                            <td>$0$</td>
+                            <td>$2$</td>
+                            <td>$4&gt;0$</td>
+                            <td>Local minimum, $f_{\min}=-\frac{1}{2e}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(\dfrac{1}{\sqrt{2e}},-\dfrac{1}{\sqrt{2e}}\right)$</td>
+                            <td>$-2&lt;0$</td>
+                            <td>$0$</td>
+                            <td>$-2$</td>
+                            <td>$4&gt;0$</td>
+                            <td>Local maximum, $f_{\max}=\dfrac{1}{2e}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(-\dfrac{1}{\sqrt{2e}},\dfrac{1}{\sqrt{2e}}\right)$</td>
+                            <td>$-2&lt;0$</td>
+                            <td>$0$</td>
+                            <td>$-2$</td>
+                            <td>$4&gt;0$</td>
+                            <td>Local maximum, $f_{\max}=\dfrac{1}{2e}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(-\dfrac{1}{\sqrt{2e}},-\dfrac{1}{\sqrt{2e}}\right)$</td>
+                            <td>$2&gt;0$</td>
+                            <td>$0$</td>
+                            <td>$2$</td>
+                            <td>$4&gt;0$</td>
+                            <td>Local minimum, $f_{\min}=-\frac{1}{2e}$</td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div> 
+        </details>
+        
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y)=y^2-2y\cos x,\quad -1\leq x\leq 7$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                Domain of $f$: $D=\{(x,y)\in\R^2 | -1\leq x\leq 7\}$. We then solve for $\nabla f(x,y)=(0,0)$
+                <div class="equation">
+                    $$
+                    \begin{cases}
+                        f_x(x,y)=2y\sin x=0\\[0.5em]
+                        f_y(x,y)=2y-2\cos x=0
+                    \end{cases}\quad
+                    \Rightarrow\quad
+                    \begin{cases}
+                        x=k\pi,\; y=0\\[0.5em]
+                        y=\cos x
+                    \end{cases}
+                    $$
+                </div>
+                For $x=k\pi$, since $-1\leq x\leq 7$, we have $x\in \{0,\;\pi,\;2\pi\}$. This gives us three stationary points.
+                <ol type="i" style="line-height: 1.6;">
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        If $x=0$, then $y=\cos (0)=1\;\Rightarrow\;(0,1)$.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        If $x=\pi$, then $y=\cos (\pi)=-1\;\Rightarrow\;(\pi,-1)$.
+                    </li>
+                    <li style="margin: var(--in-page-li-spacing) 0;">
+                        If $x=2\pi$, then $y=\cos (2\pi)=1\;\Rightarrow\;(2\pi,1)$.
+                    </li>
+                </ol>
+
+                For $y=0$, we then have $y=\cos x=0$, and thus $x=\pi/2$ and $x=3\pi/2$ (since $-1\leq x\leq 7$), therefore we have two more stationary point $(\pi/2,0)$ and $(3\pi/2,0)$. We then find the second partial derivatives of $f$ and $\Delta_2(x,y)$
+                <div class="equation">
+                    $$f_{xx}=2y\cos x,\;f_{xy}=2\sin x,\;\text{and}\;f_{yy}=2$$
+                </div>
+                <div class="equation">$$\Delta_2(x,y)=f_{xx}f_{yy}-f_{xy}^2=4y\cos x-4\sin^2 x=4(y\cos x-\sin^2 x)$$</div>
+                For this kind of problem, we should draw a table to govern all the stationary points.
+                <div class="table-wrapper">
+                    <table class="p-table">
+                        <tr>
+                            <td><strong>Points</strong></td>
+                            <td>$f_{xx}(x_0,y_0)$</td>
+                            <td>$\Delta_2(x_0,y_0)$</td>
+                            <td><strong>Conclusion</strong></td>
+                        </tr>
+                        <tr>
+                            <td>$(0,1)$</td>
+                            <td>$2&gt;0$</td>
+                            <td>$4&gt;0$</td>
+                            <td>Relative minimum, $f_{\min}=-1$</td>
+                        </tr>
+                        <tr>
+                            <td>$(\pi,-1)$</td>
+                            <td>$2&gt;0$</td>
+                            <td>$4&gt;0$</td>
+                            <td>Relative minimum, $f_{\min}=-1$</td>
+                        </tr>
+                        <tr>
+                            <td>$(2\pi,1)$</td>
+                            <td>$2&gt;0$</td>
+                            <td>$4&gt;0$</td>
+                            <td>Relative minimum, $f_{\min}=-1$</td>
+                        </tr>
+                        <tr>
+                            <td>$(\frac{\pi}{2},0)$</td>
+                            <td>$0$</td>
+                            <td>$-4&lt;0$</td>
+                            <td>Saddle point at $(\pi/2,0,0)$</td>
+                        </tr>
+                        <tr>
+                            <td>$(\frac{3\pi}{2},0)$</td>
+                            <td>$0$</td>
+                            <td>$-4&lt;0$</td>
+                            <td>Saddle point at $(3\pi/2,0,0)$</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y)=2x^4+y^4-x^2-2y^2$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                Domain of $f$: $D=\R^2$. We now solve for $\nabla f(x,y)=0$
+                <div class="equation">
+                    \begin{equation*}
+                \begin{cases}
+                    f_x(x,y)=8x^3-2x=0\\
+                    f_y(x,y)=4y^3-4y=0
+                \end{cases}
+                \Rightarrow\;
+                \begin{cases}
+                    x=0,\;x=\dfrac{1}{2},\;x=-\dfrac{1}{2}\\
+                    y=0,\;y=1,\;y=-1
+                \end{cases}
+                \end{equation*}
+                </div>
+                This system of equations gives $3\cdot 3=9$ stationary points, namely
+                <div class="equation">
+                    $$(0,0),\;(0,1),\;(0,-1),\;\left(\frac{1}{2},0\right),\;\left(\frac{1}{2},1\right),\;\left(\frac{1}{2},-1\right),\left(-\frac{1}{2},0\right),\;\left(-\frac{1}{2},1\right),\;\text{and}\;\left(-\frac{1}{2},-1\right)$$
+                </div>
+                We then follow the procedure and find the partial derivatives of $f$ and $\Delta_2$:
+                <div class="equation">
+                    $$f_{xx}=24x^2-2,\;f_{xy}=0,\;f_{yy}=12y^2-4,\;\text{and}\;\Delta_2(x,y)=(24x^2-2)(12y^2-4)$$
+                </div>
+                Now, we draw a table, of course.
+                <div class="table-wrapper">
+                    <table class="p-table">
+                        <tr>
+                            <td><strong>Points</strong></td>
+                            <td>$f_{xx}(x_0,y_0)$</td>
+                            <td>$\Delta_2(x_0,y_0)$</td>
+                            <td><strong>Conclusion</strong></td>
+                        </tr>
+                        <tr>
+                            <td>$(0,0)$</td>
+                            <td>$-2&lt;0$</td>
+                            <td>$8&gt;0$</td>
+                            <td>Local maximum, $f_{\max}=0$</td>
+                        </tr>
+                        <tr>
+                            <td>$(0,1)$</td>
+                            <td>$-2&lt;0$</td>
+                            <td>$-16&lt;0$</td>
+                            <td>Saddle Point at $(0,1,-1)$</td>
+                        </tr>
+                        <tr>
+                            <td>$(0,-1)$</td>
+                            <td>$-2&lt;0$</td>
+                            <td>$-16&lt;0$</td>
+                            <td>Saddle Point at $(0,-1,-1)$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(\frac{1}{2},0\right)$</td>
+                            <td>$4&gt;0$</td>
+                            <td>$-16&lt;0$</td>
+                            <td>Saddle Point at $(\frac{1}{2},0,-\frac{1}{8})$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(\frac{1}{2},1\right)$</td>
+                            <td>$4&gt;0$</td>
+                            <td>$32&lt;0$</td>
+                            <td>Local minimum, $f_{\min}=-\frac{9}{8}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(\frac{1}{2},-1\right)$</td>
+                            <td>$4&gt;0$</td>
+                            <td>$32&gt;0$</td>
+                            <td>Local minimum, $f_{\min}=-\frac{9}{8}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(-\frac{1}{2},0\right)$</td>
+                            <td>$4&gt;0$</td>
+                            <td>$-16&lt;0$</td>
+                            <td>Saddle Point at $(-\frac{1}{2},0,-\frac{1}{8})$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(-\frac{1}{2},1\right)$</td>
+                            <td>$4&gt;0$</td>
+                            <td>$32&gt;0$</td>
+                            <td>Local minimum, $f_{\min}=-\frac{9}{8}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\left(-\frac{1}{2},-1\right)$</td>
+                            <td>$4&gt;0$</td>
+                            <td>$32&gt;0$</td>
+                            <td>Local minimum, $f_{\min}=-\frac{9}{8}$</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y)=x+y+4\sin x\sin y$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                Domain of $f$: $D=\R^2$. We then solve for $\nabla f(x,y)=(0,0)$:
+                <div class="equation">
+                    \begin{equation*}
+                    \begin{cases}
+                        f_{x}(x,y)=1+4\cos x\sin y=0\\
+                        f_{y}(x,y)=1+4\sin x\cos y=0
+                    \end{cases}
+                    \Rightarrow
+                    \begin{cases}
+                        2\sin(x+y)-2\sin(x-y)+1=0\\
+                        2\sin(x+y)+2\sin(x-y)+1=0
+                    \end{cases}
+                    \end{equation*}
+                </div>
+                Treat this system as linear and solve for $\sin(x+y)$ and $\sin(x-y)$, we obtain
+                <div class="equation">
+                    $$\begin{cases}
+                    \sin(x-y)=0\\
+                    \sin(x+y)=-\frac{1}{2}
+                    \end{cases}$$
+                </div>
+                The first equation gives $x-y=n\pi$, where $n\in\Z$. The second equation gives
+                <div class="equation">
+                    $$x+y=-\dfrac{\pi}{6}+m2\pi\quad\text{and}\quad x+y=\dfrac{7\pi}{6}+m2\pi,\quad m\in\Z$$
+                </div>
+                To make things a bit easer, we can combine the two solutions of $x+y$ and obtain
+                <div class="equation">
+                    $$
+                    x+y=(-1)^{m+1}\dfrac{\pi}{6}+m\pi
+                    $$
+                </div>
+                We now have a simplified system of equations
+                <div class="equation">
+                    $$\begin{cases}
+                    x - y = n\pi\\
+                    x+y=(-1)^{m+1}\dfrac{\pi}{6}+m\pi
+                    \end{cases}$$
+                </div>
+                Continuing solving for $x$ and $y$ as a linear system, we obtain
+                <div class="equation">
+                    $$
+                    \begin{cases}
+                    x=(-1)^{m+1}\dfrac{\pi}{12}+(m+n)\dfrac{\pi}{2}\\[1em]
+                    y=(-1)^{m+1}\dfrac{\pi}{12}+(m-n)\dfrac{\pi}{2}
+                    \end{cases}
+                    ,\quad\text{where}\; (m,n)\in\Z^2.
+                    $$
+                </div>
+
+                Follow the standard procedure again and find the second partial derivatives of the function,
+                <div class="equation">
+                    $$f_{xx}=-4\sin x\sin y,\;f_{xy}=4\cos x\cos y,\;\text{and}\;f_{yy}=-4\sin x\sin y.$$
+                </div>
+                By then,
+                <div class="equation">
+                    \begin{align*}
+                        \Delta_2(x,y)&=f_{xx}(x,y)f_{yy}(x,y)-f_{xy}^2(x,y)\\[0.5em]
+                        &=-(16\cos^2 x\cos^2 y-16\sin^2 x\sin^2 y)\\[0.5em]
+                        &=-16(\cos x\cos y+\sin x\sin y)(\cos x\cos y-\sin x\sin y)\\[0.5em]
+                        &=-16\cos(x-y)\cos(x+y)
+                    \end{align*}
+                </div>
+                Substituting
+                <div class="equation">
+                    $$x-y=n\pi \quad\text{and}\quad x+y=(-1)^{m+1}\dfrac{\pi}{6}+m\pi$$
+                </div>
+                derived from the equations above into $\Delta_2(x,y)$, we obtain
+                <div class="equation">
+                    $$ \Delta_2(x,y) \Big|^{x-y=n\pi}_{x+y=(-1)^{m+1}\frac{\pi}{6}+m\pi}=-16\cos(n\pi)\cos\left((-1)^{m+1}\frac{\pi}{6}+m\pi\right)$$
+                </div>
+                Since $m$ and $n$ are integers, and therefore the signs of $\Delta_2(x,y)$ depend on the even and odd properties of $m$ and $n$. Thus, we set up an appropriate table according to their odd and even properties.
+                <div class="table-wrapper">
+                    <table class="p-table">
+                        <tr>
+                            <td>$m$</td>
+                            <td>$n$</td>
+                            <td>$\Delta_2(x,y)$</td>
+                            <td>$f_{xx}(x_0,y_0)$</td>
+                            <td><strong>Conclusion</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Even</td>
+                            <td>Even</td>
+                            <td>$\Delta_2=-16\cos\left(-\dfrac{\pi}{6}\right)=-8\sqrt{3}&lt;0$</td>
+                            <td>~</td>
+                            <td>Saddle Point</td>
+                        </tr>
+                        <tr>
+                            <td>Odd</td>
+                            <td>Odd</td>
+                            <td>$\Delta_2=16\cos\left(\dfrac{7\pi}{6}\right)=-8\sqrt{3}&lt;0$</td>
+                            <td>~</td>
+                            <td>Saddle Point</td>
+                        </tr>
+                        <tr>
+                            <td>Even</td>
+                            <td>Odd</td>
+                            <td>$\Delta_2=16\cos\left(-\dfrac{\pi}{6}\right)=8\sqrt{3}&gt;0$</td>
+                            <td>$\sqrt{3}+2&gt;0$</td>
+                            <td>Local Minimum, where
+                                $$f_{\min}=m\pi-\frac{\pi}{6}-2-\sqrt{3}$$
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Odd</td>
+                            <td>Even</td>
+                            <td>$\Delta_2=-16\cos\left(\dfrac{7\pi}{6}\right)=8\sqrt{3}&gt;0$</td>
+                            <td>$-\sqrt{3}-2&lt;0$</td>
+                            <td>Local maximum, where
+                                $$f_{\max}=m\pi+\frac{\pi}{6}+2+\sqrt{3}$$
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y,z)=x^2+y^2+z^2-xy+x-2z$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+                Domain of $f$: $D=\R^3$. Next, we solve the equation $\nabla f(x,y,z)=\mathbf{0}$.
+                <div class="equation">
+                    \begin{equation*}
+                    \begin{cases}
+                        f_{x}=2x-y+1=0\\[0.5em]
+                        f_{y}=2y-x=0\\[0.5em]
+                        f_{z}=2z-2=0
+                    \end{cases}
+                    \;\Rightarrow\;
+                    \begin{cases}
+                        x=-2/3\\[0.5em]
+                        y=-1/3\\[0.5em]
+                        z=1
+                    \end{cases}
+                    \end{equation*}
+                </div>
+                From the equations, we see that this equation only has one stationary point $M=\left(-\dfrac{2}{3},-\dfrac{1}{3},1\right)$. We then proceed to find all the second derivatives of $f$:
+                <div class="equation">
+                    $$f_{xx}=2,\;f_{yy}=2,\;f_{zz}=2,\;f_{xy}=-1,f_{xz}=0,\;\text{and}\; f_{yz}=0$$
+                </div>
+                The Hessian matrix at $\left(-\dfrac{2}{3},-\dfrac{1}{3},1\right)$:
+                <div class="equation">
+                    $$H_f(M)=
+                \begin{bmatrix}
+                    f_{xx} & f_{xy} & f_{xz}\\
+                    f_{yx} & f_{yy} & f_{yz}\\
+                    f_{zx} & f_{zy} & f_{zz}
+                \end{bmatrix}=
+                \begin{bmatrix}
+                    2 & -1 & 0\\
+                    -1 & 2 & 0\\
+                    0 & 0 & 2
+                \end{bmatrix}$$
+                </div>
+                Apply the Sylvester's criterion on $H_f(M)$ by calculating the major sub-matrices of $H_f(M)$:
+                <div class="equation">
+                    $$\Delta_1=2>0,\;\;
+                \Delta_2=
+                \begin{vmatrix}
+                    2 & -1\\
+                    -1 & 2
+                \end{vmatrix}=3>0
+                \;\;\text{and}\;\; \Delta_3=
+                \begin{vmatrix}
+                    2 & -1 & 0\\
+                    -1 & 2 & 0\\
+                    0 & 0 & 2 
+                \end{vmatrix}=
+                (-1)^{3+3}\begin{vmatrix}
+                    2 & -1\\
+                    -1 & 2
+                \end{vmatrix}=6>0,$$
+                </div>
+                we see that the matrix $H_f(M)$ is positive-definite, therefore $M=\left(-\dfrac{2}{3},-\dfrac{1}{3},1\right)$ is a minimum of $f$ and
+                $$f_{\min}=f\left(-\dfrac{2}{3},-\dfrac{1}{3},1\right)=-\dfrac{4}{3}$$
+            </div>
+        </details>
+
+
+        <div class="problem">
+            Find all local maximum, minimum, and saddle points of the following function
+            $$f(x,y,z)=x^3+xy+y^2-2xz+2z^2+3y-1$$
+        </div>
+
+        <details class="solution"><summary>Solution</summary>
+            <div>
+               
+            </div>
+        </details>
+
+
+    <div class="line-1"></div>
+    <header>
+        <h3>More Articles</h3>
+    </header>
+    <div id="rec-article-container"></div>
+            
+
+        </div> <!--general wrapper ends here-->
+    </div>
+    <!--Master grid ends here -->
+
+<div class="footer"></div>
+<script src="../assets/js/scripts.js"></script>
+<script src="../assets/js/load.js"></script>
+<script src="../assets/js/blogpage-setting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
+</body>
+</html>
