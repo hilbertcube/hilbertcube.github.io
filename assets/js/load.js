@@ -146,7 +146,7 @@ function SearchBar() {
     }
 
     // Load suggestions from JSON file
-    fetch('/website-test/assets/json/suggestions.json')
+    fetch(baseLink + '/assets/json/suggestions.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response is sloppy sloppy: ' + response.statusText);
@@ -396,24 +396,24 @@ function currentYear(){
 
 
 $(document).ready(function() {
-    $(".side-nav-container").load("/website-test/assets/source/side-nav.html");
-    $(".highlights-and-attribute").load("/website-test/assets/source/highlights-and-attribute.html", function(){
+    $(".side-nav-container").load(baseLink + "/assets/source/side-nav.html");
+    $(".highlights-and-attribute").load(baseLink + "/assets/source/highlights-and-attribute.html", function(){
         loadAndSetupSuggestions();
     });
-    $("#logo").load("/website-test/assets/source/logo.html");
-    $(".footer").load("/website-test/assets/source/footer.html",  function() {
+    $("#logo").load(baseLink + "assets/source/logo.html");
+    $(".footer").load(baseLink + "/assets/source/footer.html",  function() {
         currentYear();
     });
 
     // Load the top bar
-    $(".top-nav").load("/website-test/assets/source/top-bar-and-setting.html", function() {
+    $(".top-nav").load(baseLink + "/assets/source/top-bar-and-setting.html", function() {
         window.onscroll = function() {scrollIndicator()};
         const initialLightTheme = codeThemeSwitch('light-theme-select', 'lightTheme', 0);
         const initialDarkTheme = codeThemeSwitch('dark-theme-select', 'darkTheme', 0);
         CodeDarkMode(initialLightTheme, initialDarkTheme);
         extendSearchBar();
         BodyDarkMode();
-        $(".top-nav").load("/website-test/assets/source/top-bar-and-setting.html", function() {
+        $(".top-nav").load(baseLink + "/assets/source/top-bar-and-setting.html", function() {
             // Once the top bar is loaded, initialize functionalities
             BodyDarkMode();
             extendSearchBar();

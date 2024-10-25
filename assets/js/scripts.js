@@ -6,10 +6,12 @@ MathJax = {
     }
 };
 
+const baseLink = '/website-test';
+
 // TAB ICON
 const link = document.createElement('link');
 link.rel = 'icon';
-link.href = '/website-test/public/Images/Logo/pendulum_trace.PNG';
+link.href = baseLink + '/public/Images/Logo/pendulum_trace.PNG';
 link.type = 'image/png';
 document.head.appendChild(link);
 
@@ -155,11 +157,11 @@ document.addEventListener('DOMContentLoaded', applyDropdownDelays);
 
 
 // ARTICLES
-const image_root = "/website-test/public/Images/";
+const image_root = baseLink + '/public/Images/';
 
 function article(NUM_ARTICLE, des, random_article){
 
-    fetch('/website-test/assets/json/suggestions.json')
+    fetch(baseLink + '/assets/json/suggestions.json')
         .then(response => response.json())
         .then(data => {
             // Access the articles array within the fetched JSON data
@@ -187,7 +189,7 @@ function article(NUM_ARTICLE, des, random_article){
 
         articles.forEach(article => {
             const articleLink = document.createElement('a');
-            articleLink.href = article.link;
+            articleLink.href = baseLink +  article.link;
             articleLink.classList.add('article');
             articleLink.target = "_blank"; // Open link in a new tab (optional)
             // articleLink.setAttribute('data-aos', 'fade-up');
@@ -289,7 +291,7 @@ function changeTab(evt, nav_item_name, switch_target) {
 
 // LOAD SUGGESTIONS ON SIDE NAV
 function loadAndSetupSuggestions() {
-    fetch('/website-test/assets/json/suggestions.json')
+    fetch(baseLink + '/assets/json/suggestions.json')
         .then(response => response.json())
         .then(data => {
             const articles = data.articles;
