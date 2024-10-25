@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Green Function</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="subject" content='Vibration and standing waves'>
+    <meta name="description" content="Describing Chladni patterns using the regular and biharmonic wave equations" />
+    <meta name="keywords" content="Wave equation, python, eigenvalue,  boundary conditions" />
+    <meta name="author" content="Don Le, ledongduu@gmail.com"/>
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css" rel="stylesheet" id="prism-min"/>-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/general.css"> <!-- Link to external CSS file here -->
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/topbar.css">
+    <link rel="stylesheet" href="assets/css/resize.css">
+    <link rel="stylesheet" href="assets/css/button.css">
+    <link rel="icon" href="Icons/Koch_snowflake.png">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+<body class="nav-open light-mode">
+    $$
+    \newcommand{\R}{\mathbb{R}}
+    $$
+
+    <div class = "top-nav"></div>
+
+    <!-- TABLE OF CONTENTS -->
+    <nav class="navbar open" id="navbar">
+        <!--open attribute - default-->
+        <div class = "side-nav-container"> 
+            <details open class = side-nav></details>
+        </div>
+
+        <div class="line-2"></div>
+        <header class="major">
+            <h2>Table of Contents</h2>
+        </header>
+        <div class = "toc">
+            <ul>
+                <li>Introduction
+                    <ul>
+                        <li>Historical notes</li>
+                    </ul>
+                </li>
+                <li>The wave equation model
+                    <ul>
+                        <li>The free boundary condition</li>
+                        <li>Square domain</li>
+                        <li><a>Circular domain</a></li>
+                    </ul>
+                </li>
+                <li>Python codes
+                    <ul>
+                        <li>Square domain</li>
+                        <li>Circular domain</li>
+                    </ul>
+                </li>
+                <li>The biharmonic model for circular domain
+                    <ul>
+                        <li>Chladni's law</li>
+                        <li>Circular domain</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class = "line-3"></div>
+        <img class="test-img" src = "Images/chladni-patterns-sbs.jpg">
+    </nav>
+
+
+<!--Master grid starts here -->
+
+<div class="content-grid">
+    
+    <!-- CONTENTS -->
+    <div class = "general-wrapper">
+        <div class = "topic">
+            Topics: Mathematics/Physics/Standing Waves/Python
+        </div>
+        <div>
+            <h1 class = "title">
+                Green Function
+            </h1>
+        </div>
+        <img class = "front-img" src = "Images/chladni_banner.jpg">
+        <img class = "mobile-front-img" src = "Images/chladni-patterns-sbs.jpg">
+        <h2>Introduction</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum $f(x):\R\to\R$.
+        </p>
+    
+    
+        <div class = "equation">
+            \begin{equation}
+                u(x,y,t) = \frac{1}{4}A_{00} + \sum_{n=1}^{\infty}\sum_{m=1}^{\infty}X_n(x)Y_n(y)W_{nm}(t)
+            \end{equation}
+        </div>
+        <div class="box">
+            <div class="code-container">
+                <button class="copy-btn">Copy</button>
+                <pre class="line-numbers"><code class="language-python">from scipy.special import jnp_zeros
+    n = 0   # Order of the Bessel function
+    m = 7   # Zero number
+    
+def bessel_derivative_zero(n, m):
+    if n == 0:
+        zeros = list(jnp_zeros(n, m + 1))
+        zeros.insert(0, 0)
+        return zeros[m]
+    else:
+        # Get the m-th zero, treating first zero as the 0th zero
+        return jnp_zeros(n, m + 1)[-1]  
+
+for i in range (m):
+    zero = bessel_derivative_zero(n, i)
+    print(round(zero, 7) )
+                </code></pre>
+            </div>
+        </div> <!--box ends here-->
+        <div class="line-1"></div>
+
+        <header>
+            <h3>References</h3>
+        </header>
+
+        <ol class = "reference">
+            <li>John M. Davis. Introduction to Applied Partial Differential Equation. W. H. Freeman, New York City, 1st edition, 2012.</li>
+            <li>Richard. Haberman. Applied Partial Differential Equations with Fourier Series and Boundary Value Problems. Pearson, New York City, 5th edition, 2018.</li>
+        </ol>
+    </div> <!--general wrapper ends here-->
+
+    
+</div>
+<!--Master grid ends here-->
+
+<div id='settings_window' class="hidden">
+    <div style= "font-size: 20px">Settings</div>
+    <div class = "line-4"></div>
+    <div class = "settings_window-container">
+        <div class = "setting-window-right">
+            <div class = "sw_1st_column_items">Body Font</div>
+            <div class = "sw_1st_column_items">Font Size</div>
+            <div class = "sw_1st_column_items">Code Theme (Light Mode)</div>
+            <div class = "sw_1st_column_items">Code Theme (Dark Mode)</div>
+        </div>
+        <div class = "setting-window-right">
+            <div class="custom-select">
+                <select id="font-select">
+                    <option value="sans-serif">Arial, sans-serif: Default</option>
+                    <option value="Computer-Modern">Computer Modern, serif</option>
+                    <option value="Georgia">Georgia, serif</option>
+                    <option value="Times New Roman">Times New Roman, serif</option>
+                    <option value="Verdana">Verdana, sans-serif</option>
+                </select>
+            </div>
+            <div class="custom-select">
+                <select id="font-size-select">
+                    <option value="14px">Small</option>
+                    <option value="16px">Medium: Default</option>
+                    <option value="18px">Large</option>
+                    <option value="20px">Extra Large</option>
+                </select>
+            </div>
+            <div class="custom-select">
+                <select id="light-theme-select"> <!--prism-min-->
+                    <option value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css">Min: Default</option>
+                    <option value = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-solarizedlight.min.css">Solarized Light</option>
+                </select>
+            </div>
+            <div class="custom-select">
+                <select id="dark-theme-select">
+                    <option value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css">Okaidia: Default</option>
+                    <option value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css">Tomorrow</option>
+                    <option value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-twilight.min.css">Twilight</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class = "footer-container">
+        <div class = "footer-block">
+            <div class = "footer-items" style = "font-size: 20px">Legal</div>
+            <div class = "line-4"></div>
+            <div class = "footer-items"> Copyright © 2024-2024</div>
+            <div class = "footer-items">Don D. Le</div>
+            <div class = "footer-items">More Information</div>
+        </div>
+        <div class = "footer-block">
+            <div class = "footer-items" style = "font-size: 20px">Contacts</div>
+            <div class = "line-4"></div>
+            <div class = "footer-items"> Copyright 2024-2024</div>
+            <div class = "footer-items">Don D. Le</div>
+            <div class = "footer-items">More Information</div>
+        </div>
+        <div class = "footer-block">
+            <div class = "footer-items" style = "font-size: 20px">Tools</div>
+            <div class = "line-4"></div>
+            <div class = "footer-items"> HTML5, CSS, JS</div>
+            <div class = "footer-items">JQuery, Prism.js</div>
+            <div class = "footer-items">Mathjax</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="assets/js/scripts.js"></script>
+<script src="assets/js/topbar.js"></script>
+<script src="assets/js/dropdown.js"></script>
+<script>
+    MathJax = {
+        tex: {
+            tags: 'ams',
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
+<!------------------->
+</body>
+</html>
