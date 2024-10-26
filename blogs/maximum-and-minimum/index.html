@@ -9,7 +9,7 @@
     <meta name="keywords" content="Hessian Matrix, Sylvester Criterion, Maximum, Minimum of a function" />
     <meta name="author" content="Don Le, ledongduu@gmail.com"/>
     <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <style>
         .front-img{
@@ -87,7 +87,7 @@
             </div>
            
             <figure style="margin: 0;">
-                <img class = "front-img" src = "../blogs/max-and-min/banner.png">
+                <img class = "front-img" src = "banner.png">
             </figure>
 
             <div class="Quote">
@@ -862,7 +862,7 @@
 
         <details class="solution"><summary>Solution</summary>
             <div>
-                Domain of $f$: $D=\R^3$. Next, we solve the equation $\nabla f(x,y,z)=\mathbf{0}$.
+                We proceed with the standard procedure: finding the domain of $f$: $D=\R^3$. Next, we solve the equation $\nabla f(x,y,z)=\mathbf{0}$.
                 <div class="equation">
                     \begin{equation*}
                     \begin{cases}
@@ -928,7 +928,7 @@
 
         <details class="solution"><summary>Solution</summary>
             <div>
-                Domain of $f$: $D=\R^3$. Next, we solve the equation $\nabla f(x,y,z)=\mathbf{0}$.
+                We first need to find the domain of $f$: $D=\R^3$. Next, we solve the equation $\nabla f(x,y,z)=\mathbf{0}$.
                 <div class="equation">
                 \begin{equation*}
                 \begin{cases}
@@ -993,7 +993,42 @@
                     -2 & 0 & 4 
                 \end{vmatrix}=36>0.$$
                 </div>
-                We conclude that $H_f(M)$ is positive definite, therefore $M$ is a minimum and $f_{\min}=-\frac{3}{2}$.
+                We conclude that $H_f(M)$ is positive definite, therefore $M$ is a minimum and $f_{\min}=-\frac{3}{2}$. <br>
+
+                At $N=\left(-\dfrac{1}{2},-\dfrac{5}{4},-\dfrac{1}{4}\right)$,
+                <div class="equation">$$H_f(M)=
+                    \begin{bmatrix}
+                        f_{xx} & f_{xy} & f_{xz}\\
+                        f_{yx} & f_{yy} & f_{yz}\\
+                        f_{zx} & f_{zy} & f_{zz}
+                    \end{bmatrix}=
+                    \begin{bmatrix}
+                        -3 & 1 & -2\\
+                        1 & 2 & 0\\
+                        -2 & 0 & 4
+                    \end{bmatrix}$$</div>
+                The major sub-matrices of $H_f(N)$:
+                <div class="equation">
+                    $$\Delta_1=-3<0,\;\;
+                \Delta_2=
+                \begin{vmatrix}
+                    -3 & 1\\
+                    1 & 2
+                \end{vmatrix}=7>0
+                \;\;\text{and}\;\; \Delta_3=
+                \begin{vmatrix}
+                    -3 & 1 & -2\\
+                    1 & 2 & 0\\
+                    -2 & 0 & 4 
+                \end{vmatrix}
+                \;\xrightarrow{-2R_1+R_2\to R_2}\;
+                \begin{vmatrix}
+                    -3 & 1 & -2\\
+                    7 & 0 & 4\\
+                    -2 & 0 & 4 
+                \end{vmatrix}=36>0.$$
+                </div>
+                We conclude that $H_f(N)$ is neither positive nor negative definite, therefore $N$ is a saddle point.
             </div>
         </details>
 
@@ -1010,9 +1045,9 @@
     <!--Master grid ends here -->
 
 <div class="footer"></div>
-<script src="../assets/js/scripts.js"></script>
-<script src="../assets/js/load.js"></script>
-<script src="../assets/js/blogpage-setting.js"></script>
+<script src="../../assets/js/scripts.js"></script>
+<script src="../../assets/js/load.js"></script>
+<script src="../../assets/js/blogpage-setting.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
