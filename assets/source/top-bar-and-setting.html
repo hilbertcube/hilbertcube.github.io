@@ -7,26 +7,27 @@
         </button>
     </div>
     <div class="left">
-        <a class = "top-buttons" href = "/neumanncondition/"  id="Home-button"> <!--onclick="changeTab('home')"-->
+        <a class = "top-buttons" href = "/" onclick="location.href = ROOT + this.getAttribute('href'); return false;"  id="Home-button"> <!--onclick="changeTab('home')"-->
             <!-- <i class="fa fa-home top-bar-icon" aria-hidden="true"></i>  -->
             Home
         </a>
-        <a class = "top-buttons" href = "/neumanncondition/about" id="About-button"> <!--onclick="changeTab('about')"-->
-            <!-- <i class="fa fa-square-o top-bar-icon" aria-hidden="true"></i>  -->
+        <a class = "top-buttons" href="/about" onclick="location.href = ROOT + this.getAttribute('href'); return false;" id="About-button">
             About
         </a>
         
         <div class="dropdown">
             <button onclick = "dropDown('notes')" class="dropbtn top-buttons" id="Note-button">
-                <!-- <i class="fa fa-pencil-square-o top-bar-icon" aria-hidden="true"></i> -->
+                <!-- <i class="fa fa-pencil-square-o top-bar-icon" aria-hidden="true"></i>
+                href="/about" onclick="location.href = baseLink + this.href;return false;" 
+                -->
                 Notes
             </button>
             <div id="notes"  class="dropdown-content">
-                <a href="/neumanncondition/notes/#calculus">Calculus</a>
-                <a href="/neumanncondition/notes/#de">ODE and PDE</a>
-                <a href="/neumanncondition/notes/#linear-algebra">Linear Algebra</a>
-                <a href="/neumanncondition/notes/#DSA">DSA</a>
-                <a href="/neumanncondition/notes/#others">Others</a>
+                <a href="/notes/#calculus" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Calculus</a>
+                <a href="/notes/#de" onclick="location.href = ROOT + this.getAttribute('href'); return false;">ODE and PDE</a>
+                <a href="/notes/#linear-algebra" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Linear Algebra</a>
+                <a href="/notes/#DSA" onclick="location.href = ROOT + this.getAttribute('href'); return false;">DSA</a>
+                <a href="/notes/#others" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Others</a>
             </div>
         </div> 
         <div class="dropdown">
@@ -36,13 +37,13 @@
                 Recommended Materials
             </button>
             <div id="recommended-materials"  class="dropdown-content">
-                <a href="/neumanncondition/recommended-materials/#books">Books</a>
-                <a href="/neumanncondition/recommended-materials/#lecture-notes">Lecture Notes</a>
-                <a href="/neumanncondition/recommended-materials/#websites">Websites</a>
-                <a href="/neumanncondition/recommended-materials/#youtube">Youtube Channels</a>
+                <a href="/recommended-materials/#books" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Books</a>
+                <a href="/recommended-materials/#lecture-notes" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Lecture Notes</a>
+                <a href="/recommended-materials/#websites" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Websites</a>
+                <a href="/recommended-materials/#youtube" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Youtube Channels</a>
             </div>
         </div> 
-        <a class = "top-buttons" href = "/neumanncondition/contact" id="Contact-button">
+        <a class = "top-buttons" href = "/contact" onclick="location.href = ROOT + this.getAttribute('href'); return false;" id="Contact-button">
             <!-- <i class="fa fa-space-shuttle top-bar-icon" aria-hidden="true"></i>  -->
             Contact
         </a>
