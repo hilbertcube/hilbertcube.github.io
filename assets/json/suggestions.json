@@ -5,7 +5,7 @@
             "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
             "id": "chladni-1",
             "image": "chladni_1.png",
-            "link": "/blogs/the-quest-to-finding-chladni-patterns-1.html",
+            "link": "/blogs/the-quest-to-finding-chladni-patterns-1",
             "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
             "description": "Designing algorithms to plot Chladni's pattern using the wave equation model.",
             "date": "June 14, 2024"
@@ -14,7 +14,7 @@
             "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
             "id": "chladni-2",
             "image": "CCircle1.png",
-            "link": "/blogs/the-quest-to-finding-chladni-patterns-2.html",
+            "link": "/blogs/the-quest-to-finding-chladni-patterns-2",
             "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
             "description": "Simulating Chladni's pattern using the wave equation model.",
             "date": "June 14, 2024"
@@ -50,7 +50,7 @@
             "title": "The Quest to Finding Chladni Patterns, Part 3",
             "id": "chladni-3",
             "image": "chladni-patterns.jpg",
-            "link": "/blogs/the-quest-to-finding-chladni-patterns-3.html",
+            "link": "/blogs/the-quest-to-finding-chladni-patterns-3",
             "topic": "Python, Eigenvalue Problems, PDEs, Numpy, Biharmonic Equation",
             "description": "Explaining Chladni's patterns via the Biharmonic wave equation model.",
             "date": ""
@@ -68,7 +68,7 @@
             "title": "How to find maxima and minima of an n-th dimensional function",
             "id": "hessian-1",
             "image": "3d_function.png",
-            "link": "/blogs/maximum-and-minimum.html",
+            "link": "/blogs/maximum-and-minimum",
             "topic": "Python, Hessian Matrix, Fermat's Theorem",
             "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
             "date": "May 25, 2024"
