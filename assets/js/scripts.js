@@ -479,9 +479,7 @@ class equation extends HTMLElement {
   }
 
 
-  const solutions = document.querySelectorAll('.solution');
-
-
+const solutions = document.querySelectorAll('.solution');
 solutions.forEach((solution) => {
     solution.setAttribute('open', '');
 });
