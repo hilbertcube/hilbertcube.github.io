@@ -13,7 +13,7 @@ function canvas() {
         'black-body.svg'
     ];
     
-    const svgUrls = svgFileNames.map(fileName => `${baseLink}/public/banner-svg/${fileName}`);
+    const svgUrls = svgFileNames.map(fileName => `${ROOT}/public/banner-svg/${fileName}`);
     const svgImages = [];
     const numSvgs = svgUrls.length;
 
@@ -193,7 +193,7 @@ function canvas() {
 
 // Load the banner and start the canvas animation
 $(function() {
-    $(".home-banner").load(baseLink + "/assets/source/home-banner.html", function() {
+    $(".home-banner").load(ROOT + "/assets/source/home-banner.html", function() {
         canvas();
     });
 });

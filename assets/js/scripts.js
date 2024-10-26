@@ -16,12 +16,12 @@ MathJax = {
 //     }
 //   });
 
-const baseLink = '/neumanncondition';
+const ROOT = '/neumanncondition';
 
 // TAB ICON
 const link = document.createElement('link');
 link.rel = 'icon';
-link.href = baseLink + '/public/Images/Logo/pendulum_trace.PNG';
+link.href = ROOT + '/public/Images/Logo/pendulum_trace.PNG';
 link.type = 'image/png';
 document.head.appendChild(link);
 
@@ -37,6 +37,12 @@ document.querySelectorAll('.url').forEach(function(element) {
         return false;
     };
 });
+
+/// NAVIGATE TO IMAGE BASED ON ROOT
+function navigateToImage(element) {
+    const newUrl = ROOT + element.getAttribute('src');
+    location.href = newUrl;
+}
 
 
 // SIDE NAV
@@ -167,11 +173,11 @@ document.addEventListener('DOMContentLoaded', applyDropdownDelays);
 
 
 // ARTICLES
-const image_root = baseLink + '/public/Images/';
+const image_root = ROOT + '/public/Images/';
 
 function article(NUM_ARTICLE, des, random_article){
 
-    fetch(baseLink + '/assets/json/suggestions.json')
+    fetch(ROOT + '/assets/json/suggestions.json')
         .then(response => response.json())
         .then(data => {
             // Access the articles array within the fetched JSON data
@@ -199,7 +205,7 @@ function article(NUM_ARTICLE, des, random_article){
 
         articles.forEach(article => {
             const articleLink = document.createElement('a');
-            articleLink.href = baseLink +  article.link;
+            articleLink.href = ROOT +  article.link;
             articleLink.classList.add('article');
             articleLink.target = "_blank"; // Open link in a new tab (optional)
             // articleLink.setAttribute('data-aos', 'fade-up');
@@ -301,7 +307,7 @@ function changeTab(evt, nav_item_name, switch_target) {
 
 // LOAD SUGGESTIONS ON SIDE NAV
 function loadAndSetupSuggestions() {
-    fetch(baseLink + '/assets/json/suggestions.json')
+    fetch(ROOT + '/assets/json/suggestions.json')
         .then(response => response.json())
         .then(data => {
             const articles = data.articles;
@@ -312,7 +318,7 @@ function loadAndSetupSuggestions() {
                 if (article) {
                     // Create a link element for the image
                     const articleLink = document.createElement('a');
-                    articleLink.href = baseLink + article.link;
+                    articleLink.href = ROOT + article.link;
                     articleLink.target = "_blank"; // Open link in a new tab (optional)
                     articleLink.className = 'recommend-img';
 
@@ -402,7 +408,7 @@ $(document).ready(function() {
             }, 800, function() {
                 // Add hash (#) to URL when done scrolling (default click behavior)
                 // enable this thing to add hash
-                // window.location.hash = hash;
+                window.location.hash = hash;
             });
         }
     });

@@ -5,7 +5,7 @@
         Navigation</summary>
     <ul>
         <li>
-            <a class = "side-buttons" href = "/neumanncondition/"> 
+            <a class = "side-buttons" href = "/" onclick="location.href = ROOT + this.getAttribute('href'); return false;"> 
                 <summary class = "side-nav-summary" id="Home-button">
                     <i class="fa fa-home top-bar-icon" aria-hidden="true"></i> 
                     HOME
@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a class = "side-buttons" href = "/neumanncondition/about" id="About-button">
+            <a class = "side-buttons" href = "/about" onclick="location.href = ROOT + this.getAttribute('href'); return false;" id="About-button">
                 <summary class = "side-nav-summary">
                     <i class="fa fa-square-o top-bar-icon" aria-hidden="true"></i> 
                     ABOUT
@@ -28,11 +28,11 @@
                 NOTES
             </summary>
             <ul>
-                <li><a href="/neumanncondition/notes/#calculus">Calculus</a></li>
-                <li><a href="/neumanncondition/notes/#de">ODE and PDE</a></li>
-                <li><a href="/neumanncondition/notes/#linear-algebra">Linear Algebra</a></li>
-                <li><a href="/neumanncondition/notes/#dsa">DSA</a></li>
-                <li><a href="/neumanncondition/notes/others">Others</a></li>
+                <li><a href="/notes/#calculus" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Calculus</a></li>
+                <li><a href="/notes/#de" onclick="location.href = ROOT + this.getAttribute('href'); return false;">ODE and PDE</a></li>
+                <li><a href="/notes/#linear-algebra" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Linear Algebra</a></li>
+                <li><a href="/notes/#dsa" onclick="location.href = ROOT + this.getAttribute('href'); return false;">DSA</a></li>
+                <li><a href="/notes/others" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Others</a></li>
             </ul>
             </details>
         </li>
@@ -43,15 +43,15 @@
                 RECOMMENDED MATERIALS
             </summary>
             <ul>
-                <li><a href="/neumanncondition/recommended-materials/#books">Books</a></li>
-                <li><a href="/neumanncondition/recommended-materials/#lecture-notes">Lecture Notes</a></li>
-                <li><a href="/neumanncondition/recommended-materials/#websites">Websites</a></li>
-                <li><a href="/neumanncondition/recommended-materials/#youtube">Youtube Channels</a></li>
+                <li><a href="/recommended-materials/#books" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Books</a></li>
+                <li><a href="/recommended-materials/#lecture-notes" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Lecture Notes</a></li>
+                <li><a href="/recommended-materials/#websites" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Websites</a></li>
+                <li><a href="/recommended-materials/#youtube" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Youtube Channels</a></li>
             </ul>
             </details>
         </li>
         <li>
-            <a class = "side-buttons" href = "/neumanncondition/contact" id="Contact-button">
+            <a class = "side-buttons" href = "/contact" onclick="location.href = ROOT + this.getAttribute('href'); return false;" id="Contact-button">
                 <summary class = "side-nav-summary">
                     <i class="fa fa-space-shuttle top-bar-icon" aria-hidden="true"></i> 
                     CONTACT
