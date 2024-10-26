@@ -6,6 +6,16 @@ MathJax = {
     }
 };
 
+// window.addEventListener('load', () => {
+//     if (typeof MathJax !== 'undefined') {
+//       document.querySelectorAll('.equation').forEach(section => {
+//         MathJax.typesetPromise([section]).catch((err) => console.log(err.message));
+//       });
+//     } else {
+//       console.log("MathJax did not load correctly.");
+//     }
+//   });
+
 const baseLink = '/neumanncondition';
 
 // TAB ICON
@@ -333,67 +343,6 @@ function loadAndSetupSuggestions() {
 
 
 
-// function setupDropdownEffect() {
-//     const listItems = document.querySelectorAll('.home-li');
-
-//     listItems.forEach(li => {
-//         const img = li.querySelector('img');
-//         const li_a = li.querySelector('a');
-
-//         if (isMobile()) {
-//             // Set initial state for mobile
-//             let isExpanded = img.style.maxHeight !== '0px' && img.style.maxHeight; 
-
-//             // Ensure pointer events are set initially
-//             li_a.style.pointerEvents = isExpanded ? 'auto' : 'none';
-            
-//             li.addEventListener('click', () => {
-//                 isExpanded = img.style.maxHeight !== '0px' && img.style.maxHeight;
-//                 img.style.maxHeight = isExpanded ? '0' : img.naturalHeight + 'px';
-//                 img.style.opacity = isExpanded ? '0' : '1';
-//                 li_a.style.pointerEvents = isExpanded ? 'none' : 'auto'; // Toggle pointer events
-
-//                 // Toggle the class to show/hide the pseudo-element
-//                 if (isExpanded) {
-//                     li_a.classList.remove('show-read-more');
-//                 } else {
-//                     li_a.classList.add('show-read-more');
-//                 }
-//             });
-//         } else {
-//             // Handle non-mobile interactions (hover)
-//             li.addEventListener('mouseenter', () => {
-//                 img.style.maxHeight = img.naturalHeight + 'px'; // Expand to the image's natural height
-//                 img.style.opacity = '1'; // Make the image visible
-//                 li_a.style.pointerEvents = 'auto'; // Enable pointer events
-
-//                 // Ensure the pseudo-element is visible on hover
-//                 li_a.classList.add('show-read-more');
-//             });
-
-//             li.addEventListener('mouseleave', () => {
-//                 img.style.maxHeight = '0'; // Collapse the image
-//                 img.style.opacity = '0'; // Hide the image
-//                 li_a.style.pointerEvents = 'none'; // Disable pointer events
-
-//                 // Ensure the pseudo-element is hidden on leave
-//                 li_a.classList.remove('show-read-more');
-//             });
-//         }
-
-//         // Ensure initial state
-//         img.style.maxHeight = img.style.maxHeight || '0';
-//         img.style.opacity = img.style.opacity || '0';
-//     });
-
-//     function isMobile() {
-//         return window.innerWidth <= 1200;
-//     }
-// }
-
-
-
-
 // SUGGESTION DROPDOWN BEHAVIOR
 function setupDropdownEffect() {
     const listItems = document.querySelectorAll('.home-li');
@@ -527,9 +476,9 @@ class equation extends HTMLElement {
   const solutions = document.querySelectorAll('.solution');
 
   // Loop through each and set the 'open' attribute
-  solutions.forEach((solution) => {
-      solution.setAttribute('open', '');
-  });
+solutions.forEach((solution) => {
+    solution.setAttribute('open', '');
+});
 
 
 

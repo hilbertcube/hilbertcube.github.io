@@ -923,12 +923,77 @@
 
         <div class="problem">
             Find all local maximum, minimum, and saddle points of the following function
-            $$f(x,y,z)=x^3+xy+y^2-2xz+2z^2+3y-1$$
+            <div class="equation">$$f(x,y,z)=x^3+xy+y^2-2xz+2z^2+3y-1$$</div>
         </div>
 
         <details class="solution"><summary>Solution</summary>
             <div>
-               
+                Domain of $f$: $D=\R^3$. Next, we solve the equation $\nabla f(x,y,z)=\mathbf{0}$.
+                <div class="equation">
+                \begin{equation*}
+                \begin{cases}
+                    f_{x}=3x^2+y-2z=0\\
+                    f_{y}=x+2y+3=0\\
+                    f_{z}=-2x+4z=0
+                \end{cases}
+                \;\Rightarrow\;
+                \begin{cases}
+                    3x^2+y-2z=0\\[0.5em]
+                    y=-\dfrac{x+3}{2}\\[0.5em]
+                    z=\dfrac{1}{2}x
+                \end{cases}
+                \;\Rightarrow\;
+                \begin{cases}
+                    6x^2-3x-3=0\\[0.5em]
+                    y=-\dfrac{x+3}{2}\\[0.5em]
+                    z=\dfrac{1}{2}x
+                \end{cases}
+                \end{equation*}
+                </div>
+                Solve for $x$ from the quadratic equation and plug it back into $y$ and $z$, we obtain two stationary points, 
+                <div class="equation">
+                    $$M=\left(1,-2,\dfrac{1}{2}\right),\;\text{and}\;N=\left(-\dfrac{1}{2},-\dfrac{5}{4},-\dfrac{1}{4}\right).$$
+                </div>
+                The partial derivatives of $f$:
+                <div class="equation">
+                    $$f_{xx}=6x,\;f_{yy}=2,\;f_{zz}=4,\;f_{xy}=1,f_{xz}=-2,\;\text{and}\; f_{yz}=0$$
+                </div>
+                At $M=\left(1,-2,\dfrac{1}{2}\right)$,
+                <div class="equation">
+                $$H_f(M)=
+                \begin{bmatrix}
+                    f_{xx} & f_{xy} & f_{xz}\\
+                    f_{yx} & f_{yy} & f_{yz}\\
+                    f_{zx} & f_{zy} & f_{zz}
+                \end{bmatrix}=
+                \begin{bmatrix}
+                    6 & 1 & -2\\
+                    1 & 2 & 0\\
+                    -2 & 0 & 4
+                \end{bmatrix}$$
+                </div>
+                The major sub-matrices of $H_f(M)$:
+                <div class="equation">
+                $$\Delta_1=6>0,\;\;
+                \Delta_2=
+                \begin{vmatrix}
+                    6 & 1\\
+                    1 & 2
+                \end{vmatrix}=7>0
+                \;\;\text{and}\;\; \Delta_3=
+                \begin{vmatrix}
+                    6 & 1 & -2\\
+                    1 & 2 & 0\\
+                    -2 & 0 & 4 
+                \end{vmatrix}
+                \;\xrightarrow{-2R_1+R_2\to R_2}\;
+                \begin{vmatrix}
+                    6 & 1 & -2\\
+                    -11 & 0 & 4\\
+                    -2 & 0 & 4 
+                \end{vmatrix}=36>0.$$
+                </div>
+                We conclude that $H_f(M)$ is positive definite, therefore $M$ is a minimum and $f_{\min}=-\frac{3}{2}$.
             </div>
         </details>
 
@@ -951,6 +1016,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<!-- <script src="../assets/js/mathjax/es5/tex-chtml.js" id="MathJax-script" async></script> -->
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
 </body>
 </html>
