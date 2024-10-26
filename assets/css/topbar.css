@@ -8,6 +8,9 @@
     
 */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+:root{
+    --top-bar-font: Sans-serif, serif;
+}
 .top-nav{
     position: fixed;
     background-color: var(--nav-bar-color);
@@ -15,7 +18,7 @@
     color: white; /*var(--border-line-color)*/
     display: flex;
     flex-direction: row;
-    font-family: "Poppins", sans-serif;; /* Sans-serif, serif  */
+    font-family: var(--top-bar-font); /* Sans-serif, serif  "Computer-Modern", serif "Poppins", sans-serif*/
     justify-content: space-between; /*start is default, other options are ends, space-between*/
     align-items: stretch; /* stretch is default, others are start, center, end, etc*/
     width: 100%;
@@ -47,7 +50,12 @@
     align-items: center;
 }
 
+#Material-button, #Note-button{
+    font-family: var(--top-bar-font);
+}
+
 .dropdown {
+    
     overflow: hidden;
 }
 
