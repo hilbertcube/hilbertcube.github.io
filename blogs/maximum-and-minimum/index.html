@@ -305,10 +305,10 @@
                                 If $\mathrm{H}_f(\mathbf{a_0})\prec 0$, then $\mathbf{a_0}$ is a maximum of the function $f(\mathbf{x})$.
                             </li>
                             <li style="margin: var(--in-page-li-spacing) 0;">
-                                If $\det (\Delta_k)\neq 0,\;1\leq k\leq n,$ but $\mathrm{H}_f(\mathbf{a_0})$ itself is neither positive nor negative definite, then $\mathbf{a_0}$ is not an extremum. A similar statement is that if there exist two points $\mathbf{y}=(y_1,y_2,...,y_n)$ and $\mathbf{z}=(z_1,z_2,...,z_n)$ such that $\mathbf{y}\mathrm{H}_f(\mathbf{a_0})\mathbf{y}^{\mathrm{T}}>0$ and $\mathbf{z}\mathrm{H}_f(\mathbf{a_0})\mathbf{z}^{\mathrm{T}}< 0$, then $\mathbf{a_0}$ is not an extremum of $f(\mathbf{x})$. 
+                                If $\det (\Delta_k)\neq 0,\;1\leq k\leq n,$ but $\mathrm{H}_f(\mathbf{a_0})$ itself is neither positive nor negative definite, then $\mathbf{a_0}$ is not an extremum. A similar statement is that if there exist two points $\mathbf{y}=(y_1,y_2,...,y_n)$ and $\mathbf{z}=(z_1,z_2,...,z_n)$ such that $\mathbf{y}H_f(\mathbf{a_0})\mathbf{y}^{\mathsf{T}}>0$ and $\mathbf{z}H_f(\mathbf{a_0})\mathbf{z}^{\mathsf{T}}< 0$, then $\mathbf{a_0}$ is not an extremum of $f(\mathbf{x})$. 
                             </li>
                             <li style="margin: var(--in-page-li-spacing) 0;">
-                                If there exists a point $\mathbf{y}=(y_1,y_2,...,y_n)$ such that $\mathbf{y}^{\mathrm{T}}\mathrm{H}_f(\mathbf{a_0})\mathbf{y}=0$; that is, there is at least one major sub-matrix of $\mathrm{H}_f(\mathbf{a_0})$ is equal to 0,  then the test is inconclusive.
+                                If there exists a point $\mathbf{y}=(y_1,y_2,...,y_n)$ such that $\mathbf{y}^{\mathrm{T}}\mathrm{H}_f(\mathbf{a_0})\mathbf{y}=0$; that is, if there is at least one major sub-matrix of $\mathrm{H}_f(\mathbf{a_0})$ equals to 0,  then the test is inconclusive.
                             </li>
                         </ol>
                     </li>
@@ -330,23 +330,23 @@
 
         <details class="solution"><summary>Solution</summary>
             <div>
-                We first need to find the domain of $f$, which is just simply $D=\R^2$. We then solve for $\nabla f(x,y)=(0,0)$, that is, solve for the system of equations
+                We first need to find the domain of $f$, which is just simply $D=\R^2$ since there is no point in $\R^2$ where the function is undefined. We then solve for $\nabla f(x,y)=(0,0)$, that is, solve for the system of equations
                 <div class="equation">
                 \begin{equation*}
                 \begin{cases}
                     f_x(x,y)=2x-y-2=0\\[0.5em]
                     f_y(x,y)=2y-x+1=0
                 \end{cases}
-                \Rightarrow\;
+                \quad\Rightarrow\quad
                 \begin{cases}
                     x=1\\[0.5em]
                     y=0
                 \end{cases}
                 \end{equation*}
                 </div>
-                The function $f$ has one critical point $(x,y)=(1,0)$. We then find second partial derivatives of $f$:
+                The function $f$ has one critical point $(x,y)=(1,0)$. The next step is to find second partial derivatives of $f$:
                 $$f_{xx}(x,y)=2, \;f_{xy}(x,y)=1,\;\text{and}\;f_{yy}(x,y)=2$$
-                At $(1,0)$, we have $f_{xx}(1,0)=2$, $f_{xy}(1,0)=1$ and $f_{yy}(1,0)=2$, Since, $\Delta_2(1,0)=f_{xx}f_{yy}-f_{xy}^2=3>0$ and $f_{xx}(1,0)=2>0$, therefore, $(1,0)$ is a minimum of $f(x,y)$ and $f_{\min} =-1$.
+                At $(1,0)$, we have $f_{xx}(1,0)=2$, $f_{xy}(1,0)=1$ and $f_{yy}(1,0)=2$. Since, $\Delta_2(1,0)=f_{xx}f_{yy}-f_{xy}^2=3>0$ and $f_{xx}(1,0)=2>0$, therefore, $(1,0)$ is a minimum of $f(x,y)$ and $f_{\min} = f(1, 0) = -1$.
             </div>
         </details>
 
@@ -357,22 +357,18 @@
 
         <details class="solution"><summary>Solution</summary>
             <div>
-                Domain of $f: D=\R^2$. We then solve for $\nabla f(x,y)=(0,0)$
+                The first step, again, is to find the domain of $f: D=\R^2$. We then solve for $\nabla f(x,y)=(0,0)$
                 <div class="equation">
                     \begin{equation*}
                     \begin{cases}
                         f_x(x,y)=\dfrac{x}{\sqrt{x^2+y^2}}=0\\[0.5em]
-                        f_y(x,y)=\dfrac{y}{\sqrt{x^2+y^2}}=0\\[0.5em]
-                        \text{Condition:} \;(x,y)\neq (0,0)
-                    \end{cases}
-                    \quad\Rightarrow\quad
-                    \begin{cases}
-                        (x,y)=(0,0)\Rightarrow\text{Reject}\\[0.5em]
-                        \text{Condition:} \;(x,y)\neq (0,0)
+                        f_y(x,y)=\dfrac{y}{\sqrt{x^2+y^2}}=0\\
                     \end{cases}
                     \end{equation*}
                 </div>
-                Based on the condition of the system of equations, the function $f$ has no stationary point, but it has one critical point $(0,0)$. Notice that $f(x,y)=\sqrt{x^2+y^2}\geq f(0,0)=0,\;\forall (x,y)\in\R^2$. Therefore, by definition, $(0,0)$ is the minimum of the function and $f_{\min}=0$.
+                If we simply solve for $x$ and $y$, we will immediately get $(x, y) = (0, 0)$. This solution is invalid because the condition of the system requires $(x, y)\neq (0,0)$.<br><br>
+                
+                Based on the condition of the equations system, the function $f$ has no stationary point, but it has one critical point $(0,0)$ since that point is undefined at both $f_x$ and $f_y$. Notice that $f(x,y)=\sqrt{x^2+y^2}\geq f(0,0)=0,\;\forall (x,y)\in\R^2$. Therefore, by definition, $(0,0)$ is the minimum of the function and $f_{\min}=0$.
             </div>
         </details>
 
@@ -391,21 +387,39 @@
                         f_x(x,y)=y-\dfrac{50}{x^2}=0\\[1em]
                         f_y(x,y)=x-\dfrac{20}{y^2}=0
                     \end{cases}
-                    \xRightarrow{(x,y)\neq (0,0)}
+                    \]
+                </div>
+                For this system to be well-defined, $x$ and $y$ must not be equal to zero. We have already defined that in the domain of $f$, so now, we can simply multiple both sides of the first equations by $x$, both sides of the second equation by $y$, we will obtain
+                <div class="equation">
+                    \[
                     \begin{cases}
                         x^2y=50\\
                         xy^2=20
                     \end{cases}
-                    \Rightarrow x\left(\frac{50}{x^2}\right)^2=\frac{50^2}{x^3}=20\;\Rightarrow 
+                    \quad\xRightarrow{y = 50/x^2 \to x^2y = 50}\quad
+                    
+                    x\left(\frac{50}{x^2}\right)^2=\frac{50^2}{x^3}=20\;\Rightarrow 
                     \begin{cases}
                         x=50\\
                         y=2
-                    \end{cases}
+                    \end{cases}.
                     \]
                 </div>
-                Partial derivatives of $f$:
+                The next step is to find the partial derivatives of $f$:
                 <div class="equation">$$f_{xx}=\frac{100}{x^3},\;f_{xy}=1,\;f_{yy}=\frac{40}{y^3}$$</div>
-                At $(5,2)$, $f_{xx}=4/5$, $f_{xy}=1$, $f_{yy}=5$, and thus $\Delta_2=3>0$. Therefore, $(5,2)$ is a local minimum of $f$ and $f_{\min}=30$.
+                At $(5,2)$, $f_{xx}=4/5$, $f_{xy}=1$, $f_{yy}=5$, and thus $\Delta_2=3>0$. Therefore, $(5,2)$ is a local minimum of $f$ and $f_{\min}=30$.<br><br>
+
+                For this particular function, we can verify this quite easily using the AM-GM inequality. The inequality requires $x$ and $y$ to be non-negative, which they are, so we don't have to worry about them. Simply apply the inequality and we may obtain
+                <div class="equation">
+                    $$
+                        xy + \frac{50}{x} + \frac{20}{y}\geq 3\cdot\sqrt[3]{(xy)\cdot \frac{50}{x} \cdot \frac{20}{y}} = 3\cdot 10 = 30,
+                    $$
+                </div>
+                with equality if and only if 
+                <div class="equation">
+                    $$xy = \frac{50}{x} = \frac{20}{y}.$$
+                </div>
+                Solve for these equations one by one, we will obtain $(x, y) = (5, 2)$, verifying our solution that uses the Hessian matrix.
             </div>
         </details>
 
@@ -428,10 +442,10 @@
                 This system branches out to several solutions:
                 <ol type="i" style="line-height: 1.6;">
                     <li style="margin: var(--in-page-li-spacing) 0;">
-                        If $y=0$, substitute into equation (2), we obtain $x\ln(x^2)=0$, and thus $x=0$ (Reject since $(0,0)\notin D$) or $\ln(x^2)=0$, which gives two stationary points $(1,0)$ and $(-1,0)$.
+                        If $y=0$, substitute into equation (2), we obtain $x\ln(x^2)=0$, and thus $x=0$ (We reject this solution since $(0,0)\notin D$) or $\ln(x^2)=0$, which gives two stationary points $(1,0)$ and $(-1,0)$.
                     </li>
                     <li style="margin: var(--in-page-li-spacing) 0;">
-                        If $x=0$, substitute into equation (1), we obtain $y\ln(y^2)=0$, and thus $y=0$ (Reject since $(0,0)\notin D$) or $\ln(y^2)=0$, which gives two more stationary points $(0,1)$ and $(0,-1)$.
+                        If $x=0$, substitute into equation (1), we obtain $y\ln(y^2)=0$, and thus $y=0$ (We reject this solution since $(0,0)\notin D$) or $\ln(y^2)=0,$ which gives two more stationary points $(0,1)$ and $(0,-1)$.
                     </li>
                     <li style="margin: var(--in-page-li-spacing) 0;">
                         If $x\neq 0$ and $y\neq 0$, the system of equations above is equivalent to
@@ -468,7 +482,7 @@
                 <div class="equation">
                     $$f_{xx}=\frac{2x^3+6xy^3}{(x^2+y^2)^2},\;f_{xy}=\ln(x^2+y^2)+\frac{2y^2}{x^2+y^2}+\frac{2x^4-2xy^2}{(x^2+y^2)^2},\;\text{and}\;f_{yy}=\frac{6yx^3+2xy^3}{(x^2+y^2)^2}$$
                 </div>
-                For this problem, it is easier to calculate each second partial derivative at a point independently (just use a good and modern calculator). We now set up a table:
+                For this problem, it is easier to calculate each second partial derivative at a point independently (just use a good calculator that allows variable-passing). We now set up a table:
                 <div class="table-wrapper">
                     <table class="p-table">
                         <tr>

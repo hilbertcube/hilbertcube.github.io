@@ -41,7 +41,7 @@
             "title": "Green's Function",
             "id": "green-1",
             "image": "GreensFunctionExample_1000.svg",
-            "link": "https://example.com/css-grid",
+            "link": "/blogs/greens-function",
             "topic": "Python, PDEs, Numpy",
             "description": "An in-depth view of how to use Green's functions and their physical meaning.",
             "date": ""
@@ -59,7 +59,7 @@
             "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
             "id": "orb-cuda-1",
             "image": "CUDA_process_0_serial_30_imgs.png",
-            "link": "https://example.com/css-grid",
+            "link": "/blogs/accelerating-feature-extraction-and-image-stitching-algorithm",
             "topic": "C++, OpenCV, MPI, OpenMP, Computer Vision, Image Processing",
             "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
             "date": "August 10, 2024"
@@ -77,7 +77,7 @@
             "title": "Slightly More Interesting Inertia Problems",
             "id": "moi-1",
             "image": "inertia.gif",
-            "link": "https://example.com/css-grid",
+            "link": "/blogs/moment-of-inertia",
             "topic": "Classical Mechanics, Dynamics of Rotation",
             "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque. This article explore more about moment of inertia, but with interesting shapes.",
             "date": ""
