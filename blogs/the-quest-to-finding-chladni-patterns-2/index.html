@@ -277,7 +277,7 @@
 </div>
 
 <p>
-    takes in $x$, $y$, the pairs which we need to plots, and the signs list from the <code class="inline-code">generate_sign_combinations</code> function. The output is obviously the z-value of the function $u$. For example, if <code class="inline-code">(n, m) = [[0, 5], [3, 4], [4, 3], [5, 0]]</code>, and <code class="inline-code">[1, -1, -1]</code>, then the contour equation $u(x, y, t)$ must be
+    takes in $x$, $y$, the pairs which we need to plots, and the signs list from the <code class="inline-code">generate_sign_combinations</code> function. The output is obviously the z-value of the function $u$. For example, if the pairs of $n$ and $m$ is given as <code class="inline-code">(n, m) = [[0, 5], [3, 4], [4, 3], [5, 0]]</code>, and the sign combinations is <code class="inline-code">[1, -1, -1]</code>, then the contour equation $u(x, y, t)$ must be
     <div class="equation">
         \begin{equation} 
             u(x, y, t_0) = X(x, 0)X(y, 5) - X(x, 3)X(y, 4) - X(x, 4)X(y, 3) - X(x, 5)X(y, 0) = 0
@@ -307,7 +307,7 @@
 
 
 <p>
-    The final, and longest function is the <code class="inline-code">plot_sum_of_squares(start_index, end_index)</code>. We first focus on the first half of the function's code block and start by creating three lists: <code class="inline-code">equations</code>, <code class="inline-code">description</code>, and <code class="inline-code">sum_of_squares</code>.
+    The final, and longest function is the <code class="inline-code">plot_sum_of_squares(start_index, end_index)</code>. This function input the starting and ending pattern number, iterate through all patterns in between, and output them to the plots. We first focus on the first half of the function's code block and start by creating three lists: <code class="inline-code">equations</code>, <code class="inline-code">description</code>, and <code class="inline-code">sum_of_squares</code>.
 </p>
 <div class="box" style="width: 80%; margin: 25px auto;">
     <div class="code-container">
@@ -550,7 +550,7 @@ plot_sum_of_squares(start, end)
         <h3>Code for the Circular Plate</h3>
 
     <p>
-        As mentioned in the previous part of this article, the circular plate is simpler to implement, since we do not have to search for any sum-of-squares numbers. Each pair of $(n, m)$ is a pattern by itself, so we only need to make a double for loop to iterate over every single of of them. The first, and foremost thing to do is to set up a function to find the m-th zero of the n-th derivative of the bessel function of the first kind, $J_n(x)$. For this, we must import <code class="inline-code">jn, jnp_zeros</code> from <code class="inline-code">scipy.special</code>
+        As mentioned in the previous part of this article, the circular plate is a bit easier to implement, since we do not have to search for any sum-of-squares numbers. Each pair of $(n, m)$ is a pattern by itself, so we only need to make a double for loop to iterate over every single of of them. The first, and foremost thing to do is to set up a function to find the m-th zero of the n-th derivative of the bessel function of the first kind, $J_n(x)$. For this, we must import <code class="inline-code">jn, jnp_zeros</code> from <code class="inline-code">scipy.special</code>
     </p>
 
 
@@ -753,7 +753,10 @@ plot_polar_contour(columns, rows, a)
 <h2>Theoretical, Experimental Results and Data Analysis</h2>
 <h3>Square Plate</h3>
     <p>
-        In this section, we will compare our theoretical results from the codes to the experimental results from my experiment. The designed code above should be good for up and running. Before we proceed any further, there are a few things to note. The patterns displayed below is arranged so that the frequency increases from left to right, top to bottom. Each set of patterns of the same color correspond to a different node, with different sign combinations. The information about the modes and sign combinations is printed to the terminal. On each pattern's caption, there will be two numbers: $N=1$, which is simply the number of the pattern, and $S$, which is the sum of squares which that pattern is generated from (if $S=50$, then the modes are $(1, 7)$, $(5, 5)$ and $(7, 1)$, since $1^2+7^2=5^2 + 5^2=50$). By setting <code class="inline-code">start = 1</code> and <code class="inline-code">end = 72</code>, we shall obtain the patterns below:
+        In this section, we will compare our theoretical results from the codes to the experimental results from my experiment. The designed code above should be good for up and running. Before we proceed any further, there are a few things to note. The patterns displayed below is arranged so that the frequency increases from left to right, top to bottom. Each set of patterns of the same color correspond to a different node, with different sign combinations. 
+    </p>
+    <p>
+        The information about the modes and sign combinations is printed to the terminal. On each pattern's caption, there will be two numbers: $N=1$, which is simply the number of the pattern, and $S$, which is the sum of squares which that pattern is generated from (if $S=50$, then the modes are $(1, 7)$, $(5, 5)$ and $(7, 1)$, since $1^2+7^2=5^2 + 5^2=50$). By setting <code class="inline-code">start = 1</code> and <code class="inline-code">end = 72</code>, we shall obtain the patterns below:
     </p>
 
     <figure>
@@ -801,7 +804,10 @@ plot_polar_contour(columns, rows, a)
         <figcaption>Pattern #217 to #288..</figcaption>
     </figure>
     <p>
-        The final step is to compare these patterns with our actual experimental result. For this project, I simply obtained the necessary equipment from my college's engineering stock room. Out of all the choices that we had, this experiment is probably the simplest to perform but quite challenging to explain and derive. If you are planning to conduct this experiment yourself, before conducting the experiment, remember to make sure that the surface on which we place our generator must be perfectly flat, or else the sand will be bouncing in a chaos manner. Wear ear plugs as well, since the plate will output some very loud noise if we are not at resonance frequency. The figures below are some of the patterns that arise as we increases the frequency $f$.
+        The final step is to compare these patterns with our actual experimental result. For this project, I simply obtained the necessary equipment from my college's engineering stock room. Out of all the choices that we had, this experiment is probably the simplest to perform but quite challenging to explain and derive. If you are planning to conduct this experiment yourself, before conducting the experiment, remember to make sure that the surface on which we place our generator must be perfectly flat, or else the sand will be bouncing in a chaos manner. Wear ear plugs as well, since the plate will output some very loud noise if we are not at resonance frequency.
+    </p>
+    <p>
+        The figures below are some of the patterns that arise as we increases the frequency $f$.
     </p>
     <figure>
         <img src="Square1.png" alt="" class="image-block" style="width: 70%">
