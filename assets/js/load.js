@@ -395,6 +395,9 @@ function currentYear(){
 }
 
 
+const font_size = ['p' ,'.material-description', '.theorem', '.reference', '.solution', '.problem'];
+
+
 $(document).ready(function() {
     $(".side-nav-container").load(ROOT + "/assets/source/side-nav.html");
     $(".highlights-and-attribute").load(ROOT + "/assets/source/highlights-and-attribute.html", function(){
@@ -421,7 +424,7 @@ $(document).ready(function() {
             const darkTheme = codeThemeSwitch('dark-theme-select', 'darkTheme', 0);
             CodeDarkMode(lightTheme, darkTheme); 
             Switcher('fontFamily', 'font-select', ['.general-wrapper', '.navbar'], 0);
-            Switcher('fontSize', 'font-size-select', ['p', 'ol', 'ul' ,'.material-description', '.theorem', '.reference'], 2); // , '.MathJax'
+            Switcher('fontSize', 'font-size-select', font_size, 2); // , '.MathJax'
             Switcher('display', 'indicator-select', ['.progress-container', '.progress-bar'], 0);
             SearchBar();
     

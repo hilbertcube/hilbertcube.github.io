@@ -32,7 +32,7 @@
             "title": "A More In-depth Look of Snell's Law",
             "id": "snell-1",
             "image": "snell_s_law_drawing.jpg",
-            "link": "https://example.com/css-grid",
+            "link": "/blogs/snells-law",
             "topic": "Refraction, PDEs",
             "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
             "date": ""
