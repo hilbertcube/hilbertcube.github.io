@@ -21,7 +21,7 @@ const ROOT = '/neumanncondition';
 // TAB ICON
 const link = document.createElement('link');
 link.rel = 'icon';
-link.href = ROOT + '/public/Images/Logo/pendulum_trace.PNG';
+link.href = ROOT + '/public/Images/Logo/favicon.png';
 link.type = 'image/png';
 document.head.appendChild(link);
 

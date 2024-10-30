@@ -65,7 +65,7 @@ body.dark-mode {
     --article-date-color: #aaa;
     --black-svg-filters: invert(100%) sepia(100%) saturate(2%) hue-rotate(215deg) brightness(101%) contrast(101%);
     --social-media-container-color: black;
-    --url-color: rgb(0, 217, 217);
+    /* --url-color: rgb(0, 217, 217); */
     --url-hover-color: rgb(0, 194, 0);
     --material-link-color: #aaa;
     --article-shadow-color: rgba(255, 255, 255, 0.1);
