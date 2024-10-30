@@ -9,7 +9,7 @@
 */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 :root{
-    --top-bar-font: Sans-serif, serif;
+    --top-bar-font: "Computer-Modern", serif;
 }
 .top-nav{
     position: fixed;
@@ -126,7 +126,6 @@
 
 
 .top-bar-icon{
-    /*height: 1em;*/
     margin-right: 10px;
     width: 20px;
     padding: 0;
@@ -152,12 +151,12 @@
 }
 
 .top-buttons, .dropbtn{
-    font-size: 1.4em;
+    font-size: 1.5em;
 }
 
 @media all and (max-width: 1385px){
     .top-buttons, .dropbtn{
-        font-size: 1.3em;
+        font-size: 1.35em;
     }
 }
 
