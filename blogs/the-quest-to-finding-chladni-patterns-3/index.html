@@ -49,9 +49,13 @@
 
 <body class="nav-open light-mode">
     \[
-    \newcommand{\lbrac}{\left(}
-    \newcommand{\rbrac}{\right)}
-\]        
+        \newcommand{\R}{\mathbb{R}}
+        \newcommand\pd[2]{\displaystyle\frac{\partial #1}{\partial #2}}
+        \newcommand\fourthpd[2]{\displaystyle\frac{\partial^{4} #1}{\partial #2^{4}}}
+        \newcommand\secondpd[2]{\displaystyle\frac{\partial^{2} #1}{\partial #2^{2}}}
+        \newcommand{\lbrac}{\left(}
+        \newcommand{\rbrac}{\right)}
+    \]       
     <div class = "top-nav"></div> <!-- TOP NAV-->   
     <nav class="navbar open" id="navbar"> <!-- SIDE BAR -->
         <div id="logo"></div>
@@ -104,11 +108,90 @@
             </figure>
 
             <div class="Quote">
-                <div class="Quote-content">&#8220That there are such limits to our knowledge of nature, must be borne with patience by every sound mind whether he be a scientist or a workman.&#8221</div>
-                <div class="Author">- Gustav Robert Kirchhoff</div>
+                <div class="Quote-content">&#8220We cannot escape the fact that in observing nature, we are studying the vibrations of waves that we cannot see.&#8221</div>
+                <div class="Author">- Heinrich Hertz</div>
             </div>
             
-            <h2 id= "Introduction">The Biharmonic Wave Equation</h2>
+            <h2 id= "Introduction">The Biharmonic Wave Equation of Bending Plates</h2>
+            <p>
+                According to the wave equation model, the wave speed of the plate should remains a constant number. This is far from what we see from out results in the last part. What's going on here? Is our derivation wrong? Well, not quite. The only wrong thing is the very model that we chose to solve our problem. The two-dimensional wave equation was derived using the fact that the surface is assumed to be thin and membrane-like. Meaning that, the entire plate must be supported by tension. In reality, this is far from the case. Our plate is made of metal, a rigid object, and it is not thin enough to be considered a membrane, and therefore, it is not supported by tension, but something else. Although the wave equation has led to some decent approximation of a few patterns, in reality, the assumption that the displacement of the metal plate obeys the two-dimensional wave equation is almost completely false.
+            </p>
+            <p>
+                 The rigid metal plate, unlike a membrane, is not supported by tension, but by something called the bending moment. The equation that truly describes the displacement of the plate is called the Biharmonic wave equation, a fourth-order, time-dependent partial differential equation, described by
+            </p>
+            <div class="equation">
+                \begin{equation}
+                    \secondpd{u}{t} + \kappa^2\left(\fourthpd{u}{x} + 2\frac{\partial^4 u}{\partial x^2y^2} +\fourthpd{u}{y}\right)=Q(x,y,t),
+                \end{equation}
+            </div>
+            <p>
+                or, written in a more compact form:
+            </p>
+            <div class="equation">
+            \begin{equation}
+                u_{tt} + \kappa^2\nabla^4 u = Q,\quad -a\leq x, y\leq a,
+            \end{equation}
+            </div>
+            <p>here, $\nabla^4 = \nabla^2 (\nabla^2)$, and</p>
+            <div class="equation">
+            \begin{equation}
+                \kappa^2 = \frac{Eh^2}{12\rho(1-\nu^2)},
+            \end{equation}
+            </div>
+            <p>
+                where $p$ is the density, $\nu$ is Poisson's ratio, $E$ is Young's modulus, and $h$ is the thickness of the plate. For a free-edge plate, the conditions that apply to this equation are the boundary conditions
+            </p>
+            <div class="equation">                         
+                \begin{alignat*}{2}
+                &u_{xx}+\nu u_{yy} = 0,\quad  && u_{xxx} +(2-\nu)u_{yyx} = 0\;\text{along } x=\pm a\\
+                &u_{yy}+\nu u_{xx} = 0,\quad  && u_{yyy} +(2-\nu)u_{yxx} = 0\;\text{along } y=\pm a
+                \end{alignat*}
+            </div>
+            <p>
+                and initial conditions:
+            </p>
+
+            <div class="equation">
+                $$u(x, y, 0) = f(x,y)\quad \text{ and } u_t(x, y, 0) = g(x, y)$$
+            </div>
+
+
+            <p>
+                Any attempts to solve this Boundary-Initial Condition using separation of variables is not possible. While we were on our journey to find the eigenvalues with the first two boundary conditions, we ran into an extreme difficulty: having to solve the equation
+            </p>
+            <div class="equation">
+                $$(p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,$$
+            </div>
+            where
+            $$\zeta = (2-\nu)Y''(y)$$
+            <p>
+                This is a very difficult task since $\zeta$ is not a number, but a function of $y$, so attempting to solve the eigenvalue numerically is not in the discussion. Moreover, even if we can find, and express the eigenvalues in terms of $\zeta$, the task will be even more difficult since we now have to substitute back into the other boundary and initial conditions to solve for the exact values of the eigenvalues, making it pretty much impossible to solve for $p$'s. All the papers, books, and research works of various individuals that we have looked through so far have claimed that it is not possible to solve this equation analytically.
+            </p>
+
+
+
+            <h2>Rayleigh's Derivation of Chladni's Law and the Effective Wave Speed</h2>
+            <p>
+                As challenging as the problem is, it does not mean that nothing meaningful can be discovered from this equation. Although the square plate is indeed extremely difficult to solve, the circular plate, on the other hand, is also difficult to solve. However, due to the symmetric nature of the circular plate, Rayleigh was able to show that
+            </p>
+            <div class="equation">
+            \begin{equation}
+                f = C(n+2m)^2.
+            \end{equation}
+            </div>
+            <p>
+                To understand the work of Rayleigh, we need to go back to one dimension. Take a 2-meter wooden ruler that we usually see in our average college classroom, and wave it. We will see that the ruler creates a standing wave. However, the equation governing the motion of the ruler is not the regular wave equation because of the reason similar to as stated above, but by the bending beam - flexural wave equation
+            </p>
+            <div class="equation">
+            \begin{equation}
+                \secondpd{u}{t} + c^2_L K^2\secondpd{u}{x} = 0.
+            \end{equation}
+            </div>
+
+
+            <h2>Data Analysis: Verifying Chladni's Law</h2>
+
+
            
 
 <h2 id = "References">References</h2>

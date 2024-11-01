@@ -74,6 +74,14 @@ pre{
     overflow-y: hidden;
     white-space:nowrap;
 }
+/* .equation::-webkit-scrollbar {
+    height: 5px;
+}
+
+.equation::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+} */
 mjx-container[jax="CHTML"][display="true"] {
     margin: 0.5em 0;
 
