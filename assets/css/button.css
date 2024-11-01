@@ -143,8 +143,12 @@ input:checked + .slider:before {
 
 :root{
     --next-button: rgb(26, 26, 26);
-    --next-text: #ffffff;
+    --next-text: black;
     --next-border: #A9A9B3;
+}
+
+body.dark-mode{
+    --next-text: #ffffff;
 }
 .redirect-button{
     min-width: 80px;
@@ -153,26 +157,34 @@ input:checked + .slider:before {
     font-family: "Poppins", sans-serif;
     text-align: center;
     margin: 20px auto;
-    background: linear-gradient(to left, var(--next-button) 50%, rgb(0, 185, 226) 50%) right;
+    background: linear-gradient(to left, var(--body-background-color) 50%, #2a7ae2 50%) right;
     background-size: 200%;
     transition: .2s ease-out;
-    border: 1px solid var(--next-border);
+    border:1px solid var(--next-border);
     border-radius: 5px;
-    padding: 0.8rem 1.2rem;
+    padding: 0.7rem 1.2rem;
     font-size: 18px;
     color: var(--next-text);
     font-weight: 400;
     text-decoration: none;
 }
 
-.redirect-button a {
-    display: inline-block;
-    color: var(--next-text);
-    font-weight: 400;
-    text-decoration: none;
-}
+/* .redirect-button:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;  
+    top: 0.7rem;
+    right: -10px;
+    transition: 0.5s;
+} */
+
 
 .redirect-button:hover {
     background-position: left;
     
 }
+
+/* .redirect-button:hover:after {
+    opacity: 1;
+    right: 7px;
+} */
