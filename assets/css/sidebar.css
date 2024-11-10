@@ -249,6 +249,14 @@ nav ul, .side-nav ul {
 .toc ul li li li:hover {
     border-left: 2px solid green;
 }
+
+
+.toc a.active {
+    color: #007bff;
+    font-weight: bold;
+    border-left: 3px solid #007bff;
+    padding-left: 5px;
+}
 /*-----------------------------------------------------*/
 
 
