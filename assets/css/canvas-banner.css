@@ -97,7 +97,7 @@ body.nav-open{
 }
 @media all and (max-width: 580px){
     .banner-title{
-        font-size: 1.4em;
+        font-size: 1.25em;
     }
     .home-banner{
         min-height: 100px;
