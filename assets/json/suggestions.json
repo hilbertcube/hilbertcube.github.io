@@ -20,13 +20,13 @@
             "date": "June 14, 2024"
         },
         {
-            "title": "Simulating the Brachistochrone problem",
-            "id": "brachistochrone-1",
-            "image": "brachistochrone.jpg",
-            "link": "https://example.com/js-event-loop",
-            "topic": "Python, Calculus of Variations",
-            "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
-            "date": ""
+            "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
+            "id": "orb-cuda-1",
+            "image": "CUDA_process_0_serial_30_imgs.png",
+            "link": "/blogs/accelerating-feature-extraction-and-image-stitching-algorithm",
+            "topic": "C++, OpenCV, MPI, OpenMP, Computer Vision, Image Processing",
+            "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
+            "date": "August 10, 2024"
         },
         {
             "title": "A More In-depth Look of Snell's Law",
@@ -35,6 +35,15 @@
             "link": "/blogs/snells-law",
             "topic": "Refraction, PDEs",
             "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
+            "date": ""
+        },
+        {
+            "title": "Simulating the Brachistochrone problem",
+            "id": "brachistochrone-1",
+            "image": "brachistochrone.jpg",
+            "link": "https://example.com/js-event-loop",
+            "topic": "Python, Calculus of Variations",
+            "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
             "date": ""
         },
         {
@@ -52,17 +61,8 @@
             "image": "chladni-patterns.jpg",
             "link": "/blogs/the-quest-to-finding-chladni-patterns-3",
             "topic": "Python, Eigenvalue Problems, PDEs, Numpy, Biharmonic Equation",
-            "description": "Explaining Chladni's patterns via the Biharmonic wave equation model.",
+            "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
             "date": ""
-        },
-        {
-            "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
-            "id": "orb-cuda-1",
-            "image": "CUDA_process_0_serial_30_imgs.png",
-            "link": "/blogs/accelerating-feature-extraction-and-image-stitching-algorithm",
-            "topic": "C++, OpenCV, MPI, OpenMP, Computer Vision, Image Processing",
-            "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
-            "date": "August 10, 2024"
         },
         {
             "title": "How to find maxima and minima of an n-th dimensional function",
@@ -79,7 +79,7 @@
             "image": "inertia.gif",
             "link": "/blogs/moment-of-inertia",
             "topic": "Classical Mechanics, Dynamics of Rotation",
-            "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque. This article explore more about moment of inertia, but with interesting shapes.",
+            "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations. This article explore more about moment of inertia of interesting shapes.",
             "date": ""
         }
     ]

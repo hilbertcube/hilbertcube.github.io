@@ -588,7 +588,7 @@ ol.steps .step::before{
     position: absolute;
     content: "";
     background: var(--topic-line-color);
-    height: 1px;
+    height: 2px;
     width: 15%;
     bottom: 0;
     left: 0;
@@ -599,7 +599,7 @@ ol.steps .step::before{
     content: "";
     background: var(--topic-line-color);
     height: 100%;
-    width: 1px;
+    width: 2px;
     bottom: 0;
     left: 0;
 }

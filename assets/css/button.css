@@ -41,7 +41,7 @@ body.dark-mode {
     --body-background-color: #161616;
     /* --text-color: #A9A9B3;  */
     --grid-text-color: #A9A9B3; /*#dddddd*/
-    --topic-line-color: rgb(0, 185, 226);
+    /* --topic-line-color: #007bff; */
     --nav-bar-color: #121212;
     --nav-bar-text-color: #dddddd;
     --code-box-color: #2a2a2a;
