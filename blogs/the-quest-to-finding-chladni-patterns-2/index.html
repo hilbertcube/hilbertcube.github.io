@@ -61,18 +61,18 @@
         <div class = "toc">
             <ul>
                 <li><a href="#review-of-part-1">Review of Part 1</a></li>
-                <li>Generate Patterns in Python
+                <li><a href="#generate-patterns">Generate Patterns in Python</a>
                     <ul>
                         <li><a href="#square-plate-code">Code for the Square Plate</a></li>
                         <li><a href="#circular-plate-code">Code for the Circular Plate</a></li>
                     </ul>
                 </li>
-                <li>Theoretical, Experimental Results and Data Analysis
+                <li><a href="#results-and-analysis">Theoretical, Experimental Results and Data Analysis</a>
                     <ul>
-                        <li>The Square Plate</li>
-                        <li>Data Analysis for the Square Plate</li>
-                        <li>For the Circular Plate</li>
-                        <li>Data Analysis for the Circular Plate</li>
+                        <li><a href="#square-theoretical">Theoretical Results for the Square Plate</a></li>
+                        <li><a href="#square-analysis">Data Analysis for the Square Plate</a></li>
+                        <li><a href="#circular-theoretical">Theoretical Results for the Circular Plate</a></li>
+                        <li><a href="#circular-analysis">Data Analysis for the Circular Plate</a></li>
                     </ul>
                 </li>
                 <li><a href="#References">References</a></li>
@@ -111,7 +111,7 @@
             <section id= "review-of-part-1">
                 <h2>Review of Part 1</h2>
                 <p>
-                    The previous part of this article talked about (one of) the theories behind Chladni patterns: the wave equation model. We used this model to construct our contour equation and established two algorithms to plot the square model and the circular model. The square wave equation algorithm requires us to check if a number can be represented as a sum of squares. If it can be represented as sum(s) of squares, then we must search for all possible combinations of $n$ and $m$ such that
+                    The previous part of this article talked about one of the theoretical models behind Chladni patterns: the wave equation model. We used this model to construct our contour equation and established two algorithms to plot the square model and the circular model. The square wave equation algorithm requires us to check if a number can be represented as a sum of squares. If it can be represented as sum(s) of squares, then we must search for all possible combinations of $n$ and $m$ such that
                 </p>
                 <div class="equation">
                     \begin{equation}
@@ -119,7 +119,7 @@
                     \end{equation}
                 </div>
                 <p>
-                    including pairs with zero. The circular wave equation model is much simpler, as we only need to implement built-in integration methods, and do a double for loop to search over 0 to $n$ and 0 to $m$. Right below is the draft of the two algorithms that we designed previously.
+                    including pairs with zero. The circular wave equation model is simpler to implement, as we only need to utilize built-in integration methods, and do a double for loop to search over 0 to $n$ and 0 to $m$. Right below is the draft of the two algorithms that we have designed previously.
                 </p>
                 
     
@@ -202,7 +202,7 @@
     
     
                 <p>
-                    In the next part, we will generate these patterns in Python, but before proceeding, remember to install Python (install for all users) and related dependencies by using the python package manager:
+                    In the next part, we will generate these patterns in Python, but before proceeding, remember to install Python (select install for all users) and download related dependencies by using the pip package manager:
                 </p>
 
 <div style="text-align: center; margin: 25px 0;">
@@ -215,7 +215,7 @@
 </div>
                 
                 <p>
-                    We use matplotlib to plot our coordinate systems, numpy for the mathematical functions and constants, itertools for convenient sign alternation tool, scipy for integration and built-in special functions.
+                    In this article, we will use matplotlib to plot our coordinate systems, numpy for the mathematical functions and constants, itertools for convenient sign alternation tool, scipy for integration and built-in special functions.
                 </p>
             </section>
             
@@ -230,7 +230,7 @@
 
 
                 <p>
-                    Most of the code sketch that from the section above and the previous part is already pretty straight forward, but I want to make a few remarks about the <code class="inline-code">generate_sign_combinations</code> function and the use of itertools to implement this function. 
+                    Most of the code sketch that from the section above and the previous part is already pretty straight forward, but I want to make a few remarks about some of the functions used in this code snippet.
                 </p>
 
 
@@ -244,7 +244,7 @@
     </div>
 </div>
                 <p>
-                    The function <code class="inline-code">.product()</code> works similar to a cartesian product, or equivalent to a nested for-loop in computer science context. For example, <code class="inline-code">product('ABCD', repeat=2)</code> will output
+                    The function <code class="inline-code">.product()</code> works similar to a cartesian product, or equivalent to a nested for-loop in the context of computer science. For example, <code class="inline-code">product('ABCD', repeat=2)</code> will output
                 </p>
 
 <div style="text-align: center; margin: 25px 0;">
@@ -562,7 +562,7 @@ plot_sum_of_squares(start, end)
             <h3>Code for the Circular Plate</h3>
 
                 <p>
-                    As mentioned in the previous part of this article, the circular plate is a bit easier to implement, since we do not have to search for any sum-of-squares numbers. Each pair of $(n, m)$ is a pattern by itself, so we only need to make a double for loop to iterate over every single of of them. The first, and foremost thing to do is to set up a function to find the m-th zero of the n-th derivative of the bessel function of the first kind, $J_n(x)$. For this, we must import <code class="inline-code">jn, jnp_zeros</code> from <code class="inline-code">scipy.special</code>
+                    As mentioned earlier in this article, the circular plate is somewhat easier to implement, as it doesn't require searching for any sum-of-squares numbers. Each pair of $(n, m)$ is a pattern by itself, so we only need to make a double for loop to iterate over every single of of them. The first thing to do is to of course set up a function to find the m-th zero of the n-th derivative of the bessel function of the first kind, $J_n(x)$. For this, we must import <code class="inline-code">jn, jnp_zeros</code> from <code class="inline-code">scipy.special</code>
                 </p>
 
 
@@ -582,7 +582,7 @@ def bessel_derivative_zero(n, m):
 </div>
 
                 <p>
-                    One of the weird things about the <code class="inline-code">jnp_zeroes</code> is that it only output zeroes that are greater than zero, but zero itself is one of the zeroes of the derivative of the zero-order Bessel function, $J_0'(x)$. Illustrated in the figure below:
+                    One of the weird things about the <code class="inline-code">jnp_zeroes</code> is that it only output zeroes that are greater than zero, but zero itself is one of the zeroes of the derivative of the zeroth-order Bessel function, $J_0'(x)$. You can see this right in the figure below:
                 </p>
                 <figure>
                     <img src="Bessel1st.png" alt="" class="image-block">
@@ -623,7 +623,7 @@ def b_nm(n, m, a):
 </div>
 
                 <p>
-                    The final step is pretty straight forward, simply iterate through all $n$ and $m$ using a double for loops and plot the figure.
+                    After calculating the coefficients, the final step is straight forward. Simply iterate through all $n$ and $m$ using a double for loops and plot the figure.
                 </p>
 
 
@@ -668,7 +668,7 @@ plot_polar_contour(columns, rows, a)
 
 
                 <p>
-                    Put together all the pieces, and we may arrive at the final code for the circular plate, using the 2d wave equation as:
+                    Put together all the pieces, and we may arrive at the final code for the circular plate, using the 2d wave equation to be:
                 </p>
 
 <div class="box" style="margin: 30px auto;">
@@ -765,12 +765,14 @@ plot_polar_contour(columns, rows, a)
 
         
 <h2>Theoretical, Experimental Results and Data Analysis</h2>
-<h3>Square Plate</h3>
+
+<section id="square-theoretical">
+    <h3>Theoretical Results for the Square Plate</h3>
     <p>
         In this section, we will compare our theoretical results from the codes to the experimental results from my experiment. The designed code above should be good for up and running. Before we proceed any further, there are a few things to note. The patterns displayed below is arranged so that the frequency increases from left to right, top to bottom. Each set of patterns of the same color correspond to a different node, with different sign combinations. 
     </p>
     <p>
-        The information about the modes and sign combinations is printed to the terminal. On each pattern's caption, there will be two numbers: $N=1$, which is simply the number of the pattern, and $S$, which is the sum of squares which that pattern is generated from (if $S=50$, then the modes are $(1, 7)$, $(5, 5)$ and $(7, 1)$, since $1^2+7^2=5^2 + 5^2=50$). By setting <code class="inline-code">start = 1</code> and <code class="inline-code">end = 72</code>, we shall obtain the patterns below:
+        The information about the modes and sign combinations is printed to the terminal. On each pattern's caption, there will be two numbers: $N=1$, which is simply the number of the pattern, and $S$, which is the sum of squares which that pattern is generated from (if $S=50$, then the modes are $(1, 7)$, $(5, 5)$ and $(7, 1)$, since $1^2+7^2=5^2 + 5^2=50$). By setting <code class="inline-code">start = 1</code> and <code class="inline-code">end = 72</code>, we shall obtain the patterns right below:
     </p>
 
     <figure>
@@ -818,17 +820,23 @@ plot_polar_contour(columns, rows, a)
         <figcaption>Pattern #217 to #288..</figcaption>
     </figure>
     <p>
-        The final step is to compare these patterns with our actual experimental result. For this project, I simply obtained the necessary equipment from my college's engineering stock room. Out of all the choices that we had, this experiment is probably the simplest to perform but quite challenging to explain and derive. If you are planning to conduct this experiment yourself, before conducting the experiment, remember to make sure that the surface on which we place our generator must be perfectly flat, or else the sand will be bouncing in a chaos manner. Wear ear plugs as well, since the plate will output some very loud noise if we are not at resonance frequency.
+        There is no limit in how far you can go in a theoretical sense. But in reality, there will be no more new patterns after around $f= 5000$ Hz due to the amplitude of the plate being too small. After we are done with our theoretical result, we can compare these patterns with our actual experimental results. 
     </p>
     <p>
-        The figures below are some of the patterns that arise as we increases the frequency $f$.
+        For this project, I obtained the necessary equipment from my college's engineering stock room. Out of all the choices that we had, this experiment is probably the simplest to perform but quite challenging to explain and derive. If you are planning to conduct this experiment yourself, before conducting the experiment, remember to make sure that the surface on which we place our generator must be perfectly flat, or else the sand will be bouncing in a chaos manner. Wear ear plugs as well, since the plate will output some very loud noise if we are not at resonance frequency.
+    </p>
+    <p>
+        Turn on the wave generator, put on the ear plugs, and these patterns will arise as we increases the frequency $f$.
     </p>
     <figure>
         <img src="Square1.png" alt="" class="image-block" style="width: 70%">
         <figcaption>Experimental Results of the Square Plate.</figcaption>
     </figure>
+</section>
 
 
+
+<section id="square-analysis">
     <h3>Data Analysis of Square's Plate</h3>
     <p>
         The figure right below contains selected patterns that (relatively) matches with the patterns generated by our program. Note that some patterns are similar, while some other are not so much. I just pick that ones that are closest to our actual results.
@@ -852,194 +860,214 @@ plot_polar_contour(columns, rows, a)
         \end{equation}
     </div>
     <p>
-        The length of our plate is $24.1\pm 0.1$ cm, and assuming that the thickness is negligible. I made a table right below, comparing the similar patterns obtained from the actual experiment and the patterns generated by the program. Each pattern has each own modes and sign-combination, so I also listed them in the table.
+        For this experiment, the length of our plate is $24.1\pm 0.1$ cm, and we are assuming that the thickness is negligible. For better organization, I made a table below, comparing the similar patterns obtained from the actual experiment and the patterns generated by the program. Each pattern has each own modes and sign-combination, so I also listed them in the table.
     </p>
 
     
-<div class="table-wrapper">
+    <div class="table-wrapper">
+        
+        <table style="margin-left: auto; margin-right: auto; text-align: center;" id="square-wave-table">
+            <caption>Wave Speed of the Square Plate</caption>
+            <tr style="border-top: 2px solid var(--grid-text-color); ">
+                <th style="min-width: 80px"><strong>Pattern No. $(N)$</strong></th>
+                <th><strong>Sum $(S)$</strong></th>
+                <th><strong>Modes $(n,m)$</strong></th>
+                <th><strong>Sign</strong></th>
+                <th style="border-left: 1px solid black"><strong>Found at</strong></th>
+                <th><strong>Wave Speed</strong></th>
+            </tr>
+            <tr>
+                <td>$21$</td>
+                <td>$20$</td>
+                <td>$(2, 4)\; (4, 2)\; $</td>
+                <td>$[+, +]$</td>
+                <td style="border-left: 1px solid black">$245\pm 50$ Hz</td>
+                <td>$26.41\pm 5.39$</td>
+            </tr>
+            <tr>
+                <td>$17$</td>
+                <td>$16$</td>
+                <td>$(0, 4)\; (4, 0)\; $</td>
+                <td>$[+, -]$</td>
+                <td style="border-left: 1px solid black">$453 \pm 50$ Hz</td>
+                <td>$54.59\pm 6.03$</td>
+            </tr>
+            <tr>
+                <td>$33$</td>
+                <td>$26$</td>
+                <td>$(1, 5)\; (5, 1)\; $</td>
+                <td>$[+, -]$</td>
+                <td style="border-left: 1px solid black">$56 \pm 75$ Hz</td>
+                <td>$53.41\pm 7.11$</td>
+            </tr>
+            <tr>
+                <td>$22$</td>
+                <td>$21$</td>
+                <td>$(2, 4)\; (4, 2)\; $</td>
+                <td>$[+, -]$</td>
+                <td style="border-left: 1px solid black">$647 \pm 75$ Hz</td>
+                <td>$69.73\pm 8.09$</td>
+            </tr>
+            <tr>
+                <td>$62$</td>
+                <td>$58$</td>
+                <td>$(3, 7)\; (7, 3)\; $</td>
+                <td>$[+, -]$</td>
+                <td style="border-left: 1px solid black">$934 \pm 100$ Hz</td>
+                <td>$59.11\pm 6.33$</td>
+            </tr>
+            <tr>
+                <td>$52$</td>
+                <td>$50$</td>
+                <td>$(1, 7)\; (5, 5)\; (7, 1) $</td>
+                <td>$[+, +, +]$</td>
+                <td style="border-left: 1px solid black">$2160 \pm 500$ Hz</td>
+                <td>$147.24\pm 34.09$</td>
+            </tr>
+            <tr>
+                <td>$223$</td>
+                <td>$200$</td>
+                <td>$(2, 14)\;(10, 10)\; (14, 2)\; $</td>
+                <td>$[+, +, +]$</td>
+                <td style="border-left: 1px solid black">$3163 \pm 800$ Hz</td>
+                <td>$107.80\pm 27.27$</td>
+            </tr>
+        </table>
+    </div>
+
+    <p>
+        Based on the wave equation model that we used, the wave speed should remain a constant. This is not what we see here. The wave speed seems to increases as the frequency $f$ increases, and some results seem to fall off the increasing trend as well. Let's see what the circular plate has to offer.
+    </p>
+</section>
     
-    <table style="margin-left: auto; margin-right: auto; text-align: center;" id="square-wave-table">
-        <caption>Wave Speed of the Square Plate</caption>
-        <tr style="border-top: 2px solid var(--grid-text-color); ">
-            <th style="min-width: 80px"><strong>Pattern No. $(N)$</strong></th>
-            <th><strong>Sum $(S)$</strong></th>
-            <th><strong>Modes $(n,m)$</strong></th>
-            <th><strong>Sign</strong></th>
-            <th style="border-left: 1px solid black"><strong>Found at</strong></th>
-            <th><strong>Wave Speed</strong></th>
-        </tr>
-        <tr>
-            <td>$21$</td>
-            <td>$20$</td>
-            <td>$(2, 4)\; (4, 2)\; $</td>
-            <td>$[+, +]$</td>
-            <td style="border-left: 1px solid black">$245\pm 50$ Hz</td>
-            <td>$26.41\pm 5.39$</td>
-        </tr>
-        <tr>
-            <td>$17$</td>
-            <td>$16$</td>
-            <td>$(0, 4)\; (4, 0)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid black">$453 \pm 50$ Hz</td>
-            <td>$54.59\pm 6.03$</td>
-        </tr>
-        <tr>
-            <td>$33$</td>
-            <td>$26$</td>
-            <td>$(1, 5)\; (5, 1)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid black">$56 \pm 75$ Hz</td>
-            <td>$53.41\pm 7.11$</td>
-        </tr>
-        <tr>
-            <td>$22$</td>
-            <td>$21$</td>
-            <td>$(2, 4)\; (4, 2)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid black">$647 \pm 75$ Hz</td>
-            <td>$69.73\pm 8.09$</td>
-        </tr>
-        <tr>
-            <td>$62$</td>
-            <td>$58$</td>
-            <td>$(3, 7)\; (7, 3)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid black">$934 \pm 100$ Hz</td>
-            <td>$59.11\pm 6.33$</td>
-        </tr>
-        <tr>
-            <td>$52$</td>
-            <td>$50$</td>
-            <td>$(1, 7)\; (5, 5)\; (7, 1) $</td>
-            <td>$[+, +, +]$</td>
-            <td style="border-left: 1px solid black">$2160 \pm 500$ Hz</td>
-            <td>$147.24\pm 34.09$</td>
-        </tr>
-        <tr>
-            <td>$223$</td>
-            <td>$200$</td>
-            <td>$(2, 14)\;(10, 10)\; (14, 2)\; $</td>
-            <td>$[+, +, +]$</td>
-            <td style="border-left: 1px solid black">$3163 \pm 800$ Hz</td>
-            <td>$107.80\pm 27.27$</td>
-        </tr>
-    </table>
-</div>
+<section id="circular-theoretical">
+    <h3>Theoretical Results for the Circular Plate</h3>
+    <p>
+        I did not set any start and end for the circular plate, simply because they all follow the same set of rules: the number of diameter lines increases as we further move to the right, and the number of rings increases as we move downward. Set <code class="inline-code">columns = 7</code> and <code class="inline-code">rows = 5</code> and our output will be generated as below. The computer-generated patterns for the circular plate a bit less interesting, and is not as versatile and mesmerizing as the square patterns.
+    </p>
+        <figure>
+            <img src="CCircle1.png" alt="" class="image-block" style="width: 70%">
+            <figcaption>First 35 patterns of the Circular Plate.</figcaption>
+        </figure>
 
-<p>
-    Based on the wave equation model, the wave speed SHOULD remain constant. This is not what we see here. The wave speed seems to increases as the frequency $f$ increases, but the calculated results remain all over the place.
-</p>
-
-<h3>The Circular Plate</h3>
-<p>
-    I did not set any start and end for the circular plate, simply because they all follow the same set of rules: the number of diameter lines increases as we further move to the right, and the number of rings increases as we move downward. Set <code class="inline-code">columns = 7</code> and <code class="inline-code">rows = 5</code> and our output will be generated as below. The computer-generated patterns for the circular plate a bit less interesting, and is not as versatile and mesmerizing as the square patterns.
-</p>
-    <figure>
-        <img src="CCircle1.png" alt="" class="image-block" style="width: 70%">
-        <figcaption>First 35 patterns of the Circular Plate.</figcaption>
-    </figure>
-
-<p>
-    On the other hand, our experimental results for the circular yield much more interesting outcome. I have yet to seen any diameter lines on any of my experiment, but our actual experimentation generates more patterns than just rings like our theoretical analysis.
-</p>
+    <p>
+        On the other hand, our experimental results for the circular yield much more interesting outcome. I have yet to seen any diameter lines on any of my experiment, but our actual experimentation generates more patterns than just rings like our theoretical analysis.
+    </p>
 
     <figure>
         <img src="Circle1.png" alt="" class="image-block" style="width: 70%">
         <figcaption>Experimental Results of the Circular Plate.</figcaption>
+    </figure>   
+</section>
+
+
+<section id="circular-analysis">
+    <h3>Data Analysis of the Circular Plate</h3>
+
+    <p>
+        Similar to the square plate, the circular plate also has similar experimental patterns.
+    </p>
+        
+    <figure>
+        <img class="image" id="circular-plate" src = "Similar_Circle.png">
+        <figcaption class="caption">Matching patterns on the Circular Plate.</figcaption>
     </figure>
-            
+
+    <figure>
+        <img class="image" id="circular-plate" src = "Similar_Circle_Theoretical.png">
+        <figcaption class="caption">Similar Patterns.</figcaption>
+    </figure>
+
+    <p>
+        From the angular frequency of the plate from the previous part, we can easily derive the wave speed equation for the circular plate:
+    </p>
+    <div class="equation">
+        \begin{equation} 
+            c=\frac{2\pi f r}{z_{nm}}
+        \end{equation}
+    </div>
+    <p>
+        For our experiment, the plate's radius is $r = 12.1\pm 0.1$ cm.
+    </p>
+    <div class="table-wrapper">
+        <table style="margin-left: auto; margin-right: auto; text-align: center;" id="circle-wave-table">
+            <caption>Wave Speed of the Circular Plate</caption>
+            <tr style="border-top: 2px solid var(--grid-text-color); ">
+                <th><strong>Order $(n)$</strong></th>
+                <th><strong>Zero ($m$)</strong></th>
+                <th><strong>Zeroes of $J&#39;_n(r)$</strong></th>
+                <th><strong>Found at</strong></th>
+                <th><strong>Wave Speed ($m/s$)</strong></th>
+            </tr>
+            <tr>
+                <td>$0$</td>
+                <td>0</td>
+                <td>$0.000000$</td>
+                <td>$0.000$ Hz</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td>$0$</td>
+                <td>$1$</td>
+                <td>$3.831706$</td>
+                <td>$131 \pm 50$ Hz</td>
+                <td>$25.885\pm 9.88$</td>
+            </tr>
+            <tr>
+                <td>$0$</td>
+                <td>$2$</td>
+                <td>$7.0155867$</td>
+                <td>$429 \pm 75$ Hz</td>
+                <td>$46.298\pm 8.10$</td>
+            </tr>
+            <tr>
+                <td>$0$</td>
+                <td>$3$</td>
+                <td>$10.1734681$</td>
+                <td>$1079 \pm 100$ v</td>
+                <td>$80.301\pm 14.05$</td>
+            </tr>
+            <tr>
+                <td>$0$</td>
+                <td>$4$</td>
+                <td>$13.3236919$</td>
+                <td>$1806 \pm 500$ Hz</td>
+                <td>$102.627\pm 7.47$</td>
+            </tr>
+            <tr>
+                <td>$0$</td>
+                <td>$5$</td>
+                <td>$16.4706301$</td>
+                <td>$3320 \pm 750$ Hz</td>
+                <td>$152.614\pm 34.50$</td>
+            </tr>
+            <tr>
+                <td>$0$</td>
+                <td>$6$</td>
+                <td>$19.6158585$</td>
+                <td>$4661 \pm 800$ Hz</td>
+                <td>$172.184\pm 29.59$</td>
+            </tr>
+        </table>
+    </div>
+
+    <p>
+        The wave speed of the circular plate also increases as the frequency $f$ increases, which is far from our expectation. What is going on here? Well, it turns out that the wave equation model might not be sufficient after all. The problem seems to be much more complicated than I expected, and we might need a much more precise model in order to accurately describe these patterns.
+    </p>
+
+    <div style="text-align: center;">
+        <a style="text-align: center;" href="../the-quest-to-finding-chladni-patterns-3" class="redirect-button">
+            Next
+        </a>
+    </div>
+
+</section>
 
 
-<h3>Data Analysis of the Circular Plate</h3>
 
-<p>
-    Similar to the square plate, the circular plate also has similar experimental patterns.
-</p>
-    
-<figure>
-    <img class="image" id="circular-plate" src = "Similar_Circle.png">
-    <figcaption class="caption">Matching patterns on the Circular Plate.</figcaption>
-</figure>
 
-<figure>
-    <img class="image" id="circular-plate" src = "Similar_Circle_Theoretical.png">
-    <figcaption class="caption">Similar Patterns.</figcaption>
-</figure>
-
-<div class="table-wrapper">
-    <table style="margin-left: auto; margin-right: auto; text-align: center;" id="circle-wave-table">
-        <caption>Wave Speed of the Circular Plate</caption>
-        <tr style="border-top: 2px solid var(--grid-text-color); ">
-            <th><strong>Order $(n)$</strong></th>
-            <th><strong>Zero ($m$)</strong></th>
-            <th><strong>Zeroes of $J&#39;_n(r)$</strong></th>
-            <th><strong>Found at</strong></th>
-            <th><strong>Wave Speed ($m/s$)</strong></th>
-        </tr>
-        <tr>
-            <td>$0$</td>
-            <td>0</td>
-            <td>$0.000000$</td>
-            <td>$0.000$ Hz</td>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <td>$0$</td>
-            <td>$1$</td>
-            <td>$3.831706$</td>
-            <td>$131 \pm 50$ Hz</td>
-            <td>$25.885\pm 9.88$</td>
-        </tr>
-        <tr>
-            <td>$0$</td>
-            <td>$2$</td>
-            <td>$7.0155867$</td>
-            <td>$429 \pm 75$ Hz</td>
-            <td>$46.298\pm 8.10$</td>
-        </tr>
-        <tr>
-            <td>$0$</td>
-            <td>$3$</td>
-            <td>$10.1734681$</td>
-            <td>$1079 \pm 100$ v</td>
-            <td>$80.301\pm 14.05$</td>
-        </tr>
-        <tr>
-            <td>$0$</td>
-            <td>$4$</td>
-            <td>$13.3236919$</td>
-            <td>$1806 \pm 500$ Hz</td>
-            <td>$102.627\pm 7.47$</td>
-        </tr>
-        <tr>
-            <td>$0$</td>
-            <td>$5$</td>
-            <td>$16.4706301$</td>
-            <td>$3320 \pm 750$ Hz</td>
-            <td>$152.614\pm 34.50$</td>
-        </tr>
-        <tr>
-            <td>$0$</td>
-            <td>$6$</td>
-            <td>$19.6158585$</td>
-            <td>$4661 \pm 800$ Hz</td>
-            <td>$172.184\pm 29.59$</td>
-        </tr>
-    </table>
-</div>
-
-<p>
-    The wave speed of the circular plate also increases as the frequency $f$ increases, which is not what we want. What is going on here? Well, it turns out that the wave equation model might not be sufficient after all. The problem seems to be much more complicated than I expected, and we might need a much more complicated model in order to accurately describe these patterns.
-</p>
-
-<div style="text-align: center;">
-    <a style="text-align: center;" href="../the-quest-to-finding-chladni-patterns-3" class="redirect-button">
-        Next
-    </a>
-</div>
-
-<h2 id = "References">References</h2>
+<section id = "References">
+    <h2>References</h2>
 
     <ol class = "reference">
         <li>Linqi. Shao. Modeling a square vibrating plate. University of Waterloo, pages 1-58, 2018.</li>
@@ -1052,6 +1080,9 @@ plot_polar_contour(columns, rows, a)
         <li>Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Stable and accurate numerical methods for generalized kirchhoff-love plates, 2020. Accessed: 2024-05-26.
         </li>
     </ol>
+</section>
+
+
 
     <div class="line-1"></div>
     <header>

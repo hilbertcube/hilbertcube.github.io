@@ -408,7 +408,7 @@ $(document).ready(function() {
             }, 800, function() {
                 // Add hash (#) to URL when done scrolling (default click behavior)
                 // enable this thing to add hash
-                window.location.hash = hash;
+                // window.location.hash = hash;
             });
         }
     });
@@ -499,7 +499,7 @@ document.querySelectorAll('img').forEach(img => {
 document.addEventListener("DOMContentLoaded", function () {
     const sections = document.querySelectorAll("section"); // Adjust this to target sections
     const tocLinks = document.querySelectorAll(".toc a");
-    //const headers = document.querySelectorAll("h2")
+    //const headers = document.querySelectorAll("h2:not(section h2)")
 
     function removeActiveClasses() {
         tocLinks.forEach(link => link.classList.remove("active"));
@@ -516,6 +516,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentSection = section;
             }
         });
+
+        // headers.forEach(section => {
+        //     const rect = section.getBoundingClientRect();
+        //     if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+        //         // Remove all active classes and then add to the current section
+        //         //removeActiveClasses();
+        //         const link = document.querySelector(`.toc a[href="#${section.id}"]`);
+        //         if (link) link.classList.add("active");
+        //     }
+        // });
 
 
         // Highlight the corresponding TOC link if we found a current section
