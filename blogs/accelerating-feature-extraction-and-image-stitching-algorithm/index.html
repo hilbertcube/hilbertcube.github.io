@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Accelerate with CUDA</title>
+    <title>Accelerate ORB with CUDA</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="subject" content='here'>
@@ -26,7 +26,7 @@
     \[
     \newcommand{\lbrac}{\left(}
     \newcommand{\rbrac}{\right)}
-\]        
+    \]        
     <div class = "top-nav"></div> <!-- TOP NAV-->   
     <nav class="navbar open" id="navbar"> <!-- SIDE BAR -->
         <div id="logo"></div>
@@ -35,7 +35,22 @@
         <header class="major"><h2>Table of Contents</h2></header>   <!-- TABLE OF CONTENTS -->
         <div class = "toc">
             <ul>
-                <li>Introduction</li>
+                <li><a href="#feature-extraction">Feature Extraction from Images and the ORB Feature Detector</a>
+                    <ul>
+                        <li><a href="#Introduction">Introduction</a></li>
+                        <li><a href="#utilizing-gpu">Project's Objective</a></li>
+                    </ul>
+                </li>
+                <li><a href="#literature-review">Literature Review and Technologies</a>
+                    <ul>
+                        <li><a href="#sift-and-orb">The SIFT and ORB Feature Detectors</a></li>
+                        <li><a href="#gpu-and-cuda">Overview of General GPU Architecture and Nvidia’s Compute Unified Device Architecture (CUDA)</a></li>
+                        <li><a href="#mpi">Message Passing Interfaces (MPI)</a></li>
+                        <li><a href="#openmp">Open Multi-Processing (OpenMP)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#implementation">Implementations</a></li>
+                <li><a href="#results-and-benchmarks">Results and Benchmarks</a></li>
                 <li><a href="#Appendix">Appendix</a></li>
                 <li><a href="#References">References</a></li>
             </ul>
@@ -49,7 +64,7 @@
         <!-- CONTENTS -->
         <div class = "general-wrapper">
             <div class = "topic">
-                Topics: C++/CUDA/MPI/OPENMP/Image-Stitching/
+                Topics: C++/OpenCV/CUDA/MPI/OPENMP/Image-Stitching/
             </div>
             
             <div>
@@ -70,9 +85,198 @@
                 <div class="Author">- Peter Fraser</div>
             </div>
             
-            <h2 id= "Introduction">Feature Extraction from an Image and the ORB Feature Detector</h2>
+
+            <section id="feature-extraction">
+                <h2>Feature Extraction from Images and the ORB Feature Detector</h2>
+                <section id= "Introduction">
+                    <h3>Introduction</h3>
+                    <p>
+                        Assuming that you are in a region where natural disasters rampage. Landscape can change, buildings can collapse, and outdated map requires immediate, detailed, and accurate updates. This problem can be addressed by using Unmanned Aerial Vehicle(s) (UAV) to capture images of the area, and then stitch them together using existing computer-vision technologies. The true issue lies in how fast we can do this, as accurate updates mean that multiple high-quality images will be processed, and thus slows down the process due to highly expensive computational processes.
+                    </p>
+                    
+                    <div class="two-columns-block">
+                        <div>
+                            <p>
+                                Image stitching requires feature detection algorithms. The first widely-used feature detection algorithm was the Harris Corner Detector, introduced in 1988 by Chris Harris and Mike Stephens. Later on, in 1999, the Scale-invariant feature transform (SIFT) algorithm by David G. and Lowe revolutionized the field of computer vision by providing a reliable method for feature detection and description. It builds upon the Harris Corner Detector but adds many key innovations to improve robustness and functionality. The SIFT algorithm is still widely used today, and most new methods in feature detection, either through traditional means, or neural networks, use SIFT as their benchmark.
+                            </p>
+                            <p>
+                                Although SIFT is a reliable method for such tasks, it is also very computationally expensive. Therefore, many more methods throughout the years have been developed to address that issue, and in 2011, Oriented FAST and Rotated BRIEF (ORB) was introduced. After multiple benchmark tests, ORB has been proven to have better overall performance with quick computing and is demonstrated to be robust to light and rotational shifts.
+                            </p>
+                        </div>
+                        <div>
+                            <figure>
+                                <img src="capital.jpg" alt="Capital Building" class="image-block" style="width: 100%">
+                                <figcaption>The Capital Building of the United States. Feature detection using the Oriented FAST and Rotated BRIEF (ORB) Algorithm. The colored circular regions are called key points of the image.</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                </section>
+
+
+
+
+                <section id="utilizing-gpu">
+                    <h3>Project's Objective</h3>
+                    <div class="two-columns-block">
+                        <div>
+                            <p>
+                                This project mainly focuses on images captured by Unmanned Aerial Vehicles (UAV), the image patch is then sent to a central computer with an Nvidia graphic card for image processing. The map generation process involves processing a pair of images, then the algorithm will detect, and match each of the key points from one image to another. The existing work of this project involves an algorithm to process the image patch using multi-core CPUs, which are available on most modern computers. 
+                            </p>
+            
+                            <p>
+                                The original author of the project also addressed the issue of increasing data overhead by employing distributed and shared memory architectures to reduce computation time. For this project, we will use all of the techniques available above, alongside the GPU, and the goal is to generate reliable maps and accelerate image stitching algorithms even further by utilizing multi-core, multi-threads, and GPU computation.
+                            </p>
+                        </div>
+                        <div>          
+                            <figure>
+                                <img src="30_images.png" alt="30 images" class="image-block" style="width: 98%">
+                                <figcaption>Patch of 30 images captured by the UAV</figcaption>
+                            </figure>
+                
+                
+                            <figure>
+                                <img src="banner.png" alt="Final Map" class="image-block" style="width: 95%">
+                                <figcaption>Final Map Obtained from Stitching Process</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
            
-            Let's consider this problem:
+
+
+            
+
+
+            <section id="literature-review">
+                <h2>Literature Review and Technologies</h2>
+
+                <section id="sift-and-orb">
+                    <h3>The SIFT and ORB Feature Detectors</h3>
+                    <p>
+                        <strong>Scale-Invariant Feature Transform.</strong> SIFT is one of the most well-known and reliable feature detectors in the field of computer vision to extract invariant features from an image. SIFT primarily works based on the Difference of Gaussian (D.o.G), defined as
+                    </p>
+                    <div class="equation">
+                        \begin{equation}
+                            D(\mathbf{x},\sigma) = \frac{1}{2\pi\sigma}\left[\frac{1}{k}\exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2(k\sigma)^2}\rbrac - \exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2\sigma^2}\rbrac \right].
+                        \end{equation} 
+                    </div>
+                    <p>Since</p>
+                    <div class="equation">
+                        \begin{equation}
+                            D(\mathbf{0},\sigma) = \frac{1}{2\pi k \sigma} < \frac{1}{\sqrt{2}}D_{max}\quad\text{and}\quad D(\mathbf{\infty},\sigma) = 0,
+                        \end{equation}  
+                    </div>
+                    <p> 
+                        the D.o.G is a bandpass filter, which means that it only lets selected frequencies through. One characteristic of the bandpass filter is that it lets frequencies greater than $\frac{1}{\sqrt{2}}D_{max}$ through and blocks low frequencies. This means that the frequencies that it passes tend to be the areas of high contrast on the image, which are usually edges (In computer vision, edges are abrupt changes in intensity, discontinuity in image brightness, or contrast).
+                    </p>
+                    <p>
+                        The algorithm then uses the Gaussian pyramid to compare the respective pixel with its surrounding 26 other neighbor pixels to look for the extrema of the image and improve the accuracy by the Taylor series method. SIFT then uses a straightforward approach for assigning orientations. For each image sample, $L(x,y)$, we compute the gradient magnitude $M(x,y)$ and orientation angle $\theta(x,y)$ using differences of pixels:
+                    </p>
+                    <div class="equation">
+                        \begin{equation}
+                            M(x,y) = \sqrt{(L(x+1, y) - L(x-1,y))^2 + (L(x,y+1) - L(x,y-1))^2}
+                        \end{equation}   
+                    </div>
+                    <p>and,</p>
+                    <div class="equation">
+                        \begin{equation}
+                            \theta(x,y) = \tan^{-1}\lbrac\frac{L(x,y+1) - L(x,y-1)}{L(x+1, y) - L(x-1,y)}\rbrac.
+                        \end{equation}
+                    </div>
+                    <p>
+                        The final output is an $n$-dimensional feature vector whose elements are invariant feature descriptors. Authors Griwodz, Calvet, and Halvorsen proposed a Python library called PopSIFT in 2018, which serves as a CUDA implementation of the SIFT algorithm.
+                    </p>
+
+
+                    <p style="margin-top: 30px"><strong>Oriented FAST and Rotated BRIEF.</strong>
+                        FAST, short for &#8220Features from Accelerated Segment Test,&#8221 is a widely recognized corner detection algorithm introduced by Edward Rosten and Tom Drumm in their paper &#8220Machine Learning for High-speed Corner Detection.&#8221 FAST identifies corners by examining a circular region around a pixel to determine if the pixel qualifies as a corner. The ORB (Oriented FAST and Rotated BRIEF) algorithm uses FAST-9, which uses a circle with a radius of 9 pixels to optimize performance. However, because the original FAST algorithm does not account for orientation, ORB enhances it by assigning an orientation to each detected keypoint (similar to SIFT), thereby making the algorithm rotation-invariant. This orientation is calculated using the intensity centroid method, which leverages the moments of the patch around the keypoint, defined as:
+                    </p>
+                    <div class="equation">
+                        \begin{equation}
+                            m_{pq} = \sum_{x,y}x^py^qI(x,y)
+                        \end{equation}
+                    </div>
+                    <p>
+                        These moments are used to determine the dominant orientation of the keypoint. The centroid can be then computed by
+                    </p>
+                    <div class="equation">
+                        \begin{equation}
+                            C = \lbrac\frac{m_{10}}{m_{00}},\frac{m_{01}}{m_{00}}\rbrac
+                        \end{equation}  
+                    </div>
+                    <p>
+                        By optimizing the BRIEF (Binary Robust Independent Elementary Features) algorithm, binary descriptors are generated by simple pixel intensity comparison, and Angle invariance is recognized by shifting the descriptors in the main direction.
+                    </p>
+                </section>
+
+                <section id="gpu-and-cuda">
+                    <h3>Overview of General GPU Architecture and Nvidia’s Compute Unified Device Architecture (CUDA)</h3>
+                    <p>
+                        Unlike a Central Processing Unit (CPU), which typically has only a few physical cores, a Graphics Processing Unit (GPU) can contain thousands or even tens of thousands of cores. Although GPU cores are designed for simple calculations and are less versatile than CPU cores, the GPU's key advantage lies in its ability to perform large-scale parallel computations. Take a look at an image, for instance:
+                    </p>
+                    <figure>
+                        <img src="pixels.jpg" alt="Zooming into pixels" class="image-block" style="width: 55%">
+                        <figcaption>Zooming into an image. Image by Julie Waterhouse Photography</figcaption>
+                    </figure>
+
+                    <p>
+                        Images are composed of millions of pixels. When processing an image, the GPU cannot handle pixels one by one (it shouldn't!), as doing so would leave many cores idle, leading to a significant waste of resources. Instead, a key principle of GPU operation is parallelism: whichever core is available first takes on the computation, ensuring that all cores are utilized efficiently. All computations are independent of each other, and finally, we only need to combine them to output the final input image.
+                    </p>
+                    <p>
+                        Let's say we have 100 tasks for a GPU to compute, with each task represented as a thread. GPUs are designed to handle thousands or even millions of threads simultaneously, but they don't assign one thread to each core directly. Instead, GPU cores are organized into groups called "warps," typically consisting of 32 threads that execute the same instruction simultaneously. These warps are managed by units within the GPU called Streaming Multiprocessors (SMs).
+                    </p>
+                    <p>
+                        If the number of tasks increases to 1 million, the GPU doesn't need 1 million cores to process them. Instead, it groups the threads into blocks, and these blocks are distributed among the SMs. Each SM contains multiple cores that work together to execute the warps of threads. When an SM processes a block, it schedules the warps dynamically, keeping all its cores busy and switching between warps to hide any delays, such as waiting for memory access.
+                    </p>
+                    <p>
+                        For example, with 1,000 cores organized into several SMs, each SM might handle many blocks of threads. Even if a single block contains 1,000 threads, the SM can manage them efficiently by processing them in warps and switching between them as needed. This hierarchical structure allows the GPU to handle a vast number of threads, ensuring that even with millions of tasks, the cores are utilized efficiently to maximize parallel computation.
+                    </p>
+                </section>
+                
+                <section id="mpi">
+                    <h3>Message Passing Interfaces (MPI)</h3>
+                </section>
+                
+                <section id="openmp">
+                    <h3>Open Multi-Processing (OpenMP)</h3>
+                </section>
+                
+
+            </section>
+            
+
+
+
+            <section id="implementation">
+                <h2>Implementations</h2>
+
+
+
+            </section>
+
+
+
+
+            <section id="results-and-benchmarks">
+                <h2>Results and Benchmarks</h2>
+
+
+                <figure>
+                    <img src="no_openmp.png" alt="Final Map" class="image-block" style="width: 60%">
+                </figure>
+
+                <figure>
+                    <img src="with_openmp.png" alt="Final Map" class="image-block" style="width: 60%">
+                </figure>
+            </section>
+
+
+
+
+
 
 
     <div class="line-1"></div>
