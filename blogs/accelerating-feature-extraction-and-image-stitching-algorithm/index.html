@@ -250,6 +250,15 @@
                 
                 <section id="openmp">
                     <h3>Open Multi-Processing (OpenMP)</h3>
+                    <p>
+                        OpenMP is an Application Program Interface (API) that may be used to direct multi-threaded, shared memory parallelism in C/C++, or Fortran programs. Both g++ (available since GCC 4.9) and MSVC compiler have OpenMP available through the header <code class="inline-code">#include&lt;omp.h&gt;</code>. To enable OpenMP in Microsoft Visual Studio, go to Project > Properties > C/C++ > Language > OpenMP support, select yes.
+                        
+                        For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation of any module that uses OpenMP:
+                    </p>
+<div style="text-align: center; margin: 25px 0;  overflow: auto;">
+    <pre class="console" style="display:inline-block;"><samp>    g++ -c test.cpp -o test.o -fopenmp
+    g++ test.o -o test -fopenmp -lpthread    </samp></pre>
+</div>                    
                 </section>
                 
 
@@ -288,19 +297,19 @@
                 <section id="optimization">
                     <h3>Optimization</h3>
                     <p>
-                        The main change from the original paper is to convert the method of image feature extraction using CPU to GPU. We will add a function based on our mentor's original code that can detect image features using the GPU. We changed the finder of feature detection to use <code class="inline-code">cuda::ORB</code>, and based on the open source code of OpenCV CUDA, we used the corresponding CUDA ORB image feature detection algorithm to achieve the same purpose as its regular version. We call this new function
+                        The main change from the original paper is to convert the method of image feature extraction using CPU to GPU. We will add a function based on the code of the original paper that can detect image features using the GPU. We changed the finder of feature detection to use <code class="inline-code">cuda::ORB</code>, and based on the open source code of OpenCV CUDA, we used the corresponding CUDA ORB image feature detection algorithm to achieve the same purpose as its regular version. We call this new function
                     </p>
 
 <div style="text-align: center; margin: 25px 0;  overflow: auto;">
     <pre class="console" style="display:inline-block;"><samp>    void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const cuda::GpuMat& img,ImageFeatures& features)    </samp></pre>
 </div>
                     <p>
-                        to compute GPU images. This is an analogous version of the <code class="inline-code">detectAndCompute</code> function when using regular feature detector ORB. The key feature in this function is the computation of descriptors on the GPU. To do this, we must upload the images from the CPU to the GPU, and then download it back to the CPU.
+                        to compute GPU images. This is an analogous version of the <code class="inline-code">detectAndCompute</code> function when using regular feature detector ORB. The key feature in this function is the computation of descriptors on the GPU. To do this, we must upload the descriptors from the CPU to the GPU, and then download it back to the CPU.
                     </p>
 <div class="box" style="margin: 30px 0;">
     <div class="code-container">
         <button class="copy-btn">Copy</button>
-        <pre class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// A peak inside computeImageFeatures
+        <pre class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// A peak inside computeImageFeatures()
 
 cuda::GpuMat keypointsGPU;
 orb->detectAndComputeAsync(grayImg, cuda::GpuMat(), keypointsGPU, descriptorsGPU);
@@ -314,7 +323,7 @@ if (keypointsCPU.empty()) {
     LOGLN("No keypoints detected on GPU");
     throw std::runtime_error("No keypoints detected on GPU");
 }
-LOGLN("Keypoints detected on GPU: " << keypointsCPU.size());
+cerr "Keypoints detected on GPU: " << keypointsCPU.size() << endl;
 
 if (descriptorsGPU.empty()) {
     LOGLN("Descriptor computation failed on GPU");
@@ -353,8 +362,17 @@ features.img_size = grayImg.size();
 
             <section id="results-and-benchmarks">
                 <h2>Results and Benchmarks</h2>
+                <p>
+                    The data set for this project is sixty-four 4k images, each with a resolution of 3840 $\times$ 2160 px. We will utilize CUDA to accelerate the processing of high-resolution images.
+                </p> 
 
+                <p>
+                    <strong>CPU Implementation.</strong> We will evaluate the algorithm's performance under different conditions, including with and without CUDA acceleration. In the absence of CUDA acceleration, we will record the impact of distributed memory design (utilizing MPI) and shared memory design (utilizing OpenMP) on the algorithm's speed. Given our limited resources, we will test the processing speed using 1, 2, 4, 8, 16, and 32 CPU cores, as well as using 1, 2, 4, 8, 16, 24 threads, and 32 threads.
+                </p>
 
+                <p>
+                    <strong>GPU Implementation.</strong> For the CUDA-accelerated version of the algorithm, the tests will concentrate exclusively on the distributed memory design. This focus is due to the current limitations of the experiment, which prevent us from utilizing the GPU implementation across multiple threads. In simple words, OpenMP is not available for CUDA. I am still working on this problem.
+                </p>
                 <figure>
                     <img src="no_openmp.png" alt="Final Map" class="image-block" style="width: 60%">
                 </figure>

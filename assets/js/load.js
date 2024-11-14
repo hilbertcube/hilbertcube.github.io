@@ -403,7 +403,9 @@ $(document).ready(function() {
     $(".highlights-and-attribute").load(ROOT + "/assets/source/highlights-and-attribute.html", function(){
         loadAndSetupSuggestions();
     });
-    $("#logo").load(ROOT + "/assets/source/logo.html");
+    $("#logo").load(ROOT + "/assets/source/logo.html", function(){
+        setLogo();
+    });
     $(".footer").load(ROOT + "/assets/source/footer.html",  function() {
         currentYear();
     });

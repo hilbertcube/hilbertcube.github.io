@@ -30,7 +30,7 @@
     </nav>
 
     <div class="content-grid" id="content-grid">
-        <div class="home-banner" id="home-banner"></div><script src="/neumanncondition/assets/js/canvas-banner.js"></script>
+        <div class="home-banner" id="home-banner"></div>
         <div class = "general-wrapper" id="home">
             <div class = "topic">
                 Homepage
@@ -51,7 +51,7 @@
                     </a>
                 </div>
                 <div>
-                    <img style="width: 75%;" class="image"  src = "/neumanncondition/public/Images/O_n_filter.png">
+                    <img style="width: 75%;" class="image" id="timeComplexityImage">
                     <figcaption class="caption"> Linear runtime illustration.</figcaption>
                 </div>
             </div>
@@ -84,8 +84,32 @@
     
     <div class="footer"></div>
     <script src="/neumanncondition/assets/js/scripts.js"></script>
-    <script src="/neumanncondition/assets/js/load.js"></script>
-    <script src="/neumanncondition/assets/js/homepage-setting.js"></script>
+    <script>
+        fetch(ROOT + '/assets/json/suggestions.json')
+            .then(response => response.json())
+            .then(data => {
+                const articles = data.articles;
+                //console.log('Number of articles:', articles.length);
+                article(articles.length, true, false);
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+
+        const timeComplexitySrc = ROOT + "/public/Images/O_n_filter.png";
+        document.getElementById("timeComplexityImage").src = timeComplexitySrc;
+
+        function LoadScript(source, scriptId){
+            const jsSrc = ROOT + source;
+            const scriptElement = document.createElement("script");
+            scriptElement.id = scriptId;
+            scriptElement.src = jsSrc;
+            document.head.appendChild(scriptElement);
+        }
+
+        LoadScript("/assets/js/load.js", "jsLoad");
+        LoadScript("/assets/js/canvas-banner.js", "bannerScript");
+    </script>
+    <script id="jsLoad"></script>
+    <script id="bannerScript"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
     <script>
