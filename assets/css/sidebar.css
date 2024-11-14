@@ -120,7 +120,7 @@ header.major {
     overflow: hidden;
 }
 
-.logo-img {
+#logoImage {
     display: block;
     object-fit: contain;
     width: 80%;
@@ -129,7 +129,7 @@ header.major {
     transition: transform 0.2s ease;
 }
 
-.logo-img:hover {
+#logoImage:hover {
     transform: scale(1.05);
 }
 

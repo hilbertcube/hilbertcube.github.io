@@ -45,6 +45,14 @@ function navigateToImage(element) {
 }
 
 
+// LOGO
+function setLogo(){
+    const imageSrc = ROOT + "/public/Images/Logo/pendulum_logo.png";
+    document.getElementById("logoImage").src = imageSrc;
+}
+
+
+
 // SIDE NAV
 function toggleNav() {
     var navbar = document.getElementById('navbar');
