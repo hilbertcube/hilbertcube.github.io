@@ -55,7 +55,7 @@
                         <li><a href="#optimization">Optimization</a></li>
                     </ul>
                 </li>
-                <li><a href="#results-and-benchmarks">Results and Benchmarks</a></li>
+                <li><a href="#benchmarks">Data Collection and Benchmarks</a></li>
                 <li><a href="#future-work">Ending Remarks and Future Work</a></li>
                 <li><a href="#References">References</a></li>
             </ul>
@@ -360,10 +360,10 @@ features.img_size = grayImg.size();
             <!--  -->
 
 
-            <section id="results-and-benchmarks">
-                <h2>Results and Benchmarks</h2>
+            <section id="benchmarks">
+                <h2>Data Collection and Benchmarks</h2>
                 <p>
-                    The data set for this project is sixty-four 4k images, each with a resolution of 3840 $\times$ 2160 px. We will utilize CUDA to accelerate the processing of high-resolution images.
+                    The data set for this project is a set of sixty-four 4k images, each with a resolution of 3840 $\times$ 2160 px. We will utilize CUDA to accelerate the processing of these high-resolution images.
                 </p> 
 
                 <p>
@@ -373,6 +373,91 @@ features.img_size = grayImg.size();
                 <p>
                     <strong>GPU Implementation.</strong> For the CUDA-accelerated version of the algorithm, the tests will concentrate exclusively on the distributed memory design. This focus is due to the current limitations of the experiment, which prevent us from utilizing the GPU implementation across multiple threads. In simple words, OpenMP is not available for CUDA. I am still working on this problem.
                 </p>
+
+                <div class="two-columns-block" style="margin: 30px 0 10px; column-gap: 1.2em;">
+                    <div>
+                        <span style="font-size: large;"><strong>Performance Testing without CUDA Acceleration</strong></span>
+                        <ul style="line-height: 1.6;">
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Benchmark Test:</strong> Record the processing speed of 64 images without any optimization, which will serve as the initial benchmark for the experiment.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Single-Core Execution (Serial Processing):</strong> Test the processing speed of 64 images using a single CPU core.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Distributed Memory Design (Parallel Processing):</strong> Test the processing speed for 1, 2, 4, 8, 16, and 32 CPU cores.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Single-Core Execution and Shared Memory Design (Serial Threading):</strong> Test the processing speed for 1, 2, 4, 8, 16, 24, and 32 threads with 1 core.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Distributed Memory and Shared Memory Design (Parallel Processing and Multi-threading):</strong> Test the processing speed using combinations such as 2 cores 2 threads, 2 cores 4 threads, 4 cores 2 threads, 4 cores 4 threads, etc.
+                            </li> 
+                        </ul>
+                    </div>
+                    <div>
+                        <span style="font-size: large;"><strong>Performance Testing with CUDA Acceleration</strong></span>
+                        <ul style="line-height: 1.6;">
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Benchmark Test:</strong> Record the processing speed of 64 images under the optimized design of 1 core and 1 threads with CUDA was recorded as the second part experimental initial benchmark.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Single-Core Execution (Serial Processing):</strong> Test the processing speed of 64 images using a single CPU core and GPU acceleration with 1 core.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                <strong>Distributed Memory Design (Parallel Processing and Serial-threading):</strong> Test the processing speed using 1, 2, 4, 8, 16, and 24 CPU cores with GPU acceleration.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p><strong>Experimental Setup:</strong> The data collection process will be conducted on two different computers:</p>
+                
+                <div class="table-wrapper">
+                    <table style="margin-left: auto; margin-right: auto; text-align: center; min-width: 70%;" id="setup-table">
+                        <tr style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);">
+                            <th></th>
+                            <th style="border-left: 1px solid var(--grid-text-color)"><strong>First Setup</strong></th>
+                            <th><strong>Second Setup</strong></th>
+                        </tr>
+                        <tr style="border: 0; ">
+                            <td>CPU</td>
+                            <td style="border-left: 1px solid var(--grid-text-color)">Intel Core i7-8750H</td>
+                            <td>Intel Core i9-13900KF</td>
+                        </tr>
+                        <tr>
+                            <td>GPU</td>
+                            <td style="border-left: 1px solid var(--grid-text-color)">NVIDIA GTX 1070 Max-Q</td>
+                            <td>NVIDIA RTX 4060Ti</td>
+                        </tr>
+                        <tr>
+                            <td>OpenCV Version</td>
+                            <td style="border-left: 1px solid var(--grid-text-color)">OpenCV 4.10.0</td>
+                            <td>OpenCV 4.10.0</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td style="border-left: 1px solid var(--grid-text-color)">16GB</td>
+                            <td>32GB</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--grid-text-color);">
+                            <td>GPU Memory</td>
+                            <td style="border-left: 1px solid var(--grid-text-color)">8GB</td>
+                            <td>16GB</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <p>
+                    There will be some differences in the data obtained from the two setups. The CPU used in lab setup 1 has only 6 cores, so the data obtained using setup 1 will be only from 1, 2, 4, and at most 8 cores (overhead). We also use different running memories to compare whether the calculation results of the algorithm will be affected by different running memories.
+                </p>
+                
+
+            </section>
+
+
+            <section>
+                <h2>Results</h2>
                 <figure>
                     <img src="no_openmp.png" alt="Final Map" class="image-block" style="width: 60%">
                 </figure>
@@ -381,8 +466,6 @@ features.img_size = grayImg.size();
                     <img src="with_openmp.png" alt="Final Map" class="image-block" style="width: 60%">
                 </figure>
             </section>
-
-
 
 
 
