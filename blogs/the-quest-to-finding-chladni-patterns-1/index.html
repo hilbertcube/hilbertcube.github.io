@@ -222,19 +222,19 @@
                         Depends on whether you clamp your edge or not, clamp the edge partially, or simply support the plate by placing some other objects below the plate; the boundary condition may be different. For this project, we will emphasize the free boundary condition. That is, only the wave generator supports the plate.
                     </p>
 
-                    <table style="margin-left: auto; margin-right: auto;" id="boundary-table">
-                        <tr style="border-top: 2px solid var(--grid-text-color); text-align: center;">
+                    <table style="margin-left: auto; margin-right: auto; text-align: center;" id="boundary-table">
+                        <tr style="border-top: 2px solid var(--grid-text-color); text-align: center; border-bottom: 1px solid var(--grid-text-color);">
                             <th>Type of Boundary</th>
                             <th style="text-align: center;">Boundary Condition</th>
                         </tr>
                         <tr>
-                            <td>Clamped (fixed) edge </td> <td style="text-align: center;">$u(\pm a, y, t) = u(x, \pm a, t) = 0$</td>
+                            <td>Clamped (fixed) edge </td> <td>$u(\pm a, y, t) = u(x, \pm a, t) = 0$</td>
                         </tr>
                         <tr>
-                            <td>Moving edge</td> <td style="text-align: center;">$u(a, y, t_0) = f(y, t)$</td>
+                            <td>Moving edge</td> <td>$u(a, y, t_0) = f(y, t)$</td>
                         </tr>
-                        <tr>
-                            <td>Free edge</td> <td style="text-align: center;"> $\pd{u}{x}(\pm a, y, t) = \pd{u}{y}(x, \pm a, t) = 0$</td>
+                        <tr style="border-bottom: 1px solid var(--grid-text-color);">
+                            <td>Free edge</td> <td> $\pd{u}{x}(\pm a, y, t) = \pd{u}{y}(x, \pm a, t) = 0$</td>
                         </tr>
                     </table>
 

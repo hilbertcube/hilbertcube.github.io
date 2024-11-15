@@ -38,13 +38,13 @@
             "date": ""
         },
         {
-            "title": "Simulating the Brachistochrone problem",
-            "id": "brachistochrone-1",
-            "image": "brachistochrone.jpg",
-            "link": "https://example.com/js-event-loop",
-            "topic": "Python, Calculus of Variations",
-            "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
-            "date": ""
+            "title": "How to find maxima and minima of an n-th dimensional function",
+            "id": "hessian-1",
+            "image": "3d_function.png",
+            "link": "/blogs/maximum-and-minimum",
+            "topic": "Python, Hessian Matrix, Fermat's Theorem",
+            "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
+            "date": "May 25, 2024"
         },
         {
             "title": "Green's Function",
@@ -65,21 +65,21 @@
             "date": ""
         },
         {
-            "title": "How to find maxima and minima of an n-th dimensional function",
-            "id": "hessian-1",
-            "image": "3d_function.png",
-            "link": "/blogs/maximum-and-minimum",
-            "topic": "Python, Hessian Matrix, Fermat's Theorem",
-            "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
-            "date": "May 25, 2024"
-        },
-        {
             "title": "Slightly More Interesting Inertia Problems",
             "id": "moi-1",
             "image": "inertia.gif",
             "link": "/blogs/moment-of-inertia",
             "topic": "Classical Mechanics, Dynamics of Rotation",
             "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations. This article explore more about moment of inertia of interesting shapes.",
+            "date": ""
+        },
+        {
+            "title": "Simulating the Brachistochrone problem",
+            "id": "brachistochrone-1",
+            "image": "brachistochrone.jpg",
+            "link": "https://example.com/js-event-loop",
+            "topic": "Python, Calculus of Variations",
+            "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
             "date": ""
         }
     ]

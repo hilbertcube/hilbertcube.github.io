@@ -103,11 +103,11 @@ mjx-container[jax="CHTML"][display="true"] {
     font-weight: bold;
 } */
 body{
-    counter-reset: fig table_ theorem problem;
+    counter-reset: fig table_ theorem problem def;
 }
 
 
-.theorem, .problem {
+.theorem, .problem, .definition {
     position: relative;
     border-radius: 4px;
     margin: 30px 0;
@@ -117,7 +117,7 @@ body{
     overflow: hidden;
 }
 
-.theorem::before, .problem::before {
+.theorem::before, .problem::before, .definition::before {
     position: absolute;
     top: 0;
     left: 0;
@@ -135,6 +135,16 @@ body{
     counter-increment: theorem;
     background-color: rgba(0, 184, 212, 0.2);
     content: "Theorem " counter(theorem) attr(data-theorem-name) ". ";
+}
+
+.definition{
+    border: 1px solid #006a27;
+}
+
+.definition::before{
+    counter-increment: def;
+    background-color: rgba(0, 212, 28, 0.2);
+    content: "Definition " counter(def) attr(data-definition-name) ". ";
 }
 
 .problem{
