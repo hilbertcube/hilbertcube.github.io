@@ -105,7 +105,7 @@
                 <section id= "Introduction">
                     <h3>Introduction</h3>
                     <p>
-                        Assuming that you are in a region where natural disasters rampage. Landscape can change, buildings can collapse, and outdated map requires immediate, detailed, and accurate updates. This problem can be addressed by using Unmanned Aerial Vehicle(s) (UAV) to capture images of the area, and then stitch them together using existing computer-vision technologies. The true issue lies in how fast we can do this, as accurate updates mean that multiple high-quality images will be processed, and thus slows down the process due to highly expensive computational processes. One option is multi-core and multi-threads processing, but we can do better by utilizing the Graphic Processing Unit.
+                        Assuming that you are in a region where natural disasters rampage. Landscape can change, buildings can collapse, and outdated map requires immediate, detailed, and accurate updates. This problem can be addressed by using Unmanned Aerial Vehicle(s) (UAV) to capture images of the area, and then stitch them together using existing computer-vision technologies. The true issue lies in how fast we can do this, as accurate updates mean that multiple high-quality images will be processed, and thus slows down the process due to highly expensive computational processes. One option is multi-core and multi-threads processing. But can we do better? The answer is yes, through the modern architecture behind the Graphic Processing Unit (GPU).
                     </p>
                     
                     <div class="two-columns-block">
@@ -538,7 +538,7 @@ features.img_size = grayImg.size();
                         I initially ran our code on Setup 1. The original goal of this research is to be able to stitch 64 4K images, but due to the limited resources of the first setup, I had to downscale the image by 75% from their original quality to 540$\times$960 px.
                     </p>
                     <p>
-                        The GPU implementation significantly outperformed the original CPU-based image stitching, reducing the runtime by a factor of three to four. However, as the number of used cores exceeded the available physical cores, the application began to slow down: all components of the system were operating at their limits: the CPU was running at 100%, the RAM was fully utilized at 16GB, and the GPU memory was maxed out at 8GB. This likely due to the context switching that the system had to perform.
+                        The GPU implementation significantly outperformed the original CPU-based image stitching, reducing the runtime by a factor of three to four. However, as the number of used cores exceeded the available physical cores, the application began to slow down: all components of the system were operating at their limits: the CPU was running at 100%, the RAM was fully utilized at 16GB, and the GPU memory was maxed out at 8GB. This likely due to the context switching that the system had to perform when running out of physical cores.
                     </p>
                     <p>                    
                         One interesting thing for the first setup is that the GPU implementation was able to run up to 8 CPU cores, but the original implementation could only run up to 4 cores. One possible reason for this is that the GPU shared the resources with the CPU while performing the algorithm, which put less constraint on the CPU, and hence pushed the number of cores to the limit.
@@ -549,6 +549,11 @@ features.img_size = grayImg.size();
 
                 <section id="speedup">
                     <h3>Speedup</h3>
+                    
+                    <p>
+                        Even though the runtime has massively decreased under the usage of CUDA, the speedup ratio does not stand out among the CPU with the OpenMP dataset, but it did, however, speedup in all scenarios of cores against CPU with 1 thread, which is reasonable since our GPU setup also uses only one thread of the CPU (no OpenMP available for GPU).One possible reason why the GPU doesn’t speed up as fast is due to the uploading and downloading of images to the GPU, which costs much more resources due to the high quality of the image patch.
+                    </p>
+
                     <figure>
                         <img src="speedup.png" alt="Final Map" class="image-block" style="width: 60%">
                     </figure>
@@ -557,6 +562,11 @@ features.img_size = grayImg.size();
 
                 <section id="cost">
                     <h3>Cost</h3>
+                    
+                    <p>
+                        In parallel computing, resource inefficiency occurs when parts of a process are forced to wait for others to complete, reducing overall performance. As observed, the cost of the GPU implementation is much lower than every other previous CPU implementations. This is not a surprise at all, as GPUs, optimized for massively parallel tasks, often provide significantly better performance for certain applications compared to traditional CPU implementations, resulting in lower operational costs for these specific workloads.
+                    </p>
+
                     <figure>
                         <img src="cost.png" alt="Final Map" class="image-block" style="width: 60%">
                     </figure>
@@ -565,10 +575,16 @@ features.img_size = grayImg.size();
 
                 <section id="efficiency">
                     <h3>Efficiency</h3>
+                    
+                    <p>
+                        For efficiency, the CUDA-enhanced algorithm is less efficient than the CPU with 1 thread setup, but is overall more efficient than other CPU setups as the number of cores increases. The efficiency of the GPU implementation eventually matches that of the CPU, 1 thread implementation as $p=32$.
+                    </p>
+
                     <figure>
                         <img src="efficiency.png" alt="Final Map" class="image-block" style="width: 60%">
                     </figure>
                 </section>
+                
             </section>
 
 
@@ -576,6 +592,13 @@ features.img_size = grayImg.size();
 
             <section id="future-work">
                 <h2>Ending Remarks and Future Work</h2>
+
+                <p>
+                    One significant drawback to the CUDA-accelerated algorithm is that it is a generally memory-costly method. However, if the user lacks a high-quality camera or needs to create a map quickly without focusing on fine details, the image patch can be downscaled to meet these requirements. This approach has been validated in the first setup, where the 4K patch was downscaled by 75% and worked perfectly. This can be achieved easily by modifying a small section in the code, but this is not the main discussion of this article. Another issue with the 4K patch is that it was not able to stitch parts of the map where there are rotations due to memory issues. After careful inspection, it is deduced that this is not a problem with the code, but due to memory issues, since if we stitch the same patch with downscaled quality, it was able to stitch the patch successfully without any problem.
+                </p>
+                <p>
+                    Integrating shared memory design for multi-threading with the GPU is still an open problem, and I plan to address this in future projects to accelerate the algorithm even further. The ultimate goal of this project is to process 64 frames of 4K images in one second. Another objective is perhaps to resurvey the memory management in the code base to ensure that the program does not crash when the input is too large and to generate more consistent and reliable results.
+                </p>
             </section>
 
 
