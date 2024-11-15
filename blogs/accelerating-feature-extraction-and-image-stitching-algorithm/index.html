@@ -56,6 +56,15 @@
                     </ul>
                 </li>
                 <li><a href="#benchmarks">Data Collection and Benchmarks</a></li>
+                <li><a href="#results">Results</a>
+                    <ul>
+                        <li><a href="#performance-metrics">Performance Metrics</a></li>
+                        <li><a href="#runtime">Runtime Comparison</a></li>
+                        <li><a href="#speedup">Speedup</a></li>
+                        <li><a href="#cost">Cost</a></li>
+                        <li><a href="#efficiency">Efficiency</a></li>
+                    </ul>
+                </li>
                 <li><a href="#future-work">Ending Remarks and Future Work</a></li>
                 <li><a href="#References">References</a></li>
             </ul>
@@ -458,16 +467,116 @@ features.img_size = grayImg.size();
 
             <section>
                 <h2>Results</h2>
-                <figure>
-                    <img src="no_openmp.png" alt="Final Map" class="image-block" style="width: 60%">
-                </figure>
 
-                <figure>
-                    <img src="with_openmp.png" alt="Final Map" class="image-block" style="width: 60%">
-                </figure>
+                <section id="performance-metrics">
+                    <h3>Performance Metrics</h3>
+
+
+                    <div class="definition" data-definition-name=" (Serial and Parallel Runtime)">
+                        The serial and parallel runtime of a program are defined as follows:
+                        <ol type="i" style="line-height: 1.6;">
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                The Serial runtime of a program is the time between the beginning and the end of its execution on a sequential processor. We denote this by $T_S$.
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                Parallel runtime is the time from the moment the first processor begins its execution to the moment the last processor ends its execution. We denote this by $T_P$.
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="definition" data-definition-name=" (Speedup)">
+                        Speedup is defined as the ratio between the serial runtime to the time taken by parallel runtime,
+                        <div class="equation">
+                            \begin{equation}
+                                S=\frac{T_S}{T_P}
+                            \end{equation} 
+                        </div>  
+                        The speedup of a parallel algorithm measures how much faster an algorithm is than its sequential counterpart.
+                    </div>
+
+                    <div class="definition" data-definition-name=" (Cost)">
+                        The cost of processing a program on a parallel system is defined as the product of run time and the number of processors,
+                        <div class="equation">
+                            \begin{equation}
+                                C = T_P\cdot p,
+                            \end{equation} 
+                        </div> 
+                        where $p$ denotes the number of processors.
+                    </div>
+
+                    <div class="definition" data-definition-name=" (Efficiency)">
+                        The efficiency of a parallel program that uses $p$ processors is defined by
+                        <div class="equation">
+                            \begin{equation}
+                                E = \frac{T_S}{p\cdot T_P}=\frac{S}{p}
+                            \end{equation}  
+                        </div>
+                    </div>
+                </section>
+
+                <section id="runtime">
+                    <h3>Runtime Comparison</h3>
+                    <p>
+                        As mentioned, I will compare the two runtime of the setup with, and without multi-threading.
+                    </p>
+                    <div class="two-columns-block">
+                        <div>
+                            <figure style="padding: 0; margin: 0;">
+                                <img src="no_openmp.png" alt="Final Map" class="image-block" style="width: 100%; padding: 0;">
+                            </figure>
+                            <figcaption>Without OpenMP for CPU vs GPU (1 thread)</figcaption>
+                        </div>
+                        <div>
+                            <figure style="padding: 0; margin: 0;">
+                                <img src="with_openmp.png" alt="Final Map" class="image-block" style="width: 100%; padding: 0;">
+                            </figure>
+                            <figcaption>With OpenMP for CPU vs GPU (1 thread)</figcaption>
+                        </div>
+                    </div>
+
+                    <p>
+                        I initially ran our code on Setup 1. The original goal of this research is to be able to stitch 64 4K images, but due to the limited resources of the first setup, I had to downscale the image by 75% from their original quality to 540$\times$960 px.
+                    </p>
+                    <p>
+                        The GPU implementation significantly outperformed the original CPU-based image stitching, reducing the runtime by a factor of three to four. However, as the number of used cores exceeded the available physical cores, the application began to slow down: all components of the system were operating at their limits: the CPU was running at 100%, the RAM was fully utilized at 16GB, and the GPU memory was maxed out at 8GB. This likely due to the context switching that the system had to perform.
+                    </p>
+                    <p>                    
+                        One interesting thing for the first setup is that the GPU implementation was able to run up to 8 CPU cores, but the original implementation could only run up to 4 cores. One possible reason for this is that the GPU shared the resources with the CPU while performing the algorithm, which put less constraint on the CPU, and hence pushed the number of cores to the limit.
+                    </p>
+                </section>
+
+
+
+                <section id="speedup">
+                    <h3>Speedup</h3>
+                    <figure>
+                        <img src="speedup.png" alt="Final Map" class="image-block" style="width: 60%">
+                    </figure>
+                </section>
+
+
+                <section id="cost">
+                    <h3>Cost</h3>
+                    <figure>
+                        <img src="cost.png" alt="Final Map" class="image-block" style="width: 60%">
+                    </figure>
+                </section>
+
+
+                <section id="efficiency">
+                    <h3>Efficiency</h3>
+                    <figure>
+                        <img src="efficiency.png" alt="Final Map" class="image-block" style="width: 60%">
+                    </figure>
+                </section>
             </section>
 
 
+
+
+            <section id="future-work">
+                <h2>Ending Remarks and Future Work</h2>
+            </section>
 
 
 

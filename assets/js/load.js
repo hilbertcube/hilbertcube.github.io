@@ -395,7 +395,7 @@ function currentYear(){
 }
 
 
-const font_size = ['p' ,'.material-description', '.theorem', '.reference', '.solution', '.problem', '.two-columns-block'];
+const font_size = ['p' ,'.material-description', '.theorem', '.reference', '.solution', '.problem', '.two-columns-block', 'section'];
 
 
 $(document).ready(function() {
