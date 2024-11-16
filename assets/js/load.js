@@ -404,7 +404,7 @@ $(document).ready(function() {
         loadAndSetupSuggestions();
     });
     $("#logo").load(ROOT + "/assets/source/logo.html", function(){
-        setLogo();
+        setImage("logoImage", "/public/Images/Logo/pendulum_logo.png");
     });
     $(".footer").load(ROOT + "/assets/source/footer.html",  function() {
         currentYear();

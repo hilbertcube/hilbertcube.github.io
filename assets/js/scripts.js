@@ -6,19 +6,17 @@ MathJax = {
     }
 };
 
-// window.addEventListener('load', () => {
-//     if (typeof MathJax !== 'undefined') {
-//       document.querySelectorAll('.equation').forEach(section => {
-//         MathJax.typesetPromise([section]).catch((err) => console.log(err.message));
-//       });
-//     } else {
-//       console.log("MathJax did not load correctly.");
-//     }
-//   });
+function LoadScript(scriptId, source){
+    const jsSrc = ROOT + source;
+    const scriptElement = document.createElement("script");
+    scriptElement.id = scriptId;
+    scriptElement.src = jsSrc;
+    document.head.appendChild(scriptElement);
+}
 
 
-//  /neumanncondition
-const ROOT = '';
+//////////////////// ROOT ////////////////////
+const ROOT = ''; // /neumanncondition
 
 // TAB ICON
 const link = document.createElement('link');
@@ -47,17 +45,14 @@ function navigateToImage(element) {
 }
 
 
-// LOGO
-function setLogo(){
-    const imageSrc = ROOT + "/public/Images/Logo/pendulum_logo.png";
-    document.getElementById("logoImage").src = imageSrc;
+// SET IMAGE DYNAMICALLY
+function setImage(imageId, source){
+    const imageSrc = ROOT + source;
+    document.getElementById(imageId).src = imageSrc;
 }
 
 
-
-
-// Select the element
-
+// SET BANNER
 function setBanner(){
     const imageUrl = ROOT + '/public/Images/code-banner.PNG';
     const banner = document.querySelector('.right-section-banner');
@@ -492,12 +487,7 @@ function sharePage(event, platform) {
 
 
 
-class equation extends HTMLElement {
-    constructor() {
-      super();
-    }
-    // Element functionality written in here
-}
+
 
 
 const solutionDefaultOpen = true;

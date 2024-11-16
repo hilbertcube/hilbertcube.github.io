@@ -93,19 +93,10 @@
             })
             .catch(error => console.error('Error loading JSON:', error));
 
-        const timeComplexitySrc = ROOT + "/public/Images/O_n_filter.png";
-        document.getElementById("timeComplexityImage").src = timeComplexitySrc;
-
-        function LoadScript(source, scriptId){
-            const jsSrc = ROOT + source;
-            const scriptElement = document.createElement("script");
-            scriptElement.id = scriptId;
-            scriptElement.src = jsSrc;
-            document.head.appendChild(scriptElement);
-        }
-
-        LoadScript("/assets/js/load.js", "jsLoad");
-        LoadScript("/assets/js/canvas-banner.js", "bannerScript");
+        setImage("timeComplexityImage", "/public/Images/O_n_filter.png");
+        
+        LoadScript("jsLoad", "/assets/js/load.js");
+        LoadScript("bannerScript", "/assets/js/canvas-banner.js");
     </script>
     <script id="jsLoad"></script>
     <script id="bannerScript"></script>
