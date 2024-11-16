@@ -16,7 +16,9 @@ MathJax = {
 //     }
 //   });
 
-const ROOT = '/neumanncondition';
+
+//  /neumanncondition
+const ROOT = '';
 
 // TAB ICON
 const link = document.createElement('link');
@@ -49,6 +51,17 @@ function navigateToImage(element) {
 function setLogo(){
     const imageSrc = ROOT + "/public/Images/Logo/pendulum_logo.png";
     document.getElementById("logoImage").src = imageSrc;
+}
+
+
+
+
+// Select the element
+
+function setBanner(){
+    const imageUrl = ROOT + '/public/Images/code-banner.PNG';
+    const banner = document.querySelector('.right-section-banner');
+    banner.style.backgroundImage = `url("${imageUrl}")`;
 }
 
 
