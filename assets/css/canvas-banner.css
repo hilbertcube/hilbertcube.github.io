@@ -79,7 +79,6 @@ body.nav-open{
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    background-image: url("/neumanncondition/public/Images/code-banner.PNG");
     background-repeat: no-repeat;
     background-size: cover;
     
