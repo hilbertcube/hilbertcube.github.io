@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="subject" content='here'>
     <meta name="description" content="here" />
-    <meta name="keywords" content="Image Stitching, CUDA, MPI, Openmp" />
+    <meta name="keywords" content="image stitching, CUDA, MPI, openmp, image processing, parallel processing, multi-core, multi-threads"/>
     <meta name="author" content="Don Le, ledongduu@gmail.com"/>
     <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
     <link rel="stylesheet" href="../../assets/css/main.css">
@@ -18,6 +18,14 @@
             border-radius: 10px;
             height: auto; 
             margin: auto;
+        }
+        #flowchart-caption{
+            width: 70%;
+        }
+        @media all and (max-width: 580px){
+            #flowchart-caption{
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -77,27 +85,28 @@
         
         <!-- CONTENTS -->
         <div class = "general-wrapper">
-            <div class = "topic">
-                Topics: C++/OpenCV/CUDA/MPI/OPENMP/Image-Stitching/
-            </div>
+            
             
             <div>
+                <div class = "topic">
+                    Topics: C++/OpenCV/CUDA/MPI/OPENMP/Image-Stitching/
+                </div>
                 <h1 class = "title">
                     Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA
                 </h1>
                 <div class="date">
                     Updated June 14, 2024.
                 </div>
+                <figure style="margin: 0;">
+                    <img class = "front-img" src = "banner.png" alt = "image">
+                </figure>
+                <div class="Quote">
+                    <div class="Quote-content">&#8220The images attempt to capture scientific thought. They represent the physical manifestation of the thought process. Everything in the laboratory is a product of a stream of conscious or unconscious thought.&#8221</div>
+                    <div class="Author">- Peter Fraser</div>
+                </div>
             </div>
            
-            <figure style="margin: 0;">
-                <img class = "front-img" src = "banner.png" alt = "image">
-            </figure>
-
-            <div class="Quote">
-                <div class="Quote-content">&#8220The images attempt to capture scientific thought. They represent the physical manifestation of the thought process. Everything in the laboratory is a product of a stream of conscious or unconscious thought.&#8221</div>
-                <div class="Author">- Peter Fraser</div>
-            </div>
+            
             
 
             <section id="feature-extraction">
@@ -285,7 +294,7 @@
                     </p>
                     <figure>
                         <img src="flowchart.png" alt="Final Map" class="image-block" style="width: 90%">
-                        <figcaption>Image Stitching workflow, green boxes are the steps that utilize CUDA.</figcaption>
+                        <figcaption id="flowchart-caption">Image Stitching workflow. Green are the steps that can be further accelerated with CUDA, and blue are steps that can be further accelerated with OpenMP.</figcaption>
                     </figure>
                     <p>
                         In order to further improve the speed of image processing, the author of the CPU implementation used a distributed memory design to parallelize image processing. Distributed memory designs transfer information between multiple CPU cores through MPI, with each or more CPU cores processing two images as a node. The greater the number of CPU cores, the greater the number of images that can be processed simultaneously in parallel without the need to wait for earlier images in the list to complete processing before processing later images. For example, if one wishes to concatenate four images, one can use two CPU cores for parallel processing.
