@@ -48,6 +48,9 @@
                 I'm also a math and computer science tutor. I left some of my personal notes in the <b>Notes</b> section above, feel free to use them.
             </p>
             <p>
+                About the logo: that's the trajectory of a double pendulum in a simulation.
+            </p>
+            <p>
                 I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar. Some other tools I used are <a href="https://www.mathjax.org/" class="url">MathJax</a>, a javascript library that helps display fancy equation like this:
                 <div class="equation">
                     $$
@@ -98,9 +101,8 @@ ostream& operator << (ostream& os, const vector<S>& vector){
     if(vector.empty())
         os << "No element found";
     else{
-        for(auto element: vector){
+        for(auto element: vector)
             os << element << " ";
-        }
     }
     return os;
 }
@@ -123,11 +125,18 @@ int main(){
 </div>
 
 
-            
 
-            <p>About the logo: that's the trajectory of a double pendulum simulation. The general layout of this website should be completed, but I will still add some new features every once in a while, if I have time. This website is still relatively new anyway.</p>
-
-
+            <p>
+                The general layout of this website should be completed, but I will still add some new features every once in a while, if I have time. This website is still relatively new anyway.
+            </p>
+            <p>
+                Some features I might add in the future:
+            </p>
+            <ul style="line-height: 1.6;">
+                <li style="margin: var(--in-page-li-spacing) 0;">A comment system.</li>
+                <li style="margin: var(--in-page-li-spacing) 0;">A screen reader for better accessibility.</li>
+                <li style="margin: var(--in-page-li-spacing) 0;">Export page as pdf.</li>
+            </ul>
         </div>
     </div>
     <!--Master grid ends here-->
