@@ -568,6 +568,9 @@ ol.steps .step::before{
     font-style: italic;
     position: relative;
 }
+@media all and (max-width: 580px){
+    .Quote{width: 100%;}
+}
 .Quote-content{
     font-size: 1.1em;    
     -webkit-hyphens: auto;
