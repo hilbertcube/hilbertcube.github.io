@@ -3,7 +3,15 @@
     --inline-code-color: rgb(226, 226, 226);
     --box-border: #ddd;
     --pre-color: #f7f7f7;
+    /* aliceblue */
+    --tab-color: #ededed; 
 }
+body.dark-mode{
+    --pre-color: #1a1a1a;
+    --inline-code-color: rgb(55, 55, 55);
+    --tab-color: black;
+}
+
 .inline-code{
     font-size: 13px;
     background-color: var(--inline-code-color);
@@ -211,4 +219,30 @@ display: none;
 
 .solution li {
     padding-left: 0.5rem; /* Optional: Indent the bullet/number */
+}
+
+
+
+.tab-button-container{
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space:nowrap;
+}
+
+.tab-button{
+    -webkit-border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0px 0px; 
+    background-color: var(--pre-color);
+    border: 0px;
+    border-bottom: 1px solid var(--pre-color);
+    min-width: 80px;
+    font-size: 13px;
+    padding: 0.3rem;
+    color: inherit;
+}
+
+.tab-effect{
+    /* font-weight: 650; */
+    border-bottom: 1px solid blue;
+    background-color:var(--tab-color);
 }
