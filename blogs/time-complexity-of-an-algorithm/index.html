@@ -19,6 +19,21 @@
             height: auto; 
             margin: auto;
         }
+        .tab-button{
+            -webkit-border-radius: 4px 4px 0px 0px;
+            border-radius: 4px 4px 0px 0px; 
+            background-color: var(--pre-color);
+            border: 0px;
+            border-bottom: 1px solid var(--pre-color);
+            min-width: 80px;
+            font-size: 11px;
+            padding: 0.3rem;
+            color: inherit;
+        }
+        .tab-effect{
+            font-weight: 650;
+            border-bottom: 1px solid blue;
+        }
     </style>
 </head>
 
@@ -68,8 +83,211 @@
         
             
             
-            <h2 id= "Introduction">Introduction</h2>
-           
+            <section>
+                <h2 id= "Introduction">What is the Best Way to Compare Algorithms' Efficiency?</h2>
+
+                <p>
+                    Given two algorithms that perform the same task, what is the best way to compare their performance? At first glance, one might start by measuring the runtime of the two algorithms. However, this is not a reliable metric, as runtime is heavily dependent on the hardware and can be highly inconsistent due to real-world conditions. The better way would be a more theoretical approach.
+                </p>
+
+                <p>
+
+                </p>
+
+
+            </section>
+
+
+            <section>
+                <h2>When Does Time Complexity Start to Matter?</h2>
+
+                <p>
+                    Let's write a simple program to verify this.
+                </p>
+<div class="box" style="margin: 30px 0;">
+    <div class="tab-button-container">
+        <button class="tab-button tab-effect" onclick="changeTab(event, 'main-cpp', 'pseudo-tab')">main.cpp</button>
+        <button class="tab-button" onclick="changeTab(event, 'maximum_summation-h', 'pseudo-tab')">maximum_summation.h</button>
+        <button class="tab-button" onclick="changeTab(event, 'time_measure-py', 'pseudo-tab')">time.py</button>
+    </div>
+<div class="code-container">
+
+<pre style="border-radius: 0px 7px 7px 7px;" id="main-cpp" class="pseudo-tab line-numbers"><button class="copy-btn" style="position: absolute">Copy</button><code class="language-cpp"><script type="prism-cpp">// program to find two numbers from a sorted array that sum to a target
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <ctime>
+#include <cstdlib>
+#include <iomanip>
+#include <fstream> 
+#include <string> 
+#include "maximum_summation.h"
+
+using namespace std;
+using namespace std::chrono;
+
+int main(){
+    vector <int> A;
+    int upper_bound = 10000;
+    int lower_bound = -10000;
+
+    for(int j = 0; j < 3; j++){
+        string fileName = "python/timing_data" + to_string(j + 1)+".txt";
+        ofstream file(fileName);
+
+        cout << left << setw(10) << "n" << setw(15) << "time (milliseconds)" << endl;
+        cout << string(25, '-') << endl;
+
+        file << "n,time_ms" << endl;
+        for(int n = 1; n <= 500; n += 1) {
+            srand(time(0) + n);
+            A.reserve(n); 
+
+            for (int i = 0; i < n; ++i) {
+                int random_int = (rand()%(upper_bound - lower_bound)) + lower_bound;
+                A.push_back(random_int);
+            }
+
+            auto start = high_resolution_clock::now();
+            f[j](A);
+            auto end = high_resolution_clock::now();
+
+            auto duration_ms = duration_cast<duration<double, milli>>(end - start);
+
+            cout << left << setw(10) << n << setw(20) << fixed << setprecision(6) << duration_ms.count() << endl;
+            file << n << "," << fixed << setprecision(3) << duration_ms.count() << endl;
+
+            A.clear();
+            
+        }
+    }
+
+    // Run: g++ ec.cpp -o ec.exe; ./ec.exe
+    return 0;
+}
+</script></code></pre>
+
+<pre style="border-radius: 0px 7px 7px 7px; display: none;" id="maximum_summation-h" class="pseudo-tab line-numbers"><button class="copy-btn" style="position: absolute">Copy</button><code class="language-cpp"><script type="prism-cpp">#pragma once
+
+typedef int (*Function_Vector) (const std::vector<int>& A);
+
+// output the largest sum found in a sub-array
+// there should be sum_{i = 0}^{size} binom(size, i) = 2^n sub-arrays
+// and there should be 1 + 2 + ... + n = n(n + 1)/2 consecutive sub-arrays
+int maximumSummation1(const std::vector<int>& A) {
+    if (A.size() == 0) return 0;
+
+    int maxSoFar = A[0];
+    int maxEndingHere = A[0];
+
+    for (int i = 1; i < A.size(); i++) {
+        maxEndingHere = std::max(A[i], maxEndingHere + A[i]);   // O(1)
+        maxSoFar = std::max(maxSoFar, maxEndingHere);           // O(1)
+    }
+
+    return maxSoFar;
+}
+
+int maximumSummation2(const std::vector<int>& A){
+    if (A.size() == 0) return 0;
+
+    int max = A[0];
+    for(int i = 0; i < A.size(); i++){
+        int sum = 0;
+        for(int j = i; j < A.size(); j++){
+            sum += A[j];
+            if(sum > max)
+                max = sum;
+        }
+    }
+    return max;
+}   
+
+int maximumSummation3(const std::vector<int>& A){
+    if (A.size() == 0) return 0;
+
+    int max = A[0];
+    for(int i = 0; i < A.size(); i++){
+        for(int j = i; j < A.size(); j++){
+            int sum = 0;
+            for(int k = i; k <= j; k++){
+                sum += A[k];
+            }
+            if(sum > max)
+                max = sum;
+        }
+    }
+    return max;
+}
+
+Function_Vector f[] = {maximumSummation1, maximumSummation2, maximumSummation3};
+    
+</script></code></pre>
+
+
+<pre style="border-radius: 0px 7px 7px 7px; display: none;" id="time_measure-py" class="pseudo-tab line-numbers"><button class="copy-btn" style="position: absolute">Copy</button><code class="language-python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import font_manager as fm
+
+# Load the font for the plot
+font_path = 'fonts/computer-modern/cmunrm.ttf'
+prop = fm.FontProperties(fname=font_path)
+plt.rcParams['font.family'] = prop.get_name()
+
+# Load the data from the files
+file_names = ['python/timing_data1.txt', 'python/timing_data2.txt', 'python/timing_data3.txt']
+data_frames = [pd.read_csv(file) for file in file_names]
+
+# Prepare a list of colors for each dataset
+colors = ['red', 'green', 'blue']
+
+# Plot the cleaned data for each file
+plt.figure(figsize=(6, 6))
+plt.grid(True, linestyle='--')
+font_size = 14
+
+for i, data in enumerate(data_frames):
+    # Calculate IQR for the current dataset
+    Q1 = data[['n', 'time_ms']].quantile(0.25)
+    Q3 = data[['n', 'time_ms']].quantile(0.75)
+    IQR = Q3 - Q1
+    
+    # Define outlier thresholds
+    outlier_factor = 1.0
+    lower_bound = (Q1 - outlier_factor * IQR).to_dict()
+    upper_bound = (Q3 + outlier_factor * IQR).to_dict()
+    
+    # Filter out outliers
+    data_clean = data[~((data[['n', 'time_ms']] < lower_bound) | (data[['n', 'time_ms']] > upper_bound)).any(axis=1)]
+    
+    # Sort data_clean by 'n' to connect the points in order
+    data_clean = data_clean.sort_values('n')
+    
+    # Fit a linear model
+    coefficients = np.polyfit(data_clean['n'], data_clean['time_ms'], i + 1)
+    linear_fit = np.poly1d(coefficients)
+    
+    # Plot data points and linear fit
+    plt.plot(data_clean['n'], data_clean['time_ms'], marker='o', linestyle='None', 
+             color=colors[i], markersize=3, label=f'maximumSummation{i+1}')
+    # plt.plot(data_clean['n'], linear_fit(data_clean['n']), color=colors[i], linestyle='-', label=f'maximumSummation{i+1}')
+
+# Set plot labels and title
+plt.xlabel('n (Number of Elements)', fontsize=font_size)
+plt.ylabel('Time (milliseconds)', fontsize=font_size)
+plt.title('n vs Time (milliseconds)', fontsize=font_size)
+plt.legend()
+
+plt.show()
+</code></pre>
+</div>
+
+
+</div>
+            </section>
+
+
 
 
     <div class="line-1"></div>
@@ -87,8 +305,13 @@
 <script src="../../assets/js/scripts.js"></script>
 <script src="../../assets/js/load.js"></script>
 <script src="../../assets/js/blogpage-setting.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script> <!-- use prism-c.min.js or prism-clike.min.js-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
 </body>
