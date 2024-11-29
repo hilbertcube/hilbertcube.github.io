@@ -302,23 +302,41 @@ mobileHover(['.materials-right img', '.hyperlink']);
 // CHANGE TAB FUNCTION
 // nav_item_name <-> switch_target
 
+// function changeTab(evt, nav_item_name, switch_target) {
+//     var tablinks = document.getElementsByClassName("tab-button");
+//     var x = document.getElementsByClassName(switch_target);
+//     for (var i = 0; i < x.length; i++) {
+//         x[i].style.display = "none";
+//     }
+//     document.getElementById(nav_item_name).style.display = "block";
+
+//     for (var i = 0; i < x.length; i++) {
+//         tablinks[i].className = tablinks[i].className.replace(" tab-effect", "");
+//     }
+//     evt.currentTarget.className += " tab-effect";
+// }
+
+
+
 function changeTab(evt, nav_item_name, switch_target) {
-    var tablinks = document.getElementsByClassName("tab-button");
+    // Hide all elements with the class switch_target
     var x = document.getElementsByClassName(switch_target);
     for (var i = 0; i < x.length; i++) {
         x[i].style.display = "none";
     }
+
+    // Show the targeted tab content
     document.getElementById(nav_item_name).style.display = "block";
 
-    for (var i = 0; i < x.length; i++) {
+    // Remove the tab-effect class from all tab buttons
+    var tablinks = document.getElementsByClassName("tab-button");
+    for (var i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" tab-effect", "");
     }
+
+    // Add the tab-effect class to the clicked tab button
     evt.currentTarget.className += " tab-effect";
 }
-
-
-
-
 
 
 // LOAD SUGGESTIONS ON SIDE NAV

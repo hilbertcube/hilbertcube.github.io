@@ -95,9 +95,9 @@
         <button class="tab-button" onclick="changeTab(event, 'maximum_summation-h', 'pseudo-tab')">maximum_summation.h</button>
         <button class="tab-button" onclick="changeTab(event, 'time_measure-py', 'pseudo-tab')">time_measurement.py</button>
     </div>
-<div class="code-container">
-
-<pre style="border-radius: 0px 7px 7px 7px;" id="main-cpp" class="pseudo-tab line-numbers"><button class="copy-btn" style="position: absolute">Copy</button><code class="language-cpp"><script type="prism-cpp">// program to find two numbers from a sorted array that sum to a target
+<div class="code-container pseudo-tab" id="main-cpp">
+    <button class="copy-btn" style="position: absolute">Copy</button>
+<pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// program to find two numbers from a sorted array that sum to a target
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -151,8 +151,14 @@ int main(){
     return 0;
 }
 </script></code></pre>
+</div>
 
-<pre style="border-radius: 0px 7px 7px 7px; display: none;" id="maximum_summation-h" class="pseudo-tab line-numbers"><button class="copy-btn" style="position: absolute">Copy</button><code class="language-cpp"><script type="prism-cpp">#pragma once
+
+
+
+<div class="code-container pseudo-tab" id="maximum_summation-h" style="display: none">
+    <button class="copy-btn" style="position: absolute">Copy</button>
+<pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-cpp"><script type="prism-cpp">#pragma once
 
 typedef int (*Function_Vector) (const std::vector<int>& A);
 
@@ -208,9 +214,12 @@ int maximumSummation3(const std::vector<int>& A){
 Function_Vector f[] = {maximumSummation1, maximumSummation2, maximumSummation3};
     
 </script></code></pre>
+</div>
 
 
-<pre style="border-radius: 0px 7px 7px 7px; display: none;" id="time_measure-py" class="pseudo-tab line-numbers"><button class="copy-btn" style="position: absolute">Copy</button><code class="language-python">import pandas as pd
+<div class="code-container pseudo-tab" id="time_measure-py" style="display: none">
+    <button class="copy-btn" style="position: absolute">Copy</button>
+<pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-python">import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import font_manager as fm
@@ -269,8 +278,11 @@ plt.show()
 </div>
 
 
-</div>
+</div> box
             </section>
+
+
+
 
 
 
