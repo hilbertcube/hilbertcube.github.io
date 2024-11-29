@@ -74,37 +74,103 @@
                 <p>
                     Given two algorithms that perform the same task, what is the best way to compare their performance? At first glance, one might consider measuring the runtime of the two algorithms. However, this is not a reliable metric, as runtime depends heavily on the hardware and can be highly inconsistent due to real-world conditions, even on the same machine. To address this problem, scientists have developed a more theoretical approach called the time complexity of an algorithm. This measure evaluates how an algorithm's performance scales as the size of the input increases.
                 </p>
-
                 <p>
-                    If $n$ is the number of input, then for a given algorithm, there exists a function $f(n)$ that measures the time of the algorithm as $n$ varies. There are many such categories of $f(n)$, and the most important functions used in algorithm analysis are the constant function, $f(n)=c$, the logarithm function $f(n) = \log_b(n)$, the linear function $f(n) = n$, $f(n) = n\log(n)$, the quadratic function $f(n) = n^2$, other polynomial functions $f(n) = n^d$, the exponential functions $f(n) = a^n$, and the factorial function $f(n) = n!$.
+                    If $n$ is the number of input, then for a given algorithm, there exists a function $f(n)$ that measures the worst-case runtime of the algorithm as $n$ varies. The runtime of an algorithm generally follows a specific trend, such as constant, logarithmic, or linear. However, as noted, the runtime is significantly influenced by hardware and physical conditions. Therefore, these functions are often expressed with additional constant factors, such as: 
+                </p>
+                <div class="equation">
+                    $$f(n) = C_1n + C_0,$$
+                </div>
+                <p>
+                    where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, can be rewritten as
+                </p>
+                <div class="equation">
+                    $$f(n) = C_1n + C_0\sim O(n).$$
+                </div>
+                <p>
+                    There are many categories of such functions $f(n)$, and the most important functions used in algorithmic analysis are the constant function, $f(n)=c$, the logarithm function $f(n) = \log_b(n)$, the linear function $f(n) = n$, $f(n) = n\log(n)$, the quadratic function $f(n) = n^2$, other polynomial functions $f(n) = n^d$, the exponential functions $f(n) = a^n$, and the factorial function $f(n) = n!$.
                 </p>
 
                 <section>
                     <h3>The constant function</h3>
-
                     <p>
-                        These type of algorithms' runtime do not depend on the size of the input (theoretically). Some examples of algorithms with this complexity are:
+                        The constant time complexity function, denoted
+                    </p>
+                    <div class="equation">
+                        $$f(n) = c \;\sim\; O(1),$$
+                    </div>
+                    <p>
+                        do not depend on the size of the input (unless the size of the input is exceptionally large). Some examples of algorithms with this complexity are:
                     </p>
                     <ul style="line-height: 1.6;">
-                        <li style="margin: var(--in-page-li-spacing) 0;">Accessing array index:
+                        <li style="margin: var(--in-page-li-spacing) 0;">Accessing array index: Accessing elements at a specific index in an array takes constant time because an array begins at a fixed memory location. The memory location of each element can be directly calculated using the element's size and its index, which is a constant operation.
                             
                         </li>
-                        <li style="margin: var(--in-page-li-spacing) 0;">Basic arithmetic operations*:
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                        <p>
+                            Basic arithmetic and bitwise operations: Computers usually uses 8-bit, 16-bit, 32-bit, and 64-bit for integers and floating point numbers. Addition, subtraction, multiplication, or division of two numbers are considered constant time complexity because they are limited to a certain amount of bit. However, for large number arithmetic with arbitrary precision, the time complexity will no longer be constant.
+                        </p>
+                        <p>
+                            Bitwise operations like AND, OR, and XOR also take constant time because, again, primitive data types are limited to a certain size on the computer.
+                        </p>
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">Variable assignment: For primitive data types such as integers, floating points, characters, and boolean, the assignment operator takes constant time complexity because the size of these variables are pre-determined. However, for non-primitive data types such as strings, the assignment operator takes linear time, $O(n)$ because strings are arrays of characters.
 
                         </li>
-                        <li style="margin: var(--in-page-li-spacing) 0;">Variable assignment*:
+                        <li style="margin: var(--in-page-li-spacing) 0;">Returning a value from a function: Returning a pre-defined value also takes constant time.
 
                         </li>
-                        <li style="margin: var(--in-page-li-spacing) 0;">Bitwise operations
-
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Inserting a node, or jump to the next/previous node in a linked list: These operation are constant because each node holds the address of the next node (for a singly linked list), or the address of both the previous and the next node (for a doubly linked list).
                         </li>
-                        <li style="margin: var(--in-page-li-spacing) 0;">Returning a value from a function:
-
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Pushing and popping on stack. Insertion and removal from queue.
                         </li>
-                        <li style="margin: var(--in-page-li-spacing) 0;">Hashmap operations:
+                        <li style="margin: var(--in-page-li-spacing) 0;">Hashmap operations: Insert, access, and search operations in a hash map take constant time on average (ideally). These operations are $O(1)$ on average because a hash map uses a bucket array, and accessing elements in an array is $O(1)$. The hash function computes an index for a given key, and ideally, keys are distributed evenly across the buckets. However, if all keys end up in the same bucket due to hash collisions (e.g., in separate chaining), these operations degrade to $O(n)$ in the worst case, where $n$ is the total number of keys in the hash map.
 
                         </li>
                     </ol>
+                </section>
+
+
+                <section>
+                    <h3>The Logarithm Function</h3>
+                    <p>
+                        Some examples of this type of algorithms are:
+                    </p>
+                    <ul style="line-height: 1.6;">
+                        <li style="margin: var(--in-page-li-spacing) 0;">Binary search
+                            
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">Calculate the 64-bit (or below) $n$-th Fibinacci number with <a href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/" class="url">fast doubling method</a>.
+                            
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">Balanced Binary Search Trees (e.g., AVL Tree, Red-Black Tree)
+                            
+                        </li>
+                    </ul>
+                </section>
+
+
+
+                <section>
+                    <h3>The Linear Function</h3>
+                </section>
+
+
+                <section>
+                    <h3>The $n\log n$ Function</h3>
+                </section>
+
+
+                <section>
+                    <h3>The Exponential Function</h3>
+                    <ul style="line-height: 1.6;">
+                        <li style="margin: var(--in-page-li-spacing) 0;">Find all sub-array of an array. This algorithm has an exponential time complexity because the total number of sub-arrays in an array of size $n$ is
+                        <div class="equation">
+                            $$S = \sum_{k=1}^{n}\binom{n}{k} = 2^n - 1.$$
+                        </div>
+                        </li>
+                    </ul>
                 </section>
             </section>
 
@@ -123,7 +189,7 @@
     </div>
 <div class="code-container pseudo-tab" id="main-cpp">
     <button class="copy-btn" style="position: absolute">Copy</button>
-<pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// program to find two numbers from a sorted array that sum to a target
+<pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// program to find a maximum contiguous sub-array.
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -173,7 +239,7 @@ int main(){
         }
     }
 
-    // Run: g++ ec.cpp -o ec.exe; ./ec.exe
+    // Run: g++ main.cpp -o main.exe; ./main.exe
     return 0;
 }
 </script></code></pre>
