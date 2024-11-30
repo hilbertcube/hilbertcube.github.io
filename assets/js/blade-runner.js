@@ -31,24 +31,24 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }, 500); // Optional delay before the second line starts typing
         });
-    });
+});
 
 
-        // Disable right-click
-    document.addEventListener("contextmenu", function(e) {
-        e.preventDefault(); // Prevent the right-click context menu from appearing
-    });
+// Disable right-click
+// document.addEventListener("contextmenu", function(e) {
+//     e.preventDefault(); // Prevent the right-click context menu from appearing
+// });
 
-    // Disable certain key combinations
-    document.onkeydown = function(e) {
-        if (e.ctrlKey && 
-            (e.keyCode === 67 || // C
-            e.keyCode === 86 || // V
-            e.keyCode === 85 || // U
-            e.keyCode === 117)) { // F6
-            // alert('not allowed');
-            return false; // Prevent the default action
-        } else {
-            return true; // Allow other keys
-        }
-    };
+// // Disable certain key combinations
+// document.onkeydown = function(e) {
+//     if (e.ctrlKey && 
+//         (e.keyCode === 67 || // C
+//         e.keyCode === 86 || // V
+//         e.keyCode === 85 || // U
+//         e.keyCode === 117)) { // F6
+//         // alert('not allowed');
+//         return false; // Prevent the default action
+//     } else {
+//         return true; // Allow other keys
+//     }
+// };
