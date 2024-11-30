@@ -35,20 +35,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 // Disable right-click
-// document.addEventListener("contextmenu", function(e) {
-//     e.preventDefault(); // Prevent the right-click context menu from appearing
-// });
+document.addEventListener("contextmenu", function(e) {
+    e.preventDefault(); // Prevent the right-click context menu from appearing
+});
 
-// // Disable certain key combinations
-// document.onkeydown = function(e) {
-//     if (e.ctrlKey && 
-//         (e.keyCode === 67 || // C
-//         e.keyCode === 86 || // V
-//         e.keyCode === 85 || // U
-//         e.keyCode === 117)) { // F6
-//         // alert('not allowed');
-//         return false; // Prevent the default action
-//     } else {
-//         return true; // Allow other keys
-//     }
-// };
+// Disable certain key combinations
+document.onkeydown = function(e) {
+    if (e.ctrlKey && 
+        (e.keyCode === 67 || // C
+        e.keyCode === 86 || // V
+        e.keyCode === 85 || // U
+        e.keyCode === 117)) { // F6
+        // alert('not allowed');
+        return false; // Prevent the default action
+    } else {
+        return true; // Allow other keys
+    }
+};
