@@ -19,6 +19,14 @@
             height: auto; 
             margin: auto;
         }
+        .algorithm_box{
+            width: 50%;
+        }
+        @media all and (max-width: 580px){
+            .algorithm_box{
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -35,9 +43,27 @@
         <header class="major"><h2>Table of Contents</h2></header>   <!-- TABLE OF CONTENTS -->
         <div class = "toc">
             <ul>
-                <li>Introduction</li>
-                <li><a href="#Appendix">Appendix</a></li>
-                <li><a href="#References">References</a></li>
+                <li>What is the Best Way to Compare Algorithms' Efficiency?
+                    <ul>
+                        <li>Introduction</li>
+                        <li>Algorithmic Analysis</li>
+                    </ul>
+                </li>
+                <li>The Fundamental Functions of Algorithmic Analysis
+                    <ul>
+                        <li>The Constant Function</li>
+                        <li>The Logarithm Function</li>
+                        <li>The Linear Function</li>
+                        <li>The n log n Function</li>
+                        <li>The Quadratic Function</li>
+                        <li>The Cubic Function</li>
+                        <li>The Exponential Function</li>
+                        <li>The Factorial Function</li>
+                        <li>Other Irregular Functions</li>
+                    </ul>
+                </li>
+                <li><a>When Does Time Complexity Start to Matter?</a></li>
+                <li><a>References</a></li>
             </ul>
         </div>
         <div class = "highlights-and-attribute"></div>
@@ -67,28 +93,60 @@
            
         
             
-            
             <section>
-                <h2 id= "Introduction">What is the Best Way to Compare Algorithms' Efficiency?</h2>
+                <h2>What is the Best Way to Compare Algorithms' Efficiency?</h2>
 
-                <p>
-                    Given two algorithms that perform the same task, what is the best way to compare their performance? At first glance, one might consider measuring the runtime of the two algorithms. However, this is not a reliable metric, as runtime depends heavily on the hardware and can be highly inconsistent due to real-world conditions, even on the same machine. To address this problem, scientists have developed a more theoretical approach called the time complexity of an algorithm. This measure evaluates how an algorithm's performance scales as the size of the input increases.
-                </p>
-                <p>
-                    If $n$ is the number of input, then for a given algorithm, there exists a function $f(n)$ that measures the worst-case runtime of the algorithm as $n$ varies. The runtime of an algorithm generally follows a specific trend, such as constant, logarithmic, or linear. However, as noted, the runtime is significantly influenced by hardware and physical conditions. Therefore, these functions are often expressed with additional constant factors, such as: 
-                </p>
-                <div class="equation">
-                    $$f(n) = C_1n + C_0,$$
-                </div>
-                <p>
-                    where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, can be rewritten as
-                </p>
-                <div class="equation">
-                    $$f(n) = C_1n + C_0\sim O(n).$$
-                </div>
-                <p>
-                    There are many categories of such functions $f(n)$, and the most important functions used in algorithmic analysis are the constant function, $f(n)=c$, the logarithm function $f(n) = \log_b(n)$, the linear function $f(n) = n$, $f(n) = n\log(n)$, the quadratic function $f(n) = n^2$, other polynomial functions $f(n) = n^d$, the exponential functions $f(n) = a^n$, and the factorial function $f(n) = n!$.
-                </p>
+                <section>
+                    <h3>Introduction</h3>
+                    <p>
+                        Given two algorithms that perform the same task, what is the best way to compare their performance? At first glance, one might consider measuring the runtime of the two algorithms. However, this is not a reliable metric, as runtime depends heavily on the hardware and can be highly inconsistent due to real-world conditions, even on the same machine. To address this problem, scientists have developed a more theoretical approach called the time complexity of an algorithm. This measure evaluates how an algorithm's performance scales as the size of the input increases.
+                    </p>
+                    <p>
+                        If $n$ is the number of input, then for a given algorithm, there exists a function $f(n)$ that measures the worst-case runtime of the algorithm as $n$ varies. The runtime of an algorithm generally follows a specific trend, such as constant, logarithmic, or linear. However, as noted, the runtime is significantly influenced by hardware and physical conditions. Therefore, these functions are often expressed with additional constant factors, such as: 
+                    </p>
+                    <div class="equation">
+                        $$f(n) = C_1n + C_0,$$
+                    </div>
+                    <p>
+                        where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, can be rewritten as
+                    </p>
+                    <div class="equation">
+                        $$f(n) = C_1n + C_0\sim O(n).$$
+                    </div>
+                    <p>
+                        There are many categories of such functions $f(n)$, and the most important functions used in algorithmic analysis are the constant function, $f(n)=c$, the logarithm function $f(n) = \log_b(n)$, the linear function $f(n) = n$, $f(n) = n\log(n)$, the quadratic function $f(n) = n^2$, other polynomial functions $f(n) = n^d$, the exponential functions $f(n) = a^n$, and the factorial function $f(n) = n!$.
+                    </p>
+                </section>
+
+
+                <section>
+                    <h3>Algorithmic Analysis</h3>
+                    <p>
+                        Looking at an algorithm, how can we determine its time complexity?
+                    </p>
+<div style="text-align: center; margin: 25px auto;" class="algorithm_box">
+    <pre class="console">
+    <samp>// Algorithm: find the maximum element of an array of integers
+    // Input: an array A of size n
+    // Output: maximum element of A
+    array_max(int A[], int n){
+        int current_max = A[0];
+        for (i = 1 ; i < n; i++)
+            if (A[i] > current_max)
+                current_max = A[i];
+        return current_max;
+     } </samp></pre>
+</div>
+                </section>
+            </section>
+
+
+
+
+
+
+            <section>
+                <h2>The Fundamental Functions of Algorithmic Analysis</h2>
 
                 <section>
                     <h3>The constant function</h3>
@@ -144,8 +202,29 @@
                         <li style="margin: var(--in-page-li-spacing) 0;">Calculate the 64-bit (or below) $n$-th Fibinacci number with <a href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/" class="url">fast doubling method</a>.
                             
                         </li>
-                        <li style="margin: var(--in-page-li-spacing) 0;">Balanced Binary Search Trees (e.g., AVL Tree, Red-Black Tree)
+                        <li style="margin: var(--in-page-li-spacing) 0;">Balanced Binary Search Trees (e.g., AVL Tree, Red-Black Tree): Searching, insertion, and deletion in balanced binary search trees like AVL trees, Red-Black trees, or B-trees operate in $O(\log n)$ because the height of a balanced tree is $O(\log n)$.
                             
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">Binary Heap Operations: Operations like insertion and extracting the minimum (or maximum) in a binary heap take $O(\log n)$ time because of heapify operations.                         
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">Exponentiation by Squaring: This algorithm utilizes the divide and conquer method by checking whether $n$ is even or odd.
+<div style="text-align: center; margin: 25px auto;" class="algorithm_box">
+    <pre class="console">
+    <samp>Input: a real number x; an integer n
+    Output: x^n
+    exp_by_squaring(x, n)
+        if n < 0 then
+            return exp_by_squaring(1 / x, -n);
+        else if n = 0 then 
+            return 1;
+        else if n is even then 
+            return exp_by_squaring(x * x, n / 2);
+        else if n is odd then 
+            return x * exp_by_squaring(x * x, (n - 1) / 2);
+    end function </samp></pre>
+</div>
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">Finding the Greatest Common Divisor (GCD)
                         </li>
                     </ul>
                 </section>
@@ -158,7 +237,7 @@
 
 
                 <section>
-                    <h3>The $n\log n$ Function</h3>
+                    <h3>The n log n Function</h3>
                 </section>
 
 
