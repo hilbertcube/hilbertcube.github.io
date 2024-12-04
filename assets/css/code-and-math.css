@@ -1,6 +1,6 @@
 :root {
     --code-box-color: #fff;
-    --inline-code-color: rgb(226, 226, 226);
+    --inline-code-color: rgb(235, 235, 235);
     --box-border: #ddd;
     --pre-color: #f7f7f7;
     /* aliceblue */
@@ -15,6 +15,9 @@ body.dark-mode{
 .inline-code{
     font-size: 13px;
     background-color: var(--inline-code-color);
+    padding: 2px;
+    border-radius: 4px;
+    border: 1px solid var(--box-border);
 }
 
 /*code box font*/
