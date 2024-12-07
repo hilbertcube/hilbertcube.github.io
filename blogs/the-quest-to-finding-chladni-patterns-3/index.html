@@ -34,23 +34,8 @@
         .image-block{
             width: 65%;
         }
-        #square-wave-table, #circle-wave-table{
-            width: 80%;
-        }
-        .tab-button{
-            -webkit-border-radius: 4px 4px 0px 0px;
-            border-radius: 4px 4px 0px 0px; 
-            background-color: var(--pre-color);
-            border: 0px;
-            border-bottom: 1px solid var(--pre-color);
-            min-width: 80px;
-            font-size: 14px;
-            padding: 0.3rem;
-            color: inherit;
-        }
-        .tab-effect{
-            font-weight: bold;
-            border-bottom: 1px solid blue;
+        #frequency-table{
+            width: 12em;
         }
     </style>
 </head>
@@ -79,13 +64,13 @@
                         <li><a href="#effective-wave-speed">The Effective Wave Speed</a></li>
                     </ul>
                 </li>
-                <li>Data Analysis: Verifying Chladni's Law
+                <li><a href="#analysis">Data Analysis: Verifying Chladni's Law</a>
                     <ul>
-                        <li>Chladni's law</li>
-                        <li>Circular domain</li>
+                        <li><a href="#experimental-results">Experimental Results</a></li>
+                        <li><a href="graph">Linearity of Chladni's Law</a></li>
                     </ul>
                 </li>
-                <li><a href="#Appendix">Appendix</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
                 <li><a href="#References">References</a></li>
             </ul>
         </div>
@@ -239,7 +224,7 @@
                     <div class="equation">
                     \begin{equation}
                         k^2 = \frac{\sqrt{12}\omega}{h}\sqrt{\frac{\rho(1-\nu^2)}{E}} = \frac{\sqrt{12}\omega}{hc_L}.
-                    \end{equation
+                    \end{equation}
                     </div>
                     <p>
                         By dimensional analysis, it is not too hard to see that this $k$ is the familiar "wave number" that we like and love. Therefore,
@@ -314,37 +299,156 @@
 
 
            
+            <section id="analysis">
+                <h2>Data Analysis: Verifying Chladni's Law</h2>
+                
+                <section id="experimental-results">
+                    <h3>Experimental Results</h3>
+                    <p>
+                        Here are a few images that matches the description of Chladni's prediction from our experiments:
+                    </p>
+        
+                    <figure>
+                        <img class="image" id="circular-plate" src = "circle.png">
+                        <figcaption class="caption">Matching patterns on the Circular Plate.</figcaption>
+                    </figure>
+        
+                    <p>
+                        By counting the number of rings on each pattern listed above, we can make a table as below:
+                    </p>
+                    <div class="table-wrapper">
+                        <table style="margin-left: auto; margin-right: auto; text-align: center;" id="frequency-table">
+                            <tr style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);">
+                                <td>$m$</td>
+                                <td>$4m^2$</td>
+                                <td>$f$ (Hz)</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>4</td>
+                                <td>131</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>16</td>
+                                <td>429</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>36</td>
+                                <td>1079</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>64</td>
+                                <td>1806</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>100</td>
+                                <td>3320</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--grid-text-color);">
+                                <td>6</td>
+                                <td>144</td>
+                                <td>4661</td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
 
+                <section id = "graph">
+                    <h3>Linearity of Chladni's Law</h3>
+                    <p>
+                        Since there are no diameter lines, $n=0$. The equation for $f$ becomes
+                    </p>
+                    <div class="equation">
+                        \begin{equation}
+                            f = \frac{1}{\pi 4\sqrt{3}}hc_Lk^2 =  \frac{h\pi}{4\sqrt{3}d^2}\sqrt{\frac{E}{\rho(1-\nu^2)}}\cdot(2m)^2,
+                        \end{equation}
+                    </div>
+                    <p>
+                        This implies that $f$ and $(2m)^2$ have a linear relationship. Therefore, we plotted our data below to test this theory.
+                    </p>
+                    <figure>
+                        <img src="chladni-law.png" alt="Chladni's Law" class="image-block" style="width: 60%">
+                        <figcaption class="caption">Matching patterns on the Circular Plate.</figcaption>
+                    </figure>
+                    <p>
+                        The plate is made of Aluminum, which has the following properties: $E = 68$ GPa, $p = 2710\;kg/m^3$, $\nu = 0.33$, $h=0.8\pm 0.3$ mm, $d = 0.241\pm 0.001$ m. Therefore, the coefficient $C$ is determined by 
+                    </p>
+                    <div class="equation">
+                        \begin{equation}
+                            C=\frac{1}{\pi 4\sqrt{3}}hc_L =  \frac{h\pi}{d^2}\sqrt{\frac{E}{12\rho(1-\nu^2)}}= \kappa\pi\frac{h}{d^2} = 33.1430,
+                        \end{equation}
+                    </div>
+                    <p>which is very close to our linear fit. The uncertainty of $C$ can be calculated by</p>
+                    <div class="equation">
+                        \begin{equation}
+                            \sigma_{C} = \sqrt{\lbrac\pd{C}{h}\sigma_h\rbrac^2 + \lbrac\pd{C}{d}\sigma_d\rbrac^2} = C\sqrt{\lbrac\frac{\sigma_h}{h}\rbrac^2 + \lbrac\frac{2h\sigma_d}{d}\rbrac^2} = 12.43.
+                        \end{equation}
+                    </div>
+                    <p>The coefficient $C$ lies within our uncertainty range, which once again verifies the validity of Chladni's law.</p>
+                </section>
+            </section>
             
             
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+
+                <p> The true flaw within this experiment arises from the inaccurate wave equation. The actual equation that describes the plate is the Biharmonic wave equation: </p> 
+                
+                <div class="equation"> $$\frac{\partial^2 u}{\partial t^2} + k^2\left(\frac{\partial^4 u}{\partial x^4} + 2\frac{\partial^4 u}{\partial x^2 y^2} + \frac{\partial^4 u}{\partial y^4}\right) = Q, \quad \text{or} \quad u_{tt} + k^2\nabla^4 u = Q, \quad -a \leq x, y \leq a$$ </div> 
+                
+                <p> This equation is a fourth-order partial differential equation and, therefore, quite difficult to solve even with simple boundary conditions. However, with the given set of boundary-initial conditions, it was virtually impossible to solve because it required solving for multiple sets of non-elementary eigenvalues. </p> 
+                
+                <p> The uncertainty in this project was nearly deterred by the intimidating equations that describe the plate. However, by taking a more elementary and less intimidating approach—finding the $R^2$ of the set of data points in Chladni's Law for effective wave speed—we were able to gauge the validity of the data. Surprisingly, the data was extremely good when looking at our observed linear case. Moreover, I was able to determine an interval in which our coefficient $C$ was valid. The theoretical coefficient was found to be $33.1430 \pm 12.43$, while my experimental value is 33.73, which is surprisingly close! The uncertainty in $C$ was large because Young's modulus $E$ is quite large. </p> 
+                
+                <p> For the square plate, I was unable to find a relevant equation relating to the general increasing trend in the wave speed of the plate. It is important to note that the trend is not as noticeable in the square plate because the uncertainty in the frequency for the square plate was much larger than in the circular plate for some unknown reason. At the larger $f$ values, it can be seen that resonance occurred in intervals of $\pm 800 \;\mathrm{Hz}$ for some $f$ values. The wave speed, however, does not depend on the frequency in either case. </p>
+
+                <p>
+                    My knowledge was limited at the time, and I could not proceed further due to time constraints. However, a recent paper from 2020, titled &#8220Stable and Accurate Numerical Methods for Generalized Kirchhoff-Love Plates,&#8221 by authors Nguyen, Li, and Ji, accurately modeled the patterns on Chladni plates. The plates in their paper have the same dimensions as those in my experiment, and the patterns on the plates are also identical, appearing at frequencies very close to those in this experiment. The paper used the full Biharmonic Equation.
+                </p>
+                <div class="equation">
+                    \begin{equation}
+                        \rho h\secondpd{w}{t} = - D\nabla^4 w + T\nabla^2 w -K_0w -K_1\pd{w}{t} + T_1\nabla^2\pd{w}{t} + F(\textbf{x}, t),
+                    \end{equation}
+                </div>
+                <p>
+                    Here, $p$ is the density, $K_0$ is the linear stiffness coefficient, representing the linear storing force, $T$ is the tension coefficient, $K_1$ is the linear damping term, $T_1$ is the visco-elastic damping coefficient, and $F(\mathbf{x}, t)$ is the forcing function. Moreover, $D$ is defined as 
+                </p>
+                <div class="equation">
+                    \begin{equation}
+                        D = \frac{Eh^3}{12(1-\nu^2)},
+                    \end{equation}
+                </div>
+            </section>
+
+
             
 
 
 
-            <h2>Data Analysis: Verifying Chladni's Law</h2>
-            
-            <p>
-                Here are a few images that matches the description of Chladni's prediction from our experiments:
-            </p>
+    <section id = "References">
+        <h2>References</h2>
 
-            <figure>
-                <img class="image" id="circular-plate" src = "circle.png">
-                <figcaption class="caption">Matching patterns on the Circular Plate.</figcaption>
-            </figure>
-
-<h2 id = "References">References</h2>
-
-    <ol class = "reference">
-        <li>Linqi. Shao. Modeling a square vibrating plate. University of Waterloo, pages 1-58, 2018.</li>
-        <li>Lord Rayleigh. Vibration of Plates, pages 352-361. Princeton University Press, New York, NY, 1894.</li>
-        <li>John M. Davis. Introduction to Applied Partial Differential Equation. W. H. Freeman, New York City, 1st edition, 2012.</li>
-        <li>Richard. Haberman. Applied Partial Differential Equations with Fourier Series and Boundary Value Problems. Pearson, New York City, 5th edition, 2018.</li>
-        <li>Rudolph. Szilard. Theories and Applications of Plates Analysis. John Wiley and Sons, Inc., 111 River Street Hoboken, NJ 07030-5774, 2004</li>
-        <li>Dispersion of flexural waves. <a href="https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html" class="url">https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html</a>, 2004. Accessed: 2024-05-26</li>
-        <li>Thomas D. Rossing and Neville H. Fletcher. Two-Dimensional Systems: Membranes and Plates, pages 65-94. Springer New York, New York, 2004.</li>
-        <li>Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Stable and accurate numerical methods for generalized kirchhoff-love plates, 2020. Accessed: 2024-05-26.
-        </li>
-    </ol>
+        <ol class = "reference">
+            <li>Linqi. Shao. Modeling a square vibrating plate. University of Waterloo, pages 1-58, 2018.</li>
+            <li>Lord Rayleigh. Vibration of Plates, pages 352-361. Princeton University Press, New York, NY, 1894.</li>
+            <li>John M. Davis. Introduction to Applied Partial Differential Equation. W. H. Freeman, New York City, 1st edition, 2012.</li>
+            <li>Richard. Haberman. Applied Partial Differential Equations with Fourier Series and Boundary Value Problems. Pearson, New York City, 5th edition, 2018.</li>
+            <li>Rudolph. Szilard. Theories and Applications of Plates Analysis. John Wiley and Sons, Inc., 111 River Street Hoboken, NJ 07030-5774, 2004</li>
+            <li>Dispersion of flexural waves. <a href="https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html" class="url">https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html</a>, 2004. Accessed: 2024-05-26</li>
+            <li>Thomas D. Rossing and Neville H. Fletcher. Two-Dimensional Systems: Membranes and Plates, pages 65-94. Springer New York, New York, 2004.</li>
+            <li>Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Stable and accurate numerical methods for generalized kirchhoff-love plates, 2020. Accessed: 2024-05-26.
+            </li>
+        </ol>
+    </section>
 
     <div class="line-1"></div>
     <header>
