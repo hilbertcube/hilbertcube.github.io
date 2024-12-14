@@ -116,16 +116,42 @@
                         $$f(n) = C_1n + C_0,$$
                     </div>
                     <p>
-                        where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, can be rewritten as
+                        where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, if $f(n) = C_1n + C_0$, then $f(n)$ can be rewritten as
                     </p>
                     <div class="equation">
-                        $$f(n) = C_1n + C_0\sim O(n).$$
+                        $$f(n)\sim O(n).$$
                     </div>
                     <p>
                         There are many categories of such functions $f(n)$, and the most important functions used in algorithmic analysis are the constant function, $f(n)=c$, the logarithm function $f(n) = \log_b(n)$, the linear function $f(n) = n$, $f(n) = n\log(n)$, the quadratic function $f(n) = n^2$, other polynomial functions $f(n) = n^d$, the exponential functions $f(n) = a^n$, and the factorial function $f(n) = n!$.
                     </p>
                 </section>
 
+                <section>
+                    <h3>The Big O, Big Omega, Big Theta, and Their Properties</h3>
+
+                    <div class="definition" data-definition-name=" (The Big-Oh)">
+                        Let $f$ and $g$ be real-valued and not necessarily continuous functions. We say that $f$ is the big O of $g$, written
+                        <div class="equation">
+                            $$f(n) = O(g(n)),\quad n\to\infty,$$
+                        </div>
+                        if there's some large enough value of $n_0$ such that
+                        <div class="equation">
+                            $$|f(n)| \leq M|g(n)|,\quad\forall n\geq n_0.$$
+                        </div>
+                        this is equivalent to saying that
+                        <div class="equation">
+                            $$\lim_{n\to\infty}\frac{f(n)}{g(n)} = A,\quad 0 < A< \infty.$$
+                        </div>
+                    </div>
+
+                    <p>
+                        For example, we say that $f(n) = 3n = O(n)$ because $|3n| \leq M|n|,$ for $n\geq 0$, and $M$ can be any number greater than or equal to 3.
+                    </p>
+                    <p>
+                        
+                    </p>
+
+                </section>
 
                 <section>
                     <h3>Algorithmic Analysis</h3>
