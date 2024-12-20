@@ -119,7 +119,7 @@
                         where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, if $f(n) = C_1n + C_0$, then $f(n)$ can be rewritten as
                     </p>
                     <div class="equation">
-                        $$f(n)\sim O(n).$$
+                        $$f(n) = O(n).$$
                     </div>
                     <p>
                         There are many categories of such functions $f(n)$, and the most important functions used in algorithmic analysis are the constant function, $f(n)=c$, the logarithm function $f(n) = \log_b(n)$, the linear function $f(n) = n$, $f(n) = n\log(n)$, the quadratic function $f(n) = n^2$, other polynomial functions $f(n) = n^d$, the exponential functions $f(n) = a^n$, and the factorial function $f(n) = n!$.
@@ -156,7 +156,7 @@
                 <section>
                     <h3>Algorithmic Analysis</h3>
                     <p>
-                        Looking at the algorithm below, how can we determine its time complexity?
+                        How can we determine the time complexity of an algorithm? Consider the following example: finding the largest element in an array.
                     </p>
 <div style="text-align: center; margin: 25px auto;" class="algorithm_box">
     <pre class="console">
