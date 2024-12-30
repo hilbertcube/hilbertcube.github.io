@@ -271,21 +271,44 @@
 
                 <section>
                     <h3>The Linear Function</h3>
+
+                    <ul style="line-height: 1.6;">
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Finding the maximum/minimum of an array: 
+                        </li>
+                    </ul>
                 </section>
 
 
                 <section>
                     <h3>The n log n Function</h3>
+
+                    <ul style="line-height: 1.6;">
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Fast Fourier Transform:
+                        </li>
+                    </ul>
                 </section>
 
 
                 <section>
                     <h3>The Exponential Function</h3>
                     <ul style="line-height: 1.6;">
-                        <li style="margin: var(--in-page-li-spacing) 0;">Find all sub-array of an array. This algorithm has an exponential time complexity because the total number of sub-arrays in an array of size $n$ is
-                        <div class="equation">
-                            $$S = \sum_{k=1}^{n}\binom{n}{k} = 2^n - 1.$$
-                        </div>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            The Traveling Salesman Problem (TSP) - Brute Force Approach: Given a set of cities, find the shortest possible route that visits each city exactly once and returns to the origin city. A brute force approach checks all possible permutations of the cities to find the optimal solution.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Subset Sum Problem (Brute Force): Given a set of integers, determine if there is a subset whose sum equals a given target value. A brute-force approach would involve checking every possible subset of the set to see if its sum equals the target. Time Complexity: $O(2^n)$ because there are
+                            <div class="equation">
+                                $$S = \sum_{k=0}^{n}\binom{n}{k} = \binom{n}{1} + \binom{n}{2} + \ldots + \binom{n}{n} = 2^n.$$
+                            </div>
+                            subsets of a set of $n$ elements.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Naive Recursive Fibonacci: Compute the n-th Fibonacci number, where $F(n) = F(n-1) + F(n-2)$ and the base cases are $F(0) = 0$ and $F(1) = 1$. The time complexity of this problem is $O(2^n)$ because the recursive calls grow exponentially due to repeated subproblems.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Find all sub-arrays of an array. This algorithm actually has an time complexity of $O(n\cdot 2^n)$ because the total number of non-empty  sub-arrays in an array of size $n$ is $2^n - 1$ and we also need to loop over $n$ elements of the array.
                         </li>
                     </ul>
                 </section>
