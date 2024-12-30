@@ -7,7 +7,7 @@
             "image": "chladni_1.png",
             "link": "/blogs/the-quest-to-finding-chladni-patterns-1",
             "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
-            "description": "Designing algorithms to plot Chladni's pattern using the wave equation model.",
+            "description": "Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni's pattern using the wave equation model.",
             "date": "June 1, 2024"
         },
         {
