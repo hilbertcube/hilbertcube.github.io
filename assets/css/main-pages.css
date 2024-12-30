@@ -56,25 +56,14 @@
 
 .article:hover, .article:active {
     transform: translateY(-0.8em);
-    /* background-color: var(--article-color); */
-    
 }
-/* .article::after {
-    content: '';
-    position: absolute;
-    background-color: black;
-    height: 1px;
-    z-index: 1;
- } */
-/* .article::before, 
 
+@media all and (max-width: 1200px){
+    .article:hover, .article:active {
+        transform: scale(1.02);
+    }
+}
 
-.article::after {
-    inline-size: 30vw;
-    block-size: var(--line-thickness);
-    inset-inline-start: 0;
-    inset-block-start: calc(var(--line-offset) * -1);
-} */
 
 
 .article img {
