@@ -237,7 +237,7 @@
                         <li style="margin: var(--in-page-li-spacing) 0;">Binary search: binary search involves searching for an element in a sorted array. This algorithm is $O(\log n)$ because it utilizes the divide and conquer technique, where the size of the array reduces by half every iteration.
                             
                         </li>
-                        <li style="margin: var(--in-page-li-spacing) 0;">Calculate the 64-bit (or below) $n$-th Fibinacci number with <a href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/" class="url">fast doubling method</a>.
+                        <li style="margin: var(--in-page-li-spacing) 0;">Calculate the 64-bit (or less) $n$-th Fibinacci number with <a href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/" class="url">fast doubling method</a>.
                             
                         </li>
                         <li style="margin: var(--in-page-li-spacing) 0;">Balanced Binary Search Trees (e.g., AVL Tree, Red-Black Tree): Searching, insertion, and deletion in balanced binary search trees like AVL trees, Red-Black trees, or B-trees operate in $O(\log n)$ because the height of a balanced tree is $O(\log n)$.
@@ -272,9 +272,19 @@
                 <section>
                     <h3>The Linear Function</h3>
 
+
                     <ul style="line-height: 1.6;">
                         <li style="margin: var(--in-page-li-spacing) 0;">
-                            Finding the maximum/minimum of an array: 
+                            Finding the maximum/minimum of an array: We can only find the maximum or the minimum of an array by going over all elements of the array.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Linear search: If the elements are not sorted, then to find an element in an array, we must perform linear search, which has the worst-case complexity of $O(n)$. Similarly, traversing a linked list is also $O(n)$.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Deletion and Insertion at random position in a linked list or array. This tasks requires us to traverse over each individual elements/nodes, which has the worst-case complexity of $O(n)$.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Comparing arrays, linked list, strings.
                         </li>
                     </ul>
                 </section>
@@ -282,10 +292,15 @@
 
                 <section>
                     <h3>The n log n Function</h3>
-
+                    <p>
+                        These types of algorithms are usually optimized versions of $O(n^2)$ algorithms. Some examples of this type of algorithms are:
+                    </p>
                     <ul style="line-height: 1.6;">
                         <li style="margin: var(--in-page-li-spacing) 0;">
-                            Fast Fourier Transform:
+                            Fast Fourier Transform: FFT works by breaking down the computation of the Discrete Fourier Transform (DFT), which is $O(n^2)$ nto smaller subproblems. For an input signal of size $n$, the FFT algorithm splits it into two halves: one for the even-indexed terms and one for the odd-indexed terms. It then recursively computes the DFT of these smaller subproblems: the even and odd indexes terms of the DFT.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Merge Sort, Quick Sort, Heap Sort, AVL Tree Sort are all $O(n\;\log n)$ algorithms.
                         </li>
                     </ul>
                 </section>
@@ -293,6 +308,9 @@
 
                 <section>
                     <h3>The Exponential Function</h3>
+                    <p>
+                        Algorithms of this type are generally very bad. Some examples are:
+                    </p>
                     <ul style="line-height: 1.6;">
                         <li style="margin: var(--in-page-li-spacing) 0;">
                             The Traveling Salesman Problem (TSP) - Brute Force Approach: Given a set of cities, find the shortest possible route that visits each city exactly once and returns to the origin city. A brute force approach checks all possible permutations of the cities to find the optimal solution.
@@ -319,8 +337,9 @@
                 <h2>When Does Time Complexity Start to Matter?</h2>
 
                 <p>
-                    With the speed of the modern computers, it is not quite obvious to notice the slight change in runtime between different time complexities, especially when running only a small code segment. To truly know when it actually matters, we can do something like this: run the code segment for tens of thousands of random value and plot our runtime. Let's write a simple program to verify this.
+                    With the speed of the modern computers, it is not quite obvious to notice the slight change in runtime between different time complexities, especially when running only a small code segment, and especially if you are a beginner. To notice the impact of how you design your algorithm, we can actually plot out the runtime as $n$ increases. Below is a C++ program and a python script to verify the runtime.
                 </p>
+
 <div class="box" style="margin: 30px 0;">
     <div class="tab-button-container">
         <button class="tab-button tab-effect" onclick="changeTab(event, 'main-cpp', 'pseudo-tab')">main.cpp</button>
