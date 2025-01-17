@@ -35,6 +35,9 @@
                 width: 100%;
             }
         }
+        #nlogn > .MathJax{
+            font-size: inherit !important;
+        }
     </style>
 </head>
 
@@ -51,9 +54,15 @@
         <header class="major"><h2>Table of Contents</h2></header>   <!-- TABLE OF CONTENTS -->
         <div class = "toc">
             <ul>
-                <li>What is the Best Way to Compare Algorithms' Efficiency?
+                <li>Introduction
                     <ul>
-                        <li>Introduction</li>
+                        <li>What is the Best Way to Compare Algorithms' Efficiency?</li>
+                        <li>The Big O, Big Omega, Big Theta, and Their Properties
+                            <ul>
+                                <li>The Big-O Notation</li>
+                                <li>Properties of the Big-O Notation</li>
+                            </ul>
+                        </li>
                         <li>Algorithmic Analysis</li>
                     </ul>
                 </li>
@@ -102,10 +111,10 @@
         
             
             <section>
-                <h2>What is the Best Way to Compare Algorithms' Efficiency?</h2>
+                <h2>Introduction</h2>
 
                 <section>
-                    <h3>Introduction</h3>
+                    <h3>What is the Best Way to Compare Algorithms' Efficiency?</h3>
                     <p>
                         Given two algorithms that perform the same task, what is the best way to compare their performance? At first glance, one might consider measuring the runtime of the two algorithms. However, this is not a reliable metric, as runtime depends heavily on the hardware and can be highly inconsistent due to real-world conditions, even on the same machine. To address this problem, scientists have developed a more theoretical approach called the time complexity of an algorithm. This measure evaluates how an algorithm's performance scales as the size of the input increases.
                     </p>
@@ -116,10 +125,10 @@
                         $$f(n) = C_1n + C_0,$$
                     </div>
                     <p>
-                        where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, if $f(n) = C_1n + C_0$, then $f(n)$ can be rewritten as
+                        where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient, as we don't usually know what these constant factors are, so the general rule of thumb to express the worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, if $f(n) = C_1n + C_0$, then $f(n)$ it can be said that
                     </p>
                     <div class="equation">
-                        $$f(n) = O(n).$$
+                        $$f(n) \in O(n).$$
                     </div>
                     <p>
                         There are many categories of such functions $f(n)$, and the most important functions used in algorithmic analysis are the constant function, $f(n)=c$, the logarithm function $f(n) = \log_b(n)$, the linear function $f(n) = n$, $f(n) = n\log(n)$, the quadratic function $f(n) = n^2$, other polynomial functions $f(n) = n^d$, the exponential functions $f(n) = a^n$, and the factorial function $f(n) = n!$.
@@ -129,27 +138,53 @@
                 <section>
                     <h3>The Big O, Big Omega, Big Theta, and Their Properties</h3>
 
-                    <div class="definition" data-definition-name=" (The Big-Oh)">
-                        Let $f$ and $g$ be real-valued and not necessarily continuous functions. We say that $f$ is the big O of $g$, written
-                        <div class="equation">
-                            $$f(n) = O(g(n)),\quad n\to\infty,$$
+                    <section>
+                        <h4>The Big-O Notation</h4>
+                        <div class="definition" data-definition-name=" (The Big-Oh)">
+                            Let $f$ and $g$ be real-valued and not necessarily continuous functions. We say that $f$ is the big O of $g$, written
+                            <div class="equation">
+                                $$f(n) = O(g(n)),\quad n\to\infty,$$
+                            </div>
+                            if there's some large enough value of $n_0$ such that
+                            <div class="equation">
+                                $$|f(n)| \leq M|g(n)|,\quad\forall n\geq n_0.$$
+                            </div>
+                            this is equivalent to saying that
+                            <div class="equation">
+                                $$\lim_{n\to\infty}\frac{f(n)}{g(n)} = A,\quad 0 < A< \infty.$$
+                            </div>
+                            Alternatively, we can say that $f$ is order of $g$, mathematically written,
+                            <div class="equation">
+                                $$f(n)\in O(g(n))$$
+                            </div>
+                            for the big-O notation.
                         </div>
-                        if there's some large enough value of $n_0$ such that
-                        <div class="equation">
-                            $$|f(n)| \leq M|g(n)|,\quad\forall n\geq n_0.$$
-                        </div>
-                        this is equivalent to saying that
-                        <div class="equation">
-                            $$\lim_{n\to\infty}\frac{f(n)}{g(n)} = A,\quad 0 < A< \infty.$$
-                        </div>
-                    </div>
 
-                    <p>
-                        For example, we say that $f(n) = 3n = O(n)$ because $|3n| \leq M|n|,$ for $n\geq 0$, and $M$ can be any number greater than or equal to 3.
-                    </p>
-                    <p>
-                        
-                    </p>
+                        <p>
+                            For example, we say that $f(n) = 3n \in O(n)$ because $|3n| \leq M|n|,$ for $n\geq 0$, and $M$ can be any number greater than or equal to 3. Similarly, $8n + 5\in O(n)$ because if we choose $M = 9$ and $n_0 = 5$, then $8n + 5 \leq 9n$, for $n\geq 5$.
+                        </p>
+                    </section>
+
+
+                    <section>
+                        <h4>Properties of the Big-O Notation</h4>
+
+                        <p>
+                            Given two functions $f(n)$ and $g(n)$ defined on $n\geq 0$.
+                        </p>
+                        <ol style="line-height: 1.6;" type = "i">
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                If
+                                <div class="equation">
+                                    $$\lim_{n\to\infty}\frac{f(n)}{g(n)} = A,\quad 0 < A < \infty.$$
+                                </div>
+                                then we say that
+                            </li>
+                            <li style="margin: var(--in-page-li-spacing) 0;">
+                                
+                            </li>
+                        </ol>
+                    </section>
 
                 </section>
 
@@ -158,6 +193,7 @@
                     <p>
                         How can we determine the time complexity of an algorithm? Consider the following example: finding the largest element in an array.
                     </p>
+                    
 <div style="text-align: center; margin: 25px auto;" class="algorithm_box">
     <pre class="console">
     <samp>// Algorithm: find the maximum element of an array of integers
@@ -192,7 +228,7 @@
                         The constant time complexity function, denoted
                     </p>
                     <div class="equation">
-                        $$f(n) = c \;\sim\; O(1),$$
+                        $$f(n) = c \in O(1),$$
                     </div>
                     <p>
                         does not depend on the size of the input (unless the size of the input is exceptionally large). Some examples of algorithms with this complexity are:
@@ -291,7 +327,7 @@
 
 
                 <section>
-                    <h3>The n log n Function</h3>
+                    <h3>The <span id="nlogn">$n \log n$</span> Function</h3>
                     <p>
                         These types of algorithms are usually optimized versions of $O(n^2)$ algorithms. Some examples of this type of algorithms are:
                     </p>
@@ -300,7 +336,7 @@
                             Fast Fourier Transform: FFT works by breaking down the computation of the Discrete Fourier Transform (DFT), which is $O(n^2)$ nto smaller subproblems. For an input signal of size $n$, the FFT algorithm splits it into two halves: one for the even-indexed terms and one for the odd-indexed terms. It then recursively computes the DFT of these smaller subproblems: the even and odd indexes terms of the DFT.
                         </li>
                         <li style="margin: var(--in-page-li-spacing) 0;">
-                            Merge Sort, Quick Sort, Heap Sort, AVL Tree Sort are all $O(n\;\log n)$ algorithms.
+                            Merge Sort, Quick Sort (on average), Heap Sort, AVL Tree Sort are all $O(n\;\log n)$ algorithms.
                         </li>
                     </ul>
                 </section>
@@ -312,9 +348,6 @@
                         Algorithms of this type are generally very bad. Some examples are:
                     </p>
                     <ul style="line-height: 1.6;">
-                        <li style="margin: var(--in-page-li-spacing) 0;">
-                            The Traveling Salesman Problem (TSP) - Brute Force Approach: Given a set of cities, find the shortest possible route that visits each city exactly once and returns to the origin city. A brute force approach checks all possible permutations of the cities to find the optimal solution.
-                        </li>
                         <li style="margin: var(--in-page-li-spacing) 0;">
                             Subset Sum Problem (Brute Force): Given a set of integers, determine if there is a subset whose sum equals a given target value. A brute-force approach would involve checking every possible subset of the set to see if its sum equals the target. Time Complexity: $O(2^n)$ because there are
                             <div class="equation">
@@ -330,6 +363,18 @@
                         </li>
                     </ul>
                 </section>
+
+                <section>
+                    <h3>The Factorial Function</h3>
+                    <ul style="line-height: 1.6;">
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            The Traveling Salesman Problem (TSP) - Brute Force Approach: Given a set of cities, find the shortest possible route that visits each city exactly once and returns to the origin city. A brute force approach checks all possible permutations of the cities to find the optimal solution.
+                        </li>
+                        <li style="margin: var(--in-page-li-spacing) 0;">
+                            Generating Factorials: Given a set of integers $S=\{1, 2, \ldots, n\}$. Since there are up to $n!$ permutations of elements of this set, generating all possible permutation will requires $O(n!)$.
+                        </li>
+                    </ul> 
+                </section>
             </section>
 
 
@@ -338,6 +383,9 @@
 
                 <p>
                     With the speed of the modern computers, it is not quite obvious to notice the slight change in runtime between different time complexities, especially when running only a small code segment, and especially if you are a beginner. To notice the impact of how you design your algorithm, we can actually plot out the runtime as $n$ increases. Below is a C++ program and a python script to verify the runtime.
+                </p>
+                <p>
+                    Consider the following problem: Given an array $A = \{a_1, a_2, \ldots, a_n\}$.
                 </p>
 
 <div class="box" style="margin: 30px 0;">
@@ -381,7 +429,7 @@ int main(){
 
             for (int i = 0; i < n; ++i) {
                 int random_int = (rand()%(upper_bound - lower_bound)) + lower_bound;
-                A.push_back(random_int);
+                A[i] = random_int;
             }
 
             auto start = high_resolution_clock::now();
@@ -411,9 +459,8 @@ int main(){
     <button class="copy-btn" style="position: absolute">Copy</button>
 <pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-cpp"><script type="prism-cpp">#pragma once
 
-typedef int (*Function_Vector) (const std::vector<int>& A);
-
-// output the largest sum found in a sub-array
+// Input: an array
+// Output: the largest sum found in a sub-array
 // there should be sum_{i = 0}^{size} binom(size, i) = 2^n sub-arrays
 // and there should be 1 + 2 + ... + n = n(n + 1)/2 consecutive sub-arrays
 int maximumSummation1(const std::vector<int>& A) {
@@ -462,6 +509,7 @@ int maximumSummation3(const std::vector<int>& A){
     return max;
 }
 
+typedef int (*Function_Vector) (const std::vector<int>& A);
 Function_Vector f[] = {maximumSummation1, maximumSummation2, maximumSummation3};
     
 </script></code></pre>
