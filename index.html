@@ -26,6 +26,9 @@
             font-weight: var(--top-buttons-font-weight);
             color:var(--top-buttons-hover-color);
         }
+        @media all and (max-width: 580px) {
+            #chladniImage{width: 95% !important; border-top: 20px;}
+        }
     </style>
 </head>
 
@@ -44,8 +47,28 @@
                 Homepage
             </div>
             
-            
             <section>
+                <h1 class="home-title">Chladni Patterns - The Wave Equation Model</h1>
+                <div class = "two-columns-block">
+                    <div>
+                        <p>
+                            Take a solid metal plate (or any other rigid material) and sprinkle some particles on it. It can either be sand, salt, or even baking soda. Then, generate some vibration on the plate by using either a violin bow to excite the plate, or place it on a wave generator and set it to specific frequencies. What you will observe are the beautiful patterns generated as shown in the figure. This experiment sounds relatively simple, but as simple as it sounds, this experiment reveals some extremely complex and intensive underlying mathematical principles.
+                        </p>
+                        <p>
+                            Ok, so how does this work? Well, it turns out these are examples of standing waves in the two-dimensional space. In one dimension, a &#8220node&#8221 in a <a class="url" href="https://en.wikipedia.org/wiki/Standing_wave">standing wave</a> is a point along the wave where the amplitude is at minimum. Similarly, in two dimensions, there are &#8220nodal lines,&#8221 which are static points or lines on the plate where the particles settle.
+                        </p>
+                        <a style="text-align: center;" href="blogs/the-quest-to-finding-chladni-patterns-1/" class="redirect-button">
+                            Read More
+                        </a>
+                    </div>
+                    <div>
+                        <img style="width: 75%; border-radius: 10px;" class="image" id="chladniImage">
+                        <figcaption class="caption">Chladni Patterns on a Square Plate.</figcaption>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- <section>
                 <h1 class="home-title">When does time complexity start to matter?</h1>
                 <div class = "two-columns-block">
                     <div>
@@ -64,7 +87,7 @@
                         <figcaption class="caption"> Linear runtime illustration.</figcaption>
                     </div>
                 </div>
-            </section>
+            </section> -->
 
 
             <section>
@@ -111,7 +134,7 @@
             })
             .catch(error => console.error('Error loading JSON:', error));
 
-        setImage("timeComplexityImage", "/public/Images/O_n_filter.png");
+        setImage("chladniImage", "/public/Images/chladni-patterns-sbs.jpg");
         
         LoadScript("jsLoad", "/assets/js/load.js");
         LoadScript("bannerScript", "/assets/js/canvas-banner.js");

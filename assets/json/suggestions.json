@@ -29,13 +29,13 @@
             "date": "August 10, 2024"
         },
         {
-            "title": "Light Refraction and A More In-depth Look of Snell's Law",
-            "id": "snell-1",
-            "image": "snell_s_law_drawing.jpg",
-            "link": "/blogs/snells-law",
-            "topic": "Refraction, PDEs",
-            "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
-            "date": "October 2, 2024"
+            "title": "Time Complexity of an Algorithm",
+            "id": "dsa-1",
+            "image": "time-complexity-banner.png",
+            "link": "/blogs/time-complexity-of-an-algorithm",
+            "topic": "Data Structures and Algorithm, C++, Python",
+            "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
+            "date": "December 2, 2024"
         },
         {
             "title": "How to find maxima and minima of an n-th dimensional function",
@@ -45,6 +45,15 @@
             "topic": "Python, Hessian Matrix, Fermat's Theorem",
             "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
             "date": "May 25, 2024"
+        },
+        {
+            "title": "Light Refraction and A More In-depth Look of Snell's Law",
+            "id": "snell-1",
+            "image": "snell_s_law_drawing.jpg",
+            "link": "/blogs/snells-law",
+            "topic": "Refraction, PDEs",
+            "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
+            "date": "October 2, 2024"
         },
         {
             "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
