@@ -15,3 +15,4 @@ and run with live server.
 1. [Mathjax](https://www.mathjax.org/) to display math equations.
 2. [Prism.js](https://prismjs.com/) to display different code themes.
 3. [jQuery](https://jquery.com/) to dynamically load some components.
+4. [AOS](https://github.com/michalsnik/aos): Animate On Scroll Library.
