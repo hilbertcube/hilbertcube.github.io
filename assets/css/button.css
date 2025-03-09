@@ -152,18 +152,16 @@ body.dark-mode{
     min-width: 80px;
     display: inline-block;
     position: relative;
-    font-family: "Poppins", sans-serif;
     text-align: center;
     margin: 20px auto;
-    
     background-size: 200%;
     transition: .2s ease-out;
     border:1px solid var(--next-border);
     border-radius: 5px;
-    padding: 0.7rem 1.2rem;
+    padding: 0.7rem 1rem;
     font-size: 18px;
     color: var(--next-text);
-    font-weight: 400;
+    font-weight: 500;
     text-decoration: none;
     /* background: linear-gradient(to left, var(--body-background-color) 50%, #2a7ae2 50%) right; */
 }
