@@ -1,339 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'G-00W722FWP2');
-    </script>
-    <title>Accelerate ORB with CUDA</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="subject" content='here'>
-    <meta name="description" content="here" />
-    <meta name="keywords" content="image stitching, CUDA, MPI, openmp, image processing, parallel processing, multi-core, multi-threads"/>
-    <meta name="author" content="Don Le, ledongduu@gmail.com"/>
-    <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <style>
-        .front-img{
-            display: block;
-            width: 100%;
-            border-radius: 10px;
-            height: auto; 
-            margin: auto;
-        }
-        #flowchart-caption{
-            width: 70%;
-        }
-        @media all and (max-width: 580px){
-            #flowchart-caption{
-                width: 100%;
-            }
-        }
-    </style>
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-00W722FWP2');
+  </script>
+  <title>Accelerate ORB with CUDA</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="subject" content='here'>
+  <meta name="description" content="here" />
+  <meta name="keywords"
+    content="image stitching, CUDA, MPI, openmp, image processing, parallel processing, multi-core, multi-threads" />
+  <meta name="author" content="Don Le, ledongduu@gmail.com" />
+  <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <style>
+    .front-img {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      height: auto;
+      margin: auto;
+    }
+
+    #flowchart-caption {
+      width: 70%;
+    }
+
+    @media all and (max-width: 580px) {
+      #flowchart-caption {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body class="nav-open light-mode">
-    \[
-    \newcommand{\lbrac}{\left(}
-    \newcommand{\rbrac}{\right)}
-    \]        
-    <div class = "top-nav"></div> <!-- TOP NAV-->   
-    <nav class="navbar open" id="navbar"> <!-- SIDE BAR -->
-        <div id="logo"></div>
-        <div class = "side-nav-container"></div> <!--open attribute - default-->
-        <div class="line-3"></div>
-        <header class="major"><h2>Table of Contents</h2></header>   <!-- TABLE OF CONTENTS -->
-        <div class = "toc">
-            <ul>
-                <li><a href="#feature-extraction">Feature Extraction from Images and the ORB Feature Detector</a>
-                    <ul>
-                        <li><a href="#Introduction">Introduction</a></li>
-                        <li><a href="#utilizing-gpu">Project's Objective</a></li>
-                    </ul>
-                </li>
-                <li><a href="#literature-review">Literature Review and Technologies</a>
-                    <ul>
-                        <li><a href="#sift-and-orb">The SIFT and ORB Feature Detectors</a></li>
-                        <li><a href="#gpu-and-cuda">Overview of General GPU Architecture and Nvidia’s Compute Unified Device Architecture (CUDA)</a></li>
-                        <li><a href="#mpi">Message Passing Interfaces (MPI)</a></li>
-                        <li><a href="#openmp">Open Multi-Processing (OpenMP)</a></li>
-                    </ul>
-                </li>
-                <li><a href="#implementation">Implementations</a>
-                    <ul>
-                        <li><a href="#workflow">Image Stitching Workflow</a></li>
-                        <li><a href="#optimization">Optimization</a></li>
-                    </ul>
-                </li>
-                <li><a href="#benchmarks">Data Collection and Benchmarks</a></li>
-                <li><a href="#results">Results</a>
-                    <ul>
-                        <li><a href="#performance-metrics">Performance Metrics</a></li>
-                        <li><a href="#runtime">Runtime Comparison</a></li>
-                        <li><a href="#speedup">Speedup</a></li>
-                        <li><a href="#cost">Cost</a></li>
-                        <li><a href="#efficiency">Efficiency</a></li>
-                    </ul>
-                </li>
-                <li><a href="#future-work">Ending Remarks and Future Work</a></li>
-                <li><a href="#References">References</a></li>
-            </ul>
+  \[
+  \newcommand{\lbrac}{\left(}
+  \newcommand{\rbrac}{\right)}
+  \]
+  <div class="top-nav"></div> <!-- TOP NAV-->
+  <nav class="navbar open" id="navbar">
+    <!-- SIDE BAR -->
+    <div id="logo"></div>
+    <div class="side-nav-container"></div>
+    <!--open attribute - default-->
+    <div class="line-3"></div>
+    <header class="major">
+      <h2>Table of Contents</h2>
+    </header> <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+      <ul>
+        <li><a href="#feature-extraction">Feature Extraction from Images and the ORB Feature Detector</a>
+          <ul>
+            <li><a href="#Introduction">Introduction</a></li>
+            <li><a href="#utilizing-gpu">Project's Objective</a></li>
+          </ul>
+        </li>
+        <li><a href="#literature-review">Literature Review and Technologies</a>
+          <ul>
+            <li><a href="#sift-and-orb">The SIFT and ORB Feature Detectors</a></li>
+            <li><a href="#gpu-and-cuda">Overview of General GPU Architecture and Nvidia’s Compute Unified Device
+                Architecture (CUDA)</a></li>
+            <li><a href="#mpi">Message Passing Interfaces (MPI)</a></li>
+            <li><a href="#openmp">Open Multi-Processing (OpenMP)</a></li>
+          </ul>
+        </li>
+        <li><a href="#implementation">Implementations</a>
+          <ul>
+            <li><a href="#workflow">Image Stitching Workflow</a></li>
+            <li><a href="#optimization">Optimization</a></li>
+          </ul>
+        </li>
+        <li><a href="#benchmarks">Data Collection and Benchmarks</a></li>
+        <li><a href="#results">Results</a>
+          <ul>
+            <li><a href="#performance-metrics">Performance Metrics</a></li>
+            <li><a href="#runtime">Runtime Comparison</a></li>
+            <li><a href="#speedup">Speedup</a></li>
+            <li><a href="#cost">Cost</a></li>
+            <li><a href="#efficiency">Efficiency</a></li>
+          </ul>
+        </li>
+        <li><a href="#future-work">Ending Remarks and Future Work</a></li>
+        <li><a href="#References">References</a></li>
+      </ul>
+    </div>
+    <div class="highlights-and-attribute"></div>
+  </nav>
+
+  <!--Master grid starts here -->
+  <div class="content-grid">
+
+    <!-- CONTENTS -->
+    <div class="general-wrapper">
+
+
+      <header>
+        <div class="topic">
+          Topics: C++/OpenCV/CUDA/MPI/OPENMP/Image-Stitching/
         </div>
-        <div class = "highlights-and-attribute"></div>
-    </nav>
-
-    <!--Master grid starts here -->
-    <div class="content-grid">
-        
-        <!-- CONTENTS -->
-        <div class = "general-wrapper">
-            
-            
-            <header>
-                <div class = "topic">
-                    Topics: C++/OpenCV/CUDA/MPI/OPENMP/Image-Stitching/
-                </div>
-                <h1 class = "title">
-                    Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA
-                </h1>
-                <div class="date"></div>
-                <figure style="margin: 0;">
-                    <img class = "front-img" src = "banner.png" alt = "image">
-                </figure>
-                <div class="Quote">
-                    <div class="Quote-content">&#8220The images attempt to capture scientific thought. They represent the physical manifestation of the thought process. Everything in the laboratory is a product of a stream of conscious or unconscious thought.&#8221</div>
-                    <div class="Author">- Peter Fraser</div>
-                </div>
-            </header>
-           
-            
-            
-
-            <section id="feature-extraction">
-                <h2>Feature Extraction from Images and the ORB Feature Detector</h2>
-                <section id= "Introduction">
-                    <h3>Introduction</h3>
-                    <p>
-                        Assuming that you are in a region where natural disasters rampage. Landscape can change, buildings can collapse, and outdated map requires immediate, detailed, and accurate updates. This problem can be addressed by using Unmanned Aerial Vehicle(s) (UAV) to capture images of the area, and then stitch them together using existing computer-vision technologies. The true issue lies in how fast we can do this, as accurate updates mean that multiple high-quality images will be processed, and thus slows down the process due to highly expensive computational processes. One option is multi-core and multi-threads processing. But can we do better? The answer is yes, through the modern architecture behind the Graphic Processing Unit (GPU).
-                    </p>
-                    
-                    <div class="two-columns-block">
-                        <div>
-                            <p>
-                                Image stitching requires feature detection algorithms. The first widely-used feature detection algorithm was the Harris Corner Detector, introduced in 1988 by Chris Harris and Mike Stephens. Later on, in 1999, the Scale-invariant feature transform (SIFT) algorithm by David G. and Lowe revolutionized the field of computer vision by providing a reliable method for feature detection and description. It builds upon the Harris Corner Detector but adds many key innovations to improve robustness and functionality. The SIFT algorithm is still widely used today, and most papers regarding new methods in feature detection, either through traditional means, or neural networks, use SIFT as their benchmark.
-                            </p>
-                            <p>
-                                Although SIFT is a reliable method for such tasks, it is also very computationally expensive. Therefore, many more methods throughout the years have been developed to address that issue, and in 2011, Oriented FAST and Rotated BRIEF (ORB) was introduced. After multiple benchmark tests, ORB has been proven to have better overall performance with quick computing and is demonstrated to be robust to light and rotational shifts.
-                            </p>
-                        </div>
-                        <div>
-                            <figure>
-                                <img src="capital.jpg" alt="Capital Building" class="image-block" style="width: 100%">
-                                <figcaption>The Capital Building of the United States. Feature detection using the Oriented FAST and Rotated BRIEF (ORB) Algorithm. The colored circular regions are called key points of the image.</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-
-                </section>
+        <h1 class="title">
+          Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA
+        </h1>
+        <div class="date"></div>
+        <figure style="margin: 0;">
+          <img class="front-img" src="banner.png" alt="image">
+        </figure>
+        <div class="Quote">
+          <div class="Quote-content">&#8220The images attempt to capture scientific thought. They represent the physical
+            manifestation of the thought process. Everything in the laboratory is a product of a stream of conscious or
+            unconscious thought.&#8221</div>
+          <div class="Author">- Peter Fraser</div>
+        </div>
+      </header>
 
 
 
 
-                <section id="utilizing-gpu">
-                    <h3>Project's Objective</h3>
-                    <div class="two-columns-block">
-                        <div>
-                            <p>
-                                This project mainly focuses on images captured by Unmanned Aerial Vehicles (UAV), the image patch is then sent to a central computer with an Nvidia graphic card for image processing. The map generation process involves processing a pair of images, then the algorithm will detect, and match each of the key points from one image to another. The existing work of this project involves an algorithm to process the image patch using multi-core CPUs, which are available on most modern computers. 
-                            </p>
-            
-                            <p>
-                                The original author of the project, my mentor, also addressed the issue of increasing data overhead by employing distributed and shared memory architectures to reduce computation time, or in other words, multi-threading. For this project, we will employ all the previously mentioned techniques, but we will also integrate the Graphic Processing Unit through the use of CUDA. The goal is to generate reliable maps and accelerate image stitching algorithms even further by utilizing multi-core, multi-threads, and GPU computation. Performance is a large emphasis for this project; therefore, C++ will be prioritized instead of Python.
-                            </p>
-                        </div>
-                        <div>          
-                            <figure>
-                                <img src="30_images.png" alt="30 images" class="image-block" style="width: 98%">
-                                <figcaption>Patch of 30 images captured by the UAV</figcaption>
-                            </figure>
-                
-                
-                            <figure>
-                                <img src="banner.png" alt="Final Map" class="image-block" style="width: 95%">
-                                <figcaption>Final Map Obtained from Stitching Process</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                </section>
+      <section id="feature-extraction">
+        <h2>Feature Extraction from Images and the ORB Feature Detector</h2>
+        <section id="Introduction">
+          <h3>Introduction</h3>
+          <p>
+            Assuming that you are in a region where natural disasters rampage. Landscape can change, buildings can
+            collapse, and outdated map requires immediate, detailed, and accurate updates. This problem can be addressed
+            by using Unmanned Aerial Vehicle(s) (UAV) to capture images of the area, and then stitch them together using
+            existing computer-vision technologies. The true issue lies in how fast we can do this, as accurate updates
+            mean that multiple high-quality images will be processed, and thus slows down the process due to highly
+            expensive computational processes. One option is multi-core and multi-threads processing. But can we do
+            better? The answer is yes, through the modern architecture behind the Graphic Processing Unit (GPU).
+          </p>
 
-            </section>
-           
+          <div class="two-columns-block">
+            <div>
+              <p>
+                Image stitching requires feature detection algorithms. The first widely-used feature detection algorithm
+                was the Harris Corner Detector, introduced in 1988 by Chris Harris and Mike Stephens. Later on, in 1999,
+                the Scale-invariant feature transform (SIFT) algorithm by David G. and Lowe revolutionized the field of
+                computer vision by providing a reliable method for feature detection and description. It builds upon the
+                Harris Corner Detector but adds many key innovations to improve robustness and functionality. The SIFT
+                algorithm is still widely used today, and most papers regarding new methods in feature detection, either
+                through traditional means, or neural networks, use SIFT as their benchmark.
+              </p>
+              <p>
+                Although SIFT is a reliable method for such tasks, it is also very computationally expensive. Therefore,
+                many more methods throughout the years have been developed to address that issue, and in 2011, Oriented
+                FAST and Rotated BRIEF (ORB) was introduced. After multiple benchmark tests, ORB has been proven to have
+                better overall performance with quick computing and is demonstrated to be robust to light and rotational
+                shifts.
+              </p>
+            </div>
+            <div>
+              <figure>
+                <img src="capital.jpg" alt="Capital Building" class="image-block" style="width: 100%">
+                <figcaption>The Capital Building of the United States. Feature detection using the Oriented FAST and
+                  Rotated BRIEF (ORB) Algorithm. The colored circular regions are called key points of the image.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
 
-
-            
-
-
-            <section id="literature-review">
-                <h2>Literature Review and Technologies</h2>
-
-                <section id="sift-and-orb">
-                    <h3>The SIFT and ORB Feature Detectors</h3>
-                    <p>
-                        <strong>Scale-Invariant Feature Transform.</strong> SIFT is one of the most well-known and reliable feature detectors in the field of computer vision to extract invariant features from an image. SIFT primarily works based on the Difference of Gaussian (D.o.G), defined as
-                    </p>
-                    <div class="equation">
-                        \begin{equation}
-                            D(\mathbf{x},\sigma) = \frac{1}{2\pi\sigma}\left[\frac{1}{k}\exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2(k\sigma)^2}\rbrac - \exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2\sigma^2}\rbrac \right].
-                        \end{equation} 
-                    </div>
-                    <p>Since</p>
-                    <div class="equation">
-                        \begin{equation}
-                            D(\mathbf{0},\sigma) = \frac{1}{2\pi k \sigma} < \frac{1}{\sqrt{2}}D_{max}\quad\text{and}\quad D(\mathbf{\infty},\sigma) = 0,
-                        \end{equation}  
-                    </div>
-                    <p> 
-                        the D.o.G is a bandpass filter, which means that it only lets selected frequencies through. One characteristic of the bandpass filter is that it lets frequencies greater than $\frac{1}{\sqrt{2}}D_{max}$ through and blocks low frequencies. This means that the frequencies that it passes tend to be the areas of high contrast on the image, which are usually edges (In computer vision, edges are abrupt changes in intensity, discontinuity in image brightness, or contrast).
-                    </p>
-                    <p>
-                        The algorithm then uses the Gaussian pyramid to compare the respective pixel with its surrounding 26 other neighbor pixels to look for the extrema of the image and improve the accuracy by the Taylor series method. SIFT then uses a straightforward approach for assigning orientations. For each image sample, $L(x,y)$, we compute the gradient magnitude $M(x,y)$ and orientation angle $\theta(x,y)$ using differences of pixels:
-                    </p>
-                    <div class="equation">
-                        \begin{equation}
-                            M(x,y) = \sqrt{(L(x+1, y) - L(x-1,y))^2 + (L(x,y+1) - L(x,y-1))^2}
-                        \end{equation}   
-                    </div>
-                    <p>and,</p>
-                    <div class="equation">
-                        \begin{equation}
-                            \theta(x,y) = \tan^{-1}\lbrac\frac{L(x,y+1) - L(x,y-1)}{L(x+1, y) - L(x-1,y)}\rbrac.
-                        \end{equation}
-                    </div>
-                    <p>
-                        The final output is an $n$-dimensional feature vector whose elements are invariant feature descriptors. In 2018, authors Griwodz, Calvet, and Halvorsen proposed a Python library called PopSIFT, which serves as a CUDA implementation of the SIFT algorithm.
-                    </p>
-
-
-                    <p style="margin-top: 30px"><strong>Oriented FAST and Rotated BRIEF.</strong>
-                        FAST, short for &#8220Features from Accelerated Segment Test,&#8221 is a widely recognized corner detection algorithm introduced by Edward Rosten and Tom Drumm in their paper &#8220Machine Learning for High-speed Corner Detection.&#8221 FAST identifies corners by examining a circular region around a pixel to determine if the pixel qualifies as a corner. The ORB (Oriented FAST and Rotated BRIEF) algorithm uses FAST-9, which uses a circle with a radius of 9 pixels to optimize performance. However, because the original FAST algorithm does not account for orientation, ORB enhances it by assigning an orientation to each detected keypoint (similar to SIFT), thereby making the algorithm rotation-invariant. This orientation is calculated using the intensity centroid method, which leverages the moments of the patch around the keypoint, defined as:
-                    </p>
-                    <div class="equation">
-                        \begin{equation}
-                            m_{pq} = \sum_{x,y}x^py^qI(x,y)
-                        \end{equation}
-                    </div>
-                    <p>
-                        These moments are used to determine the dominant orientation of the keypoint. The centroid can be then computed by
-                    </p>
-                    <div class="equation">
-                        \begin{equation}
-                            C = \lbrac\frac{m_{10}}{m_{00}},\frac{m_{01}}{m_{00}}\rbrac
-                        \end{equation}  
-                    </div>
-                    <p>
-                        By optimizing the BRIEF (Binary Robust Independent Elementary Features) algorithm, binary descriptors are generated by simple pixel intensity comparison, and Angle invariance is recognized by shifting the descriptors in the main direction.
-                    </p>
-                </section>
+        </section>
 
 
 
 
-                <section id="gpu-and-cuda">
-                    <h3>Overview of General GPU Architecture and Nvidia’s Compute Unified Device Architecture (CUDA)</h3>
-                    <p>
-                        Unlike a Central Processing Unit (CPU), which typically has only a few physical cores, a Graphics Processing Unit (GPU) can contain thousands or even tens of thousands of cores. Although GPU cores are designed for simple calculations and are less versatile than CPU cores, the GPU's key advantage lies in its ability to perform large-scale parallel computations. Take a look at an image, for instance:
-                    </p>
-                    <figure>
-                        <img src="pixels.jpg" alt="Zooming into pixels" class="image-block" style="width: 55%">
-                        <figcaption>Zooming into an image. Image by Julie Waterhouse Photography</figcaption>
-                    </figure>
+        <section id="utilizing-gpu">
+          <h3>Project's Objective</h3>
+          <div class="two-columns-block">
+            <div>
+              <p>
+                This project mainly focuses on images captured by Unmanned Aerial Vehicles (UAV), the image patch is
+                then sent to a central computer with an Nvidia graphic card for image processing. The map generation
+                process involves processing a pair of images, then the algorithm will detect, and match each of the key
+                points from one image to another. The existing work of this project involves an algorithm to process the
+                image patch using multi-core CPUs, which are available on most modern computers.
+              </p>
 
-                    <p>
-                        Images are composed of millions of pixels. When processing an image, the GPU cannot handle pixels one by one (it shouldn't!), as doing so would leave many cores idle, leading to a significant waste of resources. Instead, a key principle of GPU operation is parallelism: whichever core is available first takes on the computation, ensuring that all cores are utilized efficiently. All computations are independent of each other, and finally, we only need to combine them to output the final input image.
-                    </p>
-                    <p>
-                        Let's say we have 100 tasks for a GPU to compute, with each task represented as a thread. GPUs are designed to handle thousands or even millions of threads simultaneously, but they don't assign one thread to each core directly. Instead, GPU cores are organized into groups called "warps," typically consisting of 32 threads that execute the same instruction simultaneously. These warps are managed by units within the GPU called Streaming Multiprocessors (SMs).
-                    </p>
-                    <p>
-                        If the number of tasks increases to 1 million, the GPU doesn't need 1 million cores to process them. Instead, it groups the threads into blocks, and these blocks are distributed among the SMs. Each SM contains multiple cores that work together to execute the warps of threads. When an SM processes a block, it schedules the warps dynamically, keeping all its cores busy and switching between warps to hide any delays, such as waiting for memory access. For example, with 1,000 cores organized into several SMs, each SM might handle many blocks of threads. Even if a single block contains 1,000 threads, the SM can manage them efficiently by processing them in warps and switching between them as needed. This hierarchical structure allows the GPU to handle a vast number of threads, ensuring that even with millions of tasks, the cores are utilized efficiently to maximize parallel computation.
-                    </p>
-                </section>
-                
-                <section id="mpi">
-                    <h3>Message Passing Interfaces (MPI)</h3>
-                    <p>
-                        What is an MPI? An MPI is a software designed to allow communication between CPU cores. MPI defines the syntax and semantics of library routines that allow programs to communicate data by passing messages between processes. For this research project, we will be using the Microsoft Message Passing Interface (MsMPI). 
-                    </p>
-                </section>
-                
-                <section id="openmp">
-                    <h3>Open Multi-Processing (OpenMP)</h3>
-                    <p>
-                        OpenMP is an Application Program Interface (API) that may be used to direct multi-threaded, shared memory parallelism in C/C++, or Fortran programs. Both g++ (available since GCC 4.9) and MSVC compiler have OpenMP available through the header <code class="inline-code">#include&lt;omp.h&gt;</code>. To enable OpenMP in Microsoft Visual Studio, go to Project > Properties > C/C++ > Language > OpenMP support, select yes.
-                        
-                        For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation of any module that uses OpenMP:
-                    </p>
-<div style="text-align: center; margin: 25px 0;  overflow: auto;">
-    <pre class="console" style="display:inline-block;"><samp>    g++ -c test.cpp -o test.o -fopenmp
+              <p>
+                The original author of the project, my mentor, also addressed the issue of increasing data overhead by
+                employing distributed and shared memory architectures to reduce computation time, or in other words,
+                multi-threading. For this project, we will employ all the previously mentioned techniques, but we will
+                also integrate the Graphic Processing Unit through the use of CUDA. The goal is to generate reliable
+                maps and accelerate image stitching algorithms even further by utilizing multi-core, multi-threads, and
+                GPU computation. Performance is a large emphasis for this project; therefore, C++ will be prioritized
+                instead of Python.
+              </p>
+            </div>
+            <div>
+              <figure>
+                <img src="30_images.png" alt="30 images" class="image-block" style="width: 98%">
+                <figcaption>Patch of 30 images captured by the UAV</figcaption>
+              </figure>
+
+
+              <figure>
+                <img src="banner.png" alt="Final Map" class="image-block" style="width: 95%">
+                <figcaption>Final Map Obtained from Stitching Process</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+
+
+
+
+
+      <section id="literature-review">
+        <h2>Literature Review and Technologies</h2>
+
+        <section id="sift-and-orb">
+          <h3>The SIFT and ORB Feature Detectors</h3>
+          <p>
+            <strong>Scale-Invariant Feature Transform.</strong> SIFT is one of the most well-known and reliable feature
+            detectors in the field of computer vision to extract invariant features from an image. SIFT primarily works
+            based on the Difference of Gaussian (D.o.G), defined as
+          </p>
+          <div class="equation">
+            \begin{equation}
+            D(\mathbf{x},\sigma) =
+            \frac{1}{2\pi\sigma}\left[\frac{1}{k}\exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2(k\sigma)^2}\rbrac -
+            \exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2\sigma^2}\rbrac \right].
+            \end{equation}
+          </div>
+          <p>Since</p>
+          <div class="equation">
+            \begin{equation}
+            D(\mathbf{0},\sigma) = \frac{1}{2\pi k \sigma} < \frac{1}{\sqrt{2}}D_{max}\quad\text{and}\quad
+              D(\mathbf{\infty},\sigma)=0, \end{equation} </div> <p>
+              the D.o.G is a bandpass filter, which means that it only lets selected frequencies through. One
+              characteristic of the bandpass filter is that it lets frequencies greater than $\frac{1}{\sqrt{2}}D_{max}$
+              through and blocks low frequencies. This means that the frequencies that it passes tend to be the areas of
+              high contrast on the image, which are usually edges (In computer vision, edges are abrupt changes in
+              intensity, discontinuity in image brightness, or contrast).
+              </p>
+              <p>
+                The algorithm then uses the Gaussian pyramid to compare the respective pixel with its surrounding 26
+                other neighbor pixels to look for the extrema of the image and improve the accuracy by the Taylor series
+                method. SIFT then uses a straightforward approach for assigning orientations. For each image sample,
+                $L(x,y)$, we compute the gradient magnitude $M(x,y)$ and orientation angle $\theta(x,y)$ using
+                differences of pixels:
+              </p>
+              <div class="equation">
+                \begin{equation}
+                M(x,y) = \sqrt{(L(x+1, y) - L(x-1,y))^2 + (L(x,y+1) - L(x,y-1))^2}
+                \end{equation}
+              </div>
+              <p>and,</p>
+              <div class="equation">
+                \begin{equation}
+                \theta(x,y) = \tan^{-1}\lbrac\frac{L(x,y+1) - L(x,y-1)}{L(x+1, y) - L(x-1,y)}\rbrac.
+                \end{equation}
+              </div>
+              <p>
+                The final output is an $n$-dimensional feature vector whose elements are invariant feature descriptors.
+                In 2018, authors Griwodz, Calvet, and Halvorsen proposed a Python library called PopSIFT, which serves
+                as a CUDA implementation of the SIFT algorithm.
+              </p>
+
+
+              <p style="margin-top: 30px"><strong>Oriented FAST and Rotated BRIEF.</strong>
+                FAST, short for &#8220Features from Accelerated Segment Test,&#8221 is a widely recognized corner
+                detection algorithm introduced by Edward Rosten and Tom Drumm in their paper &#8220Machine Learning for
+                High-speed Corner Detection.&#8221 FAST identifies corners by examining a circular region around a pixel
+                to determine if the pixel qualifies as a corner. The ORB (Oriented FAST and Rotated BRIEF) algorithm
+                uses FAST-9, which uses a circle with a radius of 9 pixels to optimize performance. However, because the
+                original FAST algorithm does not account for orientation, ORB enhances it by assigning an orientation to
+                each detected keypoint (similar to SIFT), thereby making the algorithm rotation-invariant. This
+                orientation is calculated using the intensity centroid method, which leverages the moments of the patch
+                around the keypoint, defined as:
+              </p>
+              <div class="equation">
+                \begin{equation}
+                m_{pq} = \sum_{x,y}x^py^qI(x,y)
+                \end{equation}
+              </div>
+              <p>
+                These moments are used to determine the dominant orientation of the keypoint. The centroid can be then
+                computed by
+              </p>
+              <div class="equation">
+                \begin{equation}
+                C = \lbrac\frac{m_{10}}{m_{00}},\frac{m_{01}}{m_{00}}\rbrac
+                \end{equation}
+              </div>
+              <p>
+                By optimizing the BRIEF (Binary Robust Independent Elementary Features) algorithm, binary descriptors
+                are generated by simple pixel intensity comparison, and Angle invariance is recognized by shifting the
+                descriptors in the main direction.
+              </p>
+        </section>
+
+
+
+
+        <section id="gpu-and-cuda">
+          <h3>Overview of General GPU Architecture and Nvidia’s Compute Unified Device Architecture (CUDA)</h3>
+          <p>
+            Unlike a Central Processing Unit (CPU), which typically has only a few physical cores, a Graphics Processing
+            Unit (GPU) can contain thousands or even tens of thousands of cores. Although GPU cores are designed for
+            simple calculations and are less versatile than CPU cores, the GPU's key advantage lies in its ability to
+            perform large-scale parallel computations. Take a look at an image, for instance:
+          </p>
+          <figure>
+            <img src="pixels.jpg" alt="Zooming into pixels" class="image-block" style="width: 55%">
+            <figcaption>Zooming into an image. Image by Julie Waterhouse Photography</figcaption>
+          </figure>
+
+          <p>
+            Images are composed of millions of pixels. When processing an image, the GPU cannot handle pixels one by one
+            (it shouldn't!), as doing so would leave many cores idle, leading to a significant waste of resources.
+            Instead, a key principle of GPU operation is parallelism: whichever core is available first takes on the
+            computation, ensuring that all cores are utilized efficiently. All computations are independent of each
+            other, and finally, we only need to combine them to output the final input image.
+          </p>
+          <p>
+            Let's say we have 100 tasks for a GPU to compute, with each task represented as a thread. GPUs are designed
+            to handle thousands or even millions of threads simultaneously, but they don't assign one thread to each
+            core directly. Instead, GPU cores are organized into groups called "warps," typically consisting of 32
+            threads that execute the same instruction simultaneously. These warps are managed by units within the GPU
+            called Streaming Multiprocessors (SMs).
+          </p>
+          <p>
+            If the number of tasks increases to 1 million, the GPU doesn't need 1 million cores to process them.
+            Instead, it groups the threads into blocks, and these blocks are distributed among the SMs. Each SM contains
+            multiple cores that work together to execute the warps of threads. When an SM processes a block, it
+            schedules the warps dynamically, keeping all its cores busy and switching between warps to hide any delays,
+            such as waiting for memory access. For example, with 1,000 cores organized into several SMs, each SM might
+            handle many blocks of threads. Even if a single block contains 1,000 threads, the SM can manage them
+            efficiently by processing them in warps and switching between them as needed. This hierarchical structure
+            allows the GPU to handle a vast number of threads, ensuring that even with millions of tasks, the cores are
+            utilized efficiently to maximize parallel computation.
+          </p>
+        </section>
+
+        <section id="mpi">
+          <h3>Message Passing Interfaces (MPI)</h3>
+          <p>
+            What is an MPI? An MPI is a software designed to allow communication between CPU cores. MPI defines the
+            syntax and semantics of library routines that allow programs to communicate data by passing messages between
+            processes. For this research project, we will be using the Microsoft Message Passing Interface (MsMPI).
+          </p>
+        </section>
+
+        <section id="openmp">
+          <h3>Open Multi-Processing (OpenMP)</h3>
+          <p>
+            OpenMP is an Application Program Interface (API) that may be used to direct multi-threaded, shared memory
+            parallelism in C/C++, or Fortran programs. Both g++ (available since GCC 4.9) and MSVC compiler have OpenMP
+            available through the header <code class="inline-code">#include&lt;omp.h&gt;</code>. To enable OpenMP in
+            Microsoft Visual Studio, go to Project > Properties > C/C++ > Language > OpenMP support, select yes.
+
+            For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation of any module that uses
+            OpenMP:
+          </p>
+          <div style="text-align: center; margin: 25px 0;  overflow: auto;">
+            <pre class="console" style="display:inline-block;"><samp>    g++ -c test.cpp -o test.o -fopenmp
     g++ test.o -o test -fopenmp -lpthread    </samp></pre>
-</div>                    
-                </section>
-                
-
-            </section>
-            
+          </div>
+        </section>
 
 
+      </section>
 
-            <section id="implementation">
-                <h2>Implementations</h2>
-                <section id="workflow">
-                    <h3>Image Stitching Workflow</h3>
-                    <p>
-                        The code base of this project belongs to a private repository, so I will not put the full code on here. It wouldn't make much sense anyway because this whole process spans across thousands of lines code. Instead, I will be summarizing the image stitching process using the flow chart below:
-                    </p>
-                    <figure>
-                        <img src="flowchart.png" alt="Final Map" class="image-block" style="width: 90%">
-                        <figcaption id="flowchart-caption">Image Stitching workflow. Green are the steps that can be further accelerated with CUDA, and blue are steps that can be further accelerated with OpenMP.</figcaption>
-                    </figure>
-                    <p>
-                        In order to further improve the speed of image processing, the author of the CPU implementation used a distributed memory design to parallelize image processing. Distributed memory designs transfer information between multiple CPU cores through MPI, with each or more CPU cores processing two images as a node. The greater the number of CPU cores, the greater the number of images that can be processed simultaneously in parallel without the need to wait for earlier images in the list to complete processing before processing later images. For example, if one wishes to concatenate four images, one can use two CPU cores for parallel processing.
-                    </p>
-                    <p>
-                        When the two nodes are finished processing, the results are sent to the new node via MPI to process the two images processed by the previous node. This structure is similar to the tree structure and has been shown to increase the computation speed. However, one needs to note that given an unlimited amount of resources, it does not necessarily mean that the program can speed up infinitely, see <a href="https://en.wikipedia.org/wiki/Amdahl%27s_law" class="url">Amdahl's law</a>, which states that the potential speedup of a process due to parallelization is limited by the portion of the process that cannot be parallelized, which can be formalized by the equation
-                    </p>
-                    <div class="equation">
-                        \begin{equation}
-                            S = \frac{1}{(1-P) + \frac{P}{N}},
-                        \end{equation}   
-                    </div>
-                    <p>                                      
-                        where $S$ is the speedup ratio, $P$ is the proportion of the task that can be parallelized, $N$ is the number of processors or cores, and $(1-P)$ is the proportion of the task that must be performed sequentially.
-                    </p>
-                </section>
 
-                <section id="optimization">
-                    <h3>Optimization</h3>
-                    <p>
-                        The main change from the original paper is to convert the method of image feature extraction using CPU to GPU. We will add a function based on the code of the original paper that can detect image features using the GPU. We changed the finder of feature detection to use <code class="inline-code">cuda::ORB</code>, and based on the open source code of OpenCV CUDA, we used the corresponding CUDA ORB image feature detection algorithm to achieve the same purpose as its regular version. We call this new function
-                    </p>
 
-<div style="text-align: center; margin: 25px 0;  overflow: auto;">
-    <pre class="console" style="display:inline-block;"><samp>    void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const cuda::GpuMat& img,ImageFeatures& features)    </samp></pre>
-</div>
-                    <p>
-                        to compute GPU images. This is an analogous version of the <code class="inline-code">detectAndCompute</code> function when using regular feature detector ORB. The key feature in this function is the computation of descriptors on the GPU. To do this, we must upload the descriptors from the CPU to the GPU, and then download it back to the CPU.
-                    </p>
-<div class="box" style="margin: 30px 0;">
-    <div class="code-container">
-        <button class="copy-btn">Copy</button>
-        <pre class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// A peak inside computeImageFeatures()
+
+      <section id="implementation">
+        <h2>Implementations</h2>
+        <section id="workflow">
+          <h3>Image Stitching Workflow</h3>
+          <p>
+            The code base of this project belongs to a private repository, so I will not put the full code on here. It
+            wouldn't make much sense anyway because this whole process spans across thousands of lines code. Instead, I
+            will be summarizing the image stitching process using the flow chart below:
+          </p>
+          <figure>
+            <img src="flowchart.png" alt="Final Map" class="image-block" style="width: 90%">
+            <figcaption id="flowchart-caption">Image Stitching workflow. Green are the steps that can be further
+              accelerated with CUDA, and blue are steps that can be further accelerated with OpenMP.</figcaption>
+          </figure>
+          <p>
+            In order to further improve the speed of image processing, the author of the CPU implementation used a
+            distributed memory design to parallelize image processing. Distributed memory designs transfer information
+            between multiple CPU cores through MPI, with each or more CPU cores processing two images as a node. The
+            greater the number of CPU cores, the greater the number of images that can be processed simultaneously in
+            parallel without the need to wait for earlier images in the list to complete processing before processing
+            later images. For example, if one wishes to concatenate four images, one can use two CPU cores for parallel
+            processing.
+          </p>
+          <p>
+            When the two nodes are finished processing, the results are sent to the new node via MPI to process the two
+            images processed by the previous node. This structure is similar to the tree structure and has been shown to
+            increase the computation speed. However, one needs to note that given an unlimited amount of resources, it
+            does not necessarily mean that the program can speed up infinitely, see <a
+              href="https://en.wikipedia.org/wiki/Amdahl%27s_law" class="url">Amdahl's law</a>, which states that the
+            potential speedup of a process due to parallelization is limited by the portion of the process that cannot
+            be parallelized, which can be formalized by the equation
+          </p>
+          <div class="equation">
+            \begin{equation}
+            S = \frac{1}{(1-P) + \frac{P}{N}},
+            \end{equation}
+          </div>
+          <p>
+            where $S$ is the speedup ratio, $P$ is the proportion of the task that can be parallelized, $N$ is the
+            number of processors or cores, and $(1-P)$ is the proportion of the task that must be performed
+            sequentially.
+          </p>
+        </section>
+
+        <section id="optimization">
+          <h3>Optimization</h3>
+          <p>
+            The main change from the original paper is to convert the method of image feature extraction using CPU to
+            GPU. We will add a function based on the code of the original paper that can detect image features using the
+            GPU. We changed the finder of feature detection to use <code class="inline-code">cuda::ORB</code>, and based
+            on the open source code of OpenCV CUDA, we used the corresponding CUDA ORB image feature detection algorithm
+            to achieve the same purpose as its regular version. We call this new function
+          </p>
+
+          <div style="text-align: center; margin: 25px 0;  overflow: auto;">
+            <pre class="console"
+              style="display:inline-block;"><samp>    void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const cuda::GpuMat& img,ImageFeatures& features)    </samp></pre>
+          </div>
+          <p>
+            to compute GPU images. This is an analogous version of the <code class="inline-code">detectAndCompute</code>
+            function when using regular feature detector ORB. The key feature in this function is the computation of
+            descriptors on the GPU. To do this, we must upload the descriptors from the CPU to the GPU, and then
+            download it back to the CPU.
+          </p>
+          <div class="box" style="margin: 30px 0;">
+            <div class="code-container">
+              <button class="copy-btn">Copy</button>
+              <pre class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// A peak inside computeImageFeatures()
 
 cuda::GpuMat keypointsGPU;
 orb->detectAndComputeAsync(grayImg, cuda::GpuMat(), keypointsGPU, descriptorsGPU);
@@ -376,268 +491,331 @@ features.keypoints = keypointsCPU;
 features.descriptors = descriptors;
 features.img_size = grayImg.size();
         </script></code></pre>
-    </div>
-</div>
-                </section>
-            </section>
+            </div>
+          </div>
+        </section>
+      </section>
 
-            <!--  -->
-
-
-            <section id="benchmarks">
-                <h2>Data Collection and Benchmarks</h2>
-                <p>
-                    The data set for this project is a set of sixty-four 4k images, each with a resolution of 3840 $\times$ 2160 px. We will utilize CUDA to accelerate the processing of these high-resolution images.
-                </p> 
-
-                <p>
-                    <strong>CPU Implementation.</strong> We will evaluate the algorithm's performance under different conditions, including with and without CUDA acceleration. In the absence of CUDA acceleration, we will record the impact of distributed memory design (utilizing MPI) and shared memory design (utilizing OpenMP) on the algorithm's speed. Given our limited resources, we will test the processing speed using 1, 2, 4, 8, 16, and 32 CPU cores, as well as using 1, 2, 4, 8, 16, 24 threads, and 32 threads.
-                </p>
-
-                <p>
-                    <strong>GPU Implementation.</strong> For the CUDA-accelerated version of the algorithm, the tests will concentrate exclusively on the distributed memory design. This focus is due to the current limitations of the experiment, which prevent us from utilizing the GPU implementation across multiple threads. In simple words, OpenMP is not available for CUDA. I am still working on this problem.
-                </p>
-
-                <div class="two-columns-block" style="margin: 30px 0 10px; column-gap: 1.2em;">
-                    <div>
-                        <span style="font-size: large;"><strong>Performance Testing without CUDA Acceleration</strong></span>
-                        <ul style="line-height: 1.6;">
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Benchmark Test:</strong> Record the processing speed of 64 images without any optimization, which will serve as the initial benchmark for the experiment.
-                            </li>
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Single-Core Execution (Serial Processing):</strong> Test the processing speed of 64 images using a single CPU core.
-                            </li>
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Distributed Memory Design (Parallel Processing):</strong> Test the processing speed for 1, 2, 4, 8, 16, and 32 CPU cores.
-                            </li>
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Single-Core Execution and Shared Memory Design (Serial Threading):</strong> Test the processing speed for 1, 2, 4, 8, 16, 24, and 32 threads with 1 core.
-                            </li>
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Distributed Memory and Shared Memory Design (Parallel Processing and Multi-threading):</strong> Test the processing speed using combinations such as 2 cores 2 threads, 2 cores 4 threads, 4 cores 2 threads, 4 cores 4 threads, etc.
-                            </li> 
-                        </ul>
-                    </div>
-                    <div>
-                        <span style="font-size: large;"><strong>Performance Testing with CUDA Acceleration</strong></span>
-                        <ul style="line-height: 1.6;">
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Benchmark Test:</strong> Record the processing speed of 64 images under the optimized design of 1 core and 1 threads with CUDA was recorded as the second part experimental initial benchmark.
-                            </li>
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Single-Core Execution (Serial Processing):</strong> Test the processing speed of 64 images using a single CPU core and GPU acceleration with 1 core.
-                            </li>
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                <strong>Distributed Memory Design (Parallel Processing and Serial-threading):</strong> Test the processing speed using 1, 2, 4, 8, 16, and 24 CPU cores with GPU acceleration.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <p><strong>Experimental Setup:</strong> The data collection process will be conducted on two different computers:</p>
-                
-                <div class="table-wrapper">
-                    <table style="margin-left: auto; margin-right: auto; text-align: center; min-width: 70%;" id="setup-table">
-                        <tr style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);">
-                            <th></th>
-                            <th style="border-left: 1px solid var(--grid-text-color)"><strong>First Setup</strong></th>
-                            <th><strong>Second Setup</strong></th>
-                        </tr>
-                        <tr style="border: 0; ">
-                            <td>CPU</td>
-                            <td style="border-left: 1px solid var(--grid-text-color)">Intel Core i7-8750H</td>
-                            <td>Intel Core i9-13900KF</td>
-                        </tr>
-                        <tr>
-                            <td>GPU</td>
-                            <td style="border-left: 1px solid var(--grid-text-color)">NVIDIA GTX 1070 Max-Q</td>
-                            <td>NVIDIA RTX 4060Ti</td>
-                        </tr>
-                        <tr>
-                            <td>OpenCV Version</td>
-                            <td style="border-left: 1px solid var(--grid-text-color)">OpenCV 4.10.0</td>
-                            <td>OpenCV 4.10.0</td>
-                        </tr>
-                        <tr>
-                            <td>RAM</td>
-                            <td style="border-left: 1px solid var(--grid-text-color)">16GB</td>
-                            <td>32GB</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--grid-text-color);">
-                            <td>GPU Memory</td>
-                            <td style="border-left: 1px solid var(--grid-text-color)">8GB</td>
-                            <td>16GB</td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <p>
-                    There will be some differences in the data obtained from the two setups. The CPU used in lab setup 1 has only 6 cores, so the data obtained using setup 1 will be only from 1, 2, 4, and at most 8 cores (overhead). We also use different running memories to compare whether the calculation results of the algorithm will be affected by different running memories.
-                </p>
-                
-
-            </section>
+      <!--  -->
 
 
-            <section>
-                <h2>Results</h2>
+      <section id="benchmarks">
+        <h2>Data Collection and Benchmarks</h2>
+        <p>
+          The data set for this project is a set of sixty-four 4k images, each with a resolution of 3840 $\times$ 2160
+          px. We will utilize CUDA to accelerate the processing of these high-resolution images.
+        </p>
 
-                <section id="performance-metrics">
-                    <h3>Performance Metrics</h3>
+        <p>
+          <strong>CPU Implementation.</strong> We will evaluate the algorithm's performance under different conditions,
+          including with and without CUDA acceleration. In the absence of CUDA acceleration, we will record the impact
+          of distributed memory design (utilizing MPI) and shared memory design (utilizing OpenMP) on the algorithm's
+          speed. Given our limited resources, we will test the processing speed using 1, 2, 4, 8, 16, and 32 CPU cores,
+          as well as using 1, 2, 4, 8, 16, 24 threads, and 32 threads.
+        </p>
+
+        <p>
+          <strong>GPU Implementation.</strong> For the CUDA-accelerated version of the algorithm, the tests will
+          concentrate exclusively on the distributed memory design. This focus is due to the current limitations of the
+          experiment, which prevent us from utilizing the GPU implementation across multiple threads. In simple words,
+          OpenMP is not available for CUDA. I am still working on this problem.
+        </p>
+
+        <div class="two-columns-block" style="margin: 30px 0 10px; column-gap: 1.2em;">
+          <div>
+            <span style="font-size: large;"><strong>Performance Testing without CUDA Acceleration</strong></span>
+            <ul style="line-height: 1.6;">
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Benchmark Test:</strong> Record the processing speed of 64 images without any optimization,
+                which will serve as the initial benchmark for the experiment.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Single-Core Execution (Serial Processing):</strong> Test the processing speed of 64 images using
+                a single CPU core.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Distributed Memory Design (Parallel Processing):</strong> Test the processing speed for 1, 2, 4,
+                8, 16, and 32 CPU cores.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Single-Core Execution and Shared Memory Design (Serial Threading):</strong> Test the processing
+                speed for 1, 2, 4, 8, 16, 24, and 32 threads with 1 core.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Distributed Memory and Shared Memory Design (Parallel Processing and Multi-threading):</strong>
+                Test the processing speed using combinations such as 2 cores 2 threads, 2 cores 4 threads, 4 cores 2
+                threads, 4 cores 4 threads, etc.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <span style="font-size: large;"><strong>Performance Testing with CUDA Acceleration</strong></span>
+            <ul style="line-height: 1.6;">
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Benchmark Test:</strong> Record the processing speed of 64 images under the optimized design of
+                1 core and 1 threads with CUDA was recorded as the second part experimental initial benchmark.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Single-Core Execution (Serial Processing):</strong> Test the processing speed of 64 images using
+                a single CPU core and GPU acceleration with 1 core.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                <strong>Distributed Memory Design (Parallel Processing and Serial-threading):</strong> Test the
+                processing speed using 1, 2, 4, 8, 16, and 24 CPU cores with GPU acceleration.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <p><strong>Experimental Setup:</strong> The data collection process will be conducted on two different
+          computers:</p>
+
+        <div class="table-wrapper">
+          <table style="margin-left: auto; margin-right: auto; text-align: center; min-width: 70%;" id="setup-table">
+            <tr style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);">
+              <th></th>
+              <th style="border-left: 1px solid var(--grid-text-color)"><strong>First Setup</strong></th>
+              <th><strong>Second Setup</strong></th>
+            </tr>
+            <tr style="border: 0; ">
+              <td>CPU</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">Intel Core i7-8750H</td>
+              <td>Intel Core i9-13900KF</td>
+            </tr>
+            <tr>
+              <td>GPU</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">NVIDIA GTX 1070 Max-Q</td>
+              <td>NVIDIA RTX 4060Ti</td>
+            </tr>
+            <tr>
+              <td>OpenCV Version</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">OpenCV 4.10.0</td>
+              <td>OpenCV 4.10.0</td>
+            </tr>
+            <tr>
+              <td>RAM</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">16GB</td>
+              <td>32GB</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--grid-text-color);">
+              <td>GPU Memory</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">8GB</td>
+              <td>16GB</td>
+            </tr>
+          </table>
+        </div>
+
+        <p>
+          There will be some differences in the data obtained from the two setups. The CPU used in lab setup 1 has only
+          6 cores, so the data obtained using setup 1 will be only from 1, 2, 4, and at most 8 cores (overhead). We also
+          use different running memories to compare whether the calculation results of the algorithm will be affected by
+          different running memories.
+        </p>
 
 
-                    <div class="definition" data-definition-name=" (Serial and Parallel Runtime)">
-                        The serial and parallel runtime of a program are defined as follows:
-                        <ol type="i" style="line-height: 1.6;">
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                The Serial runtime of a program is the time between the beginning and the end of its execution on a sequential processor. We denote this by $T_S$.
-                            </li>
-                            <li style="margin: var(--in-page-li-spacing) 0;">
-                                Parallel runtime is the time from the moment the first processor begins its execution to the moment the last processor ends its execution. We denote this by $T_P$.
-                            </li>
-                        </ol>
-                    </div>
-
-                    <div class="definition" data-definition-name=" (Speedup)">
-                        Speedup is defined as the ratio between the serial runtime to the time taken by parallel runtime,
-                        <div class="equation">
-                            \begin{equation}
-                                S=\frac{T_S}{T_P}
-                            \end{equation} 
-                        </div>  
-                        The speedup of a parallel algorithm measures how much faster an algorithm is than its sequential counterpart.
-                    </div>
-
-                    <div class="definition" data-definition-name=" (Cost)">
-                        The cost of processing a program on a parallel system is defined as the product of run time and the number of processors,
-                        <div class="equation">
-                            \begin{equation}
-                                C = T_P\cdot p,
-                            \end{equation} 
-                        </div> 
-                        where $p$ denotes the number of processors.
-                    </div>
-
-                    <div class="definition" data-definition-name=" (Efficiency)">
-                        The efficiency of a parallel program that uses $p$ processors is defined by
-                        <div class="equation">
-                            \begin{equation}
-                                E = \frac{T_S}{p\cdot T_P}=\frac{S}{p}
-                            \end{equation}  
-                        </div>
-                    </div>
-                </section>
-
-                <section id="runtime">
-                    <h3>Runtime Comparison</h3>
-                    <p>
-                        As mentioned, I will compare the two runtime of the setup with, and without multi-threading.
-                    </p>
-                    <div class="two-columns-block">
-                        <div>
-                            <figure style="padding: 0; margin: 0;">
-                                <img src="no_openmp.png" alt="Final Map" class="image-block" style="width: 100%; padding: 0;">
-                            </figure>
-                            <figcaption>Without OpenMP for CPU vs GPU (1 thread)</figcaption>
-                        </div>
-                        <div>
-                            <figure style="padding: 0; margin: 0;">
-                                <img src="with_openmp.png" alt="Final Map" class="image-block" style="width: 100%; padding: 0;">
-                            </figure>
-                            <figcaption>With OpenMP for CPU vs GPU (1 thread)</figcaption>
-                        </div>
-                    </div>
-
-                    <p>
-                        I initially ran our code on Setup 1. The original goal of this research is to be able to stitch 64 4K images, but due to the limited resources of the first setup, I had to downscale the image by 75% from their original quality to 540$\times$960 px.
-                    </p>
-                    <p>
-                        The GPU implementation significantly outperformed the original CPU-based image stitching, reducing the runtime by a factor of three to four. However, as the number of used cores exceeded the available physical cores, the application began to slow down: all components of the system were operating at their limits: the CPU was running at 100%, the RAM was fully utilized at 16GB, and the GPU memory was maxed out at 8GB. This likely due to the context switching that the system had to perform when running out of physical cores.
-                    </p>
-                    <p>                    
-                        One interesting thing for the first setup is that the GPU implementation was able to run up to 8 CPU cores, but the original implementation could only run up to 4 cores. One possible reason for this is that the GPU shared the resources with the CPU while performing the algorithm, which put less constraint on the CPU, and hence pushed the number of cores to the limit.
-                    </p>
-                </section>
+      </section>
 
 
+      <section>
+        <h2>Results</h2>
 
-                <section id="speedup">
-                    <h3>Speedup</h3>
-                    
-                    <p>
-                        Even though the runtime has massively decreased under the usage of CUDA, the speedup ratio does not stand out among the CPU with the OpenMP dataset, but it did, however, speedup in all scenarios of cores against CPU with 1 thread, which is reasonable since our GPU setup also uses only one thread of the CPU (no OpenMP available for GPU).One possible reason why the GPU doesn’t speed up as fast is due to the uploading and downloading of images to the GPU, which costs much more resources due to the high quality of the image patch.
-                    </p>
-
-                    <figure>
-                        <img src="speedup.png" alt="Final Map" class="image-block" style="width: 60%">
-                    </figure>
-                </section>
+        <section id="performance-metrics">
+          <h3>Performance Metrics</h3>
 
 
-                <section id="cost">
-                    <h3>Cost</h3>
-                    
-                    <p>
-                        In parallel computing, resource inefficiency occurs when parts of a process are forced to wait for others to complete, reducing overall performance. As observed, the cost of the GPU implementation is much lower than every other previous CPU implementations. This is not a surprise at all, as GPUs, optimized for massively parallel tasks, often provide significantly better performance for certain applications compared to traditional CPU implementations, resulting in lower operational costs for these specific workloads.
-                    </p>
+          <div class="definition" data-definition-name=" (Serial and Parallel Runtime)">
+            The serial and parallel runtime of a program are defined as follows:
+            <ol type="i" style="line-height: 1.6;">
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                The Serial runtime of a program is the time between the beginning and the end of its execution on a
+                sequential processor. We denote this by $T_S$.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0;">
+                Parallel runtime is the time from the moment the first processor begins its execution to the moment the
+                last processor ends its execution. We denote this by $T_P$.
+              </li>
+            </ol>
+          </div>
 
-                    <figure>
-                        <img src="cost.png" alt="Final Map" class="image-block" style="width: 60%">
-                    </figure>
-                </section>
+          <div class="definition" data-definition-name=" (Speedup)">
+            Speedup is defined as the ratio between the serial runtime to the time taken by parallel runtime,
+            <div class="equation">
+              \begin{equation}
+              S=\frac{T_S}{T_P}
+              \end{equation}
+            </div>
+            The speedup of a parallel algorithm measures how much faster an algorithm is than its sequential
+            counterpart.
+          </div>
 
+          <div class="definition" data-definition-name=" (Cost)">
+            The cost of processing a program on a parallel system is defined as the product of run time and the number
+            of processors,
+            <div class="equation">
+              \begin{equation}
+              C = T_P\cdot p,
+              \end{equation}
+            </div>
+            where $p$ denotes the number of processors.
+          </div>
 
-                <section id="efficiency">
-                    <h3>Efficiency</h3>
-                    
-                    <p>
-                        For efficiency, the CUDA-enhanced algorithm is less efficient than the CPU with 1 thread setup, but is overall more efficient than other CPU setups as the number of cores increases. The efficiency of the GPU implementation eventually matches that of the CPU, 1 thread implementation as $p=32$.
-                    </p>
+          <div class="definition" data-definition-name=" (Efficiency)">
+            The efficiency of a parallel program that uses $p$ processors is defined by
+            <div class="equation">
+              \begin{equation}
+              E = \frac{T_S}{p\cdot T_P}=\frac{S}{p}
+              \end{equation}
+            </div>
+          </div>
+        </section>
 
-                    <figure>
-                        <img src="efficiency.png" alt="Final Map" class="image-block" style="width: 60%">
-                    </figure>
-                </section>
-                
-            </section>
+        <section id="runtime">
+          <h3>Runtime Comparison</h3>
+          <p>
+            As mentioned, I will compare the two runtime of the setup with, and without multi-threading.
+          </p>
+          <div class="two-columns-block">
+            <div>
+              <figure style="padding: 0; margin: 0;">
+                <img src="no_openmp.png" alt="Final Map" class="image-block" style="width: 100%; padding: 0;">
+              </figure>
+              <figcaption>Without OpenMP for CPU vs GPU (1 thread)</figcaption>
+            </div>
+            <div>
+              <figure style="padding: 0; margin: 0;">
+                <img src="with_openmp.png" alt="Final Map" class="image-block" style="width: 100%; padding: 0;">
+              </figure>
+              <figcaption>With OpenMP for CPU vs GPU (1 thread)</figcaption>
+            </div>
+          </div>
+
+          <p>
+            I initially ran our code on Setup 1. The original goal of this research is to be able to stitch 64 4K
+            images, but due to the limited resources of the first setup, I had to downscale the image by 75% from their
+            original quality to 540$\times$960 px.
+          </p>
+          <p>
+            The GPU implementation significantly outperformed the original CPU-based image stitching, reducing the
+            runtime by a factor of three to four. However, as the number of used cores exceeded the available physical
+            cores, the application began to slow down: all components of the system were operating at their limits: the
+            CPU was running at 100%, the RAM was fully utilized at 16GB, and the GPU memory was maxed out at 8GB. This
+            likely due to the context switching that the system had to perform when running out of physical cores.
+          </p>
+          <p>
+            One interesting thing for the first setup is that the GPU implementation was able to run up to 8 CPU cores,
+            but the original implementation could only run up to 4 cores. One possible reason for this is that the GPU
+            shared the resources with the CPU while performing the algorithm, which put less constraint on the CPU, and
+            hence pushed the number of cores to the limit.
+          </p>
+        </section>
 
 
 
+        <section id="speedup">
+          <h3>Speedup</h3>
 
-            <section id="future-work">
-                <h2>Ending Remarks and Future Work</h2>
+          <p>
+            Even though the runtime has massively decreased under the usage of CUDA, the speedup ratio does not stand
+            out among the CPU with the OpenMP dataset, but it did, however, speedup in all scenarios of cores against
+            CPU with 1 thread, which is reasonable since our GPU setup also uses only one thread of the CPU (no OpenMP
+            available for GPU).One possible reason why the GPU doesn’t speed up as fast is due to the uploading and
+            downloading of images to the GPU, which costs much more resources due to the high quality of the image
+            patch.
+          </p>
 
-                <p>
-                    One significant drawback to the CUDA-accelerated algorithm is that it is a generally memory-costly method. However, if the user lacks a high-quality camera or needs to create a map quickly without focusing on fine details, the image patch can be downscaled to meet these requirements. This approach has been validated in the first setup, where the 4K patch was downscaled by 75% and worked perfectly. This can be achieved easily by modifying a small section in the code, but this is not the main discussion of this article. Another issue with the 4K patch is that it was not able to stitch parts of the map where there are rotations due to memory issues. After several hours and careful inspection, it is deduced that this is not a problem with the code, but due to memory issues, since if we stitch the same patch with downscaled quality, it was able to stitch the patch successfully without any problem.
-                </p>
-                <p>
-                    Integrating shared memory design for multi-threading with the GPU is still an open problem, and I plan to address this in future projects to accelerate the algorithm even further. The ultimate goal of this project is to process 64 frames of 4K images in one second. Another objective is perhaps to resurvey the memory management in the code base to ensure that the program does not crash when the input is too large and to generate more consistent and reliable results.
-                </p>
-            </section>
+          <figure>
+            <img src="speedup.png" alt="Final Map" class="image-block" style="width: 60%">
+          </figure>
+        </section>
+
+
+        <section id="cost">
+          <h3>Cost</h3>
+
+          <p>
+            In parallel computing, resource inefficiency occurs when parts of a process are forced to wait for others to
+            complete, reducing overall performance. As observed, the cost of the GPU implementation is much lower than
+            every other previous CPU implementations. This is not a surprise at all, as GPUs, optimized for massively
+            parallel tasks, often provide significantly better performance for certain applications compared to
+            traditional CPU implementations, resulting in lower operational costs for these specific workloads.
+          </p>
+
+          <figure>
+            <img src="cost.png" alt="Final Map" class="image-block" style="width: 60%">
+          </figure>
+        </section>
+
+
+        <section id="efficiency">
+          <h3>Efficiency</h3>
+
+          <p>
+            For efficiency, the CUDA-enhanced algorithm is less efficient than the CPU with 1 thread setup, but is
+            overall more efficient than other CPU setups as the number of cores increases. The efficiency of the GPU
+            implementation eventually matches that of the CPU, 1 thread implementation as $p=32$.
+          </p>
+
+          <figure>
+            <img src="efficiency.png" alt="Final Map" class="image-block" style="width: 60%">
+          </figure>
+        </section>
+
+      </section>
 
 
 
-    <div class="line-1"></div>
-    <header>
+
+      <section id="future-work">
+        <h2>Ending Remarks and Future Work</h2>
+
+        <p>
+          One significant drawback to the CUDA-accelerated algorithm is that it is a generally memory-costly method.
+          However, if the user lacks a high-quality camera or needs to create a map quickly without focusing on fine
+          details, the image patch can be downscaled to meet these requirements. This approach has been validated in the
+          first setup, where the 4K patch was downscaled by 75% and worked perfectly. This can be achieved easily by
+          modifying a small section in the code, but this is not the main discussion of this article. Another issue with
+          the 4K patch is that it was not able to stitch parts of the map where there are rotations due to memory
+          issues. After several hours and careful inspection, it is deduced that this is not a problem with the code,
+          but due to memory issues, since if we stitch the same patch with downscaled quality, it was able to stitch the
+          patch successfully without any problem.
+        </p>
+        <p>
+          Integrating shared memory design for multi-threading with the GPU is still an open problem, and I plan to
+          address this in future projects to accelerate the algorithm even further. The ultimate goal of this project is
+          to process 64 frames of 4K images in one second. Another objective is perhaps to resurvey the memory
+          management in the code base to ensure that the program does not crash when the input is too large and to
+          generate more consistent and reliable results.
+        </p>
+      </section>
+
+
+
+      <div class="line-1"></div>
+      <header>
         <h3>More Articles</h3>
-    </header>
-    <div id="rec-article-container"></div>
-            
+      </header>
+      <div id="rec-article-container"></div>
 
-        </div> <!--general wrapper ends here-->
+
     </div>
-    <!--Master grid ends here -->
+    <!--general wrapper ends here-->
+  </div>
+  <!--Master grid ends here -->
 
-<div class="footer"></div>
-<script src="../../assets/js/scripts.js"></script>
-<script src="../../assets/js/load.js"></script>
-<script src="../../assets/js/blogpage-setting.js"></script>
-<script>loadDate("orb-cuda-1");</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
+  <div class="footer"></div>
+  <script src="../../assets/js/scripts.js"></script>
+  <script src="../../assets/js/load.js"></script>
+  <script src="../../assets/js/blogpage-setting.js"></script>
+  <script>
+    loadDate("orb-cuda-1");
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script"
+    async></script>
 </body>
+
 </html>

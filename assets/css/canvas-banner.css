@@ -1,29 +1,29 @@
-@import 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700i,900i'; /*font-family: 'Playfair Display', serif;*/
+@import "https://fonts.googleapis.com/css?family=Playfair+Display:400,700i,900i"; /*font-family: 'Playfair Display', serif;*/
 /* @import 'https://fonts.googleapis.com/css2?family=VT323&display=swap'; */
 /* font-family: "VT323", monospace;
     font-weight: 400;
     font-style: normal; 
 */
 #bannerCanvas {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    z-index: 0;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  z-index: 0;
 }
 .home-banner {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-width: 100%;
-    height: 40vh; 
-    /* min-height: 40vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 100%;
+  height: 40vh;
+  /* min-height: 40vh;
     max-height: 100%; */
-    border: 0;
-    background-color: black;
-    /* transition: height 0.3s ease;  */
+  border: 0;
+  background-color: black;
+  /* transition: height 0.3s ease;  */
 }
 /* belongs to home-banner*/
 /*min-height: 300px; /*300px 40vh*/
@@ -38,74 +38,72 @@ body.nav-open{
     --canvas-height: 40vh;
 } */
 
-.banner-title{
-    
-    font-family: 'Playfair Display', serif;
-    position: relative;
-    font-size: 5vh;
-    font-weight: bold;
-    color: white;
-    width: max-content;
-    background: rgba( 255, 255, 255, 0.05);
-    padding: 2px 10px;
-    backdrop-filter: blur( 1px );
-    -webkit-backdrop-filter: blur( 4px );
-    border-radius: 10px;
-    /* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
+.banner-title {
+  font-family: "Playfair Display", serif;
+  position: relative;
+  font-size: 5vh;
+  font-weight: bold;
+  color: white;
+  width: max-content;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 10px;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  /* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
 }
-.banner-title::after{
-    position: absolute;
-    content:  "";
-    background: linear-gradient(to right, red, green, blue);
-    height: 3px;
-    width: 60%;
-    bottom: 0;
-    left: 0;
+.banner-title::after {
+  position: absolute;
+  content: "";
+  background: linear-gradient(to right, red, green, blue);
+  height: 3px;
+  width: 60%;
+  bottom: 0;
+  left: 0;
 }
 
-.left-section-banner, .right-section-banner{
-    width: 100%;
-    height: inherit;
-    /* do not set height to 100%*/
+.left-section-banner,
+.right-section-banner {
+  width: 100%;
+  height: inherit;
+  /* do not set height to 100%*/
 }
 .left-section-banner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Prevent overflow if canvas exceeds bounds */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent overflow if canvas exceeds bounds */
 }
-.right-section-banner{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    background-repeat: no-repeat;
-    background-size: cover;
-    
+.right-section-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-@media all and (max-width: 1200px){
-    .home-banner{
-        min-height: 100px;
-        height: 350px;
-    }
+@media all and (max-width: 1200px) {
+  .home-banner {
+    min-height: 100px;
+    height: 350px;
+  }
 }
-@media all and (max-width: 1080px){
-    .banner-title{
-        font-size: 2.5em;
-    }
+@media all and (max-width: 1080px) {
+  .banner-title {
+    font-size: 2.5em;
+  }
 }
-@media all and (max-width: 580px){
-    .banner-title{
-        font-size: 1.25em;
-    }
-    .home-banner{
-        min-height: 100px;
-        height: 200px;
-    }
-    .banner-title::after{
-        height: 2px;
-    }
-
+@media all and (max-width: 580px) {
+  .banner-title {
+    font-size: 1.25em;
+  }
+  .home-banner {
+    min-height: 100px;
+    height: 200px;
+  }
+  .banner-title::after {
+    height: 2px;
+  }
 }
 /* .banner-title::before{
     position: absolute;

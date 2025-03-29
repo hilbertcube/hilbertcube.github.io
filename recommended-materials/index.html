@@ -1,254 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'G-00W722FWP2');
-    </script>
-    <title>Materials - neumanncondition</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="subject" content='This is the material page'>
-    <meta name="description" content="This is the material page" />
-    <meta name="keywords" content="math, physics, programming, coding, computer science, computer simulation"/>
-    <meta name="author" content="Don Le, ledongduu@gmail.com"/>
-    <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/canvas-banner.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <style>
-        #bannerCanvas{
-            background: linear-gradient(to top,rgb(0, 0, 235) 0%,rgb(0, 185, 226) 100%);
-        }
-        #Material-button{
-            font-weight: var(--top-buttons-font-weight);
-            color:var(--top-buttons-hover-color);
-        }
-    </style>
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-00W722FWP2');
+  </script>
+  <title>Materials - neumanncondition</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="subject" content='This is the material page'>
+  <meta name="description" content="This is the material page" />
+  <meta name="keywords" content="math, physics, programming, coding, computer science, computer simulation" />
+  <meta name="author" content="Don Le, ledongduu@gmail.com" />
+  <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/canvas-banner.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <style>
+    #bannerCanvas {
+      background: linear-gradient(to top, rgb(0, 0, 235) 0%, rgb(0, 185, 226) 100%);
+    }
+
+    #Material-button {
+      font-weight: var(--top-buttons-font-weight);
+      color: var(--top-buttons-hover-color);
+    }
+  </style>
 </head>
 
 <body class="nav-open light-mode">
-    <div class = "top-nav"></div>
-    <nav class="navbar open" id="navbar">
-        <div id="logo"></div>
-        <div class = "side-nav-container"></div>
-        <div class = "highlights-and-attribute"></div>
-    </nav>
+  <div class="top-nav"></div>
+  <nav class="navbar open" id="navbar">
+    <div id="logo"></div>
+    <div class="side-nav-container"></div>
+    <div class="highlights-and-attribute"></div>
+  </nav>
 
-    <div class="content-grid">
-        <div class="home-banner" id="home-banner"></div><script src="../assets/js/canvas-banner.js"></script>
-        <div class = "general-wrapper" id="home">
-            <div class = "topic">
-                Materials - Math, CS, Websites, and more
+  <div class="content-grid">
+    <div class="home-banner" id="home-banner"></div>
+    <script src="../assets/js/canvas-banner.js"></script>
+    <div class="general-wrapper" id="home">
+      <div class="topic">
+        Materials - Math, CS, Websites, and more
+      </div>
+      <h1 class="home-title">Recommended Materials</h1>
+
+      <p>These are some resources that I think would serve as good learning materials.</p>
+      <h3 id="books" class="home-h3-headers">Books</h3>
+
+      <div class="material-container">
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">A Complete Guide to Programming in C++</div>
+            <div class="author">by Ulla Kirch-Prinz and Peter Prinz </div>
+            <div class="material-description">
+              A good book for students to learn C++. This cover the language from the ground up, from basics to
+              advanced.
             </div>
-            <h1 class="home-title">Recommended Materials</h1>
-
-            <p>These are some resources that I think would serve as good learning materials.</p>
-            <h3 id="books" class="home-h3-headers">Books</h3>
-
-            <div class = "material-container">
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">A Complete Guide to Programming in C++</div>
-                        <div class="author">by Ulla Kirch-Prinz and Peter Prinz </div>
-                        <div class="material-description">
-                            A good book for students to learn C++. This cover the language from the ground up, from basics to advanced.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Complete-Guide-Programming-Title-Demand/dp/0763718173" class="url">Amazon</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/cpp_complete.jpg" class="material-images">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Digital Image Processing</div>
-                        <div class="author">by Rafael Gonzalez and Richard Woods</div>
-                        <div class="material-description">
-                            A good introduction to theoretical computer vision. I like the detail description of point, line, edge detection and the SIFT algorithm of this book.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/0133356728" class="url">Amazon</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/digital_processing.jpg" class="material-images">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Data Structures and Algorithms in C++</div>
-                        <div class="author">by Michael T. Goodrich, Roberto Tamassia, and David M. Mount </div>
-                        <div class="material-description">
-                            A classic for C++ DSA.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Data-Structures-Algorithms-Michael-Goodrich/dp/0470383275" class="url">Amazon</a>, <a href="https://www.wiley.com/en-us/Data+Structures+and+Algorithms+in+C%2B%2B%2C+2nd+Edition-p-9780470383278" class="url">Wiley</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/cppdsa.jpg" class="material-images">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Introduction to Applied Partial Differential Equations</div>
-                        <div class="author">by John M. Davis</div>
-                        <div class="material-description">
-                            The first book I used to learn PDEs. Very good treatment of eigenvalue and boundary-value problems.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Introduction-Applied-Partial-Differential-Equations/dp/1429275928" class="url">Amazon</a>, <a href="https://www.abebooks.com/9781429275927/Introduction-Applied-Partial-Differential-Equations-1429275928/plp" class="url">Abebooks</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/pde2.jpg" class="material-images">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Applied Partial Differential Equations with Fourier Series and Boundary Value Problems</div>
-                        <div class="author">by Richard Haberman</div>
-                        <div class="material-description">
-                            A more detailed treatment of PDEs for the undergraduate level, covering higher-dimensional PDE's, nonhomogeneous problems, green functions, and method of finite difference.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Differential-Equations-Boundary-Problems-Featured/dp/0321797051" class="url">Amazon</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/pde1.jpg" class="material-images">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Principles of Mathematical Analysis</div>
-                        <div class="author">by Walter Rudin</div>
-                        <div class="material-description">
-                            A standard, good university book for learning mathematical analysis over metric spaces. It's a good book if you have a dedicated instructor, not so good as a self-learn book.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Principles-Mathematical-Analysis-International-Mathematics/dp/007054235X" class="url">Amazon</a>, <a href="https://www.abebooks.com/9780070856134/Principles-Mathematical-Analysis-International-Series-0070856133/plp" class="url">Abebooks</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/baby_rudin.jpg" class="material-images">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Analysis I and II</div>
-                        <div class="author">by Terence Tao</div>
-                        
-                        <div class="material-description">
-                            An easier-to-understand analysis book series. The first book focuses on analysis on the real numbers and its subsets. Metric space is introduced in the second book.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Terence-Tao-Analysis-Mathematics-CORRECTED/dp/B07WHR7TDF" class="url">Amazon</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/tao_analysis.jpg" class="material-images" id="tao-analysis">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Introduction to Classical Mechanics: With Problems and Solutions</div>
-                        <div class="author">by David Morin</div>
-                        <div class="material-description">
-                            An intuitive introduction to classical mechanics with interesting (difficult, even) problems.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Introduction-Classical-Mechanics-Problems-Solutions/dp/0521876222" class="url">Amazon</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/david_morin_mechanics.jpg" class="material-images">
-                    </div>
-                </div>
-
-                <div class = "materials">
-                    <div class="materials-left">
-                        <div class="material-title">Introduction to Electrodynamics</div>
-                        <div class="author">by David J. Griffiths</div>
-                        <div class="material-description">
-                            If you truly want to learn Electrodynamics, this book is the one, written by none other than David J. Griffiths himself. Problems are very hard, but interesting.
-                        </div>
-                        <div class="material-link">You can buy this on: <a href="https://www.amazon.com/Introduction-Electrodynamics-David-J-Griffiths/dp/1108420419" class="url">Amazon</a>, <a href="https://www.ebay.com/itm/332769940414" class="url">Ebay</a>, <a href="https://www.abebooks.com/9781108420419/Introduction-Electrodynamics-Griffiths-David-J-1108420419/plp" class="url">Abebooks</a></div>
-                    </div>
-                    <div class="line-6"></div>
-                    <div class="materials-right">
-                        <img src = "../public/materials-images/griffith_electrodymaics.jpg" class="material-images">
-                    </div>
-                </div>
-
-
-            </div>
-
-            <h3 id="lecture-notes" class="home-h3-headers">Lecture Notes</h3>
-            <p><b>Sunil Golwala's lecture note on classical mechanics - Caltech: </b> <a href="https://sites.astro.caltech.edu/~golwala/ph106ab/ph106ab_notes.pdf" class="url">link</a></p>
-
-            <p><b>Riccardo Cristoferi's calculus of variations: </b> <a href="https://www.math.cmu.edu/cna/Publications/publications2016/papers/16-CNA-007.pdf" class="url">link</a></p>
-
-            <p><b>Gabriel Nagy's Ordinary Differential Equations - University of Michigan: </b> <a href="https://users.math.msu.edu/users/gnagy/teaching/ode.pdf" class="url">link</a></p>
-
-            <h3 id="websites" class="home-h3-headers">Websites</h3>
-            <p><b>Science and Mathematics Applied to Computer Science (SMACS): </b> <a href="https://smacs.vercel.app/" class="url">smacs.vercel.app</a>. Shout out to my friend for creating this nice website for my school's SMACS club. As mentioned on the website's front page, SMACS aims to explore the intersections of science, math, and computer science. The website seeks to understand mathematical principles, scientific theories, and computation methods and apply them in computer science to simulate real life, solve calculations, or visualize abstract concepts.</p>
-
-            <p><b>beltoforion: </b> <a href="https://beltoforion.de/de/" class="url">beltoforion.de</a>. This is one of the sites that inspired me. Developed by Ingo Berg, the website focuses on a wide range of topics, ranging from programming, earth and space science, mathematics, and physics.</p>
-
-            <p><b>Ten Minute Physics: </b> <a href="https://matthias-research.github.io/pages/tenMinutePhysics/index.html" class="url">link</a>. Cool, complex physics simulation using only HTML and Javascript. This is a website created to accompany the youtube channel <a href="https://www.youtube.com/@tenminutephysics" class="url">Ten Minute Physics.</a></p>
-
-            <p><b>scipython: </b> <a href="https://scipython.com/" class="url">scipython.com</a>. One of my inspiration for this website. Created by the author of <a href="https://www.cambridge.org/sj/universitypress/subjects/physics/mathematical-methods/learning-scientific-programming-python-2nd-edition?format=PB" class="url">Learning Scientific Programming with Python</a>, Christian Hill. This website contains an endless resource of Python simulation and scientific programming articles. This website is an overall excellent source of learning scientific programming.</p>
-            
-            <p><b>Romanian Mathematical Magazine: </b> <a href="https://www.ssmrmh.ro/" class="url">ssmrmh.ro</a>. Got bored by regular school mathematics? Want some extremely challenging problems that make you question your sanity? Come to this website.</p>
-
-            <p><b>cplusplus: </b> <a href="https://cplusplus.com/" class="url">cplusplus.com</a>. A good website for learning C++ from start to end.</p>
-
-            <p><b>Mozilla Official Website for Developers: </b> <a href="https://developer.mozilla.org/en-US/docs/Web" class="url">developer.mozilla.org</a>. HTML, CSS, and especially Javascript.</p>
-
-            <p><b>W3 - CSS: </b> <a href="https://www.w3schools.com/w3css/" class="url">w3schools.com</a>. The best website for learning HTML and CSS.</p>
-
-            <p><b>Art of Problem Solving: </b> <a href="https://artofproblemsolving.com/community" class="url">artofproblemsolving.com</a>. A forum-based website for math problems of all levels: middle school, high school, college, contests, olympiads, Putnam, etc.</p>
-            
-
-
-
-            <h3 id="youtube" class="home-h3-headers">Youtube Channels</h3>
-            <p><b>Mathematics: </b><a href="https://www.youtube.com/@3blue1brown" class="url">3Blue1Brown</a>, <a href="https://www.youtube.com/@Mathologer" class="url">Mathologer</a>, <a href="https://www.youtube.com/@MichaelPennMath" class="url">Michael Penn</a>, <a href="https://www.youtube.com/@morphocular" class="url">Morphocular</a>, <a href="https://www.youtube.com/@maths_505" class="url">Maths 505</a>, <a href="https://www.youtube.com/@Aleph0" class="url">Aleph 0</a>,  <a href="https://www.youtube.com/@CreativeMathProblems" class="url">Creative Math Problems</a>, <a href="https://www.youtube.com/@DrBarker" class="url"> Dr Barker</a>, <a href="https://www.youtube.com/@DrTrefor" class="url"> Dr. Trefor Bazett</a>, <a href="https://www.youtube.com/@EpsilonDeltaMain" class="url">EpsilonDelta</a>, <a href="https://www.youtube.com/@richarde.borcherds7998" class="url">Richard E Borcherds</a>, <a href="https://www.youtube.com/@mathemaniac" class="url">Mathemaniac</a></p>
-            </a></p>
-            <p><b>Computer Science: </b><a href="https://www.youtube.com/@TheCherno" class="url">The Cherno</a>, <a href="https://www.youtube.com/@Computerphile" class="url">Computerphile</a>, <a href="https://www.youtube.com/@CoreDumpped" class="url"> Core Dumped</a>, <a href="https://www.youtube.com/@Errichto" class="url"> Errichto Algorithms</a>, <a href="https://www.youtube.com/@SheafificationOfG" class="url">Sheafification of G</a></p>
-            <p><b>Computer Simulations and Numerical Computation: </b><a href="https://www.youtube.com/@Eigensteve" class="url">Steve Brunton
-            </a>, <a href="https://www.youtube.com/@MrPSolver" class="url">Mr. P Solver
-            </a>, <a href="https://www.youtube.com/@AngeTheGreat" class="url">AngeTheGreat</a>, <a href="https://www.youtube.com/@ArtemKirsanov" class="url">Artem Kirsanov</a></p>
-            <p><b>Fun Programming: </b><a href="https://www.youtube.com/@SebastianLague" class="url">Sebastian Lague</a>, <a href="https://www.youtube.com/@CodeBullet" class="url">Code Bullet</a>, <a href="https://www.youtube.com/@CodeParade" class="url">Code Parade</a></p>
-            <p><b>Web Development </b> <a href="https://www.youtube.com/@TheCoderCoder" class="url">Coder Coder</a>, <a href="https://www.youtube.com/@coding2go" class="url">Coding2GO </a></p>
-            <p><b>Physics: </b> <a href="https://www.youtube.com/@DrBenYelverton" class="url">Dr Ben Yelverton</a>, <a href="https://www.youtube.com/@jkzero" class="url"> Dr. Jorge S. Diaz</a></p>
-
-
-            <div style="display: flex; justify-content: center; margin-top: 30px;">
-                <iframe allow="fullscreen;" width="640" height="350" src="https://www.youtube.com/embed/KzT9I1d-LlQ"></iframe>
-            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Complete-Guide-Programming-Title-Demand/dp/0763718173"
+                class="url">Amazon</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/cpp_complete.jpg" class="material-images">
+          </div>
         </div>
 
-        <!--<a href="" class="url"></a>-->
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Digital Image Processing</div>
+            <div class="author">by Rafael Gonzalez and Richard Woods</div>
+            <div class="material-description">
+              A good introduction to theoretical computer vision. I like the detail description of point, line, edge
+              detection and the SIFT algorithm of this book.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/0133356728"
+                class="url">Amazon</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/digital_processing.jpg" class="material-images">
+          </div>
+        </div>
+
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Data Structures and Algorithms in C++</div>
+            <div class="author">by Michael T. Goodrich, Roberto Tamassia, and David M. Mount </div>
+            <div class="material-description">
+              A classic for C++ DSA.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Data-Structures-Algorithms-Michael-Goodrich/dp/0470383275"
+                class="url">Amazon</a>, <a
+                href="https://www.wiley.com/en-us/Data+Structures+and+Algorithms+in+C%2B%2B%2C+2nd+Edition-p-9780470383278"
+                class="url">Wiley</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/cppdsa.jpg" class="material-images">
+          </div>
+        </div>
+
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Introduction to Applied Partial Differential Equations</div>
+            <div class="author">by John M. Davis</div>
+            <div class="material-description">
+              The first book I used to learn PDEs. Very good treatment of eigenvalue and boundary-value problems.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Introduction-Applied-Partial-Differential-Equations/dp/1429275928"
+                class="url">Amazon</a>, <a
+                href="https://www.abebooks.com/9781429275927/Introduction-Applied-Partial-Differential-Equations-1429275928/plp"
+                class="url">Abebooks</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/pde2.jpg" class="material-images">
+          </div>
+        </div>
+
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Applied Partial Differential Equations with Fourier Series and Boundary Value
+              Problems</div>
+            <div class="author">by Richard Haberman</div>
+            <div class="material-description">
+              A more detailed treatment of PDEs for the undergraduate level, covering higher-dimensional PDE's,
+              nonhomogeneous problems, green functions, and method of finite difference.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Differential-Equations-Boundary-Problems-Featured/dp/0321797051"
+                class="url">Amazon</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/pde1.jpg" class="material-images">
+          </div>
+        </div>
+
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Principles of Mathematical Analysis</div>
+            <div class="author">by Walter Rudin</div>
+            <div class="material-description">
+              A standard, good university book for learning mathematical analysis over metric spaces. It's a good book
+              if you have a dedicated instructor, not so good as a self-learn book.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Principles-Mathematical-Analysis-International-Mathematics/dp/007054235X"
+                class="url">Amazon</a>, <a
+                href="https://www.abebooks.com/9780070856134/Principles-Mathematical-Analysis-International-Series-0070856133/plp"
+                class="url">Abebooks</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/baby_rudin.jpg" class="material-images">
+          </div>
+        </div>
+
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Analysis I and II</div>
+            <div class="author">by Terence Tao</div>
+
+            <div class="material-description">
+              An easier-to-understand analysis book series. The first book focuses on analysis on the real numbers and
+              its subsets. Metric space is introduced in the second book.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Terence-Tao-Analysis-Mathematics-CORRECTED/dp/B07WHR7TDF"
+                class="url">Amazon</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/tao_analysis.jpg" class="material-images" id="tao-analysis">
+          </div>
+        </div>
+
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Introduction to Classical Mechanics: With Problems and Solutions</div>
+            <div class="author">by David Morin</div>
+            <div class="material-description">
+              An intuitive introduction to classical mechanics with interesting (difficult, even) problems.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Introduction-Classical-Mechanics-Problems-Solutions/dp/0521876222"
+                class="url">Amazon</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/david_morin_mechanics.jpg" class="material-images">
+          </div>
+        </div>
+
+        <div class="materials">
+          <div class="materials-left">
+            <div class="material-title">Introduction to Electrodynamics</div>
+            <div class="author">by David J. Griffiths</div>
+            <div class="material-description">
+              If you truly want to learn Electrodynamics, this book is the one, written by none other than David J.
+              Griffiths himself. Problems are very hard, but interesting.
+            </div>
+            <div class="material-link">You can buy this on: <a
+                href="https://www.amazon.com/Introduction-Electrodynamics-David-J-Griffiths/dp/1108420419"
+                class="url">Amazon</a>, <a href="https://www.ebay.com/itm/332769940414" class="url">Ebay</a>, <a
+                href="https://www.abebooks.com/9781108420419/Introduction-Electrodynamics-Griffiths-David-J-1108420419/plp"
+                class="url">Abebooks</a></div>
+          </div>
+          <div class="line-6"></div>
+          <div class="materials-right">
+            <img src="../public/materials-images/griffith_electrodymaics.jpg" class="material-images">
+          </div>
+        </div>
+
+
+      </div>
+
+      <h3 id="lecture-notes" class="home-h3-headers">Lecture Notes</h3>
+      <p><b>Sunil Golwala's lecture note on classical mechanics - Caltech: </b> <a
+          href="https://sites.astro.caltech.edu/~golwala/ph106ab/ph106ab_notes.pdf" class="url">link</a></p>
+
+      <p><b>Riccardo Cristoferi's calculus of variations: </b> <a
+          href="https://www.math.cmu.edu/cna/Publications/publications2016/papers/16-CNA-007.pdf" class="url">link</a>
+      </p>
+
+      <p><b>Gabriel Nagy's Ordinary Differential Equations - University of Michigan: </b> <a
+          href="https://users.math.msu.edu/users/gnagy/teaching/ode.pdf" class="url">link</a></p>
+
+      <h3 id="websites" class="home-h3-headers">Websites</h3>
+      <p><b>Science and Mathematics Applied to Computer Science (SMACS): </b> <a href="https://smacs.vercel.app/"
+          class="url">smacs.vercel.app</a>. Shout out to my friend for creating this nice website for my school's SMACS
+        club. As mentioned on the website's front page, SMACS aims to explore the intersections of science, math, and
+        computer science. The website seeks to understand mathematical principles, scientific theories, and computation
+        methods and apply them in computer science to simulate real life, solve calculations, or visualize abstract
+        concepts.</p>
+
+      <p><b>beltoforion: </b> <a href="https://beltoforion.de/de/" class="url">beltoforion.de</a>. This is one of the
+        sites that inspired me. Developed by Ingo Berg, the website focuses on a wide range of topics, ranging from
+        programming, earth and space science, mathematics, and physics.</p>
+
+      <p><b>Ten Minute Physics: </b> <a href="https://matthias-research.github.io/pages/tenMinutePhysics/index.html"
+          class="url">link</a>. Cool, complex physics simulation using only HTML and Javascript. This is a website
+        created to accompany the youtube channel <a href="https://www.youtube.com/@tenminutephysics" class="url">Ten
+          Minute Physics.</a></p>
+
+      <p><b>scipython: </b> <a href="https://scipython.com/" class="url">scipython.com</a>. One of my inspiration for
+        this website. Created by the author of <a
+          href="https://www.cambridge.org/sj/universitypress/subjects/physics/mathematical-methods/learning-scientific-programming-python-2nd-edition?format=PB"
+          class="url">Learning Scientific Programming with Python</a>, Christian Hill. This website contains an endless
+        resource of Python simulation and scientific programming articles. This website is an overall excellent source
+        of learning scientific programming.</p>
+
+      <p><b>Romanian Mathematical Magazine: </b> <a href="https://www.ssmrmh.ro/" class="url">ssmrmh.ro</a>. Got bored
+        by regular school mathematics? Want some extremely challenging problems that make you question your sanity? Come
+        to this website.</p>
+
+      <p><b>cplusplus: </b> <a href="https://cplusplus.com/" class="url">cplusplus.com</a>. A good website for learning
+        C++ from start to end.</p>
+
+      <p><b>Mozilla Official Website for Developers: </b> <a href="https://developer.mozilla.org/en-US/docs/Web"
+          class="url">developer.mozilla.org</a>. HTML, CSS, and especially Javascript.</p>
+
+      <p><b>W3 - CSS: </b> <a href="https://www.w3schools.com/w3css/" class="url">w3schools.com</a>. The best website
+        for learning HTML and CSS.</p>
+
+      <p><b>Art of Problem Solving: </b> <a href="https://artofproblemsolving.com/community"
+          class="url">artofproblemsolving.com</a>. A forum-based website for math problems of all levels: middle school,
+        high school, college, contests, olympiads, Putnam, etc.</p>
+
+
+
+
+      <h3 id="youtube" class="home-h3-headers">Youtube Channels</h3>
+      <p><b>Mathematics: </b><a href="https://www.youtube.com/@3blue1brown" class="url">3Blue1Brown</a>, <a
+          href="https://www.youtube.com/@Mathologer" class="url">Mathologer</a>, <a
+          href="https://www.youtube.com/@MichaelPennMath" class="url">Michael Penn</a>, <a
+          href="https://www.youtube.com/@morphocular" class="url">Morphocular</a>, <a
+          href="https://www.youtube.com/@maths_505" class="url">Maths 505</a>, <a href="https://www.youtube.com/@Aleph0"
+          class="url">Aleph 0</a>, <a href="https://www.youtube.com/@CreativeMathProblems" class="url">Creative Math
+          Problems</a>, <a href="https://www.youtube.com/@DrBarker" class="url"> Dr Barker</a>, <a
+          href="https://www.youtube.com/@DrTrefor" class="url"> Dr. Trefor Bazett</a>, <a
+          href="https://www.youtube.com/@EpsilonDeltaMain" class="url">EpsilonDelta</a>, <a
+          href="https://www.youtube.com/@richarde.borcherds7998" class="url">Richard E Borcherds</a>, <a
+          href="https://www.youtube.com/@mathemaniac" class="url">Mathemaniac</a></p>
+      </a></p>
+      <p><b>Computer Science: </b><a href="https://www.youtube.com/@TheCherno" class="url">The Cherno</a>, <a
+          href="https://www.youtube.com/@Computerphile" class="url">Computerphile</a>, <a
+          href="https://www.youtube.com/@CoreDumpped" class="url"> Core Dumped</a>, <a
+          href="https://www.youtube.com/@Errichto" class="url"> Errichto Algorithms</a>, <a
+          href="https://www.youtube.com/@SheafificationOfG" class="url">Sheafification of G</a></p>
+      <p><b>Computer Simulations and Numerical Computation: </b><a href="https://www.youtube.com/@Eigensteve"
+          class="url">Steve Brunton
+        </a>, <a href="https://www.youtube.com/@MrPSolver" class="url">Mr. P Solver
+        </a>, <a href="https://www.youtube.com/@AngeTheGreat" class="url">AngeTheGreat</a>, <a
+          href="https://www.youtube.com/@ArtemKirsanov" class="url">Artem Kirsanov</a></p>
+      <p><b>Fun Programming: </b><a href="https://www.youtube.com/@SebastianLague" class="url">Sebastian Lague</a>, <a
+          href="https://www.youtube.com/@CodeBullet" class="url">Code Bullet</a>, <a
+          href="https://www.youtube.com/@CodeParade" class="url">Code Parade</a></p>
+      <p><b>Web Development </b> <a href="https://www.youtube.com/@TheCoderCoder" class="url">Coder Coder</a>, <a
+          href="https://www.youtube.com/@coding2go" class="url">Coding2GO </a></p>
+      <p><b>Physics: </b> <a href="https://www.youtube.com/@DrBenYelverton" class="url">Dr Ben Yelverton</a>, <a
+          href="https://www.youtube.com/@jkzero" class="url"> Dr. Jorge S. Diaz</a></p>
+
+
+      <div style="display: flex; justify-content: center; margin-top: 30px;">
+        <iframe allow="fullscreen;" width="640" height="350" src="https://www.youtube.com/embed/KzT9I1d-LlQ"></iframe>
+      </div>
     </div>
 
-    <div class="footer"></div>
-    <script src="../assets/js/scripts.js"></script>
-    <script src="../assets/js/load.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            easing: 'ease-in-quad',
-            once: false, // whether animation should happen only once - while scrolling down
-        });
-    </script>
+    <!--<a href="" class="url"></a>-->
+  </div>
+
+  <div class="footer"></div>
+  <script src="../assets/js/scripts.js"></script>
+  <script src="../assets/js/load.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      easing: 'ease-in-quad',
+      once: false, // whether animation should happen only once - while scrolling down
+    });
+  </script>
 </body>
+
 </html>
