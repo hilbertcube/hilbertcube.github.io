@@ -1,90 +1,94 @@
 :root {
-    --code-box-color: #fff;
-    --inline-code-color: rgb(235, 235, 235);
-    --box-border: #ddd;
-    --pre-color: #f7f7f7;
-    /* aliceblue */
-    --tab-color: #ededed; 
+  --code-box-color: #fff;
+  --inline-code-color: rgb(235, 235, 235);
+  --box-border: #ddd;
+  --pre-color: #f7f7f7;
+  /* aliceblue */
+  --tab-color: #ededed;
 }
-body.dark-mode{
-    --pre-color: #1a1a1a;
-    --inline-code-color: rgb(55, 55, 55);
-    --tab-color: black;
+body.dark-mode {
+  --pre-color: #1a1a1a;
+  --inline-code-color: rgb(55, 55, 55);
+  --tab-color: black;
 }
 
-.inline-code{
-    font-size: 13px;
-    background-color: var(--inline-code-color);
-    padding: 2px;
-    border-radius: 4px;
-    border: 1px solid var(--box-border);
+.inline-code {
+  font-size: 13px;
+  background-color: var(--inline-code-color);
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid var(--box-border);
 }
 
 /*code box font*/
 /* General code block styles */
 code[class*="language-"],
 pre[class*="language-"] {
-    font-size: 12px;
-    line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 /* Light mode specific styles */
 body.light-mode code[class*="language-"],
 body.light-mode pre[class*="language-"] {
-    font-size: 12px;
-    line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 /* Dark mode specific styles */
 body.dark-mode code[class*="language-"],
 body.dark-mode pre[class*="language-"] {
-    font-size: 12px;
-    line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
-body.dark-mode{
-    --box-border: #424242;
+body.dark-mode {
+  --box-border: #424242;
 }
 .box {
-    position: relative;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 10px;
-    min-height: 10px;
-    padding: 15px;
-    border: 1px solid var(--box-border);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: var(--code-box-color);
-    border-radius: 4px;
+  position: relative;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 10px;
+  min-height: 10px;
+  padding: 15px;
+  border: 1px solid var(--box-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--code-box-color);
+  border-radius: 4px;
 }
 /* This can be removed if `.box` handles positioning */
 .code-container {
-    position: relative; 
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-pre{
-    border: 1px solid var(--box-border) !important;
-    border-radius: 7px;
-    padding: 0;
-    margin: 0 !important;
-    position: relative;
+pre {
+  border: 1px solid var(--box-border) !important;
+  border-radius: 7px;
+  padding: 0;
+  margin: 0 !important;
+  position: relative;
 }
 
-.console{
-    line-height: 2; overflow-x: auto; background-color: var(--pre-color); font-size: 12px; text-align: left;
+.console {
+  line-height: 2;
+  overflow-x: auto;
+  background-color: var(--pre-color);
+  font-size: 12px;
+  text-align: left;
 }
 
-.equation{
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space:nowrap;
+.equation {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 /* .equation::-webkit-scrollbar {
     height: 5px;
@@ -95,11 +99,10 @@ pre{
     border-radius: 5px;
 } */
 mjx-container[jax="CHTML"][display="true"] {
-    margin: 0.5em 0;
-
+  margin: 0.5em 0;
 }
-.MathJax{
-    font-size: 18px !important;
+.MathJax {
+  font-size: 18px !important;
 }
 
 /* .theorem{
@@ -114,139 +117,139 @@ mjx-container[jax="CHTML"][display="true"] {
     content: "Theorem " counter(theorem) attr(data-theorem-name)  ". ";
     font-weight: bold;
 } */
-body{
-    counter-reset: fig table_ theorem problem def;
+body {
+  counter-reset: fig table_ theorem problem def;
 }
 
-
-.theorem, .problem, .definition {
-    position: relative;
-    border-radius: 4px;
-    margin: 30px 0;
-    padding: 1rem;
-    padding-top: 3.5rem;
-    box-sizing: border-box;
-    overflow: hidden;
+.theorem,
+.problem,
+.definition {
+  position: relative;
+  border-radius: 4px;
+  margin: 30px 0;
+  padding: 1rem;
+  padding-top: 3.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.theorem::before, .problem::before, .definition::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 0.5rem;
-    font-weight: bold;
-    box-sizing: border-box;
+.theorem::before,
+.problem::before,
+.definition::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem;
+  font-weight: bold;
+  box-sizing: border-box;
 }
 
-.theorem{
-    border: 1px solid #008195; /*#00b8d4*/
+.theorem {
+  border: 1px solid #008195; /*#00b8d4*/
 }
 
-.theorem::before{
-    counter-increment: theorem;
-    background-color: rgba(0, 184, 212, 0.2);
-    content: "Theorem " counter(theorem) attr(data-theorem-name) ". ";
+.theorem::before {
+  counter-increment: theorem;
+  background-color: rgba(0, 184, 212, 0.2);
+  content: "Theorem " counter(theorem) attr(data-theorem-name) ". ";
 }
 
-.definition{
-    border: 1px solid #006a27;
+.definition {
+  border: 1px solid #006a27;
 }
 
-.definition::before{
-    counter-increment: def;
-    background-color: rgba(0, 212, 28, 0.2);
-    content: "Definition " counter(def) attr(data-definition-name) ". ";
+.definition::before {
+  counter-increment: def;
+  background-color: rgba(0, 212, 28, 0.2);
+  content: "Definition " counter(def) attr(data-definition-name) ". ";
 }
 
-.problem{
-    border: 1px solid rgba(113, 0, 212);
+.problem {
+  border: 1px solid rgba(113, 0, 212);
 }
 
-.problem::before{
-    counter-increment: problem;
-    background-color: rgba(113, 0, 212, 0.2);
-    content: "Problem " counter(problem)". ";
+.problem::before {
+  counter-increment: problem;
+  background-color: rgba(113, 0, 212, 0.2);
+  content: "Problem " counter(problem) ". ";
 }
 
-.solution{
-    border: 1px solid #5b5b5b; /* rgb(0, 97, 0) */
-    border-radius: 4px;
-    box-sizing: border-box;
-    position: relative;
+.solution {
+  border: 1px solid #5b5b5b; /* rgb(0, 97, 0) */
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
 }
 .solution > *:not(summary) {
-    padding: 0 1rem 1rem 1rem; 
-    
+  padding: 0 1rem 1rem 1rem;
 }
 
-.solution summary{
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    font-weight: bold;
+.solution summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-weight: bold;
 }
 
-.solution > div{
-    line-height: 1.6;
+.solution > div {
+  line-height: 1.6;
 }
 
-.solution summary::after{
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: url('../../public/Icons/arrow.svg') no-repeat;
-    background-size: 100% 100%;
-    margin-left: .75em;
-    transition: 0.2s;
+.solution summary::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: url("../../public/Icons/arrow.svg") no-repeat;
+  background-size: 100% 100%;
+  margin-left: 0.75em;
+  transition: 0.2s;
 }
 
 .solution[open] > summary::after {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
-  
-.solution summary::-webkit-details-marker {
-display: none;
-}
-  
 
-  
-.solution[open] summary {border-radius: 4px 4px 0 0;}
+.solution summary::-webkit-details-marker {
+  display: none;
+}
+
+.solution[open] summary {
+  border-radius: 4px 4px 0 0;
+}
 .solution ol,
 .solution ul {
-    margin-left: 2rem; /* Adjust this value as needed */
-    padding-left: 0;
+  margin-left: 2rem; /* Adjust this value as needed */
+  padding-left: 0;
 }
 
 .solution li {
-    padding-left: 0.5rem; /* Optional: Indent the bullet/number */
+  padding-left: 0.5rem; /* Optional: Indent the bullet/number */
 }
 
-
-
-.tab-button-container{
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space:nowrap;
+.tab-button-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 
-.tab-button{
-    -webkit-border-radius: 4px 4px 0px 0px;
-    border-radius: 4px 4px 0px 0px; 
-    background-color: var(--pre-color);
-    border: 0px;
-    border-bottom: 1px solid var(--pre-color);
-    margin: 0 !important;
-    min-width: 80px;
-    font-size: 13px;
-    padding: 0.3rem;
-    color: inherit;
+.tab-button {
+  -webkit-border-radius: 4px 4px 0px 0px;
+  border-radius: 4px 4px 0px 0px;
+  background-color: var(--pre-color);
+  border: 0px;
+  border-bottom: 1px solid var(--pre-color);
+  margin: 0 !important;
+  min-width: 80px;
+  font-size: 13px;
+  padding: 0.3rem;
+  color: inherit;
 }
 
-.tab-effect{
-    /* font-weight: 650; */
-    border-bottom: 2px solid #4C83EE;
-    background-color:var(--tab-color);
+.tab-effect {
+  /* font-weight: 650; */
+  border-bottom: 2px solid #4c83ee;
+  background-color: var(--tab-color);
 }

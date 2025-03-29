@@ -9,8 +9,6 @@
   <div class="left">
     <a class="top-buttons" href="/" onclick="location.href = ROOT + this.getAttribute('href'); return false;"
       id="Home-button">
-      <!--onclick="changeTab('home')"-->
-      <!-- <i class="fa fa-home top-bar-icon" aria-hidden="true"></i>  -->
       Home
     </a>
     <a class="top-buttons" href="/about" onclick="location.href = ROOT + this.getAttribute('href'); return false;"
@@ -20,9 +18,6 @@
 
     <div class="dropdown">
       <button onclick="dropDown('notes')" class="dropbtn top-buttons" id="Note-button">
-        <!-- <i class="fa fa-pencil-square-o top-bar-icon" aria-hidden="true"></i>
-                href="/about" onclick="location.href = baseLink + this.href;return false;" 
-                -->
         Notes
       </button>
       <div id="notes" class="dropdown-content">
@@ -37,8 +32,6 @@
     </div>
     <div class="dropdown">
       <button onclick="dropDown('recommended-materials')" class="dropbtn top-buttons" id="Material-button">
-        <!-- <i class="fa fa-book top-bar-icon" aria-hidden="true"></i> -->
-        <!-- RECOMMENDED MATERIALS -->
         Resources
       </button>
       <div id="recommended-materials" class="dropdown-content">
@@ -82,6 +75,12 @@
           <div class="tooth"></div>
         </div>
       </label>
+
+        <!-- <input type="checkbox" id="toggle">
+        <label for="toggle" id="toggleButton">
+          <i class="fa fa-gear"></i>
+        </label> -->
+
 
       <!-- Setting Window -->
       <div id="settings_window" class="hidden">

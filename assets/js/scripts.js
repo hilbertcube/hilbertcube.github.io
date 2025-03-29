@@ -1,289 +1,279 @@
 MathJax = {
-    tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]},
-    svg: {fontCache: 'global', scale: 1.00},
-    chtml: {
-        scale: 1.00
-    }
+  tex: {
+    tags: "ams",
+    inlineMath: [
+      ["$", "$"],
+      ["\\(", "\\)"],
+    ],
+  },
+  svg: { fontCache: "global", scale: 1.0 },
+  chtml: {
+    scale: 1.0,
+  },
 };
 
-const ROOT = ''; // /neumanncondition
+const ROOT = ""; // /neumanncondition
 
-function LoadScript(scriptId, source)
-{
-    const jsSrc = ROOT + source;
-    const scriptElement = document.createElement("script");
-    scriptElement.id = scriptId;
-    scriptElement.src = jsSrc;
-    document.head.appendChild(scriptElement);
+function LoadScript(scriptId, source) {
+  const jsSrc = ROOT + source;
+  const scriptElement = document.createElement("script");
+  scriptElement.id = scriptId;
+  scriptElement.src = jsSrc;
+  document.head.appendChild(scriptElement);
 }
-
 
 // TAB ICON
 function setFavicon() {
-    const link = document.createElement('link');
-    link.rel = 'icon';
-    link.href = ROOT + '/public/Images/Logo/favicon.png';
-    link.type = 'image/png';
-    document.head.appendChild(link);
+  const link = document.createElement("link");
+  link.rel = "icon";
+  link.href = ROOT + "/public/Images/Logo/favicon.png";
+  link.type = "image/png";
+  document.head.appendChild(link);
 }
 setFavicon();
 
-
 // OPEN URL IN NEW WINDOWS
-document.querySelectorAll('.url').forEach(function(element) {
-    element.onclick = function() {
-        window.open(this.href);
-        return false;
-    };
-    element.onkeypress = function() {
-        window.open(this.href);
-        return false;
-    };
+document.querySelectorAll(".url").forEach(function (element) {
+  element.onclick = function () {
+    window.open(this.href);
+    return false;
+  };
+  element.onkeypress = function () {
+    window.open(this.href);
+    return false;
+  };
 });
 
 /// NAVIGATE TO IMAGE BASED ON ROOT
 function navigateToImage(element) {
-    const newUrl = ROOT + element.getAttribute('src');
-    location.href = newUrl;
+  const newUrl = ROOT + element.getAttribute("src");
+  location.href = newUrl;
 }
-
 
 // SET IMAGE DYNAMICALLY
-function setImage(imageId, source){
-    const imageSrc = ROOT + source;
-    document.getElementById(imageId).src = imageSrc;
+function setImage(imageId, source) {
+  const imageSrc = ROOT + source;
+  document.getElementById(imageId).src = imageSrc;
 }
-
 
 // SET BANNER
-function setBanner(){
-    const imageUrl = ROOT + '/public/Images/code-banner.PNG';
-    const banner = document.querySelector('.right-section-banner');
-    banner.style.backgroundImage = `url("${imageUrl}")`;
+function setBanner() {
+  const imageUrl = ROOT + "/public/Images/code-banner.PNG";
+  const banner = document.querySelector(".right-section-banner");
+  banner.style.backgroundImage = `url("${imageUrl}")`;
 }
-
 
 // SIDE NAV
 function toggleNav() {
-    var navbar = document.getElementById('navbar');
-    var body = document.body;
+  var navbar = document.getElementById("navbar");
+  var body = document.body;
 
-    if (navbar.classList.contains('open')) {
-        navbar.classList.remove('open');
-        navbar.classList.add('closed');
-        body.classList.remove('nav-open');
-        body.classList.add('nav-closed');
-    } 
-    else {
-        navbar.classList.remove('closed');
-        navbar.classList.add('open');
-        body.classList.remove('nav-closed');
-        body.classList.add('nav-open');
-    }
+  if (navbar.classList.contains("open")) {
+    navbar.classList.remove("open");
+    navbar.classList.add("closed");
+    body.classList.remove("nav-open");
+    body.classList.add("nav-closed");
+  } else {
+    navbar.classList.remove("closed");
+    navbar.classList.add("open");
+    body.classList.remove("nav-closed");
+    body.classList.add("nav-open");
+  }
 }
-
-
 
 // FUNCTION FOR CLOSING SIDE NAV
 // if window width is less than 1200px, close the side nav
 function checkWidthAndToggle() {
-    const body = document.body;
-    const navbar = document.querySelector('.navbar');
-    const toggleBtn = document.querySelector('.toggle-btn');
+  const body = document.body;
+  const navbar = document.querySelector(".navbar");
+  const toggleBtn = document.querySelector(".toggle-btn");
 
-    if (window.innerWidth < 1200) {
-        body.classList.remove('nav-open');
-        body.classList.add('nav-closed');
-        navbar.classList.remove('open');
-        navbar.classList.add('closed');
-    } 
-    else {
-        body.classList.add('nav-open');
-        body.classList.remove('nav-closed');
-        navbar.classList.add('open');
-        navbar.classList.remove('closed');
-    }
+  if (window.innerWidth < 1200) {
+    body.classList.remove("nav-open");
+    body.classList.add("nav-closed");
+    navbar.classList.remove("open");
+    navbar.classList.add("closed");
+  } else {
+    body.classList.add("nav-open");
+    body.classList.remove("nav-closed");
+    navbar.classList.add("open");
+    navbar.classList.remove("closed");
+  }
 }
 checkWidthAndToggle();
-window.addEventListener('resize', checkWidthAndToggle); // Event listener for window resize
-
-
+window.addEventListener("resize", checkWidthAndToggle); // Event listener for window resize
 
 // COPY BUTTON
 function copyButton() {
-    const copyButtons = document.querySelectorAll('.copy-btn');
-    const codeBlocks = document.querySelectorAll('.code-container code');
+  const copyButtons = document.querySelectorAll(".copy-btn");
+  const codeBlocks = document.querySelectorAll(".code-container code");
 
-    copyButtons.forEach((button, index) => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default action for better control
-            const code = codeBlocks[index];
+  copyButtons.forEach((button, index) => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent default action for better control
+      const code = codeBlocks[index];
 
-            if (code && code.innerText.trim() !== '') {
-                // Fallback to use a temporary textarea
-                const textarea = document.createElement('textarea');
-                textarea.value = code.innerText;
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    document.execCommand('copy');
-                    button.textContent = 'Copied!';
-                } catch (e) {
-                    button.textContent = 'Failed to copy';
-                }
-                document.body.removeChild(textarea);
-                
-                setTimeout(function () {
-                    button.textContent = 'Copy';
-                }, 1000);
-            } else {
-                button.textContent = 'No text to copy';
-            }
-        });
+      if (code && code.innerText.trim() !== "") {
+        // Fallback to use a temporary textarea
+        const textarea = document.createElement("textarea");
+        textarea.value = code.innerText;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          button.textContent = "Copied!";
+        } catch (e) {
+          button.textContent = "Failed to copy";
+        }
+        document.body.removeChild(textarea);
+
+        setTimeout(function () {
+          button.textContent = "Copy";
+        }, 1000);
+      } else {
+        button.textContent = "No text to copy";
+      }
     });
+  });
 }
 copyButton();
 
-
 // Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    condition = event.target.matches('.dropbtn') || event.target.matches('.switch') || event.target.matches('.slider') || event.target.matches('#modeToggle');
-    if (!condition) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
+window.onclick = function (event) {
+  condition =
+    event.target.matches(".dropbtn") ||
+    event.target.matches(".switch") ||
+    event.target.matches(".slider") ||
+    event.target.matches("#modeToggle");
+  if (!condition) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains("show")) {
+        openDropdown.classList.remove("show");
+      }
     }
-}
+  }
+};
 
 // drop down menu
 function applyDropdownDelays() {
-    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
-        dropdown.querySelectorAll('a').forEach((item, index) => {
-            item.style.animationDelay = `${(0.06) * index}s`; // Adjust delay increment as needed
-        });
+  document.querySelectorAll(".dropdown-content").forEach((dropdown) => {
+    dropdown.querySelectorAll("a").forEach((item, index) => {
+      item.style.animationDelay = `${0.06 * index}s`; // Adjust delay increment as needed
     });
+  });
 }
 
 function dropDown(dropdownId) {
-    var dropdown = document.getElementById(dropdownId);
-    dropdown.classList.toggle("show");
-    applyDropdownDelays(); // Apply delays whenever dropdown is shown
+  var dropdown = document.getElementById(dropdownId);
+  dropdown.classList.toggle("show");
+  applyDropdownDelays(); // Apply delays whenever dropdown is shown
 }
 
 // Ensure delays are set on page load
-document.addEventListener('DOMContentLoaded', applyDropdownDelays);
-
-
-
+document.addEventListener("DOMContentLoaded", applyDropdownDelays);
 
 // ARTICLES
-const image_root = ROOT + '/public/Images/';
+const image_root = ROOT + "/public/Images/";
 
 function article(NUM_ARTICLE, des, random_article) {
-    fetch(ROOT + '/assets/json/suggestions.json')
-        .then(response => response.json())
-        .then(data => {
-            const articles = data.articles;
-            if (random_article) shuffleArray(articles);
-            displayArticles(articles.slice(0, NUM_ARTICLE));
-        })
-        .catch(error => console.error('Error loading articles:', error));
+  fetch(ROOT + "/assets/json/suggestions.json")
+    .then((response) => response.json())
+    .then((data) => {
+      const articles = data.articles;
+      if (random_article) shuffleArray(articles);
+      displayArticles(articles.slice(0, NUM_ARTICLE));
+    })
+    .catch((error) => console.error("Error loading articles:", error));
 
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+  }
 
-    function displayArticles(articles) {
-        const container = document.getElementById('rec-article-container');
-        container.innerHTML = ''; // Clear previous content
+  function displayArticles(articles) {
+    const container = document.getElementById("rec-article-container");
+    container.innerHTML = ""; // Clear previous content
 
-        articles.forEach(article => {
-            const articleLink = document.createElement('a');
-            articleLink.href = ROOT + article.link;
-            articleLink.classList.add('article');
-            articleLink.target = "_blank"; // Open in new tab (optional)
+    articles.forEach((article) => {
+      const articleLink = document.createElement("a");
+      articleLink.href = ROOT + article.link;
+      articleLink.classList.add("article");
+      articleLink.target = "_blank"; // Open in new tab (optional)
 
-            // Create image container
-            const imageContainer = document.createElement('div');
-            imageContainer.className = 'article-image-container'; 
+      // Create image container
+      const imageContainer = document.createElement("div");
+      imageContainer.className = "article-image-container";
 
-            const img = document.createElement('img');
-            img.src = image_root + article.image;
-            img.alt = article.title;
-            imageContainer.appendChild(img);
+      const img = document.createElement("img");
+      img.src = image_root + article.image;
+      img.alt = article.title;
+      imageContainer.appendChild(img);
 
-            // Create text container
-            const textContainer = document.createElement('div');
-            textContainer.className = 'article-text-container'; // New container for text
+      // Create text container
+      const textContainer = document.createElement("div");
+      textContainer.className = "article-text-container"; // New container for text
 
-            const title = document.createElement('div');
-            title.classList.add('article-name');
-            title.textContent = article.title;
+      const title = document.createElement("div");
+      title.classList.add("article-name");
+      title.textContent = article.title;
 
-            const topic = document.createElement('div');
-            topic.classList.add('article-topic');
-            topic.textContent = 'Topics: ' + article.topic;
+      const topic = document.createElement("div");
+      topic.classList.add("article-topic");
+      topic.textContent = "Topics: " + article.topic;
 
-            const description = document.createElement('div');
-            description.classList.add('article-description');
-            description.textContent = article.description;
+      const description = document.createElement("div");
+      description.classList.add("article-description");
+      description.textContent = article.description;
 
-            const date = document.createElement('div');
-            date.classList.add('article-date');
-            date.textContent = 'Updated ' + article.date;
+      const date = document.createElement("div");
+      date.classList.add("article-date");
+      date.textContent = "Updated " + article.date;
 
-            // Append text elements to text container
-            textContainer.appendChild(title);
-            if (des) {
-                textContainer.appendChild(topic);
-                textContainer.appendChild(description);
-                textContainer.appendChild(date);
-            }
+      // Append text elements to text container
+      textContainer.appendChild(title);
+      if (des) {
+        textContainer.appendChild(topic);
+        textContainer.appendChild(description);
+        textContainer.appendChild(date);
+      }
 
-            // Append containers to the article link
-            articleLink.appendChild(imageContainer);
-            articleLink.appendChild(textContainer);
+      // Append containers to the article link
+      articleLink.appendChild(imageContainer);
+      articleLink.appendChild(textContainer);
 
-            // Append article link to main container
-            container.appendChild(articleLink);
-        });
+      // Append article link to main container
+      container.appendChild(articleLink);
+    });
 
-        mobileHover(['.article']);
-    }
+    mobileHover([".article"]);
+  }
 }
 // MOBILE HOVER BEHAVIOR
-function mobileHover(arr){
-    // Hover effect on mobile
-    //const classes = ['.article', '.materials-right img'];
-    arr.forEach((className) => {
+function mobileHover(arr) {
+  // Hover effect on mobile
+  //const classes = ['.article', '.materials-right img'];
+  arr.forEach((className) => {
     const elements = document.querySelectorAll(className);
 
     elements.forEach((element) => {
-        // Add touchstart event listener
-        element.addEventListener('touchstart', () => {
-        element.classList.add('touch-hover-effect');
-        });
+      // Add touchstart event listener
+      element.addEventListener("touchstart", () => {
+        element.classList.add("touch-hover-effect");
+      });
 
-        element.addEventListener('touchend', () => {
+      element.addEventListener("touchend", () => {
         // Remove touch effect
-        element.classList.remove('touch-hover-effect');
-        });
+        element.classList.remove("touch-hover-effect");
+      });
     });
-    });
+  });
 }
 
-mobileHover(['.materials-right img', '.hyperlink']);
-
-
-
-
+mobileHover([".materials-right img", ".hyperlink"]);
 
 // CHANGE TAB FUNCTION
 // nav_item_name <-> switch_target
@@ -302,260 +292,257 @@ mobileHover(['.materials-right img', '.hyperlink']);
 //     evt.currentTarget.className += " tab-effect";
 // }
 
-
-
 function changeTab(evt, nav_item_name, switch_target) {
-    // Hide all elements with the class switch_target
-    var x = document.getElementsByClassName(switch_target);
-    for (var i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
+  // Hide all elements with the class switch_target
+  var x = document.getElementsByClassName(switch_target);
+  for (var i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
 
-    // Show the targeted tab content
-    document.getElementById(nav_item_name).style.display = "block";
+  // Show the targeted tab content
+  document.getElementById(nav_item_name).style.display = "block";
 
-    // Remove the tab-effect class from all tab buttons
-    var tablinks = document.getElementsByClassName("tab-button");
-    for (var i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" tab-effect", "");
-    }
+  // Remove the tab-effect class from all tab buttons
+  var tablinks = document.getElementsByClassName("tab-button");
+  for (var i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" tab-effect", "");
+  }
 
-    // Add the tab-effect class to the clicked tab button
-    evt.currentTarget.className += " tab-effect";
+  // Add the tab-effect class to the clicked tab button
+  evt.currentTarget.className += " tab-effect";
 }
-
 
 // LOAD SUGGESTIONS ON SIDE NAV
 function loadAndSetupSuggestions() {
-    fetch(ROOT + '/assets/json/suggestions.json')
-        .then(response => response.json())
-        .then(data => {
-            const articles = data.articles;
-            document.querySelectorAll('.home-li').forEach(li => {
-                const title = li.getAttribute('data-id');
-                const article = articles.find(article => article.id === title);
+  fetch(ROOT + "/assets/json/suggestions.json")
+    .then((response) => response.json())
+    .then((data) => {
+      const articles = data.articles;
+      document.querySelectorAll(".home-li").forEach((li) => {
+        const title = li.getAttribute("data-id");
+        const article = articles.find((article) => article.id === title);
 
-                if (article) {
-                    // Create a link element for the image
-                    const articleLink = document.createElement('a');
-                    articleLink.href = ROOT + article.link;
-                    articleLink.target = "_blank"; // Open link in a new tab (optional)
-                    articleLink.className = 'recommend-img';
+        if (article) {
+          // Create a link element for the image
+          const articleLink = document.createElement("a");
+          articleLink.href = ROOT + article.link;
+          articleLink.target = "_blank"; // Open link in a new tab (optional)
+          articleLink.className = "recommend-img";
 
-                    // Create and add the image dynamically
-                    const img = document.createElement('img');
-                    img.src = image_root + article.image;
-                    img.alt = article.title;
-                    
-                    // Append the image to the link
-                    articleLink.appendChild(img);
+          // Create and add the image dynamically
+          const img = document.createElement("img");
+          img.src = image_root + article.image;
+          img.alt = article.title;
 
-                    // Create a span element to hold the title
-                    const titleSpan = document.createElement('span');
-                    titleSpan.textContent = article.title;
+          // Append the image to the link
+          articleLink.appendChild(img);
 
-                    // Clear any existing content and append the title and link (which contains the image) to the li element
-                    li.textContent = ''; // Clear any existing text
-                    li.appendChild(titleSpan); // Append the title
-                    li.appendChild(articleLink); // Append the link with image
-                }
-            });
+          // Create a span element to hold the title
+          const titleSpan = document.createElement("span");
+          titleSpan.textContent = article.title;
 
-            // Setup dropdown effect
-            setupDropdownEffect();
-        })
-        .catch(error => console.error('Error loading articles:', error));
+          // Clear any existing content and append the title and link (which contains the image) to the li element
+          li.textContent = ""; // Clear any existing text
+          li.appendChild(titleSpan); // Append the title
+          li.appendChild(articleLink); // Append the link with image
+        }
+      });
+
+      // Setup dropdown effect
+      setupDropdownEffect();
+    })
+    .catch((error) => console.error("Error loading articles:", error));
 }
-
-
 
 // SUGGESTION DROPDOWN BEHAVIOR
 function setupDropdownEffect() {
-    const listItems = document.querySelectorAll('.home-li');
+  const listItems = document.querySelectorAll(".home-li");
 
-    listItems.forEach(li => {
-        const img = li.querySelector('img');
-        const li_a = li.querySelector('a');
+  listItems.forEach((li) => {
+    const img = li.querySelector("img");
+    const li_a = li.querySelector("a");
 
-        // Set initial state for mobile
-        let isExpanded = img.style.maxHeight !== '0px' && img.style.maxHeight; 
+    // Set initial state for mobile
+    let isExpanded = img.style.maxHeight !== "0px" && img.style.maxHeight;
 
-        // Ensure pointer events are set initially
-        li_a.style.pointerEvents = isExpanded ? 'auto' : 'none';
-        
-        li.addEventListener('click', () => {
-            isExpanded = img.style.maxHeight !== '0px' && img.style.maxHeight;
-            img.style.maxHeight = isExpanded ? '0' : img.naturalHeight + 'px';
-            img.style.opacity = isExpanded ? '0' : '1';
-            li_a.style.pointerEvents = isExpanded ? 'none' : 'auto'; // Toggle pointer events
+    // Ensure pointer events are set initially
+    li_a.style.pointerEvents = isExpanded ? "auto" : "none";
 
-            // Toggle the class to show/hide the pseudo-element
-            if (isExpanded) {
-                li_a.classList.remove('show-read-more');
-            } else {
-                li_a.classList.add('show-read-more');
-            }
-        });
-        
+    li.addEventListener("click", () => {
+      isExpanded = img.style.maxHeight !== "0px" && img.style.maxHeight;
+      img.style.maxHeight = isExpanded ? "0" : img.naturalHeight + "px";
+      img.style.opacity = isExpanded ? "0" : "1";
+      li_a.style.pointerEvents = isExpanded ? "none" : "auto"; // Toggle pointer events
 
-        // Ensure initial state
-        img.style.maxHeight = img.style.maxHeight || '0';
-        img.style.opacity = img.style.opacity || '0';
+      // Toggle the class to show/hide the pseudo-element
+      if (isExpanded) {
+        li_a.classList.remove("show-read-more");
+      } else {
+        li_a.classList.add("show-read-more");
+      }
     });
+
+    // Ensure initial state
+    img.style.maxHeight = img.style.maxHeight || "0";
+    img.style.opacity = img.style.opacity || "0";
+  });
 }
 
 // SMOOTHS SCROLLING
 // has to use with scroll-padding-top: 120px; in html{} for smoothness
-$(document).ready(function() {
-    // Add smooth scrolling to all links
-    $("a").on('click', function(event) {
-        // Make sure this.hash has a value before overriding default behavior
-        if (this.hash !== "") {
-            // Prevent default anchor click behavior
-            event.preventDefault();
+$(document).ready(function () {
+  // Add smooth scrolling to all links
+  $("a").on("click", function (event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
 
-            // Store hash
-            var hash = this.hash;
+      // Store hash
+      var hash = this.hash;
 
-            // Adjust the scroll position by subtracting the navbar height
-            var Offset = 120; // Height of navbar
-            var targetOffset = $(hash).offset().top - Offset;
+      // Adjust the scroll position by subtracting the navbar height
+      var Offset = 120; // Height of navbar
+      var targetOffset = $(hash).offset().top - Offset;
 
-            // Using jQuery's animate() method to add smooth page scroll
-            // 800 milliseconds to scroll to the specified area
-            $('html, body').animate({
-                scrollTop: targetOffset
-            }, 800, function() {
-                // Add hash (#) to URL when done scrolling (default click behavior)
-                // enable this thing to add hash
-                // window.location.hash = hash;
-            });
+      // Using jQuery's animate() method to add smooth page scroll
+      // 800 milliseconds to scroll to the specified area
+      $("html, body").animate(
+        {
+          scrollTop: targetOffset,
+        },
+        800,
+        function () {
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          // enable this thing to add hash
+          // window.location.hash = hash;
         }
-    });
+      );
+    }
+  });
 });
-
 
 // SHARE BUTTON
 function toggleShareOptions(event) {
-    event.preventDefault();
-    const shareOptionsContainer = document.getElementById('shareOptions');
-    const shareOptions = shareOptionsContainer.querySelectorAll('.share-option');
+  event.preventDefault();
+  const shareOptionsContainer = document.getElementById("shareOptions");
+  const shareOptions = shareOptionsContainer.querySelectorAll(".share-option");
 
-    // Toggle the visibility of the share options
-    if (shareOptionsContainer.style.display === 'none' || shareOptionsContainer.style.display === '') {
-        shareOptionsContainer.style.display = 'block';
+  // Toggle the visibility of the share options
+  if (
+    shareOptionsContainer.style.display === "none" ||
+    shareOptionsContainer.style.display === ""
+  ) {
+    shareOptionsContainer.style.display = "block";
 
-        // Show each option with a delay
-        shareOptions.forEach((option, index) => {
-            option.style.opacity = '0';
-            option.style.display = 'block';
-            setTimeout(() => {
-                option.style.opacity = '1';
-                option.style.transition = 'opacity .5s ease';
-            }, index * 100);
-        });
-    } else {
-        // Hide all options at once
-        shareOptions.forEach((option) => {
-            option.style.display = 'none';
-        });
-        shareOptionsContainer.style.display = 'none';
-    }
+    // Show each option with a delay
+    shareOptions.forEach((option, index) => {
+      option.style.opacity = "0";
+      option.style.display = "block";
+      setTimeout(() => {
+        option.style.opacity = "1";
+        option.style.transition = "opacity .5s ease";
+      }, index * 100);
+    });
+  } else {
+    // Hide all options at once
+    shareOptions.forEach((option) => {
+      option.style.display = "none";
+    });
+    shareOptionsContainer.style.display = "none";
+  }
 }
 
 // SHARE OPTIONS
 function sharePage(event, platform) {
-    event.preventDefault();
-    const pageUrl = window.location.href; // Get the current page URL
-    let shareUrl = '';
+  event.preventDefault();
+  const pageUrl = window.location.href; // Get the current page URL
+  let shareUrl = "";
 
-    switch (platform) {
-        case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
-            break;
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=Check%20this%20out!`;
-            break;
-        case 'whatsapp':
-            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(pageUrl)}`;
-            break;
-        case 'reddit':
-            shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(pageUrl)}&title=Interesting%20page`;
-            break;
-        default:
-            return;
-    }
+  switch (platform) {
+    case "facebook":
+      shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        pageUrl
+      )}`;
+      break;
+    case "twitter":
+      shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        pageUrl
+      )}&text=Check%20this%20out!`;
+      break;
+    case "whatsapp":
+      shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+        pageUrl
+      )}`;
+      break;
+    case "reddit":
+      shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(
+        pageUrl
+      )}&title=Interesting%20page`;
+      break;
+    default:
+      return;
+  }
 
-    window.open(shareUrl, '_blank'); // Open the share link in a new tab
+  window.open(shareUrl, "_blank"); // Open the share link in a new tab
 }
-
-
-
-
-
 
 const solutionDefaultOpen = true;
 
-if(solutionDefaultOpen){
-    const solutions = document.querySelectorAll('.solution');
-    solutions.forEach((solution) => {
-        solution.setAttribute('open', '');
-    });
+if (solutionDefaultOpen) {
+  const solutions = document.querySelectorAll(".solution");
+  solutions.forEach((solution) => {
+    solution.setAttribute("open", "");
+  });
 }
 
-document.querySelectorAll('img').forEach(img => {
-    img.setAttribute('loading', 'lazy');
+document.querySelectorAll("img").forEach((img) => {
+  img.setAttribute("loading", "lazy");
 });
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
-    const sections = document.querySelectorAll("section"); // Adjust this to target sections
-    const tocLinks = document.querySelectorAll(".toc a");
-    //const headers = document.querySelectorAll("h2:not(section h2)")
+  const sections = document.querySelectorAll("section"); // Adjust this to target sections
+  const tocLinks = document.querySelectorAll(".toc a");
+  //const headers = document.querySelectorAll("h2:not(section h2)")
 
-    function removeActiveClasses() {
-        tocLinks.forEach(link => link.classList.remove("active"));
+  function removeActiveClasses() {
+    tocLinks.forEach((link) => link.classList.remove("active"));
+  }
+
+  function highlightTocLink() {
+    let currentSection = null;
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+
+      // Check if any part of the section is within the viewport
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        currentSection = section;
+      }
+    });
+
+    // headers.forEach(section => {
+    //     const rect = section.getBoundingClientRect();
+    //     if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+    //         // Remove all active classes and then add to the current section
+    //         //removeActiveClasses();
+    //         const link = document.querySelector(`.toc a[href="#${section.id}"]`);
+    //         if (link) link.classList.add("active");
+    //     }
+    // });
+
+    // Highlight the corresponding TOC link if we found a current section
+    if (currentSection) {
+      removeActiveClasses();
+      const link = document.querySelector(
+        `.toc a[href="#${currentSection.id}"]`
+      );
+      if (link) link.classList.add("active");
     }
+  }
 
-    function highlightTocLink() {
-        let currentSection = null;
-
-        sections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-
-            // Check if any part of the section is within the viewport
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                currentSection = section;
-            }
-        });
-
-        // headers.forEach(section => {
-        //     const rect = section.getBoundingClientRect();
-        //     if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-        //         // Remove all active classes and then add to the current section
-        //         //removeActiveClasses();
-        //         const link = document.querySelector(`.toc a[href="#${section.id}"]`);
-        //         if (link) link.classList.add("active");
-        //     }
-        // });
-
-
-        // Highlight the corresponding TOC link if we found a current section
-        if (currentSection) {
-            removeActiveClasses();
-            const link = document.querySelector(`.toc a[href="#${currentSection.id}"]`);
-            if (link) link.classList.add("active");
-        }
-    }
-
-    window.addEventListener("scroll", highlightTocLink);
+  window.addEventListener("scroll", highlightTocLink);
 });
-
-
-
 
 // function loadTitleAndDate(id) {
 //     fetch(ROOT + '/assets/json/suggestions.json') // Adjust the path as needed
@@ -580,8 +567,8 @@ document.addEventListener("DOMContentLoaded", function () {
 //                 // Update the <div> element with the date
 //                 const dateDiv = document.querySelector('div.date');
 //                 if (dateDiv) {
-//                     const dateText = article.date 
-//                         ? `Updated ${article.date}` 
+//                     const dateText = article.date
+//                         ? `Updated ${article.date}`
 //                         : "Date not available";
 //                     dateDiv.textContent = dateText;
 //                 } else {
@@ -596,34 +583,33 @@ document.addEventListener("DOMContentLoaded", function () {
 //         });
 // }
 
-
 function loadDate(id) {
-    fetch(ROOT + '/assets/json/suggestions.json') // Adjust the path as needed
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error fetching JSON: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const article = data.articles.find(article => article.id === id);
+  fetch(ROOT + "/assets/json/suggestions.json") // Adjust the path as needed
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error fetching JSON: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const article = data.articles.find((article) => article.id === id);
 
-            if (article) {
-                // Update the <div> element with the date
-                const dateDiv = document.querySelector('div.date');
-                if (dateDiv) {
-                    const dateText = article.date 
-                        ? `Updated ${article.date}` 
-                        : "Date not available";
-                    dateDiv.textContent = dateText;
-                } else {
-                    console.error("No <div class='date'> element found in the DOM.");
-                }
-            } else {
-                console.error(`No article found with ID: ${id}`);
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+      if (article) {
+        // Update the <div> element with the date
+        const dateDiv = document.querySelector("div.date");
+        if (dateDiv) {
+          const dateText = article.date
+            ? `Updated ${article.date}`
+            : "Date not available";
+          dateDiv.textContent = dateText;
+        } else {
+          console.error("No <div class='date'> element found in the DOM.");
+        }
+      } else {
+        console.error(`No article found with ID: ${id}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
