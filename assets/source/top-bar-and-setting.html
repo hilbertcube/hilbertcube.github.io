@@ -34,7 +34,7 @@
             <button onclick = "dropDown('recommended-materials')" class="dropbtn top-buttons" id="Material-button">
                 <!-- <i class="fa fa-book top-bar-icon" aria-hidden="true"></i> -->
                 <!-- RECOMMENDED MATERIALS -->
-                Recommended Materials
+                Resources
             </button>
             <div id="recommended-materials"  class="dropdown-content">
                 <a href="/recommended-materials/#books" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Books</a>
@@ -57,10 +57,9 @@
         </div>
         <div class="search-overlay" id="searchOverlay"></div>
         <div class="dark-switch-container">
-            <label class="switch">
-                <input type="checkbox" id="modeToggle">
-                <span class="slider"></span>
-            </label>
+            <button id="modeToggle" class="dark-mode-button">
+                <i id="toggleIcon" class="fa fa-moon-o"></i>
+            </button>
         </div>
         <div class = "setting-container">
             <input type="checkbox" id="toggle">

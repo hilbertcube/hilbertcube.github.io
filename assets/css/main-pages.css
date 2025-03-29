@@ -13,19 +13,13 @@
 #rec-article-container {
     display: grid;
     grid-template-columns: 1fr 1fr; 
-    /* repeat(auto-fit, minmax(200px, 1fr)) */
-    gap: 20px;
+    grid-gap: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 10px;
     padding-right: 10px;
     max-width: 100%;
     margin: 0 auto;
-
-    --gap: 2em;
-   --line-offset: calc(var(--gap) / 2);
-   --line-thickness: 1px;
-   --line-color: red;
 }
 
 @media all and (max-width: 580px){
@@ -36,95 +30,81 @@
 }
 
 
+
+
 .article {
     position: relative;
     display: flex;
     flex-direction: column;
-    /* background-color: var(--article-color);
-    box-shadow: 0 2px 4px var(--article-shadow-color); */
     padding: 10px;
     padding-bottom: 5px;
-    border-radius: 5px;
     text-decoration: none;
     transition: transform 0.2s ease;
     color: black;
     margin: 0;
     height: auto;
-    box-shadow: 0 4px 8px var(--article-shadow-color);
-    
-}
-
-.article:hover, .article:active {
-    transform: translateY(-0.8em);
-}
-
-@media all and (max-width: 1200px){
-    .article:hover, .article:active {
-        transform: scale(1.02);
-    }
 }
 
 
+
+.article-image-container {
+    padding: 0;
+    overflow: hidden; /* Prevents the image from exceeding the container */
+    border-radius: 0.5rem;
+}
 
 .article img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
-    /* border: var(--article-img-border) solid 0.1px; */
-}
-:root{
-    --article-img-border: #d7d7d7;
-}
-body.dark-mode{
-    --article-img-border: #484848;
+    transition: transform 0.2s ease;
+    object-fit: cover;
+    border-radius: 0.5rem;
 }
 
+.article:hover .article-image-container img {
+    transform: scale(1.02);
+}
+
+.article:hover .article-name {
+    text-decoration: underline;
+}
 
 .article-name {
     font-size: 19px;
     margin: 10px 0 0;
-    text-align: center;
+    text-align: left;
     color: var(--article-name-color); 
     font-weight: bold;
     padding-bottom: 10px;
-    /* border-bottom: var(--nav-line-color) solid 1px; */
-    /* height: 100%; */
     justify-content: center;
 }
 
 .article-topic{
     font-size: 12px;
     color: var(--article-date-color);
-    margin-left: 10px;
-    margin-top: 16px;
+    margin-top: 2px;
     margin-right: 2px;
     font-weight: bold;
     padding-bottom: 10px;
 }
 
 .article-description{
-    margin-left: 10px;
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.4;
-    color: var(--article-description-color);
+    color: var(--grid-text-color);
     text-align: justify;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-
-    /* 
-        enable this along with .article display: flex and flex-direction column
-        delete this and .article display: flex and flex-direction column if we want the date to not
-        at the bottom
-    */
-    height: 100%;
+    /* height: 100%; */
 }
 
 .article-date{
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 12px;
     text-align: left;
     font-style: italic;
@@ -134,7 +114,6 @@ body.dark-mode{
 
 
 :root{
-    /* --black-svg-filters: invert(0%) sepia(91%) saturate(7500%) hue-rotate(349deg) brightness(89%) contrast(96%); */
     --black-svg-filters: invert(100%) sepia(100%) saturate(1%) hue-rotate(318deg) brightness(109%) contrast(101%);
     --social-media-container-color: rgb(26, 26, 26);
 }

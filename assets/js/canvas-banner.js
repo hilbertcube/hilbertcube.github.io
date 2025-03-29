@@ -10,7 +10,10 @@ function canvas() {
         'laplace.svg',
         'discrete-fourier.svg',
         'cauchy.svg',
-        'black-body.svg'
+        'black-body.svg',
+        'navier.svg',
+        'information.svg',
+        'moore.svg'
     ];
     
     const svgUrls = svgFileNames.map(fileName => `${ROOT}/public/banner-svg/${fileName}`);
