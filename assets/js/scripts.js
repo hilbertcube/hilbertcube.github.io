@@ -6,7 +6,10 @@ MathJax = {
     }
 };
 
-function LoadScript(scriptId, source){
+const ROOT = ''; // /neumanncondition
+
+function LoadScript(scriptId, source)
+{
     const jsSrc = ROOT + source;
     const scriptElement = document.createElement("script");
     scriptElement.id = scriptId;
@@ -15,15 +18,15 @@ function LoadScript(scriptId, source){
 }
 
 
-//////////////////// ROOT ////////////////////
-const ROOT = ''; // /neumanncondition
-
 // TAB ICON
-const link = document.createElement('link');
-link.rel = 'icon';
-link.href = ROOT + '/public/Images/Logo/favicon.png';
-link.type = 'image/png';
-document.head.appendChild(link);
+function setFavicon() {
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.href = ROOT + '/public/Images/Logo/favicon.png';
+    link.type = 'image/png';
+    document.head.appendChild(link);
+}
+setFavicon();
 
 
 // OPEN URL IN NEW WINDOWS
@@ -58,7 +61,6 @@ function setBanner(){
     const banner = document.querySelector('.right-section-banner');
     banner.style.backgroundImage = `url("${imageUrl}")`;
 }
-
 
 
 // SIDE NAV
@@ -143,16 +145,6 @@ function copyButton() {
 copyButton();
 
 
-
-
-
-// TOP NAV DROPDOWN
-// function dropDown(dropdownId) {
-//     var dropdown = document.getElementById(dropdownId);
-//     dropdown.classList.toggle("show");
-// }
-
-
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
     condition = event.target.matches('.dropbtn') || event.target.matches('.switch') || event.target.matches('.slider') || event.target.matches('#modeToggle');
@@ -191,18 +183,12 @@ document.addEventListener('DOMContentLoaded', applyDropdownDelays);
 // ARTICLES
 const image_root = ROOT + '/public/Images/';
 
-function article(NUM_ARTICLE, des, random_article){
-
+function article(NUM_ARTICLE, des, random_article) {
     fetch(ROOT + '/assets/json/suggestions.json')
         .then(response => response.json())
         .then(data => {
-            // Access the articles array within the fetched JSON data
             const articles = data.articles;
-
-            // Shuffle the articles if random_article is true
             if (random_article) shuffleArray(articles);
-
-            // Display only the first NUM_ARTICLE articles
             displayArticles(articles.slice(0, NUM_ARTICLE));
         })
         .catch(error => console.error('Error loading articles:', error));
@@ -214,30 +200,36 @@ function article(NUM_ARTICLE, des, random_article){
         }
     }
 
-    // Function to display the articles
     function displayArticles(articles) {
         const container = document.getElementById('rec-article-container');
-        container.innerHTML = ''; // Clear the container before adding new articles
+        container.innerHTML = ''; // Clear previous content
 
         articles.forEach(article => {
             const articleLink = document.createElement('a');
-            articleLink.href = ROOT +  article.link;
+            articleLink.href = ROOT + article.link;
             articleLink.classList.add('article');
-            articleLink.target = "_blank"; // Open link in a new tab (optional)
-            // articleLink.setAttribute('data-aos', 'fade-up');
+            articleLink.target = "_blank"; // Open in new tab (optional)
+
+            // Create image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'article-image-container'; 
 
             const img = document.createElement('img');
             img.src = image_root + article.image;
             img.alt = article.title;
+            imageContainer.appendChild(img);
+
+            // Create text container
+            const textContainer = document.createElement('div');
+            textContainer.className = 'article-text-container'; // New container for text
 
             const title = document.createElement('div');
             title.classList.add('article-name');
             title.textContent = article.title;
 
-
             const topic = document.createElement('div');
             topic.classList.add('article-topic');
-            topic.textContent =  'Topics: ' + article.topic;
+            topic.textContent = 'Topics: ' + article.topic;
 
             const description = document.createElement('div');
             description.classList.add('article-description');
@@ -247,31 +239,25 @@ function article(NUM_ARTICLE, des, random_article){
             date.classList.add('article-date');
             date.textContent = 'Updated ' + article.date;
 
-            articleLink.appendChild(img);
-            articleLink.appendChild(title);
-            
-            if(des){
-                articleLink.appendChild(topic);
-                articleLink.appendChild(description);
-                articleLink.appendChild(date);
-            }
-            
-            container.appendChild(articleLink);
-
-            // Apply border based on the 'des' boolean
+            // Append text elements to text container
+            textContainer.appendChild(title);
             if (des) {
-                title.style.borderBottom = '1px solid var(--nav-line-color)';
-
-            } else {
-                title.style.borderBottom = 'none';
+                textContainer.appendChild(topic);
+                textContainer.appendChild(description);
+                textContainer.appendChild(date);
             }
-        });
 
+            // Append containers to the article link
+            articleLink.appendChild(imageContainer);
+            articleLink.appendChild(textContainer);
+
+            // Append article link to main container
+            container.appendChild(articleLink);
+        });
 
         mobileHover(['.article']);
     }
 }
-
 // MOBILE HOVER BEHAVIOR
 function mobileHover(arr){
     // Hover effect on mobile
@@ -641,10 +627,3 @@ function loadDate(id) {
             console.error("Error:", error);
         });
 }
-
-
-
-
-
-
-

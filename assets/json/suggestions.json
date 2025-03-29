@@ -4,20 +4,11 @@
         {
             "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
             "id": "chladni-1",
-            "image": "chladni_1.png",
+            "image": "dark_chladni.png",
             "link": "/blogs/the-quest-to-finding-chladni-patterns-1",
             "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
             "description": "Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni's pattern using the wave equation model.",
             "date": "June 1, 2024"
-        },
-        {
-            "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
-            "id": "chladni-2",
-            "image": "CCircle1.png",
-            "link": "/blogs/the-quest-to-finding-chladni-patterns-2",
-            "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
-            "description": "Simulating Chladni's pattern using the wave equation model.",
-            "date": "June 14, 2024"
         },
         {
             "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
@@ -29,15 +20,6 @@
             "date": "August 10, 2024"
         },
         {
-            "title": "Time Complexity of an Algorithm",
-            "id": "dsa-1",
-            "image": "time-complexity-banner.png",
-            "link": "/blogs/time-complexity-of-an-algorithm",
-            "topic": "Data Structures and Algorithm, C++, Python",
-            "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
-            "date": "December 2, 2024"
-        },
-        {
             "title": "How to find maxima and minima of an n-th dimensional function",
             "id": "hessian-1",
             "image": "3d_function.png",
@@ -45,6 +27,24 @@
             "topic": "Python, Hessian Matrix, Fermat's Theorem",
             "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
             "date": "May 25, 2024"
+        },
+        {
+            "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
+            "id": "chladni-2",
+            "image": "dark_polar.png",
+            "link": "/blogs/the-quest-to-finding-chladni-patterns-2",
+            "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
+            "description": "Plotting a series of Chladni's patterns using the wave equation model.",
+            "date": "June 14, 2024"
+        },
+        {
+            "title": "Time Complexity of an Algorithm",
+            "id": "dsa-1",
+            "image": "time-complexity-banner.png",
+            "link": "/blogs/time-complexity-of-an-algorithm",
+            "topic": "Data Structures and Algorithm, C++, Python",
+            "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
+            "date": "December 2, 2024"
         },
         {
             "title": "Light Refraction and A More In-depth Look of Snell's Law",

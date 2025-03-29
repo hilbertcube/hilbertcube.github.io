@@ -2,3 +2,5 @@ assets/scratch/
 .vscode/
 assets/css/computer-modern.css
 assets/js/mathjax
+.env
+node_modules/

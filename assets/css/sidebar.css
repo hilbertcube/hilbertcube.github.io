@@ -1,19 +1,6 @@
-/*
-   _____ _____ _____  ______   ____          _____  
-  / ____|_   _|  __ \|  ____| |  _ \   /\   |  __ \ 
- | (___   | | | |  | | |__    | |_) | /  \  | |__) |
-  \___ \  | | | |  | |  __|   |  _ < / /\ \ |  _  / 
-  ____) |_| |_| |__| | |____  | |_) / ____ \| | \ \ 
- |_____/|_____|_____/|______| |____/_/    \_\_|  \_\
-
-*/
-
 :root {
-    --nav-bar-slide-in-time: .5s;
-    --nav-bar-slide-out-time: 0.5s;
-    --ul-slide-in-time: 0.2s;
-    --ul-slide-out-time: 0.7s;
-    --logo-title-transition-time: 0.5s;
+    --fade-in-out-time: 0.5s;
+    --slide-time: 0.5s;
     --li-border-color: rgb(183, 183, 183);
 }
 
@@ -21,46 +8,12 @@ body.dark-mode {
     --li-border-color: rgb(0, 71, 171);
 }
 
-.toc a{
+.toc a {
     text-decoration: none;
     color: inherit;
 }
 
-/* Header Major */
-header.major {
-    padding-left: 20px;
-    padding-bottom: 0px;
-}
-
-.major h2 {
-    font-size: 1.3em;
-    /* font-family: "Courier New", monospace; */
-    /* font-family: "Roboto Slab", serif; */
-    font-weight: bold;
-    color: var(--nav-bar-text-color);
-    border-bottom: 2px solid #ea0000;
-    padding-bottom: 5px;
-    margin: 0.75em 0;
-    display: inline-block;
-    text-align: left;
-}
-
-.major h2:hover, .side-nav:hover {
-    cursor: pointer;
-}
-
-/* Slide in/out effect for Major section */
-.major {
-    transform: translateX(0);
-    transition: transform var(--ul-slide-out-time) ease;
-}
-
-.navbar.closed .major {
-    transform: translateX(-250px);
-    transition: transform var(--ul-slide-in-time) ease;
-}
-
-/* Navbar Transitions */
+/* Navbar with Slide Effect */
 .navbar {
     position: fixed;
     height: 100%;
@@ -72,24 +25,33 @@ header.major {
     font-family: var(--body-font);
     font-size: 15px;
     border-right: 1px solid rgb(91, 91, 91);
+    overflow: hidden;
     overflow-y: scroll;
-    overflow-x: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 800;
-    transition: width var(--nav-bar-slide-out-time) ease;
+    width: var(--side-nav-width);
+    transform: translateX(0);
+    transition: transform var(--slide-time) ease;
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer/Edge */
 }
 
-.navbar .MathJax{
-    font-size: 15px !important;
+.navbar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in Chrome, Safari, and Edge */
 }
 
 .navbar.closed {
-    width: 0;
-    transition: width var(--nav-bar-slide-in-time) ease;
+    transform: translateX(-100%);
 }
 
-.navbar.open {
-    width: var(--side-nav-width);
+/* Fading effect for contents inside navbar */
+.navbar * {
+    opacity: 1;
+    transition: opacity var(--fade-in-out-time) ease;
+}
+
+.navbar.closed * {
+    opacity: 0;
 }
 
 .navbar::after {
@@ -99,20 +61,27 @@ header.major {
     width: 100%;
 }
 
-/* Navbar Scrollbar */
-.navbar::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
+
+
+/* Header Major */
+header.major {
+    padding-left: 20px;
+    padding-bottom: 0px;
 }
 
-/* .navbar *{
-    opacity: 1;
-    text-decoration: none;
-    transition: opacity .3s ease-in-out;
-} */
+.major h2 {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--nav-bar-text-color);
+    border-bottom: 2px solid #ea0000;
+    padding-bottom: 5px;
+    margin: 0.75em 0;
+    display: inline-block;
+    text-align: left;
+}
 
-.navbar.closed *{
-    opacity: 0;
+.major h2:hover, .side-nav:hover {
+    cursor: pointer;
 }
 
 /* Logo */
@@ -137,14 +106,12 @@ header.major {
 .side-nav {
     padding: 10px 10px 0 20px;
     display: none;
-    
 }
 
 .side-nav ul li a {
     font-family: inherit;
     color: inherit;
     text-decoration: none;
-    
 }
 
 .side-buttons {
@@ -197,28 +164,20 @@ nav ul, .side-nav ul {
     list-style-type: none;
     padding: 0 10px 0 15px;
     margin: 0;
-    transition: transform 0.5s;
     opacity: 1;
-    transform: translateX(0);
-}
-
-.navbar.open ul {
-    transform: translateX(0);
-    transition: transform var(--ul-slide-out-time);
+    transition: opacity var(--fade-in-out-time) ease;
 }
 
 .navbar.closed ul {
-    transform: translateX(-100%);
-    transition: transform var(--ul-slide-in-time);
+    opacity: 0;
 }
 
-/* ---------- Table of Contents and Side Navigation ------------ */
+/* Table of Contents and Side Navigation */
 .toc ul li, .side-nav ul li, .highlights ul li {
     padding: 5px;
     cursor: pointer;
     text-align: left;
     background: var(--nav-bar-color);
-    
 }
 
 .toc ul li {
@@ -240,7 +199,6 @@ nav ul, .side-nav ul {
 }
 
 .toc ul li li:hover {
-    background-position: left;
     border-left: 2px solid blue;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -250,18 +208,16 @@ nav ul, .side-nav ul {
     border-left: 2px solid green;
 }
 
-
 .toc a.active {
     color: #007bff;
     font-weight: bold;
     border-left: 3px solid #007bff;
     padding-left: 5px;
 }
-/*-----------------------------------------------------*/
 
-
+/* Attribute Section */
 .attribute {
-    height: 120px; 
+    height: 120px;
     display: flex;
     font-family: sans-serif;
     align-items: center;
@@ -271,41 +227,21 @@ nav ul, .side-nav ul {
     width: 90%;
     color: #aaa;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
     text-align: center;
     font-size: 0.9em;
     opacity: 1;
-    /* transition: opacity 2s ease; */
+    transition: opacity var(--fade-in-out-time) ease;
 }
 
 .navbar.closed .attribute {
     opacity: 0;
-    /* transition: opacity 0s ease; */
 }
 
-
-
-
-
-/* .toc ul li::after{
-    position: absolute;
-    content:  "";
-    background: rgb(183, 183, 183);
-    height: 1px;
-    width: 2%;
-    bottom: 50%;
-    left: 0;
-    margin: 0;
-} */
-
-
-
-
-
-
+/* Toggle Button */
 .toggle-btn {
     position: fixed;
-    top: calc(0.5*(var(--top-bar-height) - 35px));
+    top: calc(0.5 * (var(--top-bar-height) - 35px));
     width: 35px;
     height: 35px;
     left: 15px;
@@ -314,7 +250,7 @@ nav ul, .side-nav ul {
     padding: 0;
     cursor: pointer;
     z-index: 1000;
-    background-color: rgb(26, 26, 26); /*var(--top-bar-color)*/
+    background-color: rgb(26, 26, 26);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -325,22 +261,18 @@ nav ul, .side-nav ul {
 }
 
 .toggle-btn .bar {
-    padding-bottom:0;
-    padding-top:0;
-    width: 20px; /* Adjust width of the bars */
-    height: 2.5px; /* Adjust height of the bars */
-    background-color: var(--toggle-bar); /* Color of the bars */
+    width: 20px;
+    height: 2.5px;
+    background-color: var(--toggle-bar);
     border-radius: 1.25px;
-    margin: 2.5px; /* Space between the bars */
+    margin: 2.5px;
     transition: all 0.3s;
     transform-origin: left;
 }
 
 .toggle-btn:hover .bar {
-    background-color: #1681c4; /* Color of the bars on hover */
+    background-color: #1681c4;
 }
-
-
 
 /* Optional: Style the bar icon to rotate when open */
 body.nav-open .toggle-btn .bar:nth-child(1) {
@@ -355,20 +287,10 @@ body.nav-open .toggle-btn .bar:nth-child(3) {
     transform: rotate(-45deg) translate(0px, 2px) scaleX(1.251);
 }
 
-
-
-
-
-:root{
+/* Highlight Section */
+:root {
     --highlight-drop-time: 0.8s;
     --highlight-opacity-time: 0.5s;
-}
-@media all and (max-width: 1200px){
-    :root{
-        --highlight-drop-time: 0.4s;
-        --highlight-opacity-time: 0.4s;
-    }
-
 }
 
 .highlights span{
@@ -451,4 +373,32 @@ body.nav-open .toggle-btn .bar:nth-child(3) {
 
 .recommend-img.show-read-more::after {
     display: block; /* Show text when class is added */
+}
+
+
+.github-contribution {
+    display: flex; 
+    justify-content:right; 
+    align-items:center;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroller) var(--nav-bar-color);
+    position: relative;
+    overflow: hidden; 
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 100%;
+}
+
+:root {
+    --scroller: gray;
+}
+body.dark-mode {
+    --scroller: #ddd;
+}
+
+.github-contribution img {
+    width: auto;
+    height: 100%;
+    object-fit: cover; 
+    object-position: right; 
 }

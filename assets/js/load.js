@@ -1,34 +1,41 @@
 function BodyDarkMode() {
-    const toggleSwitch = document.getElementById('modeToggle');
+    const modeToggle = document.getElementById('modeToggle');
+    const toggleIcon = document.getElementById('toggleIcon');
     const body = document.body;
 
-    // Check for saved mode in local storage
-    if (localStorage.getItem('mode') === 'dark') {
-        body.classList.add('dark-mode');
-        if (toggleSwitch) {
-            toggleSwitch.checked = true;
+    // Check for saved mode in localStorage
+    let darkMode = localStorage.getItem('mode') === 'dark';
+
+    function updateMode() {
+        if (darkMode) {
+            body.classList.add('dark-mode');
+            toggleIcon.classList.replace('fa-moon-o', 'fa-sun-o'); // Change to sun icon
+        } else {
+            body.classList.remove('dark-mode');
+            toggleIcon.classList.replace('fa-sun-o', 'fa-moon-o'); // Change to moon icon
         }
+        localStorage.setItem('mode', darkMode ? 'dark' : 'light');
     }
 
-    if (toggleSwitch) {
-        toggleSwitch.addEventListener('change', () => {
-            if (toggleSwitch.checked) {
-                body.classList.add('dark-mode');
-                localStorage.setItem('mode', 'dark');
-            } 
-            else {
-                body.classList.remove('dark-mode');
-                localStorage.setItem('mode', 'light');
-            }
+    if (modeToggle) {
+        modeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            updateMode();
         });
     }
+
+    updateMode(); // Initialize mode on page load
 }
+
+
 
 
 
 function CodeDarkMode(lightThemeHref, darkThemeHref) {
     let lightThemeLink = document.getElementById('light-theme-link');
     let darkThemeLink = document.getElementById('dark-theme-link');
+    const modeToggle = document.getElementById('modeToggle');
+    const toggleIcon = document.getElementById('toggleIcon');
 
     // Create light theme link if it doesn't exist
     if (!lightThemeLink) {
@@ -47,41 +54,37 @@ function CodeDarkMode(lightThemeHref, darkThemeHref) {
     }
 
     // Check for saved mode in local storage
-    if (localStorage.getItem('mode') === 'dark') {
-        darkThemeLink.href = darkThemeHref; // Load dark theme
-        lightThemeLink.disabled = true; // Disable light theme
-        document.head.appendChild(darkThemeLink);
-    } else {
-        const savedLightTheme = localStorage.getItem('lightTheme') || lightThemeHref; // Get saved light theme
-        lightThemeLink.href = savedLightTheme; // Set the light theme link to the saved theme
-        lightThemeLink.disabled = false; // Enable light theme
+    let darkMode = localStorage.getItem('mode') === 'dark';
 
-        if (document.head.contains(darkThemeLink)) {
-            document.head.removeChild(darkThemeLink); // Ensure dark theme is unloaded
+    function updateTheme() {
+        if (darkMode) {
+            darkThemeLink.href = darkThemeHref; // Load dark theme
+            lightThemeLink.disabled = true; // Disable light theme
+            document.head.appendChild(darkThemeLink);
+            document.body.classList.add('dark-mode');
+            toggleIcon.classList.replace('fa-moon-o', 'fa-sun-o'); // Change to sun icon
+        } else {
+            const savedLightTheme = localStorage.getItem('lightTheme') || lightThemeHref;
+            lightThemeLink.href = savedLightTheme;
+            lightThemeLink.disabled = false;
+            if (document.head.contains(darkThemeLink)) {
+                document.head.removeChild(darkThemeLink); // Remove dark theme
+            }
+            document.body.classList.remove('dark-mode');
+            toggleIcon.classList.replace('fa-sun-o', 'fa-moon-o'); // Change to moon icon
         }
+        localStorage.setItem('mode', darkMode ? 'dark' : 'light');
     }
 
-    const toggleSwitch = document.getElementById('modeToggle');
-    if (toggleSwitch) {
-        toggleSwitch.addEventListener('change', () => {
-            if (toggleSwitch.checked) {
-                darkThemeLink.href = darkThemeHref; // Load dark theme
-                lightThemeLink.disabled = true; // Disable light theme
-                localStorage.setItem('mode', 'dark'); // Save mode to local storage
-                document.head.appendChild(darkThemeLink); // Append dark theme link
-            } else {
-                const savedLightTheme = localStorage.getItem('lightTheme') || lightThemeHref; // Get saved light theme
-                lightThemeLink.href = savedLightTheme; // Set the light theme link to the saved theme
-                lightThemeLink.disabled = false; // Enable light theme
-                localStorage.setItem('mode', 'light'); // Save mode to local storage
-                if (document.head.contains(darkThemeLink)) {
-                    document.head.removeChild(darkThemeLink); // Unload dark theme
-                }
-            }
+    if (modeToggle) {
+        modeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            updateTheme();
         });
     }
-}
 
+    updateTheme(); // Initialize mode on page load
+}
 function codeThemeSwitch(id, storageKey, defaultIndex) {
     const selectElement = document.getElementById(id);
     if (!selectElement) {
@@ -324,13 +327,6 @@ function extendSearchBar() {
         });
     });
 }
-
-
-
-
-
-
-
 
 function Switcher(target, id, selectors, defaultIndex) {
     const selectElement = document.getElementById(id);
