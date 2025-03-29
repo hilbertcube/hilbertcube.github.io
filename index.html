@@ -1,140 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'G-00W722FWP2');
-    </script>
-    <title>Home - neumanncondition</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="subject" content='Mathematics, Physics, and Computer Science Articles'>
-    <meta name="description" content="This is the homepage" />
-    <meta name="keywords" content="math, physics, programming, coding, computer science, computer simulation"/>
-    <meta name="author" content="Don Le, ledongduu@gmail.com"/>
-    <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/canvas-banner.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <style>
-        #Home-button{
-            font-weight: var(--top-buttons-font-weight);
-            color:var(--top-buttons-hover-color);
-        }
-        @media all and (max-width: 580px) {
-            #chladniImage{width: 95% !important;}
-            #chladni-outer-div{padding-top: 25px;}
-        }
-        .repo {
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin: 5px 0;
-        }
-        .calendar {
-            padding: 20px;
-        }
-        
-    </style>
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-00W722FWP2');
+  </script>
+  <title>Home - neumanncondition</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="subject" content='Mathematics, Physics, and Computer Science Articles'>
+  <meta name="description" content="This is the homepage" />
+  <meta name="keywords" content="math, physics, programming, coding, computer science, computer simulation" />
+  <meta name="author" content="Don Le, ledongduu@gmail.com" />
+  <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/canvas-banner.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <style>
+    #Home-button {
+      font-weight: var(--top-buttons-font-weight);
+      color: var(--top-buttons-hover-color);
+    }
+
+    @media all and (max-width: 580px) {
+      #chladniImage {
+        width: 95% !important;
+      }
+
+      #chladni-outer-div {
+        padding-top: 25px;
+      }
+    }
+
+    .repo {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 5px 0;
+    }
+
+    .calendar {
+      padding: 20px;
+    }
+  </style>
 </head>
 
 <body class="nav-open light-mode">
-    <div class = "top-nav"></div>
-    <nav class="navbar open" id="navbar">
-        <div id="logo"></div>
-        <div class = "side-nav-container"></div>
-        <div class = "highlights-and-attribute"></div>
-    </nav>
+  <div class="top-nav"></div>
+  <nav class="navbar open" id="navbar">
+    <div id="logo"></div>
+    <div class="side-nav-container"></div>
+    <div class="highlights-and-attribute"></div>
+  </nav>
 
-    <div class="content-grid" id="content-grid">
-        <div class="home-banner" id="home-banner"></div>
-        <div class = "general-wrapper" id="home">
-            <div class = "topic">
-                Homepage
-            </div>
-            <section>
-                <h1 class="home-title">Chladni Patterns - The Wave Equation Model</h1>                
-                <div class = "two-columns-block">
-                    <div>
-                        <p>
-                            Take a solid metal plate (or any other rigid material) and sprinkle some particles on it. It can either be sand, salt, or even baking soda. Then, generate some vibration on the plate by using either a violin bow to excite the plate, or place it on a wave generator and set it to specific frequencies. What you will observe are the beautiful patterns generated as shown in the figure. This experiment sounds relatively simple, but as simple as it sounds, this experiment reveals some extremely complex and intensive underlying mathematical principles.
-                        </p>
-                        <p>
-                            Ok, so how does this work? Well, it turns out these are examples of standing waves in the two-dimensional space. In one dimension, a &#8220node&#8221 in a <a class="url" href="https://en.wikipedia.org/wiki/Standing_wave">standing wave</a> is a point along the wave where the amplitude is at minimum. Similarly, in two dimensions, there are &#8220nodal lines,&#8221 which are static points or lines on the plate where the particles settle.
-                        </p>
-                        <a style="text-align: center;" href="blogs/the-quest-to-finding-chladni-patterns-1/" class="redirect-button">
-                            Read More
-                        </a>
-                    </div>
-                    <div id="chladni-outer-div">
-                        <img style="width: 75%; border-radius: 10px;" class="image" id="chladniImage">
-                        <figcaption class="caption">Chladni Patterns on a Square Plate.</figcaption>
-                    </div>
-                </div>
-            </section>
-            
-            <section>
-                <h1 class="home-title">Euler vs. High Order Taylor vs. RK 4</h1>
-                <p>
-                    The language of modeling problems in science and engineering is in the form of differential equations. In some special case, a differential equation might have an elementary solution, which can be solved using the techniques we learn in a standard DE class. Most of the time, however, they are unsolvable, and meaningful results can only be achieved via approximations. Euler, Taylor, and Runge-Kutta are all common methods used to approximate such initial value problems, commonly expressed as
-                    <div class="equation">
-                        $$y'(t) = f(t, y),\quad a\leq t\leq b,\quad y(a) = \alpha,$$
-                    </div>
-                    If $w_0, w_1, \ldots, w_n$ are approximations generated by Euler's method, then, for each $i = 0, 1, 2, \ldots, n$, the error bound of Euler's method is determined by
-                    <div class="equation">
-                        $$E=|y(t_i) - w_i| \leq \frac{hM}{2L}[e^{L(t_i - a)} - 1] \sim O\left(h^2 \right),$$
-                    </div>
-                    where $h$ is the step size. On the other hand, since the RK4 method is determined by
-                    $w_{i+1} = w_i + \frac{1}{6}(K_1 + 2K_2 + 2K_3 + K_4) + O(h^5),$
-                    its truncation error must be
-                    <div class="equation">
-                        $$E = |y(t_i) - w_i| = Ch^5 \sim O(h^5).$$
-                    </div>
-                </p>
-                <p>
-                    Last, but not least, if $y\in C^{n+1}[a,b]$ and has a step size $h$, then the local truncation error of the $n$-order Taylor method is $O(h^{n+1})$. The question ultimately comes down to which method is better. Euler's method is simple to implement and computationally inexpensive but often lacks accuracy unless very small step sizes are used. High-order Taylor methods are rarely employed due to their complexity and higher computational cost compared to Euler or RK4. In contrast, RK4 strikes a balance with high accuracy and stability, requiring only slightly more computation than Euler's method.
-                </p>
-            </section>
-
-
-
-            <section>
-                <h1 class="home-title">Articles</h1>
-                <div id="rec-article-container" data-aos="fade-up"></div>
-            </section>
+  <div class="content-grid" id="content-grid">
+    <div class="home-banner" id="home-banner"></div>
+    <div class="general-wrapper" id="home">
+      <div class="topic">
+        Homepage
+      </div>
+      <section>
+        <h1 class="home-title">Chladni Patterns - The Wave Equation Model</h1>
+        <div class="two-columns-block">
+          <div>
+            <p>
+              Take a solid metal plate (or any other rigid material) and sprinkle some particles on it. It can either be
+              sand, salt, or even baking soda. Then, generate some vibration on the plate by using either a violin bow
+              to excite the plate, or place it on a wave generator and set it to specific frequencies. What you will
+              observe are the beautiful patterns generated as shown in the figure. This experiment sounds relatively
+              simple, but as simple as it sounds, this experiment reveals some extremely complex and intensive
+              underlying mathematical principles.
+            </p>
+            <p>
+              Ok, so how does this work? Well, it turns out these are examples of standing waves in the two-dimensional
+              space. In one dimension, a &#8220node&#8221 in a <a class="url"
+                href="https://en.wikipedia.org/wiki/Standing_wave">standing wave</a> is a point along the wave where the
+              amplitude is at minimum. Similarly, in two dimensions, there are &#8220nodal lines,&#8221 which are static
+              points or lines on the plate where the particles settle.
+            </p>
+            <a style="text-align: center;" href="blogs/the-quest-to-finding-chladni-patterns-1/"
+              class="redirect-button">
+              Read More
+            </a>
+          </div>
+          <div id="chladni-outer-div">
+            <img style="width: 75%; border-radius: 10px;" class="image" id="chladniImage">
+            <figcaption class="caption">Chladni Patterns on a Square Plate.</figcaption>
+          </div>
         </div>
-    </div>
-    
-    <div class="footer"></div>
-    <script src="/assets/js/scripts.js"></script>
-    <script>
-        fetch(ROOT + '/assets/json/suggestions.json')
-            .then(response => response.json())
-            .then(data => {
-                const articles = data.articles;
-                //console.log('Number of articles:', articles.length);
-                article(articles.length, true, false);
-            })
-            .catch(error => console.error('Error loading JSON:', error));
+      </section>
 
-        setImage("chladniImage", "/public/Images/chladni-patterns-sbs.jpg");
-        
-        LoadScript("jsLoad", "/assets/js/load.js");
-        LoadScript("bannerScript", "/assets/js/canvas-banner.js");
-    </script>
-    <script id="jsLoad"></script><script id="bannerScript"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
-    <script>
-        AOS.init({
-            easing: 'ease-in-quad',
-            once: false, // whether animation should happen only once - while scrolling down
-        });
-    </script>
+      <section>
+        <h1 class="home-title">Euler vs. High Order Taylor vs. RK 4</h1>
+        <p>
+          The language of modeling problems in science and engineering is in the form of differential equations. In some
+          special case, a differential equation might have an elementary solution, which can be solved using the
+          techniques we learn in a standard DE class. Most of the time, however, they are unsolvable, and meaningful
+          results can only be achieved via approximations. Euler, Taylor, and Runge-Kutta are all common methods used to
+          approximate such initial value problems, commonly expressed as
+          <div class="equation">
+            $$y'(t) = f(t, y),\quad a\leq t\leq b,\quad y(a) = \alpha,$$
+          </div>
+          If $w_0, w_1, \ldots, w_n$ are approximations generated by Euler's method, then, for each $i = 0, 1, 2,
+          \ldots, n$, the error bound of Euler's method is determined by
+          <div class="equation">
+            $$E=|y(t_i) - w_i| \leq \frac{hM}{2L}[e^{L(t_i - a)} - 1] \sim O\left(h^2 \right),$$
+          </div>
+          where $h$ is the step size. On the other hand, since the RK4 method is determined by
+          $w_{i+1} = w_i + \frac{1}{6}(K_1 + 2K_2 + 2K_3 + K_4) + O(h^5),$
+          its truncation error must be
+          <div class="equation">
+            $$E = |y(t_i) - w_i| = Ch^5 \sim O(h^5).$$
+          </div>
+        </p>
+        <p>
+          Last, but not least, if $y\in C^{n+1}[a,b]$ and has a step size $h$, then the local truncation error of the
+          $n$-order Taylor method is $O(h^{n+1})$. The question ultimately comes down to which method is better. Euler's
+          method is simple to implement and computationally inexpensive but often lacks accuracy unless very small step
+          sizes are used. High-order Taylor methods are rarely employed due to their complexity and higher computational
+          cost compared to Euler or RK4. In contrast, RK4 strikes a balance with high accuracy and stability, requiring
+          only slightly more computation than Euler's method.
+        </p>
+      </section>
+
+
+
+      <section>
+        <h1 class="home-title">Articles</h1>
+        <div id="rec-article-container" data-aos="fade-up"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="footer"></div>
+  <script src="/assets/js/scripts.js"></script>
+  <script>
+    fetch(ROOT + '/assets/json/suggestions.json')
+      .then(response => response.json())
+      .then(data => {
+        const articles = data.articles;
+        //console.log('Number of articles:', articles.length);
+        article(articles.length, true, false);
+      })
+      .catch(error => console.error('Error loading JSON:', error));
+
+    setImage("chladniImage", "/public/Images/chladni-patterns-sbs.jpg");
+
+    LoadScript("jsLoad", "/assets/js/load.js");
+    LoadScript("bannerScript", "/assets/js/canvas-banner.js");
+  </script>
+  <script id="jsLoad"></script>
+  <script id="bannerScript"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script"
+    async></script>
+  <script>
+    AOS.init({
+      easing: 'ease-in-quad',
+      once: false, // whether animation should happen only once - while scrolling down
+    });
+  </script>
 </body>
+
 </html>

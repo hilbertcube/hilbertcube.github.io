@@ -1,63 +1,74 @@
 <div class="line-2"></div>
-<details open class = side-nav> <!--open attribute - default-->  
-    <summary class="side-summary">
-        <i class="fa fa-list-ul top-bar-icon" aria-hidden="true"></i>
-        Navigation</summary>
-    <ul>
-        <li>
-            <a class = "side-buttons" href = "/" onclick="location.href = ROOT + this.getAttribute('href'); return false;"> 
-                <summary class = "side-nav-summary" id="Home-button">
-                    <i class="fa fa-home top-bar-icon" aria-hidden="true"></i> 
-                    HOME
-                </summary>                
-            </a>
-        </li>
-        <li>
-            <a class = "side-buttons" href = "/about" onclick="location.href = ROOT + this.getAttribute('href'); return false;" id="About-button">
-                <summary class = "side-nav-summary">
-                    <i class="fa fa-square-o top-bar-icon" aria-hidden="true"></i> 
-                    ABOUT
-                </summary>
-                
-            </a>
-        </li>
-        <li>
-            <details class = "side-nav-details" id="Note-button">
-            <summary class = "side-nav-summary">
-                <i class="fa fa-pencil-square-o top-bar-icon" aria-hidden="true"></i>
-                NOTES
-            </summary>
-            <ul>
-                <li><a href="/notes/#calculus" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Calculus</a></li>
-                <li><a href="/notes/#de" onclick="location.href = ROOT + this.getAttribute('href'); return false;">ODE and PDE</a></li>
-                <li><a href="/notes/#linear-algebra" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Linear Algebra</a></li>
-                <li><a href="/notes/#dsa" onclick="location.href = ROOT + this.getAttribute('href'); return false;">DSA</a></li>
-                <li><a href="/notes/others" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Others</a></li>
-            </ul>
-            </details>
-        </li>
-        <li>
-            <details class = "side-nav-details" id="Material-button">
-            <summary class = "side-nav-summary">
-                <i class="fa fa-book top-bar-icon" aria-hidden="true"></i>
-                RECOMMENDED MATERIALS
-            </summary>
-            <ul>
-                <li><a href="/recommended-materials/#books" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Books</a></li>
-                <li><a href="/recommended-materials/#lecture-notes" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Lecture Notes</a></li>
-                <li><a href="/recommended-materials/#websites" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Websites</a></li>
-                <li><a href="/recommended-materials/#youtube" onclick="location.href = ROOT + this.getAttribute('href'); return false;">Youtube Channels</a></li>
-            </ul>
-            </details>
-        </li>
-        <li>
-            <a class = "side-buttons" href = "/contact" onclick="location.href = ROOT + this.getAttribute('href'); return false;" id="Contact-button">
-                <summary class = "side-nav-summary">
-                    <i class="fa fa-space-shuttle top-bar-icon" aria-hidden="true"></i> 
-                    CONTACT
-                </summary>
-            </a>
-        </li>
-    </ul>
-</details>
+<details open class=side-nav>
+  <!--open attribute - default-->
+  <summary class="side-summary">
+    <!-- <i class="fa fa-list-ul top-bar-icon" aria-hidden="true"></i> -->
+    Navigation</summary>
+  <ul>
+    <li>
+      <a class="side-buttons" href="/" onclick="location.href = ROOT + this.getAttribute('href'); return false;">
+        <summary class="side-nav-summary" id="Home-button">
+          <i class="fa fa-home top-bar-icon" aria-hidden="true"></i>
+          HOME
+        </summary>
+      </a>
+    </li>
+    <li>
+      <a class="side-buttons" href="/about" onclick="location.href = ROOT + this.getAttribute('href'); return false;"
+        id="About-button">
+        <summary class="side-nav-summary">
+          <i class="fa fa-square-o top-bar-icon" aria-hidden="true"></i>
+          ABOUT
+        </summary>
 
+      </a>
+    </li>
+    <li>
+      <details class="side-nav-details" id="Note-button">
+        <summary class="side-nav-summary">
+          <i class="fa fa-pencil-square-o top-bar-icon" aria-hidden="true"></i>
+          NOTES
+        </summary>
+        <ul>
+          <li><a href="/notes/#calculus"
+              onclick="location.href = ROOT + this.getAttribute('href'); return false;">Calculus</a></li>
+          <li><a href="/notes/#de" onclick="location.href = ROOT + this.getAttribute('href'); return false;">ODE and
+              PDE</a></li>
+          <li><a href="/notes/#linear-algebra"
+              onclick="location.href = ROOT + this.getAttribute('href'); return false;">Linear Algebra</a></li>
+          <li><a href="/notes/#dsa" onclick="location.href = ROOT + this.getAttribute('href'); return false;">DSA</a>
+          </li>
+          <li><a href="/notes/others"
+              onclick="location.href = ROOT + this.getAttribute('href'); return false;">Others</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details class="side-nav-details" id="Material-button">
+        <summary class="side-nav-summary">
+          <i class="fa fa-book top-bar-icon" aria-hidden="true"></i>
+          RECOMMENDED MATERIALS
+        </summary>
+        <ul>
+          <li><a href="/recommended-materials/#books"
+              onclick="location.href = ROOT + this.getAttribute('href'); return false;">Books</a></li>
+          <li><a href="/recommended-materials/#lecture-notes"
+              onclick="location.href = ROOT + this.getAttribute('href'); return false;">Lecture Notes</a></li>
+          <li><a href="/recommended-materials/#websites"
+              onclick="location.href = ROOT + this.getAttribute('href'); return false;">Websites</a></li>
+          <li><a href="/recommended-materials/#youtube"
+              onclick="location.href = ROOT + this.getAttribute('href'); return false;">Youtube Channels</a></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <a class="side-buttons" href="/contact" onclick="location.href = ROOT + this.getAttribute('href'); return false;"
+        id="Contact-button">
+        <summary class="side-nav-summary">
+          <i class="fa fa-space-shuttle top-bar-icon" aria-hidden="true"></i>
+          CONTACT
+        </summary>
+      </a>
+    </li>
+  </ul>
+</details>
