@@ -456,32 +456,43 @@ ol.steps .step::before {
   color: #000;
   cursor: pointer;
 }
+
 .footer {
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(19, 19, 19); /*#41617A*/
+  background-color: #111111; /*#41617A*/
   color: white;
   text-align: center;
   padding-top: 25px;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
 }
+
 .footer-container {
-  font-family: "Poppins", sans-serif; /*"Computer-Modern", serif*/
-  font-weight: 300;
+  font-family: "Computer-Modern", Arial;
   font-style: normal;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.social-media-footer {
+  margin: 10px 0px;
+}
+
+.social-media-footer a {
+  color: white;
+  margin: 0px 8px;
+  text-decoration: none;
 }
 
 .footer-block {
   flex: 1;
   padding: 10px;
   display: flex;
-  font-size: 14px;
+  font-size: 15px;
   flex-direction: column;
   align-items: center;
 }
