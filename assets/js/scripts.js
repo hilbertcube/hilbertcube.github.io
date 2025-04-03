@@ -490,10 +490,10 @@ function BodyDarkMode() {
   function updateMode() {
     if (darkMode) {
       body.classList.add("dark-mode");
-      toggleIcon.classList.replace("fa-moon-o", "fa-sun-o"); // Change to sun icon
+      toggleIcon.classList.replace("fa-moon", "fa-sun"); // Change to sun icon
     } else {
       body.classList.remove("dark-mode");
-      toggleIcon.classList.replace("fa-sun-o", "fa-moon-o"); // Change to moon icon
+      toggleIcon.classList.replace("fa-sun", "fa-moon"); // Change to moon icon
     }
     localStorage.setItem("mode", darkMode ? "dark" : "light");
   }

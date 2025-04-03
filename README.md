@@ -16,3 +16,5 @@ and run with live server.
 2. [Prism.js](https://prismjs.com/) to display different code themes.
 3. [jQuery](https://jquery.com/) to dynamically load some components.
 4. [AOS](https://github.com/michalsnik/aos): Animate On Scroll Library.
+5. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
+6. [ghchart](https://github.com/2016rshah/githubchart-api): display github activities
