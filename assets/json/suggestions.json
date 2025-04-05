@@ -3,7 +3,7 @@
     {
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
       "id": "chladni-1",
-      "image": "dark_chladni.png",
+      "image": "dark_chladni.webp",
       "link": "/blogs/the-quest-to-finding-chladni-patterns-1",
       "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
       "description": "Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni's pattern using the wave equation model.",
@@ -12,7 +12,7 @@
     {
       "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
       "id": "orb-cuda-1",
-      "image": "CUDA_process_0_serial_30_imgs.png",
+      "image": "CUDA_process_0_serial_30_imgs.webp",
       "link": "/blogs/accelerating-feature-extraction-and-image-stitching-algorithm",
       "topic": "C++, OpenCV, MPI, OpenMP, Computer Vision, Image Processing",
       "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
@@ -21,7 +21,7 @@
     {
       "title": "How to find maxima and minima of an n-th dimensional function",
       "id": "hessian-1",
-      "image": "3d_function.png",
+      "image": "3d_function.webp",
       "link": "/blogs/maximum-and-minimum",
       "topic": "Python, Hessian Matrix, Fermat's Theorem",
       "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
@@ -30,7 +30,7 @@
     {
       "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
       "id": "chladni-2",
-      "image": "dark_polar.png",
+      "image": "dark_polar.webp",
       "link": "/blogs/the-quest-to-finding-chladni-patterns-2",
       "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
       "description": "Plotting a series of Chladni's patterns using the wave equation model.",
@@ -39,7 +39,7 @@
     {
       "title": "Time Complexity of an Algorithm",
       "id": "dsa-1",
-      "image": "time-complexity-banner.png",
+      "image": "time-complexity-banner.webp",
       "link": "/blogs/time-complexity-of-an-algorithm",
       "topic": "Data Structures and Algorithm, C++, Python",
       "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
@@ -48,7 +48,7 @@
     {
       "title": "Light Refraction and A More In-depth Look of Snell's Law",
       "id": "snell-1",
-      "image": "snell_s_law_drawing.jpg",
+      "image": "snell_s_law_drawing.webp",
       "link": "/blogs/snells-law",
       "topic": "Refraction, PDEs",
       "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
@@ -57,7 +57,7 @@
     {
       "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
       "id": "chladni-3",
-      "image": "chladni-patterns.jpg",
+      "image": "chladni-patterns.webp",
       "link": "/blogs/the-quest-to-finding-chladni-patterns-3",
       "topic": "Python, Eigenvalue Problems, PDEs, Numpy, Biharmonic Equation",
       "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
@@ -84,7 +84,7 @@
     {
       "title": "Simulating the Brachistochrone problem",
       "id": "brachistochrone-1",
-      "image": "brachistochrone.jpg",
+      "image": "brachistochrone.webp",
       "link": "https://example.com/js-event-loop",
       "topic": "Python, Calculus of Variations",
       "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
