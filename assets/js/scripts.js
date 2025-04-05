@@ -56,12 +56,6 @@ function setImage(imageId, source) {
   document.getElementById(imageId).src = imageSrc;
 }
 
-// SET BANNER
-function setBanner() {
-  const imageUrl = ROOT + "/public/Images/code-banner.webp";
-  const banner = document.querySelector(".right-section-banner");
-  banner.style.backgroundImage = `url("${imageUrl}")`;
-}
 
 // SIDE NAV
 function toggleNav() {

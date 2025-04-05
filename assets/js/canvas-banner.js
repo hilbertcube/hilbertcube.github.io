@@ -192,12 +192,17 @@ function canvas() {
 }
 
 
-
+// SET BANNER
+function setBanner() {
+  const imageUrl = ROOT + "/public/Images/code-banner.webp";
+  const banner = document.querySelector(".right-section-banner");
+  banner.style.backgroundImage = `url("${imageUrl}")`;
+}
 
 // Load the banner and start the canvas animation
 $(function() {
     $(".home-banner").load(ROOT + "/assets/source/home-banner.html", function() {
-        setBanner();
+        //setBanner();
         canvas();
     });
 });
