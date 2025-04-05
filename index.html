@@ -107,7 +107,10 @@
             </a>
           </div>
           <div id="chladni-outer-div">
-            <img style="width: 75%; border-radius: 10px;" class="image" id="chladniImage">
+            <img 
+              style="width: 75%; border-radius: 10px;" 
+              class="image" id="chladniImage" alt ="Chladni plate"
+              src="/public/Images/chladni-patterns-sbs.webp">
             <figcaption class="caption">Chladni Patterns on a Square Plate.</figcaption>
           </div>
         </div>
@@ -164,8 +167,6 @@
         article(articles.length, true, false);
       })
       .catch(error => console.error('Error loading JSON:', error));
-
-    setImage("chladniImage", "/public/Images/chladni-patterns-sbs.webp");
 
     LoadScript("bannerScript", "/assets/js/canvas-banner.js");
   </script>
