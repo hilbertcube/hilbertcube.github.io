@@ -58,8 +58,15 @@
   display: flex;
   align-items: center;
   width: 100%;
+  max-width: 60vw;
   justify-content: right;
   padding-left: 200px;
+}
+
+@media all and (max-width: 1080px){
+  .right {
+    max-width: none;
+  }
 }
 
 #Home-Icon {
@@ -117,7 +124,7 @@
   --delay-increment: 0.1s;
 }
 
-/* Apply delay based on item position */
+/* Apply delay based on item-container position */
 
 .dropdown-content a:hover {
   background-color: var(--dropdown-hover-color);
@@ -284,7 +291,7 @@ input.search-bar:focus {
   --autocomplete-dropdown-color: #fff;
   --autocomplete-dropdown-border: #ccc;
   --autocomplete-dropdown-text-color: black;
-  --autocomplete-item-hover: #f0f0f0;
+  --autocomplete-item-container-hover: #f0f0f0;
   --autocomplete-dropdown-left-border: #0006b1;
 }
 
@@ -292,13 +299,13 @@ body.dark-mode {
   --autocomplete-dropdown-color: #222222;
   --autocomplete-dropdown-border: #3b3b3b;
   --autocomplete-dropdown-text-color: #aaa;
-  --autocomplete-item-hover: #3b3b3b;
+  --autocomplete-item-container-hover: #3b3b3b;
   --highlight-dropdown-color: rgb(0, 150, 255);
   --autocomplete-dropdown-left-border: rgb(0, 150, 255);
 }
 
 .autocomplete-dropdown {
-  font-family: sans-serif;
+  font-family: "Computer-Modern", Arial;
   font-size: 15px;
   position: absolute;
   top: 100%; /* Ensure dropdown appears below the search bar */
@@ -316,31 +323,22 @@ body.dark-mode {
   display: none; /* Hide by default */
 }
 
-.autocomplete-item {
+.autocomplete-item-container {
   padding: 10px;
   cursor: pointer;
 }
 
-:root {
-  --auto-item-background: url("../../public/Icons/hook_arrow_black.svg");
-  --file-svg: url("../../public/Icons/file-content.svg");
-}
-body.dark-mode {
-  --auto-item-background: url("../../public/Icons/hook_arrow.svg");
-}
-
-.autocomplete-item:hover,
+.autocomplete-item-container:hover,
 .autocomplete-active {
   border-left: 3px solid var(--autocomplete-dropdown-left-border);
   background-size: 25px 25px;
-  background-image: var(--auto-item-background);
   background-repeat: no-repeat;
   padding-left: 35px;
   background-position: 5px center;
-  background-color: var(--autocomplete-item-hover);
+  background-color: var(--autocomplete-item-container-hover);
 }
 
-.autocomplete-item a {
+.autocomplete-item-container a {
   text-decoration: none; /* Removes the underline */
   color: inherit; /* Ensures the text color is inherited */
 }
@@ -507,7 +505,7 @@ input[type="checkbox"]:checked ~ #settings_window {
   overflow: hidden;
 }
 
-.dropdown-item {
+.dropdown-item-container {
   color: inherit;
   text-decoration: none;
   white-space: nowrap;

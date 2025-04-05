@@ -178,14 +178,37 @@ document.addEventListener("DOMContentLoaded", applyDropdownDelays);
 const image_root = ROOT + "/public/Images/";
 
 function article(NUM_ARTICLE, des, random_article) {
-  fetch(ROOT + "/assets/json/suggestions.json")
-    .then((response) => response.json())
-    .then((data) => {
-      const articles = data.articles;
-      if (random_article) shuffleArray(articles);
-      displayArticles(articles.slice(0, NUM_ARTICLE));
-    })
-    .catch((error) => console.error("Error loading articles:", error));
+  // Cache for the articles data to avoid repeated fetches
+  let articlesCache = null;
+  
+  // Check if we already have the data cached
+  if (articlesCache) {
+    processArticles(articlesCache);
+  } else {
+    fetch(ROOT + "/assets/json/suggestions.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to load articles: " + response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        articlesCache = data.articles;
+        processArticles(articlesCache);
+      })
+      .catch((error) => console.error("Error loading articles:", error));
+  }
+
+  function processArticles(articles) {
+    // Filter out articles without IDs
+    const validArticles = articles.filter(article => article.id);
+    
+    // Shuffle if needed
+    if (random_article) shuffleArray(validArticles);
+    
+    // Display the articles
+    displayArticles(validArticles.slice(0, NUM_ARTICLE));
+  }
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -196,48 +219,64 @@ function article(NUM_ARTICLE, des, random_article) {
 
   function displayArticles(articles) {
     const container = document.getElementById("rec-article-container");
+    if (!container) {
+      console.error("Article container not found");
+      return;
+    }
+    
     container.innerHTML = ""; // Clear previous content
+    
+    // Create document fragment for better performance
+    const fragment = document.createDocumentFragment();
 
     articles.forEach((article) => {
       const articleLink = document.createElement("a");
       articleLink.href = ROOT + article.link;
       articleLink.classList.add("article");
-      articleLink.target = "_blank"; // Open in new tab (optional)
+      articleLink.target = "_blank";
 
       // Create image container
       const imageContainer = document.createElement("div");
       imageContainer.className = "article-image-container";
 
+      // Create image with lazy loading
       const img = document.createElement("img");
+      img.loading = "lazy"; // Add lazy loading
       img.src = image_root + article.image;
       img.alt = article.title;
+      
+      // Add error handling for images
+      img.onerror = function() {
+        this.src = image_root + "placeholder.png"; // Fallback image
+        this.onerror = null; // Prevent infinite loop
+      };
+      
       imageContainer.appendChild(img);
 
       // Create text container
       const textContainer = document.createElement("div");
-      textContainer.className = "article-text-container"; // New container for text
+      textContainer.className = "article-text-container";
 
       const title = document.createElement("div");
       title.classList.add("article-name");
       title.textContent = article.title;
-
-      const topic = document.createElement("div");
-      topic.classList.add("article-topic");
-      topic.textContent = "Topics: " + article.topic;
-
-      const description = document.createElement("div");
-      description.classList.add("article-description");
-      description.textContent = article.description;
-
-      const date = document.createElement("div");
-      date.classList.add("article-date");
-      date.textContent = "Updated " + article.date;
-
-      // Append text elements to text container
       textContainer.appendChild(title);
+
+      // Only add description elements if des flag is true
       if (des) {
+        const topic = document.createElement("div");
+        topic.classList.add("article-topic");
+        topic.textContent = "Topics: " + article.topic;
         textContainer.appendChild(topic);
+
+        const description = document.createElement("div");
+        description.classList.add("article-description");
+        description.textContent = article.description;
         textContainer.appendChild(description);
+
+        const date = document.createElement("div");
+        date.classList.add("article-date");
+        date.textContent = "Updated " + article.date;
         textContainer.appendChild(date);
       }
 
@@ -245,13 +284,20 @@ function article(NUM_ARTICLE, des, random_article) {
       articleLink.appendChild(imageContainer);
       articleLink.appendChild(textContainer);
 
-      // Append article link to main container
-      container.appendChild(articleLink);
+      // Add to fragment instead of directly to DOM
+      fragment.appendChild(articleLink);
     });
 
-    mobileHover([".article"]);
+    // Add all articles to DOM at once
+    container.appendChild(fragment);
+
+    // Mobile hover functionality
+    if (typeof mobileHover === 'function') {
+      mobileHover([".article"]);
+    }
   }
 }
+
 // MOBILE HOVER BEHAVIOR
 function mobileHover(arr) {
   // Hover effect on mobile
@@ -644,38 +690,115 @@ function SearchBar() {
 
           if (query) {
             const choice = "include"; // or "start-with"
-            const filteredSuggestions =
-              choice === "include"
-                ? suggestions
-                    .filter((item) => item.title.toLowerCase().includes(query))
-                    .slice(0, maxItems)
-                : suggestions
-                    .filter((item) =>
-                      item.title.toLowerCase().startsWith(query)
-                    )
-                    .slice(0, maxItems);
+            
+            // Enhanced search across multiple fields
+            const filteredSuggestions = suggestions.filter((item) => {
+              // Search in title, topic, description
+              return (
+                item.title.toLowerCase().includes(query) ||
+                item.topic.toLowerCase().includes(query) ||
+                item.description.toLowerCase().includes(query) ||
+                item.date.toLowerCase().includes(query)
+              );
+            });
+            
+            // Get total matches count before slicing
+            const totalMatches = filteredSuggestions.length;
+            
+            // Slice for display
+            const displayedSuggestions = filteredSuggestions.slice(0, maxItems);
+            
+            // Create and add the results count indicator
+            if (totalMatches > 0) {
+              const countDiv = document.createElement("div");
+              countDiv.className = "results-count";
+              countDiv.textContent = `Displaying ${Math.min(maxItems, totalMatches)} out of ${totalMatches} results`;
+              countDiv.style.padding = "8px 10px";
+              countDiv.style.color = "var(--text-color, #666)";
+              countDiv.style.fontSize = "0.9em";
+              countDiv.style.borderBottom = "1px solid var(--border-color, #eaeaea)";
+              dropdown.appendChild(countDiv);
+            }
 
-            filteredSuggestions.forEach((item, index) => {
-              const div = document.createElement("div");
-              const itemTitle = item.title;
-
-              // Apply both bold and color change
-              const highlightedText = itemTitle.replace(
+            // Display suggestions with enhanced information
+            displayedSuggestions.forEach((item) => {
+              const container = document.createElement("div");
+              container.className = "autocomplete-item-container";
+              container.style.padding = "10px";
+              container.style.borderBottom = "1px solid var(--border-color, #f0f0f0)";
+              
+              // Title section with highlighting
+              const titleDiv = document.createElement("div");
+              titleDiv.className = "autocomplete-item-title";
+              titleDiv.style.fontWeight = "bold";
+              titleDiv.style.marginBottom = "3px";
+              
+              // Apply highlighting to title
+              const highlightedTitle = item.title.replace(
                 new RegExp(query, "gi"),
                 (match) =>
-                  `<strong style="color: var(--highlight-dropdown-color); font-weight: normal; text-decoration: underline;">${match}</strong>`
+                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
               );
-
-              div.innerHTML = highlightedText; // Use innerHTML to insert the styled text
-              div.className = "autocomplete-item";
-              div.addEventListener("click", function () {
+              titleDiv.innerHTML = highlightedTitle;
+              
+              // Topic section with highlighting
+              const topicDiv = document.createElement("div");
+              topicDiv.className = "autocomplete-item-topic";
+              topicDiv.style.fontSize = "0.85em";
+              topicDiv.style.marginBottom = "3px";
+              
+              // Apply highlighting to topic
+              const highlightedTopic = item.topic.replace(
+                new RegExp(query, "gi"),
+                (match) =>
+                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
+              );
+              topicDiv.innerHTML = `<strong>Topics:</strong> ${highlightedTopic}`;
+              
+              // Description section with highlighting
+              const descDiv = document.createElement("div");
+              descDiv.className = "autocomplete-item-description";
+              descDiv.style.fontSize = "0.85em";
+              descDiv.style.marginBottom = "3px";
+              
+              // Apply highlighting to description
+              const highlightedDesc = item.description.replace(
+                new RegExp(query, "gi"),
+                (match) =>
+                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
+              );
+              descDiv.innerHTML = highlightedDesc;
+              
+              // Date section with highlighting
+              const dateDiv = document.createElement("div");
+              dateDiv.className = "autocomplete-item-date";
+              dateDiv.style.fontSize = "0.85em";
+              dateDiv.style.fontStyle = "italic";
+              dateDiv.style.color = "var(--muted-text-color, #888)";
+              
+              // Apply highlighting to date
+              const highlightedDate = item.date.replace(
+                new RegExp(query, "gi"),
+                (match) =>
+                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
+              );
+              dateDiv.innerHTML = highlightedDate;
+              
+              // Assemble all components
+              container.appendChild(titleDiv);
+              container.appendChild(topicDiv);
+              container.appendChild(descDiv);
+              container.appendChild(dateDiv);
+              
+              container.addEventListener("click", function () {
                 searchBar.value = item.title;
                 window.open(ROOT + item.link, "_blank"); // Open in new tab
                 searchBar.value = ""; // Clear the search bar
                 dropdown.innerHTML = "";
                 dropdown.style.display = "none";
               });
-              dropdown.appendChild(div);
+              
+              dropdown.appendChild(container);
             });
 
             dropdown.style.display = "block"; // Show dropdown
@@ -684,10 +807,8 @@ function SearchBar() {
           }
         });
 
-        // const searchBar_ = document.getElementById('searchBar');
-        // const searchBarMobile_ = document.getElementById('searchBarMobile');
         searchBar.addEventListener("keydown", function (event) {
-          const items = dropdown.getElementsByClassName("autocomplete-item");
+          const items = dropdown.getElementsByClassName("autocomplete-item-container");
 
           if (event.key === "ArrowDown") {
             event.preventDefault();
@@ -701,18 +822,22 @@ function SearchBar() {
             addActive(items);
           } else if (event.key === "Enter") {
             event.preventDefault();
-            collapseSearchBar();
+            if (typeof collapseSearchBar === 'function') {
+              collapseSearchBar();
+            }
             if (currentFocus > -1 && items[currentFocus]) {
               // Simulate click event when pressing Enter on an active item
               items[currentFocus].click();
             } else {
-              // If no active item, find the suggestion that exactly matches the search term
+              // If no active item, find the suggestion that matches the search term
               const filteredSuggestion = suggestions.find(
                 (item) =>
-                  item.title.toLowerCase() === searchBar.value.toLowerCase()
+                  item.title.toLowerCase() === searchBar.value.toLowerCase() ||
+                  item.topic.toLowerCase() === searchBar.value.toLowerCase() ||
+                  item.description.toLowerCase() === searchBar.value.toLowerCase()
               );
               if (filteredSuggestion) {
-                window.open(filteredSuggestion.link, "_blank");
+                window.open(ROOT + filteredSuggestion.link, "_blank");
                 searchBar.value = "";
                 dropdown.innerHTML = "";
                 dropdown.style.display = "none";
@@ -727,11 +852,15 @@ function SearchBar() {
           if (currentFocus >= items.length) currentFocus = 0;
           if (currentFocus < 0) currentFocus = items.length - 1;
           items[currentFocus].classList.add("autocomplete-active");
+          
+          // Add some styling to make active item clearly visible
+          items[currentFocus].style.backgroundColor = "var(--highlight-bg-color, #f5f5f5)";
         }
 
         function removeActive(items) {
           for (let item of items) {
             item.classList.remove("autocomplete-active");
+            item.style.backgroundColor = "";
           }
         }
       });

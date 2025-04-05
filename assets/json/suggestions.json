@@ -89,6 +89,70 @@
       "topic": "Python, Calculus of Variations",
       "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
       "date": ""
+    },
+    {
+      "title": "Resources - Books",
+      "image": "",
+      "link": "/recommended-materials/#books",
+      "topic": "Programming, Image Processing, DSA, Math, Physics",
+      "description": "Book Recommendation",
+      "date": "Last updated Nov. 2024"
+    },
+    {
+      "title": "Resources - Lecture Notes",
+      "image": "",
+      "link": "/recommended-materials/#lecture-notes",
+      "topic": "Physics, Calculus of Variations, DE",
+      "description": "Lecture Notes Recommendation",
+      "date": "Last updated Nov. 2024"
+    },
+    {
+      "title": "Resources - Websites",
+      "image": "",
+      "link": "/recommended-materials/#websites",
+      "topic": "Useful websites",
+      "description": "The internet and digital platforms have made information readily available to anyone with an internet connection. No more barriers.",
+      "date": "Last updated Nov. 2024"
+    },
+    {
+      "title": "Resources - Youtube Channels",
+      "image": "",
+      "link": "/recommended-materials/#youtube",
+      "topic": "Useful Youtube Channels",
+      "description": "Youtube is fun, but don't watch too much.",
+      "date": "Last updated Nov. 2024"
+    },
+    {
+      "title": "Privacy Policy",
+      "image": "",
+      "link": "/privacy-policy/",
+      "topic": "About the privacy policy of this website",
+      "description": "This website does not collect or store any personally identifiable information, such as IP addresses. However, it does use Google Analytics to analyze website usage and user behavior. The data collected by Google Analytics includes...",
+      "date": "Last updated Oct. 2024"
+    },
+    {
+      "title": "License",
+      "image": "",
+      "link": "/LICENSE-CC-BY.md",
+      "topic": "Creative Commons Attribution 4.0 International",
+      "description": "View license",
+      "date": "Last updated April 2025"
+    },
+    {
+      "title": "Source code",
+      "image": "",
+      "link": "https://github.com/Continuum3416/neumanncondition",
+      "topic": "View the source code of this website",
+      "description": "",
+      "date": "Updated recently"
+    },
+    {
+      "title": "About",
+      "image": "",
+      "link": "/about/",
+      "topic": "About this website",
+      "description": "About this website I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar...",
+      "date": "Updated recently"
     }
   ]
 }
