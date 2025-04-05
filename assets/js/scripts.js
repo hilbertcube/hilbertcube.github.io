@@ -58,7 +58,7 @@ function setImage(imageId, source) {
 
 // SET BANNER
 function setBanner() {
-  const imageUrl = ROOT + "/public/Images/code-banner.PNG";
+  const imageUrl = ROOT + "/public/Images/code-banner.webp";
   const banner = document.querySelector(".right-section-banner");
   banner.style.backgroundImage = `url("${imageUrl}")`;
 }
@@ -1025,7 +1025,7 @@ $(document).ready(function () {
     }
   );
   $("#logo").load(ROOT + "/assets/source/logo.html", function () {
-    setImage("logoImage", "/public/Images/Logo/pendulum_logo.png");
+    setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
   });
   $(".footer").load(ROOT + "/assets/source/footer.html", function () {
     currentYear();
