@@ -157,9 +157,9 @@
   </div>
 
   <div class="footer"></div>
-  <script src="/assets/js/scripts.js"></script>
+  <script src="/assets/js/scripts.js" defer></script>
   <script>
-    fetch(ROOT + '/assets/json/suggestions.json')
+    fetch('/assets/json/suggestions.json')
       .then(response => response.json())
       .then(data => {
         const articles = data.articles;

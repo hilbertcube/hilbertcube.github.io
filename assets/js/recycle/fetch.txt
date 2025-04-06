@@ -1,0 +1,232 @@
+// SMOOTHS SCROLLING
+// has to use with scroll-padding-top: 120px; in html{} for smoothness
+document.addEventListener("DOMContentLoaded", function () {
+  // Add smooth scrolling to all links
+  const links = document.querySelectorAll("a");
+
+  links.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        const hash = this.hash;
+
+        // Adjust the scroll position by subtracting the navbar height
+        const Offset = 120; // Height of navbar
+        const target = document.querySelector(hash);
+        const targetOffset = target.offsetTop - Offset;
+
+        // Smooth scroll to the target element
+        window.scrollTo({
+          top: targetOffset,
+          behavior: "smooth",
+        });
+
+        // Optionally add hash to URL when done scrolling
+        // window.location.hash = hash;
+      }
+    });
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Load side-nav
+  fetch(ROOT + "/assets/source/side-nav.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".side-nav-container").innerHTML = data;
+    })
+    .catch(error => console.error('Error loading side-nav:', error));
+
+  // Load highlights-and-attribute and setup suggestions
+  fetch(ROOT + "/assets/source/highlights-and-attribute.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".highlights-and-attribute").innerHTML = data;
+      loadAndSetupSuggestions();
+    })
+    .catch(error => console.error('Error loading highlights and attribute:', error));
+
+  // Load logo and set image
+  fetch(ROOT + "/assets/source/logo.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector("#logo").innerHTML = data;
+      setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
+    })
+    .catch(error => console.error('Error loading logo:', error));
+
+  // Load footer and set current year
+  fetch(ROOT + "/assets/source/footer.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".footer").innerHTML = data;
+      currentYear();
+    })
+    .catch(error => console.error('Error loading footer:', error));
+
+  // Load the top bar
+  const topNavContainer = document.createElement('div');
+  topNavContainer.classList.add('top-nav');
+  document.body.prepend(topNavContainer);
+
+  fetch(ROOT + "/assets/source/top-bar-and-setting.html")
+    .then(response => response.text())
+    .then(data => {
+      topNavContainer.innerHTML = data;
+      
+      window.onscroll = function () {
+        scrollIndicator();
+      };
+
+      const initialLightTheme = codeThemeSwitch(
+        "light-theme-select",
+        "lightTheme",
+        0
+      );
+      const initialDarkTheme = codeThemeSwitch(
+        "dark-theme-select",
+        "darkTheme",
+        0
+      );
+      CodeDarkMode(initialLightTheme, initialDarkTheme);
+      extendSearchBar();
+      BodyDarkMode();
+
+      fetch(ROOT + "/assets/source/top-bar-and-setting.html")
+        .then(response => response.text())
+        .then(data => {
+          topNavContainer.innerHTML = data;
+          BodyDarkMode();
+          extendSearchBar();
+          const lightTheme = codeThemeSwitch(
+            "light-theme-select",
+            "lightTheme",
+            0
+          );
+          const darkTheme = codeThemeSwitch(
+            "dark-theme-select",
+            "darkTheme",
+            0
+          );
+          CodeDarkMode(lightTheme, darkTheme);
+          Switcher(
+            "fontFamily",
+            "font-select",
+            [".general-wrapper", ".navbar"],
+            0
+          );
+          Switcher("fontSize", "font-size-select", font_size, 2); // , '.MathJax'
+          Switcher(
+            "display",
+            "indicator-select",
+            [".progress-container", ".progress-bar"],
+            0
+          );
+          SearchBar();
+        })
+        .catch(error => console.error('Error loading top bar again:', error));
+    })
+    .catch(error => console.error('Error loading top bar:', error));
+});
+
+
+// 2nd way
+document.addEventListener('DOMContentLoaded', () => {
+  // === CRITICAL FETCHES ===
+  const criticalFetches = [
+    {
+      selector: '.side-nav-container',
+      url: `${ROOT}/assets/source/side-nav.html`
+    },
+    {
+      selector: '.home-banner',
+      url: `${ROOT}/assets/source/home-banner.html`,
+      onLoad: () => canvas()
+    },
+    {
+      selector: '#logo',
+      url: `${ROOT}/assets/source/logo.html`,
+      onLoad: () => setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp")
+    },
+    {
+      selector: '.highlights-and-attribute',
+      url: `${ROOT}/assets/source/highlights-and-attribute.html`,
+      onLoad: () => loadAndSetupSuggestions()
+    },
+    {
+      selector: '.footer',
+      url: `${ROOT}/assets/source/footer.html`,
+      onLoad: currentYear
+    }
+  ];
+
+  Promise.all(
+    criticalFetches.map(item =>
+      fetch(item.url)
+        .then(res => res.text())
+        .then(html => {
+          const el = document.querySelector(item.selector);
+          if (el) el.innerHTML = html;
+          if (item.onLoad) item.onLoad();
+        })
+        .catch(err => console.error(`Error loading ${item.url}:`, err))
+    )
+  ).then(() => console.log('All critical fetches completed'))
+    .catch(err => console.error('Critical fetch error:', err));
+
+  // === DEFER NON-CRITICAL UI ===
+  requestIdleCallback(() => {
+    const topNav = document.createElement('div');
+    topNav.classList.add('top-nav');
+    document.body.prepend(topNav);
+
+    fetch(`${ROOT}/assets/source/top-bar-and-setting.html`)
+      .then(res => res.text())
+      .then(html => {
+        topNav.innerHTML = html;
+        initializeTopBarUI();
+      })
+      .catch(err => console.error('Error loading top bar:', err));
+  });
+
+  // === SMOOTH SCROLL ===
+  const Offset = 120;
+  document.querySelectorAll("a[href^='#']").forEach(link => {
+    link.addEventListener("click", function (e) {
+      if (!this.hash) return;
+
+      const target = document.querySelector(this.hash);
+      if (!target) return;
+
+      e.preventDefault();
+
+      const scrollTarget = target.offsetTop - Offset;
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+      });
+    });
+  });
+});
+
+// === Initialize Top Bar ===
+function initializeTopBarUI() {
+  window.onscroll = scrollIndicator;
+
+  const light = codeThemeSwitch("light-theme-select", "lightTheme", 0);
+  const dark = codeThemeSwitch("dark-theme-select", "darkTheme", 0);
+
+  CodeDarkMode(light, dark);
+  extendSearchBar();
+  BodyDarkMode();
+
+  Switcher("fontFamily", "font-select", [".general-wrapper", ".navbar"], 0);
+  Switcher("fontSize", "font-size-select", font_size, 2);
+  Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 0);
+  SearchBar();
+}
