@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="stylesheet" href="/assets/css/canvas-banner.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
   <style>
     #Home-button {
       font-weight: var(--top-buttons-font-weight);
@@ -167,10 +167,8 @@
         article(articles.length, true, false);
       })
       .catch(error => console.error('Error loading JSON:', error));
-
-    LoadScript("bannerScript", "/assets/js/canvas-banner.js");
   </script>
-  <script id="bannerScript"></script>
+  <script id="bannerScript" src="/assets/js/canvas-banner.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script"
     async></script>

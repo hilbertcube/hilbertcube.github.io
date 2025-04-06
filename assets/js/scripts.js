@@ -414,37 +414,69 @@ function setupDropdownEffect() {
 
 // SMOOTHS SCROLLING
 // has to use with scroll-padding-top: 120px; in html{} for smoothness
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Add smooth scrolling to all links
-  $("a").on("click", function (event) {
-    // Make sure this.hash has a value before overriding default behavior
-    if (this.hash !== "") {
-      // Prevent default anchor click behavior
-      event.preventDefault();
+  const links = document.querySelectorAll("a");
 
-      // Store hash
-      var hash = this.hash;
+  links.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
 
-      // Adjust the scroll position by subtracting the navbar height
-      var Offset = 120; // Height of navbar
-      var targetOffset = $(hash).offset().top - Offset;
+        // Store hash
+        const hash = this.hash;
 
-      // Using jQuery's animate() method to add smooth page scroll
-      // 800 milliseconds to scroll to the specified area
-      $("html, body").animate(
-        {
-          scrollTop: targetOffset,
-        },
-        800,
-        function () {
-          // Add hash (#) to URL when done scrolling (default click behavior)
-          // enable this thing to add hash
-          // window.location.hash = hash;
-        }
-      );
-    }
+        // Adjust the scroll position by subtracting the navbar height
+        const Offset = 120; // Height of navbar
+        const target = document.querySelector(hash);
+        const targetOffset = target.offsetTop - Offset;
+
+        // Smooth scroll to the target element
+        window.scrollTo({
+          top: targetOffset,
+          behavior: "smooth",
+        });
+
+        // Optionally add hash to URL when done scrolling
+        // window.location.hash = hash;
+      }
+    });
   });
 });
+
+// $(document).ready(function () {
+//   // Add smooth scrolling to all links
+//   $("a").on("click", function (event) {
+//     // Make sure this.hash has a value before overriding default behavior
+//     if (this.hash !== "") {
+//       // Prevent default anchor click behavior
+//       event.preventDefault();
+
+//       // Store hash
+//       var hash = this.hash;
+
+//       // Adjust the scroll position by subtracting the navbar height
+//       var Offset = 120; // Height of navbar
+//       var targetOffset = $(hash).offset().top - Offset;
+
+//       // Using jQuery's animate() method to add smooth page scroll
+//       // 800 milliseconds to scroll to the specified area
+//       $("html, body").animate(
+//         {
+//           scrollTop: targetOffset,
+//         },
+//         800,
+//         function () {
+//           // Add hash (#) to URL when done scrolling (default click behavior)
+//           // enable this thing to add hash
+//           // window.location.hash = hash;
+//         }
+//       );
+//     }
+//   });
+// });
 
 
 
@@ -1011,29 +1043,56 @@ const font_size = [
   "section",
 ];
 
-$(document).ready(function () {
-  $(".side-nav-container").load(ROOT + "/assets/source/side-nav.html");
-  $(".highlights-and-attribute").load(
-    ROOT + "/assets/source/highlights-and-attribute.html",
-    function () {
+document.addEventListener('DOMContentLoaded', function () {
+  // Load side-nav
+  fetch(ROOT + "/assets/source/side-nav.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".side-nav-container").innerHTML = data;
+    })
+    .catch(error => console.error('Error loading side-nav:', error));
+
+  // Load highlights-and-attribute and setup suggestions
+  fetch(ROOT + "/assets/source/highlights-and-attribute.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".highlights-and-attribute").innerHTML = data;
       loadAndSetupSuggestions();
-    }
-  );
-  $("#logo").load(ROOT + "/assets/source/logo.html", function () {
-    setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
-  });
-  $(".footer").load(ROOT + "/assets/source/footer.html", function () {
-    currentYear();
-  });
+    })
+    .catch(error => console.error('Error loading highlights and attribute:', error));
+
+  // Load logo and set image
+  fetch(ROOT + "/assets/source/logo.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector("#logo").innerHTML = data;
+      setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
+    })
+    .catch(error => console.error('Error loading logo:', error));
+
+  // Load footer and set current year
+  fetch(ROOT + "/assets/source/footer.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".footer").innerHTML = data;
+      currentYear();
+    })
+    .catch(error => console.error('Error loading footer:', error));
 
   // Load the top bar
-  $("body").prepend('<div class="top-nav"></div>');
-  $(".top-nav").load(
-    ROOT + "/assets/source/top-bar-and-setting.html",
-    function () {
+  const topNavContainer = document.createElement('div');
+  topNavContainer.classList.add('top-nav');
+  document.body.prepend(topNavContainer);
+
+  fetch(ROOT + "/assets/source/top-bar-and-setting.html")
+    .then(response => response.text())
+    .then(data => {
+      topNavContainer.innerHTML = data;
+      
       window.onscroll = function () {
         scrollIndicator();
       };
+
       const initialLightTheme = codeThemeSwitch(
         "light-theme-select",
         "lightTheme",
@@ -1048,10 +1107,10 @@ $(document).ready(function () {
       extendSearchBar();
       BodyDarkMode();
 
-      $(".top-nav").load(
-        ROOT + "/assets/source/top-bar-and-setting.html",
-        function () {
-          // Once the top bar is loaded, initialize functionalities
+      fetch(ROOT + "/assets/source/top-bar-and-setting.html")
+        .then(response => response.text())
+        .then(data => {
+          topNavContainer.innerHTML = data;
           BodyDarkMode();
           extendSearchBar();
           const lightTheme = codeThemeSwitch(
@@ -1079,8 +1138,83 @@ $(document).ready(function () {
             0
           );
           SearchBar();
-        }
-      );
-    }
-  );
+        })
+        .catch(error => console.error('Error loading top bar again:', error));
+    })
+    .catch(error => console.error('Error loading top bar:', error));
 });
+
+// jQuery alternatives
+// $(document).ready(function () {
+//   $(".side-nav-container").load(ROOT + "/assets/source/side-nav.html");
+//   $(".highlights-and-attribute").load(
+//     ROOT + "/assets/source/highlights-and-attribute.html",
+//     function () {
+//       loadAndSetupSuggestions();
+//     }
+//   );
+//   $("#logo").load(ROOT + "/assets/source/logo.html", function () {
+//     setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
+//   });
+//   $(".footer").load(ROOT + "/assets/source/footer.html", function () {
+//     currentYear();
+//   });
+
+//   // Load the top bar
+//   $("body").prepend('<div class="top-nav"></div>');
+//   $(".top-nav").load(
+//     ROOT + "/assets/source/top-bar-and-setting.html",
+//     function () {
+//       window.onscroll = function () {
+//         scrollIndicator();
+//       };
+//       const initialLightTheme = codeThemeSwitch(
+//         "light-theme-select",
+//         "lightTheme",
+//         0
+//       );
+//       const initialDarkTheme = codeThemeSwitch(
+//         "dark-theme-select",
+//         "darkTheme",
+//         0
+//       );
+//       CodeDarkMode(initialLightTheme, initialDarkTheme);
+//       extendSearchBar();
+//       BodyDarkMode();
+
+//       $(".top-nav").load(
+//         ROOT + "/assets/source/top-bar-and-setting.html",
+//         function () {
+//           // Once the top bar is loaded, initialize functionalities
+//           BodyDarkMode();
+//           extendSearchBar();
+//           const lightTheme = codeThemeSwitch(
+//             "light-theme-select",
+//             "lightTheme",
+//             0
+//           );
+//           const darkTheme = codeThemeSwitch(
+//             "dark-theme-select",
+//             "darkTheme",
+//             0
+//           );
+//           CodeDarkMode(lightTheme, darkTheme);
+//           Switcher(
+//             "fontFamily",
+//             "font-select",
+//             [".general-wrapper", ".navbar"],
+//             0
+//           );
+//           Switcher("fontSize", "font-size-select", font_size, 2); // , '.MathJax'
+//           Switcher(
+//             "display",
+//             "indicator-select",
+//             [".progress-container", ".progress-bar"],
+//             0
+//           );
+//           SearchBar();
+//         }
+//       );
+//     }
+//   );
+// });
