@@ -260,7 +260,7 @@ function article(NUM_ARTICLE, des, random_article) {
       if (des) {
         const topic = document.createElement("div");
         topic.classList.add("article-topic");
-        topic.textContent = "Topics: " + article.topic;
+        topic.textContent = "Topics: " + (article.topics ? article.topics.join(", ") : "N/A");
         textContainer.appendChild(topic);
 
         const description = document.createElement("div");
@@ -690,7 +690,7 @@ function SearchBar() {
               // Search in title, topic, description
               return (
                 item.title.toLowerCase().includes(query) ||
-                item.topic.toLowerCase().includes(query) ||
+                (item.topics && item.topics.some(t => t.toLowerCase().includes(query))) ||
                 item.description.toLowerCase().includes(query) ||
                 item.date.toLowerCase().includes(query)
               );
@@ -742,7 +742,8 @@ function SearchBar() {
               topicDiv.style.marginBottom = "3px";
               
               // Apply highlighting to topic
-              const highlightedTopic = item.topic.replace(
+              const topicText = Array.isArray(item.topics) ? item.topics.join(", ") : "";
+              const highlightedTopic = topicText.replace(
                 new RegExp(query, "gi"),
                 (match) =>
                   `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`

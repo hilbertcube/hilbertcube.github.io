@@ -129,6 +129,7 @@ body {
     opacity: 1;
   }
 }
+/*----------------------*/
 
 body::-webkit-scrollbar {
   width: 10px;

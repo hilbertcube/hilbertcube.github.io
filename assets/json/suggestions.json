@@ -5,7 +5,7 @@
       "id": "chladni-1",
       "image": "dark_chladni.webp",
       "link": "/blogs/the-quest-to-finding-chladni-patterns-1",
-      "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
+      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy"],
       "description": "Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni's pattern using the wave equation model.",
       "date": "June 1, 2024"
     },
@@ -14,7 +14,7 @@
       "id": "orb-cuda-1",
       "image": "CUDA_process_0_serial_30_imgs.webp",
       "link": "/blogs/accelerating-feature-extraction-and-image-stitching-algorithm",
-      "topic": "C++, OpenCV, MPI, OpenMP, Computer Vision, Image Processing",
+      "topics": ["C++", "OpenCV", "MPI", "OpenMP", "Computer Vision", "Image Processing"],
       "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
       "date": "August 10, 2024"
     },
@@ -23,7 +23,7 @@
       "id": "hessian-1",
       "image": "3d_function.webp",
       "link": "/blogs/maximum-and-minimum",
-      "topic": "Python, Hessian Matrix, Fermat's Theorem",
+      "topics": ["Python", "Hessian Matrix", "Fermat's Theorem"],
       "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
       "date": "May 25, 2024"
     },
@@ -32,7 +32,7 @@
       "id": "chladni-2",
       "image": "dark_polar.webp",
       "link": "/blogs/the-quest-to-finding-chladni-patterns-2",
-      "topic": "Python, Eigenvalue Problems, PDEs, Numpy",
+      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy"],
       "description": "Plotting a series of Chladni's patterns using the wave equation model.",
       "date": "June 14, 2024"
     },
@@ -41,7 +41,7 @@
       "id": "dsa-1",
       "image": "time-complexity-banner.webp",
       "link": "/blogs/time-complexity-of-an-algorithm",
-      "topic": "Data Structures and Algorithm, C++, Python",
+      "topics": ["Data Structures and Algorithm", "C++", "Python"],
       "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
       "date": "December 2, 2024"
     },
@@ -50,7 +50,7 @@
       "id": "snell-1",
       "image": "snell_s_law_drawing.webp",
       "link": "/blogs/snells-law",
-      "topic": "Refraction, PDEs",
+      "topics": ["Refraction", "PDEs"],
       "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
       "date": "October 2, 2024"
     },
@@ -59,7 +59,7 @@
       "id": "chladni-3",
       "image": "chladni-patterns.webp",
       "link": "/blogs/the-quest-to-finding-chladni-patterns-3",
-      "topic": "Python, Eigenvalue Problems, PDEs, Numpy, Biharmonic Equation",
+      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy", "Biharmonic Equation"],
       "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
       "date": "June 16, 2024"
     },
@@ -68,7 +68,7 @@
       "id": "moi-1",
       "image": "inertia.gif",
       "link": "/blogs/moment-of-inertia",
-      "topic": "Classical Mechanics, Dynamics of Rotation",
+      "topics": ["Classical Mechanics", "Dynamics of Rotation"],
       "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations. This article explore more about moment of inertia of interesting shapes.",
       "date": ""
     },
@@ -77,7 +77,7 @@
       "id": "green-1",
       "image": "GreensFunctionExample_1000.svg",
       "link": "/blogs/greens-function",
-      "topic": "Python, PDEs, Numpy",
+      "topics": ["Python", "PDEs", "Numpy"],
       "description": "An in-depth view of how to use Green's functions and their physical meaning.",
       "date": ""
     },
@@ -86,7 +86,7 @@
       "id": "brachistochrone-1",
       "image": "brachistochrone.webp",
       "link": "https://example.com/js-event-loop",
-      "topic": "Python, Calculus of Variations",
+      "topics": ["Python", "Calculus of Variations"],
       "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
       "date": ""
     },
@@ -94,7 +94,7 @@
       "title": "Resources - Books",
       "image": "",
       "link": "/recommended-materials/#books",
-      "topic": "Programming, Image Processing, DSA, Math, Physics",
+      "topics": ["Programming", "Image Processing", "DSA", "Math", "Physics"],
       "description": "Book Recommendation",
       "date": "Last updated Nov. 2024"
     },
@@ -102,7 +102,7 @@
       "title": "Resources - Lecture Notes",
       "image": "",
       "link": "/recommended-materials/#lecture-notes",
-      "topic": "Physics, Calculus of Variations, DE",
+      "topics": ["Physics", "Calculus of Variations", "DE"],
       "description": "Lecture Notes Recommendation",
       "date": "Last updated Nov. 2024"
     },
@@ -110,7 +110,7 @@
       "title": "Resources - Websites",
       "image": "",
       "link": "/recommended-materials/#websites",
-      "topic": "Useful websites",
+      "topics": ["Useful websites"],
       "description": "The internet and digital platforms have made information readily available to anyone with an internet connection. No more barriers.",
       "date": "Last updated Nov. 2024"
     },
@@ -118,7 +118,7 @@
       "title": "Resources - Youtube Channels",
       "image": "",
       "link": "/recommended-materials/#youtube",
-      "topic": "Useful Youtube Channels",
+      "topics": ["Useful Youtube Channels"],
       "description": "Youtube is fun, but don't watch too much.",
       "date": "Last updated Nov. 2024"
     },
@@ -126,7 +126,7 @@
       "title": "Privacy Policy",
       "image": "",
       "link": "/privacy-policy/",
-      "topic": "About the privacy policy of this website",
+      "topics": ["About the privacy policy of this website"],
       "description": "This website does not collect or store any personally identifiable information, such as IP addresses. However, it does use Google Analytics to analyze website usage and user behavior. The data collected by Google Analytics includes...",
       "date": "Last updated Oct. 2024"
     },
@@ -134,7 +134,7 @@
       "title": "License",
       "image": "",
       "link": "/LICENSE-CC-BY.md",
-      "topic": "Creative Commons Attribution 4.0 International",
+      "topics": ["Creative Commons Attribution 4.0 International"],
       "description": "View license",
       "date": "Last updated April 2025"
     },
@@ -142,7 +142,7 @@
       "title": "Source code",
       "image": "",
       "link": "https://github.com/Continuum3416/neumanncondition",
-      "topic": "View the source code of this website",
+      "topics": ["View the source code of this website"],
       "description": "",
       "date": "Updated recently"
     },
@@ -150,7 +150,7 @@
       "title": "About",
       "image": "",
       "link": "/about/",
-      "topic": "About this website",
+      "topics": ["About this website"],
       "description": "About this website I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar...",
       "date": "Updated recently"
     }
