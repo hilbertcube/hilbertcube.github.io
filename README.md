@@ -12,9 +12,8 @@ and run with live server.
 
 ## Other tools used:
 
-1. [Mathjax](https://www.mathjax.org/) to display math equations.
-2. [Prism.js](https://prismjs.com/) to display different code themes.
-3. [jQuery](https://jquery.com/) to dynamically load some components.
-4. [AOS](https://github.com/michalsnik/aos): Animate On Scroll Library.
-5. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
-6. [ghchart](https://github.com/2016rshah/githubchart-api): display github activities
+1. [Mathjax](https://www.mathjax.org/): a library to display math equations.
+2. [Prism.js](https://prismjs.com/): a library to display different code themes.
+3. [AOS](https://github.com/michalsnik/aos): Animate On Scroll Library.
+4. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
+5. [ghchart](https://github.com/2016rshah/githubchart-api): display github activities
