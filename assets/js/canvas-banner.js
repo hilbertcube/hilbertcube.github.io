@@ -190,18 +190,18 @@ function canvas() {
         resizeCanvas: resizeCanvas
     };
 }
-
+canvas();
 
 // Load the banner and start the canvas animation
-document.addEventListener('DOMContentLoaded', function() {
-  fetch(ROOT + "/assets/source/home-banner.html")
-      .then(response => response.text())
-      .then(data => {
-          document.querySelector(".home-banner").innerHTML = data;
-          canvas();
-      })
-      .catch(error => console.error('Error loading the home banner:', error));
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   fetch(ROOT + "/assets/source/home-banner.html")
+//       .then(response => response.text())
+//       .then(data => {
+//           document.querySelector(".home-banner").innerHTML = data;
+//           canvas();
+//       })
+//       .catch(error => console.error('Error loading the home banner:', error));
+// });
 
 // jQuery alternative
 // $(function() {

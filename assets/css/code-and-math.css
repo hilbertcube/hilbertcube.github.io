@@ -12,6 +12,10 @@ body.dark-mode {
   --tab-color: black;
 }
 
+.mathjax-definition {
+  display: none;
+}
+
 .inline-code {
   font-size: 13px;
   background-color: var(--inline-code-color);

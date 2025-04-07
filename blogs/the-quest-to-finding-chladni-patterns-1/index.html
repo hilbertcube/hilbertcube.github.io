@@ -73,14 +73,17 @@
 </head>
 
 <body class="nav-open light-mode">
-  \[
-  \newcommand{\R}{\mathbb{R}}
-  \newcommand\pd[2]{\displaystyle\frac{\partial #1}{\partial #2}}
-  \newcommand\fourthpd[2]{\displaystyle\frac{\partial^{4} #1}{\partial #2^{4}}}
-  \newcommand\secondpd[2]{\displaystyle\frac{\partial^{2} #1}{\partial #2^{2}}}
-  \newcommand{\lbrac}{\left(}
-  \newcommand{\rbrac}{\right)}
-  \]
+  <div class="mathjax-definition">
+    \[
+    \newcommand{\R}{\mathbb{R}}
+    \newcommand\pd[2]{\displaystyle\frac{\partial #1}{\partial #2}}
+    \newcommand\fourthpd[2]{\displaystyle\frac{\partial^{4} #1}{\partial #2^{4}}}
+    \newcommand\secondpd[2]{\displaystyle\frac{\partial^{2} #1}{\partial #2^{2}}}
+    \newcommand{\lbrac}{\left(}
+    \newcommand{\rbrac}{\right)}
+    \]
+  </div>
+
 
   <nav class="navbar open" id="navbar">
     <!-- SIDE BAR -->
@@ -912,8 +915,7 @@ print(f"Animation saved to: {output_path}")
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js">
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script"
-    async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 </body>
 
 </html>

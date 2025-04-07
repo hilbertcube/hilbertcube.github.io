@@ -77,7 +77,18 @@
   </nav>
 
   <div class="content-grid" id="content-grid">
-    <div class="home-banner" id="home-banner"></div>
+    <div class="home-banner" id="home-banner">
+      <div class="left-section-banner">
+        <canvas id="bannerCanvas"></canvas>
+      </div>
+      <div class="right-section-banner">
+        <img src="/public/Images/code-banner.webp" alt="Banner Image" decoding="async">
+        <span class="banner-title">
+          neumanncondition
+        </span>
+      </div>
+    </div>
+
     <div class="general-wrapper" id="home">
       <div class="topic">
         Homepage
@@ -157,7 +168,7 @@
   </div>
 
   <div class="footer"></div>
-  <script src="/assets/js/scripts.js" defer></script>
+  <script src="/assets/js/scripts.js"></script>
   <script>
     fetch('/assets/json/suggestions.json')
       .then(response => response.json())
@@ -170,8 +181,7 @@
   </script>
   <script id="bannerScript" src="/assets/js/canvas-banner.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script"
-    async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
   <script>
     AOS.init({
       easing: 'ease-in-quad',
