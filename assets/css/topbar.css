@@ -20,9 +20,9 @@
   flex-direction: row;
   font-family: var(
     --top-bar-font
-  ); /* Sans-serif, serif  "Computer-Modern", serif "Poppins", sans-serif*/
-  justify-content: space-between; /*start is default, other options are ends, space-between*/
-  align-items: stretch; /* stretch is default, others are start, center, end, etc*/
+  );
+  justify-content: space-between;
+  align-items: stretch;
   width: 100%;
   height: var(--top-bar-height);
   left: 0;
@@ -53,7 +53,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 60vw;
+  /* max-width: 60vw; */
   justify-content: center;
   padding-left: 200px;
 }
@@ -419,45 +419,6 @@ input[type="checkbox"]:checked ~ div#settings_window {
   display: block;
 }
 
-/* .setting-container {
-  margin-left: 5px;
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-input[type="checkbox"] {
-  display: none;
-}
-
-#toggleButton {
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.3s ease;
-}
-
-#toggleButton i {
-  font-size: 30px;
-  color: #ffffff;
-}
-
-input[type="checkbox"]:checked + #toggleButton {
-  transform: rotate(90deg);
-}
-
-input[type="checkbox"]:not(:checked) + #toggleButton {
-  transform: rotate(-90deg);
-}
-
-input[type="checkbox"]:checked ~ #settings_window {
-  display: block;
-} */
 
 #settings_window {
   display: none;
@@ -539,4 +500,88 @@ body.dark-mode {
   background: var(--progressive-bar-color);
   width: 0%;
   z-index: 1000;
+}
+
+
+/*=================buttons=================*/
+:root {
+  --share-button-position: 70px;
+}
+
+.share-button,
+.share-option {
+  border: 2px solid var(--nav-bar-text-color) !important;
+  color: var(--grid-text-color) !important;
+  background: var(--body-background-color);
+}
+
+.share-button {
+  position: fixed;
+  top: var(--share-button-position);
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+}
+
+
+.share-tooltip {
+  position: absolute;
+  bottom: 10px;
+  right: 100px;
+  transform: translateX(50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Ensure it's not interactive when hidden */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+}
+
+#share-expand {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.share-button:hover .share-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.share-options {
+  position: fixed;
+  display: none;
+  top: calc(var(--share-button-position) + 40px);
+  right: 10px;
+  z-index: 1001;
+}
+
+.share-option {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 17px;
+  margin: 5px 0;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.share-option:hover {
+  transform: scale(1.1);
 }
