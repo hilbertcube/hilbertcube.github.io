@@ -802,6 +802,14 @@ function SearchBar() {
                 dropdown.style.display = "none";
               }
             }
+          } else if (event.key === "Escape") {
+            // Enhanced Escape key functionality: clear search bar and hide dropdown
+            event.preventDefault();
+            searchBar.value = ""; // Clear the input value
+            dropdown.innerHTML = ""; // Clear dropdown content
+            dropdown.style.display = "none"; // Hide dropdown
+            searchBar.blur(); // Remove focus from search bar
+            collapseSearchBar(); // Collapse the expanded search bar
           }
         });
 
@@ -856,6 +864,7 @@ function extendSearchBar() {
   const searchBarContainer = document.getElementById("searchBarContainer");
   const overlay = document.getElementById("searchOverlay");
   const leftSection = document.querySelector(".left"); // Get the .left section
+  const dropdown = document.getElementById("autocomplete-dropdown");
 
   function expandSearchBar() {
     searchBarContainer.classList.add("expanded");
@@ -877,6 +886,7 @@ function extendSearchBar() {
       collapseSearchBar(); // Collapse the search bar after a short delay
     }, 100);
   });
+  
   // Allow clicking on the overlay to close the search
   overlay.addEventListener("click", collapseSearchBar);
 
@@ -892,11 +902,16 @@ function extendSearchBar() {
     }, 100);
   });
 
-  // Listen for Esc key to blur the search bars and hide dropdown
+  // Enhanced Escape key handler for both search bars
   [searchBar, searchBarMobile].forEach((bar) => {
     bar.addEventListener("keydown", function (event) {
       if (event.key === "Escape") {
+        event.preventDefault();
+        bar.value = ""; // Clear the search bar text
+        dropdown.innerHTML = ""; // Clear dropdown content
+        dropdown.style.display = "none"; // Hide dropdown
         bar.blur(); // Remove focus from the search bar
+        collapseSearchBar(); // Collapse the search bar UI
       }
     });
   });
