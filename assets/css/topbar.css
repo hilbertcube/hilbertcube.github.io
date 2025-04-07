@@ -14,12 +14,7 @@
 .top-nav {
   position: fixed;
   background-color: var(--nav-bar-color);
-  background: rgba(
-    26,
-    26,
-    26,
-    1
-  ); /*rgb(26, 26, 26) linear-gradient(to top, #001127 0%, #00126a 100%)*/
+  background: rgba(26, 26, 26, 1);
   color: white; /*var(--border-line-color)*/
   display: flex;
   flex-direction: row;
@@ -59,7 +54,7 @@
   align-items: center;
   width: 100%;
   max-width: 60vw;
-  justify-content: right;
+  justify-content: center;
   padding-left: 200px;
 }
 

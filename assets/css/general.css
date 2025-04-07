@@ -53,7 +53,7 @@
   --top-dropdown-shadow-color: rgba(0, 0, 0, 0.2);
   --figcaption-text: rgb(0, 0, 130);
   --top-bar-height: 60px;
-  --body-font: "Arial", sans-serif; /* "Computer-Modern" */
+  --body-font: "Computer-Modern", sans-serif; /* "Computer-Modern" */
   --top-buttons-font-weight: 550;
   --top-buttons-hover-color: rgb(0, 185, 226);
   --highlight-dropdown-color: rgb(0, 71, 171);
@@ -113,10 +113,12 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  background: rgba(26, 26, 26, 1);;
 }
 
 /* loading animation */
-body {
+/* body {
+  opacity: 1;
   animation: fadeInAnimation ease 1.3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -128,7 +130,8 @@ body {
   100% {
     opacity: 1;
   }
-}
+} */
+/*https://stackoverflow.com/questions/55826735/how-to-fix-lighthouse-returned-error-no-fcp-when-running-google-page-speed-t*/
 /*----------------------*/
 
 body::-webkit-scrollbar {

@@ -19,7 +19,6 @@
     <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/canvas-banner.css">
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script" async></script>
     <style>
         #bannerCanvas{
             background: linear-gradient(170deg, rgb(42, 39, 203) 0%, rgb(18, 3, 76) 100%);
@@ -32,6 +31,11 @@
 </head>
 
 <body class="nav-open light-mode">
+  <div class="mathjax-definition">
+    \[
+    \newcommand\pd[2]{\displaystyle\frac{\partial #1}{\partial #2}}
+    \]
+  </div>
     <nav class="navbar open" id="navbar">
         <div id="logo"></div>
         <div class = "side-nav-container"></div>
@@ -39,10 +43,19 @@
     </nav>
 
     <div class="content-grid">
-        <div class="home-banner" id="home-banner"></div><script src="../assets/js/canvas-banner.js"></script>
-        <div id="main-banner"></div>
+      <div class="home-banner" id="home-banner">
+        <div class="left-section-banner">
+          <canvas id="bannerCanvas"></canvas>
+        </div>
+        <div class="right-section-banner">
+          <img src="/public/Images/code-banner.webp" alt="Banner Image" decoding="async">
+          <span class="banner-title">
+            neumanncondition
+          </span>
+        </div>
+      </div>
+        
         <div class = "general-wrapper">
-            $$\newcommand\pd[2]{\displaystyle\frac{\partial #1}{\partial #2}}$$
             <div class = "topic">
                 About
             </div>
@@ -156,10 +169,12 @@ void write_to_log(const std::string& message, const std::string& filename)
     <!--Master grid ends here-->
 
     <div class="footer"></div>
-    <script src="../assets/js/scripts.js" defer></script>
+    <script src="../assets/js/scripts.js"></script>
+    <script src="../assets/js/canvas-banner.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script> <!-- use prism-c.min.js or prism-clike.min.js-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 </body>
 </html>

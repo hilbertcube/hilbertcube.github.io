@@ -43,9 +43,18 @@
   </nav>
 
   <div class="content-grid">
-    <div class="home-banner" id="home-banner"></div>
-    <script src="../assets/js/canvas-banner.js"></script>
-    <div id="main-banner"></div>
+    <div class="home-banner" id="home-banner">
+      <div class="left-section-banner">
+        <canvas id="bannerCanvas"></canvas>
+      </div>
+      <div class="right-section-banner">
+        <img src="/public/Images/code-banner.webp" alt="Banner Image" decoding="async">
+        <span class="banner-title">
+          neumanncondition
+        </span>
+      </div>
+    </div>
+
     <div class="general-wrapper" id="home">
       <div class="topic">
         Note
@@ -93,6 +102,7 @@
   <!-- <p><a href="" class="url"></a></p> -->
   <div class="footer"></div>
   <script src="../assets/js/scripts.js"></script>
+  <script src="../assets/js/canvas-banner.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript" id="MathJax-script"
     async></script>
 </body>
