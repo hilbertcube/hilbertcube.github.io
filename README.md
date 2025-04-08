@@ -1,6 +1,6 @@
 ## About
 
-Blog website. Coded from scratch using HTML, CSS3, JS.
+Blog website. Coded from scratch using HTML5, CSS3, and vanilla JS.
 
 ## Run
 
