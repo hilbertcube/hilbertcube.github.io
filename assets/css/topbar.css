@@ -475,7 +475,7 @@ input[type="checkbox"]:checked ~ div#settings_window {
 }
 
 :root {
-  --progressive-bar-height: 3px;
+  --progressive-bar-height: 2px;
   --progressive-bar-color: oklch(0.577 0.245 27.325); /* rgb(0, 71, 171) */
 }
 

@@ -211,12 +211,6 @@ body.nav-closed {
   max-width: 100%;
 }
 
-.content-grid::after {
-  content: "";
-  display: block;
-  height: 100px;
-  width: 100%;
-}
 
 .general-wrapper {
   font-family: var(--body-font);
@@ -230,6 +224,14 @@ body.nav-closed {
   margin-left: auto;
   margin-right: auto;
 }
+
+.general-wrapper::after {
+  content: "";
+  display: block;
+  height: 100px;
+  width: 100%;
+}
+
 
 h2,
 h3,

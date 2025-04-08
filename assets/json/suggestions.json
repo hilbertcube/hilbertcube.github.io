@@ -21,7 +21,7 @@
     {
       "title": "How to find maxima and minima of an n-th dimensional function",
       "id": "hessian-1",
-      "image": "3d_function.webp",
+      "image": "plot2.webp",
       "link": "/blogs/maximum-and-minimum",
       "topics": ["Python", "Hessian Matrix", "Fermat's Theorem"],
       "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
