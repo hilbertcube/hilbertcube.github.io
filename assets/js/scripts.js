@@ -227,7 +227,7 @@ function article(NUM_ARTICLE, des, random_article) {
       const articleLink = document.createElement("a");
       articleLink.href = ROOT + article.link;
       articleLink.classList.add("article");
-      articleLink.target = "_blank";
+      // articleLink.target = "_blank";
 
       // Create image container
       const imageContainer = document.createElement("div");
@@ -1030,10 +1030,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load components
   const components = [
-    { url: "/assets/source/side-nav.html", selector: ".side-nav-container" },
-    { url: "/assets/source/highlights-and-attribute.html", selector: ".highlights-and-attribute" },
-    { url: "/assets/source/logo.html", selector: "#logo" },
-    { url: "/assets/source/footer.html", selector: ".footer" }
+    { url: "/assets/components/side-nav.html", selector: ".side-nav-container" },
+    { url: "/assets/components/highlights-and-attribute.html", selector: ".highlights-and-attribute" },
+    { url: "/assets/components/logo.html", selector: "#logo" },
+    { url: "/assets/components/footer.html", selector: ".footer" }
   ];
 
   // Load components in parallel
@@ -1051,7 +1051,7 @@ document.addEventListener("DOMContentLoaded", function () {
   topNavContainer.classList.add('top-nav');
   document.body.prepend(topNavContainer);
 
-  fetchAndInsert("/assets/source/top-bar-and-setting.html", ".top-nav")
+  fetchAndInsert("/assets/components/top-bar-and-setting.html", ".top-nav")
     .then(() => {
       // Setup scrolling indicator
       window.onscroll = scrollIndicator;

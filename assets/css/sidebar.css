@@ -217,7 +217,7 @@ nav ul,
 .toc a.active {
   color: #007bff;
   font-weight: bold;
-  border-left: 3px solid #007bff;
+  /* border-left: 3px solid #007bff; */
   padding-left: 5px;
 }
 
