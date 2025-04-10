@@ -450,7 +450,7 @@ input[type="checkbox"]:checked ~ div#settings_window {
   grid-template-columns: 220px 1fr;
   row-gap: 10px;
   column-gap: 0;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .sw_1st_column_items {
@@ -490,7 +490,7 @@ input[type="checkbox"]:checked ~ div#settings_window {
 
 .custom-select select {
   font-family: 'Jura', sans-serif;
-  font-size: 14px;
+  font-size: inherit;
   border: 1px solid #5f5f5f;
   border-radius: 6px;
   font-weight: 550;
@@ -510,7 +510,7 @@ input[type="checkbox"]:checked ~ div#settings_window {
 
 .custom-select {
   position: relative;
-  width: 250px; /* adjust width as needed */
+  width: auto; /* adjust width as needed */
 }
 
 /* ================ PROGRESS BAR ================ */
