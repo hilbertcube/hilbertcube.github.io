@@ -7,10 +7,7 @@
     |_|  \____/|_|      |____/_/    \_\_|  \_\
     
 */
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-:root {
-  --top-bar-font: "Computer-Modern", serif;
-}
+
 .top-nav {
   position: fixed;
   background-color: var(--nav-bar-color);
@@ -54,7 +51,7 @@
   align-items: center;
   width: 100%;
   /* max-width: 60vw; */
-  justify-content: center;
+  justify-content: end;
   padding-left: 200px;
 }
 
@@ -92,7 +89,7 @@
   position: absolute;
   background-color: var(--nav-bar-color);
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px var(--top-dropdown-shadow-color);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   z-index: 2000;
@@ -115,9 +112,6 @@
   opacity: 0;
 }
 
-:root {
-  --delay-increment: 0.1s;
-}
 
 /* Apply delay based on item-container position */
 
@@ -240,9 +234,10 @@ input.search-bar:focus {
 
 .search-bar::placeholder,
 .search-bar-mobile::placeholder {
-  font-family: "Inter", sans-serif;
+  font-family: "Jura", sans-serif;
   font-size: 14px;
   padding-left: 3px;
+  font-weight: bold;
 }
 
 @media (max-width: 1200px) {
@@ -282,22 +277,6 @@ input.search-bar:focus {
   opacity: 1;
 }
 
-:root {
-  --autocomplete-dropdown-color: #fff;
-  --autocomplete-dropdown-border: #ccc;
-  --autocomplete-dropdown-text-color: black;
-  --autocomplete-item-container-hover: #f0f0f0;
-  --autocomplete-dropdown-left-border: #0006b1;
-}
-
-body.dark-mode {
-  --autocomplete-dropdown-color: #222222;
-  --autocomplete-dropdown-border: #3b3b3b;
-  --autocomplete-dropdown-text-color: #aaa;
-  --autocomplete-item-container-hover: #3b3b3b;
-  --highlight-dropdown-color: rgb(0, 150, 255);
-  --autocomplete-dropdown-left-border: rgb(0, 150, 255);
-}
 
 .autocomplete-dropdown {
   font-family: "Computer-Modern", Arial;
@@ -338,6 +317,33 @@ body.dark-mode {
   color: inherit; /* Ensures the text color is inherited */
 }
 
+/* =================== DARK MODE BUTTON ===================*/
+.dark-switch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px;
+  width: 15px;
+}
+
+/* Button Styles */
+.dark-mode-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease-in-out;
+  color: #333; /* Default color */
+  color: #dddddd;
+}
+
+body.dark-mode .dark-mode-button {
+  color: #fdd835;
+}
+
+
+/* =================== SETTINGS BUTTON ===================*/
 /* CODE INSPIRED BY https://codepen.io/sketchbookkeeper/pen/jMmYXm */
 :root {
   --gear-button-height: 28px;
@@ -419,25 +425,24 @@ input[type="checkbox"]:checked ~ div#settings_window {
   display: block;
 }
 
-
+/* ================ SETTING WINDOW ================ */
 #settings_window {
   display: none;
-  /* opacity: 0; */
   position: fixed;
   color: white;
-  font-family: sans-serif;
+  font-family: "Jura", sans-serif;
   padding: 20px;
   top: 50%;
   left: 50%;
   width: 500px;
   height: auto;
-  background-color: rgb(26, 26, 26, 0.82);
   transform: translate(-50%, -50%);
   border-radius: 10px;
+  background-color: rgb(26, 26, 26, 0.86);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-  z-index: 5000;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  z-index: 5000;
 }
 
 .settings_window-container {
@@ -465,7 +470,6 @@ input[type="checkbox"]:checked ~ div#settings_window {
   color: inherit;
   text-decoration: none;
   white-space: nowrap;
-
   font-size: 1em;
   outline: none;
   overflow: hidden;
@@ -474,10 +478,45 @@ input[type="checkbox"]:checked ~ div#settings_window {
   padding: 0;
 }
 
-:root {
-  --progressive-bar-height: 2px;
-  --progressive-bar-color: oklch(0.577 0.245 27.325); /* rgb(0, 71, 171) */
+.custom-select option:focus {
+  outline: none;
+  box-shadow: none;
 }
+
+.custom-select select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+.custom-select select {
+  font-family: 'Jura', sans-serif;
+  font-size: 14px;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid #5f5f5f;
+  border-radius: 6px;
+  font-weight: 550;
+  background-color: #3a3a3a;
+  color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-select {
+  position: relative;
+  width: 250px; /* adjust width as needed */
+}
+
+/* ================ PROGRESS BAR ================ */
+
 
 body.dark-mode {
   --progressive-bar-height: 1px;
@@ -504,9 +543,7 @@ body.dark-mode {
 
 
 /*=================buttons=================*/
-:root {
-  --share-button-position: 70px;
-}
+
 
 .share-button,
 .share-option {

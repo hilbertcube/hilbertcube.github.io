@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="stylesheet" href="/assets/css/canvas-banner.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
   <style>
     #Home-button {
       font-weight: var(--top-buttons-font-weight);
@@ -90,10 +89,13 @@
     </div>
 
     <div class="general-wrapper" id="home">
-      <div class="topic">
-        Homepage
-      </div>
+      <header>
+        <div class="topic">
+          Homepage
+        </div>
+      </header>
       <section>
+        <div id="repo-info"></div>
         <h1 class="home-title">Chladni Patterns - The Wave Equation Model</h1>
         <div class="two-columns-block">
           <div>
@@ -169,8 +171,9 @@
 
   <div class="footer"></div>
   <script src="/assets/js/scripts.js"></script>
+  <script src="/assets/js/fetchRepoData.js"></script>
   <script>
-    fetch('/assets/json/suggestions.json')
+    fetch('/assets/json/articles.json')
       .then(response => response.json())
       .then(data => {
         const articles = data.articles;

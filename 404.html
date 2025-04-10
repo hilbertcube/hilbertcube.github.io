@@ -9,7 +9,76 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" href="../public/Images/Logo/pendulum_trace.PNG">
   <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/blade-runner.css">
+  <style>
+    body {
+      position: relative;
+      background-color: black;
+      background-image: url("/public/background/blade-runner.png");
+      background-attachment: fixed;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: top center;
+      font-family: "VT323", monospace;
+      font-weight: 400;
+      font-style: normal;
+    }
+    /* loading animation */
+    body {
+      animation: fadeInAnimation ease 1.5s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+    @keyframes fadeInAnimation {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    .lonely {
+      position: absolute;
+      color: white;
+      right: 20vw;
+      top: 10vh;
+      font-size: 3.5rem;
+    }
+    .inner {
+      font-size: 2rem;
+      text-align: right;
+    }
+    .yesno {
+      text-align: right;
+      margin-top: 30px;
+    }
+    .yesno a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .yesno a:hover {
+      color: rgb(238, 0, 255);
+    }
+    .yesno {
+      margin-top: 20px; /* Space between text and options */
+      transition: opacity 0.5s ease, visibility 0.5s ease; /* Transition for fade effect */
+      opacity: 0; /* Start as invisible */
+      visibility: hidden; /* Hide initially */
+    }
+
+    .yesno.visible {
+      opacity: 1; /* Make visible */
+      visibility: visible; /* Set visibility to visible */
+    }
+    @media all and (max-width: 1080px) {
+      body {
+        background-image: url("/public/background/blade-runner-mobile.png");
+      }
+      .lonely {
+        right: 2vw;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -24,7 +93,64 @@
       <a id="no">No</a>
     </div>
   </div>
-  <script src="../assets/js/blade-runner.js"></script>
+  <script id="404-js">
+    document.addEventListener("DOMContentLoaded", function () {
+    const text1 = "You look lonely";
+    const text2 = "wanna go back?";
+    const textContainer1 = document.getElementById("text1");
+    const textContainer2 = document.getElementById("text2");
+    const yesNoOptions = document.getElementById("yesno");
+
+    // Define delay durations for each text
+    const delayText1 = 110; // Delay for text1
+    const delayText2 = 80; // Delay for text2 (slower)
+
+    function typeWriter(text, element, delay, callback) {
+      let index = 0;
+      function typing() {
+        if (index < text.length) {
+          element.textContent += text.charAt(index);
+          index++;
+          setTimeout(typing, delay);
+        } else if (callback) {
+          callback(); // Call the callback after typing is done
+        }
+      }
+      typing();
+    }
+
+    typeWriter(text1, textContainer1, delayText1, () => {
+      setTimeout(() => {
+        typeWriter(text2, textContainer2, delayText2, () => {
+          // Fade in the yes/no options after typing is done
+          yesNoOptions.classList.add("visible");
+        });
+      }, 500); // Optional delay before the second line starts typing
+    });
+  });
+
+  // Disable right-click
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault(); // Prevent the right-click context menu from appearing
+  });
+
+  // Disable certain key combinations
+  document.onkeydown = function (e) {
+    if (
+      e.ctrlKey &&
+      (e.keyCode === 67 || // C
+        e.keyCode === 86 || // V
+        e.keyCode === 85 || // U
+        e.keyCode === 117)
+    ) {
+      // F6
+      // alert('not allowed');
+      return false; // Prevent the default action
+    } else {
+      return true; // Allow other keys
+    }
+  };
+  </script>
 </body>
 
 </html>

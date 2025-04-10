@@ -172,14 +172,14 @@ document.addEventListener("DOMContentLoaded", applyDropdownDelays);
 const image_root = ROOT + "/public/Images/";
 
 function article(NUM_ARTICLE, des, random_article) {
-  // Cache for the articles data to avoid repeated fetches
+  // Cache for the articles data to avoid repeated fetches articles
   let articlesCache = null;
   
   // Check if we already have the data cached
   if (articlesCache) {
     processArticles(articlesCache);
   } else {
-    fetch(ROOT + "/assets/json/suggestions.json")
+    fetch(ROOT + "/assets/json/articles.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to load articles: " + response.statusText);
@@ -338,7 +338,7 @@ function changeTab(evt, nav_item_name, switch_target) {
 
 // LOAD SUGGESTIONS ON SIDE NAV
 function loadAndSetupSuggestions() {
-  fetch(ROOT + "/assets/json/suggestions.json")
+  fetch(ROOT + "/assets/json/articles.json")
     .then((response) => response.json())
     .then((data) => {
       const articles = data.articles;
@@ -628,7 +628,7 @@ function SearchBar() {
   }
 
   // Load suggestions from JSON file
-  fetch(ROOT + "/assets/json/suggestions.json")
+  fetch(ROOT + "/assets/json/articles.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error(
@@ -1028,23 +1028,58 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(error => console.error(`Error loading ${url}:`, error));
   };
 
-  // Load components
-  const components = [
-    { url: "/assets/components/side-nav.html", selector: ".side-nav-container" },
-    { url: "/assets/components/highlights-and-attribute.html", selector: ".highlights-and-attribute" },
-    { url: "/assets/components/logo.html", selector: "#logo" },
-    { url: "/assets/components/footer.html", selector: ".footer" }
-  ];
+  /// Load components ///
+  // const components = [
+  //   { url: "/assets/components/side-nav.html", selector: ".side-nav-container" },
+  //   { url: "/assets/components/highlights-and-attribute.html", selector: ".highlights-and-attribute" },
+  //   { url: "/assets/components/logo.html", selector: "#logo" },
+  //   { url: "/assets/components/footer.html", selector: ".footer" }
+  // ];
 
-  // Load components in parallel
-  Promise.all(components.map(comp => fetchAndInsert(comp.url, comp.selector)))
-    .then(results => {
-      // Execute callbacks after loading components
+  // // Load components in parallel
+  // Promise.all(components.map(comp => fetchAndInsert(comp.url, comp.selector)))
+  //   .then(results => {
+  //     // Execute callbacks after loading components
+  //     loadAndSetupSuggestions();
+  //     setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
+  //     currentYear();
+  //   })
+  //   .catch(error => console.error('Error loading components:', error));
+
+  // Load side-nav
+  fetch(ROOT + "/assets/components/side-nav.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".side-nav-container").innerHTML = data;
+    })
+    .catch(error => console.error('Error loading side-nav:', error));
+
+  // Load highlights-and-attribute and setup suggestions
+  fetch(ROOT + "/assets/components/highlights-and-attribute.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".highlights-and-attribute").innerHTML = data;
       loadAndSetupSuggestions();
+    })
+    .catch(error => console.error('Error loading highlights and attribute:', error));
+
+  // Load logo and set image
+  fetch(ROOT + "/assets/components/logo.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector("#logo").innerHTML = data;
       setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
+    })
+    .catch(error => console.error('Error loading logo:', error));
+
+  // Load footer and set current year
+  fetch(ROOT + "/assets/components/footer.html")
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(".footer").innerHTML = data;
       currentYear();
     })
-    .catch(error => console.error('Error loading components:', error));
+    .catch(error => console.error('Error loading footer:', error));
 
   // Load top bar
   const topNavContainer = document.createElement('div');
@@ -1073,3 +1108,45 @@ document.addEventListener("DOMContentLoaded", function () {
       SearchBar();
     });
 });
+
+// const userName = 'Continuum3416';
+// var xhttp = new XMLHttpRequest();
+// xhttp.onreadystatechange = function() {
+//   if (this.readyState == 4 && this.status == 200) {
+//     let repos = JSON.parse(this.responseText);
+//     let repoData = [];
+
+//     // For each repo, fetch the latest commit date
+//     let promises = repos.map((repo) => {
+//       return new Promise((resolve, reject) => {
+//         var commitRequest = new XMLHttpRequest();
+//         commitRequest.onreadystatechange = function() {
+//           if (this.readyState == 4 && this.status == 200) {
+//             let commits = JSON.parse(this.responseText);
+//             let latestCommitDate = commits.length > 0 ? new Date(commits[0].commit.committer.date) : null;
+//             repoData.push({
+//               name: repo.name,
+//               updated_at: latestCommitDate || new Date(repo.updated_at)
+//             });
+//             resolve();
+//           }
+//         };
+//         commitRequest.open("GET", `https://api.github.com/repos/${userName}/${repo.name}/commits`, true);
+//         commitRequest.send();
+//       });
+//     });
+
+//     // Once all commit data is fetched, sort and display
+//     Promise.all(promises).then(() => {
+//       repoData.sort((a, b) => b.updated_at - a.updated_at);  // Sort by latest commit date (most recent first)
+      
+//       let output = "<h3>Latest commits</h3>";
+//       repoData.forEach((repo) => {
+//         output += `<code>${repo.name}</code>: <em>${repo.updated_at.toLocaleString()}</em><br>`;
+//       });
+//       document.getElementById('repo-info').innerHTML = output;
+//     });
+//   }
+// };
+// xhttp.open("GET", "https://api.github.com/users/Continuum3416/repos", true);
+// xhttp.send();
