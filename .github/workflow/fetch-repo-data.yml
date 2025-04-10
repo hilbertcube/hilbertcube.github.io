@@ -1,43 +1,27 @@
-name: Fetch Repository Data
+name: Fetch Latest Commit
 
 on:
   push:
-    branches:
-      - main  # Trigger the action when code is pushed to the main branch
   schedule:
-    - cron: "0 * * * *"  # Optional: Automatically run the action every hour
+    - cron: '0 * * * *'  # every hour
 
 jobs:
-  fetch-repo-data:
+  fetch_commit:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout repo
+      uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+    - name: Get latest commit
+      run: |
+        curl -s -H "Authorization: token ${{ secrets.TOKEN }}" \
+        https://api.github.com/repos/Continuum3416/neumanncondition/commits | jq '.[0]' > latest_commit.json
 
-      - name: Install dependencies
-        run: npm install  # If you have any dependencies for your script
-
-      - name: Fetch repository data
-        run: |
-          echo "Fetching repository data..."
-          node fetchRepoData.js  # Run your script to fetch data (explained below)
-
-      - name: Commit and push data
-        run: |
-          git config --global user.email "ledongduu@gmail.com" 
-          git config --global user.name "Continuum3416"  # GitHub username
-          git add public/repo-data.json  # Add the generated repo-data.json to commit
-          git commit -m "Update repository data"
-          git push
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: main  # Use the 'main' branch for deployment
-          folder: public    # The folder where you store the generated files (e.g., `public`)
+    - name: Commit latest commit to repo
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add latest_commit.json
+        git commit -m "Update latest commit info" || echo "No changes to commit"
+        git push
