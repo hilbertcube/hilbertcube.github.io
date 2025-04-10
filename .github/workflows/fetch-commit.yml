@@ -28,5 +28,5 @@ jobs:
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
         git add assets/json/latest_commit.json
-        git commit -m "Update latest commit info" || echo "No changes to commit"
+        git commit -m "Update latest commit info (automated)" || echo "No changes to commit"
         git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
