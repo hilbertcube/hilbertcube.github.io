@@ -1,9 +1,7 @@
-@import "https://fonts.googleapis.com/css?family=Playfair+Display:400,700i,900i"; /*font-family: 'Playfair Display', serif;*/
-/* @import 'https://fonts.googleapis.com/css2?family=VT323&display=swap'; */
-/* font-family: "VT323", monospace;
-    font-weight: 400;
-    font-style: normal; 
-*/
+/*font-family: 'Playfair Display', serif;*/
+/* @import "https://fonts.googleapis.com/css?family=Playfair+Display:400,700i,900i";  */
+
+
 .home-banner {
   position: relative;
   display: grid;
@@ -59,7 +57,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: "Playfair Display", serif;
+  font-family: "Jura", sans-serif;
   font-size: 5vh;
   font-weight: bold;
   color: white;

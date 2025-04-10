@@ -7,57 +7,135 @@
   \_____|______|_| \_|______|_|  \_\/_/    \_\______|
                                                     
 */
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@font-face {
-  font-family: "Computer-Modern";
-  font-weight: normal;
-  src: url("../fonts/computer-modern/cmunrm.woff") format("woff");
-}
 
-@font-face {
-  font-family: "Computer-Modern";
-  font-weight: bold;
-  src: url("../fonts/computer-modern/cmunbx.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Computer-Modern";
-  font-style: italic;
-  src: url("../fonts/computer-modern/cmunsl.woff") format("woff");
-}
 
 :root {
-  --paragraph-font-size: 16px; /* this is the default font size, but the actual font size is controlled by js*/
-  --side-nav-width: 23%;
-  --blue: #1e90ff;
-  --white: #ffffff;
-  --black: rgb(0, 0, 0);
+  --paragraph-font-size: 16px;
   --body-background-color: white;
-  --grid-text-color: black; /*#446688*/
+  --grid-text-color: black;
+  --underline-color: oklch(48.8% 0.243 264.376);
+  --figcaption-text: rgb(0, 0, 130);
+  --body-font: "Computer-Modern", sans-serif;
+  --general-wrapper-width: 60em;
+
+  /* next/read more button */
+  --next-button: rgb(26, 26, 26);
+  --next-text: black;
+  --next-border: #a9a9b3;
+
+  /* line color compatible with both dark and light mode*/
+  --contrast-line-color: #b4b4b4;
+
+  --url-color: #2a7ae2;
+  --url-hover-color: rgb(0, 217, 217);
+
+  /* default li spacing*/
+  --in-page-li-spacing: 15px;
+}
+
+body.dark-mode {
+  --next-text: #ffffff;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  --body-background-color: #161616;
+  --grid-text-color: #a9a9b3; /*#dddddd*/
+  --code-box-color: #2a2a2a;
+  --figcaption-text: #939393;
+
+  /* articles */
+  --article-color: #1f1f1f;
+  --article-name-color: #dddddd;
+  --article-description-color: #dddddd;
+  --article-date-color: #aaa;
+  --url-hover-color: rgb(0, 194, 0);
+  --material-link-color: #aaa;
+  --article-shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+/* SIDE BAR */
+:root {
+  --fade-in-out-time: 0.5s;
+  --slide-time: 0.5s;
+  --li-border-color: rgb(183, 183, 183);
   --nav-bar-color: #f2f2f2;
   --nav-bar-text-color: rgb(0, 0, 130);
-  --topic-line-color: #0006b1;
-  --nav-ul-li-color: white;
-  --nav-line-color: #b4b4b4;
-  --slider-background-color: white;
-  --slider-shadow-shift: 0;
-  --slider-left: 4px;
-  --top-bar-color: white;
-  --border-line-color: black;
-  --toggle-bar: white; /*#333*/
+}
+
+
+/* ON RESOURCES PAGE*/
+:root {
+  --material-background: white;
+  --article-color-default: #fafafa;
+  --article-color: #eaeaea;
+  --article-name-color: #333;
+  --article-description-color: black;
+  --article-date-color: rgb(0, 0, 130);
+  --material-link-color: #898989;
+  --article-shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode {
+  --material-background: rgb(38, 38, 38);
+}
+
+/* SIDE BAR */
+:root {
+  --side-nav-width: 375px;
+  --highlight-drop-time: 0.8s;
+  --highlight-opacity-time: 0.5s;
+  --github-scroller: gray;
+}
+
+body.dark-mode {
+  --github-scroller: #ddd;
+  --nav-bar-color: #121212;
+  --nav-bar-text-color: #c6c6ce;
+  --dropdown-color: #121212;
+  --dropdown-text-color: white;
+}
+
+/* TOP BAR */
+:root {
+  --top-bar-height: 60px;
+  --toggle-bar: white;
+
   --dropdown-text-color: black;
   --dropdown-hover-color: #ddd;
-  --top-var-text-hover-color: #ddd;
-  --top-dropdown-shadow-color: rgba(0, 0, 0, 0.2);
-  --figcaption-text: rgb(0, 0, 130);
-  --top-bar-height: 60px;
-  --body-font: "Computer-Modern", sans-serif; /* "Computer-Modern" */
+
+  /* top bar font */
+  --top-bar-font: "Computer-Modern", serif;
+
+  /* search bar*/
+  --autocomplete-dropdown-color: #fff;
+  --autocomplete-dropdown-border: #ccc;
+  --autocomplete-dropdown-text-color: black;
+  --autocomplete-item-container-hover: #f0f0f0;
+  --autocomplete-dropdown-left-border: #0006b1;
+
+  /* progress bar */
+  --progressive-bar-height: 2px;
+  --progressive-bar-color: oklch(0.577 0.245 27.325);
+
+  /* share button */
+  --share-button-position: 70px;
+
+  /* activate when on page */
   --top-buttons-font-weight: 550;
   --top-buttons-hover-color: rgb(0, 185, 226);
-  --highlight-dropdown-color: rgb(0, 71, 171);
 }
+
+body.dark-mode {
+  --autocomplete-dropdown-color: #222222;
+  --autocomplete-dropdown-border: #3b3b3b;
+  --autocomplete-dropdown-text-color: #aaa;
+  --autocomplete-item-container-hover: #3b3b3b;
+  --highlight-dropdown-color: rgb(0, 150, 255);
+  --autocomplete-dropdown-left-border: rgb(0, 150, 255);
+  --dropdown-hover-color: #222222;
+}
+
 
 html {
   font-size: 100%;
@@ -84,7 +162,7 @@ h1 {
 h2 {
   margin: 80px 0 20px;
   font-size: 30px; /*1.95em*/
-  border-bottom: 1px solid var(--nav-line-color);
+  border-bottom: 1px solid var(--contrast-line-color);
 }
 
 h3 {
@@ -172,10 +250,10 @@ body.nav-closed {
   font-family: "Courier New", monospace;
   font-weight: bold;
   text-align: left;
-  border-bottom: 2px solid var(--topic-line-color);
+  border-bottom: 2px solid var(--underline-color);
   max-width: 100%;
   min-width: 50%;
-  margin-top: 70px;
+  margin-top: 0px;
   margin-left: 0px;
   font-size: 17px;
 }
@@ -190,39 +268,32 @@ body.nav-closed {
 .content-grid {
   left: 0;
   right: 0;
+  top: 0;
   position: relative;
   text-align: justify; /* IMPORTANT: Stretch text to fill page*/
   background-color: var(
     --body-background-color
-  ); /*var(--grid-background-color)*/
+  );
   color: var(--grid-text-color);
   margin-top: var(
     --top-bar-height
-  ); /* Adjust padding-top to add space at the top */
+  );
   display: flex;
   flex: 1;
   flex-direction: column;
-  /*
-    align-items: center;
-    justify-items: center;
-    */
-  /*remove this for instantaneous effect*/
-  /*transition: background-color 0.3s, color 0.3s;*/
   max-width: 100%;
 }
 
 
 .general-wrapper {
   font-family: var(--body-font);
-  /* INDENTATION HERE */
-  /* margin-left: 6%; 
-    margin-right: 6%;
-    max-width: 88%; */
-
-  /*disable this part for default setting*/
-  width: 58vw;
+  width: var(--general-wrapper-width);
   margin-left: auto;
   margin-right: auto;
+}
+
+.general-wrapper > header {
+  margin-top: 70px;
 }
 
 .general-wrapper::after {
@@ -337,7 +408,7 @@ caption::before {
 .line-7 {
   margin-left: auto;
   margin-right: auto;
-  background: var(--nav-line-color);
+  background: #b4b4b4;
   height: 0.5px;
   display: block;
 }
@@ -541,10 +612,7 @@ ol.steps .step::before {
   text-align: center;
 }
 
-:root {
-  --url-color: #2a7ae2;
-  --url-hover-color: rgb(0, 217, 217);
-}
+
 .url {
   color: var(--url-color);
   text-decoration: none;
@@ -589,7 +657,7 @@ ol.steps .step::before {
 .Quote::before {
   position: absolute;
   content: "";
-  background: var(--topic-line-color);
+  background: var(--underline-color);
   height: 2px;
   width: 15%;
   bottom: 0;
@@ -599,7 +667,7 @@ ol.steps .step::before {
 .Quote::after {
   position: absolute;
   content: "";
-  background: var(--topic-line-color);
+  background: var(--underline-color);
   height: 100%;
   width: 2px;
   bottom: 0;
@@ -647,6 +715,23 @@ td {
   vertical-align: middle;
 }
 
-:root {
-  --in-page-li-spacing: 15px;
+
+.redirect-button {
+  min-width: 80px;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  margin: 20px auto;
+  background-size: 200%;
+  border: 1px solid var(--next-border);
+  border-radius: 5px;
+  padding: 0.7rem 1rem;
+  font-size: 18px;
+  color: var(--next-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.redirect-button:hover {
+  color: #2a7ae2;
 }

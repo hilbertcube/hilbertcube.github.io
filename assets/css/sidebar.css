@@ -1,9 +1,3 @@
-:root {
-  --fade-in-out-time: 0.5s;
-  --slide-time: 0.5s;
-  --li-border-color: rgb(183, 183, 183);
-}
-
 body.dark-mode {
   --li-border-color: rgb(0, 71, 171);
 }
@@ -293,11 +287,7 @@ body.nav-open .toggle-btn .bar:nth-child(3) {
   transform: rotate(-45deg) translate(0px, 2px) scaleX(1.251);
 }
 
-/* Highlight Section */
-:root {
-  --highlight-drop-time: 0.8s;
-  --highlight-opacity-time: 0.5s;
-}
+
 
 .highlights span {
   margin: 0;
@@ -359,7 +349,7 @@ body.nav-open .toggle-btn .bar:nth-child(3) {
 
 .recommend-img::after {
   content: "Read More";
-  font-family: "Poppins", sans-serif;
+  font-family: "Jura", sans-serif;
   font-weight: normal;
   position: absolute;
   top: 50%;
@@ -384,7 +374,7 @@ body.nav-open .toggle-btn .bar:nth-child(3) {
   justify-content: right;
   align-items: center;
   scrollbar-width: thin;
-  scrollbar-color: var(--scroller) var(--nav-bar-color);
+  scrollbar-color: var(--github-scroller) var(--nav-bar-color);
   position: relative;
   overflow: auto;
   margin-left: 20px;
@@ -393,12 +383,6 @@ body.nav-open .toggle-btn .bar:nth-child(3) {
   direction: rtl;
 }
 
-:root {
-  --scroller: gray;
-}
-body.dark-mode {
-  --scroller: #ddd;
-}
 
 .github-contribution img {
   width: auto;

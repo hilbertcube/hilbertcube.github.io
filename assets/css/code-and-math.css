@@ -3,7 +3,6 @@
   --inline-code-color: rgb(235, 235, 235);
   --box-border: #ddd;
   --pre-color: #f7f7f7;
-  /* aliceblue */
   --tab-color: #ededed;
 }
 body.dark-mode {
@@ -11,6 +10,31 @@ body.dark-mode {
   --inline-code-color: rgb(55, 55, 55);
   --tab-color: black;
 }
+
+/* copy button */
+.copy-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: var(--body-background-color); /*#1DA1F2;*/
+  color: #4c83ee;
+  border: 1px solid #4c83ee;
+  width: 58px;
+  height: 26px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 1px;
+  cursor: pointer;
+  /* transition: background-color 0.15s, color 0.15s; */
+  z-index: 500; /* Ensure it appears above other elements */
+}
+
+.copy-btn:hover {
+  background-color: #4c83ee; /*#1681c4;*/
+  color: white;
+}
+
 
 .mathjax-definition {
   display: none;

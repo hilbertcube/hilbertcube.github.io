@@ -1,0 +1,43 @@
+name: Fetch Repository Data
+
+on:
+  push:
+    branches:
+      - main  # Trigger the action when code is pushed to the main branch
+  schedule:
+    - cron: "0 * * * *"  # Optional: Automatically run the action every hour
+
+jobs:
+  fetch-repo-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install  # If you have any dependencies for your script
+
+      - name: Fetch repository data
+        run: |
+          echo "Fetching repository data..."
+          node fetchRepoData.js  # Run your script to fetch data (explained below)
+
+      - name: Commit and push data
+        run: |
+          git config --global user.email "ledongduu@gmail.com" 
+          git config --global user.name "Continuum3416"  # GitHub username
+          git add public/repo-data.json  # Add the generated repo-data.json to commit
+          git commit -m "Update repository data"
+          git push
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: main  # Use the 'main' branch for deployment
+          folder: public    # The folder where you store the generated files (e.g., `public`)
