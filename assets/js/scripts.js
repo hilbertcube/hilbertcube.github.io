@@ -1111,7 +1111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchCommit() {
-  fetch('latest_commit.json')
+  fetch('/latest_commit.json')
   .then(res => res.json())
   .then(commit => {
     const message = commit.commit.message;
