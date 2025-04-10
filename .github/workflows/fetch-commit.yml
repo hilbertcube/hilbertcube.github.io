@@ -19,7 +19,7 @@ jobs:
     - name: Get latest commit
       run: |
         curl -s -H "Authorization: token ${{ secrets.TOKEN }}" \
-        https://api.github.com/repos/Continuum3416/neumanncondition/commits | jq '.[0]' > latest_commit.json
+        https://api.github.com/repos/Continuum3416/neumanncondition/commits | jq '.[0]' > assets/json/latest_commit.json
 
     - name: Commit latest commit to repo
       env:
