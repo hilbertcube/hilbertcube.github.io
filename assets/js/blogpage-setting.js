@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // }
 
 function loadDate(id) {
-  fetch(ROOT + "/assets/json/suggestions.json") // Adjust the path as needed
+  fetch(ROOT + "/assets/json/articles.json") // Adjust the path as needed
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Error fetching JSON: ${response.status}`);

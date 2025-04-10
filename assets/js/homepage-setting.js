@@ -1,4 +1,4 @@
-fetch('/neumanncondition/assets/json/suggestions.json')
+fetch('/neumanncondition/assets/json/articles.json')
 .then(response => response.json())
 .then(data => {
     const articles = data.articles;

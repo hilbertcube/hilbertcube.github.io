@@ -1,0 +1,32 @@
+name: Fetch Latest Commit
+
+on:
+  push:
+  schedule:
+    - cron: '0 * * * *'  # every hour
+
+permissions:
+  contents: write
+
+jobs:
+  fetch_commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Get latest commit
+      run: |
+        curl -s -H "Authorization: token ${{ secrets.TOKEN }}" \
+        https://api.github.com/repos/Continuum3416/neumanncondition/commits | jq '.[0]' > assets/json/latest_commit.json
+
+    - name: Commit latest commit to repo
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add assets/json/latest_commit.json
+        git commit -m "Update latest commit info (automated)" || echo "No changes to commit"
+        git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
