@@ -1,23 +1,23 @@
 {
-  "sha": "be629556b91e5554c16b56152099ab8cd2db68a5",
-  "node_id": "C_kwDONFt089oAKGJlNjI5NTU2YjkxZTU1NTRjMTZiNTYxNTIwOTlhYjhjZDJkYjY4YTU",
+  "sha": "38c229f0e620dea32491e50aef49800b3d6ed044",
+  "node_id": "C_kwDONFt089oAKDM4YzIyOWYwZTYyMGRlYTMyNDkxZTUwYWVmNDk4MDBiM2Q2ZWQwNDQ",
   "commit": {
     "author": {
-      "name": "github-actions",
-      "email": "github-actions@github.com",
-      "date": "2025-04-10T22:12:57Z"
+      "name": "Don D. Le",
+      "email": "ledongduu@gmail.com",
+      "date": "2025-04-10T23:30:40Z"
     },
     "committer": {
-      "name": "github-actions",
-      "email": "github-actions@github.com",
-      "date": "2025-04-10T22:12:57Z"
+      "name": "Don D. Le",
+      "email": "ledongduu@gmail.com",
+      "date": "2025-04-10T23:30:40Z"
     },
-    "message": "Update latest commit info (automated)",
+    "message": "updated readme",
     "tree": {
-      "sha": "a93b44231de6ed2e6abc0289f86d7ee9a21eeb7b",
-      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/trees/a93b44231de6ed2e6abc0289f86d7ee9a21eeb7b"
+      "sha": "894fcbf41a3696a6d600fd1729ec96e5346520a0",
+      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/trees/894fcbf41a3696a6d600fd1729ec96e5346520a0"
     },
-    "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/commits/be629556b91e5554c16b56152099ab8cd2db68a5",
+    "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/commits/38c229f0e620dea32491e50aef49800b3d6ed044",
     "comment_count": 0,
     "verification": {
       "verified": false,
@@ -27,56 +27,56 @@
       "verified_at": null
     }
   },
-  "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/be629556b91e5554c16b56152099ab8cd2db68a5",
-  "html_url": "https://github.com/Continuum3416/neumanncondition/commit/be629556b91e5554c16b56152099ab8cd2db68a5",
-  "comments_url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/be629556b91e5554c16b56152099ab8cd2db68a5/comments",
+  "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/38c229f0e620dea32491e50aef49800b3d6ed044",
+  "html_url": "https://github.com/Continuum3416/neumanncondition/commit/38c229f0e620dea32491e50aef49800b3d6ed044",
+  "comments_url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/38c229f0e620dea32491e50aef49800b3d6ed044/comments",
   "author": {
-    "login": "invalid-email-address",
-    "id": 148100,
-    "node_id": "MDQ6VXNlcjE0ODEwMA==",
-    "avatar_url": "https://avatars.githubusercontent.com/u/148100?v=4",
+    "login": "Continuum3416",
+    "id": 142064589,
+    "node_id": "U_kgDOCHe7zQ",
+    "avatar_url": "https://avatars.githubusercontent.com/u/142064589?v=4",
     "gravatar_id": "",
-    "url": "https://api.github.com/users/invalid-email-address",
-    "html_url": "https://github.com/invalid-email-address",
-    "followers_url": "https://api.github.com/users/invalid-email-address/followers",
-    "following_url": "https://api.github.com/users/invalid-email-address/following{/other_user}",
-    "gists_url": "https://api.github.com/users/invalid-email-address/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/invalid-email-address/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/invalid-email-address/subscriptions",
-    "organizations_url": "https://api.github.com/users/invalid-email-address/orgs",
-    "repos_url": "https://api.github.com/users/invalid-email-address/repos",
-    "events_url": "https://api.github.com/users/invalid-email-address/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/invalid-email-address/received_events",
+    "url": "https://api.github.com/users/Continuum3416",
+    "html_url": "https://github.com/Continuum3416",
+    "followers_url": "https://api.github.com/users/Continuum3416/followers",
+    "following_url": "https://api.github.com/users/Continuum3416/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Continuum3416/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Continuum3416/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Continuum3416/subscriptions",
+    "organizations_url": "https://api.github.com/users/Continuum3416/orgs",
+    "repos_url": "https://api.github.com/users/Continuum3416/repos",
+    "events_url": "https://api.github.com/users/Continuum3416/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Continuum3416/received_events",
     "type": "User",
     "user_view_type": "public",
     "site_admin": false
   },
   "committer": {
-    "login": "invalid-email-address",
-    "id": 148100,
-    "node_id": "MDQ6VXNlcjE0ODEwMA==",
-    "avatar_url": "https://avatars.githubusercontent.com/u/148100?v=4",
+    "login": "Continuum3416",
+    "id": 142064589,
+    "node_id": "U_kgDOCHe7zQ",
+    "avatar_url": "https://avatars.githubusercontent.com/u/142064589?v=4",
     "gravatar_id": "",
-    "url": "https://api.github.com/users/invalid-email-address",
-    "html_url": "https://github.com/invalid-email-address",
-    "followers_url": "https://api.github.com/users/invalid-email-address/followers",
-    "following_url": "https://api.github.com/users/invalid-email-address/following{/other_user}",
-    "gists_url": "https://api.github.com/users/invalid-email-address/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/invalid-email-address/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/invalid-email-address/subscriptions",
-    "organizations_url": "https://api.github.com/users/invalid-email-address/orgs",
-    "repos_url": "https://api.github.com/users/invalid-email-address/repos",
-    "events_url": "https://api.github.com/users/invalid-email-address/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/invalid-email-address/received_events",
+    "url": "https://api.github.com/users/Continuum3416",
+    "html_url": "https://github.com/Continuum3416",
+    "followers_url": "https://api.github.com/users/Continuum3416/followers",
+    "following_url": "https://api.github.com/users/Continuum3416/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Continuum3416/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Continuum3416/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Continuum3416/subscriptions",
+    "organizations_url": "https://api.github.com/users/Continuum3416/orgs",
+    "repos_url": "https://api.github.com/users/Continuum3416/repos",
+    "events_url": "https://api.github.com/users/Continuum3416/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Continuum3416/received_events",
     "type": "User",
     "user_view_type": "public",
     "site_admin": false
   },
   "parents": [
     {
-      "sha": "a5783208059494b59604934bf97f7f01cd204e72",
-      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/a5783208059494b59604934bf97f7f01cd204e72",
-      "html_url": "https://github.com/Continuum3416/neumanncondition/commit/a5783208059494b59604934bf97f7f01cd204e72"
+      "sha": "461aa34c38682913619cf323378102b4cb24b011",
+      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/461aa34c38682913619cf323378102b4cb24b011",
+      "html_url": "https://github.com/Continuum3416/neumanncondition/commit/461aa34c38682913619cf323378102b4cb24b011"
     }
   ]
 }
