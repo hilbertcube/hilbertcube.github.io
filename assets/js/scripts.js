@@ -1060,6 +1060,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
       document.querySelector(".highlights-and-attribute").innerHTML = data;
       loadAndSetupSuggestions();
+      fetchCommit();
     })
     .catch(error => console.error('Error loading highlights and attribute:', error));
 
@@ -1109,44 +1110,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// const userName = 'Continuum3416';
-// var xhttp = new XMLHttpRequest();
-// xhttp.onreadystatechange = function() {
-//   if (this.readyState == 4 && this.status == 200) {
-//     let repos = JSON.parse(this.responseText);
-//     let repoData = [];
-
-//     // For each repo, fetch the latest commit date
-//     let promises = repos.map((repo) => {
-//       return new Promise((resolve, reject) => {
-//         var commitRequest = new XMLHttpRequest();
-//         commitRequest.onreadystatechange = function() {
-//           if (this.readyState == 4 && this.status == 200) {
-//             let commits = JSON.parse(this.responseText);
-//             let latestCommitDate = commits.length > 0 ? new Date(commits[0].commit.committer.date) : null;
-//             repoData.push({
-//               name: repo.name,
-//               updated_at: latestCommitDate || new Date(repo.updated_at)
-//             });
-//             resolve();
-//           }
-//         };
-//         commitRequest.open("GET", `https://api.github.com/repos/${userName}/${repo.name}/commits`, true);
-//         commitRequest.send();
-//       });
-//     });
-
-//     // Once all commit data is fetched, sort and display
-//     Promise.all(promises).then(() => {
-//       repoData.sort((a, b) => b.updated_at - a.updated_at);  // Sort by latest commit date (most recent first)
-      
-//       let output = "<h3>Latest commits</h3>";
-//       repoData.forEach((repo) => {
-//         output += `<code>${repo.name}</code>: <em>${repo.updated_at.toLocaleString()}</em><br>`;
-//       });
-//       document.getElementById('repo-info').innerHTML = output;
-//     });
-//   }
-// };
-// xhttp.open("GET", "https://api.github.com/users/Continuum3416/repos", true);
-// xhttp.send();
+function fetchCommit() {
+  fetch('latest_commit.json')
+  .then(res => res.json())
+  .then(commit => {
+    const message = commit.commit.message;
+    const author = commit.commit.author.name;
+    const date = commit.commit.author.date;
+    document.getElementById('commit-info').textContent =
+      `Last Updated: ${date}\nCommit Message: ${message}\n`;
+  });
+}
