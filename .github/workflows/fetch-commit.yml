@@ -16,10 +16,11 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v3
 
-    - name: Get latest commit
+    - name: Get latest non-bot commit
       run: |
         curl -s -H "Authorization: token ${{ secrets.TOKEN }}" \
-        https://api.github.com/repos/Continuum3416/neumanncondition/commits | jq '.[0]' > assets/json/latest_commit.json
+        https://api.github.com/repos/Continuum3416/neumanncondition/commits \
+        | jq '[.[] | select(.commit.author.name != "github-actions")] | .[0]' > assets/json/latest_commit.json
 
     - name: Commit latest commit to repo
       env:
