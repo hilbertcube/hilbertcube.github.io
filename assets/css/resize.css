@@ -67,9 +67,6 @@
     max-width: 100%;
   }
   .side-nav {
-    display: inline-block;
-  }
-  .line-2 {
     display: block;
   }
   .left {
