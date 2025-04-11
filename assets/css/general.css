@@ -63,7 +63,6 @@ body.dark-mode {
   --nav-bar-text-color: rgb(0, 0, 130);
 }
 
-
 /* ON RESOURCES PAGE*/
 :root {
   --material-background: white;
@@ -136,7 +135,6 @@ body.dark-mode {
   --dropdown-hover-color: #222222;
 }
 
-
 html {
   font-size: 100%;
   overflow-x: hidden;
@@ -180,9 +178,7 @@ h4 {
   font-size: 1.1em;
 }
 
-.home-h3-headers {
-  font-size: 1.5em;
-}
+
 
 body {
   position: relative;
@@ -284,7 +280,6 @@ body.nav-closed {
   max-width: 100%;
 }
 
-
 .general-wrapper {
   font-family: var(--body-font);
   width: var(--general-wrapper-width);
@@ -302,7 +297,6 @@ body.nav-closed {
   height: 100px;
   width: 100%;
 }
-
 
 h2,
 h3,
@@ -399,75 +393,25 @@ caption::before {
   }
 }
 
-.line-1,
-.line-2,
-.line-3,
-.line-4,
-.line-5,
-.line-6,
-.line-7 {
+.line-6, .line-7 {
   margin-left: auto;
   margin-right: auto;
   background: #b4b4b4;
   height: 0.5px;
   display: block;
-}
-
-.line-4 {
-  width: 90%;
-}
-
-.line-1,
-.line-5,
-.line-6,
-.line-7 {
   width: 100%;
-}
-
-.line-2,
-.line-3 {
-  width: 90%;
-}
-
-/* Specific background color for line-1 */
-.line-1 {
-  background: var(--grid-text-color);
-}
-
-.line-1 {
-  margin-top: 80px;
-  margin-bottom: 80px;
-}
-
-.line-2 {
-  display: none;
+  height: 1px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.line-3 {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.line-4,
-.line-7 {
-  height: 1px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.line-5 {
-  height: 1px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
 .line-6 {
   display: none;
   height: 1px;
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
 
 ol.reference {
   justify-self: start;

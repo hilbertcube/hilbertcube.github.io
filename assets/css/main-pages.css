@@ -246,15 +246,8 @@
   }
 }
 
-#books,
-#lecture-notes,
-#websites,
-#youtube,
-#calculus,
-#de,
-#DSA,
-#linear-algebra,
-#others {
+.home-h3-headers {
+  font-size: 1.5em;
   border-bottom: 1px solid var(--contrast-line-color);
   margin-top: 10px;
   margin-bottom: 10px;
