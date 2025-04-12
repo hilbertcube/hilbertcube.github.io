@@ -983,11 +983,10 @@ const font_size = [
   "p",
   ".material-description",
   ".theorem",
-  ".reference",
   ".solution",
   ".problem",
   ".two-columns-block",
-  "section",
+  ".general-wrapper"
 ];
 
 
@@ -1118,7 +1117,7 @@ function fetchCommit() {
     const author = commit.commit.author.name;
     const date = commit.commit.author.date;
     document.getElementById('commit-info').textContent =
-      `Last Updated: ${date}\nCommit Message: ${message}\n`;
+      `Last Updated: ${date}\nCommit Message: ${message}\nFetched via Github API`;
   });
 }
 

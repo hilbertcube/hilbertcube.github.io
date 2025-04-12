@@ -28,7 +28,7 @@
 
 @media all and (max-width: 1200px) {
   .general-wrapper {
-    width: 90%;
+    width: 80%;
   }
   :root {
     --side-nav-width: 350px;
@@ -56,6 +56,9 @@
 }
 
 @media all and (max-width: 1080px) {
+  .general-wrapper {
+    width: 90%;
+  }
   .search-bar-container {
     width: 100%;
     max-width: 100%;

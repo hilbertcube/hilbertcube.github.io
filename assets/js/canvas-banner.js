@@ -62,63 +62,63 @@ function canvas() {
         let lastTime = 0;
     
         function animate(time) {
-            if (time - lastTime >= interval) {
-                lastTime = time;
-    
-                // Clear the entire canvas to prevent trailing
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-                // Filter out SVGs that are out of bounds
-                svgs.forEach((svg, index) => {
-                    // Check if the SVG is out of bounds
-                    const isOutOfBounds =
-                        svg.x + svg.img.width * svgScaleFactor < 0 ||
-                        svg.x > canvas.width ||
-                        svg.y + svg.img.height * svgScaleFactor < 0 ||
-                        svg.y > canvas.height;
-    
-                    if (isOutOfBounds) {
-                        // Remove the out-of-frame SVG
-                        svgs.splice(index, 1);
-    
-                        // Re-add the SVG after 1 second at a random position within the canvas
-                        setTimeout(() => {
-                            svg.x = Math.random() * (canvasWidth - svg.img.width * svgScaleFactor);
-                            svg.y = Math.random() * (canvasHeight - svg.img.height * svgScaleFactor);
-                            svgs.push(svg); // Re-add the SVG to the array
-                        }, 100);
-                    }
-                });
-    
-                // Move and render the remaining SVGs
-                svgs.forEach((svg) => {
-                    // Move SVG
-                    svg.x += svg.dx;
-                    svg.y += svg.dy;
-    
-                    // Bounce off the borders
-                    if (svg.x < 0 || svg.x > canvas.width - svg.img.width * svgScaleFactor) svg.dx *= -1;
-                    if (svg.y < 0 || svg.y > canvas.height - svg.img.height * svgScaleFactor) svg.dy *= -1;
-    
-                    // Save the context and apply the transformation
-                    ctx.save();
-                    ctx.translate(svg.x + (svg.img.width * svgScaleFactor) / 2, svg.y + (svg.img.height * svgScaleFactor) / 2); // Move to the center of the image
-                    if (ROTATE) {
-                        // Rotate SVG
-                        svg.angle += svg.dAngle;
-                        ctx.rotate(svg.angle); // Rotate around the center
-                    }
-                    ctx.drawImage(
-                        svg.img,
-                        -(svg.img.width * svgScaleFactor) / 2, 
-                        -(svg.img.height * svgScaleFactor) / 2, 
-                        svg.img.width * svgScaleFactor, 
-                        svg.img.height * svgScaleFactor
-                    ); // Draw the scaled image
-                    ctx.restore();
-                });
-            }
-            requestAnimationFrame(animate);
+          if (time - lastTime >= interval) {
+            lastTime = time;
+
+            // Clear the entire canvas to prevent trailing
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Filter out SVGs that are out of bounds
+            svgs.forEach((svg, index) => {
+                // Check if the SVG is out of bounds
+                const isOutOfBounds =
+                    svg.x + svg.img.width * svgScaleFactor < 0 ||
+                    svg.x > canvas.width ||
+                    svg.y + svg.img.height * svgScaleFactor < 0 ||
+                    svg.y > canvas.height;
+
+                if (isOutOfBounds) {
+                    // Remove the out-of-frame SVG
+                    svgs.splice(index, 1);
+
+                    // Re-add the SVG after 1 second at a random position within the canvas
+                    setTimeout(() => {
+                        svg.x = Math.random() * (canvasWidth - svg.img.width * svgScaleFactor);
+                        svg.y = Math.random() * (canvasHeight - svg.img.height * svgScaleFactor);
+                        svgs.push(svg); // Re-add the SVG to the array
+                    }, 100);
+                }
+              });
+  
+              // Move and render the remaining SVGs
+              svgs.forEach((svg) => {
+                  // Move SVG
+                  svg.x += svg.dx;
+                  svg.y += svg.dy;
+  
+                  // Bounce off the borders
+                  if (svg.x < 0 || svg.x > canvas.width - svg.img.width * svgScaleFactor) svg.dx *= -1;
+                  if (svg.y < 0 || svg.y > canvas.height - svg.img.height * svgScaleFactor) svg.dy *= -1;
+  
+                  // Save the context and apply the transformation
+                  ctx.save();
+                  ctx.translate(svg.x + (svg.img.width * svgScaleFactor) / 2, svg.y + (svg.img.height * svgScaleFactor) / 2); // Move to the center of the image
+                  if (ROTATE) {
+                      // Rotate SVG
+                      svg.angle += svg.dAngle;
+                      ctx.rotate(svg.angle); // Rotate around the center
+                  }
+                  ctx.drawImage(
+                      svg.img,
+                      -(svg.img.width * svgScaleFactor) / 2, 
+                      -(svg.img.height * svgScaleFactor) / 2, 
+                      svg.img.width * svgScaleFactor, 
+                      svg.img.height * svgScaleFactor
+                  ); // Draw the scaled image
+                  ctx.restore();
+              });
+          }
+          requestAnimationFrame(animate);
         }
     
         animate(desiredFPS);
