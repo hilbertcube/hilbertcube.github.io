@@ -94,8 +94,6 @@
   color: var(--article-date-color);
 }
 
-
-
 .home-h3-headers {
   font-size: 1.5em;
   border-bottom: 1px solid var(--contrast-line-color);
@@ -105,4 +103,18 @@
   padding-bottom: 10px;
 }
 
+.home-title {
+  font-size: 2.3em;
+  font-family: "Roboto Slab", serif;
+}
 
+.title {
+  font-family: "Roboto Slab", serif;
+  padding-bottom: 5px;
+  padding-top: 30px;
+}
+
+.post-title {
+  padding-top: 30px;
+  font-size: 2em;
+}
