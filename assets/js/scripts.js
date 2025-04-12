@@ -1111,14 +1111,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function fetchCommit() {
   fetch('/assets/json/latest_commit.json')
-  .then(res => res.json())
-  .then(commit => {
-    const message = commit.commit.message;
-    const author = commit.commit.author.name;
-    const date = commit.commit.author.date;
-    document.getElementById('commit-info').textContent =
-      `Last Updated: ${date}\nCommit Message: ${message}\nFetched via Github API`;
-  });
+    .then(res => res.json())
+    .then(commit => {
+      const message = commit.commit.message;
+      //const author = commit.commit.author.name;
+      const utcDateStr = commit.commit.author.date;
+
+      // Convert to California time with comma instead of 'at'
+      const localDateObj = new Date(utcDateStr);
+      const datePart = localDateObj.toLocaleDateString('en-US', {
+        timeZone: 'America/Los_Angeles',
+        dateStyle: 'long'
+      });
+      const timePart = localDateObj.toLocaleTimeString('en-US', {
+        timeZone: 'America/Los_Angeles',
+        hour: 'numeric',
+        minute: '2-digit'
+      });
+
+      document.getElementById('commit-info').textContent =
+        `Last Updated: ${datePart}, ${timePart} (Pacific)\nCommit Message: ${message}\nFetched via Github API`;
+    });
 }
 
 // js minifier: https://www.toptal.com/developers/javascript-minifier
