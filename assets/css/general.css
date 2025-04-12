@@ -683,11 +683,7 @@ td {
 #post-container ul {
   padding-left: 30px;
 }
-@media all and (max-width: 580px){
-  #post-container ul {
-    padding-left: 10px;
-  }
-}
+
 
 .post {
   text-decoration: none;
@@ -705,6 +701,7 @@ td {
 
 .post-header-row {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap;
@@ -721,8 +718,18 @@ td {
   white-space: nowrap;
 }
 
-.post-date::before,
+/* .post-date::before,
 .post-date::after {
   content: "-";
   margin: 0 0.2em;
+} */
+
+@media all and (max-width: 580px){
+  #post-container ul {
+    padding-left: 10px;
+  }
+  .post-header-row {
+    flex-direction: column;
+    align-items: start;
+  }
 }
