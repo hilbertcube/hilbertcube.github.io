@@ -49,8 +49,8 @@ function canvas() {
         svgs = svgImages.map(img => ({
             x: Math.random() * (canvasWidth - img.width * svgScaleFactor),
             y: Math.random() * (canvasHeight - img.height * svgScaleFactor),
-            dx: (Math.random() - 0.5) * speed,
-            dy: (Math.random() - 0.5) * speed,
+            dx: speed,
+            dy: speed,
             angle: Math.random() * Math.PI * 2, // Initial random angle
             dAngle: (Math.random() - 0.5) * rotationSpeed, // Random rotation speed
             img,
@@ -191,22 +191,3 @@ function canvas() {
     };
 }
 canvas();
-
-// Load the banner and start the canvas animation
-// document.addEventListener('DOMContentLoaded', function() {
-//   fetch(ROOT + "/assets/source/home-banner.html")
-//       .then(response => response.text())
-//       .then(data => {
-//           document.querySelector(".home-banner").innerHTML = data;
-//           canvas();
-//       })
-//       .catch(error => console.error('Error loading the home banner:', error));
-// });
-
-// jQuery alternative
-// $(function() {
-//     $(".home-banner").load(ROOT + "/assets/source/home-banner.html", function() {
-//         //setBanner();
-//         canvas();
-//     });
-// });

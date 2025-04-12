@@ -75,9 +75,7 @@ body.dark-mode {
 }
 .box {
   position: relative;
-  width: 95%;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 50em;
   min-width: 10px;
   min-height: 10px;
   padding: 15px;
@@ -85,7 +83,9 @@ body.dark-mode {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   background-color: var(--code-box-color);
   border-radius: 4px;
+  margin: 20px auto;
 }
+
 /* This can be removed if `.box` handles positioning */
 .code-container {
   position: relative;

@@ -91,7 +91,7 @@ body.dark-mode {
 .side-nav {
   padding: 20px 0;
   margin: 0 15px;
-  /* display: none */
+  display: none
 }
 
 .side-nav ul,nav ul {
@@ -135,10 +135,6 @@ body.dark-mode {
 .side-nav ul ul,.toc ul ul {
   padding-left: 20px;
   margin: 0
-}
-
-.side-nav ul ul li,.toc ul ul li {
-  padding: 7px
 }
 
 .major h2,.side-summary {
