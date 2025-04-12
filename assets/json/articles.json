@@ -4,7 +4,7 @@
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
       "id": "chladni-1",
       "image": "dark_chladni.webp",
-      "link": "/blogs/the-quest-to-finding-chladni-patterns-1",
+      "link": "/articles/the-quest-to-finding-chladni-patterns-1",
       "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy"],
       "description": "Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni's pattern using the wave equation model.",
       "date": "June 1, 2024"
@@ -13,7 +13,7 @@
       "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
       "id": "orb-cuda-1",
       "image": "CUDA_process_0_serial_30_imgs.webp",
-      "link": "/blogs/accelerating-feature-extraction-and-image-stitching-algorithm",
+      "link": "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
       "topics": ["C++", "OpenCV", "MPI", "OpenMP", "Computer Vision", "Image Processing"],
       "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
       "date": "August 10, 2024"
@@ -22,7 +22,7 @@
       "title": "How to find maxima and minima of an n-th dimensional function",
       "id": "hessian-1",
       "image": "plot2.webp",
-      "link": "/blogs/maximum-and-minimum",
+      "link": "/articles/maximum-and-minimum",
       "topics": ["Python", "Hessian Matrix", "Fermat's Theorem"],
       "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
       "date": "May 25, 2024"
@@ -31,7 +31,7 @@
       "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
       "id": "chladni-2",
       "image": "dark_polar.webp",
-      "link": "/blogs/the-quest-to-finding-chladni-patterns-2",
+      "link": "/articles/the-quest-to-finding-chladni-patterns-2",
       "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy"],
       "description": "Plotting a series of Chladni's patterns using the wave equation model.",
       "date": "June 14, 2024"
@@ -40,7 +40,7 @@
       "title": "Time Complexity of an Algorithm",
       "id": "dsa-1",
       "image": "time-complexity-banner.webp",
-      "link": "/blogs/time-complexity-of-an-algorithm",
+      "link": "/articles/time-complexity-of-an-algorithm",
       "topics": ["Data Structures and Algorithm", "C++", "Python"],
       "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
       "date": "December 2, 2024"
@@ -49,7 +49,7 @@
       "title": "Light Refraction and A More In-depth Look of Snell's Law",
       "id": "snell-1",
       "image": "snell_s_law_drawing.webp",
-      "link": "/blogs/snells-law",
+      "link": "/articles/snells-law",
       "topics": ["Refraction", "PDEs"],
       "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
       "date": "October 2, 2024"
@@ -58,7 +58,7 @@
       "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
       "id": "chladni-3",
       "image": "chladni-patterns.webp",
-      "link": "/blogs/the-quest-to-finding-chladni-patterns-3",
+      "link": "/articles/the-quest-to-finding-chladni-patterns-3",
       "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy", "Biharmonic Equation"],
       "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
       "date": "June 16, 2024"
@@ -67,7 +67,7 @@
       "title": "Slightly More Interesting Inertia Problems",
       "id": "moi-1",
       "image": "inertia.webp",
-      "link": "/blogs/moment-of-inertia",
+      "link": "/articles/moment-of-inertia",
       "topics": ["Classical Mechanics", "Dynamics of Rotation"],
       "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations. This article explore more about moment of inertia of interesting shapes.",
       "date": ""
@@ -76,7 +76,7 @@
       "title": "Green's Function",
       "id": "green-1",
       "image": "GreensFunctionExample_1000.svg",
-      "link": "/blogs/greens-function",
+      "link": "/articles/greens-function",
       "topics": ["Python", "PDEs", "Numpy"],
       "description": "An in-depth view of how to use Green's functions and their physical meaning.",
       "date": ""

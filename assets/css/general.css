@@ -11,7 +11,7 @@
 
 :root {
   --paragraph-font-size: 16px;
-  --body-background-color: white;
+  --body-background-color: #ffffff;
   --grid-text-color: black;
   --underline-color: oklch(48.8% 0.243 264.376);
   --figcaption-text: rgb(0, 0, 130);
@@ -27,7 +27,7 @@
   --contrast-line-color: #b4b4b4;
 
   --url-color: #2a7ae2;
-  --url-hover-color: rgb(0, 217, 217);
+  --url-hover-color: rgb(0, 194, 0);
 
   /* default li spacing*/
   --in-page-li-spacing: 15px;
@@ -49,9 +49,13 @@ body.dark-mode {
   --article-name-color: #dddddd;
   --article-description-color: #dddddd;
   --article-date-color: #aaa;
-  --url-hover-color: rgb(0, 194, 0);
   --material-link-color: #aaa;
   --article-shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+ul {
+  line-height: 1.6;
+  padding-left: 20px;
 }
 
 /* SIDE BAR */
@@ -278,6 +282,7 @@ body.nav-closed {
   flex: 1;
   flex-direction: column;
   max-width: 100%;
+  min-height: 100vh;
 }
 
 .general-wrapper {
@@ -317,7 +322,6 @@ p {
   font-weight: 400;
   padding: 0;
   margin: 10px 0;
-  /* margin: 0; */
 }
 
 .two-columns-block {
@@ -456,17 +460,14 @@ ol.steps .step::before {
   margin: 10px 0;
   display: inline-block;
   content: "STEP " counter(step) ".\00a0";
-  font-family: "Inter", sans-serif;
   counter-increment: step;
 }
 
 .custom-select {
-  font-family: Sans-serif;
   position: relative;
 }
 
 .custom-select select {
-  /*appearance: none; this is for the arrow*/
   width: 100%;
   font-size: inherit;
   height: 100%;
@@ -525,15 +526,7 @@ ol.steps .step::before {
   padding: 5px;
 }
 
-.hyperlink {
-  text-decoration: none;
-  color: inherit;
-}
 
-.hyperlink:hover {
-  text-decoration: underline;
-  color: rgb(0, 217, 217);
-}
 
 .image {
   display: block;
@@ -556,7 +549,6 @@ ol.steps .step::before {
   text-align: center;
 }
 
-
 .url {
   color: var(--url-color);
   text-decoration: none;
@@ -564,6 +556,14 @@ ol.steps .step::before {
 .url:hover {
   color: var(--url-hover-color);
   cursor: pointer;
+}
+.hyperlink {
+  text-decoration: none;
+  color: inherit;
+}
+.hyperlink:hover {
+  text-decoration: underline;
+  color: var(--url-hover-color);
 }
 
 .Quote {
@@ -659,7 +659,6 @@ td {
   vertical-align: middle;
 }
 
-
 .redirect-button {
   min-width: 80px;
   display: inline-block;
@@ -678,4 +677,52 @@ td {
 
 .redirect-button:hover {
   color: #2a7ae2;
+}
+
+
+#post-container ul {
+  padding-left: 30px;
+}
+@media all and (max-width: 580px){
+  #post-container ul {
+    padding-left: 10px;
+  }
+}
+
+.post {
+  text-decoration: none;
+  color: inherit;
+}
+
+.post-date {
+  color: var(--nav-bar-text-color);
+}
+
+.post:hover h3 {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.post-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.post-header-row h3,
+.post-header-row .post-date {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.post-date {
+  position: relative;
+  white-space: nowrap;
+}
+
+.post-date::before,
+.post-date::after {
+  content: "-";
+  margin: 0 0.2em;
 }

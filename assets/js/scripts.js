@@ -1121,3 +1121,5 @@ function fetchCommit() {
       `Last Updated: ${date}\nCommit Message: ${message}\n`;
   });
 }
+
+// js minifier: https://www.toptal.com/developers/javascript-minifier

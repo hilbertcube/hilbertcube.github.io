@@ -20,12 +20,12 @@
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/canvas-banner.css">
     <style>
-        #bannerCanvas{
-            background: linear-gradient(170deg, rgb(42, 39, 203) 0%, rgb(18, 3, 76) 100%);
+        .left-section-banner{
+          background: linear-gradient(170deg, rgb(42, 39, 203) 0%, rgb(18, 3, 76) 100%);
         }
         #About-button{
-            font-weight: var(--top-buttons-font-weight);
-            color:var(--top-buttons-hover-color);
+          font-weight: var(--top-buttons-font-weight);
+          color:var(--top-buttons-hover-color);
         }
     </style>
 </head>
@@ -45,7 +45,7 @@
     <div class="content-grid">
       <div class="home-banner" id="home-banner">
         <div class="left-section-banner">
-          <canvas id="bannerCanvas"></canvas>
+          <canvas width="80" height="50" id="bannerCanvas"></canvas>
         </div>
         <div class="right-section-banner">
           <img src="/public/Images/code-banner.webp" alt="Banner Image" decoding="async">
@@ -95,7 +95,7 @@
                 I also use <a href="https://prismjs.com/" class="url">prism.js</a> to provide some nice code syntax-highlighting for websites like below. You can change the code theme in the setting
               </p>
 
-<div class="box" style="margin: 30px 0;">
+<div class="box">
   <div class="code-container">
     <button class="copy-btn">Copy</button>
     <pre class="line-numbers"><code class="language-cpp"><script type="prism-cpp">#pragma once
