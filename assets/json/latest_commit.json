@@ -1,23 +1,23 @@
 {
-  "sha": "0e0c549d7caff3149dac9543830c413c88e2ac6c",
-  "node_id": "C_kwDONFt089oAKDBlMGM1NDlkN2NhZmYzMTQ5ZGFjOTU0MzgzMGM0MTNjODhlMmFjNmM",
+  "sha": "ba94bc92cc2d64b024501c145d2d7a5169f30534",
+  "node_id": "C_kwDONFt089oAKGJhOTRiYzkyY2MyZDY0YjAyNDUwMWMxNDVkMmQ3YTUxNjlmMzA1MzQ",
   "commit": {
     "author": {
       "name": "Don D. Le",
       "email": "ledongduu@gmail.com",
-      "date": "2025-04-12T11:06:20Z"
+      "date": "2025-04-12T11:23:08Z"
     },
     "committer": {
       "name": "Don D. Le",
       "email": "ledongduu@gmail.com",
-      "date": "2025-04-12T11:06:20Z"
+      "date": "2025-04-12T11:23:08Z"
     },
-    "message": "added posts",
+    "message": "updated policy",
     "tree": {
-      "sha": "997eb9cb65f763584104b5d6fbca9f68806f7f6b",
-      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/trees/997eb9cb65f763584104b5d6fbca9f68806f7f6b"
+      "sha": "faec8da19820f0240f1dc5f7063b186889b6d4f6",
+      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/trees/faec8da19820f0240f1dc5f7063b186889b6d4f6"
     },
-    "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/commits/0e0c549d7caff3149dac9543830c413c88e2ac6c",
+    "url": "https://api.github.com/repos/Continuum3416/neumanncondition/git/commits/ba94bc92cc2d64b024501c145d2d7a5169f30534",
     "comment_count": 0,
     "verification": {
       "verified": false,
@@ -27,9 +27,9 @@
       "verified_at": null
     }
   },
-  "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/0e0c549d7caff3149dac9543830c413c88e2ac6c",
-  "html_url": "https://github.com/Continuum3416/neumanncondition/commit/0e0c549d7caff3149dac9543830c413c88e2ac6c",
-  "comments_url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/0e0c549d7caff3149dac9543830c413c88e2ac6c/comments",
+  "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/ba94bc92cc2d64b024501c145d2d7a5169f30534",
+  "html_url": "https://github.com/Continuum3416/neumanncondition/commit/ba94bc92cc2d64b024501c145d2d7a5169f30534",
+  "comments_url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/ba94bc92cc2d64b024501c145d2d7a5169f30534/comments",
   "author": {
     "login": "Continuum3416",
     "id": 142064589,
@@ -74,9 +74,9 @@
   },
   "parents": [
     {
-      "sha": "b7f94681a3d653263d9ef9a07fbccde14e1f0eea",
-      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/b7f94681a3d653263d9ef9a07fbccde14e1f0eea",
-      "html_url": "https://github.com/Continuum3416/neumanncondition/commit/b7f94681a3d653263d9ef9a07fbccde14e1f0eea"
+      "sha": "38d48b6f9785287e8d671c3fa44fa569c06c2174",
+      "url": "https://api.github.com/repos/Continuum3416/neumanncondition/commits/38d48b6f9785287e8d671c3fa44fa569c06c2174",
+      "html_url": "https://github.com/Continuum3416/neumanncondition/commit/38d48b6f9785287e8d671c3fa44fa569c06c2174"
     }
   ]
 }
