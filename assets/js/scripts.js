@@ -273,7 +273,7 @@ function article(NUM_ARTICLE, des, random_article) {
       if (des) {
         const topic = document.createElement("div");
         topic.classList.add("article-topic");
-        topic.textContent = "Topics: " + (article.topics ? article.topics.join(", ") : "N/A");
+        topic.textContent = "Tags: " + (article.topics ? article.topics.join(", ") : "N/A");
         textContainer.appendChild(topic);
 
         const description = document.createElement("div");
@@ -651,7 +651,13 @@ function SearchBar() {
       return response.json();
     })
     .then((data) => {
-      const suggestions = data.articles; // Access the articles array within the JSON data
+      // Get both articles and others from the JSON file
+      const articles = data.articles || [];
+      const others = data.others || [];
+      const posts = data.posts || [];
+      
+      // Combine both arrays for searching
+      const allSuggestions = [...articles, ...others, ...posts];
 
       searchBars.forEach((searchBar) => {
         searchBar.addEventListener("input", function () {
@@ -660,16 +666,14 @@ function SearchBar() {
           currentFocus = -1;
 
           if (query) {
-            const choice = "include"; // or "start-with"
-            
             // Enhanced search across multiple fields
-            const filteredSuggestions = suggestions.filter((item) => {
+            const filteredSuggestions = allSuggestions.filter((item) => {
               // Search in title, topic, description
               return (
                 item.title.toLowerCase().includes(query) ||
                 (item.topics && item.topics.some(t => t.toLowerCase().includes(query))) ||
-                item.description.toLowerCase().includes(query) ||
-                item.date.toLowerCase().includes(query)
+                (item.description && item.description.toLowerCase().includes(query)) ||
+                (item.date && item.date.toLowerCase().includes(query))
               );
             });
             
@@ -687,7 +691,7 @@ function SearchBar() {
               countDiv.style.padding = "8px 10px";
               countDiv.style.color = "var(--text-color, #666)";
               countDiv.style.fontSize = "0.9em";
-              countDiv.style.borderBottom = "1px solid var(--border-color, #eaeaea)";
+              countDiv.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
               dropdown.appendChild(countDiv);
             }
 
@@ -696,7 +700,7 @@ function SearchBar() {
               const container = document.createElement("div");
               container.className = "autocomplete-item-container";
               container.style.padding = "10px";
-              container.style.borderBottom = "1px solid var(--border-color, #f0f0f0)";
+              container.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
               
               // Title section with highlighting
               const titleDiv = document.createElement("div");
@@ -712,55 +716,75 @@ function SearchBar() {
               );
               titleDiv.innerHTML = highlightedTitle;
               
-              // Topic section with highlighting
-              const topicDiv = document.createElement("div");
-              topicDiv.className = "autocomplete-item-topic";
-              topicDiv.style.fontSize = "0.85em";
-              topicDiv.style.marginBottom = "3px";
+              // Topic section with highlighting if topics exist
+              if (item.topics && item.topics.length > 0) {
+                const topicDiv = document.createElement("div");
+                topicDiv.className = "autocomplete-item-topic";
+                topicDiv.style.fontSize = "0.85em";
+                topicDiv.style.marginBottom = "3px";
+                
+                // Apply highlighting to topic
+                const topicText = Array.isArray(item.topics) ? item.topics.join(", ") : "";
+                const highlightedTopic = topicText.replace(
+                  new RegExp(query, "gi"),
+                  (match) =>
+                    `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
+                );
+                topicDiv.innerHTML = `<strong>Tags:</strong> ${highlightedTopic}`;
+                container.appendChild(topicDiv);
+              }
               
-              // Apply highlighting to topic
-              const topicText = Array.isArray(item.topics) ? item.topics.join(", ") : "";
-              const highlightedTopic = topicText.replace(
-                new RegExp(query, "gi"),
-                (match) =>
-                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
-              );
-              topicDiv.innerHTML = `<strong>Topics:</strong> ${highlightedTopic}`;
+              // Description section with highlighting if description exists
+              if (item.description) {
+                const descDiv = document.createElement("div");
+                descDiv.className = "autocomplete-item-description";
+                descDiv.style.fontSize = "0.85em";
+                descDiv.style.marginBottom = "3px";
+                
+                // Apply highlighting to description
+                const highlightedDesc = item.description.replace(
+                  new RegExp(query, "gi"),
+                  (match) =>
+                    `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
+                );
+                descDiv.innerHTML = highlightedDesc;
+                container.appendChild(descDiv);
+              }
               
-              // Description section with highlighting
-              const descDiv = document.createElement("div");
-              descDiv.className = "autocomplete-item-description";
-              descDiv.style.fontSize = "0.85em";
-              descDiv.style.marginBottom = "3px";
+              // Date section with highlighting if date exists
+              if (item.date) {
+                const dateDiv = document.createElement("div");
+                dateDiv.className = "autocomplete-item-date";
+                dateDiv.style.fontSize = "0.85em";
+                dateDiv.style.fontStyle = "italic";
+                dateDiv.style.color = "var(--muted-text-color, #888)";
+                
+                // Apply highlighting to date
+                const highlightedDate = item.date.replace(
+                  new RegExp(query, "gi"),
+                  (match) =>
+                    `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
+                );
+                dateDiv.innerHTML = highlightedDate;
+                container.appendChild(dateDiv);
+              }
               
-              // Apply highlighting to description
-              const highlightedDesc = item.description.replace(
-                new RegExp(query, "gi"),
-                (match) =>
-                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
-              );
-              descDiv.innerHTML = highlightedDesc;
+              // Source indicator (article or other)
+              const sourceDiv = document.createElement("div");
+              sourceDiv.className = "autocomplete-item-source";
+              sourceDiv.style.fontSize = "0.75em";
+              sourceDiv.style.marginTop = "3px";
+              let sourceType = "Resource"; // Default value
+              if (item.hasOwnProperty("id")) {
+                  sourceType = "Article";
+              } else if (item.hasOwnProperty("pid")) {
+                  sourceType = "Post";
+              }
+              sourceDiv.textContent = sourceType;
+              container.appendChild(sourceDiv);
               
-              // Date section with highlighting
-              const dateDiv = document.createElement("div");
-              dateDiv.className = "autocomplete-item-date";
-              dateDiv.style.fontSize = "0.85em";
-              dateDiv.style.fontStyle = "italic";
-              dateDiv.style.color = "var(--muted-text-color, #888)";
-              
-              // Apply highlighting to date
-              const highlightedDate = item.date.replace(
-                new RegExp(query, "gi"),
-                (match) =>
-                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
-              );
-              dateDiv.innerHTML = highlightedDate;
-              
-              // Assemble all components
-              container.appendChild(titleDiv);
-              container.appendChild(topicDiv);
-              container.appendChild(descDiv);
-              container.appendChild(dateDiv);
+              // Assemble the title component
+              container.prepend(titleDiv);
               
               container.addEventListener("click", function () {
                 searchBar.value = item.title;
@@ -802,11 +826,11 @@ function SearchBar() {
               items[currentFocus].click();
             } else {
               // If no active item, find the suggestion that matches the search term
-              const filteredSuggestion = suggestions.find(
+              const filteredSuggestion = allSuggestions.find(
                 (item) =>
                   item.title.toLowerCase() === searchBar.value.toLowerCase() ||
-                  item.topic.toLowerCase() === searchBar.value.toLowerCase() ||
-                  item.description.toLowerCase() === searchBar.value.toLowerCase()
+                  (item.topics && item.topics.some(t => t.toLowerCase() === searchBar.value.toLowerCase())) ||
+                  (item.description && item.description.toLowerCase() === searchBar.value.toLowerCase())
               );
               if (filteredSuggestion) {
                 window.open(ROOT + filteredSuggestion.link, "_blank");
@@ -1041,30 +1065,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   /// Load components ///
-  // const components = [
-  //   { url: "/assets/components/side-nav.html", selector: ".side-nav-container" },
-  //   { url: "/assets/components/highlights-and-attribute.html", selector: ".highlights-and-attribute" },
-  //   { url: "/assets/components/logo.html", selector: "#logo" },
-  //   { url: "/assets/components/footer.html", selector: ".footer" }
-  // ];
-
-  // // Load components in parallel
-  // Promise.all(components.map(comp => fetchAndInsert(comp.url, comp.selector)))
-  //   .then(results => {
-  //     // Execute callbacks after loading components
-  //     loadAndSetupSuggestions();
-  //     setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
-  //     currentYear();
-  //   })
-  //   .catch(error => console.error('Error loading components:', error));
-
-  // Load side-nav
-  fetch(ROOT + "/assets/components/side-nav.html")
-    .then(response => response.text())
-    .then(data => {
-      document.querySelector(".side-nav-container").innerHTML = data;
-    })
-    .catch(error => console.error('Error loading side-nav:', error));
 
   // Load highlights-and-attribute and setup suggestions
   fetch(ROOT + "/assets/components/highlights-and-attribute.html")
@@ -1080,7 +1080,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(ROOT + "/assets/components/logo.html")
     .then(response => response.text())
     .then(data => {
-      document.querySelector("#logo").innerHTML = data;
+      document.querySelector(".logo-and-side-nav").innerHTML = data;
       setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
     })
     .catch(error => console.error('Error loading logo:', error));
@@ -1089,7 +1089,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(ROOT + "/assets/components/footer.html")
     .then(response => response.text())
     .then(data => {
-      document.querySelector(".footer").innerHTML = data;
+      document.querySelector("footer").innerHTML = data;
       currentYear();
     })
     .catch(error => console.error('Error loading footer:', error));
@@ -1144,6 +1144,82 @@ function fetchCommit() {
 
       document.getElementById('commit-info').textContent =
         `Last Updated: ${datePart}, ${timePart} (Pacific)\nCommit Message: ${message}\nFetched via Github API`;
+    });
+}
+
+function loadPosts() {
+  const postContainer = document.getElementById("post-container");
+  
+  if (!postContainer) {
+    console.error("Post container element not found");
+    return;
+  }
+  
+  // Create a loading indicator
+  const loadingElement = document.createElement("div");
+  loadingElement.textContent = "Loading posts...";
+  postContainer.innerHTML = "";
+  postContainer.appendChild(loadingElement);
+  
+  // Fetch posts data from JSON file
+  fetch(ROOT + "/assets/json/articles.json")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response error: " + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Check if posts array exists
+      const posts = data.posts || [];
+      
+      if (posts.length === 0) {
+        postContainer.innerHTML = "<p>No posts available</p>";
+        return;
+      }
+      
+      // Create the post list
+      const postList = document.createElement("ul");
+      
+      // Add each post to the list
+      posts.forEach(post => {
+        const listItem = document.createElement("li");
+        
+        const postLink = document.createElement("a");
+        postLink.href = post.link;
+        postLink.className = "post";
+        
+        const headerRow = document.createElement("div");
+        headerRow.className = "post-header-row";
+        
+        const postTitle = document.createElement("h3");
+        postTitle.textContent = post.title;
+        
+        const postDate = document.createElement("div");
+        postDate.className = "post-date";
+        postDate.textContent = post.date;
+        
+        const postDescription = document.createElement("p");
+        postDescription.textContent = post.description;
+        
+        // Assemble the post structure
+        headerRow.appendChild(postTitle);
+        headerRow.appendChild(postDate);
+        
+        postLink.appendChild(headerRow);
+        postLink.appendChild(postDescription);
+        
+        listItem.appendChild(postLink);
+        postList.appendChild(listItem);
+      });
+      
+      // Replace loading indicator with posts
+      postContainer.innerHTML = "";
+      postContainer.appendChild(postList);
+    })
+    .catch(error => {
+      console.error("Error loading posts:", error);
+      postContainer.innerHTML = `<p>Error loading posts: ${error.message}</p>`;
     });
 }
 

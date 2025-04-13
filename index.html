@@ -71,8 +71,7 @@
 
 <body class="nav-open light-mode">
   <nav class="navbar open" id="navbar">
-    <div id="logo"></div>
-    <div class="side-nav-container"></div>
+    <div class="logo-and-side-nav"></div>
     <div class="highlights-and-attribute"></div>
   </nav>
 
@@ -165,42 +164,7 @@
 
       <section>
         <h1 class="home-title">Posts</h1>
-        <div id="post-container">
-          <ul>
-            <li>
-              <a href="/posts/favorite-tools/" class="post">
-                <div class="post-header-row">
-                  <h3>A list of tools that I use</h3><div class="post-date">April 12, 2025</div>
-                </div>
-                <p>
-                  A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I'm too lazy for 
-                  migration, and it has plenty of cool plugins. Why VS Code? I've tried many text-editors and IDEs before, but I find VS Code to be the most 
-                  visually pleasing, plus, it's lightweight, and has a large community and number of extensions.
-                </p>
-              </a>
-            </li>
-            <li>
-              <a href="/posts/tested-food-places/" class="post">
-                <div class="post-header-row">
-                  <h3>A list of places to munch</h3><div class="post-date">April 11, 2025</div>
-                </div>
-                <p>
-                  A list of restaurants, cafés, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I’ve tried or want to try. I’ll be using this post as a running to-do list.
-                </p>
-              </a>
-            </li>
-            <li>
-              <a href="https://don-le.vercel.app/jaskier-bot" class="post">
-                <div class="post-header-row">
-                  <h3>Silly project idea</h3><div class="post-date">March, 2025</div>
-                </div>
-                <p>
-                  I used Gemini 2.0 Flash API to create an AI bot that write poetry and play piano.
-                </p>
-              </a>
-            </li>
-          </ul>
-        </div>
+        <div id="post-container"></div>
       </section>
 
       <section>
@@ -208,9 +172,9 @@
         <div id="rec-article-container" data-aos="fade-up"></div>
       </section>
     </div>
+    <footer></footer>
   </div>
 
-  <div class="footer"></div>
   <script src="/assets/js/scripts.js"></script>
   <script>
     fetch('/assets/json/articles.json')
@@ -221,6 +185,7 @@
         article(articles.length, true, false);
       })
       .catch(error => console.error('Error loading JSON:', error));
+      document.addEventListener("DOMContentLoaded", loadPosts);
   </script>
   <script id="bannerScript" src="/assets/js/canvas-banner.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
