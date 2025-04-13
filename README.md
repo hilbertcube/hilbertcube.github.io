@@ -17,4 +17,4 @@ and run with live server.
 3. [AOS](https://github.com/michalsnik/aos): Animate On Scroll Library.
 4. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
 5. [ghchart](https://github.com/2016rshah/githubchart-api): display github activities
-6. [Github Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+6. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
