@@ -89,10 +89,37 @@
       "topics": ["Python", "Calculus of Variations"],
       "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
       "date": ""
+    }
+  ],
+  "posts": [
+    {
+      "title": "A list of tools that I use",
+      "pid": "tool-list",
+      "link": "/posts/favorite-tools/",
+      "topics": ["VS Code", "Chrome Extensions", "Software", "Hardware"],
+      "description": "A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I'm too lazy for migration, and it has plenty of cool plugins. Why VS Code? I've tried many text-editors and IDEs before, but I find VS Code to be the most visually pleasing, plus, it's lightweight, and has a large community and number of extensions.",
+      "date": "April 12, 2025"
     },
     {
+      "title": "A list of places to munch",
+      "pid": "munch-places",
+      "link": "/posts/tested-food-places/",
+      "topics": ["Daily life", "Food", "Drinks", "Desserts", "Boba"],
+      "description": "A list of restaurants, cafés, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I’ve tried or want to try. I’ll be using this post as a running to-do list.",
+      "date": "April 11, 2025"
+    },
+    {
+      "title": "Silly project idea",
+      "pid": "jaskier",
+      "link": "https://don-le.vercel.app/jaskier-bot",
+      "topics": ["Poetry", "API", "Gemini"],
+      "description": "I used Gemini 2.0 Flash API to create an AI bot that write poetry and play piano.",
+      "date": "March, 2025"
+    }
+  ],
+  "others": [
+    {
       "title": "Resources - Books",
-      "image": "",
       "link": "/recommended-materials/#books",
       "topics": ["Programming", "Image Processing", "DSA", "Math", "Physics"],
       "description": "Book Recommendation",
@@ -100,7 +127,6 @@
     },
     {
       "title": "Resources - Lecture Notes",
-      "image": "",
       "link": "/recommended-materials/#lecture-notes",
       "topics": ["Physics", "Calculus of Variations", "DE"],
       "description": "Lecture Notes Recommendation",
@@ -108,7 +134,6 @@
     },
     {
       "title": "Resources - Websites",
-      "image": "",
       "link": "/recommended-materials/#websites",
       "topics": ["Useful websites"],
       "description": "The internet and digital platforms have made information readily available to anyone with an internet connection. No more barriers.",
@@ -116,7 +141,6 @@
     },
     {
       "title": "Resources - Youtube Channels",
-      "image": "",
       "link": "/recommended-materials/#youtube",
       "topics": ["Useful Youtube Channels"],
       "description": "Youtube is fun, but don't watch too much.",
@@ -124,7 +148,6 @@
     },
     {
       "title": "Privacy Policy",
-      "image": "",
       "link": "/privacy-policy/",
       "topics": ["About the privacy policy of this website"],
       "description": "This website does not collect or store any personally identifiable information, such as IP addresses. However, it does use Google Analytics to analyze website usage and user behavior. The data collected by Google Analytics includes...",
@@ -132,7 +155,6 @@
     },
     {
       "title": "License",
-      "image": "",
       "link": "/LICENSE-CC-BY.md",
       "topics": ["Creative Commons Attribution 4.0 International"],
       "description": "View license",
@@ -140,7 +162,6 @@
     },
     {
       "title": "Source code",
-      "image": "",
       "link": "https://github.com/Continuum3416/neumanncondition",
       "topics": ["View the source code of this website"],
       "description": "",
@@ -148,7 +169,6 @@
     },
     {
       "title": "About",
-      "image": "",
       "link": "/about/",
       "topics": ["About this website"],
       "description": "About this website I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar...",
