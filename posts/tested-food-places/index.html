@@ -36,6 +36,25 @@
         padding-left: 15px; /* default is usually 40px, reduce as needed */
         margin-left: 0;
       }
+      .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+      }
+      .food-img {
+        width: calc(25% - 5px);
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      @media (max-width: 768px) {
+        .food-img {
+          width: calc(50% - 5px);
+        }
+      }
     </style>
   </head>
 
@@ -61,11 +80,12 @@
             <h3>Have Tried <i class="fa-solid fa-check" style="color: green;"></i></h3>
             <ul>
               <li class="bullet">
-                Restaurants
+                <strong>Restaurants</strong>
                 <ul>
                   <li class="bullet">Sea Harbor, Rosemead. Best Dim Sum, one Michelin Star, 9.5/10</li>
                   <li class="bullet">Slurpin Ramen Bar, City of Industry. 7/10</li>
                   <li class="bullet">Din Tai Fung, Arcadia. 8/10</li>
+                  <li class="bullet">Tatsu Ramen, LA. 8/10</li>
                   <li class="bullet">Lotus of Siam, Las Vegas. 7/10</li>
                   <li class="bullet">Thumbling, West Covina. 7.5/10</li>
                   <li class="bullet">Taiko Japanese Restaurant, Irvine. 8/10</li>
@@ -80,7 +100,7 @@
                 </ul>
               </li>
               <li class="bullet">
-                Boba & Café
+                <strong>Boba & Café</strong>
                 <ul>
                   <li class="bullet">3Catea, Irvine. 9/10</li>
                   <li class="bullet">Gong Cha, City of Industry. 8/10</li>
@@ -88,14 +108,25 @@
                   <li class="bullet">Phuc Long, Garden Grove. 6/10</li>
                 </ul>
               </li>
+              <li class="bullet">
+                <strong>Gallery</strong>
+                <div class="image-container" style="margin: 25px 0">
+                  <img class="food-img" src="coco.webp" alt="Japanese Curry"/>
+                  <img class="food-img" src="boba.webp" alt="Japanese Curry"/>
+                  <img class="food-img" src="ramen.webp" alt="Japanese Curry"/>
+                  <img class="food-img" src="takoyaki.webp" alt="Japanese Curry"/>
+                </div>
+              </li>
+
             </ul>
+
           </section>
 
           <section>
             <h3>Have Yet to Try <i class="fa-solid fa-x" style="font-size: 15px; color: red;"></i></h3>
             <ul>
               <li class="bullet">
-                Restaurants
+                <strong>Restaurants</strong>
                 <ul>
                   <li class="bullet">dPot, Irvine</li>
                   <li class="bullet">Kokiyo Ramen, NPB</li>
@@ -106,7 +137,7 @@
                 </ul>
               </li>
               <li class="bullet">
-                Desserts
+                <strong>Desserts</strong>
                 <ul>
                   <li class="bullet">Nostimo Coffee, Westminster</li>
                   <li class="bullet">Heybings Desserts & Café, Costa Mesa</li>
@@ -121,5 +152,15 @@
 
     <div class="footer"></div>
     <script src="/assets/js/scripts.js"></script>
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".food-img").forEach(function (img) {
+            img.style.cursor = "pointer";
+            img.addEventListener("click", function () {
+                window.open(this.src);
+            });
+        });
+      });
+    </script> -->
   </body>
 </html>

@@ -32,6 +32,19 @@ function setFavicon() {
 }
 setFavicon();
 
+// Image full screen for all img tags
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if the device is NOT mobile (you can adjust the max width if needed)
+  if (window.innerWidth > 768) {
+      document.querySelectorAll("img").forEach(function (img) {
+          img.style.cursor = "pointer";
+          img.addEventListener("click", function () {
+              window.open(this.src);
+          });
+      });
+  }
+});
+
 // OPEN URL IN NEW WINDOWS
 document.querySelectorAll(".url").forEach(function (element) {
   element.onclick = function () {
@@ -313,7 +326,7 @@ function mobileHover(arr) {
   });
 }
 
-mobileHover([".materials-right img", ".hyperlink"]);
+mobileHover([".materials-right img", ".hyperlink", ".post"]);
 
 // CHANGE TAB FUNCTION
 function changeTab(evt, nav_item_name, switch_target) {
@@ -1111,14 +1124,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function fetchCommit() {
   fetch('/assets/json/latest_commit.json')
-  .then(res => res.json())
-  .then(commit => {
-    const message = commit.commit.message;
-    const author = commit.commit.author.name;
-    const date = commit.commit.author.date;
-    document.getElementById('commit-info').textContent =
-      `Last Updated: ${date}\nCommit Message: ${message}\nFetched via Github API`;
-  });
+    .then(res => res.json())
+    .then(commit => {
+      const message = commit.commit.message;
+      //const author = commit.commit.author.name;
+      const utcDateStr = commit.commit.author.date;
+
+      // Convert to California time with comma instead of 'at'
+      const localDateObj = new Date(utcDateStr);
+      const datePart = localDateObj.toLocaleDateString('en-US', {
+        timeZone: 'America/Los_Angeles',
+        dateStyle: 'long'
+      });
+      const timePart = localDateObj.toLocaleTimeString('en-US', {
+        timeZone: 'America/Los_Angeles',
+        hour: 'numeric',
+        minute: '2-digit'
+      });
+
+      document.getElementById('commit-info').textContent =
+        `Last Updated: ${datePart}, ${timePart} (Pacific)\nCommit Message: ${message}\nFetched via Github API`;
+    });
 }
 
 // js minifier: https://www.toptal.com/developers/javascript-minifier

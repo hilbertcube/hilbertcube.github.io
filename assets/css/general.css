@@ -277,7 +277,7 @@ body.nav-closed {
   flex: 1;
   flex-direction: column;
   max-width: 100%;
-  min-height: 100vh;
+  
 }
 
 .general-wrapper {
@@ -285,6 +285,7 @@ body.nav-closed {
   width: var(--general-wrapper-width);
   margin-left: auto;
   margin-right: auto;
+  min-height: 100vh;
 }
 
 .general-wrapper > header {
@@ -568,10 +569,11 @@ ol.steps .step::before {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+  padding: 4px;
   font-style: italic;
   font-family: serif;
-  font-style: italic;
   position: relative;
+  /* background: var(--nav-bar-color); */
 }
 @media all and (max-width: 580px) {
   .Quote {
@@ -586,6 +588,7 @@ ol.steps .step::before {
   hyphens: auto;
   padding-left: 25px;
   padding-right: 25px;
+
 }
 
 .Author {
@@ -594,7 +597,7 @@ ol.steps .step::before {
   position: relative;
 }
 
-.Quote::before {
+/* .Quote::before {
   position: absolute;
   content: "";
   background: var(--underline-color);
@@ -602,7 +605,7 @@ ol.steps .step::before {
   width: 15%;
   bottom: 0;
   left: 0;
-}
+} */
 
 .Quote::after {
   position: absolute;
