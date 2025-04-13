@@ -33,7 +33,7 @@
         padding-left: 0;
       }
       .bullet ul {
-        padding-left: 15px; /* default is usually 40px, reduce as needed */
+        padding-left: 15px; /* default is usually 40px */
         margin-left: 0;
       }
       .image-row {
@@ -56,19 +56,19 @@
           flex-direction: column;
         }
       }
-      
-    .vscode-pet-img {
-      display: block;
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      width: auto;
-    }
-    @media all and (max-width: 580px) {
-      .vscode-pet-img  {
-        width: 100% !important;
+
+      .vscode-pet-img {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: auto;
       }
-    }
+      @media all and (max-width: 580px) {
+        .vscode-pet-img {
+          width: 100% !important;
+        }
+      }
     </style>
   </head>
 
@@ -105,7 +105,14 @@
                 this one more.
               </li>
               <li class="bullet">
-                <a class="url" href="https://chromewebstore.google.com/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc">Octotree</a>: This tool lets you preview files in a GitHub repo. To view each individual folder on GitHub, I’d normally have to click into each one to see all the files. However, GitHub can be slow, so navigating between folders can take quite a bit of time
+                <a
+                  class="url"
+                  href="https://chromewebstore.google.com/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc"
+                  >Octotree</a
+                >: This tool lets you preview files in a GitHub repo. To view
+                each individual folder on GitHub, I’d normally have to click
+                into each one to see all the files. However, GitHub can be slow,
+                so navigating between folders can take quite a bit of time
               </li>
             </ul>
           </section>
@@ -116,18 +123,29 @@
               <li class="bullet">
                 Web Developments
                 <ul>
-                  <li class="bullet">Crucial: HTML CSS Support (HTML Intellisense), Auto Rename Tag.</li>
-                  <li class="bullet">Tailwind CSS IntelliSense and Tailwind Docs. I used to hate Tailwind because I felt like I had less control over things. Now, I've come to appreciate it.</li>
-                  <li class="bullet">CSS Peak: peak straight into css, no need to jump around.</li>
+                  <li class="bullet">
+                    Crucial: HTML CSS Support (HTML Intellisense), Auto Rename
+                    Tag.
+                  </li>
+                  <li class="bullet">
+                    Tailwind CSS IntelliSense and Tailwind Docs. I used to hate
+                    Tailwind because I felt like I had less control over things.
+                    Now, I've come to appreciate it.
+                  </li>
+                  <li class="bullet">
+                    CSS Peak: peak straight into css, no need to jump around.
+                  </li>
                   <li class="bullet">
                     Github Actions. I use this tool to automate some stuff for
                     my website.
                   </li>
                   <li class="bullet">
                     Workspace Settings. Note that the HTML autocomplete does not
-                    work with React or Next js by default, so you should enable it
-                    manually via <span style="text-decoration: underline;">settings.json</span>. I also use an indentation of 2 spaces instead of 4
-                    when writing web projects.
+                    work with React or Next js by default, so you should enable
+                    it manually via
+                    <span style="text-decoration: underline">settings.json</span
+                    >. I also use an indentation of 2 spaces instead of 4 when
+                    writing web projects.
                     <div
                       class="code-container"
                       style="
@@ -165,8 +183,8 @@
                     indentations. When you first install it, it will have very
                     thick indentation lines. This look a bit ugly to me, but
                     fortunately, you can adjust that in
-                    <span style="text-decoration: underline;">settings.json</span>.
-                    This is my ideal setting:
+                    <span style="text-decoration: underline">settings.json</span
+                    >. This is my ideal setting:
                     <div
                       class="code-container"
                       style="
@@ -206,27 +224,34 @@
                     themes.
                   </li>
                   <li class="bullet">
-                    <a 
+                    <a
                       class="url"
-                      href="https://marketplace.visualstudio.com/items/?itemName=esbenp.prettier-vscode">Prettier - Code formatter</a>: 
-                    I use this extension mostly for web development, where lots of indentation are required.
+                      href="https://marketplace.visualstudio.com/items/?itemName=esbenp.prettier-vscode"
+                      >Prettier - Code formatter</a
+                    >: I use this extension mostly for web development, where
+                    lots of indentation are required.
                   </li>
                   <li class="bullet">
-                    <a 
+                    <a
                       class="url"
-                      href="https://marketplace.visualstudio.com/items/?itemName=dzhavat.bracket-pair-toggler">
-                      Bracket Pair Colorization Toggler
-                    </a>: Useful for languages that
-                    use curly braces {}.
+                      href="https://marketplace.visualstudio.com/items/?itemName=dzhavat.bracket-pair-toggler"
+                    >
+                      Bracket Pair Colorization Toggler </a
+                    >: Useful for languages that use curly braces {}.
                   </li>
                   <li class="bullet">
-                    <a 
+                    <a
                       class="url"
-                      href="https://marketplace.visualstudio.com/items/?itemName=tonybaloney.vscode-pets">
+                      href="https://marketplace.visualstudio.com/items/?itemName=tonybaloney.vscode-pets"
+                    >
                       VS Code Pets
                     </a>
-                    <div style="margin: 25px 0;">
-                      <img class="vscode-pet-img" src="vscode-pet.gif" alt="vscode-pet-demo">
+                    <div style="margin: 25px 0">
+                      <img
+                        class="vscode-pet-img"
+                        src="vscode-pet.gif"
+                        alt="vscode-pet-demo"
+                      />
                     </div>
                   </li>
                 </ul>
@@ -239,7 +264,12 @@
                     C/C++ IntelliSense, C/C++ Extension Pack, and C/C++ Theme
                   </li>
                   <li class="bullet">
-                    CMake and CMake Tools. I've always had a love-hate relationship with CMake. It makes zero sense and is very painful to use, but it's the most popular (and best?) tool we have. These extensions help me write CMake more efficiently, since it used to rebuild everything every time I made changes to my CMake script.
+                    CMake and CMake Tools. I've always had a love-hate
+                    relationship with CMake. It makes zero sense and is very
+                    painful to use, but it's the most popular (and best?) tool
+                    we have. These extensions help me write CMake more
+                    efficiently, since they rebuild everything every time I made
+                    changes to my CMake script.
                     <div
                       class="code-container"
                       style="
@@ -261,14 +291,19 @@ add_executable(main main.cpp)
 target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
                     </div>
 
-                    Test the extension with the script above for the <a href="https://github.com/fmtlib/fmt" class="url">FMT</a> library.
+                    Test the extension with the script above for the
+                    <a href="https://github.com/fmtlib/fmt" class="url">FMT</a>
+                    library.
                   </li>
                   <li class="bullet">Rust Analyzer and Rust Syntax.</li>
                   <li class="bullet">
                     MASM/TASM: run assembly directly in VS Code without a
                     compiler.
                   </li>
-                  <li class="bullet">Nsight Visual Studio Code Edition: useful for CUDA programming.</li>
+                  <li class="bullet">
+                    Nsight Visual Studio Code Edition: useful for CUDA
+                    programming.
+                  </li>
                   <li class="bullet">
                     VS Code's Shader languages support: shaders highlighters for
                     GLSL, HLSL, CG.
@@ -280,11 +315,15 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
               <li class="bullet">
                 Dev Tools
                 <ul style="line-height: 1.6">
+                  <li class="bullet">
+                    IntelliCode and IntelliCode API Usage Examples.
+                  </li>
                   <li class="bullet">Docker</li>
                   <li class="bullet">
                     <a
                       class="url"
-                      href="https://marketplace.visualstudio.com/items/?itemName=mhutchie.git-graph">
+                      href="https://marketplace.visualstudio.com/items/?itemName=mhutchie.git-graph"
+                    >
                       Git Graph.
                     </a>
                     <!-- <div style="margin: 25px 0;">
@@ -297,8 +336,12 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
               <li class="bullet">
                 Others
                 <ul style="line-height: 1.6">
-                  <li class="bullet">audio-preview: play and display audio files' information.</li>
-                  <li class="bullet">vscode-pdf: view pdf docs within vs code</li>
+                  <li class="bullet">
+                    audio-preview: play and display audio files' information.
+                  </li>
+                  <li class="bullet">
+                    vscode-pdf: view pdf docs within vs code
+                  </li>
                   <li class="bullet">Markdown All in One.</li>
                   <li class="bullet">Code Spell Checker.</li>
                 </ul>
@@ -310,16 +353,21 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
             <h3>Desktop Softwares</h3>
             <ul>
               <li class="bullet">
-                <a href="https://windhawk.net/" class="url">Windhawk</a>: Windows 11 sucks, as it does not allow you to customize
-                even simple things like the size of the taskbar, so I used this
+                <a href="https://windhawk.net/" class="url">Windhawk</a>:
+                Windows 11 sucks, as it does not allow you to customize even
+                simple things like the size of the taskbar, so I used this
                 software just to do that. It also has a lot of other cool tools
                 that you can install on your machine.
               </li>
               <li class="bullet">
-                <a href="https://www.audacityteam.org/download/" class="url">Audacity</a>: an audio editor I used to edit sound files.
+                <a href="https://www.audacityteam.org/download/" class="url"
+                  >Audacity</a
+                >: an audio editor I used to edit sound files.
               </li>
               <li class="bullet">
-                <a href="https://extensions.gnome.org/" class="url">Gnome Shell Extension</a>: Ubuntu customization.
+                <a href="https://extensions.gnome.org/" class="url"
+                  >Gnome Shell Extension</a
+                >: Ubuntu customization.
               </li>
             </ul>
           </section>
@@ -330,17 +378,25 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
               <li class="bullet">
                 Windows Laptop: Lenovo Legion Legion Pro 5, Intel Core
                 i9-14900HX, 32GB RAM, 2TB SSD, RTX 4070. This is the laptop I
-                use for most of my work, school, and games. Damn good deal from black friday.
+                use for most of my work, school, and games. Damn good deal from
+                black friday.
               </li>
               <li class="bullet">
                 Linux Laptop: ASUS ROG Zephyrus S GX531GX, Intel Core i7-8750H,
                 16GB RAM, 512GB SSD, GTX 1070 max-q. This is my old windows
-                laptop, but I deleted windows and installed Ubuntu. Thin laptop but horrible battery life. I now use it
-                to do system programming development.
+                laptop, but I deleted windows and installed Ubuntu. Thin laptop
+                but horrible battery life. I now use it to do system programming
+                development.
               </li>
               <li class="bullet">Tablet: Ipad Air 4th gen, 64GB.</li>
-              <li class="bullet">Headphone: Sony WH-1000XM3. Soundproof, wireless, bought a long time ago.</li>
-              <li class="bullet">Earbuds: Airpods 3. I prefer this one over the pro version because it has a longer battery life.</li>
+              <li class="bullet">
+                Headphone: Sony WH-1000XM3. Soundproof, wireless, bought a long
+                time ago.
+              </li>
+              <li class="bullet">
+                Earbuds: Airpods 3. I prefer this one over the pro version
+                because it has a longer battery life.
+              </li>
               <!-- <li class="bullet">Hair dryer: Babyliss Pro Titanium Xtreme</li> -->
             </ul>
           </section>

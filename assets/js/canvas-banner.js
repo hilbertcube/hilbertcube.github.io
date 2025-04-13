@@ -3,7 +3,7 @@ function canvas() {
   const ctx = canvas.getContext('2d');
 
   const svgFileNames = [
-      'matrix.svg',
+      'LDM.svg', 
       'stokes.svg',
       'laplace.svg',
       'discrete-fourier.svg',
@@ -11,8 +11,13 @@ function canvas() {
       'black-body.svg',
       'navier.svg',
       'information.svg',
-      'moore.svg'
+      'moore.svg',
+      'filter.svg'
   ];
+  
+  // Note: color = stroke
+  // L_{\text{LDM}} = \mathbb{E}_{t, z_0, \varepsilon, y}\left[\lVert \varepsilon - \varepsilon_0(z_t, t, \tau_\theta(y)) \rVert^2\right]
+  
   
   const svgUrls = svgFileNames.map(fileName => `${ROOT}/public/banner-svg/${fileName}`);
   const svgImages = [];
