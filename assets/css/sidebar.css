@@ -1,11 +1,13 @@
-body.dark-mode {
-  --li-border-color: rgb(0, 71, 171)
+:root {
+  --toc-focus-color: #007BFF;
 }
 
-.side-nav ul li a,.toc a {
-  text-decoration: none;
-  color: inherit
+body.dark-mode {
+  --li-border-color: rgb(0, 71, 171);
+  --toc-focus-color: rgb(0, 194, 0);
 }
+
+
 
 .side-buttons {
   display: block;
@@ -88,6 +90,38 @@ body.dark-mode {
   padding-top: 5px
 }
 
+.toc ul li {
+  border-left: 1.5px solid var(--li-border-color);
+}
+
+.highlights ul li:hover,
+.side-nav ul li:hover,
+.toc ul li:hover {
+  border-left: 2px solid red;
+}
+
+.toc li {
+  line-height: 1.4;
+}
+
+.toc ul li li:hover {
+  border-left: 2px solid blueviolet;
+}
+
+.toc ul li li li:hover {
+  border-left: 2px solid green;
+}
+
+.toc a.active {
+  color: var(--toc-focus-color);
+  /* font-weight: 600; */
+}
+
+.side-nav ul li a,.toc a {
+  text-decoration: none;
+  color: inherit
+}
+
 .side-nav {
   padding: 20px 0;
   margin: 0 15px;
@@ -107,30 +141,8 @@ body.dark-mode {
   cursor: pointer
 }
 
-.side-nav ul li li:hover,.toc ul li li:hover {
-  border-left: 2px solid #00f
-}
 
-.toc ul li {
-  border-left: 1.5px solid var(--li-border-color);
-}
 
-.highlights ul li:hover,.side-nav ul li:hover,.toc ul li:hover {
-  border-left: 2px solid red;
-  border-radius: 2px
-}
-
-.toc ul li li li:hover {
-  border-left: 2px solid green;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px
-}
-
-.toc a.active {
-  color: #007bff;
-  font-weight: 700;
-  
-}
 
 .side-nav ul ul,.toc ul ul {
   padding-left: 10px;
@@ -173,10 +185,15 @@ body.dark-mode {
   transform: scale(1.05)
 }
 
+.toggle-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+}
+
 .toggle-btn {
   position: fixed;
-  top: calc(.5*(var(--top-bar-height) - 35px));
-  left: 15px;
   width: 35px;
   height: 35px;
   background-color: #1a1a1a;

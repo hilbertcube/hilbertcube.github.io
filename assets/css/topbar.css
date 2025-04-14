@@ -206,7 +206,7 @@
 .search-bar-mobile {
   width: 100%;
   height: 28px;
-  font-size: 15px;
+  font-size: 16px;
   border-radius: 4px; /*14px*/
   border: 1px solid rgb(186, 186, 186);
   color: rgba(255, 255, 255, 0.75);
@@ -253,9 +253,13 @@ input.search-bar:focus {
 /*
     Issue: if we keep this left.hidden, we cannot go to the page by clicking on the text
 */
-.left.hidden {
+.left.hidden, 
+.setting-container.hidden, 
+.dark-switch-container.hidden, 
+.toggle-btn-container.hidden {
   display: none !important;
 }
+
 
 /* The overlay to darken the screen */
 .search-overlay {
@@ -291,10 +295,14 @@ input.search-bar:focus {
   border-top: none;
   border-radius: 0 0 4px 4px;
   background-color: var(--autocomplete-dropdown-color);
-  max-height: 80vh;
+  max-height: 70vh;
   overflow-y: auto;
   z-index: 10000;
   display: none; /* Hide by default */
+}
+
+@media all and (max-width: 580px) {
+  .autocomplete-dropdown{ max-height: 50vh; }
 }
 
 .autocomplete-item-container {
