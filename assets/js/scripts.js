@@ -894,8 +894,7 @@ function collapseSearchBar() {
   const searchBarContainer = document.getElementById("searchBarContainer");
   const leftSection = document.querySelector(".left"); // Get the .left section
   const overlay = document.getElementById("searchOverlay");
-  const searchOverlay = document.querySelector(".dark-switch-container");
-  const settingContainer = document.querySelector(".setting-container");
+  const settingContainer = document.querySelector(".buttons-container");
   const toggleButton = document.querySelector(".toggle-btn-container");
 
   searchBarContainer.classList.remove("expanded");
@@ -904,7 +903,6 @@ function collapseSearchBar() {
   
   // Show these elements again when collapsing the search bar
   if (window.innerWidth <= 640) { // Mobile viewport check
-    if (searchOverlay) searchOverlay.classList.remove("hidden");
     if (settingContainer) settingContainer.classList.remove("hidden");
     if (toggleButton) toggleButton.classList.remove("hidden");
   }
@@ -917,8 +915,7 @@ function extendSearchBar() {
   const overlay = document.getElementById("searchOverlay");
   const leftSection = document.querySelector(".left"); // Get the .left section
   const dropdown = document.getElementById("autocomplete-dropdown");
-  const searchOverlay = document.querySelector(".dark-switch-container");
-  const settingContainer = document.querySelector(".setting-container");
+  const settingContainer = document.querySelector(".buttons-container");
   const toggleButton = document.querySelector(".toggle-btn-container");
 
   function expandSearchBar() {
@@ -928,7 +925,6 @@ function extendSearchBar() {
     
     // Only hide these elements on mobile
     if (window.innerWidth <= 640) {
-      if (searchOverlay) searchOverlay.classList.add("hidden");
       if (settingContainer) settingContainer.classList.add("hidden");
       if (toggleButton) toggleButton.classList.add("hidden");
     }
@@ -1061,7 +1057,6 @@ const font_size = [
   ".theorem",
   ".solution",
   ".problem",
-  ".two-columns-block",
   ".general-wrapper"
 ];
 
@@ -1152,7 +1147,7 @@ document.addEventListener("DOMContentLoaded", function () {
       extendSearchBar();
       
       // Initialize UI switches
-      Switcher("fontFamily", "font-select", [".general-wrapper", ".navbar"], 0);
+      Switcher("fontFamily", "font-select", [".general-wrapper"], 0);
       Switcher("fontSize", "font-size-select", font_size, 2);
       Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 0);
       

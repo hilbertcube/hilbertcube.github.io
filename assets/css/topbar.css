@@ -253,9 +253,8 @@ input.search-bar:focus {
 /*
     Issue: if we keep this left.hidden, we cannot go to the page by clicking on the text
 */
-.left.hidden, 
-.setting-container.hidden, 
-.dark-switch-container.hidden, 
+.left.hidden,
+.buttons-container.hidden, 
 .toggle-btn-container.hidden {
   display: none !important;
 }
@@ -326,13 +325,16 @@ input.search-bar:focus {
 }
 
 /* =================== DARK MODE BUTTON ===================*/
-.dark-switch-container {
+.buttons-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 0 15px;
-  width: 15px;
+  justify-content: center;
+  padding-right: 12px;
+  padding-left: 12px;
+  gap: 8px;
+  width: 100px;
 }
+
 
 /* Button Styles */
 .dark-mode-button {
@@ -341,8 +343,6 @@ input.search-bar:focus {
   font-size: 24px;
   cursor: pointer;
   outline: none;
-  transition: transform 0.3s ease-in-out;
-  color: #333; /* Default color */
   color: #dddddd;
 }
 
@@ -364,8 +364,6 @@ body.dark-mode .dark-mode-button {
 }
 
 .setting-container {
-  margin-left: 5px;
-  margin-right: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
