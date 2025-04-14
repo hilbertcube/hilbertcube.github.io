@@ -1,4 +1,14 @@
 {
+  "main-info":
+  [
+    {
+      "title": "neumanncondition",
+      "author": "Don D. Le",
+      "link": "https://neumanncondition.com/",
+      "description": "Personal website",
+      "language": "en-us"
+    }
+  ],
   "articles": [
     {
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",

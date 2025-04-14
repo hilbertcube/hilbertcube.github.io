@@ -26,7 +26,11 @@
   }
 }
 
+/*mobile*/
 @media all and (max-width: 1200px) {
+  .buttons-container{
+    width: 80px;
+  }
   .general-wrapper {
     width: 80%;
   }
@@ -74,6 +78,15 @@
   }
 }
 @media all and (max-width: 580px) {
+  .buttons-container {
+    gap: 6px;
+    width: 50px;
+    padding-left: 7px;
+    
+  }
+  .rss{
+    display: none;
+  }
   :root {
     --side-nav-width: 330px;
   }
@@ -82,15 +95,6 @@
     margin: 0;
     padding: 0;
   }
-  .dark-switch-container {
-    margin-left: 15px;
-    margin-right: 8px;
-  }
-  .setting-container {
-    margin-left: 8px;
-    margin-right: 10px;
-  }
-
   h1.title,
   h1.home-title {
     font-size: 1.9em;
