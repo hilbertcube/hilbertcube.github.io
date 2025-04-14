@@ -876,7 +876,12 @@ function SearchBar() {
           ![...searchBars].some((bar) => bar.contains(target)) &&
           !dropdown.contains(target)
         ) {
-          dropdown.style.display = "none";
+            // Clear all search bars when clicking outside
+            searchBars.forEach(searchBar => {
+              searchBar.value = "";
+            });
+            dropdown.innerHTML = ""; // Clear dropdown content
+            dropdown.style.display = "none"; // Hide dropdown
         }
       });
     })
@@ -889,10 +894,20 @@ function collapseSearchBar() {
   const searchBarContainer = document.getElementById("searchBarContainer");
   const leftSection = document.querySelector(".left"); // Get the .left section
   const overlay = document.getElementById("searchOverlay");
+  const searchOverlay = document.querySelector(".dark-switch-container");
+  const settingContainer = document.querySelector(".setting-container");
+  const toggleButton = document.querySelector(".toggle-btn-container");
 
   searchBarContainer.classList.remove("expanded");
   leftSection.classList.remove("hidden"); // Show the left section again
   overlay.style.display = "none"; // Hide overlay
+  
+  // Show these elements again when collapsing the search bar
+  if (window.innerWidth <= 640) { // Mobile viewport check
+    if (searchOverlay) searchOverlay.classList.remove("hidden");
+    if (settingContainer) settingContainer.classList.remove("hidden");
+    if (toggleButton) toggleButton.classList.remove("hidden");
+  }
 }
 
 function extendSearchBar() {
@@ -902,11 +917,21 @@ function extendSearchBar() {
   const overlay = document.getElementById("searchOverlay");
   const leftSection = document.querySelector(".left"); // Get the .left section
   const dropdown = document.getElementById("autocomplete-dropdown");
+  const searchOverlay = document.querySelector(".dark-switch-container");
+  const settingContainer = document.querySelector(".setting-container");
+  const toggleButton = document.querySelector(".toggle-btn-container");
 
   function expandSearchBar() {
     searchBarContainer.classList.add("expanded");
-    leftSection.classList.add("hidden"); // Hide the left section
+    leftSection.classList.add("hidden"); // Hide the left section (for all viewports)
     overlay.style.display = "block"; // Show overlay
+    
+    // Only hide these elements on mobile
+    if (window.innerWidth <= 640) {
+      if (searchOverlay) searchOverlay.classList.add("hidden");
+      if (settingContainer) settingContainer.classList.add("hidden");
+      if (toggleButton) toggleButton.classList.add("hidden");
+    }
   }
 
   // Listen for focus on both desktop and mobile search bars
@@ -951,6 +976,20 @@ function extendSearchBar() {
         collapseSearchBar(); // Collapse the search bar UI
       }
     });
+  });
+  
+  // Handle window resize to adjust visibility appropriately
+  window.addEventListener("resize", function() {
+    if (!searchBarContainer.classList.contains("expanded")) return;
+    
+    // If expanded and viewport changes, update element visibility
+    if (window.innerWidth <= 768) {
+      if (searchOverlay) searchOverlay.classList.add("hidden");
+      if (settingContainer) settingContainer.classList.add("hidden");
+    } else {
+      if (searchOverlay) searchOverlay.classList.remove("hidden");
+      if (settingContainer) settingContainer.classList.remove("hidden");
+    }
   });
 }
 
