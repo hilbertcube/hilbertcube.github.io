@@ -332,7 +332,6 @@ input.search-bar:focus {
   padding-right: 12px;
   padding-left: 12px;
   gap: 8px;
-  width: 100px;
 }
 
 
@@ -348,6 +347,11 @@ input.search-bar:focus {
 
 body.dark-mode .dark-mode-button {
   color: #fdd835;
+}
+
+.rss a {
+  color: white;
+  font-size: 20px;
 }
 
 

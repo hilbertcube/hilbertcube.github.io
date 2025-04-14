@@ -26,7 +26,11 @@
   }
 }
 
+/*mobile*/
 @media all and (max-width: 1200px) {
+  .buttons-container{
+    width: 80px;
+  }
   .general-wrapper {
     width: 80%;
   }
@@ -74,6 +78,15 @@
   }
 }
 @media all and (max-width: 580px) {
+  .buttons-container {
+    gap: 6px;
+    width: 50px;
+    padding-left: 7px;
+    
+  }
+  .rss{
+    display: none;
+  }
   :root {
     --side-nav-width: 330px;
   }
