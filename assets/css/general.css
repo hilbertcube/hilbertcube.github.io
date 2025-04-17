@@ -700,8 +700,7 @@ td {
 
 .post-header-row h3,
 .post-header-row .post-date {
-    margin: 0;
-    white-space: nowrap;
+  margin: 0;
 }
 
 .post-date {
