@@ -103,6 +103,14 @@
   ],
   "posts": [
     {
+      "title": "No matter what happens, life must move on",
+      "pid": "random-post",
+      "link": "/404.html",
+      "topics": ["Life"],
+      "description": "Life is full of failures, and each failure can hurt, a lot. But nothing hurts more than the pain of regret. It's not always the case that you did something wrong. You can do everything right and still lose. Be proud that you had the courage to do it.",
+      "date": "April 16, 2025"
+    },
+    {
       "title": "A list of tools that I use",
       "pid": "tool-list",
       "link": "/posts/favorite-tools/",
@@ -123,7 +131,7 @@
       "pid": "jaskier",
       "link": "https://don-le.vercel.app/jaskier-bot",
       "topics": ["Poetry", "API", "Gemini"],
-      "description": "I used Gemini 2.0 Flash API to create an AI bot that write poetry and play piano.",
+      "description": "I used Gemini 2.0 Flash API to create an AI bot that writes poetry and plays piano.",
       "date": "March, 2025"
     }
   ],
