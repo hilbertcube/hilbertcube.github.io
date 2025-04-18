@@ -1,14 +1,4 @@
 {
-  "main-info":
-  [
-    {
-      "title": "neumanncondition",
-      "author": "Don D. Le",
-      "link": "https://neumanncondition.com/",
-      "description": "Personal website",
-      "language": "en-us"
-    }
-  ],
   "articles": [
     {
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
@@ -24,7 +14,7 @@
       "id": "orb-cuda-1",
       "image": "CUDA_process_0_serial_30_imgs.webp",
       "link": "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
-      "topics": ["C++", "OpenCV", "MPI", "OpenMP", "Computer Vision", "Image Processing"],
+      "topics": ["C++", "OpenCV", "MPI", "OpenMP", "Computer Vision", "Image Processing", "OpenMP"],
       "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
       "date": "August 10, 2024"
     },
@@ -106,7 +96,7 @@
       "title": "No matter what happens, life must move on",
       "pid": "random-post",
       "link": "/404.html",
-      "topics": ["Life"],
+      "topics": ["Life", "Self-reminder", "Cope"],
       "description": "Life is full of failures, and each failure can hurt, a lot. But nothing hurts more than the pain of regret. It's not always the case that you did something wrong. You can do everything right and still lose. Be proud that you had the courage to do it.",
       "date": "April 16, 2025"
     },
@@ -174,15 +164,15 @@
     {
       "title": "License",
       "link": "/LICENSE-CC-BY.md",
-      "topics": ["Creative Commons Attribution 4.0 International"],
-      "description": "View license",
+      "topics": ["License", "Creative Commons Attribution 4.0 International"],
+      "description": "View license of this website",
       "date": "Last updated April 2025"
     },
     {
       "title": "Source code",
       "link": "https://github.com/Continuum3416/neumanncondition",
       "topics": ["View the source code of this website"],
-      "description": "",
+      "description": "View the source code of this website on github.",
       "date": "Updated recently"
     },
     {
