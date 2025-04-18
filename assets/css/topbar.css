@@ -31,7 +31,7 @@
 
 .left {
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto;
 
   /* display: flex;
     flex-direction: row;
@@ -42,7 +42,7 @@
   padding-right: 20px;
   align-items: center;
   margin-left: 100px;
-  margin-right: 100px;
+  margin-right: 0px;
 }
 
 .right {
