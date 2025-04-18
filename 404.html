@@ -8,17 +8,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" href="../public/Images/Logo/pendulum_trace.PNG">
-  <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=VT323&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
     body {
       position: relative;
       background-color: black;
-      background-image: url("/public/background/blade-runner.png");
+      background-image: url("/public/background/blade-runner.webp");
       background-attachment: fixed;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: top center;
-      font-family: "VT323", monospace;
+      font-family: "Orbitron", sans-serif;
       font-weight: 400;
       font-style: normal;
     }
@@ -36,15 +36,24 @@
         opacity: 1;
       }
     }
+    .not-found {
+      position: fixed;
+      color: white;
+      font-size: 1.1rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* border: 1px solid white; */
+      padding: 0.4rem;
+    }
     .lonely {
       position: absolute;
       color: white;
       right: 20vw;
       top: 10vh;
-      font-size: 3.5rem;
+      font-size: 2.5rem;
     }
     .inner {
-      font-size: 2rem;
       text-align: right;
     }
     .yesno {
@@ -60,22 +69,30 @@
       color: rgb(238, 0, 255);
     }
     .yesno {
-      margin-top: 20px; /* Space between text and options */
-      transition: opacity 0.5s ease, visibility 0.5s ease; /* Transition for fade effect */
-      opacity: 0; /* Start as invisible */
-      visibility: hidden; /* Hide initially */
+      margin-top: 20px;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      opacity: 0;
+      visibility: hidden;
     }
 
     .yesno.visible {
-      opacity: 1; /* Make visible */
-      visibility: visible; /* Set visibility to visible */
+      opacity: 1;
+      visibility: visible;
     }
+    
     @media all and (max-width: 1080px) {
+      .lonely {
+        font-size: 2.5rem;
+        right: 2vw;
+      }
+    }
+    @media all and (max-width: 945px) {
       body {
-        background-image: url("/public/background/blade-runner-mobile.png");
+        background-image: url("/public/background/blade-runner-mobile.webp");
+        background-position: center bottom;
       }
       .lonely {
-        right: 2vw;
+        font-size: 2rem;
       }
     }
   </style>
@@ -90,12 +107,15 @@
     <div class="yesno" id="yesno">
       <a style="border-right: 1px solid white; padding-right: 20px; margin-right: 20px"
         href="javascript:window.history.back()" id="yes">Yes</a>
-      <a id="no">No</a>
+      <a id="no" href="https://www.youtube.com/watch?v=4GSXyo3euR4">No</a>
     </div>
+  </div>
+  <div class="not-found">
+    404 - Page not found
   </div>
   <script id="404-js">
     document.addEventListener("DOMContentLoaded", function () {
-    const text1 = "You look lonely";
+    const text1 = "You look lonely,";
     const text2 = "wanna go back?";
     const textContainer1 = document.getElementById("text1");
     const textContainer2 = document.getElementById("text2");
