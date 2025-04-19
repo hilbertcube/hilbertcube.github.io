@@ -73,7 +73,7 @@ function renderTags(tags) {
     const tagElement = document.createElement("div");
     tagElement.className = "tag";
     tagElement.dataset.tag = tag;
-    tagElement.innerHTML = `${tag} <span class="tag-count">(${count})</span>`;
+    tagElement.innerHTML = `${tag} <span class="tag-count">[${count}]</span>`;
 
     tagElement.addEventListener("click", () => toggleTag(tag, tagElement));
     tagContainer.appendChild(tagElement);

@@ -14,7 +14,7 @@
       "id": "orb-cuda-1",
       "image": "CUDA_process_0_serial_30_imgs.webp",
       "link": "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
-      "topics": ["C++", "OpenCV", "MPI", "OpenMP", "Computer Vision", "Image Processing", "OpenMP"],
+      "topics": ["C++", "OpenCV", "MPI", "OpenMP", "Computer Vision", "Image Processing", "Multithreading", "CUDA"],
       "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
       "date": "August 10, 2024"
     },
@@ -104,7 +104,7 @@
       "title": "A list of tools that I use",
       "pid": "tool-list",
       "link": "/posts/favorite-tools/",
-      "topics": ["VS Code", "Chrome Extensions", "Software", "Hardware"],
+      "topics": ["VS Code", "Chrome Extensions", "Software", "Hardware", "Life", "Work"],
       "description": "A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I'm too lazy for migration, and it has plenty of cool plugins. Why VS Code? I've tried many text-editors and IDEs before, but I find VS Code to be the most visually pleasing, plus, it's lightweight, and has a large community and number of extensions.",
       "date": "April 12, 2025"
     },
@@ -112,7 +112,7 @@
       "title": "A list of places to munch",
       "pid": "munch-places",
       "link": "/posts/tested-food-places/",
-      "topics": ["Daily life", "Food", "Drinks", "Desserts", "Boba"],
+      "topics": ["Life", "Daily life", "Food", "Drinks", "Desserts", "Boba"],
       "description": "A list of restaurants, cafés, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I’ve tried or want to try. I’ll be using this post as a running to-do list.",
       "date": "April 11, 2025"
     },
@@ -120,7 +120,7 @@
       "title": "Silly project idea",
       "pid": "jaskier",
       "link": "https://don-le.vercel.app/jaskier-bot",
-      "topics": ["Poetry", "API", "Gemini"],
+      "topics": ["Poetry", "API" ,"RestAPI", "Gemini"],
       "description": "I used Gemini 2.0 Flash API to create an AI bot that writes poetry and plays piano.",
       "date": "March, 2025"
     }
@@ -164,7 +164,7 @@
     {
       "title": "License",
       "link": "/LICENSE-CC-BY.md",
-      "topics": ["License", "Creative Commons Attribution 4.0 International"],
+      "topics": ["License", "CC-BY-4.0"],
       "description": "View license of this website",
       "date": "Last updated April 2025"
     },
