@@ -39,8 +39,7 @@ h2 {
 }
 
 .tag-count {
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 14px;
   margin-left: 6px;
 }
 
@@ -119,6 +118,7 @@ h2 {
   border: 1px solid var(--next-border);
   background-color: var(--nav-bar-color);
   color: inherit;
+  font-family: inherit;
 }
 
 .clear-btn:hover {
