@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-00W722FWP2');
+    </script>
+    <title>Favorite Problems</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="subject" content='here'>
+    <meta name="description" content="here" />
+    <meta name="keywords" content="data structures, algorithms, c++, cpp, computer science" />
+    <meta name="author" content="Don Le, ledongduu@gmail.com"/>
+    <meta name="format-detection" content="telephone=no"> <!-- Disable number string recognition-->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        .front-img{
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+            height: auto; 
+            margin: auto;
+        }
+        .algorithm_box{
+            width: 50%;
+        }
+        @media all and (max-width: 580px){
+            .algorithm_box{
+                width: 100%;
+            }
+        }
+        #nlogn > .MathJax{
+            font-size: inherit !important;
+        }
+    </style>
+</head>
+
+<body class="nav-open light-mode">
+  <div class="mathjax-definition">
+    \[
+    \newcommand{\lbrac}{\left(}
+    \newcommand{\rbrac}{\right)}
+    \DeclareMathOperator{\lcm}{lcm}
+    \newcommand{\R}{\mathbb{R}}
+    \newcommand{\Z}{\mathbb{Z}}
+    \newcommand{\N}{\mathbb{N}}
+    \DeclareMathOperator{\modular}{mod}
+    \]
+  </div>
+
+  <nav class="navbar open" id="navbar">
+    <div class="logo-and-side-nav"></div>
+    <div class = "highlights-and-attribute"></div>
+  </nav>
+
+  <div class="content-grid">
+      <div class = "general-wrapper">
+          <header>
+              <div class = "topic">
+                  Topics: Mathematics
+              </div>
+              <h1 class = "title">My Favorite Problems of All Time</h1>
+              <div class="date"></div>
+              <!-- <figure style="margin: 0;">
+                  <img class = "front-img" src = "time-complexity-banner.png" alt = "image">
+              </figure> -->
+              <div class="Quote">
+                  <div class="Quote-content">&#8220Real mathematics must be justified as art if it can be justified at all.&#8221</div>
+                  <div class="Author">- G.H. Hardy</div>
+              </div>
+          </header>
+
+          <section>
+            <h2>A Quite Difficult Series Problem</h2>
+            <div class="problem">
+                Let $\lcm(1):=1$. Prove that the series
+              <div class="equation">
+                $$\sum_{k=1}^{\infty}\frac{1}{\lcm(1,2,3,...,k)}$$
+              </div>
+                converges to an irrational number.
+            </div>
+
+            <details class="solution">
+              <summary>Proof</summary>
+              <div>
+                To know if the series converges, we use the comparison test. Let $L_k:=\lcm(1,2,...,k)$, for $k=1,2,3,...$. By definition, $L_1:=1$ and note that for $k\geq 2$, $0< L_k\leq k(k-1)$. That is, for each integer $N>0$,
+                <div class="equation">
+                  $$\sum_{k=1}^{N}\frac{1}{L_k}\leq 1+\sum_{k=2}^{N}\frac{1}{k(k-1)}\leq 1+\sum_{k=2}^{\infty}\frac{1}{k(k-1)}=1+\sum_{k=2}^{\infty}\left(\frac{1}{k-1}-\frac{1}{k}\right)=2.$$
+                </div>
+                This means that $S=\sum_{k=1}^{\infty}\frac{1}{L_k}$ exists and is a positive real number between 1 and 2. To prove that this number is irrational, we argue by contradiction. Suppose on the contrary that $S$ is rational, and it can be written as
+                <div class="equation">
+                  $$S=\frac{a}{b},$$
+                </div>
+                where $(a,b)\in\Z\times\Z\backslash\{0\}$, and $a, b$ are coprimes. Let $p_1,p_2,p_3,...,p_r,...$ be the increasing sequence of prime numbers greater than $b$. Using the famous Bertrand's Postulate, we know that
+                <div class="equation">
+                  $$p_r < p_{r+1}< 2p_r\quad\Rightarrow\quad p_{r+1}-p_r< p_r,\;\forall r=1,2,3,...$$
+                </div>
+                Change this to a non-strict inequality, we have
+                <div class="equation">$$p_{r+1}-p_r\leq p_r-1$$</div>
+                for each $r\in\Z^+$. We will now show that $p_{r+1}-p_r$ is indeed strictly less than $p_r-1$. To do this, we need to recall a useful lemma that we will not prove formally:
+                <div class="lemma">
+                  Lemma 1: There are infinitely primes of the form $3k+2$.
+                </div>
+                Lemma (1) simply states that for infinitely many primes $p_r$, it holds that $p_r\equiv 2\;(\modular 3)$. Now, note that if $p_{r+1}-p_r=p_r-1$, then $p_{r+1}-2\equiv 1\;(\modular 3)$, which means that $p_{r+1}\equiv 0\;(\modular 3)$, and is indeed true for $3$, but not true for infinitely many primes $p_r$. Hence, $p_{r+1}-p_r< p_r-1$ for infinitely many $r$. Now, notice that
+                <div class="equation">
+                  $$
+                  \begin{align*}
+                      S-S_{p_1-1}&=\left(\sum_{k=1}^{\infty}\frac{1}{L_k}-\sum_{k=1}^{p_1-1}\frac{1}{L_k}\right)=\sum_{k=p_1}^{\infty}\frac{1}{L_k}=\frac{1}{L_{p_1}}+\frac{1}{L_{p_1+1}}+\frac{1}{L_{p_1+2}}+\cdots\\
+                      &=\left(\frac{1}{L_{p_1}}+\frac{1}{L_{p_1+1}}+\cdots+\frac{1}{L_{p_2-1}}\right)+\left(\frac{1}{L_{p_2}}+\frac{1}{L_{p_2+1}}+\cdots+\frac{1}{L_{p_3-1}}\right)+\cdots\\
+                      &=\sum_{r=1}^{\infty}\sum_{k=p_r}^{p_{r+1}-1}\frac{1}{L_k}=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\sum_{k=p_r}^{p_{r+1}-1}\frac{L_{p_1-1}}{L_k}.
+                  \end{align*}
+                  $$
+                </div>
+                Notice also that $L_{p_1-1}=\lcm(1,2,...,p_1-1)$ is a multiple of all primes less than $p_1$, and $L_k=\lcm(1,2,...,k)=\lcm(1,...,p_r)$ is a multiple of all primes less than $p_r$. Therefore
+                <div class="equation">
+                  \begin{align*}
+                    0< S-S_{p_1-1}&\leq \frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\sum_{k=p_r}^{p_{r+1}-1}\frac{2\cdot 3\cdot 5\cdots (p_1-1)}{2\cdot 3\cdot 5\cdots (p_1-1)p_1\cdots p_r}\\
+                    &=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\sum_{k=p_r}^{p_{r+1}-1}\frac{1}{p_1p_2...p_r}=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\frac{1}{p_1p_2\cdots p_r}\sum_{k=p_r}^{p_{r+1}-1}1\\
+                    &=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\frac{p_{r+1}-p_r}{p_1p_2\cdots p_r}< \frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\frac{p_r-1}{p_1p_2\cdots p_r}\\
+                    &=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\left(\frac{1}{p_1\;...\;p_{r-1}}-\frac{1}{p_1...p_r}\right)\\
+                    &=\frac{1}{L_{p_1-1}}\left(1-\frac{1}{p_1}+\frac{1}{p_1}-\frac{1}{p_1p_2}+\frac{1}{p_1p_2}-\frac{1}{p_1p_2p_3}+\cdots\right)\\
+                    &=\frac{1}{L_{p_1-1}},
+                \end{align*}
+                </div>
+                which is the same as saying that
+                <div class="equation">
+                  $$
+                  \begin{equation*}\label{eqn: lcm_1}
+                      0< SL_{p_1-1}-S_{p_1-1}L_{p_1-1}< 1.
+                  \end{equation*}
+                  $$
+                </div>
+                Recall that we defined $p_1$ to be a prime number greater than $b$, therefore, $b\in\{1,2,...,p_1-1\}$, and hence $L_{p_1-1}=\lcm(1,2,...,p_1-1)$ must be a multiple of $b$; i.e., $L_{p_1-1}=kb$ for some integer $k$. This means that
+                <div class="equation">
+                  $$SL_{p_1-1}=\frac{a}{b}\cdot kb=a\cdot k\in\N.$$
+                </div>
+                Let us remind ourselves of the formula of $\lcm$ for a list of numbers.
+                <div class="lemma">
+                  Lemma 2. For an integer $m\geq k$, we have
+                  <div class="equation">
+                    $$L_m=\lcm(1,2,...,m)=\lcm(\lcm(1,2,...,k),k+1,...,m).$$
+                  </div>
+                </div>
+                Ok, but why? This lemma is left as an exercise for the reader.<br><br>
+
+                The lemma says that $L_m$ is a number divisible by $\lcm(1,2,...,k)$, and hence $\lcm(1,...,m)=h\lcm(1,...,k)$, for some $h\in\Z$. Therefore, for the term $S_{p_1-1}L_{p_1-1}$,
+                <div class="equation">
+                  $$S_{p_1-1}L_{p_1-1}=\sum_{k=1}^{p_1-1}\frac{L_{p_1-1}}{L_k}=\sum_{k=1}^{p_1-1}\frac{\lcm(1,2,...,p_1-1)}{\lcm(1,2,...,k)}\in\N,\;1\leq k\leq p_1-1.$$
+                </div>
+                This means that 
+                <div class="equation">
+                  $$SL_{p_1-1}-S_{p_1-1}L_{p_1-1}\in\N,$$
+                </div>
+                which is completely nonsensical, since this implies that there is an integer somewhere between $0$ and $1$. Therefore, the original statement must be true and $S$ is irrational.
+              </div>
+            </details>  
+          </section>
+
+          <section>
+            <h2>An Incredibly Difficult Inequality Problem</h2>
+            <p>
+              I encountered this problem back when I was in high school. I remember it took me more than 2 hours to solve.
+            </p>
+            <div class="problem">
+              Consider the set $\mathcal{S}$ of all integers $x$ satisfying
+              \[
+              4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2,
+              \]
+              for some integer $y$. How many integer values of $y$ are there such that the set $\mathcal{S}$ contains no more than 64 elements?
+            </div>
+            <details class="solution">
+              <summary>Solution</summary>
+              <div>
+                You can try solving this :)
+              </div>
+            </details>
+          </section>
+
+          <section>
+            <h2>More Articles</h2>
+            <div id="rec-article-container"></div>
+          </section>
+          
+      </div>
+      <footer></footer>
+  </div>
+<script src="../../assets/js/scripts.js"></script>
+<script src="../../assets/js/blogpage-setting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script> <!-- use prism-c.min.js or prism-clike.min.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

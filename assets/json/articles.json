@@ -37,13 +37,22 @@
       "date": "June 14, 2024"
     },
     {
-      "title": "Time Complexity of an Algorithm",
-      "id": "dsa-1",
-      "image": "time-complexity-banner.webp",
-      "link": "/articles/time-complexity-of-an-algorithm",
-      "topics": ["Data Structures and Algorithm", "C++", "Python"],
-      "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
-      "date": "December 2, 2024"
+      "title": "My Favorite Problems of All Time",
+      "id": "problems-1",
+      "image": "favorite-problems.webp",
+      "link": "/articles/favorite-problem-of-all-time",
+      "topics": ["Math", "Induction", "Contradiction"],
+      "description": "A collection of some of my favorite math problems that I've encountered throughout the years.",
+      "date": "April 24, 2025"
+    },
+    {
+      "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
+      "id": "chladni-3",
+      "image": "chladni-patterns.webp",
+      "link": "/articles/the-quest-to-finding-chladni-patterns-3",
+      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy", "Biharmonic Equation"],
+      "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
+      "date": "June 16, 2024"
     },
     {
       "title": "Light Refraction and A More In-depth Look of Snell's Law",
@@ -55,13 +64,13 @@
       "date": "October 2, 2024"
     },
     {
-      "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
-      "id": "chladni-3",
-      "image": "chladni-patterns.webp",
-      "link": "/articles/the-quest-to-finding-chladni-patterns-3",
-      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy", "Biharmonic Equation"],
-      "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
-      "date": "June 16, 2024"
+      "title": "Time Complexity of an Algorithm",
+      "id": "dsa-1",
+      "image": "time-complexity-banner.webp",
+      "link": "/articles/time-complexity-of-an-algorithm",
+      "topics": ["Data Structures and Algorithm", "C++", "Python"],
+      "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
+      "date": "December 2, 2024"
     },
     {
       "title": "Slightly More Interesting Inertia Problems",
