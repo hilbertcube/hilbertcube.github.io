@@ -238,6 +238,7 @@ input.search-bar:focus {
   font-size: 14px;
   padding-left: 3px;
   font-weight: bold;
+  color: rgb(152, 152, 152);
 }
 
 @media (max-width: 1200px) {

@@ -193,6 +193,13 @@ body {
   content: "Definition " counter(def) attr(data-definition-name) ". ";
 }
 
+.lemma {
+  border: 1px solid #008195;
+  margin: 20px 0px;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
 .problem {
   border: 1px solid rgba(113, 0, 212);
 }
@@ -208,6 +215,11 @@ body {
   border-radius: 4px;
   box-sizing: border-box;
   position: relative;
+
+  /* disable double-click select all */
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 .solution > *:not(summary) {
   padding: 0 1rem 1rem 1rem;

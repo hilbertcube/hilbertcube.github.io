@@ -283,7 +283,7 @@ function article(NUM_ARTICLE, des, random_article) {
 
         const date = document.createElement("div");
         date.classList.add("article-date");
-        date.textContent = "Updated " + article.date;
+        date.textContent = "Posted " + article.date;
         textContainer.appendChild(date);
       }
 
@@ -628,6 +628,8 @@ document.addEventListener("keydown", function (event) {
     }
   }
 });
+
+
 
 function SearchBar() {
   const searchBars = document.querySelectorAll("#searchBar, #searchBarMobile");
