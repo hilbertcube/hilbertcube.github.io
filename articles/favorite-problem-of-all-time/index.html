@@ -119,7 +119,7 @@
                 Notice also that $L_{p_1-1}=\lcm(1,2,...,p_1-1)$ is a multiple of all primes less than $p_1$, and $L_k=\lcm(1,2,...,k)=\lcm(1,...,p_r)$ is a multiple of all primes less than $p_r$. Therefore
                 <div class="equation">
                   \begin{align*}
-                    0< S-S_{p_1-1}&\leq \frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\sum_{k=p_r}^{p_{r+1}-1}\frac{2\cdot 3\cdot 5\cdots (p_1-1)}{2\cdot 3\cdot 5\cdots (p_1-1)p_1\cdots p_r}\\
+                    0 < S-S_{p_1-1}&\leq \frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\sum_{k=p_r}^{p_{r+1}-1}\frac{2\cdot 3\cdot 5\cdots (p_1-1)}{2\cdot 3\cdot 5\cdots (p_1-1)p_1\cdots p_r}\\
                     &=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\sum_{k=p_r}^{p_{r+1}-1}\frac{1}{p_1p_2...p_r}=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\frac{1}{p_1p_2\cdots p_r}\sum_{k=p_r}^{p_{r+1}-1}1\\
                     &=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\frac{p_{r+1}-p_r}{p_1p_2\cdots p_r}< \frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\frac{p_r-1}{p_1p_2\cdots p_r}\\
                     &=\frac{1}{L_{p_1-1}}\sum_{r=1}^{\infty}\left(\frac{1}{p_1\;...\;p_{r-1}}-\frac{1}{p_1...p_r}\right)\\
@@ -162,16 +162,84 @@
           </section>
 
           <section>
-            <h2>An Incredibly Difficult Inequality Problem</h2>
+            <h2>An Interesting Inequality Problem</h2>
             <p>
               I encountered this problem back when I was in high school. I remember it took me more than 2 hours to solve.
             </p>
             <div class="problem">
               Consider the set $\mathcal{S}$ of all integers $x$ satisfying
-              \[
-              4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2,
-              \]
+              <div class="equation">
+                \[
+                4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2,
+                \]
+              </div>
               for some integer $y$. How many integer values of $y$ are there such that the set $\mathcal{S}$ contains no more than 64 elements?
+            </div>
+            <p>
+              You can try solving this, or view the solution right below :)
+            </p>
+            <details class="solution">
+              <summary>Solution</summary>
+              <div>
+                For this inequality to make sense, $x$ and $y$ must be greater than 0. Now, we restate the problem in a more general sense: If $\mathcal{S}$ has n elements, then the inequality has to have n integers $x$ satisfying
+                <div class="equation">
+                  $$4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2.$$
+                </div>
+                From here, we can rearrange things a bit. From the inequality above, we now have
+                <div class="equation">
+                  $$
+                  \begin{align*}
+                    4yx^6 + \log_2(yx^6) + \log_2(4) &\geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2 + 2\log_2(x) + 1 \\[0.2em]
+                    2^{\log_2(4yx^6)} + \log_2(4yx^6) &\geq 2^{[\log_2(2x)]^2} + [\log_2(x) + 1]^2 \\[0.2em]
+                    2^{\log_2(4yx^6)} + \log_2(4yx^6) &\geq 2^{[\log_2(2x)]^2} + [\log_2(2x)]^2\\[0.2em]
+                  \end{align*}
+                  $$
+                </div>
+                <div class="lemma"> Lemma 1: Let $f: D\to\R$ be a function defined on a subset $D\subseteq\R$. Let $u(x)$ and $v(x)$ be functions such that for all $x$, $u, v\in D$ and $u(x) > v(x)$. Then,
+                  <ul>
+                    <li class="bullet">If $f$ is monotonically increasing on $D$, then $f(u(x)) > f(v(x))$</li>
+                    <li class="bullet">If $f$ is monotonically decreasing on $D$, then $f(u(x)) < f(v(x))$</li>
+                  </ul>
+                  Note: If $f$ is non-strictly monotonic (i.e., non-decreasing or non-increasing), then the inequalities become non-strict:
+                  <ul>
+                    <li class="bullet">If $f$ is non-decreasing on $D$, then $f(u(x)) \geq f(v(x))$</li>
+                    <li class="bullet">If $f$ is non-increasing on $D$, then $f(u(x)) \leq f(v(x))$</li>
+                  </ul>
+                  *See the definition of monotonic functions <a href="https://en.wikipedia.org/wiki/Monotonic_function#:~:text=In%20calculus%2C%20a%20function,order%20(see%20Figure%202)." class="url">here</a>.
+                </div>
+                From the inequality
+                <div class="equation">
+                  $$2^{\log_2(4yx^6)} + \log_2(4yx^6) \geq 2^{[\log_2(2x)]^2} + [\log_2(2x)]^2,$$
+                </div>
+                If we let $u(x) = \log_2(4yx^6)$, $v(x) = [\log_2(2x)]^2$, and $f(x) = 2^x + x$ (an obvious monotonically increasing function), then it must be true that
+                <div class="equation">
+                  $$\log_2(4yx^6) \geq [\log_2(2x)]^2$$
+                </div>
+                based on lemma 1. Solve for $y$, we obtain
+                <div class="equation">
+                  $$y\geq \frac{1}{2}x^{\log_2(x) - 4}.$$
+                </div>
+                Let $f(x) = \frac{1}{2}x^{\log_2(x) - 4}$. Our goal here is to find the minimum of this function, and perhaps visualize a rough sketch of it. Follow through the standard procedure:
+                <div class="equation">
+                  $$
+                  \begin{align*}
+                    f'(x) &= \\
+                          &= \\
+                          &=
+                  \end{align*}
+                  $$
+                </div>
+              </div>
+            </details>
+          </section>
+
+          <section>
+            <h2>An Good One from Romanian Mathematical Magazine</h2>
+            <div class="problem">
+              Prove that for any triangle ABC,
+              \[
+              \sum_{\text{cyc}} \frac{\cos(\frac{A}{2})}{\cos(\frac{A}{4}) + \cos(\frac{A}{4})} \geq \frac{3\sqrt{2}r}{R}.
+              \]
             </div>
             <details class="solution">
               <summary>Solution</summary>

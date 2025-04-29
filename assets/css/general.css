@@ -717,3 +717,13 @@ td {
     align-items: start;
   }
 }
+
+
+.bullet {
+  margin: var(--in-page-li-spacing) 0;
+  padding-left: 0;
+}
+.bullet ul {
+  padding-left: 15px; /* default is usually 40px */
+  margin-left: 0;
+}
