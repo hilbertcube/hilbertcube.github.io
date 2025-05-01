@@ -104,7 +104,7 @@
                 <div class="equation">$$p_{r+1}-p_r\leq p_r-1$$</div>
                 for each $r\in\Z^+$. We will now show that $p_{r+1}-p_r$ is indeed strictly less than $p_r-1$. To do this, we need to recall a useful lemma that we will not prove formally:
                 <div class="lemma">
-                  Lemma 1: There are infinitely primes of the form $3k+2$.
+                  <strong>Lemma 1:</strong> There are infinitely primes of the form $3k+2$.
                 </div>
                 Lemma (1) simply states that for infinitely many primes $p_r$, it holds that $p_r\equiv 2\;(\modular 3)$. Now, note that if $p_{r+1}-p_r=p_r-1$, then $p_{r+1}-2\equiv 1\;(\modular 3)$, which means that $p_{r+1}\equiv 0\;(\modular 3)$, and is indeed true for $3$, but not true for infinitely many primes $p_r$. Hence, $p_{r+1}-p_r< p_r-1$ for infinitely many $r$. Now, notice that
                 <div class="equation">
@@ -141,7 +141,7 @@
                 </div>
                 Let us remind ourselves of the formula of $\lcm$ for a list of numbers.
                 <div class="lemma">
-                  Lemma 2. For an integer $m\geq k$, we have
+                  <strong>Lemma 2:</strong> For an integer $m\geq k$, we have
                   <div class="equation">
                     $$L_m=\lcm(1,2,...,m)=\lcm(\lcm(1,2,...,k),k+1,...,m).$$
                   </div>
@@ -181,56 +181,86 @@
             <details class="solution">
               <summary>Solution</summary>
               <div>
-                For this inequality to make sense, $x$ and $y$ must be greater than 0. Now, we restate the problem in a more general sense: If $\mathcal{S}$ has n elements, then the inequality has to have n integers $x$ satisfying
+                For this inequality to make sense, $x$ and $y$ must be greater than 0. We now restate the problem more generally: if $\mathcal{S}$ has $n$ elements, then the inequality must hold for $n$ integers $x$ satisfying:
                 <div class="equation">
                   $$4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2.$$
                 </div>
-                From here, we can rearrange things a bit. From the inequality above, we now have
+                Rearranging the inequality, we obtain:
                 <div class="equation">
                   $$
                   \begin{align*}
                     4yx^6 + \log_2(yx^6) + \log_2(4) &\geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2 + 2\log_2(x) + 1 \\[0.2em]
                     2^{\log_2(4yx^6)} + \log_2(4yx^6) &\geq 2^{[\log_2(2x)]^2} + [\log_2(x) + 1]^2 \\[0.2em]
-                    2^{\log_2(4yx^6)} + \log_2(4yx^6) &\geq 2^{[\log_2(2x)]^2} + [\log_2(2x)]^2\\[0.2em]
+                    2^{\log_2(4yx^6)} + \log_2(4yx^6) &\geq 2^{[\log_2(2x)]^2} + [\log_2(2x)]^2
                   \end{align*}
                   $$
                 </div>
-                <div class="lemma"> Lemma 1: Let $f: D\to\R$ be a function defined on a subset $D\subseteq\R$. Let $u(x)$ and $v(x)$ be functions such that for all $x$, $u, v\in D$ and $u(x) > v(x)$. Then,
+                Let $u(x) = \log_2(4yx^6)$ and $v(x) = [\log_2(2x)]^2$. Then, based on the above, we have:
+                $$
+                2^{u(x)} + u(x) \geq 2^{v(x)} + v(x)
+                $$
+                To proceed, let's introduce a useful property of monotonic functions:
+                <div class="lemma"> 
+                  <strong>Lemma 1:</strong> Let $f: D \to \mathbb{R}$ be a function defined on a subset $D \subseteq \mathbb{R}$. Let $u(x)$ and $v(x)$ be functions such that for all $x$, $u(x), v(x) \in D$ and $u(x) > v(x)$. Then:
                   <ul>
-                    <li class="bullet">If $f$ is monotonically increasing on $D$, then $f(u(x)) > f(v(x))$</li>
-                    <li class="bullet">If $f$ is monotonically decreasing on $D$, then $f(u(x)) < f(v(x))$</li>
+                    <li class="bullet">If $f$ is strictly increasing on $D$, then $f(u(x)) > f(v(x))$.</li>
+                    <li class="bullet">If $f$ is strictly decreasing on $D$, then $f(u(x)) < f(v(x))$.</li>
                   </ul>
-                  Note: If $f$ is non-strictly monotonic (i.e., non-decreasing or non-increasing), then the inequalities become non-strict:
+                  <strong>Note:</strong> If $f$ is non-strictly monotonic (i.e., non-decreasing or non-increasing), then the inequalities become non-strict:
                   <ul>
-                    <li class="bullet">If $f$ is non-decreasing on $D$, then $f(u(x)) \geq f(v(x))$</li>
-                    <li class="bullet">If $f$ is non-increasing on $D$, then $f(u(x)) \leq f(v(x))$</li>
+                    <li class="bullet">If $f$ is non-decreasing on $D$, then $f(u(x)) \geq f(v(x))$.</li>
+                    <li class="bullet">If $f$ is non-increasing on $D$, then $f(u(x)) \leq f(v(x))$.</li>
                   </ul>
-                  *See the definition of monotonic functions <a href="https://en.wikipedia.org/wiki/Monotonic_function#:~:text=In%20calculus%2C%20a%20function,order%20(see%20Figure%202)." class="url">here</a>.
+                  <em>See the definition of monotonic functions 
+                  <a href="https://en.wikipedia.org/wiki/Monotonic_function#:~:text=In%20calculus%2C%20a%20function,order%20(see%20Figure%202)." class="url">here</a>.</em>
                 </div>
-                From the inequality
+                Returning to the inequality:
                 <div class="equation">
                   $$2^{\log_2(4yx^6)} + \log_2(4yx^6) \geq 2^{[\log_2(2x)]^2} + [\log_2(2x)]^2,$$
                 </div>
-                If we let $u(x) = \log_2(4yx^6)$, $v(x) = [\log_2(2x)]^2$, and $f(x) = 2^x + x$ (an obvious monotonically increasing function), then it must be true that
+                Let $f(x) = 2^x + x$, a strictly increasing function. Then, by Lemma 1:
                 <div class="equation">
                   $$\log_2(4yx^6) \geq [\log_2(2x)]^2$$
                 </div>
-                based on lemma 1. Solve for $y$, we obtain
-                <div class="equation">
-                  $$y\geq \frac{1}{2}x^{\log_2(x) - 4}.$$
-                </div>
-                Let $f(x) = \frac{1}{2}x^{\log_2(x) - 4}$. Our goal here is to find the minimum of this function, and perhaps visualize a rough sketch of it. Follow through the standard procedure:
+                Solving for $y$:
                 <div class="equation">
                   $$
                   \begin{align*}
-                    f'(x) &= \\
-                          &= \\
-                          &=
+                    4yx^6 &\geq 2^{[\log_2(2x)]^2} = 2^{\log_2(2x) \cdot \log_2(2x)} = (2x)^{\log_2(2x)} \\
+                    &= 2x \cdot x^{\log_2(2x)} = 2x^{\log_2(x) + 2}
                   \end{align*}
                   $$
                 </div>
+                Therefore:
+                <div class="equation">
+                  $$y \geq \frac{1}{2}x^{\log_2(x) - 4} > 0$$
+                </div>
+                Define $f(x) = \frac{1}{2}x^{\log_2(x) - 4}$. Our goal is to find the minimum of this function. Proceeding via standard calculus:
+                <div class="equation">
+                  $$
+                  \begin{align*}
+                    f'(x) &= \frac{1}{2}x^{\log_2(x) - 4}\left[\frac{\log_2(x) - 4}{x} + \frac{\ln(x)}{x\ln(2)}\right] \\
+                          &= \frac{1}{2}x^{\log_2(x) - 4} \cdot \frac{1}{x} \left[ \log_2(x) + \frac{\ln(x)}{\ln(2)} - 4 \right] \\
+                          &= \frac{1}{2}x^{\log_2(x) - 5} (2\log_2 x - 4)
+                  \end{align*}
+                  $$
+                </div>
+                Setting $f'(x) = 0$, we have either $\frac{1}{2}x^{\log_2(x) - 5} = 0$ or $2\log_2 x - 4 = 0$. The first case is impossible since $x > 0$. Thus:
+                $$
+                2\log_2 x - 4 = 0 \Rightarrow x = 4
+                $$
+                It's easy to verify that $f'(x)$ changes sign from negative to positive at $x = 4$, so $x = 4$ is a minimum. The core result is that:
+                <div class="equation">
+                  $$4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq 2^{[\log_2(2x)]^2} + [\log_2(x)]^2$$
+                </div>
+                is true if and only if $y \geq f(x) > 0$. For $\mathcal{S}$ to have $n$ elements, it must be true that:
+                <div class="equation">
+                  $$0 < y \leq \left\lfloor f(n + 1) \right\rfloor$$
+                </div>
+                Plugging in $n = 64$ gives $0 < y < 2319$. Therefore, there are 2319 values of $y$ satisfying the inequality.
               </div>
             </details>
+            
           </section>
 
           <section>
@@ -244,7 +274,51 @@
             <details class="solution">
               <summary>Solution</summary>
               <div>
-                You can try solving this :)
+                We have that 
+                <div class="equation">
+                  $$
+                  \begin{align*}
+                  \frac{\cos(\frac{A}{2})}{\cos(\frac{A}{4}) + \cos(\frac{A}{4})} &= \frac{\cos(\frac{A}{2})}{\sqrt{2}\cos\lbrac \frac{\pi}{4} - \frac{A}{4} \rbrac} = \frac{\sin\lbrac \frac{B + C}{2} \rbrac}{\sqrt{2}\cos\lbrac \frac{B + C}{4} \rbrac}\\[1.5em]
+                  &= \frac{2\sin\lbrac \frac{B + C}{4} \rbrac \cos\lbrac \frac{B + C}{4} \rbrac}{\sqrt{2}\cos\lbrac \frac{B + C}{4} \rbrac} = \sqrt{2}\sin\lbrac \frac{B + C}{4} \rbrac
+                  \end{align*}
+                  $$
+                </div>
+                Let $f(x) = \sin\lbrac \frac{x}{2} \rbrac$. Take the second derivative of $f$:
+                <div class="equation">
+                  $$f''(x) = -\frac{1}{4}\sin\lbrac \frac{x}{2} \rbrac < 0,\;\forall x\in(0, \pi),$$
+                </div>
+                therefore $f(x) = \sin\lbrac \frac{x}{2} \rbrac$ is a concave function on $(0, \pi)$. Using Popoviciu's inequality, we have
+                <div class="equation">
+                  \[
+                  \begin{align}
+                  \sum_{\text{cyc}}\sin\lbrac \frac{B + C}{4} \rbrac &= \sum_{\text{cyc}}f\lbrac \frac{B + C}{2}\rbrac \geq \frac{1}{2}\lbrac \sum_{\text{cyc}}f(A) + 3f\lbrac \frac{A + B + C}{3}\rbrac \rbrac \\[0.5em]
+                  &= \frac{1}{2}\lbrac \sum_{\text{cyc}}f(A) + 3f\lbrac \frac{\pi}{3}\rbrac \rbrac = \frac{1}{2}\lbrac \sum_{\text{cyc}}\sin\lbrac \frac{A}{2}\rbrac + 3\sin\lbrac \frac{\pi}{6}\rbrac \rbrac \\[0.5em]
+                  &= \frac{1}{2}\lbrac \sum_{\text{cyc}}\sin\lbrac \frac{A}{2}\rbrac + \frac{3}{2} \rbrac
+                  \end{align}
+                  \]
+                </div>
+                <div class="lemma">
+                  <strong>Lemma 1: </strong> Given a triangle $\Delta ABC$,
+                  <div class="equation">
+                    $$ \sin\lbrac \frac{A}{2}\rbrac \sin\lbrac \frac{B}{2}\rbrac \sin\lbrac \frac{C}{2}\rbrac = \frac{r}{4R}$$
+                  </div>
+                </div>
+                Using the AM-GM inequality for $f(x)$,
+                <div class="equation">
+                  $$\sum_{\text{cyc}}\sin\lbrac \frac{A}{2} \rbrac \geq 3\lbrac \prod_{\text{cyc}}\sin\lbrac \frac{A}{2} \rbrac \rbrac^{1/3} 
+                  = 3\lbrac \sin\lbrac \frac{A}{2}\rbrac \sin\lbrac \frac{B}{2}\rbrac \sin\lbrac \frac{C}{2}\rbrac \rbrac^{1/3}
+                  = 3\lbrac \frac{r}{4R} \rbrac^{1/3} $$
+                </div>
+                Thus,
+                <div class="equation">
+                  $$
+                  \frac{1}{2}\lbrac \sum_{\text{cyc}}\sin\lbrac \frac{A}{2} \rbrac + \frac{3}{2} \rbrac \geq \frac{1}{2}\lbrac 3\lbrac \frac{r}{4R} \rbrac^{1/3} + \frac{3}{2} \rbrac =  \frac{3}{2}\lbrac \frac{r}{4R} \rbrac^{1/3} + \frac{1}{2}
+                  $$
+                </div>
+                According to Euler, 
+                <div class="equation">
+                  $$R \geq 2r \Rightarrow \frac{1}{8} \geq \frac{r}{4R} $$
+                </div>
               </div>
             </details>
           </section>
