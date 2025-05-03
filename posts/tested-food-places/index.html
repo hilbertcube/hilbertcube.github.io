@@ -49,10 +49,30 @@
         object-fit: cover;
         border-radius: 8px;
       }
-
+      .food {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+      }
+      .food > section {
+        flex: 1;
+      }
+      h3 {
+        margin-top: 10px;
+      }
       @media (max-width: 768px) {
         .food-img {
           width: calc(50% - 5px);
+        }
+        .food {
+          flex-direction: column;
+          gap: 0;
         }
       }
     </style>
@@ -74,13 +94,14 @@
           <div class="date">Updated April, 29, 2024</div>
         </header>
 
-        <section>
+        <section class="food">
           <section>
             <h3>Have Tried <i class="fa-solid fa-check" style="color: green;"></i></h3>
             <ul>
               <li class="bullet">
                 <strong>Restaurants</strong>
                 <ul>
+                  <li class="bullet">LA District Market. A large variety of delicious food. A bit pricy though. 8.5/10.</li>
                   <li class="bullet">Euporium Thai, LA. 8.5/10. Free sticky rice cake for birthdays</li>
                   <li class="bullet">Sea Harbor, Rosemead. Best Dim Sum, one Michelin Star, 9.5/10</li>
                   <li class="bullet">Slurpin Ramen Bar, City of Industry. 7/10</li>
@@ -109,13 +130,12 @@
                 </ul>
               </li>
               <li class="bullet">
-                <strong>Gallery</strong>
-                <div class="image-container" style="margin: 25px 0">
-                  <img class="food-img" src="coco.webp" alt="Japanese Curry"/>
-                  <img class="food-img" src="boba.webp" alt="Boba"/>
-                  <img class="food-img" src="ramen.webp" alt="Ramen"/>
-                  <img class="food-img" src="takoyaki.webp" alt="Takoyaki"/>
-                </div>
+                <strong>Bars</strong>
+                <ul>
+                  <li class="bullet">The Gallery Lounge, Downtown LA. 8/10</li>
+                  <li class="bullet">The Grayson Bar, Downtown LA. 8/10</li>
+                  <li class="bullet">Spire 73, InterContinental LA. 9/10</li>
+                </ul>
               </li>
             </ul>
           </section>
@@ -132,6 +152,12 @@
                   <li class="bullet">Noodle Nest, Irvine</li>
                   <li class="bullet">Tijuana Taco, OC</li>
                   <li class="bullet">Koyi Sushi, Costa Mesa</li>
+                  <li class="bullet">Izakaya Taiko, Fountain Valley.</li>
+                  <li class="bullet">Happy Lamb Hotpot, Westminster.</li>
+                  <li class="bullet">Japan Village, NYC, Industry City.</li>
+                  <li class="bullet">BBQ Chung Dam, LA.</li>
+                  <li class="bullet">Chubby Sushi & Ramen, OC.</li>
+                  <li class="bullet">Story Bar + Kitchen, Anaheim.</li>
                 </ul>
               </li>
               <li class="bullet">
@@ -145,6 +171,21 @@
             </ul>
           </section>
         </section>
+
+        <section>
+          <h3>Gallery</h3>
+          <div class="image-container" style="margin: 25px 0">
+            <img class="food-img" src="coco.webp" alt="Japanese Curry"/>
+            <img class="food-img" src="boba.webp" alt="Boba"/>
+            <img class="food-img" src="ramen.webp" alt="Ramen"/>
+            <img class="food-img" src="takoyaki.webp" alt="Takoyaki"/>
+            <img class="food-img" src="thai.webp" alt="Euporium Thai"/>
+            <img class="food-img" src="bar1.webp" alt="Grayson Bar"/>
+            <img class="food-img" src="taco.webp" alt="LA Taco"/>
+            <img class="food-img" src="burger.webp" alt="Hawaiian Burger"/>
+          </div>
+        </section>
+        
       </div>
       <footer></footer>
     </div>
