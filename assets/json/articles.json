@@ -102,6 +102,14 @@
   ],
   "posts": [
     {
+      "title": "A list of places to munch",
+      "pid": "munch-places",
+      "link": "/posts/tested-food-places/",
+      "topics": ["Life", "Daily life", "Food", "Drinks", "Desserts", "Boba"],
+      "description": "A list of restaurants, cafés, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I’ve tried or want to try. I’ll be using this post as a running to-do list.",
+      "date": "April 18, 2025"
+    },
+    {
       "title": "No matter what happens, life must move on",
       "pid": "random-post",
       "link": "/404.html",
@@ -116,14 +124,6 @@
       "topics": ["VS Code", "Chrome Extensions", "Software", "Hardware", "Life", "Work"],
       "description": "A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I'm too lazy for migration, and it has plenty of cool plugins. Why VS Code? I've tried many text-editors and IDEs before, but I find VS Code to be the most visually pleasing, plus, it's lightweight, and has a large community and number of extensions.",
       "date": "April 12, 2025"
-    },
-    {
-      "title": "A list of places to munch",
-      "pid": "munch-places",
-      "link": "/posts/tested-food-places/",
-      "topics": ["Life", "Daily life", "Food", "Drinks", "Desserts", "Boba"],
-      "description": "A list of restaurants, cafés, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I’ve tried or want to try. I’ll be using this post as a running to-do list.",
-      "date": "April 11, 2025"
     },
     {
       "title": "Silly project idea",
