@@ -258,13 +258,9 @@ body.nav-closed {
   top: 0;
   position: relative;
   text-align: justify; /* IMPORTANT: Stretch text to fill page*/
-  background-color: var(
-    --body-background-color
-  );
+  background-color: var(--body-background-color);
   color: var(--grid-text-color);
-  margin-top: var(
-    --top-bar-height
-  );
+  margin-top: var(--top-bar-height);
   display: flex;
   flex: 1;
   flex-direction: column;
