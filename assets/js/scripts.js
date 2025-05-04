@@ -34,14 +34,83 @@ setFavicon();
 
 // Image full screen for all img tags
 document.addEventListener("DOMContentLoaded", function () {
-  // Check if the device is NOT mobile (you can adjust the max width if needed)
   if (window.innerWidth > 768) {
-      document.querySelectorAll("img").forEach(function (img) {
-          img.style.cursor = "pointer";
-          img.addEventListener("click", function () {
-              window.open(this.src);
-          });
+    document.querySelectorAll("img").forEach(function (img) {
+      img.style.cursor = "pointer";
+      img.addEventListener("click", function () {
+        // Create overlay
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = 0;
+        overlay.style.left = 0;
+        overlay.style.width = "100vw";
+        overlay.style.height = "100vh";
+        overlay.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.zIndex = 9999;
+
+        // Create container for image and button
+        const imgContainer = document.createElement("div");
+        imgContainer.style.position = "relative";
+        imgContainer.style.display = "inline-block";
+
+        // Create image
+        const fullscreenImg = document.createElement("img");
+        fullscreenImg.src = this.src;
+        fullscreenImg.style.maxWidth = "90vw";
+        fullscreenImg.style.maxHeight = "90vh";
+        fullscreenImg.style.boxShadow = "0 0 20px black";
+        fullscreenImg.style.display = "block";
+
+        // Create close button inside image
+        const closeButton = document.createElement("div");
+        closeButton.textContent = "✕";
+        closeButton.style.position = "absolute";
+        closeButton.style.top = "10px";
+        closeButton.style.right = "10px";
+        closeButton.style.fontSize = "24px";
+        closeButton.style.color = "white";
+        closeButton.style.backgroundColor = "rgba(0,0,0,0.5)";
+        closeButton.style.borderRadius = "50%";
+        closeButton.style.width = "32px";
+        closeButton.style.height = "32px";
+        closeButton.style.display = "flex";
+        closeButton.style.alignItems = "center";
+        closeButton.style.justifyContent = "center";
+        closeButton.style.cursor = "pointer";
+        closeButton.style.userSelect = "none";
+
+        // Assemble elements
+        imgContainer.appendChild(fullscreenImg);
+        imgContainer.appendChild(closeButton);
+        overlay.appendChild(imgContainer);
+        document.body.appendChild(overlay);
+
+        // Close logic
+        function closeOverlay() {
+          document.body.removeChild(overlay);
+          document.removeEventListener("keydown", escListener);
+        }
+
+        closeButton.addEventListener("click", closeOverlay);
+
+        // overlay.addEventListener("click", function (e) {
+        //   if (e.target === overlay) {
+        //     closeOverlay();
+        //   }
+        // });
+
+        function escListener(e) {
+          if (e.key === "Escape") {
+            closeOverlay();
+          }
+        }
+
+        document.addEventListener("keydown", escListener);
       });
+    });
   }
 });
 

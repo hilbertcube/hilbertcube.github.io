@@ -79,27 +79,26 @@
         <section>
           <h3 class="home-h3-headers">About me</h3>
           <p>
-            My [English] name is Don. I'm currently an engineering student
-            at UCLA. As part of my major and personal
-            preferences, I spent a lot of time reading research papers and
-            online scientific blogs, as a result, I got inspired by some of them
-            and decided to create this website. This website was created for
-            uploading my writings and projects. The topics that I write about
-            range from mathematics, computer science, physics, and more. I'm
-            also a math, physics, and computer science tutor. I left some of my
-            personal notes in the <b>Notes</b> section above, feel free to use
-            them.
+            My [English] name is Don. I'm currently an engineering student at
+            <a class="url" href="https://www.google.com/search?q=ucla&sca_esv=7cf0c26799f71603&rlz=1C1UEAD_enUS1141US1141&sxsrf=AHTn8zodDBV1zgGs0RLN7wjuFkMLYe0U3Q%3A1746330770159&ei=kuQWaKW_CZrNkPIP8tmsuQE&ved=0ahUKEwil0NyJ9YiNAxWaJkQIHfIsKxcQ4dUDCBA&uact=5&oq=ucla&gs_lp=Egxnd3Mtd2l6LXNlcnAiBHVjbGEyChAjGIAEGCcYigUyChAjGIAEGCcYigUyChAjGIAEGCcYigUyDRAuGIAEGLEDGBQYhwIyChAAGIAEGEMYigUyChAAGIAEGEMYigUyEBAAGIAEGLEDGEMYgwEYigUyChAAGIAEGEMYigUyChAAGIAEGEMYigUyEBAuGIAEGEMYxwEYigUYrwFI-AdQ3QNYlAZwAXgBkAEAmAFYoAHnAaoBATO4AQPIAQD4AQGYAgSgAvQBwgIKEAAYsAMY1gQYR8ICDRAAGIAEGLADGEMYigXCAg4QABiwAxjkAhjWBNgBAcICGRAuGIAEGLADGEMYxwEYyAMYigUYrwHYAQHCAhMQLhiABBiwAxhDGMgDGIoF2AEBwgIKEAAYgAQYFBiHAsICCBAuGIAEGLEDwgIFEAAYgATCAg0QABiABBixAxgUGIcCwgIKEC4YgAQYQxiKBcICCxAAGIAEGLEDGIMBmAMAiAYBkAYSugYGCAEQARgJkgcBNKAHgS2yBwEzuAfvAQ&sclient=gws-wiz-serp">UCLA</a>. 
+            As part of my major and personal preferences, I spent a lot of
+            time reading research papers and online scientific blogs, as a
+            result, I got inspired by some of them and decided to create this
+            website. This website was created for uploading my writings and
+            projects. The topics that I write about range from mathematics,
+            programming, physics, and random shit. I'm also a math, physics, and
+            computer science tutor. I left some of my personal notes in the
+            <b>Notes</b> section above, feel free to use them.
           </p>
           <p>
             Check out my portfolio and résumé at
-            <a href="https://ddonle.com/" class="url"
-              >ddonle.com</a
-            >.
+            <a href="https://ddonle.com/" class="url">ddonle.com</a>.
           </p>
         </section>
 
         <section>
           <h3 class="home-h3-headers">About this website</h3>
+          <h4>Background and Choice of Design</h4>
           <p>
             This website was formally built back in summer of 2024, but I've
             been writing a lot of the content on this website on LaTeX
@@ -138,6 +137,29 @@
               </div>
             </li>
           </ul>
+          <p>
+            The fun part about building something from scratch is having
+            fine-grained control over everything. But at the same time, too much
+            control can be a real headache. Whenever I create something, I
+            always think about my future self. I constantly ask how I can make
+            things a bit easier down the line, like the choice of loading
+            certain components dynamically. This choice actually tanked
+            performance, but it did make things easier for me whenever I want to
+            add, let's say a new section on the top bar. Because of that, I've
+            lost count of how many times I've changed the design just to make
+            the process of updating content easier.
+          </p>
+          <p>
+            Please don't get me wrong. I DO place a major emphasis on
+            efficiency, optimization, and speed. But that's only for my work in
+            system programming, or if it's something related to web dev that
+            really needs performance, I'd just use a framework like Next. For a
+            personal, hobby project like this, I don't really care. The slight
+            inefficiency is small enough to be considered negligible, and I'm
+            happy with that.
+          </p>
+
+          <h4>Additional Tools</h4>
           <p>
             Some other tools I used are
             <a href="https://www.mathjax.org/" class="url">MathJax</a>, a
@@ -226,14 +248,22 @@ void write_to_log(const std::string& message, const std::string& filename)
             you find any:
           </p>
           <ul id="contact-ul">
-            <li style="margin: var(--in-page-li-spacing) 0;"> wrong information,</li>
-            <li style="margin: var(--in-page-li-spacing) 0;"> errors in the source code,</li>
-            <li style="margin: var(--in-page-li-spacing) 0;"> contents that you are not happy about,</li>
-            <li style="margin: var(--in-page-li-spacing) 0;"> spelling or grammar errors,</li>
+            <li style="margin: var(--in-page-li-spacing) 0">
+              wrong information,
+            </li>
+            <li style="margin: var(--in-page-li-spacing) 0">
+              errors in the source code,
+            </li>
+            <li style="margin: var(--in-page-li-spacing) 0">
+              contents that you are not happy about,
+            </li>
+            <li style="margin: var(--in-page-li-spacing) 0">
+              spelling or grammar errors,
+            </li>
           </ul>
           <p>
-            feel free to reach out to me using the email address
-            below. Any feedback or thoughts about this website would be greatly
+            feel free to reach out to me using the email address below. Any
+            feedback or thoughts about this website would be greatly
             appreciated.
           </p>
           <p>
