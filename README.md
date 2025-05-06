@@ -1,6 +1,6 @@
 ## About
 
-Blog website. Coded from scratch using HTML5, CSS3, and vanilla JS.
+Blog website about math, programming, and food. Built from scratch using HTML5, CSS3, and vanilla JS.
 1.  [About](https://neumanncondition.com/about/)
 2.  [Privacy Policy](https://neumanncondition.com/privacy-policy/)
 
