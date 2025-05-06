@@ -172,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
       counterDisplay.style.borderRadius = "20px";
       counterDisplay.style.fontSize = "16px";
       counterDisplay.style.pointerEvents = "auto";
+      counterDisplay.style.fontFamily = "Jura";
 
       // Assemble elements
       imgContainer.appendChild(fullscreenImg);
