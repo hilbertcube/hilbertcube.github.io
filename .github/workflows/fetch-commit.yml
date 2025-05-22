@@ -19,7 +19,7 @@ jobs:
     - name: Get latest non-bot commit
       run: |
         curl -s -H "Authorization: token ${{ secrets.TOKEN }}" \
-        https://api.github.com/repos/hilbertcube/neumanncondition/commits \
+        https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits \
         | jq '[.[] | select(.commit.author.name != "github-actions")] | .[0]' > assets/json/latest_commit.json
 
     - name: Commit latest commit to repo
