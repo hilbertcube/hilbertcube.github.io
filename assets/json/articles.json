@@ -110,14 +110,6 @@
       "date": "April 18, 2025"
     },
     {
-      "title": "No matter what happens, life must move on",
-      "pid": "random-post",
-      "link": "/404.html",
-      "topics": ["Life", "Self-reminder", "Cope"],
-      "description": "Life is full of failures, and each failure can hurt, a lot. But nothing hurts more than the pain of regret. It's not always the case that you did something wrong. You can do everything right and still lose. Be proud that you had the courage to do it.",
-      "date": "April 16, 2025"
-    },
-    {
       "title": "A list of tools that I use",
       "pid": "tool-list",
       "link": "/posts/favorite-tools/",
@@ -190,6 +182,16 @@
       "topics": ["About this website"],
       "description": "About this website I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar...",
       "date": "Updated recently"
+    }
+  ],
+  "scratch" : [
+    {
+      "title": "No matter what happens, life must move on",
+      "pid": "random-post",
+      "link": "/404.html",
+      "topics": ["Life", "Self-reminder", "Cope"],
+      "description": "Life is full of failures, and each failure can hurt, a lot. But nothing hurts more than the pain of regret. It's not always the case that you did something wrong. You can do everything right and still lose. Be proud that you had the courage to do it.",
+      "date": "April 16, 2025"
     }
   ]
 }
