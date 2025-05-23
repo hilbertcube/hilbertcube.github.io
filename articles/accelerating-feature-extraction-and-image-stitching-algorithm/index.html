@@ -66,11 +66,11 @@
         </li>
         <li><a href="#literature-review">Literature Review and Technologies</a>
           <ul>
+            <li><a href="#mpi">Message Passing Interfaces (MPI)</a></li>
+            <li><a href="#openmp">Open Multi-Processing (OpenMP)</a></li>
             <li><a href="#sift-and-orb">The SIFT and ORB Feature Detectors</a></li>
             <li><a href="#gpu-and-cuda">Overview of General GPU Architecture and Nvidia’s Compute Unified Device
                 Architecture (CUDA)</a></li>
-            <li><a href="#mpi">Message Passing Interfaces (MPI)</a></li>
-            <li><a href="#openmp">Open Multi-Processing (OpenMP)</a></li>
           </ul>
         </li>
         <li><a href="#implementation">Implementations</a>
@@ -156,18 +156,14 @@
             </div>
             <div>
               <figure>
-                <img src="capital.jpg" alt="Capital Building" class="image-block" style="width: 100%">
-                <figcaption>The Capital Building of the United States. Feature detection using the Oriented FAST and
+                <img src="capital.jpg" alt="Capitol Building" class="image-block" style="width: 100%">
+                <figcaption>The United States Capitol, Washington D.C., United States. Feature detection using the Oriented FAST and
                   Rotated BRIEF (ORB) Algorithm. The colored circular regions are called key points of the image.
                 </figcaption>
               </figure>
             </div>
           </div>
-
         </section>
-
-
-
 
         <section id="utilizing-gpu">
           <h3>Project's Objective</h3>
@@ -209,17 +205,48 @@
       </section>
 
 
-
-
-
-
       <section id="literature-review">
-        <h2>Literature Review and Technologies</h2>
+        <h2>Tools and Frameworks</h2>
+        <section id="mpi">
+          <h3>Distributed Memory Design: Message Passing Interfaces (MPI)</h3>
+          <p>
+            What is an MPI? Simply put, an MPI is a software designed to allow communication between CPU cores. MPI defines the
+            syntax and semantics of library routines that allow programs to communicate data by passing messages between
+            processes or cores. Here's how it works:
+          </p>
+          <p>
+            Under the distributed memory design, each process has its own memory space and executes independently
+            from other processes. This allows each node (processor core, or cluster of processor cores) to work on a subsection of
+            the larger composite image asynchronously. To communicate with each other, each node is assigned a label (also called 'rank')
+            which is used to send and receive information to/from other nodes. An MPI is simply a portable distributed-memory framework to employ this design. It should be noted that the while the terms node, process, and processor are used
+            interchangeably, the algorithm does support nodes that consist of multiple processor cores. For this research project, we will be using the Microsoft Message Passing Interface (Ms.MPI).
+          </p>
+        </section>
+
+        <section id="openmp">
+          <h3>Shared Memory Design: Open Multi-Processing (OpenMP)</h3>
+          <p>
+            OpenMP is an Application Program Interface (API) that may be used to direct multi-threaded, shared memory
+            parallelism in C/C++, or Fortran programs. Both g++ (available since GCC 4.9) and MSVC compiler have OpenMP
+            available through the header <code class="inline-code">#include&lt;omp.h&gt;</code>. To enable OpenMP in
+            Microsoft Visual Studio, go to Project > Properties > C/C++ > Language > OpenMP support, select yes.
+
+            For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation of any module that uses
+            OpenMP:
+          </p>
+          <div style="text-align: center; margin: 25px 0;  overflow: auto;">
+            <pre class="console" style="display:inline-block;"><samp>    g++ -c test.cpp -o test.o -fopenmp
+    g++ test.o -o test -fopenmp -lpthread    </samp></pre>
+          </div>
+          <p>
+            What's the difference between this and the stl threads, or unix pthreads? Not that much differences, but OpenMP are usually used in loops for acceleration.
+          </p>
+        </section>
 
         <section id="sift-and-orb">
           <h3>The SIFT and ORB Feature Detectors</h3>
           <p>
-            <strong>Scale-Invariant Feature Transform.</strong> SIFT is one of the most well-known and reliable feature
+            <strong>Scale-Invariant Feature Transform.</strong> SIFT is (probably) one of the most well-known and reliable feature
             detectors in the field of computer vision to extract invariant features from an image. SIFT primarily works
             based on the Difference of Gaussian (D.o.G), defined as
           </p>
@@ -340,34 +367,6 @@
             utilized efficiently to maximize parallel computation.
           </p>
         </section>
-
-        <section id="mpi">
-          <h3>Message Passing Interfaces (MPI)</h3>
-          <p>
-            What is an MPI? An MPI is a software designed to allow communication between CPU cores. MPI defines the
-            syntax and semantics of library routines that allow programs to communicate data by passing messages between
-            processes. For this research project, we will be using the Microsoft Message Passing Interface (MsMPI).
-          </p>
-        </section>
-
-        <section id="openmp">
-          <h3>Open Multi-Processing (OpenMP)</h3>
-          <p>
-            OpenMP is an Application Program Interface (API) that may be used to direct multi-threaded, shared memory
-            parallelism in C/C++, or Fortran programs. Both g++ (available since GCC 4.9) and MSVC compiler have OpenMP
-            available through the header <code class="inline-code">#include&lt;omp.h&gt;</code>. To enable OpenMP in
-            Microsoft Visual Studio, go to Project > Properties > C/C++ > Language > OpenMP support, select yes.
-
-            For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation of any module that uses
-            OpenMP:
-          </p>
-          <div style="text-align: center; margin: 25px 0;  overflow: auto;">
-            <pre class="console" style="display:inline-block;"><samp>    g++ -c test.cpp -o test.o -fopenmp
-    g++ test.o -o test -fopenmp -lpthread    </samp></pre>
-          </div>
-        </section>
-
-
       </section>
 
 
@@ -488,14 +487,63 @@ features.img_size = grayImg.size();
         </section>
       </section>
 
-      <!--  -->
 
 
       <section id="benchmarks">
         <h2>Data Collection and Benchmarks</h2>
+        <h3>System Specs</h3>
+<div class="table-wrapper">
+          <table style="margin-left: auto; margin-right: auto; text-align: center; min-width: 90%;" id="setup-table">
+            <tr style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);">
+              <th></th>
+              <th style="border-left: 1px solid var(--grid-text-color)"><strong>First Setup</strong></th>
+              <th><strong>Second Setup</strong></th>
+              <th><strong>Third Setup</strong></th>
+              <th><strong>Fourth Setup</strong></th>
+            </tr>
+            <tr style="border: 0; ">
+              <td>CPU</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">Intel Core i7-8750H</td>
+              <td>Intel Core i9-13900KF</td>
+              <td>Intel Core i7-7700k</td>
+              <td>Intel Xeon Gold</td>
+            </tr>
+            <tr>
+              <td>GPU</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">NVIDIA GTX 1070 Max-Q</td>
+              <td>NVIDIA RTX 4060Ti</td>
+              <td>NVIDIA GTX 1070</td>
+              <td>NVIDIA Tesla-v100</td>
+            </tr>
+            <tr>
+              <td>OpenCV Version</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">OpenCV 4.10.0</td>
+              <td>OpenCV 4.10.0</td>
+              <td>OpenCV 4.5.5</td>
+              <td>OpenCV 4.5.5</td>
+            </tr>
+            <tr>
+              <td>RAM</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">16GB</td>
+              <td>32GB</td>
+              <td>64GB</td>
+              <td>192GB</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--grid-text-color);">
+              <td>GPU Memory</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">8GB</td>
+              <td>16GB</td>
+              <td>8GB</td>
+              <td>16GB</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>CUDA-accelerated Setups</h3>
         <p>
-          The data set for this project is a set of sixty-four 4k images, each with a resolution of 3840 $\times$ 2160
-          px. We will utilize CUDA to accelerate the processing of these high-resolution images.
+          The data set for this project is a set of 500 4k images, but we process them in a patch of 64 images, 
+          each with a resolution of 3840 $\times$ 2160 px. The setups that used CUDA to accelerate the processing of 
+          these high-resolution images will be limited to the first and second setup.
         </p>
 
         <p>
@@ -558,59 +606,10 @@ features.img_size = grayImg.size();
             </ul>
           </div>
         </div>
-
-        <p><strong>Experimental Setup:</strong> The data collection process will be conducted on two different
-          computers:</p>
-
-        <div class="table-wrapper">
-          <table style="margin-left: auto; margin-right: auto; text-align: center; min-width: 70%;" id="setup-table">
-            <tr style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);">
-              <th></th>
-              <th style="border-left: 1px solid var(--grid-text-color)"><strong>First Setup</strong></th>
-              <th><strong>Second Setup</strong></th>
-            </tr>
-            <tr style="border: 0; ">
-              <td>CPU</td>
-              <td style="border-left: 1px solid var(--grid-text-color)">Intel Core i7-8750H</td>
-              <td>Intel Core i9-13900KF</td>
-            </tr>
-            <tr>
-              <td>GPU</td>
-              <td style="border-left: 1px solid var(--grid-text-color)">NVIDIA GTX 1070 Max-Q</td>
-              <td>NVIDIA RTX 4060Ti</td>
-            </tr>
-            <tr>
-              <td>OpenCV Version</td>
-              <td style="border-left: 1px solid var(--grid-text-color)">OpenCV 4.10.0</td>
-              <td>OpenCV 4.10.0</td>
-            </tr>
-            <tr>
-              <td>RAM</td>
-              <td style="border-left: 1px solid var(--grid-text-color)">16GB</td>
-              <td>32GB</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--grid-text-color);">
-              <td>GPU Memory</td>
-              <td style="border-left: 1px solid var(--grid-text-color)">8GB</td>
-              <td>16GB</td>
-            </tr>
-          </table>
-        </div>
-
-        <p>
-          There will be some differences in the data obtained from the two setups. The CPU used in lab setup 1 has only
-          6 cores, so the data obtained using setup 1 will be only from 1, 2, 4, and at most 8 cores (overhead). We also
-          use different running memories to compare whether the calculation results of the algorithm will be affected by
-          different running memories.
-        </p>
-
-
       </section>
 
-
-      <section>
+      <section id="results">
         <h2>Results</h2>
-
         <section id="performance-metrics">
           <h3>Performance Metrics</h3>
 
@@ -758,7 +757,7 @@ features.img_size = grayImg.size();
         <h2>Ending Remarks and Future Work</h2>
 
         <p>
-          One significant drawback to the CUDA-accelerated algorithm is that it is a generally memory-costly method.
+          One significant drawback to the CUDA-accelerated algorithm is that it is a generally memory-costly method (extremely costly even, in many iterations of test cases).
           However, if the user lacks a high-quality camera or needs to create a map quickly without focusing on fine
           details, the image patch can be downscaled to meet these requirements. This approach has been validated in the
           first setup, where the 4K patch was downscaled by 75% and worked perfectly. This can be achieved easily by
