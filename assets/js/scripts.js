@@ -1374,7 +1374,7 @@ function fetchCommit() {
       });
 
       document.getElementById('commit-info').textContent =
-        `Last Updated: ${datePart}, ${timePart} (Pacific)\nCommit Message: ${message}\nFetched via Github API`;
+        `Last Updated: ${datePart}, ${timePart} (Pacific)\nCommit Message: ${message}\n*Fetched via Github API`;
     });
 }
 
