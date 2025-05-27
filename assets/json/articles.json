@@ -124,6 +124,14 @@
       "topics": ["Poetry", "API" ,"RestAPI", "Gemini"],
       "description": "I used Gemini 2.0 Flash API to create an AI bot that writes poetry and plays piano.",
       "date": "March, 2025"
+    },
+    {
+      "title": "Average engineering experience",
+      "pid": "avg-engr-exp",
+      "link": "/posts/avg-engr-exp",
+      "topics": ["Electrical Engineering"],
+      "description": "Electrical Engineering: Electrical Circuit Analysis, Spring of 2024.",
+      "date": "April, 2024"
     }
   ],
   "others": [
