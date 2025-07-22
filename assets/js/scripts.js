@@ -1411,10 +1411,13 @@ function loadPosts() {
       
       // Create the post list
       const postList = document.createElement("ul");
+      postList.className = "post-list";
       
       // Add each post to the list
       posts.forEach(post => {
         const listItem = document.createElement("li");
+
+        const outerDiv = document.createElement("div");
         
         const postLink = document.createElement("a");
         postLink.href = post.link;
@@ -1440,7 +1443,8 @@ function loadPosts() {
         postLink.appendChild(headerRow);
         postLink.appendChild(postDescription);
         
-        listItem.appendChild(postLink);
+        outerDiv.appendChild(postLink);
+        listItem.appendChild(outerDiv);
         postList.appendChild(listItem);
       });
       
