@@ -1378,20 +1378,97 @@ function fetchCommit() {
     });
 }
 
+// function loadPosts() {
+//   const postContainer = document.getElementById("post-container");
+  
+//   if (!postContainer) {
+//     console.error("Post container element not found");
+//     return;
+//   }
+  
+//   // Create a loading indicator
+//   const loadingElement = document.createElement("div");
+//   loadingElement.textContent = "Loading posts...";
+//   postContainer.innerHTML = "";
+//   postContainer.appendChild(loadingElement);
+  
+//   // Fetch posts data from JSON file
+//   fetch(ROOT + "/assets/json/articles.json")
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error("Network response error: " + response.statusText);
+//       }
+//       return response.json();
+//     })
+//     .then(data => {
+//       // Check if posts array exists
+//       const posts = data.posts || [];
+      
+//       if (posts.length === 0) {
+//         postContainer.innerHTML = "<p>No posts available</p>";
+//         return;
+//       }
+      
+//       // Create the post list
+//       const postList = document.createElement("ul");
+//       postList.className = "post-list";
+      
+//       // Add each post to the list
+//       posts.forEach(post => {
+//         const listItem = document.createElement("li");
+        
+//         const postLink = document.createElement("a");
+//         postLink.href = post.link;
+//         postLink.className = "post";
+        
+//         const headerRow = document.createElement("div");
+//         headerRow.className = "post-header-row";
+        
+//         const postTitle = document.createElement("h3");
+//         postTitle.textContent = post.title;
+        
+//         const postDate = document.createElement("div");
+//         postDate.className = "post-date";
+//         postDate.textContent = post.date;
+        
+//         const postDescription = document.createElement("p");
+//         postDescription.textContent = post.description;
+        
+//         // Assemble the post structure
+//         headerRow.appendChild(postTitle);
+//         headerRow.appendChild(postDate);
+        
+//         postLink.appendChild(headerRow);
+//         postLink.appendChild(postDescription);
+        
+//         listItem.appendChild(postLink);
+//         postList.appendChild(listItem);
+//       });
+      
+//       // Replace loading indicator with posts
+//       postContainer.innerHTML = "";
+//       postContainer.appendChild(postList);
+//     })
+//     .catch(error => {
+//       console.error("Error loading posts:", error);
+//       postContainer.innerHTML = `<p>Error loading posts: ${error.message}</p>`;
+//     });
+// }
+
 function loadPosts() {
   const postContainer = document.getElementById("post-container");
-  
+
   if (!postContainer) {
     console.error("Post container element not found");
     return;
   }
-  
+
   // Create a loading indicator
   const loadingElement = document.createElement("div");
   loadingElement.textContent = "Loading posts...";
   postContainer.innerHTML = "";
   postContainer.appendChild(loadingElement);
-  
+
   // Fetch posts data from JSON file
   fetch(ROOT + "/assets/json/articles.json")
     .then(response => {
@@ -1401,50 +1478,52 @@ function loadPosts() {
       return response.json();
     })
     .then(data => {
-      // Check if posts array exists
       const posts = data.posts || [];
-      
+
       if (posts.length === 0) {
         postContainer.innerHTML = "<p>No posts available</p>";
         return;
       }
-      
-      // Create the post list
+
       const postList = document.createElement("ul");
-      
-      // Add each post to the list
+      postList.className = "post-list";
+
       posts.forEach(post => {
         const listItem = document.createElement("li");
-        
-        const postLink = document.createElement("a");
-        postLink.href = post.link;
-        postLink.className = "post";
-        
+
+        const postContainerDiv = document.createElement("div");
+        postContainerDiv.className = "post";
+
         const headerRow = document.createElement("div");
         headerRow.className = "post-header-row";
-        
+
         const postTitle = document.createElement("h3");
         postTitle.textContent = post.title;
-        
+
         const postDate = document.createElement("div");
         postDate.className = "post-date";
         postDate.textContent = post.date;
-        
+
         const postDescription = document.createElement("p");
         postDescription.textContent = post.description;
-        
-        // Assemble the post structure
+
+        const readMore = document.createElement("a");
+        readMore.href = post.link;
+        readMore.className = "post-link";
+        readMore.textContent = "Read more →";
+
+        // Assemble
         headerRow.appendChild(postTitle);
         headerRow.appendChild(postDate);
-        
-        postLink.appendChild(headerRow);
-        postLink.appendChild(postDescription);
-        
-        listItem.appendChild(postLink);
+
+        postContainerDiv.appendChild(headerRow);
+        postContainerDiv.appendChild(postDescription);
+        postContainerDiv.appendChild(readMore);
+
+        listItem.appendChild(postContainerDiv);
         postList.appendChild(listItem);
       });
-      
-      // Replace loading indicator with posts
+
       postContainer.innerHTML = "";
       postContainer.appendChild(postList);
     })
@@ -1453,5 +1532,6 @@ function loadPosts() {
       postContainer.innerHTML = `<p>Error loading posts: ${error.message}</p>`;
     });
 }
+
 
 // js minifier: https://www.toptal.com/developers/javascript-minifier
