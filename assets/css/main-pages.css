@@ -121,7 +121,6 @@
   padding-left: 40px;
 }
 
-
 .post {
   text-decoration: none;
   color: inherit;
@@ -136,15 +135,15 @@
   color: var(--nav-bar-text-color);
 }
 
-/* .post:hover h3 {
+.post:hover h3 {
   text-decoration: underline;
   text-decoration-thickness: 1px;
-} */
+}
 
-.post:hover .post-link {
+/* .post:hover .post-link {
   text-decoration: underline;
   color: #2a7ae2;
-}
+} */
 
 .post-header-row {
   display: flex;
@@ -191,6 +190,3 @@
   text-decoration: none;
 }
 
-/* .post-link:hover {
-  color: blue;
-} */
