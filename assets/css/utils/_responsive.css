@@ -24,7 +24,7 @@
     overflow-y: hidden;
   }
   
-  .general-wrapper {
+  .content-grid {
     width: 60vw;
   }
   
@@ -49,7 +49,7 @@
     width: 80px;
   }
   
-  .general-wrapper {
+  .content-grid {
     width: 80%;
   }
   
@@ -96,7 +96,7 @@
 
 /* === TABLET PORTRAIT (1080px - 1199px) === */
 @media all and (max-width: 1080px) {
-  .general-wrapper {
+  .content-grid {
     width: 90%;
   }
   

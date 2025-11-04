@@ -3,7 +3,7 @@
  * Page layout, containers, and grid structures
  */
 
-.content-grid {
+.general-wrapper {
   left: 0;
   right: 0;
   top: 0;
@@ -18,7 +18,7 @@
   max-width: 100%;
 }
 
-.general-wrapper {
+.content-grid {
   font-family: var(--body-font);
   width: var(--general-wrapper-width);
   margin-left: auto;
@@ -26,11 +26,11 @@
   min-height: 100vh;
 }
 
-.general-wrapper > header {
+.content-grid > header {
   margin-top: 70px;
 }
 
-.general-wrapper::after {
+.content-grid::after {
   content: "";
   display: block;
   height: 100px;

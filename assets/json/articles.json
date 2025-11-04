@@ -120,7 +120,7 @@
     {
       "title": "Silly project idea",
       "pid": "jaskier",
-      "link": "https://don-le.vercel.app/jaskier-bot",
+      "link": "https://ddonle.com/jaskier-bot",
       "topics": ["Poetry", "API" ,"RestAPI", "Gemini"],
       "description": "I used Gemini 2.0 Flash API to create an AI bot that writes poetry and plays piano.",
       "date": "March, 2025"

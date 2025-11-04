@@ -1261,7 +1261,7 @@ const font_size = [
   ".theorem",
   ".solution",
   ".problem",
-  ".general-wrapper"
+  ".content-grid"
 ];
 
 // === Load components ===
@@ -1351,7 +1351,7 @@ document.addEventListener("DOMContentLoaded", function () {
       extendSearchBar();
       
       // Initialize UI switches
-      Switcher("fontFamily", "font-select", [".general-wrapper"], 0);
+      Switcher("fontFamily", "font-select", [".content-grid"], 0);
       Switcher("fontSize", "font-size-select", font_size, 2);
       Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 0);
       

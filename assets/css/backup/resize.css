@@ -21,7 +21,7 @@
   .equation {
     overflow-y: hidden;
   }
-  .general-wrapper {
+  .content-grid {
     width: 60vw;
   }
 }
@@ -31,7 +31,7 @@
   .buttons-container{
     width: 80px;
   }
-  .general-wrapper {
+  .content-grid {
     width: 80%;
   }
   :root {
@@ -60,7 +60,7 @@
 }
 
 @media all and (max-width: 1080px) {
-  .general-wrapper {
+  .content-grid {
     width: 90%;
   }
   .search-bar-container {
