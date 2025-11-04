@@ -379,6 +379,14 @@ document.addEventListener("DOMContentLoaded", applyDropdownDelays);
 // ARTICLES
 const image_root = ROOT + "/public/Images/";
 
+/**
+Fetch syntax:
+  fetch('https://api.example.com/data')
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+ */
+
 function article(NUM_ARTICLE, des, random_article) {
   // Cache for the articles data to avoid repeated fetches articles
   let articlesCache = null;
@@ -401,6 +409,13 @@ function article(NUM_ARTICLE, des, random_article) {
       .catch((error) => console.error("Error loading articles:", error));
   }
 
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
   function processArticles(articles) {
     // Filter out articles without IDs
     const validArticles = articles.filter(article => article.id);
@@ -410,13 +425,6 @@ function article(NUM_ARTICLE, des, random_article) {
     
     // Display the articles
     displayArticles(validArticles.slice(0, NUM_ARTICLE));
-  }
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
   }
 
   function displayArticles(articles) {
@@ -690,7 +698,6 @@ function sharePage(event, platform) {
   window.open(shareUrl, "_blank"); // Open the share link in a new tab
 }
 
-
 function BodyDarkMode() {
   const modeToggle = document.getElementById("modeToggle");
   const toggleIcon = document.getElementById("toggleIcon");
@@ -775,6 +782,7 @@ function CodeDarkMode(lightThemeHref, darkThemeHref) {
 
   updateTheme(); // Initialize mode on page load
 }
+
 function codeThemeSwitch(id, storageKey, defaultIndex) {
   const selectElement = document.getElementById(id);
   if (!selectElement) {
@@ -823,7 +831,6 @@ document.addEventListener("keydown", function (event) {
     }
   }
 });
-
 
 
 function SearchBar() {
@@ -1257,7 +1264,6 @@ const font_size = [
   ".general-wrapper"
 ];
 
-
 // === Load components ===
 document.addEventListener("DOMContentLoaded", function () {
   // Add smooth scrolling to all links
@@ -1329,7 +1335,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const topNavContainer = document.createElement('div');
   topNavContainer.classList.add('top-nav');
   document.body.prepend(topNavContainer);
-
+  
+  // load top nav twice because the coding theme needs initialization
   fetchAndInsert("/assets/components/top-bar-and-setting.html", ".top-nav")
     .then(() => {
       // Setup scrolling indicator
