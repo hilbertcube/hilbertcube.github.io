@@ -1,0 +1,126 @@
+/*
+ * Typography Styles
+ * Font styles, headings, and text elements
+ */
+
+h1 {
+  font-size: 2.5em;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  z-index: 80;
+}
+
+h2 {
+  margin: 80px 0 20px;
+  font-size: 25px;
+  border-bottom: 1px solid var(--contrast-line-color);
+}
+
+h3 {
+  font-size: 1.3em;
+  width: 100%;
+  margin: 40px 0px 0px;
+  text-align: left;
+  position: relative;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  z-index: 80;
+}
+
+h4 {
+  font-size: 1.1em;
+}
+
+p {
+  font-size: var(--paragraph-font-size);
+  min-width: 50px;
+  line-height: 1.6;
+  font-weight: 400;
+  padding: 0;
+  margin: 10px 0;
+}
+
+/* Special text elements */
+.topic {
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 2px solid var(--underline-color);
+  max-width: 100%;
+  min-width: 50%;
+  margin-top: 0px;
+  margin-left: 0px;
+  font-size: 17px;
+}
+
+.date {
+  margin-top: 0;
+  margin-bottom: 60px;
+  color: var(--nav-bar-text-color);
+  font-style: italic;
+}
+
+/* Caption styles */
+caption,
+figcaption {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  color: var(--figcaption-text);
+  font-family: inherit;
+  font: inherit;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+caption {
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+figcaption {
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+figcaption::before {
+  counter-increment: fig;
+  content: "Fig. " counter(fig) ": ";
+}
+
+caption::before {
+  counter-increment: table_;
+  content: "Table. " counter(table_) ": ";
+}
+
+/* Link styles */
+.url {
+  color: var(--url-color);
+  text-decoration: none;
+}
+
+.url:hover {
+  color: var(--url-hover-color);
+  cursor: pointer;
+}
+
+.hyperlink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.hyperlink:hover {
+  text-decoration: underline;
+  color: var(--url-hover-color);
+}
+
+.in-page-link {
+  text-decoration: underline;
+  color: var(--url-color);
+  text-decoration-thickness: 1px;
+}

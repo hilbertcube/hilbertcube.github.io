@@ -1,0 +1,118 @@
+/*
+ * Code & Math Components
+ * Code blocks, syntax highlighting, math equations, and academic elements
+ */
+
+/* Inline code */
+.inline-code {
+  font-size: 13px;
+  background-color: var(--inline-code-color);
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid var(--box-border);
+}
+
+/* Code blocks */
+code[class*="language-"],
+pre[class*="language-"] {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+body.light-mode code[class*="language-"],
+body.light-mode pre[class*="language-"] {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+body.dark-mode code[class*="language-"],
+body.dark-mode pre[class*="language-"] {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.box {
+  position: relative;
+  max-width: 50em;
+  min-width: 10px;
+  min-height: 10px;
+  padding: 15px;
+  border: 1px solid var(--box-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--code-box-color);
+  border-radius: 4px;
+  margin: 20px auto;
+}
+
+.code-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+pre {
+  border: 1px solid var(--box-border) !important;
+  border-radius: 7px;
+  padding: 0;
+  margin: 0 !important;
+  position: relative;
+}
+
+.console {
+  line-height: 2;
+  overflow-x: auto;
+  background-color: var(--pre-color);
+  font-size: 12px;
+  text-align: left;
+}
+
+/* Copy button */
+.copy-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: var(--body-background-color);
+  color: #4c83ee;
+  border: 1px solid #4c83ee;
+  width: 58px;
+  height: 26px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 1px;
+  cursor: pointer;
+  z-index: 500;
+}
+
+.copy-btn:hover {
+  background-color: #4c83ee;
+  color: white;
+}
+
+/* Tab buttons */
+.tab-button-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.tab-button {
+  -webkit-border-radius: 4px 4px 0px 0px;
+  border-radius: 4px 4px 0px 0px;
+  background-color: var(--pre-color);
+  border: 0px;
+  border-bottom: 1px solid var(--pre-color);
+  margin: 0 !important;
+  min-width: 80px;
+  font-size: 13px;
+  padding: 0.3rem;
+  color: inherit;
+}
+
+.tab-effect {
+  border-bottom: 2px solid #4c83ee;
+  background-color: var(--tab-color);
+}
+
+
+

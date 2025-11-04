@@ -1,0 +1,164 @@
+/* 
+ * CSS Custom Properties (Variables)
+ * Centralized configuration for the entire website
+ */
+
+:root {
+  /* === TYPOGRAPHY === */
+  --paragraph-font-size: 16px;
+  --body-font: "Computer-Modern", sans-serif;
+  --top-bar-font: "Computer-Modern", serif;
+  
+  /* Font weights */
+  --top-buttons-font-weight: 550;
+  
+  /* === COLORS === */
+  /* Base colors */
+  --body-background-color: #ffffff;
+  --grid-text-color: black;
+  --url-color: #2a7ae2;
+  --url-hover-color: rgb(0, 194, 0);
+  --underline-color: oklch(48.8% 0.243 264.376);
+  --figcaption-text: rgb(0, 0, 130);
+  --contrast-line-color: #b4b4b4;
+  
+  /* Navigation colors */
+  --nav-bar-color: #f2f2f2;
+  --nav-bar-text-color: rgb(0, 0, 130);
+  --li-border-color: rgb(183, 183, 183);
+  --toc-focus-color: #007BFF;
+  
+  /* Button colors */
+  --next-button: rgb(26, 26, 26);
+  --next-text: black;
+  --next-border: #a9a9b3;
+  --toggle-bar: white;
+  --top-buttons-hover-color: rgb(0, 185, 226);
+  
+  /* Dropdown colors */
+  --dropdown-color: white;
+  --dropdown-text-color: black;
+  --dropdown-hover-color: #ddd;
+  --highlight-dropdown-color: rgb(0, 0, 130);
+  
+  /* Search bar colors */
+  --autocomplete-dropdown-color: #fff;
+  --autocomplete-dropdown-border: #ccc;
+  --autocomplete-dropdown-text-color: black;
+  --autocomplete-item-container-hover: #f0f0f0;
+  --autocomplete-dropdown-left-border: #0006b1;
+  --search-item-border-color: #b0b0b0;
+  
+  /* Code and content colors */
+  --code-box-color: #fff;
+  --inline-code-color: rgb(235, 235, 235);
+  --box-border: #bfbfbf;
+  --pre-color: #f7f7f7;
+  --tab-color: #ededed;
+  
+  /* Article colors */
+  --material-background: white;
+  --article-color-default: #fafafa;
+  --article-color: #eaeaea;
+  --article-name-color: #333;
+  --article-description-color: black;
+  --article-date-color: rgb(0, 0, 130);
+  --material-link-color: #898989;
+  --article-shadow-color: rgba(0, 0, 0, 0.2);
+  
+  /* === LAYOUT & SPACING === */
+  --general-wrapper-width: 60rem;
+  --side-nav-width: 375px;
+  --top-bar-height: 60px;
+  --in-page-li-spacing: 15px;
+  
+  /* Progress bar */
+  --progressive-bar-height: 2px;
+  --progressive-bar-color: oklch(0.577 0.245 27.325);
+  
+  /* Share button positioning */
+  --share-button-position: 70px;
+  
+  /* Gear button */
+  --gear-button-height: 28px;
+  
+  /* GitHub */
+  --github-scroller: gray;
+  
+  /* === ANIMATIONS & TRANSITIONS === */
+  --fade-in-out-time: 0.5s;
+  --slide-time: 0.5s;
+  --highlight-drop-time: 0.8s;
+  --highlight-opacity-time: 0.5s;
+}
+
+/* === DARK MODE OVERRIDES === */
+body.dark-mode {
+  /* Base colors */
+  --body-background-color: #161616;
+  --grid-text-color: #a9a9b3;
+  --figcaption-text: #939393;
+  --next-text: #ffffff;
+  
+  /* Navigation */
+  --nav-bar-color: #121212;
+  --nav-bar-text-color: #c6c6ce;
+  --li-border-color: rgb(0, 71, 171);
+  --toc-focus-color: rgb(0, 194, 0);
+  
+  /* Dropdowns */
+  --dropdown-color: #121212;
+  --dropdown-text-color: white;
+  --dropdown-hover-color: #222222;
+  --highlight-dropdown-color: rgb(0, 155, 190);
+  
+  /* Search */
+  --autocomplete-dropdown-color: #161616;
+  --autocomplete-dropdown-border: #3b3b3b;
+  --autocomplete-dropdown-text-color: #aaa;
+  --autocomplete-item-container-hover: #3b3b3b;
+  --autocomplete-dropdown-left-border: rgb(0, 150, 255);
+  --search-item-border-color: #8a8a8a;
+  
+  /* Code */
+  --code-box-color: #2a2a2a;
+  --inline-code-color: rgb(55, 55, 55);
+  --box-border: #424242;
+  --pre-color: #1a1a1a;
+  --tab-color: black;
+  
+  /* Articles */
+  --material-background: rgb(38, 38, 38);
+  --article-color: #1f1f1f;
+  --article-name-color: #dddddd;
+  --article-description-color: #dddddd;
+  --article-date-color: #aaa;
+  --material-link-color: #aaa;
+  --article-shadow-color: rgba(255, 255, 255, 0.1);
+  
+  /* Progress bar */
+  --progressive-bar-height: 1px;
+  
+  /* GitHub */
+  --github-scroller: #ddd;
+}
+
+/* === RESPONSIVE VARIABLE OVERRIDES === */
+@media all and (min-width: 1800px) {
+  :root {
+    --top-bar-height: 70px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  :root {
+    --side-nav-width: 350px;
+  }
+}
+
+@media all and (max-width: 580px) {
+  :root {
+    --side-nav-width: 330px;
+    --gear-button-height: 25px;
+  }
+}

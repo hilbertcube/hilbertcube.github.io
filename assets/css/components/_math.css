@@ -1,0 +1,144 @@
+/* Math equations */
+.equation {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+mjx-container[jax="CHTML"][display="true"] {
+  margin: 0.5em 0;
+}
+
+.MathJax {
+  font-size: 18px !important;
+}
+
+.mathjax-definition {
+  display: none;
+}
+
+/* Academic elements */
+.theorem,
+.problem,
+.definition {
+  position: relative;
+  border-radius: 4px;
+  margin: 30px 0;
+  padding: 1rem;
+  padding-top: 3.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.theorem::before,
+.problem::before,
+.definition::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.theorem {
+  border: 1px solid #008195;
+}
+
+.theorem::before {
+  counter-increment: theorem;
+  background-color: rgba(0, 184, 212, 0.2);
+  content: "Theorem " counter(theorem) attr(data-theorem-name) ". ";
+}
+
+.definition {
+  border: 1px solid #006a27;
+}
+
+.definition::before {
+  counter-increment: def;
+  background-color: rgba(0, 212, 28, 0.2);
+  content: "Definition " counter(def) attr(data-definition-name) ". ";
+}
+
+.lemma {
+  border: 1px solid #008195;
+  margin: 20px 0px;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.problem {
+  border: 1px solid rgba(113, 0, 212);
+}
+
+.problem::before {
+  counter-increment: problem;
+  background-color: rgba(113, 0, 212, 0.2);
+  content: "Problem " counter(problem) ". ";
+}
+
+/* Solution details */
+.solution {
+  border: 1px solid #5b5b5b;
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.solution > *:not(summary) {
+  padding: 0 1rem 1rem 1rem;
+}
+
+.solution summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.solution > div {
+  line-height: 1.6;
+}
+
+.solution summary::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: url("../../public/Icons/arrow.svg") no-repeat;
+  background-size: 100% 100%;
+  margin-left: 0.75em;
+  transition: 0.2s;
+}
+
+.solution[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+.solution summary::-webkit-details-marker {
+  display: none;
+}
+
+.solution[open] summary {
+  border-radius: 4px 4px 0 0;
+}
+
+.solution ol,
+.solution ul {
+  margin-left: 2rem;
+  padding-left: 0;
+}
+
+.solution li {
+  padding-left: 0.5rem;
+}

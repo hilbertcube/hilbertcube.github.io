@@ -43,7 +43,7 @@ Invoke-GitCommand "commit -m `"$escapedMessage`"" "Committing changes"
 Invoke-GitCommand "push origin main" "Pushing changes to main"
 
 Write-Host "Git commit automation completed successfully!" -ForegroundColor Green
-Write-Host "ummary:" -ForegroundColor White
+Write-Host "Summary:" -ForegroundColor White
 Write-Host "   - Pulled latest changes from main" -ForegroundColor Gray
 Write-Host "   - Added all changes to staging" -ForegroundColor Gray
 Write-Host "   - Committed with message: '$Message'" -ForegroundColor Gray

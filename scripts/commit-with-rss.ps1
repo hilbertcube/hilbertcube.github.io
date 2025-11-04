@@ -28,7 +28,7 @@ function Invoke-GitCommand {
 
 # Function to generate RSS feed
 function Update-RssFeed {
-    Write-Host "📡 Checking if RSS feed needs updating..." -ForegroundColor Cyan
+    Write-Host "Checking if RSS feed needs updating..." -ForegroundColor Cyan
     
     # Check if articles.json exists
     if (-not (Test-Path "assets\json\articles.json")) {

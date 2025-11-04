@@ -1,0 +1,28 @@
+/*
+ * Font Definitions
+ * Local font files and font-face declarations
+ */
+
+@font-face {
+  font-family: "et-book";
+  font-weight: normal;
+  src: url("../../fonts/et-book-roman-line-figures/et-book-roman-line-figures.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Computer-Modern";
+  font-weight: normal;
+  src: url("../../fonts/computer-modern/cmunrm.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Computer-Modern";
+  font-weight: bold;
+  src: url("../../fonts/computer-modern/cmunbx.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Computer-Modern";
+  font-style: italic;
+  src: url("../../fonts/computer-modern/cmunsl.woff") format("woff");
+}

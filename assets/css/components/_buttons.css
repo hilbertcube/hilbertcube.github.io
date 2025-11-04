@@ -1,0 +1,202 @@
+/*
+ * Button Components
+ * Various button styles and controls
+ */
+
+/* Control buttons container */
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 12px;
+  padding-left: 12px;
+  gap: 8px;
+}
+
+/* Dark mode button */
+.dark-mode-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  outline: none;
+  color: #dddddd;
+}
+
+body.dark-mode .dark-mode-button {
+  color: #fdd835;
+}
+
+/* RSS button */
+.rss a {
+  color: white;
+  font-size: 20px;
+}
+
+/* Redirect/navigation buttons */
+.redirect-button {
+  min-width: 80px;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  margin: 20px auto;
+  background-size: 200%;
+  border: 1px solid var(--next-border);
+  border-radius: 5px;
+  padding: 0.7rem 1rem;
+  font-size: 18px;
+  color: var(--next-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.redirect-button:hover {
+  color: #2a7ae2;
+}
+
+/* Settings gear button */
+input[type="checkbox"] {
+  display: none;
+}
+
+#toggleButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  width: calc(0.8 * var(--gear-button-height));
+  height: calc(0.8 * var(--gear-button-height));
+  background: #e6e6e6;
+  border-radius: 50%;
+  transition: transform 0.5s ease;
+}
+
+.center {
+  position: absolute;
+  top: calc(0.2 * var(--gear-button-height));
+  left: calc(0.2 * var(--gear-button-height));
+  width: calc(0.4 * var(--gear-button-height));
+  height: calc(0.4 * var(--gear-button-height));
+  background: rgb(26, 26, 26);
+  border-radius: 50%;
+  z-index: 100;
+}
+
+.tooth {
+  position: absolute;
+  top: calc(-0.1 * var(--gear-button-height));
+  left: calc(0.3 * var(--gear-button-height));
+  z-index: 1;
+  width: calc(0.2 * var(--gear-button-height));
+  height: var(--gear-button-height);
+  border-radius: 0.1px;
+  background: #e6e6e6;
+}
+
+.tooth:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.tooth:nth-child(3) {
+  transform: rotate(90deg);
+}
+
+.tooth:nth-child(4) {
+  transform: rotate(135deg);
+}
+
+input[type="checkbox"]:checked + #toggleButton {
+  transform: rotate(90deg);
+}
+
+input[type="checkbox"]:not(:checked) + #toggleButton {
+  transform: rotate(-90deg);
+}
+
+input[type="checkbox"]:checked ~ div#settings_window {
+  display: block;
+}
+
+.setting-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Share button */
+.share-button {
+  position: fixed;
+  top: var(--share-button-position);
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  border: 2px solid var(--nav-bar-text-color) !important;
+  color: var(--grid-text-color) !important;
+  background: var(--body-background-color);
+}
+
+.share-tooltip {
+  position: absolute;
+  bottom: 10px;
+  right: 100px;
+  transform: translateX(50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#share-expand {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.share-button:hover .share-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.share-options {
+  position: fixed;
+  display: none;
+  top: calc(var(--share-button-position) + 40px);
+  right: 10px;
+  z-index: 1001;
+}
+
+.share-option {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 17px;
+  margin: 5px 0;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 2px solid var(--nav-bar-text-color) !important;
+  color: var(--grid-text-color) !important;
+  background: var(--body-background-color);
+}
+
+.share-option:hover {
+  transform: scale(1.1);
+}

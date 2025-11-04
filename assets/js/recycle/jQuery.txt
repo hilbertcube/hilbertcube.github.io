@@ -88,7 +88,7 @@ $(document).ready(function () {
           Switcher(
             "fontFamily",
             "font-select",
-            [".general-wrapper", ".navbar"],
+            [".content-grid", ".navbar"],
             0
           );
           Switcher("fontSize", "font-size-select", font_size, 2); // , '.MathJax'

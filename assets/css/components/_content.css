@@ -1,0 +1,177 @@
+/*
+ * Content Elements
+ * Common content components used across pages
+ */
+
+/* Lists */
+.bullet {
+  margin: var(--in-page-li-spacing) 0;
+  padding-left: 0;
+}
+
+.bullet ul {
+  padding-left: 15px;
+  margin-left: 0;
+}
+
+/* Reference lists */
+ol.reference {
+  justify-self: start;
+  line-height: 1.6;
+  position: relative;
+  text-align: justify;
+  counter-reset: item;
+  padding-left: 0;
+}
+
+ol.reference li {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.5em;
+  margin-left: 2em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+ol.reference li::before {
+  display: inline-block;
+  text-align: left;
+  content: "[" counter(item) "]\00a0";
+  counter-increment: item;
+  width: 2em;
+  margin-left: -2em;
+}
+
+/* Step lists */
+ol.steps {
+  line-height: 1.6;
+  counter-reset: step;
+  list-style: none;
+}
+
+ol.steps .step::before {
+  margin: 10px 0;
+  display: inline-block;
+  content: "STEP " counter(step) ".\00a0";
+  counter-increment: step;
+}
+
+/* Quote blocks */
+.Quote {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4px;
+  font-style: italic;
+  font-family: serif;
+  position: relative;
+}
+
+.Quote-content {
+  font-size: 1.1em;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.Author {
+  font-size: 1.1em;
+  text-align: right;
+  position: relative;
+}
+
+.Quote::after {
+  position: absolute;
+  content: "";
+  background: var(--underline-color);
+  height: 100%;
+  width: 2px;
+  bottom: 0;
+  left: 0;
+}
+
+/* Tables */
+table {
+  margin: 16px 0px;
+  border-collapse: collapse;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table,
+th,
+td {
+  border: 0;
+  border-left: none;
+  border-right: none;
+}
+
+th,
+td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Footer */
+footer {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #111111;
+  color: white;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 20px;
+}
+
+.footer-container {
+  font-family: "Computer-Modern", Arial;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-media-footer {
+  margin: 10px 0px;
+}
+
+.social-media-footer a {
+  color: white;
+  margin: 0px 8px;
+  text-decoration: none;
+}
+
+.footer-block {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  font-size: 15px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
