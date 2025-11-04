@@ -1,0 +1,99 @@
+/*
+ * Layout & Grid System
+ * Page layout, containers, and grid structures
+ */
+
+.content-grid {
+  left: 0;
+  right: 0;
+  top: 0;
+  position: relative;
+  text-align: justify;
+  background-color: var(--body-background-color);
+  color: var(--grid-text-color);
+  margin-top: var(--top-bar-height);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.general-wrapper {
+  font-family: var(--body-font);
+  width: var(--general-wrapper-width);
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+}
+
+.general-wrapper > header {
+  margin-top: 70px;
+}
+
+.general-wrapper::after {
+  content: "";
+  display: block;
+  height: 100px;
+  width: 100%;
+}
+
+/* Two column layout */
+.two-columns-block {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  gap: 1em;
+}
+
+.two-columns-block > div {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: center;
+  flex: 1;
+  padding: 0px;
+}
+
+/* Image blocks */
+.image-block {
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.image {
+  display: block;
+  max-height: 100%;
+  margin: auto;
+  border-radius: 7px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  object-fit: contain;
+}
+
+.caption {
+  text-align: center;
+}
+
+/* Divider lines */
+.line-6, .line-7 {
+  margin-left: auto;
+  margin-right: auto;
+  background: #b4b4b4;
+  height: 0.5px;
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.line-6 {
+  display: none;
+  height: 1px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
