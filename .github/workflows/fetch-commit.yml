@@ -14,20 +14,25 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
 
     - name: Get latest non-bot commit
       run: |
-        curl -s -H "Authorization: token ${{ secrets.TOKEN }}" \
-        https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits \
+        curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        https://api.github.com/repos/${{ github.repository }}/commits \
         | jq '[.[] | select(.commit.author.name != "github-actions")] | .[0]' > assets/json/latest_commit.json
 
     - name: Commit latest commit to repo
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
         git add assets/json/latest_commit.json
-        git commit -m "Update latest commit info (automated)" || echo "No changes to commit"
-        git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update latest commit info (automated)"
+          git push origin main
+        fi
