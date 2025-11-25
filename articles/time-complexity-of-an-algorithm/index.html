@@ -66,8 +66,8 @@
             <li>What is the Best Way to Compare Algorithms' Efficiency?</li>
             <li>The Big O, Big Omega, Big Theta, and Their Properties
               <ul>
-                <li>The Big-O Notation</li>
-                <li>Properties of the Big-O Notation</li>
+                <li>The Big O</li>
+                <li>The Big Theta</li>
               </ul>
             </li>
             <li>Algorithmic Analysis</li>
@@ -156,86 +156,89 @@
           <h3>The Big O, Big Omega, Big Theta, and Their Properties</h3>
 
           <section>
-            <h4>The Big-O Notation</h4>
-            <div class="definition" data-definition-name=" (The Big-Oh)">
+            <h4>The Big O Notation</h4>
+            <div class="definition" data-definition-name=". The Big O">
               Let $f$ and $g$ be real-valued and not necessarily continuous functions. We say that $f$ is the big O of
               $g$, written
               <div class="equation">
-                $$f(n) = O(g(n)),\quad n\to\infty,$$
+                $$f(n) = O(g(n)),\quad n \to \infty,$$
               </div>
-              if there's some large enough value of $n_0$ such that
+              if there exists some value $n_0$ such that
               <div class="equation">
-                $$|f(n)| \leq M|g(n)|,\quad\forall n\geq n_0.$$
+                $$|f(n)| \le M|g(n)|,\quad \forall n \ge n_0.$$
               </div>
-              this is equivalent to saying that
-              <div class="equation">
-                $$\lim_{n\to\infty}\frac{f(n)}{g(n)} = A,\quad 0 < A< \infty.$$ </div> Alternatively, we can say that
-                  $f$ is order of $g$, mathematically written, <div class="equation">
-                  $$f(n)\in O(g(n))$$
-              </div>
-              for the big-O notation.
+              for some constant $M > 0$.
             </div>
 
             <p>
-              For example, we say that $f(n) = 3n \in O(n)$ because $|3n| \leq M|n|,$ for $n\geq 0$, and $M$ can be any
-              number greater than or equal to 3. Similarly, $8n + 5\in O(n)$ because if we choose $M = 9$ and $n_0 = 5$,
-              then $8n + 5 \leq 9n$, for $n\geq 5$.
+              For example, $f(n) = 3n \in O(n)$ because $|3n| \le M|n|$ for $n \ge 0$, and $M$ can be any number greater than or equal to 3.
+              Similarly, $8n + 5 \in O(n)$ because choosing $M = 9$ and $n_0 = 5$ gives $8n + 5 \le 9n$ for all $n \ge 5$.
             </p>
           </section>
-
 
           <section>
-            <h4>Properties of the Big-O Notation</h4>
+            <h4>The Big Omega Notation</h4>
+            <div class="definition" data-definition-name=". The Big Omega">
+              Big Omega provides a lower bound on the growth of a function. We say that $f$ is the big Omega of $g$, written
+              <div class="equation">
+                $$f(n) = \Omega(g(n)),\quad n \to \infty,$$
+              </div>
+              if there exists some value $n_0$ such that
+              <div class="equation">
+                $$|f(n)| \ge M|g(n)|,\quad \forall n \ge n_0,$$
+              </div>
+              for some constant $M > 0$.
+            </div>
 
             <p>
-              Given two functions $f(n)$ and $g(n)$ defined on $n\geq 0$.
+              For example, $5n \in \Omega(n)$ since $|5n| \ge M|n|$ with $M = 5$ for all $n \ge 0$.
+              Likewise, $2n^2 + 7n \in \Omega(n^2)$ because for large enough $n$, the quadratic term dominates.
             </p>
-            <ol style="line-height: 1.6;" type="i">
-              <li style="margin: var(--in-page-li-spacing) 0;">
-                If
-                <div class="equation">
-                  $$\lim_{n\to\infty}\frac{f(n)}{g(n)} = A,\quad 0 < A < \infty.$$ </div> then we say that </li> <li
-                    style="margin: var(--in-page-li-spacing) 0;">
-
-              </li>
-            </ol>
           </section>
 
+          <section>
+            <h4>The Big Theta Notation</h4>
+            <div class="definition" data-definition-name=". The Big Theta">
+              Big Theta describes a tight bound on the growth of a function. We say that $f$ is the big Theta of $g$, written
+              <div class="equation">
+                $$f(n) = \Theta(g(n)),\quad n \to \infty,$$
+              </div>
+              if there exist constants $M_1, M_2 > 0$ and a value $n_0$ such that
+              <div class="equation">
+                $$M_1|g(n)| \le |f(n)| \le M_2|g(n)|,\quad \forall n \ge n_0.$$
+              </div>
+            </div>
+
+            <p>
+              For example, $7n + 4 \in \Theta(n)$ because the linear term dominates and both an upper bound and a lower bound
+              proportional to $n$ can be found. Similarly, $3n^3 - 2n \in \Theta(n^3)$ because the cubic term determines the
+              growth rate.
+            </p>
+          </section>
+
+        </section>
+
+
+
+
+      <section>
+        <h2>Runtime Analysis of an Algorithm</h2>
+        <section>
+          <h3>Example 1: Merge Sort</h3>
         </section>
 
         <section>
-          <h3>Algorithmic Analysis</h3>
-          <p>
-            How can we determine the time complexity of an algorithm? Consider the following example: finding the
-            largest element in an array.
-          </p>
+          <h3>Example 2: Binary Search</h3>
+        </section>
 
-          <div style="text-align: center; margin: 25px auto;" class="algorithm_box">
-            <pre class="console">
-    <samp>// Algorithm: find the maximum element of an array of integers
-    // Input: an array A of size n
-    // Output: maximum element of A
-    array_max(int A[], int n){
-        int current_max = A[0];
-        for (i = 1 ; i < n; i++)
-            if (A[i] > current_max)
-                current_max = A[i];
-        return current_max;
-     } </samp></pre>
-          </div>
+        <section>
+          <h3>Example 3: Topological Sort</h3>
+        </section>
 
-          <p>
-            The assignment operator <code class="inline-code">current_max = A[0]</code> takes constant time, $f(n)=c$.
-            In the for loop, the operator <code class="inline-code">i = 1</code> also takes constant time, $f(n)=c$. The
-            comparison operator, also takes constant time, but the operator repeated $n$ times, so the runtime function
-            is $f(n) = c_1n + c_0$.
-          </p>
+        <section>
+          <h3>Example 4: Dijkstra's Algorithm</h3>
         </section>
       </section>
-
-
-
-
 
 
       <section>
@@ -441,211 +444,7 @@
 
 
       <section>
-        <h2>When Does Time Complexity Start to Matter?</h2>
-
-        <p>
-          With the speed of the modern computers, it is not quite obvious to notice the slight change in runtime between
-          different time complexities, especially when running only a small code segment, and especially if you are a
-          beginner. To notice the impact of how you design your algorithm, we can actually plot out the runtime as $n$
-          increases. Below is a C++ program and a python script to verify the runtime.
-        </p>
-        <p>
-          Consider the following problem: Given an array $A = \{a_1, a_2, \ldots, a_n\}$.
-        </p>
-
-        <div class="box" style="margin: 30px 0;">
-          <div class="tab-button-container">
-            <button class="tab-button tab-effect" onclick="changeTab(event, 'main-cpp', 'pseudo-tab')">main.cpp</button>
-            <button class="tab-button"
-              onclick="changeTab(event, 'maximum_summation-h', 'pseudo-tab')">maximum_summation.h</button>
-            <button class="tab-button"
-              onclick="changeTab(event, 'time_measure-py', 'pseudo-tab')">time_measurement.py</button>
-          </div>
-          <div class="code-container pseudo-tab" id="main-cpp">
-            <button class="copy-btn" style="position: absolute">Copy</button>
-            <pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-cpp"><script type="prism-cpp">// program to find a maximum contiguous sub-array.
-#include <iostream>
-#include <vector>
-#include <chrono>
-#include <ctime>
-#include <cstdlib>
-#include <iomanip>
-#include <fstream> 
-#include <string> 
-#include "maximum_summation.h"
-
-using namespace std;
-using namespace std::chrono;
-
-int main(){
-    vector <int> A;
-    int upper_bound = 10000;
-    int lower_bound = -10000;
-
-    for(int j = 0; j < 3; j++){
-        string fileName = "python/timing_data" + to_string(j + 1)+".txt";
-        ofstream file(fileName);
-
-        cout << left << setw(10) << "n" << setw(15) << "time (milliseconds)" << endl;
-        cout << string(25, '-') << endl;
-
-        file << "n,time_ms" << endl;
-        for(int n = 1; n <= 500; n += 1) {
-            srand(time(0) + n);
-            A.reserve(n); 
-
-            for (int i = 0; i < n; ++i) {
-                int random_int = (rand()%(upper_bound - lower_bound)) + lower_bound;
-                A[i] = random_int;
-            }
-
-            auto start = high_resolution_clock::now();
-            f[j](A);
-            auto end = high_resolution_clock::now();
-
-            auto duration_ms = duration_cast<duration<double, milli>>(end - start);
-
-            cout << left << setw(10) << n << setw(20) << fixed << setprecision(6) << duration_ms.count() << endl;
-            file << n << "," << fixed << setprecision(3) << duration_ms.count() << endl;
-
-            A.clear();
-            
-        }
-    }
-
-    // Run: g++ main.cpp -o main.exe; ./main.exe
-    return 0;
-}
-</script></code></pre>
-          </div>
-
-
-
-
-          <div class="code-container pseudo-tab" id="maximum_summation-h" style="display: none">
-            <button class="copy-btn" style="position: absolute">Copy</button>
-            <pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-cpp"><script type="prism-cpp">#pragma once
-
-// Input: an array
-// Output: the largest sum found in a sub-array
-// there should be sum_{i = 0}^{size} binom(size, i) = 2^n sub-arrays
-// and there should be 1 + 2 + ... + n = n(n + 1)/2 consecutive sub-arrays
-int maximumSummation1(const std::vector<int>& A) {
-    if (A.size() == 0) return 0;
-
-    int maxSoFar = A[0];
-    int maxEndingHere = A[0];
-
-    for (int i = 1; i < A.size(); i++) {
-        maxEndingHere = std::max(A[i], maxEndingHere + A[i]);   // O(1)
-        maxSoFar = std::max(maxSoFar, maxEndingHere);           // O(1)
-    }
-
-    return maxSoFar;
-}
-
-int maximumSummation2(const std::vector<int>& A){
-    if (A.size() == 0) return 0;
-
-    int max = A[0];
-    for(int i = 0; i < A.size(); i++){
-        int sum = 0;
-        for(int j = i; j < A.size(); j++){
-            sum += A[j];
-            if(sum > max)
-                max = sum;
-        }
-    }
-    return max;
-}   
-
-int maximumSummation3(const std::vector<int>& A){
-    if (A.size() == 0) return 0;
-
-    int max = A[0];
-    for(int i = 0; i < A.size(); i++){
-        for(int j = i; j < A.size(); j++){
-            int sum = 0;
-            for(int k = i; k <= j; k++){
-                sum += A[k];
-            }
-            if(sum > max)
-                max = sum;
-        }
-    }
-    return max;
-}
-
-typedef int (*Function_Vector) (const std::vector<int>& A);
-Function_Vector f[] = {maximumSummation1, maximumSummation2, maximumSummation3};
-    
-</script></code></pre>
-          </div>
-
-
-          <div class="code-container pseudo-tab" id="time_measure-py" style="display: none">
-            <button class="copy-btn" style="position: absolute">Copy</button>
-            <pre style="border-radius: 0px 7px 7px 7px;" class="line-numbers"><code class="language-python">import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import font_manager as fm
-
-# Load the font for the plot
-font_path = 'fonts/computer-modern/cmunrm.ttf'
-prop = fm.FontProperties(fname=font_path)
-plt.rcParams['font.family'] = prop.get_name()
-
-# Load the data from the files
-file_names = ['python/timing_data1.txt', 'python/timing_data2.txt', 'python/timing_data3.txt']
-data_frames = [pd.read_csv(file) for file in file_names]
-
-# Prepare a list of colors for each dataset
-colors = ['red', 'green', 'blue']
-
-# Plot the cleaned data for each file
-plt.figure(figsize=(6, 6))
-plt.grid(True, linestyle='--')
-font_size = 14
-
-for i, data in enumerate(data_frames):
-    # Calculate IQR for the current dataset
-    Q1 = data[['n', 'time_ms']].quantile(0.25)
-    Q3 = data[['n', 'time_ms']].quantile(0.75)
-    IQR = Q3 - Q1
-    
-    # Define outlier thresholds
-    outlier_factor = 1.0
-    lower_bound = (Q1 - outlier_factor * IQR).to_dict()
-    upper_bound = (Q3 + outlier_factor * IQR).to_dict()
-    
-    # Filter out outliers
-    data_clean = data[~((data[['n', 'time_ms']] < lower_bound) | (data[['n', 'time_ms']] > upper_bound)).any(axis=1)]
-    
-    # Sort data_clean by 'n' to connect the points in order
-    data_clean = data_clean.sort_values('n')
-    
-    # Fit a linear model
-    coefficients = np.polyfit(data_clean['n'], data_clean['time_ms'], i + 1)
-    linear_fit = np.poly1d(coefficients)
-    
-    # Plot data points and linear fit
-    plt.plot(data_clean['n'], data_clean['time_ms'], marker='o', linestyle='None', 
-             color=colors[i], markersize=3, label=f'maximumSummation{i+1}')
-    # plt.plot(data_clean['n'], linear_fit(data_clean['n']), color=colors[i], linestyle='-', label=f'maximumSummation{i+1}')
-
-# Set plot labels and title
-plt.xlabel('n (Number of Elements)', fontsize=font_size)
-plt.ylabel('Time (milliseconds)', fontsize=font_size)
-plt.title('n vs Time (milliseconds)', fontsize=font_size)
-plt.legend()
-
-plt.show()
-</code></pre>
-          </div>
-
-
-        </div>
-      </section>
+        
 
       <section>
         <h2>More Articles</h2>
