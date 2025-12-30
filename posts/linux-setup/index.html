@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-00W722FWP2");
+    </script>
+    <title>Post</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="subject" content="" />
+    <meta name="description" content="This is the homepage" />
+    <meta
+      name="keywords"
+      content="math, physics, programming, coding, computer science, computer simulation"
+    />
+    <meta name="author" content="Don Le, ledongduu@gmail.com" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <style>
+      .image-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1em;
+      }
+
+      .responsive-img {
+        max-width: 100%;
+        height: auto;
+        width: 25em;
+      }
+
+      .desktop-img {
+        max-width: 85%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 600px) {
+        .image-row {
+          flex-direction: column;
+        }
+
+        .desktop-img {
+          max-width: 100%;
+        }
+      }
+
+    </style>
+  </head>
+
+  <body class="nav-open light-mode">
+    <nav class="navbar open" id="navbar">
+      <div class="logo-and-side-nav"></div>
+      <div class="toc">
+        <header class="major">
+          <h2>Table of Contents</h2>
+        </header>
+        <ul>
+          <li><a href="#system">Preparation (after OS installation)</a></li>
+          <li><a href="#devops">DevOps and Text Editors</a></li>
+          <li><a href="#cpp">C and C++ Development Environment</a></li>
+          <li><a href="#python">Python and Anaconda</a></li>
+          <li><a href="#javascript">JavaScript and Web</a></li>
+          <li><a href="#rust">Rust and Cargo</a></li>
+          <li><a href="#engineering">Engineering Softwares</a></li>
+        </ul>
+      </div>
+      <div class="highlights-and-attribute"></div>
+    </nav>
+
+    <div class="general-wrapper" id="content-grid">
+      <div class="content-grid" id="home">
+        <header>
+          <div class="topic">
+            Linux, Ubuntu, Development Environment, Programming
+          </div>
+          <h1 class="post-title">Linux development environment setup</h1>
+          <div class="date">December, 28, 2025</div>
+        </header>
+
+        <section>
+          <section id="system">
+            <h3>Preparation (after OS installation)</h3>
+            <ul>
+              <li class="bullet">
+                Install recommended NVIDIA drivers: Open the "Software & Updates" application, navigate to the "Additional Drivers" tab, and select the recommended NVIDIA driver for your GPU. Apply the changes and reboot when prompted. Alternatively, install via terminal:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo ubuntu-drivers devices
+sudo ubuntu-drivers autoinstall
+sudo reboot</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                Power Management (Powertop): Linux's battery management on laptops tends to be less optimized than other operating systems. Powertop helps optimize power consumption and extend battery life. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt update && sudo apt upgrade -y
+sudo apt install powertop -y
+sudo systemctl enable tlp</code></pre>
+                    </div>
+              </li>
+            </ul>
+            <!-- <div style="margin: 25px 0">
+                <img
+                  class="desktop-img"
+                  src="desktop.webp"
+                  alt="my desktop"
+                />
+              </div> -->
+          </section>
+          <section id="devops">
+            <h3>DevOps and Text Editors</h3>
+            <ul>
+              <li class="bullet">
+                <a href="https://code.visualstudio.com/" class="url">VSCode</a>: My primary code editor. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt update && sudo apt upgrade -y
+sudo apt install wget gpg -y
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt install apt-transport-https -y
+sudo apt update && sudo apt install code -y</code></pre>
+                    </div>
+                  or, simply use the Software Center to install it.
+              </li>
+              <li class="bullet">
+                <a href="https://neovim.io/" class="url">Neovim</a>: Terminal-based text editor. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt update && sudo apt upgrade -y
+sudo apt install neovim -y</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                <a href="https://git-scm.com/" class="url">Git</a>: Version control system. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt update && sudo apt upgrade -y
+sudo apt install git -y</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                <a href="https://www.docker.com/" class="url">Docker</a>: Containerization platform. Follow the <a href="https://docs.docker.com/engine/install/ubuntu/" class="url">official installation guide</a>:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash"># update and remove old versions
+sudo apt update
+sudo apt remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
+
+# install dependencies
+sudo apt install ca-certificates curl gnupg
+                        
+# add Docker's official GPG key
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# add Docker apt repository
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# install Docker Engine
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# verify installation
+sudo systemctl status docker
+sudo docker run hello-world
+</code></pre>
+                    </div> 
+              </li>
+            </ul>
+          </section>
+          <section id="cpp">
+            <h3>C and C++ Development Environment</h3>
+            <ul>
+              <li class="bullet">
+                Essentials: Core development tools including build-essential, gdb, g++-multilib, and related packages. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt install build-essential lldb ninja-build clang gdb g++-multilib -y</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                <a href="https://cmake.org/" class="url">CMake</a> and CMake GUI: Build system generator with GUI support for easier project configuration. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt install cmake cmake-qt-gui -y</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                Package Managers:
+                <ul>
+                  <li class="bullet">
+                  <a href="https://github.com/microsoft/vcpkg" class="url">Vcpkg</a>: Microsoft's C++ package manager. Install with:
+                  <div class="code-container"
+                        style="text-align: center; margin: 25px auto; max-width: 40em;">
+                        <button class="copy-btn">Copy</button>
+                        <pre
+                          class="console"
+                          style="color: oklch(48.8% 0.243 264.376)"
+                        ><code class="language-bash">cd ~
+git clone https://github.com/microsoft/vcpkg
+./vcpkg/bootstrap-vcpkg.sh
+export VCPKG_ROOT=~/vcpkg
+export PATH=$VCPKG_ROOT:$PATH</code></pre>
+                      </div>
+                      Add the export lines to your .bashrc file to make them permanent.
+                </li>
+                <li class="bullet">
+                  <a href="https://conan.io/" class="url">Conan</a>: Alternative C++ package manager. Install with:
+                  <div class="code-container"
+                        style="text-align: center; margin: 25px auto; max-width: 40em;">
+                        <button class="copy-btn">Copy</button>
+                        <pre
+                          class="console"
+                          style="color: oklch(48.8% 0.243 264.376)"
+                        ><code class="language-bash">pip install conan</code></pre>
+                      </div>
+                </li>
+                </ul>
+              </li>
+              <li>
+                GPU Programming:
+                <ul>
+                  <li class="bullet">
+                  <a href="https://developer.nvidia.com/cuda-toolkit" class="url">CUDA Toolkit</a>: GPU programming framework. Follow the installation instructions on the
+                  <a
+                    href="https://developer.nvidia.com/cuda-downloads"
+                    class="url"
+                    >NVIDIA website</a
+                  >.
+                  After installation, add these lines to your .bashrc:
+                  <div class="code-container"
+                        style="text-align: center; margin: 25px auto; max-width: 40em;">
+                        <button class="copy-btn">Copy</button>
+                        <pre
+                          class="console"
+                          style="color: oklch(48.8% 0.243 264.376)"
+                        ><code class="language-bash"># CUDA Toolkit paths
+export PATH=/usr/local/cuda-13.1/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH</code></pre>
+                      </div>
+                      Replace "13.1" with your installed version.
+                
+                Update the environment:
+                <div class="code-container"
+                        style="text-align: center; margin: 25px auto; max-width: 40em;">
+                        <button class="copy-btn">Copy</button>
+                        <pre
+                          class="console"
+                          style="color: oklch(48.8% 0.243 264.376)"
+                        ><code class="language-bash">source ~/.bashrc</code></pre>
+                      </div>
+                to update the environment variables. Verify the installation by running:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">nvcc --version</code></pre>
+                    </div>
+                <li>
+                  <a href="https://developer.nvidia.com/cudnn" class="url">cuDNN</a>: Deep learning library. Follow the instructions on the <a href="https://developer.nvidia.com/cudnn" class="url">NVIDIA cuDNN website</a>.
+                </li>
+              </ul>
+              </li>
+              <li>
+                Profiling:
+                <ul>
+                  <li class="bullet">
+                    <a href="https://valgrind.org/" class="url">Valgrind</a>: Memory debugging, leak detection, and profiling tool. Install with:
+                    <div class="code-container"
+                          style="text-align: center; margin: 25px auto; max-width: 40em;">
+                          <button class="copy-btn">Copy</button>
+                          <pre
+                            class="console"
+                            style="color: oklch(48.8% 0.243 264.376)"
+                          ><code class="language-bash">sudo apt install valgrind -y</code></pre>
+                        </div>
+                  </li>
+                  <li class="bullet">
+                    Perf: Performance analysis tool. Install with:
+                    <div class="code-container"
+                          style="text-align: center; margin: 25px auto; max-width: 40em;">
+                          <button class="copy-btn">Copy</button>
+                          <pre
+                            class="console"
+                            style="color: oklch(48.8% 0.243 264.376)"
+                          ><code class="language-bash">sudo apt install linux-tools-common linux-tools-$(uname -r) -y</code></pre>
+                        </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Common Libraries:
+                <ul>
+                  <li class="bullet">
+                    <a href="https://www.boost.org/" class="url">Boost</a>: Comprehensive C++ library collection. Install with:
+                    <div class="code-container"
+                          style="text-align: center; margin: 25px auto; max-width: 40em;">
+                          <button class="copy-btn">Copy</button>
+                          <pre
+                            class="console"
+                            style="color: oklch(48.8% 0.243 264.376)"
+                          ><code class="language-bash">sudo apt install libboost-all-dev -y</code></pre>
+                        </div>
+                  </li>
+                  <li class="bullet">
+                    <a href="https://eigen.tuxfamily.org/" class="url">Eigen</a>: C++ template library for linear algebra. Install with:
+                    <div class="code-container"
+                          style="text-align: center; margin: 25px auto; max-width: 40em;">
+                          <button class="copy-btn">Copy</button>
+                          <pre
+                            class="console"
+                            style="color: oklch(48.8% 0.243 264.376)"
+                          ><code class="language-bash">sudo apt install libeigen3-dev -y</code></pre>
+                        </div>
+                  </li>
+                  <li class="bullet">
+                    <a href="https://www.open-mpi.org/" class="url">OpenMPI</a>: Parallel programming framework. Install with:
+                    <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt install libopenmpi-dev openmpi-bin -y</code></pre>
+                    </div>
+                  </li>
+                  <li class="bullet">
+                    <a href="https://www.fftw.org/" class="url">FFTW</a>: Discrete Fourier transform library. Install with:
+                    <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt install libfftw3-dev -y</code></pre>
+                    </div>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          <section id="python">
+            <h3>Python and Anaconda</h3>
+            <ul>
+              <li class="bullet">
+                <a href="https://www.python.org/" class="url">Python</a>: Most Linux distributions include Python by default.
+                Check your version:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">python3 --version</code></pre>
+                    </div>
+                To prevent pip from installing packages globally (which helps keep your system clean), create a pip configuration file:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">mkdir -p ~/.config/pip
+echo "[global]" > ~/.config/pip/pip.conf
+echo "user = true" >> ~/.config/pip/pip.conf</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                <a href="https://www.anaconda.com/" class="url">Anaconda</a>: Python development and package management platform.
+                Download the installer from the
+                <a href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity" class="url">Anaconda website</a> and follow the installation instructions. Verify installation:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">source ~/.bashrc
+conda --version</code></pre> 
+                      
+                    </div>
+                Managing your Anaconda environments:
+                <ul>
+                        <li class="bullet">
+                          Prevent Auto-Activation: If you don't want the (base) environment to start every time you open a terminal, run:
+                          <div class="code-container"
+                                style="text-align: center; margin: 25px auto; max-width: 40em;">
+                                <button class="copy-btn">Copy</button>
+                                <pre
+                                  class="console"
+                                  style="color: oklch(48.8% 0.243 264.376)"
+                                ><code class="language-bash">conda config --set auto_activate_base false</code></pre>
+                              </div>
+                        </li>
+                        <li class="bullet">
+                          Create a New Environment: To create a new environment with a specific Python version, run:
+                          <div class="code-container"
+                                style="text-align: center; margin: 25px auto; max-width: 40em;">
+                                <button class="copy-btn">Copy</button>
+                                <pre
+                                  class="console"
+                                  style="color: oklch(48.8% 0.243 264.376)"
+                                ><code class="language-bash">conda create -n myenv python=3.10</code></pre>
+                              </div>
+                        </li>
+                        <li class="bullet">
+                          Activate an Environment: To activate an environment, run:
+                          <div class="code-container"
+                                style="text-align: center; margin: 25px auto; max-width: 40em;">
+                                <button class="copy-btn">Copy</button>
+                                <pre
+                                  class="console"
+                                  style="color: oklch(48.8% 0.243 264.376)"
+                                ><code class="language-bash">conda activate myenv</code></pre>
+                              </div>
+                        </li>
+                        <li class="bullet">
+                          Deactivate an Environment: To deactivate the current environment, run:
+                          <div class="code-container"
+                                style="text-align: center; margin: 25px auto; max-width: 40em;">
+                                <button class="copy-btn">Copy</button>
+                                <pre
+                                  class="console"
+                                  style="color: oklch(48.8% 0.243 264.376)"
+                                ><code class="language-bash">conda deactivate</code></pre>
+                              </div>
+                        </li>
+                      </ul>
+                  <strong>Note:</strong> The global pip restriction mentioned earlier can interfere with pip usage inside Anaconda environments. To temporarily override it, prefix your pip commands with:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="console"
+                    style="color: oklch(48.8% 0.243 264.376)"
+                  ><code class="language-bash">PIP_REQUIRE_VIRTUALENV=false</code></pre>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section id="javascript">
+            <h3>JavaScript and Web</h3>
+            <ul>
+              <li class="bullet">
+                <a href="https://nodejs.org/" class="url">Node.js</a> and npm: JavaScript runtime and package manager. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt install nodejs npm -y</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                Yarn: Alternative JavaScript package manager. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">npm install -g yarn</code></pre>
+                    </div>
+              </li>
+              <li>
+                Cwebp: WebP image conversion tool. Install with:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="console"
+                    style="color: oklch(48.8% 0.243 264.376)"
+                  ><code class="language-bash">sudo apt install webp -y</code></pre>
+                </div>
+                Now, you can convert images to WebP format using the cwebp command. For example:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="console"
+                    style="color: oklch(48.8% 0.243 264.376)"
+                  ><code class="language-bash"># Convert PNG to WebP
+cwebp input.png -o output.webp
+
+# Batch convert all PNGs
+for file in *.png; do cwebp "$file" -o "${file%.png}.webp"; done</code></pre>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section id="rust">
+            <h3>Rust and Cargo</h3>
+            <ul>
+              <li class="bullet">
+                <a href="https://www.rust-lang.org/" class="url">Rust</a> and Cargo: Systems programming language with built-in package manager. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env</code></pre>
+                    </div>
+              </li>
+                Verify the installation by running:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">rustc --version
+cargo --version</code></pre>
+                    </div>
+            </ul>
+          </section>
+
+          <section id="engineering">
+            <h3>Engineering Softwares</h3>
+            <ul>
+              <li class="bullet">
+                <a href="https://www.mathworks.com/products/matlab.html" class="url">MATLAB</a>: Numerical computing environment. Download from MathWorks and follow their installation instructions.
+
+                To add MATLAB to your application menu, create
+                <code class="inline-code">~/.local/share/applications/matlab.desktop</code>
+                with this content:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MATLAB
+Comment=MATLAB Numerical Computing Environment
+Exec=/usr/local/MATLAB/R2024a/bin/matlab -desktop
+Icon=/usr/local/MATLAB/R2024a/bin/glnxa64/cef_resources/matlab_icon.png
+Terminal=false
+Categories=Development;Science;Engineering;</code></pre>
+                    </div>
+
+                    Then, refresh the application menu by running:
+                    <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">update-desktop-database ~/.local/share/applications/</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                <a href="https://www.kicad.org/" class="url">KiCAD</a>: PCB design software. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt install kicad -y</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                <a href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html" class="url">LTspice</a>: Circuit simulation tool. Download from Analog Devices and follow their installation instructions.
+              </li>
+              <li class="bullet">
+                <a href="https://www.audacityteam.org/" class="url">Audacity</a>: Audio editing software. Install with:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">sudo apt install audacity -y</code></pre>
+                    </div>
+              </li>
+              <li class="bullet">
+                <a href="https://code-industry.net/masterpdfeditor/" class="url">Master PDF Editor</a>: PDF editing software. Installation steps:
+                <ul>
+                  <li class="bullet">First, download the installer from the Master PDF Editor website.</li>
+                  <li class="bullet">Next, open the terminal and navigate to the directory where the installer was downloaded, then install it via apt.
+                    <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="console"
+                        style="color: oklch(48.8% 0.243 264.376)"
+                      ><code class="language-bash">cd ~/Downloads
+sudo apt install ./master-pdf-editor*.deb</code></pre>
+                    </div>
+                  </li>
+                  <li class="bullet">Then, run the installer with: <code class="inline-code">./master-pdf-editor-*.run</code></li>
+                  <li class="bullet">Follow the on-screen instructions to complete the installation.</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          
+        </section>
+      </div>
+      <footer></footer>
+    </div>
+    
+    <script src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/blogpage-setting.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cmake.js"></script>
+  </body>
+</html>

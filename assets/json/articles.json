@@ -55,18 +55,9 @@
       "date": "June 16, 2024"
     },
     {
-      "title": "Light Refraction and A More In-depth Look of Snell's Law",
-      "id": "snell-1",
-      "image": "snell_s_law_drawing.webp",
-      "link": "/articles/snells-law",
-      "topics": ["Refraction", "PDEs"],
-      "description": "Simple idea, complex derivation. Snell's law describe the relationship between the angle of incidence and angle of reflection.",
-      "date": "October 2, 2024"
-    },
-    {
-      "title": "Time Complexity of an Algorithm",
+      "title": "Algorithmic Analysis of an Algorithm",
       "id": "dsa-1",
-      "image": "time-complexity-banner.webp",
+      "image": "time-complexity.webp",
       "link": "/articles/time-complexity-of-an-algorithm",
       "topics": ["Data Structures and Algorithm", "C++", "Python"],
       "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
@@ -80,27 +71,18 @@
       "topics": ["Classical Mechanics", "Dynamics of Rotation"],
       "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations. This article explore more about moment of inertia of interesting shapes.",
       "date": ""
-    },
-    {
-      "title": "Green's Function",
-      "id": "green-1",
-      "image": "GreensFunctionExample_1000.svg",
-      "link": "/articles/greens-function",
-      "topics": ["Python", "PDEs", "Numpy"],
-      "description": "An in-depth view of how to use Green's functions and their physical meaning.",
-      "date": ""
-    },
-    {
-      "title": "Simulating the Brachistochrone problem",
-      "id": "brachistochrone-1",
-      "image": "brachistochrone.webp",
-      "link": "https://example.com/js-event-loop",
-      "topics": ["Python", "Calculus of Variations"],
-      "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
-      "date": ""
     }
+
   ],
   "posts": [
+    {
+      "title": "Linux development environment setup",
+      "pid": "linux-setup",
+      "link": "/posts/linux-setup/",
+      "topics": ["Ubuntu", "Linux", "Development Environment", "Programming", "Productivity"],
+      "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04, including installation steps, configurations, and useful tips for an efficient workflow.",
+      "date": "December 28, 2025"
+    },
     {
       "title": "A list of places to munch",
       "pid": "munch-places",
@@ -116,14 +98,6 @@
       "topics": ["VS Code", "Chrome Extensions", "Software", "Hardware", "Life", "Work"],
       "description": "A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I'm too lazy for migration, and it has plenty of cool plugins. Why VS Code? I've tried many text-editors and IDEs before, but I find VS Code to be the most visually pleasing, plus, it's lightweight, and has a large community and number of extensions.",
       "date": "April 12, 2025"
-    },
-    {
-      "title": "Silly project idea",
-      "pid": "jaskier",
-      "link": "https://ddonle.com/jaskier-bot",
-      "topics": ["Poetry", "API" ,"RestAPI", "Gemini"],
-      "description": "I used Gemini 2.0 Flash API to create an AI bot that writes poetry and plays piano.",
-      "date": "March, 2025"
     },
     {
       "title": "Average engineering experience",
@@ -194,12 +168,13 @@
   ],
   "scratch" : [
     {
-      "title": "No matter what happens, life must move on",
-      "pid": "random-post",
-      "link": "/404.html",
-      "topics": ["Life", "Self-reminder", "Cope"],
-      "description": "Life is full of failures, and each failure can hurt, a lot. But nothing hurts more than the pain of regret. It's not always the case that you did something wrong. You can do everything right and still lose. Be proud that you had the courage to do it.",
-      "date": "April 16, 2025"
+      "title": "Simulating the Brachistochrone problem",
+      "id": "brachistochrone-1",
+      "image": "brachistochrone.webp",
+      "link": "https://example.com/js-event-loop",
+      "topics": ["Python", "Calculus of Variations"],
+      "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
+      "date": ""
     }
   ]
 }

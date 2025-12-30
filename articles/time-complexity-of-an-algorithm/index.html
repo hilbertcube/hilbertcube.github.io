@@ -61,33 +61,44 @@
         <h2>Table of Contents</h2>
       </header> 
       <ul>
-        <li>Introduction
+        <li><a href="#introduction">Introduction</a>
           <ul>
-            <li>What is the Best Way to Compare Algorithms' Efficiency?</li>
-            <li>The Big O, Big Omega, Big Theta, and Their Properties
+            <li><a href="#compare-efficiency">What is the Best Way to Compare Algorithms' Efficiency?</a></li>
+            <li><a href="#big-o-omega-theta">The Big O, Big Omega, Big Theta, and Their Properties</a>
               <ul>
-                <li>The Big O</li>
-                <li>The Big Theta</li>
+                <li><a href="#big-o">The Big O</a></li>
+                <li><a href="#big-omega">The Big Omega</a></li>
+                <li><a href="#big-theta">The Big Theta</a></li>
+                <li><a href="#useful-properties">Useful Properties</a></li>
               </ul>
             </li>
-            <li>Algorithmic Analysis</li>
           </ul>
         </li>
-        <li>The Fundamental Functions of Algorithmic Analysis
+        <li><a href="#runtime-analysis">Runtime Analysis of an Algorithm</a>
           <ul>
-            <li>The Constant Function</li>
-            <li>The Logarithm Function</li>
-            <li>The Linear Function</li>
-            <li>The n log n Function</li>
-            <li>The Quadratic Function</li>
-            <li>The Cubic Function</li>
-            <li>The Exponential Function</li>
-            <li>The Factorial Function</li>
-            <li>Other Irregular Functions</li>
+            <li><a href="#master-theorem">The Master Theorem</a></li>
+            <li><a href="#example-merge-sort">Example 1: Merge Sort</a></li>
+            <li><a href="#example-binary-search">Example 2: Binary Search</a></li>
+            <li><a href="#example-topological-sort">Example 3: Topological Sort</a></li>
+            <li><a href="#example-dijkstra">Example 4: Dijkstra's Algorithm</a></li>
           </ul>
         </li>
-        <li><a>When Does Time Complexity Start to Matter?</a></li>
-        <li><a>References</a></li>
+        <li><a href="#fundamental-functions">The Fundamental Functions of Algorithmic Analysis</a>
+          <ul>
+            <li><a href="#constant-function">The Constant Function</a></li>
+            <li><a href="#logarithm-function">The Logarithm Function</a></li>
+            <li><a href="#linear-function">The Linear Function</a></li>
+            <li><a href="#nlogn-function">The n log n Function</a></li>
+            <li><a href="#quadratic-function">The Quadratic Function</a></li>
+            <li><a href="#cubic-function">The Cubic Function</a></li>
+            <li><a href="#exponential-function">The Exponential Function</a></li>
+            <li><a href="#factorial-function">The Factorial Function</a></li>
+            <li><a href="#irregular-functions">Other Irregular Functions</a></li>
+          </ul>
+        </li>
+        <li><a href="#when-complexity-matters">When Does Time Complexity Start to Matter?</a></li>
+        <li><a href="#algorithmic-analysis">Algorithmic Analysis</a></li>
+        <li><a href="#references">References</a></li>
       </ul>
     </div>
     <div class="highlights-and-attribute"></div>
@@ -98,12 +109,12 @@
 
       <header>
         <div class="topic">
-          Topics: Computer-Science/Data-Structure/Algorithms/C++
+          Topics: Computer Science, Data Structures, Algorithms, C++
         </div>
-        <h1 class="title">Time Complexity of an Algorithm</h1>
+        <h1 class="title">Algorithmic Analysis of an Algorithm</h1>
         <div class="date"></div>
         <figure style="margin: 0;">
-          <img class="front-img" src="time-complexity-banner.png" alt="image">
+          <img class="front-img" src="time-complexity.webp" alt="image">
         </figure>
         <div class="Quote">
           <div class="Quote-content">&#8220Science is what we understand well enough to explain to a computer. Art is
@@ -112,10 +123,10 @@
         </div>
       </header>
 
-      <section>
+      <section id="introduction">
         <h2>Introduction</h2>
 
-        <section>
+        <section id="compare-efficiency">
           <h3>What is the Best Way to Compare Algorithms' Efficiency?</h3>
           <p>
             Given two algorithms that perform the same task, what is the best way to compare their performance? At first
@@ -138,8 +149,8 @@
           <p>
             where $C_1$ and $C_0$ are factors that depends on outside conditions. This expression is quite inconvenient,
             as we don't usually know what these constant factors are, so the general rule of thumb to express the
-            worst-case runtime of an algorithm is through the big-O notation. For $f(n) = C_1n + C_0$, for example, if
-            $f(n) = C_1n + C_0$, then $f(n)$ it can be said that
+            worst-case runtime of an algorithm is through the big-O notation. For example, if
+            $f(n) = C_1n + C_0$, then it can be said that
           </p>
           <div class="equation">
             $$f(n) \in O(n).$$
@@ -152,10 +163,18 @@
           </p>
         </section>
 
-        <section>
+        <section id="big-o-omega-theta">
           <h3>The Big O, Big Omega, Big Theta, and Their Properties</h3>
+            <p>
+              Merge sort splits the input array into halves, recursively sorts both halves, then merges two sorted arrays in linear time.
+              Let $T(n)$ be the time to sort $n$ items. The recurrence is
+            </p>
+            <div class="equation">$$T(n) = 2\,T\!\left(\tfrac{n}{2}\right) + \Theta(n).$$</div>
+            <p>
+              Here $a=2$, $b=2$, and $f(n)=\Theta(n)$ matches Case 2 of the Master Theorem with $k=0,\;\log_b a=1$, yielding $T(n) \in \Theta(n\,\log n)$. The merge step uses linear extra space, so space complexity is $\Theta(n)$.
+            </p>
 
-          <section>
+          <section id="big-o">
             <h4>The Big O Notation</h4>
             <div class="definition" data-definition-name=". The Big O">
               Let $f$ and $g$ be real-valued and not necessarily continuous functions. We say that $f$ is the big O of
@@ -176,7 +195,14 @@
             </p>
           </section>
 
-          <section>
+            <p>
+              Binary search on a sorted array halves the search interval each iteration. The recurrence is
+            </p>
+            <div class="equation">$$T(n) = T\!\left(\tfrac{n}{2}\right) + \Theta(1).$$</div>
+            <p>
+              With $a=1$, $b=2$, $f(n)=\Theta(1)$, we have $\log_b a = 0$ and Case 2 gives $T(n) \in \Theta(\log n)$. Iterative binary search uses $\Theta(1)$ extra space; the naive recursive form uses $\Theta(\log n)$ stack space.
+            </p>
+          <section id="big-omega">
             <h4>The Big Omega Notation</h4>
             <div class="definition" data-definition-name=". The Big Omega">
               Big Omega provides a lower bound on the growth of a function. We say that $f$ is the big Omega of $g$, written
@@ -196,7 +222,11 @@
             </p>
           </section>
 
-          <section>
+            <p>
+              Using Kahn’s algorithm (indegree + queue) or DFS, each vertex is enqueued/visited a constant number of times and each edge is examined once.
+              For a DAG with $V$ vertices and $E$ edges, the runtime is $\Theta(V+E)$; space is $\Theta(V)$ for the queue/stack and $\Theta(V+E)$ for adjacency lists.
+            </p>
+          <section id="big-theta">
             <h4>The Big Theta Notation</h4>
             <div class="definition" data-definition-name=". The Big Theta">
               Big Theta describes a tight bound on the growth of a function. We say that $f$ is the big Theta of $g$, written
@@ -216,35 +246,96 @@
             </p>
           </section>
 
+            <p>
+              With adjacency lists and a binary heap priority queue:
+            </p>
+            <ul style="line-height: 1.6;">
+              <li style="margin: var(--in-page-li-spacing) 0;">Extract-min occurs $V$ times at $\Theta(\log V)$ each.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;">Decrease-key (relaxation) occurs up to $E$ times at $\Theta(\log V)$ each.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;">Scanning adjacency lists costs $\Theta(E)$ overall.</li>
+            </ul>
+            <p>
+              Total time $\Theta\big((V+E)\log V\big)$; with an array as the queue it is $\Theta(V^2+E)$; with a Fibonacci heap it becomes $\Theta(E+V\log V)$.
+            </p>
+          <section id="useful-properties">
+            <h4>Useful Properties</h4>
+            <ul style="line-height: 1.6;">
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Ignore constants:</b> $c\,f(n) \in \Theta(f(n))$ for any constant $c>0$.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Base of logs:</b> $\log_a n \in \Theta(\log_b n)$ for any fixed bases $a,b>1$.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Sum dominated by max:</b> $f(n)+g(n) \in \Theta(\max\{f(n),g(n)\})$ if one eventually dominates.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Products:</b> If $f\in O(g)$ and $h\in O(k)$, then $fh \in O(gk)$.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Polynomial vs. exponential:</b> For any constant $d>0$ and any $a>1$, $n^d \in o(a^n)$.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Transitivity:</b> If $f\in O(g)$ and $g\in O(h)$ then $f\in O(h)$ (similarly for $\Omega$).</li>
+            </ul>
+          </section>
+
+          <section id="master-theorem">
+            <h4>The Master Theorem</h4>
+            <p>
+              Many divide-and-conquer algorithms lead to recurrences of the form
+            </p>
+            <div class="equation">$$T(n) = a\,T\!\left(\frac{n}{b}\right) + f(n), \quad a \ge 1,\; b>1,$$</div>
+            <p>
+              where $a$ subproblems of size $n/b$ are solved and $f(n)$ accounts for splitting/merging work. The Master Theorem gives asymptotic solutions:
+            </p>
+            <ul style="line-height: 1.6;">
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Case 1:</b> If $f(n) \in O\big(n^{\log_b a - \varepsilon}\big)$ for some $\varepsilon>0$, then $T(n) \in \Theta\big(n^{\log_b a}\big)$.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Case 2:</b> If $f(n) = \Theta\big(n^{\log_b a}\,\log^k n\big)$ for some $k \ge 0$, then $T(n) \in \Theta\big(n^{\log_b a}\,\log^{k+1} n\big)$.</li>
+              <li style="margin: var(--in-page-li-spacing) 0;"><b>Case 3:</b> If $f(n) \in \Omega\big(n^{\log_b a + \varepsilon}\big)$ for some $\varepsilon>0$ and $a\,f(n/b) \le c\,f(n)$ for some constant $c<1$ and all sufficiently large $n$, then $T(n) \in \Theta\big(f(n)\big)$.</li>
+            </ul>
+          </section>
         </section>
 
 
 
 
-      <section>
+      <section id="runtime-analysis">
         <h2>Runtime Analysis of an Algorithm</h2>
-        <section>
+        <section id="example-merge-sort">
           <h3>Example 1: Merge Sort</h3>
+          <p>
+            Merge sort splits the input array into halves, recursively sorts both halves, then merges two sorted arrays in linear time.
+            Let $T(n)$ be the time to sort $n$ items. The recurrence is
+          </p>
+          <div class="equation">$$T(n) = 2\,T\!\left(\tfrac{n}{2}\right) + \Theta(n),$$</div>
+          <p>
+            which solves to $T(n) \in \Theta(n\,\log n)$ by the Master Theorem. The merge step uses linear extra space, so space complexity is $\Theta(n)$.
+          </p>
         </section>
 
-        <section>
+        <section id="example-binary-search">
           <h3>Example 2: Binary Search</h3>
+          <p>
+            Binary search on a sorted array halves the search interval each iteration. The recurrence is
+          </p>
+          <div class="equation">$$T(n) = T\!\left(\tfrac{n}{2}\right) + \Theta(1) \;\Rightarrow\; T(n) \in \Theta(\log n).$$</div>
+          <p>
+            Iterative binary search uses $\Theta(1)$ extra space; the naive recursive form uses $\Theta(\log n)$ stack space.
+          </p>
         </section>
 
-        <section>
+        <section id="example-topological-sort">
           <h3>Example 3: Topological Sort</h3>
+          <p>
+            Kahn’s algorithm or a DFS-based algorithm visits each vertex and edge a constant number of times.
+            For a directed acyclic graph (DAG) with $V$ vertices and $E$ edges, the runtime is $\Theta(V+E)$.
+          </p>
         </section>
 
-        <section>
+        <section id="example-dijkstra">
           <h3>Example 4: Dijkstra's Algorithm</h3>
+          <p>
+            With a binary heap (priority queue) and adjacency lists, Dijkstra runs in $\Theta\big((V+E)\log V\big)$.
+            Using an array as the queue yields $\Theta(V^2+E)$; with a Fibonacci heap it becomes $\Theta(E+V\log V)$.
+          </p>
         </section>
       </section>
 
 
-      <section>
+      <section id="fundamental-functions">
         <h2>The Fundamental Functions of Algorithmic Analysis</h2>
 
-        <section>
+        <section id="constant-function">
           <h3>The constant function</h3>
           <p>
             The constant time complexity function, denoted
@@ -301,11 +392,11 @@
               $O(n)$ in the worst case, where $n$ is the total number of keys in the hash map.
 
             </li>
-            </ol>
+            </ul>
         </section>
 
 
-        <section>
+        <section id="logarithm-function">
           <h3>The Logarithm Function</h3>
           <p>
             Some examples of this type of algorithms are:
@@ -316,7 +407,7 @@
               technique, where the size of the array reduces by half every iteration.
 
             </li>
-            <li style="margin: var(--in-page-li-spacing) 0;">Calculate the 64-bit (or less) $n$-th Fibinacci number with
+            <li style="margin: var(--in-page-li-spacing) 0;">Calculate the 64-bit (or less) $n$-th Fibonacci number with
               <a href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/"
                 class="url">fast doubling method</a>.
 
@@ -354,7 +445,7 @@
 
 
 
-        <section>
+        <section id="linear-function">
           <h3>The Linear Function</h3>
 
 
@@ -378,7 +469,7 @@
         </section>
 
 
-        <section>
+        <section id="nlogn-function">
           <h3>The <span id="nlogn">$n \log n$</span> Function</h3>
           <p>
             These types of algorithms are usually optimized versions of $O(n^2)$ algorithms. Some examples of this type
@@ -387,9 +478,9 @@
           <ul style="line-height: 1.6;">
             <li style="margin: var(--in-page-li-spacing) 0;">
               Fast Fourier Transform: FFT works by breaking down the computation of the Discrete Fourier Transform
-              (DFT), which is $O(n^2)$ nto smaller subproblems. For an input signal of size $n$, the FFT algorithm
+              (DFT), which is $O(n^2)$ into smaller subproblems. For an input signal of size $n$, the FFT algorithm
               splits it into two halves: one for the even-indexed terms and one for the odd-indexed terms. It then
-              recursively computes the DFT of these smaller subproblems: the even and odd indexes terms of the DFT.
+               recursively computes the DFT of these smaller subproblems: the even and odd indexed terms of the DFT.
             </li>
             <li style="margin: var(--in-page-li-spacing) 0;">
               Merge Sort, Quick Sort (on average), Heap Sort, AVL Tree Sort are all $O(n\;\log n)$ algorithms.
@@ -397,8 +488,30 @@
           </ul>
         </section>
 
+        <section id="quadratic-function">
+          <h3>The Quadratic Function</h3>
+          <p>
+            Quadratic time $\Theta(n^2)$ typically arises from a constant number of nested loops over the input.
+            Examples include selection sort, bubble sort, and insertion sort (worst case), naive substring search,
+            and computing all pairwise distances in an array.
+          </p>
+          <ul style="line-height: 1.6;">
+            <li style="margin: var(--in-page-li-spacing) 0;">Two nested loops over $n$ elements: $\sum_{i=1}^{n} \sum_{j=1}^{n} 1 \in \Theta(n^2)$.</li>
+            <li style="margin: var(--in-page-li-spacing) 0;">Insertion sort: $\Theta(n^2)$ in the worst/average case, $\Theta(n)$ in the best (already sorted).</li>
+          </ul>
+        </section>
 
-        <section>
+        <section id="cubic-function">
+          <h3>The Cubic Function</h3>
+          <p>
+            Cubic time $\Theta(n^3)$ appears in triple-nested loops and classical algorithms such as naive
+            matrix multiplication. Faster asymptotic algorithms exist (e.g., Strassen’s $\Theta(n^{\log_2 7})$),
+            but with large constants and practical trade-offs.
+          </p>
+        </section>
+
+
+        <section id="exponential-function">
           <h3>The Exponential Function</h3>
           <p>
             Algorithms of this type are generally very bad. Some examples are:
@@ -414,19 +527,19 @@
               subsets of a set of $n$ elements.
             </li>
             <li style="margin: var(--in-page-li-spacing) 0;">
-              Naive Recursive Fibonacci: Compute the n-th Fibonacci number, where $F(n) = F(n-1) + F(n-2)$ and the base
+              Naive Recursive Fibonacci: Compute the $n$-th Fibonacci number, where $F(n) = F(n-1) + F(n-2)$ and the base
               cases are $F(0) = 0$ and $F(1) = 1$. The time complexity of this problem is $O(2^n)$ because the recursive
               calls grow exponentially due to repeated subproblems.
             </li>
             <li style="margin: var(--in-page-li-spacing) 0;">
-              Find all sub-arrays of an array. This algorithm actually has an time complexity of $O(n\cdot 2^n)$ because
+              Find all sub-arrays of an array. This algorithm actually has a time complexity of $O(n\cdot 2^n)$ because
               the total number of non-empty sub-arrays in an array of size $n$ is $2^n - 1$ and we also need to loop
               over $n$ elements of the array.
             </li>
           </ul>
         </section>
 
-        <section>
+        <section id="factorial-function">
           <h3>The Factorial Function</h3>
           <ul style="line-height: 1.6;">
             <li style="margin: var(--in-page-li-spacing) 0;">
@@ -436,19 +549,61 @@
             </li>
             <li style="margin: var(--in-page-li-spacing) 0;">
               Generating Factorials: Given a set of integers $S=\{1, 2, \ldots, n\}$. Since there are up to $n!$
-              permutations of elements of this set, generating all possible permutation will requires $O(n!)$.
+              permutations of elements of this set, generating all possible permutations will require $O(n!)$.
             </li>
+          </ul>
+        </section>
+
+        <section id="irregular-functions">
+          <h3>Other Irregular Functions</h3>
+          <ul style="line-height: 1.6;">
+            <li style="margin: var(--in-page-li-spacing) 0;"><b>Square-root time:</b> $\Theta(\sqrt{n})$ or $\Theta(n\sqrt{n})$ appears in number-theoretic sieves and some block-decomposition tricks.</li>
+            <li style="margin: var(--in-page-li-spacing) 0;"><b>Polylogarithmic:</b> $\Theta(\log^k n)$ for fixed $k$ occurs in balanced trees and multi-level indexing.</li>
+            <li style="margin: var(--in-page-li-spacing) 0;"><b>Iterated log:</b> $\log\log n$ and $\log^{(*)} n$ arise in specialized data structures.</li>
+            <li style="margin: var(--in-page-li-spacing) 0;"><b>Inverse Ackermann:</b> $\alpha(n)$ (essentially a constant <em>in practice</em>) appears in union-find with path compression and union by rank; overall operations can be $\Theta(m\,\alpha(n))$ for $m$ operations on $n$ elements.</li>
           </ul>
         </section>
       </section>
 
+<!-- 
+      <section id="when-complexity-matters">
+        <h2>When Does Time Complexity Start to Matter?</h2>
+        <p>
+          On tiny inputs, a well-tuned $\Theta(n^2)$ routine can beat a fancy $\Theta(n\log n)$ one. Past a certain size, the curve wins.
+          At $n=10^5$, $n^2 \approx 10^{10}$ operations; $n\log_2 n \approx 1.7\times10^6$ — roughly <em>six thousand times</em> less work.
+          That’s where asymptotics start paying rent.
+        </p>
+        <ul style="line-height: 1.6;">
+          <li style="margin: var(--in-page-li-spacing) 0;"><b>First fix the class:</b> Move $\Theta(n^2)$ to $\Theta(n\log n)$ before micro-optimizing.</li>
+          <li style="margin: var(--in-page-li-spacing) 0;"><b>Know your data:</b> Nearly-sorted inputs, sparsity, or bounded ranges can slash work.</li>
+          <li style="margin: var(--in-page-li-spacing) 0;"><b>Trade memory for speed:</b> Hashing and preprocessing often turn $\Theta(n)$ scans into $\Theta(1)$ average lookups.</li>
+          <li style="margin: var(--in-page-li-spacing) 0;"><b>Use amortized bounds:</b> Dynamic arrays and union–find spread occasional expensive steps over many cheap ones.</li>
+        </ul>
+      </section>
 
-      <section>
-        
+      <section id="algorithmic-analysis">
+        <h2>Algorithmic Analysis</h2>
+        <p>
+          We commonly reason about <b>worst-case</b>, <b>average-case</b>, and <b>best-case</b> time, as well as <b>space complexity</b>.
+          Amortized analysis bounds the average cost per operation over a sequence. Choose the model of computation and input distribution
+          carefully; complexity guarantees often assume specific data structures and cost models.
+        </p>
+      </section> -->
 
       <section>
         <h2>More Articles</h2>
         <div id="rec-article-container"></div>
+      </section>
+
+      <section id="references">
+        <h2>References</h2>
+        <ul style="line-height: 1.6;">
+          <li style="margin: var(--in-page-li-spacing) 0;">T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein, <em>Introduction to Algorithms</em> (CLRS).</li>
+          <li style="margin: var(--in-page-li-spacing) 0;">R. Sedgewick and K. Wayne, <em>Algorithms</em>, 4th ed.</li>
+          <li style="margin: var(--in-page-li-spacing) 0;">D. E. Knuth, <em>The Art of Computer Programming</em>.</li>
+          <li style="margin: var(--in-page-li-spacing) 0;"><a class="url" href="https://cp-algorithms.com/">cp-algorithms.com</a> – Practical algorithm notes and proofs.</li>
+          <li style="margin: var(--in-page-li-spacing) 0;"><a class="url" href="https://en.wikipedia.org/wiki/Big_O_notation">Wikipedia: Big-O notation</a> – Reference for definitions and properties.</li>
+        </ul>
       </section>
 
 
@@ -458,6 +613,7 @@
 
   <script src="../../assets/js/scripts.js"></script>
   <script src="../../assets/js/blogpage-setting.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
