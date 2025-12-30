@@ -26,8 +26,8 @@ function LoadScript(scriptId, source) {
 function setFavicon() {
   const link = document.createElement("link");
   link.rel = "icon";
-  link.href = ROOT + "/public/Images/Logo/favicon.png";
-  link.type = "image/png";
+  link.href = ROOT + "/public/Images/Logo/favicon.webp";
+  link.type = "image/webp";
   document.head.appendChild(link);
 }
 setFavicon();
@@ -91,8 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const closeButton = document.createElement("div");
       closeButton.textContent = "✕";
       closeButton.style.position = "absolute";
-      closeButton.style.top = "10px";
-      closeButton.style.right = "10px";
+      closeButton.style.top = "20px";
+      closeButton.style.right = "20px";
       closeButton.style.fontSize = "24px";
       closeButton.style.color = "white";
       closeButton.style.backgroundColor = "rgba(0,0,0,0.5)";
@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
       closeButton.style.justifyContent = "center";
       closeButton.style.cursor = "pointer";
       closeButton.style.userSelect = "none";
+      closeButton.style.pointerEvents = "auto";
 
       // Create navigation buttons container
       const navContainer = document.createElement("div");
@@ -176,13 +177,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Assemble elements
       imgContainer.appendChild(fullscreenImg);
-      imgContainer.appendChild(closeButton);
       viewerWrapper.appendChild(imgContainer);
       
       // Add navigation buttons to the nav container
       navContainer.appendChild(leftButton);
       navContainer.appendChild(rightButton);
       navContainer.appendChild(counterDisplay);
+      navContainer.appendChild(closeButton);
       
       // Add all elements to the overlay
       overlay.appendChild(viewerWrapper);
@@ -1361,18 +1362,65 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchCommit() {
-  fetch('/assets/json/latest_commit.json')
-    .then(res => res.json())
+  // Fetch repository stats
+  Promise.all([
+    fetch('https://api.github.com/repos/hilbertcube/neumanncondition'),
+    fetch('https://api.github.com/repos/hilbertcube/neumanncondition/commits?per_page=1'),
+    fetch('/assets/json/latest_commit.json'),
+    fetch('/assets/json/articles.json')
+  ])
+    .then(async ([repoRes, commitsRes, localCommitRes, articlesRes]) => {
+      const repoData = await repoRes.json();
+      const articlesData = await articlesRes.json();
+      const totalCommits = commitsRes.headers.get('Link') 
+        ? parseInt(commitsRes.headers.get('Link').match(/page=(\d+)>; rel="last"/)?.[1] || '0')
+        : 1;
+      
+      // Calculate lines of code (approximate from repo size)
+      const sizeKB = repoData.size;
+      const estimatedLines = Math.round(sizeKB * 30); // rough estimate: 30 lines per KB
+      
+      // Count articles and posts
+      const articleCount = articlesData.articles?.length || 0;
+      const postCount = articlesData.posts?.length || 0;
+      
+      // Calculate repository age
+      const createdDate = new Date(repoData.created_at);
+      const now = new Date();
+      const ageInDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+      const years = Math.floor(ageInDays / 365);
+      const months = Math.floor((ageInDays % 365) / 30);
+      const ageString = years > 0 
+        ? `${years} year${years > 1 ? 's' : ''}, ${months} month${months !== 1 ? 's' : ''}`
+        : `${months} month${months !== 1 ? 's' : ''}`;
+      
+      // Format numbers with commas
+      const formatNumber = (num) => num.toLocaleString('en-US');
+      
+      // Update repo stats
+      const statsElement = document.getElementById('repo-stats');
+      if (statsElement) {
+        statsElement.textContent = 
+          `Total Commits: ${formatNumber(totalCommits)}\n` +
+          `Estimated Lines: ${formatNumber(estimatedLines)}\n` +
+          `Articles: ${articleCount} | Posts: ${postCount}\n` +
+          `Repository Age: ${ageString}`;
+      }
+      
+      // Handle latest commit info
+      return localCommitRes.json();
+    })
     .then(commit => {
       const message = commit.commit.message;
-      //const author = commit.commit.author.name;
       const utcDateStr = commit.commit.author.date;
 
       // Convert to California time with comma instead of 'at'
       const localDateObj = new Date(utcDateStr);
       const datePart = localDateObj.toLocaleDateString('en-US', {
         timeZone: 'America/Los_Angeles',
-        dateStyle: 'long'
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
       });
       const timePart = localDateObj.toLocaleTimeString('en-US', {
         timeZone: 'America/Los_Angeles',
@@ -1381,7 +1429,14 @@ function fetchCommit() {
       });
 
       document.getElementById('commit-info').textContent =
-        `Last Updated: ${datePart}, ${timePart} (Pacific)\nCommit Message: ${message}\n*Fetched via Github API`;
+        `Last Updated: ${datePart}, ${timePart} (PST)\nCommit: ${message}`;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      const statsElement = document.getElementById('repo-stats');
+      if (statsElement) {
+        statsElement.textContent = 'Unable to load stats';
+      }
     });
 }
 

@@ -67,6 +67,16 @@
   <body class="nav-open light-mode">
     <nav class="navbar open" id="navbar">
       <div class="logo-and-side-nav"></div>
+      <div class="toc">
+        <header class="major">
+          <h2>Table of Contents</h2>
+        </header>
+        <ul>
+          <li><a href="#chrome-extensions">Chrome Extensions</a></li>
+          <li><a href="#vscode-extensions">VS Code Extensions and Settings</a></li>
+          <li><a href="#hardware">Hardware</a></li>
+        </ul>
+      </div>
       <div class="highlights-and-attribute"></div>
     </nav>
 
@@ -81,7 +91,7 @@
         </header>
 
         <section>
-          <section>
+          <section id="chrome-extensions">
             <h3>Chrome Extensions</h3>
             <ul>
               <li class="bullet">
@@ -108,7 +118,7 @@
             </ul>
           </section>
 
-          <section>
+          <section id="vscode-extensions">
             <h3>VS Codes Extensions and Settings</h3>
             <ul>
               <li class="bullet">
@@ -309,17 +319,14 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
                   <li class="bullet">
                     IntelliCode and IntelliCode API Usage Examples.
                   </li>
-                  <li class="bullet">Docker</li>
+                  <li class="bullet">Docker Extension</li>
                   <li class="bullet">
                     <a
                       class="url"
                       href="https://marketplace.visualstudio.com/items/?itemName=mhutchie.git-graph"
                     >
                       Git Graph.
-                    </a>
-                    <!-- <div style="margin: 25px 0;">
-                      <img class="image-block" style="width: 28rem;" src="git-graph.webp" alt="vscode-pet-demo">
-                    </div> -->
+                    </a> A visual git history viewer.
                   </li>
                 </ul>
               </li>
@@ -340,49 +347,22 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
             </ul>
           </section>
 
-          <section>
-            <h3>Desktop Softwares</h3>
-            <ul>
-              <li class="bullet">
-                <a href="https://windhawk.net/" class="url">Windhawk</a>:
-                Windows 11 sucks, as it does not allow you to customize even
-                simple things like the size of the taskbar, so I used this
-                software just to do that. It also has a lot of other cool tools
-                that you can install on your machine.
-              </li>
-              <li class="bullet">
-                <a href="https://www.audacityteam.org/download/" class="url"
-                  >Audacity</a
-                >: an audio editor I used to edit sound files.
-              </li>
-              <li class="bullet">
-                <a href="https://extensions.gnome.org/" class="url"
-                  >Gnome Shell Extension</a
-                >: Ubuntu customization.
-              </li>
-            </ul>
-          </section>
-
-          <section>
+          <section id="hardware">
             <h3>Hardware</h3>
             <ul>
               <li class="bullet">
-                Windows Laptop: Lenovo Legion Legion Pro 5, Intel Core
+                Linux Laptop: Lenovo Legion Legion Pro 5, Intel Core
                 i9-14900HX, 32GB RAM, 2TB SSD, RTX 4070. This is the laptop I
-                use for most of my work, school, and games. Damn good deal from
-                black friday.
+                use for most of my work, school, and games.
               </li>
               <li class="bullet">
-                Linux Laptop: ASUS ROG Zephyrus S GX531GX, Intel Core i7-8750H,
-                16GB RAM, 512GB SSD, GTX 1070 max-q. This is my old windows
-                laptop, but I deleted windows and installed Ubuntu. Thin laptop
-                but horrible battery life. I now use it to do system programming
-                development.
+                Windows Laptop: ASUS ROG Zephyrus S GX531GX, Intel Core i7-8750H,
+                16GB RAM, 512GB SSD, GTX 1070 max-q.
               </li>
               <li class="bullet">
                 Keyboard: CORSAIR K65 plus wireless 75% RGB.
               </li>
-              <li class="bullet">Tablet: Ipad Air 4th gen, 64GB.</li>
+              <li class="bullet">Tablet: Ipad Air 6th gen, 256GB.</li>
               <li class="bullet">
                 Headphone: Sony WH-1000XM3. Soundproof, wireless, a headphone bought a long
                 time ago.
@@ -400,6 +380,7 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
     </div>
     
     <script src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/blogpage-setting.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cmake.js"></script>

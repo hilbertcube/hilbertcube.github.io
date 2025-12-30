@@ -93,7 +93,7 @@
 
       <header>
         <div class="topic">
-          Topics: Mathematics/Physics/Standing Waves/Python
+          Topics: Mathematics, Physics, Standing Waves, Python
         </div>
         <h1 class="title">
           The Quest to Finding Chladni Patterns, Part 2: Codes and Results
@@ -141,73 +141,120 @@
           </div>
 
           <pre style="border-radius: 0px 7px 7px 7px;" id="Square-Pseudo-Code" class="pseudo-tab console">
-    <samp># ALGORITHM 1: PLOT SQUARE CHLADNI PATTERNS
-    
-    # generate different sign combinations for X using 
-    # an array of 1's and -1's.
-    # always keep the first element positive (1)
-    # return a list of list
-    function generate_sign_combinations(pairs) 
-        
-    # define the basis function
-    # we don't use Y(y), or m here because it's basically 
-    # the exact same function as X
-    function X(x, n)
-        return mod(n + 1, 2) * cos(n * pi * x/ 2.0) + 
-                mod(n, 2) * sin(n * pi * x/ 2.0)
+  <samp><b>Function</b> GenerateSignCombinations(pairs)
+      <b>Input:</b>  List of integer pairs (n, m)
+      <b>Output:</b> Array of sign combinations [+/-1, +/-1, ...] with first element fixed at +1
+      
+  <b>Function</b> BasisFunction(x, n)
+      <b>Input:</b>  Spatial coordinate x, mode number n
+      <b>Output:</b> X_n(x) = a_n cos(n*pi*x/L) + a_bar_n sin(n*pi*x/L)
+      <b>Return</b> ((n+1) mod 2) * cos(n*pi*x/2) + (n mod 2) * sin(n*pi*x/2)
 
-    # plot the full wave function
-    # input: x, y, pair (n, m) and sign array, for example, [1, -1, -1]
-    function u(x, y, pairs, signs)
+  <b>Function</b> WaveFunction(x, y, pairs, signs)
+      <b>Input:</b>  Coordinates (x, y), mode pairs [(n_1,m_1), (n_2,m_2), ...], sign array
+      <b>Output:</b> u(x,y) = sum over i of signs_i * X_n_i(x) * Y_m_i(y)
+      <b>Return</b> sum from i=1 to n of signs_i * BasisFunction(x, n_i) * BasisFunction(y, m_i)
+      <b>Input:</b>  Integer S
+      <b>Output:</b> Set of pairs {(n, m) : n^2 + m^2 = S}
+      pairs = empty_set
+      <b>for</b> n = 0 <b>to</b> floor(sqrt(S)) <b>do</b>
+          m = sqrt(S - n^2)
+          <b>if</b> m is an integer <b>then</b>
+              pairs = pairs union {(n, m), (m, n)}
+      <b>return</b> pairs
 
-    # search for sum-of-squares pairs
-    # find all pairs of (n, m) such that n^2 + m^2 = number
-    # return value: a list of tuples (n, m) that satisfies the requirement
-    function find_pairs(number) 
+  <b>Function</b> IsSumOfSquares(S)
+      <b>Input:</b>  Integer S
+      <b>Output:</b> Boolean indicating if S = n^2 + m^2 for some integers n, m
+      <b>Return</b> size(FindSumOfSquaresPairs(S)) > 0
 
-    # Check if a given number can be represented as sums of
-    # squares pairs
-    # return true if it is a sum of square
-    function exist_sos(number) 
-
-    # search for sum of squares
-    # plot the sum of squares
-    function plot_sum_of_squares(start_index, end_index)
+  <b>Algorithm</b> PlotSquareChladniPatterns(startIndex, endIndex)
+      <b>Input:</b>  Range [startIndex, endIndex] for pattern indices
+      <b>Output:</b> Contour plots of nodal lines at u(x,y) = 0
+      
+      totalPlots = endIndex - startIndex
+      equations = [ ]    // Store wave functions
+      sumValues = [ ]    // Store corresponding S values
+      plotCount = 0
+      k = 1
+      
+      <b>while</b> plotCount < totalPlots <b>do</b>
+          <b>if</b> IsSumOfSquares(k) <b>then</b>
+              pairs = FindSumOfSquaresPairs(k)
+              signCombos = GenerateSignCombinations(pairs)
+              
+              <b>for each</b> combo in signCombos <b>do</b>
+                  <b>if</b> plotCount >= startIndex <b>and</b> plotCount < endIndex <b>then</b>
+                      u_xy = WaveFunction(x, y, pairs, combo)
+                      equations.append(u_xy)
+                      sumValues.append(k)
+                  plotCount = plotCount + 1
+          k = k + 1
+      
+      <b>for</b> i = 0 <b>to</b> totalPlots - 1 <b>do</b>
+          AssignColorsByModePairs(pairs[i])
+          PlotContour(equations[i], level=0)    // Plot nodal lines at z = 0
 </samp>
 </pre>
 
 
           <pre style="border-radius: 0px 7px 7px 7px; display:none" id="Circular-Pseudo-Code"
             class="pseudo-tab console">
-    <samp># ALGORITHM 2: PLOT CIRCULAR CHLADNI PATTERNS
-        
-    # Function to get the m-th zero of the derivative of the 
-    # Bessel function of order n
-    function bessel_derivative_zero(n, m):
-        # redefine the first zero of J_0 prime to be 0
-        # default is not zero for some reason
-        if n == 0 then
-            zeros = list(jnp_zeros(n, m + 1))
-            zeros.insert(0, 0)
-            return zeros[m]
-        else
-            # Get the m-th zero, treating first zero as the 
-            # 0th zero
-            return jnp_zeros(n, m + 1)[-1]  
+  <samp><b>Function</b> BesselDerivativeZero(n, m)
+    <b>Input:</b>  Order n, zero index m
+    <b>Output:</b> m-th zero z_nm of J'_n(x)
+    
+    <b>if</b> n = 0 <b>then</b>
+        zeros = ComputeBesselPrimeZeros(0, m + 1)
+        zeros[0] = 0    // Redefine first zero as origin
+        <b>return</b> zeros[m]
+    <b>else</b>
+        zeros = ComputeBesselPrimeZeros(n, m + 1)
+        <b>return</b> zeros[m]
 
-    # Initial function f(r, theta)
-    function f(r, theta):
-        return r * np.cos(theta)
+  <b>Function</b> InitialDisplacement(r, theta)
+      <b>Input:</b>  Polar coordinates (r, theta)
+      <b>Output:</b> Initial condition f(r, theta)
+      <b>Return</b> r * cos(theta)
 
-    # Two coefficients
-    # use built-in integration tools to obtain these
-    # input: pair (n, m), radius a
-    function a_nm(n, m, a)   
-    function b_nm(n, m, a)
+  <b>Function</b> FourierCoefficient_A(n, m, a)
+      <b>Input:</b>  Mode numbers (n, m), plate radius a
+      <b>Output:</b> Coefficient a_nm from initial conditions
+      
+      k = z_nm / a
+      numerator = integral from 0 to a, integral from 0 to 2*pi of
+                  J_n(kr) * cos(n*theta) * f(r,theta) * r d(theta) dr
+      denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
+      <b>Return</b> numerator / denominator
 
-    # Define the function J_n(z_nm * r / a) * (a_nm * cos(n*theta)
-    # + b_nm * sin(n*theta))
-    def u(n, m, r, theta, a)
+  <b>Function</b> FourierCoefficient_B(n, m, a)
+      <b>Input:</b>  Mode numbers (n, m), plate radius a
+      <b>Output:</b> Coefficient b_nm from initial conditions
+      
+      k = z_nm / a
+      numerator = integral from 0 to a, integral from 0 to 2*pi of
+                  J_n(kr) * sin(n*theta) * f(r,theta) * r d(theta) dr
+      denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
+      <b>Return</b> numerator / denominator
+
+  <b>Function</b> CircularWaveFunction(n, m, r, theta, a)
+      <b>Input:</b>  Mode numbers (n, m), polar coordinates (r, theta), radius a
+      <b>Output:</b> u_nm(r, theta) = J_n(kr)[a_nm cos(n*theta) + b_nm sin(n*theta)]
+      
+      z_nm = BesselDerivativeZero(n, m)
+      k = z_nm / a
+      a_nm = FourierCoefficient_A(n, m, a)
+      b_nm = FourierCoefficient_B(n, m, a)
+      <b>Return</b> J_n(kr) * [a_nm * cos(n*theta) + b_nm * sin(n*theta)]
+
+  <b>Algorithm</b> PlotCircularChladniPattern(n, m, a)
+      <b>Input:</b>  Mode numbers (n, m), plate radius a
+      <b>Output:</b> Contour plot of nodal lines at u(r,theta) = 0
+      
+      <b>for each</b> point (r, theta) in [0, a] x [0, 2*pi] <b>do</b>
+          u[r, theta] = CircularWaveFunction(n, m, r, theta, a)
+      
+      PlotContour(u, level=0)    // Plot nodal lines where u = 0
         </samp>
 </pre>
         </div>

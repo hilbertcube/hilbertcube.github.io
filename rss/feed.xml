@@ -1,24 +1,26 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
     <title>neumanncondition</title>
     <link>https://neumanncondition.com/</link>
     <description>Recent articles and posts from neumanncondition.com</description>
     <language>en-us</language>
-    <pubDate>Tue, 04 Nov 2025 00:29:51 -08:00</pubDate>
-    <lastBuildDate>Tue, 04 Nov 2025 00:29:51 -08:00</lastBuildDate>
-    <generator>PowerShell RSS Generator</generator>
+    <pubDate>Tue, 30 Dec 2025 04:25:47 </pubDate>
+    <lastBuildDate>Tue, 30 Dec 2025 04:25:47 </lastBuildDate>
+    <generator>Python RSS Generator</generator>
+
     <item>
       <title>The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms</title>
       <link>https://neumanncondition.com/articles/the-quest-to-finding-chladni-patterns-1</link>
-      <description>Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni&apos;s pattern using the wave equation model.</description>
+      <description>Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni&#x27;s pattern using the wave equation model.</description>
       <guid>https://neumanncondition.com/articles/the-quest-to-finding-chladni-patterns-1</guid>
       <category>Python</category>
       <category>Eigenvalue Problems</category>
       <category>PDEs</category>
       <category>Numpy</category>
-      <pubDate>Sat, 01 Jun 2024 00:00:00 -07:00</pubDate>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 </pubDate>
     </item>
+
     <item>
       <title>Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA</title>
       <link>https://neumanncondition.com/articles/accelerating-feature-extraction-and-image-stitching-algorithm</link>
@@ -32,8 +34,9 @@
       <category>Image Processing</category>
       <category>Multithreading</category>
       <category>CUDA</category>
-      <pubDate>Sat, 10 Aug 2024 00:00:00 -07:00</pubDate>
+      <pubDate>Sat, 10 Aug 2024 00:00:00 </pubDate>
     </item>
+
     <item>
       <title>How to find maxima and minima of an n-th dimensional function</title>
       <link>https://neumanncondition.com/articles/maximum-and-minimum</link>
@@ -41,61 +44,70 @@
       <guid>https://neumanncondition.com/articles/maximum-and-minimum</guid>
       <category>Python</category>
       <category>Hessian Matrix</category>
-      <category>Fermat&apos;s Theorem</category>
-      <pubDate>Sat, 25 May 2024 00:00:00 -07:00</pubDate>
+      <category>Fermat&#x27;s Theorem</category>
+      <pubDate>Sat, 25 May 2024 00:00:00 </pubDate>
     </item>
+
     <item>
       <title>The Quest to Finding Chladni Patterns, Part 2: Codes and Results</title>
       <link>https://neumanncondition.com/articles/the-quest-to-finding-chladni-patterns-2</link>
-      <description>Plotting a series of Chladni&apos;s patterns using the wave equation model.</description>
+      <description>Plotting a series of Chladni&#x27;s patterns using the wave equation model.</description>
       <guid>https://neumanncondition.com/articles/the-quest-to-finding-chladni-patterns-2</guid>
       <category>Python</category>
       <category>Eigenvalue Problems</category>
       <category>PDEs</category>
       <category>Numpy</category>
-      <pubDate>Fri, 14 Jun 2024 00:00:00 -07:00</pubDate>
+      <pubDate>Fri, 14 Jun 2024 00:00:00 </pubDate>
     </item>
+
     <item>
       <title>My Favorite Problems of All Time</title>
       <link>https://neumanncondition.com/articles/favorite-problem-of-all-time</link>
-      <description>A collection of some of my favorite math problems that I&apos;ve encountered throughout the years.</description>
+      <description>A collection of some of my favorite math problems that I&#x27;ve encountered throughout the years.</description>
       <guid>https://neumanncondition.com/articles/favorite-problem-of-all-time</guid>
       <category>Math</category>
       <category>Induction</category>
       <category>Contradiction</category>
-      <pubDate>Thu, 24 Apr 2025 00:00:00 -07:00</pubDate>
+      <pubDate>Thu, 24 Apr 2025 00:00:00 </pubDate>
     </item>
+
     <item>
       <title>The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation</title>
       <link>https://neumanncondition.com/articles/the-quest-to-finding-chladni-patterns-3</link>
-      <description>Explaining Chladni&apos;s patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.</description>
+      <description>Explaining Chladni&#x27;s patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.</description>
       <guid>https://neumanncondition.com/articles/the-quest-to-finding-chladni-patterns-3</guid>
       <category>Python</category>
       <category>Eigenvalue Problems</category>
       <category>PDEs</category>
       <category>Numpy</category>
       <category>Biharmonic Equation</category>
-      <pubDate>Sun, 16 Jun 2024 00:00:00 -07:00</pubDate>
+      <pubDate>Sun, 16 Jun 2024 00:00:00 </pubDate>
     </item>
+
     <item>
-      <title>Light Refraction and A More In-depth Look of Snell&apos;s Law</title>
-      <link>https://neumanncondition.com/articles/snells-law</link>
-      <description>Simple idea, complex derivation. Snell&apos;s law describe the relationship between the angle of incidence and angle of reflection.</description>
-      <guid>https://neumanncondition.com/articles/snells-law</guid>
-      <category>Refraction</category>
-      <category>PDEs</category>
-      <pubDate>Wed, 02 Oct 2024 00:00:00 -07:00</pubDate>
-    </item>
-    <item>
-      <title>Time Complexity of an Algorithm</title>
+      <title>Algorithmic Analysis of an Algorithm</title>
       <link>https://neumanncondition.com/articles/time-complexity-of-an-algorithm</link>
       <description>Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.</description>
       <guid>https://neumanncondition.com/articles/time-complexity-of-an-algorithm</guid>
       <category>Data Structures and Algorithm</category>
       <category>C++</category>
       <category>Python</category>
-      <pubDate>Mon, 02 Dec 2024 00:00:00 -08:00</pubDate>
+      <pubDate>Mon, 02 Dec 2024 00:00:00 </pubDate>
     </item>
+
+    <item>
+      <title>Linux development environment setup</title>
+      <link>https://neumanncondition.com/posts/linux-setup/</link>
+      <description>A detailed guide on how I set up my Linux development environment using Ubuntu 24.04, including installation steps, configurations, and useful tips for an efficient workflow.</description>
+      <guid>https://neumanncondition.com/posts/linux-setup/</guid>
+      <category>Ubuntu</category>
+      <category>Linux</category>
+      <category>Development Environment</category>
+      <category>Programming</category>
+      <category>Productivity</category>
+      <pubDate></pubDate>
+    </item>
+
     <item>
       <title>A list of places to munch</title>
       <link>https://neumanncondition.com/posts/tested-food-places/</link>
@@ -107,12 +119,13 @@
       <category>Drinks</category>
       <category>Desserts</category>
       <category>Boba</category>
-      <pubDate>Fri, 18 Apr 2025 00:00:00 -07:00</pubDate>
+      <pubDate>Fri, 18 Apr 2025 00:00:00 </pubDate>
     </item>
+
     <item>
       <title>A list of tools that I use</title>
       <link>https://neumanncondition.com/posts/favorite-tools/</link>
-      <description>A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I&apos;m too lazy for migration, and it has plenty of cool plugins. Why VS Code? I&apos;ve tried many text-editors and IDEs before, but I find VS Code to be the most visually pleasing, plus, it&apos;s lightweight, and has a large community and number of extensions.</description>
+      <description>A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I&#x27;m too lazy for migration, and it has plenty of cool plugins. Why VS Code? I&#x27;ve tried many text-editors and IDEs before, but I find VS Code to be the most visually pleasing, plus, it&#x27;s lightweight, and has a large community and number of extensions.</description>
       <guid>https://neumanncondition.com/posts/favorite-tools/</guid>
       <category>VS Code</category>
       <category>Chrome Extensions</category>
@@ -120,26 +133,17 @@
       <category>Hardware</category>
       <category>Life</category>
       <category>Work</category>
-      <pubDate>Sat, 12 Apr 2025 00:00:00 -07:00</pubDate>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 </pubDate>
     </item>
-    <item>
-      <title>Silly project idea</title>
-      <link>https://ddonle.com/jaskier-bot</link>
-      <description>I used Gemini 2.0 Flash API to create an AI bot that writes poetry and plays piano.</description>
-      <guid>https://ddonle.com/jaskier-bot</guid>
-      <category>Poetry</category>
-      <category>API</category>
-      <category>RestAPI</category>
-      <category>Gemini</category>
-      <pubDate>Sat, 01 Mar 2025 00:00:00 -08:00</pubDate>
-    </item>
+
     <item>
       <title>Average engineering experience</title>
       <link>https://neumanncondition.com/posts/avg-engr-exp</link>
       <description>Electrical Engineering: Electrical Circuit Analysis, Spring of 2024.</description>
       <guid>https://neumanncondition.com/posts/avg-engr-exp</guid>
       <category>Electrical Engineering</category>
-      <pubDate>Mon, 01 Apr 2024 00:00:00 -07:00</pubDate>
+      <pubDate>Mon, 01 Apr 2024 00:00:00 </pubDate>
     </item>
+
   </channel>
 </rss>

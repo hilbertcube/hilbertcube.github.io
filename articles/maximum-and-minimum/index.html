@@ -104,7 +104,7 @@
     <div class="content-grid">
       <header>
         <div class="topic">
-          Topics: Mathematics/Physics/Standing Waves/Python
+          Topics: Mathematics, Physics, Standing Waves, Python
         </div>
         <h1 class="title">
           How to find Maxima and Minima of an n-th Dimensional Function
@@ -187,7 +187,7 @@
             The points where all of the partial derivatives of $f$ equals 0 is called the stationary points of $f$. That
             is,
             <div class="equation">
-              $$\pd{f}{x_i}(a_1,a_2,...,a_n)=\pd{f(\mathbf{a})}{x_i}=0\quad\text{for\;all}\; i=1,2,...,n$$
+              $$\pd{f}{x_i}(a_1,a_2,...,a_n)=\pd{f(\mathbf{a})}{x_i}=0\quad\forall\; i=1,2,...,n$$
             </div>
           </li>
           <li style="margin: var(--in-page-li-spacing) 0;"><strong>Critical Point.</strong>
@@ -404,6 +404,33 @@
         
         <section id="special-case">
           <h3>The Special Case: $n=2$</h3>
+          <p>
+            For a 2-variable function $z=f(x,y)$, the maximum/minimum algorithm can be simplified a bit. After finding
+            all stationary and critical points of $f(x,y)$, we can follow these steps to identify the extrema of $f$:
+            <ol class="steps">
+              <li class="step">
+                For each stationary point $(x_0,y_0)$, calculate the second partial derivatives of $f$ at that point:
+                $f_{xx}(x_0,y_0)$, $f_{yy}(x_0,y_0)$, and $f_{xy}(x_0,y_0)$.
+              </li>
+              <li class="step">
+                Calculate $\Delta_2(x_0,y_0)=f_{xx}(x_0,y_0)f_{yy}(x_0,y_0)-[f_{xy}(x_0,y_0)]^2$.
+                <ol type="i" style="line-height: 1.6;">
+                  <li style="margin: var(--in-page-li-spacing) 0;">
+                    If $\Delta_2(x_0,y_0)>0$ and $f_{xx}(x_0,y_0)>0$, then $(x_0,y_0)$ is a minimum of $f(x,y)$.
+                  </li>
+                  <li style="margin: var(--in-page-li-spacing) 0;">
+                    If $\Delta_2(x_0,y_0)>0$ and $f_{xx}(x_0,y_0)< 0 $, then $(x_0,y_0)$ is a maximum of $f(x,y)$.
+                  </li>
+                  <li style="margin: var(--in-page-li-spacing) 0;">
+                    If $\Delta_2(x_0,y_0)< 0$, then $(x_0,y_0)$ is not an extremum of $f(x,y)$.
+                  </li>
+                  <li style="margin: var(--in-page-li-spacing) 0;">
+                    If $\Delta_2(x_0,y_0)=0$, then the test is inconclusive.
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </p>
         </section>
       </section>
 
