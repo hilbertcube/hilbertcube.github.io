@@ -265,13 +265,16 @@
           (select install for all users) and download related dependencies by using the pip package manager:
         </p>
 
-        <div style="text-align: center; margin: 25px 0;">
-          <pre class="console" style="color: green;">
-    <samp>    -m pip install matplotlib
-        -m pip install numpy
-        -m pip install itertools
-        -m pip install scipy</samp>
-</pre>
+        <div style="text-align: center; margin: 25px auto; max-width: 45em;">
+          <pre
+          class="command-line"
+          data-host="pc"
+          ><button class="copy-btn">Copy</button><code class="language-bash">python3 -m venv venv
+source venv/bin/activate      # On Windows, use `venv\Scripts\activate`
+pip install matplotlib
+pip install numpy
+pip install itertools
+pip install scipy</code></pre>
         </div>
 
         <p>
@@ -1228,7 +1231,11 @@ plot_polar_contour(columns, rows, a)
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.min.js"></script>
 </body>
 </html>
