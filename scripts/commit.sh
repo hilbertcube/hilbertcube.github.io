@@ -33,7 +33,7 @@ invoke_git_command() {
     
     echo -e "\033[0;33m${description}...\033[0m"
     
-    if git $command; then
+    if eval "git $command"; then
         echo -e "\033[0;32m${description} completed successfully\033[0m"
     else
         echo -e "\033[0;31mError during ${description}\033[0m"

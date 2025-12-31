@@ -1,3 +1,4 @@
+### Tools
 ```bash
 # Commit with RSS generation
 ./scripts/commit-with-rss.sh "Your commit message"

@@ -1367,18 +1367,31 @@ function fetchCommit() {
     fetch('https://api.github.com/repos/hilbertcube/neumanncondition'),
     fetch('https://api.github.com/repos/hilbertcube/neumanncondition/commits?per_page=1'),
     fetch('/assets/json/latest_commit.json'),
-    fetch('/assets/json/articles.json')
+    fetch('/assets/json/articles.json'),
+    fetch('https://api.github.com/repos/hilbertcube/neumanncondition/git/trees/main?recursive=1')
   ])
-    .then(async ([repoRes, commitsRes, localCommitRes, articlesRes]) => {
+    .then(async ([repoRes, commitsRes, localCommitRes, articlesRes, treeRes]) => {
       const repoData = await repoRes.json();
       const articlesData = await articlesRes.json();
+      const treeData = await treeRes.json();
       const totalCommits = commitsRes.headers.get('Link') 
         ? parseInt(commitsRes.headers.get('Link').match(/page=(\d+)>; rel="last"/)?.[1] || '0')
         : 1;
       
-      // Calculate lines of code (approximate from repo size)
-      const sizeKB = repoData.size;
-      const estimatedLines = Math.round(sizeKB * 30); // rough estimate: 30 lines per KB
+      // Calculate lines of code by filtering out binary/image files
+      const codeExtensions = ['.html', '.css', '.js', '.json', '.md', '.txt', '.py', '.sh', '.xml', '.yml', '.yaml'];
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico', '.bmp', '.pdf', '.woff', '.woff2', '.ttf', '.otf', '.eot'];
+      
+      const codeFiles = treeData.tree?.filter(file => {
+        const hasCodeExt = codeExtensions.some(ext => file.path.toLowerCase().endsWith(ext));
+        const hasImageExt = imageExtensions.some(ext => file.path.toLowerCase().endsWith(ext));
+        return hasCodeExt && !hasImageExt && file.type === 'blob';
+      }) || [];
+      
+      // Estimate lines: smaller multiplier since we're only counting actual code files
+      // Average code file has ~50-100 lines, and average line is ~50 bytes
+      const totalCodeSize = codeFiles.reduce((sum, file) => sum + (file.size || 0), 0);
+      const estimatedLines = Math.round(totalCodeSize / 50); // ~50 bytes per line of code
       
       // Count articles and posts
       const articleCount = articlesData.articles?.length || 0;
