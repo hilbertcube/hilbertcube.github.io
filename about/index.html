@@ -82,20 +82,10 @@
             My [English] name is Don. I'm currently an engineering student at
             <a class="url" href="https://ucla.edu/">UCLA</a>, pursuing
             by Bachelor of Science in Computer Science and Engineering. 
-            <!-- I was
-            born an American, but I grew up outside of the United States and
-            only moved to Greater Los Angeles back in 2022.  -->
-            Outside of school, I
-            enjoy writing (on this website), reading, movies, poker, and
+            Outside of school, I enjoy writing (on this website), reading, movies, poker, and
             traveling. I love exploring new places, especially trying out new
             food. I also enjoy poker and board games in general. Recently, I've
-            been playing a game called
-            <a href="https://en.wikipedia.org/wiki/Catan_Card_Game" class="url"
-              >Catan</a
-            >. Regarding school: engineering has been quite an experience. Lots of ups
-            and downs, and certainly a lot of work to be done. Read more about
-            my engineering experiences
-            <a href="/posts/avg-engr-exp/" class="url">here</a>.
+            been playing a game called.
           </p>
           <p>
             If you want to know more about my curriculum and professional
@@ -299,33 +289,10 @@
                 class="line-numbers"
               ><code class="language-cpp"><script type="prism-cpp">#pragma once
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <ctime>
-#include <iomanip>
-
-void write_to_log(const std::string& message, const std::string& filename) 
-{
-    std::ofstream log_file(filename, std::ios::out);
-    if (log_file.is_open()) {
-    std::time_t now = std::time(nullptr);
-    std::tm tm_now;
-#ifdef _WIN32
-    localtime_s(&tm_now, &now);
-#else
-    localtime_r(&now, &tm_now);
-#endif
-  
-#ifdef ENABLE_TIME
-    log_file << "[" << std::put_time(&tm_now, "%Y-%m-%d %H:%M:%S") << "] " << message << std::endl;
-#else
-    log_file << message << std::endl;
-#endif
-    log_file.close();
-    } else {
-        std::cerr << "Damn, idk" << std::endl;
-    }
+template<typename Func>
+double numerical_derivative(Func f, double x, double h) {
+    // Use the central difference formula for better accuracy
+    return (f(x + h) - f(x - h)) / (2.0 * h);
 }
     </script></code></pre>
             </div>
