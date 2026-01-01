@@ -171,11 +171,13 @@
                 data-theorem-name=" (F.T. of an Impulse Train)"
               >
                 The Fourier transform of the impulse train is another impulse train:
-                \[
-                \mathcal{F}\{\delta_T(t)\}
-                = \frac{2\pi}{T}\sum_{k=-\infty}^{\infty} \delta(\omega - k\omega_s),
-                \qquad \omega_s = \frac{2\pi}{T}.
-                \]
+                <div class="equation">
+                  \[
+                  \mathcal{F}\{\delta_T(t)\}
+                  = \frac{2\pi}{T}\sum_{k=-\infty}^{\infty} \delta(\omega - k\omega_s),
+                  \qquad \omega_s = \frac{2\pi}{T}.
+                  \]
+                </div>
               </div>
             </li>
           </ul>
@@ -296,8 +298,7 @@ template<typename Func>
 double numerical_derivative(Func f, double x, double h) {
     // Use the central difference formula for better accuracy
     return (f(x + h) - f(x - h)) / (2.0 * h);
-}
-    </script></code></pre>
+}</script></code></pre>
             </div>
           </div>
           <p>

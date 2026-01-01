@@ -15,14 +15,14 @@
 
       gtag("config", "G-00W722FWP2");
     </script>
-    <title>Post</title>
+    <title>Post - Linux Setup</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="subject" content="" />
-    <meta name="description" content="This is the homepage" />
+    <meta name="description" content="My Linux development environment setup" />
     <meta
       name="keywords"
-      content="math, physics, programming, coding, computer science, computer simulation"
+      content="linux setup, linux development environment, vscode extensions, ide setup, software tools, chrome extensions"
     />
     <meta name="author" content="Don Le, ledongduu@gmail.com" />
     <meta name="format-detection" content="telephone=no" />
@@ -78,6 +78,7 @@
           <li><a href="#javascript">JavaScript and Web</a></li>
           <li><a href="#rust">Rust and Cargo</a></li>
           <li><a href="#engineering">Engineering Softwares</a></li>
+          <li><a href="#other-softwares">Other Useful Softwares</a></li>
         </ul>
       </div>
       <div class="highlights-and-attribute"></div>
@@ -93,7 +94,14 @@
           <div class="date">December, 28, 2025</div>
         </header>
 
-        <section>
+        <!-- <div style="margin: 25px 0">
+          <img
+            class="desktop-img"
+            src="desktop.webp"
+            alt="my desktop"
+          />
+        </div> -->
+
           <section id="system">
             <h3>Preparation (after OS installation)</h3>
             <ul>
@@ -128,14 +136,52 @@ sudo systemctl enable tlp</code></pre>
               <li>
                 Change keybinding: on Linux, copy and paste is defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and Ctrl+V, open the terminal, then go to the burger menu, then Preferences > Shortcuts, and change the Copy and Paste shortcuts. After changing, restart the terminal. Now, Ctrl+Shift+C will be automatically mapped to cancel command (SIGINT), and Ctrl+C and Ctrl+V will work as expected for copy and paste.
               </li>
+              <li>
+                GNOME: I use GNOME desktop environment for simplicity. To further customize and optimize it, install
+                GNOME Tweaks by running:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="command-line"
+                        data-host="pc"
+                        
+                      ><code class="language-bash">sudo apt update && sudo apt upgrade -y
+sudo apt install gnome-tweaks -y</code></pre>
+                    </div>
+              You can use GNOME Tweaks to adjust various settings such as themes, fonts, and extensions to enhance your desktop experience. Here are some of my favorite GNOME extensions:
+              <ul>
+                <li class="bullet">
+                  <a href="https://extensions.gnome.org/extension/307/dash-to-dock/" class="url">Dash to Dock</a>: Turn the GNOME dash into a nice-looking dock for easier access to applications.
+                </li>
+                <li class="bullet">
+                  <a href="https://extensions.gnome.org/extension/1460/caffeine-ng/" class="url">Caffeine-NG</a>: Prevents your computer from going to sleep or activating the screensaver when certain applications are running.
+                </li>
+                <li class="bullet">
+                  <a href="https://extensions.gnome.org/extension/3193/blur-my-shell/" class="url">Blur my Shell</a>: Adds a blur effect to the GNOME shell elements for a sleek look.
+                </li>
+                <li class="bullet">
+                  <a href="https://extensions.gnome.org/extension/3195/vitals/" class="url">Vitals</a>: Monitors system resources like CPU, RAM, and network usage directly from the top bar.
+                </li>
+              </ul>
+              </li>
+              <li class="bullet">
+                If you want even more customization, consider <a href="https://kde.org/plasma-desktop" class="url">KDE Plasma</a> desktop environment.
+              </li>
+              <li class="bullet">
+                <a href="https://gdm-settings.github.io/" class="url">GDM settings</a>: lock screen customization, auto login, etc. Install GDM settings with:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                    
+                  ><code class="language-bash">sudo apt install gdm3setup -y</code></pre>
+                </div>
+              </li>
+              
             </ul>
-            <!-- <div style="margin: 25px 0">
-                <img
-                  class="desktop-img"
-                  src="desktop.webp"
-                  alt="my desktop"
-                />
-              </div> -->
           </section>
           <section id="devops">
             <h3>DevOps and Text Editors</h3>
@@ -161,7 +207,7 @@ sudo apt install apt-transport-https -y
 sudo apt update && sudo apt install code -y</code></pre>
                     </div>
 
-                  <strong>Settings:</strong> on Linux,again,  copy and paste is defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it back to Ctrl+C and Ctrl+V, go to Settings > Keyboard Shortcuts, and paste the following JSON:
+                  <strong>Settings:</strong> on Linux, again,  copy and paste is defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it back to Ctrl+C and Ctrl+V, go to Settings > Keyboard Shortcuts, and paste the following JSON:
                   <div class="code-container"
                       style="text-align: center; margin: 25px auto; max-width: 40em;">
                       <button class="copy-btn">Copy</button>
@@ -724,8 +770,58 @@ sudo apt install ./master-pdf-editor*.deb</code></pre>
             </ul>
           </section>
 
-          
-        </section>
+          <section class="" id="other-softwares">
+            <h3>Other Useful Softwares</h3>
+            <ul>
+              <li class="bullet">
+                <a href="https://www.spotify.com/" class="url">Spotify</a>:
+                <div class="code-container"
+                      style="text-align: center; margin: 25px auto; max-width: 40em;">
+                      <button class="copy-btn">Copy</button>
+                      <pre
+                        class="command-line"
+                        data-host="pc"
+                      ><code class="language-bash">sudo apt update && sudo apt upgrade -y
+curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
+echo "deb [signed-by=/usr/share/keyrings/spotify-archive.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+sudo apt update && sudo apt install spotify-client -y</code></pre>
+                  </div>
+              </li>
+              <li class="bullet">
+                <a href="https://www.videolan.org/vlc/" class="url">VLC Media Player</a>: Versatile media player. Install with:
+                <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                    ><code class="language-bash">sudo apt install vlc</code></pre>
+                </div>
+              </li>
+              <li class="bullet">
+                <a href="https://github.com/ksnip/ksnip" class="url">ksnip</a>: Equivalent of Window's snipping tool, a screenshot tool with annotation features. Install with:
+                <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                    ><code class="language-bash">sudo apt install ksnip -y</code></pre>
+                </div>
+              </li>
+              <li class="bullet">
+                <a href="https://telegram.org/" class="url">Telegram</a>: Messaging app. Install with:
+                <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                    ><code class="language-bash">sudo apt install telegram-desktop -y</code></pre>
+                </div>
+              </li>
+          </section>
+
       </div>
       <footer></footer>
     </div>
