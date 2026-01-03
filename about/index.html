@@ -16,19 +16,12 @@
     </script>
     <title>About - neumanncondition</title>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <meta name="subject" content="About page" />
     <meta name="description" content="This is the about page" />
-    <meta
-      name="keywords"
-      content="math, physics, programming, coding, computer science, computer simulation"
-    />
+    <meta name="keywords" content="About, neumanncondition, Don Le, UCLA, Computer Science, Engineering"/>
     <meta name="author" content="Don Le, ledongduu@gmail.com" />
     <meta name="format-detection" content="telephone=no" />
-    <!-- Disable number string recognition-->
     <link rel="stylesheet" href="../assets/css/main.css" />
     <style>
       .left-section-banner {
@@ -126,166 +119,175 @@
 
         <section>
           <h3 class="home-h3-headers">About this website</h3>
-          <h4>Background and choice of design</h4>
-          <p>
-            I started digging through the internet back in middle school to
-            collect and read scientific textbooks. While doing so, I couldn't
-            help but encounter a lot of interesting computer science and math
-            blogs. As a result, I got inspired by some of them and decided to
-            create this website: a place for me to upload my writings and
-            projects. I primarily write about math, programming, and physics,
-            and occasionally about everyday topics like
-            <a class="url" href="/posts/tested-food-places">food reviews</a>.
-          </p>
-          <p>
-            This website was formally built back in summer of 2024, but I've
-            been writing a lot of the content on this website on LaTeX
-            documentations way before that. I coded this website from scratch
-            using HTML, CSS, and vanilla Javascript (ancient and primitive, I
-            know, but they works). For this reason, the website might not be
-            very well-optimized, so please excuse me. To view the source code,
-            click on the logo on the side navigation bar or follow this
-            <a
-              href="https://github.com/hilbertcube/neumanncondition"
-              class="url"
-              >link</a
-            >.
-          </p>
-          <ul style="line-height: 1.6">
-            <li style="margin: var(--in-page-li-spacing) 0">
-              <strong>Question</strong>: Why not use a framework or a static
-              site generator?
-            </li>
-            <li style="margin: var(--in-page-li-spacing) 0">
-              <strong>Answer</strong>: I wanted to learn the basics of web
-              development, so in order to learn, I must create things. This
-              website the became my first web project. Plus, this site has no
-              complex API calls, so a framework would be overkill, although
-              using a framework would have probably been a bit easier. Ok, but
-              why not a static site generator like Jekyll? I feel like static
-              site generators offer much less control over things, such as the
-              ability to easily create highly customizable components like this
-              one:
-              <div
-                class="theorem"
-                data-theorem-name=" (F.T. of an Impulse Train)"
-              >
-                The Fourier transform of the impulse train is another impulse train:
-                <div class="equation">
-                  \[
-                  \mathcal{F}\{\delta_T(t)\}
-                  = \frac{2\pi}{T}\sum_{k=-\infty}^{\infty} \delta(\omega - k\omega_s),
-                  \qquad \omega_s = \frac{2\pi}{T}.
-                  \]
+
+          <section>
+            <h4>Background and choice of design</h4>
+            <p>
+              I started digging through the internet back in middle school to
+              collect and read scientific textbooks. While doing so, I couldn't
+              help but encounter a lot of interesting computer science and math
+              blogs. As a result, I got inspired by some of them and decided to
+              create this website: a place for me to upload my writings and
+              projects. I primarily write about math, programming, and physics,
+              and occasionally about everyday topics like
+              <a class="url" href="/posts/tested-food-places">food reviews</a>.
+            </p>
+            <p>
+              This website was formally built back in summer of 2024, but I've
+              been writing a lot of the content on this website on LaTeX
+              documentations way before that. I coded this website from scratch
+              using HTML, CSS, and vanilla Javascript (ancient and primitive, I
+              know, but they works). For this reason, the website might not be
+              very well-optimized, so please excuse me. To view the source code,
+              click on the logo on the side navigation bar or follow this
+              <a
+                href="https://github.com/hilbertcube/neumanncondition"
+                class="url"
+                >link</a
+              >.
+            </p>
+            <ul style="line-height: 1.6">
+              <li style="margin: var(--in-page-li-spacing) 0">
+                <strong>Question</strong>: Why not use a framework or a static
+                site generator?
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0">
+                <strong>Answer</strong>: I wanted to learn the basics of web
+                development, so in order to learn, I must create things. This
+                website the became my first web project. Plus, this site has no
+                complex API calls, so a framework would be overkill, although
+                using a framework would have probably been a bit easier. Ok, but
+                why not a static site generator like Jekyll? I feel like static
+                site generators offer much less control over things, such as the
+                ability to easily create highly customizable components like this
+                one:
+                <div
+                  class="theorem"
+                  data-theorem-name=" (F.T. of an Impulse Train)"
+                >
+                  The Fourier transform of the impulse train is another impulse train:
+                  <div class="equation">
+                    \[
+                    \mathcal{F}\{\delta_T(t)\}
+                    = \frac{2\pi}{T}\sum_{k=-\infty}^{\infty} \delta(\omega - k\omega_s),
+                    \qquad \omega_s = \frac{2\pi}{T}.
+                    \]
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </section>
+          
+          <section>
+            <h4>Structure</h4>
+            <p>
+              
+              There are two types of blogs on this website: articles and posts.
+              Articles are technical and focus specifically on topics in math,
+              computer science, physics, or engineering. Posts, on the other hand,
+              are shorter, usually non-technical, and primarily cover everyday
+              niche topics.
+            </p>
+          </section>
 
-          <p>
-            <strong>Structure: </strong>
-            There are two types of blogs on this website: articles and posts.
-            Articles are technical and focus specifically on topics in math,
-            computer science, physics, or engineering. Posts, on the other hand,
-            are shorter, usually non-technical, and primarily cover everyday
-            niche topics.
-          </p>
-
-          <h4>Reflection</h4>
-          <p>
-            Building an entire blog system from scratch is no easy task, but the
-            fun part about doing so is me having fine-grained control over
-            everything. However, too much control over something can be a real
-            headache. This means that if something goes wrong on this website,
-            it's entirely my fault.
-          </p>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin: 30px 0;
-            "
-          >
-            <img
-              src="mrincredibles.webp"
-              alt="mr. incredible meme"
-              style="width: 100%; max-width: 520px; height: auto"
-            />
-          </div>
-          <p>
-            Instead of using pre-built components or a template like any sane
-            person would, I decided to write thousands of lines of CSS and
-            Javascript and I had to constantly fix the code to ensure that it
-            works well on both desktop and mobile. Now that I'm looking back, I
-            think that it was a real pain and a waste of time, but here we are.
-          </p>
-          <p>
-            That said, all of it still ties back to one thing: future-proofing
-            my work. Whenever I create something, I always think about my future
-            self. I constantly ask how I can make things a bit easier down the
-            line, like the choice of loading certain components dynamically.
-            This choice actually tanked performance, but it did make things
-            easier for me whenever I want to add, let's say a new section on the
-            top bar. Because of that, I've lost count of how many times I've
-            changed the design just to make the process of updating content
-            easier.
-          </p>
-          <p>
-            Please don't get me wrong. I DO place a major emphasis on
-            efficiency, optimization, and speed. But that's only for my work in
-            system programming, or if it's something related to web dev that
-            really needs performance, I'd just use a framework like Next. For a
-            personal, hobby project like this, I don't really care. The slight
-            inefficiency is small enough to be considered negligible, and I'm
-            happy with that.
-          </p>
-
-          <h4>Third party tools</h4>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin: 30px 0;
-            "
-          >
-            <img
-              src="carl-sagan.webp"
-              alt="carl sagan apple pie quote"
-              style="width: 100%; max-width: 520px; height: auto"
-            />
-          </div>
-          <p>
-            Earlier, I did say that I built this website from scratch. I was
-            lying. Nobody builds anything from scratch, we're all standing on
-            the shoulder of someone. Some other tools I used are
-            <a href="https://www.mathjax.org/" class="url">MathJax</a>, a
-            javascript library that helps display fancy equation like this:
-          </p>
-          <div class="equation">
-            $$ \rho h\frac{\partial^2 w}{\partial t^2} = - D\nabla^4 w +
-            T\nabla^2 w -K_0w -K_1\pd{w}{t} + T_1\nabla^2\pd{w}{t} +
-            F(\textbf{x}, t). $$
-          </div>
-          <!-- <div class="equation">
-            $$\hat{f} (\xi)=\int_{-\infty}^{\infty}f(x)e^{-2\pi ix\xi}dx.$$
-          </div> -->
-          <p>
-            On your left side, in the side navigation bar, I used
-            <a href="https://github.com/2016rshah/githubchart-api" class="url"
-              >ghchart</a
+          <section>
+            <h4>Reflection</h4>
+            <p>
+              Building an entire blog system from scratch is no easy task, but the
+              fun part about doing so is me having fine-grained control over
+              everything. However, too much control over something can be a real
+              headache. This means that if something goes wrong on this website,
+              it's entirely my fault.
+            </p>
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 30px 0;
+              "
             >
-            by
-            <a href="https://github.com/2016rshah" class="url">2016rshah</a> to
-            display my GitHub activities. I wish he had added an option to
-            change the cell colors, as it would've worked better with dark mode.
-            Someone even opened a pull request for it, but the author is nowhere
-            to be seen. I also use
-            <a href="https://prismjs.com/" class="url">prism.js</a> to provide
-            some nice code syntax-highlighting for websites like below. You can
-            change the code theme in the setting
-          </p>
+              <img
+                src="mrincredibles.webp"
+                alt="mr. incredible meme"
+                style="width: 100%; max-width: 520px; height: auto"
+              />
+            </div>
+            <p>
+              Instead of using pre-built components or a template like any sane
+              person would, I decided to write thousands of lines of CSS and
+              Javascript and I had to constantly fix the code to ensure that it
+              works well on both desktop and mobile. Now that I'm looking back, I
+              think that it was a real pain and a waste of time, but here we are.
+            </p>
+            <p>
+              That said, all of it still ties back to one thing: future-proofing
+              my work. Whenever I create something, I always think about my future
+              self. I constantly ask how I can make things a bit easier down the
+              line, like the choice of loading certain components dynamically.
+              This choice actually tanked performance, but it did make things
+              easier for me whenever I want to add, let's say a new section on the
+              top bar. Because of that, I've lost count of how many times I've
+              changed the design just to make the process of updating content
+              easier.
+            </p>
+            <p>
+              Please don't get me wrong. I DO place a major emphasis on
+              efficiency, optimization, and speed. But that's only for my work in
+              system programming, or if it's something related to web dev that
+              really needs performance, I'd just use a framework like Next. For a
+              personal, hobby project like this, I don't really care. The slight
+              inefficiency is small enough to be considered negligible, and I'm
+              happy with that.
+            </p>
+          </section>
+          
+          <section>
+            <h4>Third party tools</h4>
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 30px 0;
+              "
+            >
+              <img
+                src="carl-sagan.webp"
+                alt="carl sagan apple pie quote"
+                style="width: 100%; max-width: 520px; height: auto"
+              />
+            </div>
+            <p>
+              Earlier, I did say that I built this website from scratch. I was
+              lying. Nobody builds anything from scratch, we're all standing on
+              the shoulder of someone. Some other tools I used are
+              <a href="https://www.mathjax.org/" class="url">MathJax</a>, a
+              javascript library that helps display fancy equation like this:
+            </p>
+            <div class="equation">
+              $$ \rho h\frac{\partial^2 w}{\partial t^2} = - D\nabla^4 w +
+              T\nabla^2 w -K_0w -K_1\pd{w}{t} + T_1\nabla^2\pd{w}{t} +
+              F(\textbf{x}, t). $$
+            </div>
+            <!-- <div class="equation">
+              $$\hat{f} (\xi)=\int_{-\infty}^{\infty}f(x)e^{-2\pi ix\xi}dx.$$
+            </div> -->
+            <p>
+              On your left side, in the side navigation bar, I used
+              <a href="https://github.com/2016rshah/githubchart-api" class="url"
+                >ghchart</a
+              >
+              by
+              <a href="https://github.com/2016rshah" class="url">2016rshah</a> to
+              display my GitHub activities. I wish he had added an option to
+              change the cell colors, as it would've worked better with dark mode.
+              Someone even opened a pull request for it, but the author is nowhere
+              to be seen. I also use
+              <a href="https://prismjs.com/" class="url">prism.js</a> to provide
+              some nice code syntax-highlighting for websites like below. You can
+              change the code theme in the setting
+            </p>
 
           <div class="box">
             <div class="code-container">
@@ -301,29 +303,32 @@ double numerical_derivative(Func f, double x, double h) {
 }</script></code></pre>
             </div>
           </div>
-          <p>
-            About the logo: that's the trajectory of a double pendulum in a
-            computer simulation.
-          </p>
+            <p>
+              About the logo: that's the trajectory of a double pendulum in a
+              computer simulation.
+            </p>
+          </section>
 
-          <h4>Check list</h4>
-          <p>
-            The general layout of this website should be completed, but I will
-            still add some new features every once in a while, if I have time.
-            This website is still relatively new anyway.
-          </p>
-          <p>Some features I might add in the future:</p>
-          <ul style="line-height: 1.6">
-            <li style="margin: var(--in-page-li-spacing) 0">
-              A comment system.
-            </li>
-            <li style="margin: var(--in-page-li-spacing) 0">
-              A screen reader for better accessibility.
-            </li>
-            <li style="margin: var(--in-page-li-spacing) 0">
-              Export page as pdf.
-            </li>
-          </ul>
+          <section>
+            <h4>Check list</h4>
+            <p>
+              The general layout of this website should be completed, but I will
+              still add some new features every once in a while, if I have time.
+              This website is still relatively new anyway.
+            </p>
+            <p>Some features I might add in the future:</p>
+            <ul style="line-height: 1.6">
+              <li style="margin: var(--in-page-li-spacing) 0">
+                A comment system.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0">
+                A screen reader for better accessibility.
+              </li>
+              <li style="margin: var(--in-page-li-spacing) 0">
+                Export page as pdf.
+              </li>
+            </ul>
+          </section>
         </section>
 
         <section>
@@ -376,9 +381,6 @@ double numerical_derivative(Func f, double x, double h) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
-      async
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
   </body>
 </html>
