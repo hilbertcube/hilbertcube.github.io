@@ -11,6 +11,13 @@
 
 # Create new post
 ./scripts/new-article.sh --type post --slug "my-new-post" --title "My New Post"
+
+# Generate Table of Contents (TOC) from sections with IDs
+# Preview only (prints to stdout)
+python3 scripts/generate-toc.py path/to/file.html
+
+# Insert TOC into the file (creates backup)
+python3 scripts/generate-toc.py path/to/file.html --insert
 ```
 
 #### Git & Deployment

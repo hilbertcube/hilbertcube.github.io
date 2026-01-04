@@ -72,6 +72,7 @@
         </header>
         <ul>
           <li><a href="#system">Preparation (after OS installation)</a></li>
+          <li><a href="#change-default-behavior">Change Some Default Behaviors</a></li>
           <li><a href="#devops">DevOps and Text Editors</a></li>
           <li><a href="#cpp">C and C++ Development Environment</a></li>
           <li><a href="#python">Python and Anaconda</a></li>
@@ -133,9 +134,7 @@ sudo apt install powertop -y
 sudo systemctl enable tlp</code></pre>
                     </div>
               </li>
-              <li>
-                Change keybinding: on Linux, copy and paste is defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and Ctrl+V, open the terminal, then go to the burger menu, then Preferences > Shortcuts, and change the Copy and Paste shortcuts. After changing, restart the terminal. Now, Ctrl+Shift+C will be automatically mapped to cancel command (SIGINT), and Ctrl+C and Ctrl+V will work as expected for copy and paste.
-              </li>
+              
               <li>
                 GNOME: I use GNOME desktop environment for simplicity. To further customize and optimize it, install
                 GNOME Tweaks by running:
@@ -178,11 +177,148 @@ sudo apt install gnome-tweaks -y</code></pre>
                     data-host="pc"
                     
                   ><code class="language-bash">sudo apt install gdm3setup -y</code></pre>
-                </div>
+                </div>  
               </li>
-              
             </ul>
           </section>
+
+          <section id="change-default-behavior">
+            <h3>Change Some Default Behaviors</h3>
+            <ul>
+              <li class="bullet">
+                Change keybinding: on Linux, copy and paste in the terminal is defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and Ctrl+V, open the terminal, then go to the burger menu, then Preferences > Shortcuts, and change the Copy and Paste shortcuts. After changing, restart the terminal. Now, Ctrl+Shift+C will be automatically mapped to cancel command (SIGINT), and Ctrl+C and Ctrl+V will work as expected for copy and paste.
+              </li>
+              <li class="bullet">
+                Better Bash autocompletion: Install bash-completion for improved command-line experience:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                  ><code class="language-bash">sudo apt update && sudo apt upgrade -y
+sudo apt install bash-completion -y</code></pre>
+                </div>
+                  After installation, verify, and then source it:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                  ><code class="language-bash">echo $BASH_VERSION
+source /etc/bash_completion</code></pre>
+                </div>
+                Next, add the following line to your <code class="inline-code">~/.bashrc</code> file to enable bash-completion automatically on terminal startup:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                  ><code class="language-bash">if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi</code></pre>
+                </div>
+                The next thing I did is to enable a menu-style tab completion by adding the following lines to <code class="inline-code">~/.inputrc</code>:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                  ><code class="language-bash"># Show all matches immediately
+set show-all-if-ambiguous on
+
+# Enable menu-style completion
+TAB: menu-complete
+
+# Case-insensitive completion
+set completion-ignore-case on
+set completion-map-case on
+
+# Mark symlinked directories
+set mark-symlinked-directories on</code></pre>
+                </div>
+                Finally, reload it with:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                  ><code class="language-bash">bind -f ~/.inputrc</code></pre>
+                </div>
+              How this works: let's say you're in a folder called UCLA, with the following folders inside:
+              <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                  ><code class="language-bash">ls UCLA
+CS-111  CS-180  CS-35L  CS-M51A  ECE-102 ECE-115C</code></pre>
+                </div>
+              now, when you press CS + Tab, it will rotate through different options of the CS folders. Then simply press enter to select the desired folder.
+              </li>
+              <li>
+                Remap certain keys (optional). One of the annoying things about Laptops made in recent years is that they come with the copilot key, which is located where the right Ctrl key should be. To remap it back to Ctrl, first install keyd to tell which keycode corresponds to the copilot key:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                    
+                  ><code class="language-bash">sudo apt install keyd -y
+sudo systemctl enable keyd
+sudo systemctl start keyd</code></pre>
+                </div>
+                After installation, remember to verify with
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                    
+                  ><code class="language-bash">whereis keyd
+systemctl status keyd</code></pre>
+                </div>
+
+                Next, monitor which keycode corresponds to the copilot key by running:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                  ><code class="language-bash">sudo keyd monitor # or sudo keyd.rvaiya monitor</code></pre>
+                </div>
+                Add the following to <code class="inline-code">/etc/keyd/default.conf</code>:
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                    
+                  ><code class="language-bash">[ids]
+*
+
+[main]
+leftshift+leftmeta+f23 = rightcontrol # this varies, adjust accordingly to your system</code></pre>
+                </div>
+Then, reload with 
+                <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="command-line"
+                    data-host="pc"
+                    
+                  ><code class="language-bash">sudo keyd reload # or sudo keyd.rvaiya reload</code></pre>
+                </div>
+
+              </li>
+            </ul>
+          </section>
+
           <section id="devops">
             <h3>DevOps and Text Editors</h3>
             <ul>
