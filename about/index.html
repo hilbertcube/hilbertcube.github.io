@@ -44,6 +44,24 @@
     </div>
     <nav class="navbar open" id="navbar">
       <div class="logo-and-side-nav"></div>
+      <!-- <div class="toc">
+        <header class="major">
+          <h2>Table of Contents</h2>
+        </header>
+        <ul>
+          <li><a href="#about-me">About me</a></li>
+          <li><a href="#about-this-website">About this website</a>
+            <ul>
+              <li><a href="#background-and-design">Background and choice of design</a></li>
+              <li><a href="#structure">Structure</a></li>
+              <li><a href="#reflection">Reflection</a></li>
+              <li><a href="#third-party-tools">Third party tools</a></li>
+              <li><a href="#check-list">Check list</a></li>
+            </ul>
+          </li>
+          <li><a href="#disclaimer">Disclaimer</a></li>
+        </ul>
+      </div> -->
       <div class="highlights-and-attribute"></div>
     </nav>
 
@@ -68,7 +86,7 @@
         </header>
         <h1 class="home-title">Some Information</h1>
 
-        <section>
+        <section id="about-me">
           <h3 class="home-h3-headers">About me</h3>
           <h4>A little bit of detail</h4>
           <p>
@@ -117,10 +135,10 @@
           </p>
         </section>
 
-        <section>
+        <section id="about-this-website">
           <h3 class="home-h3-headers">About this website</h3>
 
-          <section>
+          <section id="background-and-design">
             <h4>Background and choice of design</h4>
             <p>
               I started digging through the internet back in middle school to
@@ -174,11 +192,21 @@
                     \]
                   </div>
                 </div>
+                <p>
+                  or this one below (click on the arrow!)
+                </p>
+                <br/>
+                <details class="solution">
+                  <summary>Proof</summary>
+                  <div>
+                    The proof is left as an exercise to the reader.
+                  </div>
+                </details>
               </li>
             </ul>
           </section>
           
-          <section>
+          <section id="structure">
             <h4>Structure</h4>
             <p>
               
@@ -190,7 +218,7 @@
             </p>
           </section>
 
-          <section>
+          <section id="reflection">
             <h4>Reflection</h4>
             <p>
               Building an entire blog system from scratch is no easy task, but the
@@ -242,7 +270,7 @@
             </p>
           </section>
           
-          <section>
+          <section id="third-party-tools">
             <h4>Third party tools</h4>
             <div
               style="
@@ -274,16 +302,7 @@
               $$\hat{f} (\xi)=\int_{-\infty}^{\infty}f(x)e^{-2\pi ix\xi}dx.$$
             </div> -->
             <p>
-              On your left side, in the side navigation bar, I used
-              <a href="https://github.com/2016rshah/githubchart-api" class="url"
-                >ghchart</a
-              >
-              by
-              <a href="https://github.com/2016rshah" class="url">2016rshah</a> to
-              display my GitHub activities. I wish he had added an option to
-              change the cell colors, as it would've worked better with dark mode.
-              Someone even opened a pull request for it, but the author is nowhere
-              to be seen. I also use
+              I also use
               <a href="https://prismjs.com/" class="url">prism.js</a> to provide
               some nice code syntax-highlighting for websites like below. You can
               change the code theme in the setting
@@ -309,7 +328,7 @@ double numerical_derivative(Func f, double x, double h) {
             </p>
           </section>
 
-          <section>
+          <section id="check-list">
             <h4>Check list</h4>
             <p>
               The general layout of this website should be completed, but I will
@@ -331,7 +350,7 @@ double numerical_derivative(Func f, double x, double h) {
           </section>
         </section>
 
-        <section>
+        <section id="disclaimer">
           <h3 class="home-h3-headers">Disclaimer</h3>
           <p>
             This website is private, and it was created solely to display my
@@ -376,6 +395,7 @@ double numerical_derivative(Func f, double x, double h) {
     <!--Master grid ends here-->
 
     <script src="../assets/js/scripts.js"></script>
+    <script src="/assets/js/blogpage-setting.js"></script>
     <script src="../assets/js/canvas-banner.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
