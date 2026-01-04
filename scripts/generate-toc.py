@@ -129,18 +129,32 @@ def create_toc_block(sections):
 
 
 def insert_toc_into_navbar(html_content, toc_html):
-    """Insert TOC into the navbar element."""
+    """Insert or replace TOC in the navbar element."""
+    # First, try to replace existing TOC
+    # Pattern to match existing TOC div with all its content
+    existing_toc_pattern = r'(<nav[^>]*class="navbar[^"]*"[^>]*>\s*<div class="logo-and-side-nav"></div>)\s*<div class="toc">.*?</div>\s*(<div class="highlights-and-attribute"></div>)'
+    
+    # Check if TOC already exists
+    if re.search(existing_toc_pattern, html_content, re.DOTALL):
+        # Replace existing TOC
+        replacement = r'\1\n' + toc_html + r'\n    \2'
+        new_content = re.sub(existing_toc_pattern, replacement, html_content, count=1, flags=re.DOTALL)
+        print("Existing TOC found and replaced")
+        return new_content
+    
+    # If no existing TOC, insert new one
     # Pattern to find navbar with logo-and-side-nav and highlights-and-attribute
-    pattern = r'(<nav[^>]*class="navbar[^"]*"[^>]*>\s*<div class="logo-and-side-nav"></div>)\s*(<div class="highlights-and-attribute"></div>)'
+    insert_pattern = r'(<nav[^>]*class="navbar[^"]*"[^>]*>\s*<div class="logo-and-side-nav"></div>)\s*(<div class="highlights-and-attribute"></div>)'
     
     replacement = r'\1\n' + toc_html + r'\n    \2'
     
-    new_content = re.sub(pattern, replacement, html_content, count=1)
+    new_content = re.sub(insert_pattern, replacement, html_content, count=1)
     
     if new_content == html_content:
         print("Warning: Could not find navbar pattern to insert TOC")
         return None
     
+    print("New TOC inserted")
     return new_content
 
 
