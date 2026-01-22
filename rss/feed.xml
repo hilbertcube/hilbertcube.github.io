@@ -5,8 +5,8 @@
     <link>https://neumanncondition.com/</link>
     <description>Recent articles and posts from neumanncondition.com</description>
     <language>en-us</language>
-    <pubDate>Tue, 30 Dec 2025 04:25:47 </pubDate>
-    <lastBuildDate>Tue, 30 Dec 2025 04:25:47 </lastBuildDate>
+    <pubDate>Thu, 22 Jan 2026 02:10:48 </pubDate>
+    <lastBuildDate>Thu, 22 Jan 2026 02:10:48 </lastBuildDate>
     <generator>Python RSS Generator</generator>
 
     <item>
@@ -98,14 +98,14 @@
     <item>
       <title>Linux development environment setup</title>
       <link>https://neumanncondition.com/posts/linux-setup/</link>
-      <description>A detailed guide on how I set up my Linux development environment using Ubuntu 24.04, including installation steps, configurations, and useful tips for an efficient workflow.</description>
+      <description>A detailed guide on how I set up my Linux development environment using Ubuntu 24.04 on an NVIDIA machine, including installation steps, configurations, and useful tips for an efficient workflow.</description>
       <guid>https://neumanncondition.com/posts/linux-setup/</guid>
       <category>Ubuntu</category>
       <category>Linux</category>
       <category>Development Environment</category>
       <category>Programming</category>
       <category>Productivity</category>
-      <pubDate></pubDate>
+      <pubDate>Sun, 28 Dec 2025 00:00:00 </pubDate>
     </item>
 
     <item>

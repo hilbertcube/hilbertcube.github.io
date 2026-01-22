@@ -80,7 +80,7 @@
       "pid": "linux-setup",
       "link": "/posts/linux-setup/",
       "topics": ["Ubuntu", "Linux", "Development Environment", "Programming", "Productivity"],
-      "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04, including installation steps, configurations, and useful tips for an efficient workflow.",
+      "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04 on an NVIDIA machine, including installation steps, configurations, and useful tips for an efficient workflow.",
       "date": "December 28, 2025"
     },
     {
