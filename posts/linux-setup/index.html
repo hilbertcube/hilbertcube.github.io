@@ -869,7 +869,65 @@ Categories=Development;Science;Engineering;</code></pre>
                     </div>
               </li>
               <li class="bullet">
-                <a href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html" class="url">LTspice</a>: Circuit simulation tool. Download from Analog Devices and follow their installation instructions.
+                <a href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html" class="url">LTspice</a>: Circuit simulation tool. LTSpice is mainly a Windows application, but it can be run on Linux using Wine. Follow instruction on how to install wine on Ubuntu on their <a href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu" class="url">official website</a>. Next, download and install LTspice (64 bit) using Wine:
+                <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                      
+                    ><code class="language-bash">cd ~/Downloads
+wget https://LTspice.analog.com/download/latest/LTspice64.msi
+wine msiexec /i LTspice64.msi</code></pre>
+                  </div>
+                  Next, simply start and run the application with
+                  <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                      
+                    ><code class="language-bash">wine ~/.wine/drive_c/users/$USER/AppData/Local/Programs/ADI/LTspice/LTspice.exe</code></pre>
+                  </div>
+                  You can also create a desktop shortcut for easier access. First, create the launcher file. Run this command to create a new .desktop file:
+                  <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                      
+                    ><code class="language-bash">nano ~/.local/share/applications/ltspice.desktop</code></pre>
+                  </div>
+                  Then, add the following content to the file:
+                  <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                      
+                    ><code class="language-bash">[Desktop Entry]
+Name=LTspice
+Comment=Analog Devices LTspice Circuit Simulator
+Exec=wine /home/don-le/.wine/drive_c/users/don-le/AppData/Local/Programs/ADI/LTspice/LTspice.exe
+Icon=application-x-ms-dos-executable
+Terminal=false
+Type=Application
+Categories=Education;Electronics;Engineering;</code></pre>
+                  </div>
+                  Finally, make it executable
+                  <div class="code-container"
+                    style="text-align: center; margin: 25px auto; max-width: 40em;">
+                    <button class="copy-btn">Copy</button>
+                    <pre
+                      class="command-line"
+                      data-host="pc"
+                      
+                    ><code class="language-bash">chmod +x ~/.local/share/applications/ltspice.desktop</code></pre>
+                  </div>
               </li>
               <li class="bullet">
                 <a href="https://www.audacityteam.org/" class="url">Audacity</a>: Audio editing software. Install with:
