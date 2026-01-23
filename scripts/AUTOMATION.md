@@ -21,6 +21,7 @@ python3 scripts/generate-toc.py path/to/file.html --insert
 ```
 
 #### Git & Deployment
+
 ```bash
 # Commit with RSS generation
 ./scripts/commit-with-rss.sh "Your commit message"
