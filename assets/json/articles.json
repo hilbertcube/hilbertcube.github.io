@@ -64,12 +64,12 @@
       "date": "December 2, 2024"
     },
     {
-      "title": "Slightly More Interesting Inertia Problems",
+      "title": "Simulating Moment of Inertia with OpenGL and GLM",
       "id": "moi-1",
       "image": "inertia.webp",
       "link": "/articles/moment-of-inertia",
       "topics": ["Classical Mechanics", "Dynamics of Rotation"],
-      "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations. This article explore more about moment of inertia of interesting shapes.",
+      "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations.",
       "date": ""
     }
 
@@ -80,7 +80,7 @@
       "pid": "linux-setup",
       "link": "/posts/linux-setup/",
       "topics": ["Ubuntu", "Linux", "Development Environment", "Programming", "Productivity"],
-      "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04 on an NVIDIA machine, including installation steps, configurations, and useful tips for an efficient workflow.",
+      "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04 on an NVIDIA machine, including installation steps, configurations, and useful tips for an efficient workflow. Ok, but why Ubuntu though? Ans: Very stable and much easier to use than Debian (my first distro)",
       "date": "December 28, 2025"
     },
     {
@@ -95,8 +95,8 @@
       "title": "A list of tools that I use",
       "pid": "tool-list",
       "link": "/posts/favorite-tools/",
-      "topics": ["VS Code", "Chrome Extensions", "Software", "Hardware", "Life", "Work"],
-      "description": "A comprehensive list of software, Chrome extensions, VS Code extensions, and electronics that I use regularly. Why Chrome? I'm too lazy for migration, and it has plenty of cool plugins. Why VS Code? I've tried many text-editors and IDEs before, but I find VS Code to be the most visually pleasing, plus, it's lightweight, and has a large community and number of extensions.",
+      "topics": ["VS Code", "Extensions", "Software", "Hardware", "Life", "Work"],
+      "description": "A comprehensive list of software, Firefox extensions, VS Code extensions, and electronics that I use regularly.",
       "date": "April 12, 2025"
     },
     {
