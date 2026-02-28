@@ -13,4 +13,5 @@
       "**/node_modules/**": true,
       "**/.vscode/**": true
     },
+    // "github.copilot.enable": false,
 }

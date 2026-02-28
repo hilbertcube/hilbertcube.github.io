@@ -44,7 +44,7 @@
       }
 
       .desktop-img {
-        max-width: 85%;
+        max-width: 70%;
         height: auto;
         display: block;
         margin: 0 auto;
@@ -72,7 +72,12 @@
         </header>
         <ul>
           <li><a href="#system">Preparation (after OS installation)</a></li>
-          <li><a href="#change-default-behavior">Change Some Default Behaviors</a></li>
+          <li><a href="#basic-rice">Basic Rice</a></li>
+          <li><a href="#change-default-behavior">Change Some Default Behaviors</a>
+            <ul>
+              <li><a href="#emacs">A quick word about Emacs</a></li>
+            </ul>
+          </li>
           <li><a href="#devops">DevOps and Text Editors</a>
             <ul>
               <li><a href="#snap">A quick word about Snap</a></li>
@@ -99,14 +104,6 @@
           <h1 class="post-title">Linux development environment setup</h1>
           <div class="date">December, 28, 2025</div>
         </header>
-
-        <!-- <div style="margin: 25px 0">
-          <img
-            class="desktop-img"
-            src="desktop.webp"
-            alt="my desktop"
-          />
-        </div> -->
 
           <section id="system">
             <h3>Preparation (after OS installation)</h3>
@@ -187,11 +184,44 @@ sudo apt install gnome-tweaks -y</code></pre>
             </ul>
           </section>
 
+          <section id="basic-rice">
+            <h3>Basic Rice</h3>
+            <p>
+              Simple GNOME desktop rice using <a href="https://github.com/fastfetch-cli/fastfetch" class="url">fastfetch</a>. Link to my config: <a href="https://github.com/hilbertcube/fastfetch-config" class="url">github</a>
+            </p>
+            <div style="margin: 25px 0">
+              <img
+                class="desktop-img"
+                src="rice.webp"
+                alt="vscode-pet-demo"
+              />
+            </div>
+            Display any image on the terminal using <a href="https://github.com/hpjansson/chafa" class="url">chafa</a>:
+                            <div class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;">
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                  ><code class="language-bash">ucla-logo() {
+    # Generate the logo on the fly
+    local LOGO=$(chafa --size 50 --symbols block /home/img/ucla.png)
+    
+    # Print it
+    echo -e "$LOGO"
+}</code></pre>
+                </div>
+          </section>
+
           <section id="change-default-behavior">
             <h3>Change Some Default Behaviors</h3>
             <ul>
               <li class="bullet">
-                Change keybinding: on Linux, copy and paste in the terminal is defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and Ctrl+V, open the terminal, then go to the burger menu, then Preferences > Shortcuts, and change the Copy and Paste shortcuts. After changing, restart the terminal. Now, Ctrl+Shift+C will be automatically mapped to cancel command (SIGINT), and Ctrl+C and Ctrl+V will work as expected for copy and paste.
+                Change keybinding: on Linux, copy and paste in the terminal is defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and Ctrl+V, open the terminal, then go to the burger menu, then Preferences > Shortcuts, and change the Copy and Paste shortcuts. After changing, restart the terminal. Now, Ctrl+Shift+C will be automatically mapped to cancel command (SIGINT), and Ctrl+C and Ctrl+V will work as expected for copy and paste
+
+                <section id="emacs">
+                  <h4>A quick word about Emacs</h4> 
+                  
+                  Please note that if you change this keybinding, and you're using Emacs, it will interfere with Emacs keybindings in the terminal. For example, Ctrl+C is used for various commands in Emacs. If you want to use Emacs keybindings, you can either keep the default Ctrl+Shift+C and Ctrl+Shift+V for copy and paste, or you can remap the copy and paste shortcuts to something else that doesn't conflict with Emacs.
+                </section>
               </li>
               <li class="bullet">
                 Better Bash autocompletion: Install bash-completion for improved command-line experience:
@@ -378,7 +408,7 @@ sudo apt update && sudo apt install code -y</code></pre>
                   <section id="snap">
                     <h4>A quick note about Snap</h4>
 
-                    Snap is one of the most common criticisms aimed at Ubuntu, mostly because of perceived performance issues. I am not a big fan of it either. That said, it is worth remembering that you are not forced to use Snap AT ALL if it does not fit your needs. Like many things in Linux, it comes down to preference and the flexibility to choose what works best for you.
+                    Snap is one of the most common criticisms of Ubuntu, mostly because of perceived performance issues. I am not a big fan of it either. That said, it is worth remembering that you don't have to use Snap at all if it does not fit your needs. Like many things in Linux, it comes down to preference and the flexibility to choose what works best for you.
                   </section>
               </li>
               <li class="bullet">
