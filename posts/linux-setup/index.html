@@ -73,13 +73,18 @@
         <ul>
           <li><a href="#system">Preparation (after OS installation)</a></li>
           <li><a href="#change-default-behavior">Change Some Default Behaviors</a></li>
-          <li><a href="#devops">DevOps and Text Editors</a></li>
+          <li><a href="#devops">DevOps and Text Editors</a>
+            <ul>
+              <li><a href="#snap">A quick word about Snap</a></li>
+            </ul>
+          </li>
           <li><a href="#cpp">C and C++ Development Environment</a></li>
           <li><a href="#python">Python and Anaconda</a></li>
           <li><a href="#javascript">JavaScript and Web</a></li>
           <li><a href="#rust">Rust and Cargo</a></li>
           <li><a href="#engineering">Engineering Softwares</a></li>
           <li><a href="#other-softwares">Other Useful Softwares</a></li>
+          <li><a href="#final-words">Final Words</a></li>
         </ul>
       </div>
       <div class="highlights-and-attribute"></div>
@@ -165,7 +170,7 @@ sudo apt install gnome-tweaks -y</code></pre>
               </ul>
               </li>
               <li class="bullet">
-                If you want even more customization, consider <a href="https://kde.org/plasma-desktop" class="url">KDE Plasma</a> desktop environment.
+                If you want even more customization, consider <a href="https://kde.org/plasma-desktop" class="url">KDE Plasma</a> desktop environment. Personally, I prefer GNOME for its simplicity. I've used KDE before when I was still on Debian, but one thing I noticed is that it takes up more power and resources, and since I use a laptop, I prefer to save battery life with GNOME.
               </li>
               <li class="bullet">
                 <a href="https://gdm-settings.github.io/" class="url">GDM settings</a>: lock screen customization, auto login, etc. Install GDM settings with:
@@ -323,7 +328,7 @@ Then, reload with
             <h3>DevOps and Text Editors</h3>
             <ul>
               <li class="bullet">
-                <a href="https://code.visualstudio.com/" class="url">VSCode</a>: My primary code editor. Simply use the Software Center to install it, or install with:
+                <a href="https://code.visualstudio.com/" class="url">VSCode</a>: My primary code editor. Simply use the Software Center to install it via snap. If you dislike snap, install with:
                 <div class="code-container"
                       style="text-align: center; margin: 25px auto; max-width: 40em;">
                       <button class="copy-btn">Copy</button>
@@ -369,6 +374,12 @@ sudo apt update && sudo apt install code -y</code></pre>
   }
 ]</code></pre>
                     </div>
+
+                  <section id="snap">
+                    <h4>A quick note about Snap</h4>
+
+                    Snap is one of the most common criticisms aimed at Ubuntu, mostly because of perceived performance issues. I am not a big fan of it either. That said, it is worth remembering that you are not forced to use Snap AT ALL if it does not fit your needs. Like many things in Linux, it comes down to preference and the flexibility to choose what works best for you.
+                  </section>
               </li>
               <li class="bullet">
                 <a href="https://neovim.io/" class="url">Neovim</a>: Terminal-based text editor. Install with:
@@ -965,6 +976,9 @@ sudo apt install ./master-pdf-editor*.deb</code></pre>
             <h3>Other Useful Softwares</h3>
             <ul>
               <li class="bullet">
+                <a href="https://www.mozilla.org/firefox/" class="url">Firefox</a>
+              </li>
+              <li class="bullet">
                 <a href="https://www.spotify.com/" class="url">Spotify</a>:
                 <div class="code-container"
                       style="text-align: center; margin: 25px auto; max-width: 40em;">
@@ -1011,6 +1025,13 @@ sudo apt update && sudo apt install spotify-client -y</code></pre>
                     ><code class="language-bash">sudo apt install telegram-desktop -y</code></pre>
                 </div>
               </li>
+          </section>
+
+          <section id="final-words">
+            <h3>Final Words</h3>
+            <p>
+              Try not to worry too much about what other people say. Choose what works best for you, but take some time to research before settling on a distro. Some people prefer Arch's rolling release, while I value the stability and long-term support that Ubuntu provides. The best way to learn is by exploring different options and discovering what fits your workflow and preferences. Linux is built around choice and customization, so experiment freely and shape it into something that feels right for you.
+            </p>
           </section>
 
       </div>
