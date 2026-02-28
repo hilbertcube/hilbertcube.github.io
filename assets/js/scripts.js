@@ -1374,9 +1374,9 @@ function fetchCommit() {
       const repoData = await repoRes.json();
       const articlesData = await articlesRes.json();
       const treeData = await treeRes.json();
-      const totalCommits = commitsRes.headers.get('Link') 
+      const totalCommits = Math.round((commitsRes.headers.get('Link') 
         ? parseInt(commitsRes.headers.get('Link').match(/page=(\d+)>; rel="last"/)?.[1] || '0')
-        : 1;
+        : 1) / 2);
       
       // Calculate lines of code by filtering out binary/image files
       const codeExtensions = ['.html', '.css', '.js', '.json', '.md', '.txt', '.py', '.sh', '.xml', '.yml', '.yaml'];
@@ -1414,7 +1414,7 @@ function fetchCommit() {
       const statsElement = document.getElementById('repo-stats');
       if (statsElement) {
         statsElement.textContent = 
-          `Total Commits: ${formatNumber(totalCommits)}\n` +
+          `Total Updates: ${formatNumber(totalCommits)}\n` +
           `Estimated Lines: ${formatNumber(estimatedLines)}\n` +
           `Articles: ${articleCount} | Posts: ${postCount}\n` +
           `Repository Age: ${ageString}`;
