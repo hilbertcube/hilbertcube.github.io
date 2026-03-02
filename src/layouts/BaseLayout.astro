@@ -1,0 +1,115 @@
+---
+/**
+ * BaseLayout.astro
+ * ================
+ * Shared layout for all pages. Replaces the boilerplate that was copy-pasted
+ * into every index.html. Components are imported at build time — no fetch() calls.
+ */
+import TopBar from "../components/TopBar.astro";
+import Logo from "../components/Logo.astro";
+import Footer from "../components/Footer.astro";
+import HighlightsAndAttribute from "../components/HighlightsAndAttribute.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  /** ID of the nav button to highlight, e.g. "Home-button" */
+  activeButton?: string;
+}
+
+const {
+  title,
+  description = "",
+  keywords = "math, physics, programming, coding, computer science, computer simulation",
+  activeButton = "",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-00W722FWP2"
+      is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-00W722FWP2");
+    </script>
+
+    <title>{title} - neumanncondition</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="subject"
+      content="Mathematics, Physics, and Computer Science Articles"
+    />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Don Le, ledongduu@gmail.com" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Main CSS (same file — served from public/ ) -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Active nav button highlighting -->
+    {
+      activeButton && (
+        <style
+          set:html={`
+      #${activeButton} {
+        font-weight: var(--top-buttons-font-weight);
+        color: var(--top-buttons-hover-color);
+      }
+    `}
+        />
+      )
+    }
+
+    <!-- Page-specific head content (extra styles, meta, etc.) -->
+    <slot name="head" />
+  </head>
+
+  <body class="nav-open light-mode">
+    <!-- Top bar is now embedded in the HTML at build time -->
+    <TopBar />
+
+    <nav class="navbar open" id="navbar">
+      <div class="logo-and-side-nav">
+        <Logo />
+      </div>
+      <!-- Sidebar: use the "sidebar" slot to override (e.g. TOC on about/article pages) -->
+      <slot name="sidebar">
+        <!-- Default: highlights and attribute -->
+        <div class="highlights-and-attribute">
+          <HighlightsAndAttribute />
+        </div>
+      </slot>
+    </nav>
+
+    <main class="general-wrapper" id="content-grid">
+      <!-- Page-specific content goes here -->
+      <slot />
+
+      <footer>
+        <Footer />
+      </footer>
+    </main>
+
+    <!--
+    scripts.js still runs for interactive features (dark mode, search, settings).
+    The fetch-and-insert component-loading code can be removed in a future pass
+    since all HTML components are now baked in.
+  -->
+    <script is:inline src="/assets/js/scripts.js"></script>
+
+    <!-- Additional page-specific scripts -->
+    <slot name="scripts" />
+  </body>
+</html>

@@ -1,0 +1,58 @@
+---
+/**
+ * src/pages/tags/index.astro
+ * ==========================
+ * Archive/Tags page — migrated from /tags/index.html
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Banner from "../../components/Banner.astro";
+---
+
+<BaseLayout
+  title="Contact"
+  description="This is the contact page"
+  keywords="tags"
+  activeButton="Archive-button"
+>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/tags/tags.css" />
+    <style is:global>
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+  </Fragment>
+
+  <Banner />
+
+  <div class="content-grid">
+    <header>
+      <h1 class="topic">Tags</h1>
+    </header>
+
+    <div class="controls">
+      <div class="clear-btn-container">
+        <button id="clear-tags" class="clear-btn">Clear All Tags</button>
+      </div>
+      <div id="filter-status" class="filter-status">Showing all content</div>
+    </div>
+
+    <div id="tag-container" class="tag-container"></div>
+
+    <div id="loading">Loading content...</div>
+
+    <div id="content-sections">
+      <h2>Articles</h2>
+      <ul id="articles-container" class="content-container"></ul>
+
+      <h2>Posts</h2>
+      <ul id="posts-container" class="content-container"></ul>
+    </div>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src="/assets/js/tags.js"></script>
+    <script is:inline src="/assets/js/canvas-banner.js"></script>
+  </Fragment>
+</BaseLayout>

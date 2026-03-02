@@ -17,6 +17,24 @@ h2 {
   border-bottom: 1px solid var(--contrast-line-color);
 }
 
+/* Visually match h3 style on semantically-promoted h2 headings (a11y fix) */
+h2.h3-visual {
+  font-size: 1.3em;
+  margin: 40px 0 0;
+  border-bottom: none;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  padding: 0;
+  z-index: 80;
+}
+
+/* Visually match h4 style on semantically-promoted h3 headings (a11y fix) */
+h3.h4-visual {
+  font-size: 1.1em;
+  margin: revert;
+}
+
 h3 {
   font-size: 1.3em;
   width: 100%;
