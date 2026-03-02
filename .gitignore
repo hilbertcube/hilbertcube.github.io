@@ -30,6 +30,9 @@ build/
 npm-debug.log*
 *.log
 
+# Image backups
+public/Images/originals/
+
 # Editor/OS files (optional, can be in a global gitignore)
 .DS_Store
 .idea/
