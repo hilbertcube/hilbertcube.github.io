@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
 <BaseLayout
@@ -104,9 +105,9 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
         Topics: Mathematics, Physics, Standing Waves, Python
       </div>
       <h1 class="title">
-        How to find Maxima and Minima of an n-th Dimensional Function
+        Maxima and Minima of an n-th Dimensional Function - The Hessian Matrix
       </h1>
-      <div class="date"></div>
+      <div class="date">Updated May 25, 2024</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -795,6 +796,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
                     <td
                       >$\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td
                     >
+                    <td>$2&gt;0$</td>
                     <td>$0$</td>
                     <td>$2$</td>
                     <td>$4&gt;0$</td>
@@ -1288,7 +1290,12 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 
     <section>
       <h2>More Articles</h2>
-      <div id="rec-article-container"></div>
+      <ArticleCards
+        count={4}
+        showDetails={true}
+        shuffle={true}
+        excludePath="/articles/maximum-and-minimum"
+      />
     </section>
   </div><!-- .content-grid -->
 

@@ -6,6 +6,7 @@
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
 <BaseLayout
@@ -59,7 +60,8 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
             <li>
               <a href="#gpu-and-cuda"
                 >Overview of General GPU Architecture and Nvidia's Compute
-                Unified Device Architecture (CUDA)</a>
+                Unified Device Architecture (CUDA)</a
+              >
             </li>
           </ul>
         </li>
@@ -104,7 +106,7 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
         Accelerating Feature Extraction and Image Stitching Algorithm Using
         Nvidia CUDA
       </h1>
-      <div class="date"></div>
+      <div class="date">Updated August 10, 2024</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -952,15 +954,17 @@ features.img_size = grayImg.size();</code></pre>
 
     <section>
       <h2>More Articles</h2>
-      <div id="rec-article-container"></div>
+      <ArticleCards
+        count={4}
+        showDetails={true}
+        shuffle={true}
+        excludePath="/articles/accelerating-feature-extraction-and-image-stitching-algorithm"
+      />
     </section>
   </div>
 
   <Fragment slot="scripts">
     <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script is:inline>
-      loadDate("orb-cuda-1");
-    </script>
     <script
       is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"

@@ -1,0 +1,33 @@
+---
+/**
+ * PostList.astro
+ * ==============
+ */
+import articlesData from "../../assets/json/articles.json";
+
+const posts = articlesData.posts || [];
+---
+
+<div id="post-container">
+  {
+    posts.length === 0 ? (
+      <p>No posts available</p>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post: any) => (
+          <li>
+            <div>
+              <a href={post.link} class="post">
+                <div class="post-header-row">
+                  <h3>{post.title}</h3>
+                  <div class="post-date">{post.date}</div>
+                </div>
+                <p>{post.description}</p>
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</div>

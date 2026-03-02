@@ -5,6 +5,7 @@
  * Article: My Favorite Problems of All Time
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
 <BaseLayout
@@ -51,7 +52,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <header>
       <div class="topic">Topics: Mathematics</div>
       <h1 class="title">My Favorite Problems of All Time</h1>
-      <div class="date"></div>
+      <div class="date">Updated April 24, 2025</div>
       <div class="Quote">
         <div class="Quote-content">
           &#8220;Real mathematics must be justified as art if it can be
@@ -305,7 +306,12 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 
     <section>
       <h2>More Articles</h2>
-      <div id="rec-article-container"></div>
+      <ArticleCards
+        count={4}
+        showDetails={true}
+        shuffle={true}
+        excludePath="/articles/favorite-problem-of-all-time"
+      />
     </section>
   </div>
 

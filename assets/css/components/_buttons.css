@@ -128,7 +128,7 @@ input[type="checkbox"]:checked ~ div#settings_window {
 .share-button {
   position: fixed;
   top: var(--share-button-position);
-  right: 10px;
+  right: 15px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -137,10 +137,21 @@ input[type="checkbox"]:checked ~ div#settings_window {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0;
-  border: 2px solid var(--nav-bar-text-color) !important;
-  color: var(--grid-text-color) !important;
+  border: 1px solid var(--contrast-line-color);
+  color: var(--grid-text-color);
   background: var(--body-background-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.share-button:hover {
+  /* transform: scale(1.08); */
+  border-color: var(--nav-bar-text-color);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.share-button:active {
+  transform: scale(0.95);
 }
 
 .share-tooltip {
@@ -148,21 +159,26 @@ input[type="checkbox"]:checked ~ div#settings_window {
   bottom: 10px;
   right: 100px;
   transform: translateX(50%);
-  background-color: #333;
+  background-color: rgba(26, 26, 26, 0.92);
   color: #fff;
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 4px;
+  font-family: var(--body-font);
   font-size: 12px;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
 }
 
 #share-expand {
-  padding: 5px 10px;
-  border-radius: 5px;
   font-size: 16px;
+  transition: color 0.25s ease;
+}
+
+.share-button:hover #share-expand {
+  color: var(--top-buttons-hover-color);
 }
 
 .share-button:hover .share-tooltip {
@@ -173,30 +189,38 @@ input[type="checkbox"]:checked ~ div#settings_window {
 .share-options {
   position: fixed;
   display: none;
-  top: calc(var(--share-button-position) + 40px);
-  right: 10px;
+  top: calc(var(--share-button-position) + 46px);
+  right: 15px;
   z-index: 1001;
 }
 
 .share-option {
-  font-family: "Poppins", sans-serif;
-  text-align: center;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
   padding: 0;
   border-radius: 50%;
-  color: #ffffff;
   font-size: 17px;
-  margin: 5px 0;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border: 2px solid var(--nav-bar-text-color) !important;
-  color: var(--grid-text-color) !important;
+  margin: 6px 0;
+  border: 1px solid var(--contrast-line-color);
+  color: var(--grid-text-color);
   background: var(--body-background-color);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.share-option:hover {
-  transform: scale(1.1);
+#share-facebook:hover  { color: #1877f2; border-color: #1877f2; }
+#share-twitter:hover   { color: #1da1f2; border-color: #1da1f2; }
+#share-whatsapp:hover  { color: #25d366; border-color: #25d366; }
+#share-reddit:hover    { color: #ff4500; border-color: #ff4500; }
+#share-hackernews:hover { color: #ff6600; border-color: #ff6600; }
+#share-telegram:hover  { color: #26a5e4; border-color: #26a5e4; }
+
+
+
+.share-option:active {
+  transform: scale(0.95);
 }

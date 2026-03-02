@@ -6,6 +6,7 @@
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
 <BaseLayout
@@ -67,7 +68,12 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
 
     <section>
       <h2>More Articles</h2>
-      <div id="rec-article-container"></div>
+      <ArticleCards
+        count={4}
+        showDetails={true}
+        shuffle={true}
+        excludePath="/articles/moment-of-inertia"
+      />
     </section>
   </div>
 

@@ -1,0 +1,80 @@
+---
+/**
+ * ArticleCards.astro
+ * ==================
+ * Renders article cards at build time, replacing the client-side article() JS function.
+ *
+ * Props:
+ *   count: max articles to show (default: all)
+ *   showDetails: show tags, description, date (default: true)
+ *   shuffle: randomise order (default: false)
+ *   excludePath URL path to exclude (e.g. the current article)
+ */
+import articlesData from "../../assets/json/articles.json";
+
+interface Props {
+  count?: number;
+  showDetails?: boolean;
+  shuffle?: boolean;
+  excludePath?: string;
+}
+
+const {
+  count,
+  showDetails = true,
+  shuffle = false,
+  excludePath = "",
+} = Astro.props;
+
+const IMAGE_ROOT = "/public/Images/";
+
+// Filter articles that have an id and link, excluding the current page
+let articles = articlesData.articles.filter(
+  (a: any) =>
+    a.id &&
+    a.link &&
+    a.link.replace(/\/$/, "") !== excludePath.replace(/\/$/, ""),
+);
+
+// Shuffle using Fisher-Yates if requested
+if (shuffle) {
+  for (let i = articles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [articles[i], articles[j]] = [articles[j], articles[i]];
+  }
+}
+
+// Slice to requested count
+if (count !== undefined) {
+  articles = articles.slice(0, count);
+}
+---
+
+<div id="rec-article-container">
+  {
+    articles.map((article: any) => (
+      <a href={article.link} class="article">
+        <div class="article-image-container">
+          <img
+            loading="lazy"
+            src={IMAGE_ROOT + article.image}
+            alt={article.title}
+            class="no-lightbox"
+          />
+        </div>
+        <div class="article-text-container">
+          <div class="article-name">{article.title}</div>
+          {showDetails && (
+            <>
+              <div class="article-topic">
+                Tags: {article.topics ? article.topics.join(", ") : "N/A"}
+              </div>
+              <div class="article-description">{article.description}</div>
+              <div class="article-date">Posted {article.date}</div>
+            </>
+          )}
+        </div>
+      </a>
+    ))
+  }
+</div>

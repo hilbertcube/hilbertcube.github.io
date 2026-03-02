@@ -6,6 +6,7 @@
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
 <BaseLayout
@@ -112,7 +113,7 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
       <h1 class="title">
         The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms
       </h1>
-      <div class="date"></div>
+      <div class="date">Updated June 1, 2024</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -190,7 +191,8 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
             <figcaption class="caption">
               Motion of a vibrating metal plate (greatly exagerated). <a
                 href="#Appendix"
-                class="in-page-link">Source code</a>
+                class="in-page-link">Source code</a
+              >
             </figcaption>
           </div>
         </div>
@@ -1076,15 +1078,17 @@ print(f"Animation saved to: &#123;output_path&#125;")
 
     <section>
       <h2>More Articles</h2>
-      <div id="rec-article-container"></div>
+      <ArticleCards
+        count={4}
+        showDetails={true}
+        shuffle={true}
+        excludePath="/articles/the-quest-to-finding-chladni-patterns-1"
+      />
     </section>
   </div>
 
   <Fragment slot="scripts">
     <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script is:inline>
-      loadDate("chladni-1");
-    </script>
     <script
       is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"

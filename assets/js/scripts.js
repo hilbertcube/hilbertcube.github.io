@@ -12,16 +12,6 @@ MathJax = {
   },
 };
 
-// TAB ICON
-function setFavicon() {
-  const link = document.createElement("link");
-  link.rel = "icon";
-  link.href = "/public/Images/Logo/favicon.webp";
-  link.type = "image/webp";
-  document.head.appendChild(link);
-}
-setFavicon();
-
 // // OPEN FULL IMG
 document.addEventListener("DOMContentLoaded", function () {
     const allImages = document.querySelectorAll("img:not(#logoImage):not(#home-banner img):not(.no-lightbox):not(.recommend-img img):not(.front-img)");
@@ -328,132 +318,6 @@ copyButton();
 
 
 
-// ARTICLES
-const image_root = "/public/Images/";
-
-function article(NUM_ARTICLE, des, random_article) {
-  let articlesCache = null;
-  
-  if (articlesCache) {
-    processArticles(articlesCache);
-  } else {
-    fetch("/assets/json/articles.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to load articles: " + response.statusText);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        articlesCache = data.articles;
-        processArticles(articlesCache);
-      })
-      .catch((error) => console.error("Error loading articles:", error));
-  }
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-
-  function processArticles(articles) {
-    // Filter out articles without IDs and the current page's article
-    const currentPath = window.location.pathname.replace(/\/$/, '');
-    const validArticles = articles.filter(article => 
-      article.id && article.link && article.link.replace(/\/$/, '') !== currentPath
-    );
-    
-    // Shuffle if needed
-    if (random_article) shuffleArray(validArticles);
-    
-    // Display the articles
-    displayArticles(validArticles.slice(0, NUM_ARTICLE));
-  }
-
-  function displayArticles(articles) {
-    const container = document.getElementById("rec-article-container");
-    if (!container) {
-      console.error("Article container not found");
-      return;
-    }
-    
-    container.innerHTML = ""; // Clear previous content
-    
-    // Create document fragment for better performance
-    const fragment = document.createDocumentFragment();
-
-    articles.forEach((article) => {
-      const articleLink = document.createElement("a");
-      articleLink.href = article.link;
-      articleLink.classList.add("article");
-      // articleLink.target = "_blank";
-
-      // Create image container
-      const imageContainer = document.createElement("div");
-      imageContainer.className = "article-image-container";
-
-      // Create image with lazy loading
-      const img = document.createElement("img");
-      img.loading = "lazy"; // Add lazy loading
-      img.src = image_root + article.image;
-      img.alt = article.title;
-      img.classList.add("no-lightbox");
-      
-      // Add error handling for images
-      img.onerror = function() {
-        this.src = image_root + "placeholder.png"; // Fallback image
-        this.onerror = null; // Prevent infinite loop
-      };
-      
-      imageContainer.appendChild(img);
-
-      // Create text container
-      const textContainer = document.createElement("div");
-      textContainer.className = "article-text-container";
-
-      const title = document.createElement("div");
-      title.classList.add("article-name");
-      title.textContent = article.title;
-      textContainer.appendChild(title);
-
-      // Only add description elements if des flag is true
-      if (des) {
-        const topic = document.createElement("div");
-        topic.classList.add("article-topic");
-        topic.textContent = "Tags: " + (article.topics ? article.topics.join(", ") : "N/A");
-        textContainer.appendChild(topic);
-
-        const description = document.createElement("div");
-        description.classList.add("article-description");
-        description.textContent = article.description;
-        textContainer.appendChild(description);
-
-        const date = document.createElement("div");
-        date.classList.add("article-date");
-        date.textContent = "Posted " + article.date;
-        textContainer.appendChild(date);
-      }
-
-      // Append containers to the article link
-      articleLink.appendChild(imageContainer);
-      articleLink.appendChild(textContainer);
-
-      // Add to fragment instead of directly to DOM
-      fragment.appendChild(articleLink);
-    });
-
-    // Add all articles to DOM at once
-    container.appendChild(fragment);
-
-    // Mobile hover functionality
-    if (typeof mobileHover === 'function') {
-      mobileHover([".article"]);
-    }
-  }
-}
-
 // MOBILE HOVER BEHAVIOR
 function mobileHover(arr) {
   // Hover effect on mobile
@@ -597,6 +461,16 @@ function sharePage(event, platform) {
       shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(
         pageUrl
       )}&title=Interesting%20page`;
+      break;
+    case "hackernews":
+      shareUrl = `https://news.ycombinator.com/submitlink?u=${encodeURIComponent(
+        pageUrl
+      )}&t=${encodeURIComponent(document.title)}`;
+      break;
+    case "telegram":
+      shareUrl = `https://t.me/share/url?url=${encodeURIComponent(
+        pageUrl
+      )}&text=${encodeURIComponent(document.title)}`;
       break;
     default:
       return;
@@ -1294,85 +1168,6 @@ function fetchCommit() {
       if (statsElement) {
         statsElement.textContent = 'Unable to load stats';
       }
-    });
-}
-
-function loadPosts() {
-  const postContainer = document.getElementById("post-container");
-  
-  if (!postContainer) {
-    console.error("Post container element not found");
-    return;
-  }
-  
-  // Create a loading indicator
-  const loadingElement = document.createElement("div");
-  loadingElement.textContent = "Loading posts...";
-  postContainer.innerHTML = "";
-  postContainer.appendChild(loadingElement);
-  
-  // Fetch posts data from JSON file
-  fetch("/assets/json/articles.json")
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response error: " + response.statusText);
-      }
-      return response.json();
-    })
-    .then(data => {
-      const posts = data.posts || [];
-      
-      if (posts.length === 0) {
-        postContainer.innerHTML = "<p>No posts available</p>";
-        return;
-      }
-      
-      // Create the post list
-      const postList = document.createElement("ul");
-      postList.className = "post-list";
-      
-      // Add each post to the list
-      posts.forEach(post => {
-        const listItem = document.createElement("li");
-
-        const outerDiv = document.createElement("div");
-        
-        const postLink = document.createElement("a");
-        postLink.href = post.link;
-        postLink.className = "post";
-        
-        const headerRow = document.createElement("div");
-        headerRow.className = "post-header-row";
-        
-        const postTitle = document.createElement("h3");
-        postTitle.textContent = post.title;
-        
-        const postDate = document.createElement("div");
-        postDate.className = "post-date";
-        postDate.textContent = post.date;
-        
-        const postDescription = document.createElement("p");
-        postDescription.textContent = post.description;
-        
-        // Assemble the post structure
-        headerRow.appendChild(postTitle);
-        headerRow.appendChild(postDate);
-        
-        postLink.appendChild(headerRow);
-        postLink.appendChild(postDescription);
-        
-        outerDiv.appendChild(postLink);
-        listItem.appendChild(outerDiv);
-        postList.appendChild(listItem);
-      });
-      
-      // Replace loading indicator with posts
-      postContainer.innerHTML = "";
-      postContainer.appendChild(postList);
-    })
-    .catch(error => {
-      console.error("Error loading posts:", error);
-      postContainer.innerHTML = `<p>Error loading posts: ${error.message}</p>`;
     });
 }
 
