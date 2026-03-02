@@ -6,6 +6,8 @@
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Banner from "../components/Banner.astro";
+import ArticleCards from "../components/ArticleCards.astro";
+import PostList from "../components/PostList.astro";
 ---
 
 <BaseLayout
@@ -95,27 +97,17 @@ import Banner from "../components/Banner.astro";
 
     <section>
       <h1 class="home-title">Posts</h1>
-      <div id="post-container"></div>
+      <PostList />
     </section>
 
     <section>
       <h1 class="home-title">Articles</h1>
-      <div id="rec-article-container"></div>
+      <ArticleCards showDetails={true} />
     </section>
   </div>
 
   <!-- Page-specific scripts -->
   <Fragment slot="scripts">
-    <script is:inline>
-      fetch("/assets/json/articles.json")
-        .then((response) => response.json())
-        .then((data) => {
-          const articles = data.articles;
-          article(articles.length, true, false);
-        })
-        .catch((error) => console.error("Error loading JSON:", error));
-      document.addEventListener("DOMContentLoaded", loadPosts);
-    </script>
     <script is:inline src="/assets/js/canvas-banner.js"></script>
   </Fragment>
 </BaseLayout>

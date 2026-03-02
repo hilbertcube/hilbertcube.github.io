@@ -6,6 +6,7 @@
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
 <BaseLayout
@@ -47,7 +48,8 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
           <ul>
             <li>
               <a href="#compare-efficiency"
-                >What is the Best Way to Compare Algorithms' Efficiency?</a>
+                >What is the Best Way to Compare Algorithms' Efficiency?</a
+              >
             </li>
             <li>
               <a href="#big-o-omega-theta"
@@ -71,8 +73,8 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
               <a href="#example-binary-search">Example 2: Binary Search</a>
             </li>
             <li>
-              <a href="#example-topological-sort"
-                >Example 3: Topological Sort</a>
+              <a href="#example-topological-sort">Example 3: Topological Sort</a
+              >
             </li>
             <li>
               <a href="#example-dijkstra">Example 4: Dijkstra's Algorithm</a>
@@ -118,7 +120,7 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
         Topics: Computer Science, Data Structures, Algorithms, C++
       </div>
       <h1 class="title">Algorithmic Analysis of an Algorithm</h1>
-      <div class="date"></div>
+      <div class="date">Updated December 2, 2024</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -741,7 +743,12 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
 
       <section>
         <h2>More Articles</h2>
-        <div id="rec-article-container"></div>
+        <ArticleCards
+          count={4}
+          showDetails={true}
+          shuffle={true}
+          excludePath="/articles/time-complexity-of-an-algorithm"
+        />
       </section>
     </section>
   </div>

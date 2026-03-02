@@ -5,9 +5,13 @@
  * Shared layout for all pages.
  */
 import TopBar from "../components/TopBar.astro";
+import ShareButton from "../components/ShareButton.astro";
 import Logo from "../components/Logo.astro";
 import Footer from "../components/Footer.astro";
 import HighlightsAndAttribute from "../components/HighlightsAndAttribute.astro";
+
+// Vite resolves all @import statements inside main.css at build time,
+import "../../assets/css/main.css";
 
 interface Props {
   title: string;
@@ -42,6 +46,11 @@ const {
       gtag("config", "G-00W722FWP2");
     </script>
 
+    <link
+      rel="icon"
+      href="/public/Images/Logo/favicon.webp"
+      type="image/webp"
+    />
     <title>{title} - neumanncondition</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -53,9 +62,6 @@ const {
     <meta name="keywords" content={keywords} />
     <meta name="author" content="Don Le, ledongduu@gmail.com" />
     <meta name="format-detection" content="telephone=no" />
-
-    <!-- Bundled site CSS (single file, no @import waterfall) -->
-    <link rel="stylesheet" href="/assets/css/bundle.css" />
 
     <!-- Preconnect to third-party origins -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
@@ -96,8 +102,8 @@ const {
   </head>
 
   <body class="light-mode">
-    <!-- Top bar is now embedded in the HTML at build time -->
     <TopBar />
+    <ShareButton />
 
     <nav class="navbar" id="navbar">
       <div class="logo-and-side-nav">
@@ -105,7 +111,6 @@ const {
       </div>
       <!-- Sidebar: use the "sidebar" slot to override (e.g. TOC on about/article pages) -->
       <slot name="sidebar">
-        <!-- Default: highlights and attribute -->
         <div class="highlights-and-attribute">
           <HighlightsAndAttribute />
         </div>

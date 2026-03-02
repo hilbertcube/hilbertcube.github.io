@@ -166,6 +166,7 @@ ASTRO_EOF
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
 <BaseLayout
@@ -210,15 +211,12 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
 
     <section>
       <h2>More Articles</h2>
-      <div id="rec-article-container"></div>
+      <ArticleCards count={4} showDetails={true} shuffle={true} excludePath="/articles/$SLUG" />
     </section>
   </div>
 
   <Fragment slot="scripts">
     <script is:inline src="/assets/js/blogpage-setting.js"><\/script>
-    <script is:inline>
-      loadDate("$SLUG");
-    <\/script>
     <script is:inline src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async><\/script>
   </Fragment>
 </BaseLayout>
