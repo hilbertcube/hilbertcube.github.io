@@ -24,7 +24,7 @@ setFavicon();
 
 // // OPEN FULL IMG
 document.addEventListener("DOMContentLoaded", function () {
-    const allImages = document.querySelectorAll("img:not(#logoImage):not(#home-banner img)");
+    const allImages = document.querySelectorAll("img:not(#logoImage):not(#home-banner img):not(.no-lightbox):not(.recommend-img img):not(.front-img)");
     
     allImages.forEach(function (img, index) {
       img.style.cursor = "pointer";
@@ -399,6 +399,7 @@ function article(NUM_ARTICLE, des, random_article) {
       img.loading = "lazy"; // Add lazy loading
       img.src = image_root + article.image;
       img.alt = article.title;
+      img.classList.add("no-lightbox");
       
       // Add error handling for images
       img.onerror = function() {
