@@ -1,0 +1,640 @@
+---
+/**
+ * src/pages/articles/the-quest-to-finding-chladni-patterns-3/index.astro
+ * ======================================================================
+ * Article: The Quest to Finding Chladni Patterns, Part 3
+ * Migrated from /articles/the-quest-to-finding-chladni-patterns-3/index.html
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+---
+
+<BaseLayout
+  title="Chladni Patterns, Part 3"
+  description="Describing Chladni patterns using the regular and biharmonic wave equations"
+  keywords="Wave equation, python, eigenvalue, boundary conditions"
+>
+  <Fragment slot="head">
+    <style>
+      .front-img {
+        display: block;
+        width: 100%;
+        border-radius: 10px;
+        height: auto;
+        margin: auto;
+      }
+      #circular-plate {
+        width: 80%;
+      }
+      @media all and (max-width: 580px) {
+        #circular-plate {
+          width: 100%;
+          margin: 0;
+        }
+      }
+      .image-block {
+        width: 65%;
+      }
+      #frequency-table {
+        width: 12em;
+      }
+    </style>
+  </Fragment>
+
+  <Fragment slot="sidebar">
+    <div class="toc">
+      <header class="major">
+        <h2>Table of Contents</h2>
+      </header>
+      <ul>
+        <li>
+          <a href="#biharmonic-equation"
+            >The Biharmonic Wave Equation of Plates</a>
+        </li>
+        <li>
+          <a href="#rayleight-and-wave-speed"
+            >Rayleigh's Derivation of Chladni's Law and the Effective Wave Speed</a
+          >
+          <ul>
+            <li>
+              <a href="#rayleigh-derivation"
+                >Rayleigh's Derivation of the Formula</a>
+            </li>
+            <li>
+              <a href="#effective-wave-speed">The Effective Wave Speed</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#analysis">Data Analysis: Verifying Chladni's Law</a>
+          <ul>
+            <li><a href="#experimental-results">Experimental Results</a></li>
+            <li><a href="#graph">Linearity of Chladni's Law</a></li>
+          </ul>
+        </li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#References">References</a></li>
+      </ul>
+    </div>
+    <div class="highlights-and-attribute">
+      <HighlightsAndAttribute />
+    </div>
+  </Fragment>
+
+  <div class="mathjax-definition">
+    \[ \newcommand&#123;\R&#125;&#123;\mathbb&#123;R&#125;&#125;
+    \newcommand\pd[2]&#123;\displaystyle\frac&#123;\partial
+    #1&#125;&#123;\partial #2&#125;&#125;
+    \newcommand\fourthpd[2]&#123;\displaystyle\frac&#123;\partial^&#123;4&#125;
+    #1&#125;&#123;\partial #2^&#123;4&#125;&#125;&#125;
+    \newcommand\secondpd[2]&#123;\displaystyle\frac&#123;\partial^&#123;2&#125;
+    #1&#125;&#123;\partial #2^&#123;2&#125;&#125;&#125;
+    \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
+    \newcommand&#123;\rbrac&#125;&#123;\right)&#125; \]
+  </div>
+
+  <div class="content-grid">
+    <header>
+      <div class="topic">
+        Topics: Mathematics, Physics, Standing Waves, Python
+      </div>
+      <h1 class="title">
+        The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave
+        Equation
+      </h1>
+      <div class="date"></div>
+      <figure style="margin: 0;">
+        <img
+          class="front-img"
+          src="/articles/the-quest-to-finding-chladni-patterns-3/banner.jpg"
+        />
+        <figcaption>
+          Chladni Patterns on Different Types of Plates. Image by Matemateca
+          IME-USP, distributed under <a
+            class="url"
+            href="https://creativecommons.org/licenses/by-sa/4.0/"
+            >CC BY-SA 4.0</a>
+        </figcaption>
+      </figure>
+      <div class="Quote">
+        <div class="Quote-content">
+          &#8220;We cannot escape the fact that in observing nature, we are
+          studying the vibrations of waves that we cannot see.&#8221;
+        </div>
+        <div class="Author">- Heinrich Hertz</div>
+      </div>
+    </header>
+
+    <section id="biharmonic-equation">
+      <h2>The Biharmonic Wave Equation of Plates</h2>
+      <p>
+        According to the wave equation model, the wave speed of the plate should
+        remains a constant number. This is far from what we see from out results
+        in the last part. What's going on here? Is our derivation wrong? Well,
+        not quite, as the results matches with many of the patterns created in
+        laboratory environments. The only wrong thing is the very model that we
+        chose to solve our problem. The two-dimensional wave equation was
+        derived using the fact that the surface is assumed to be thin and
+        membrane-like. Meaning that, the entire plate must be supported by
+        tension. In reality, this is far from the case. Our plate is made of
+        metal, a rigid object, and it is not thin enough to be considered a
+        membrane, and therefore, it is not supported by tension, but something
+        else. Although the wave equation has led to some decent approximation of
+        a few patterns, in reality, the assumption that the displacement of the
+        metal plate obeys the two-dimensional wave equation is almost completely
+        false.
+      </p>
+      <p>
+        The rigid metal plate, unlike a membrane, is not supported by tension,
+        but by something called the bending moment. This is a well-known concept
+        in material science. The equation that truly describes the displacement
+        of the plate is called the Biharmonic wave equation, a fourth-order,
+        time-dependent partial differential equation, described by
+      </p>
+      <div class="equation">
+        \begin&#123;equation&#125; \secondpd&#123;u&#125;&#123;t&#125; +
+        \kappa^2\left(\fourthpd&#123;u&#125;&#123;x&#125; +
+        2\frac&#123;\partial^4 u&#125;&#123;\partial x^2y^2&#125;
+        +\fourthpd&#123;u&#125;&#123;y&#125;\right)=Q(x,y,t),
+        \end&#123;equation&#125;
+      </div>
+      <p>or, written in a more compact form:</p>
+      <div class="equation">
+        \begin&#123;equation&#125; u_&#123;tt&#125; + \kappa^2\nabla^4 u =
+        Q,\quad -a\leq x, y\leq a, \end&#123;equation&#125;
+      </div>
+      <p>here, $\nabla^4 = \nabla^2 (\nabla^2)$, and</p>
+      <div class="equation">
+        \begin&#123;equation&#125; \kappa^2 =
+        \frac&#123;Eh^2&#125;&#123;12\rho(1-\nu^2)&#125;,
+        \end&#123;equation&#125;
+      </div>
+      <p>
+        where $p$ is the density, $\nu$ is Poisson's ratio, $E$ is Young's
+        modulus, and $h$ is the thickness of the plate. For a free-edge plate,
+        the conditions that apply to this equation are the boundary conditions
+      </p>
+      <div class="equation">
+        \begin&#123;alignat*&#125;&#123;2&#125; &amp;u_&#123;xx&#125;+\nu
+        u_&#123;yy&#125; = 0,\quad &amp;&amp; u_&#123;xxx&#125;
+        +(2-\nu)u_&#123;yyx&#125; = 0\;\text&#123;along &#125; x=\pm a\\
+        &amp;u_&#123;yy&#125;+\nu u_&#123;xx&#125; = 0,\quad &amp;&amp;
+        u_&#123;yyy&#125; +(2-\nu)u_&#123;yxx&#125; = 0\;\text&#123;along &#125;
+        y=\pm a \end&#123;alignat*&#125;
+      </div>
+      <p>and initial conditions:</p>
+      <div class="equation">
+        $$u(x, y, 0) = f(x,y)\quad \text&#123; and &#125;\quad u_t(x, y, 0) =
+        g(x, y)$$
+      </div>
+      <p>
+        Any attempts to solve this Boundary-Initial Condition using separation
+        of variables is apparently not possible. While we were on our journey to
+        find the eigenvalues with the first two boundary conditions, we ran into
+        an very difficult problem: having to solve the equation
+      </p>
+      <div class="equation">
+        $$(p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,$$
+      </div>
+      where $$\zeta = (2-\nu)Y''(y)$$
+      <p>
+        This is a very difficult task since $\zeta$ is not a numeric value, but
+        a function of $y$, so attempting to solve the eigenvalue numerically is
+        a very challenging task. Moreover, even if we can find, and express the
+        eigenvalues in terms of $\zeta$, the task will be even more difficult
+        since we now have to substitute back into the other boundary and initial
+        conditions to solve for the exact values of the eigenvalues, making it
+        pretty much impossible to solve for $p$'s. Many authors in the past have
+        gone through this problem, and it is indeed true that it is not possible
+        to solve this equation analytically, but the solution can only be
+        achieved via numerical approximations.
+      </p>
+    </section>
+
+    <section id="rayleight-and-wave-speed">
+      <h2>
+        Rayleigh's Derivation of Chladni's Law and the Effective Wave Speed
+      </h2>
+      <p>
+        As challenging as the problem is, it does not mean that nothing
+        meaningful can be discovered from this equation. Although the square
+        plate is indeed extremely difficult to solve, the circular plate, on the
+        other hand, is... also difficult to solve. However, due to the symmetric
+        nature of the circular plate, Rayleigh was able to show that
+      </p>
+      <div class="equation">
+        \begin&#123;equation&#125; f = C(n+2m)^2. \end&#123;equation&#125;
+      </div>
+      <p>
+        To understand the work of Rayleigh, we need to go back to the
+        one-dimensional space. Take a 2-meter wooden ruler that we usually see
+        in our average college classroom, and wave it. We will see that the
+        ruler creates a standing wave. However, the equation governing the
+        motion of the ruler is not the regular wave equation because of the
+        reason similar to as stated above, but by the bending beam - flexural
+        wave equation
+      </p>
+      <div class="equation">
+        \begin&#123;equation&#125; \secondpd&#123;u&#125;&#123;t&#125; + c^2_L
+        K^2\secondpd&#123;u&#125;&#123;x&#125; = 0. \end&#123;equation&#125;
+      </div>
+      <p>
+        Here, $c_L$ is the longitudinal wave speed, defined by the square root
+        of the Young's modulus, $E$ divided by the density $\rho$
+      </p>
+      <div class="equation">
+        \begin&#123;equation&#125; c_L =
+        \sqrt&#123;\frac&#123;E&#125;&#123;\rho&#125;&#125;,
+        \end&#123;equation&#125;
+      </div>
+      <p>
+        This is a bit different in two dimensions since there are lateral
+        expansions in 2D. Authors Rossing and Fletcher mentioned in their work,
+        that the correct equation for $c_L$ for a plate is
+      </p>
+      <div class="equation">
+        \begin&#123;equation&#125; c_L =
+        \sqrt&#123;\frac&#123;E&#125;&#123;\rho(1-\nu^2)&#125;&#125;,
+        \end&#123;equation&#125;
+      </div>
+      <p>
+        where $\nu$ is the ratio of lateral contraction to longitudinal
+        elongation (also known as Poisson's ratio).
+      </p>
+
+      <section id="rayleigh-derivation">
+        <h3>Rayleigh's Derivation of the Formula.</h3>
+        <p>
+          Going back to the biharmonic equation above. Since we know that the
+          forcing function should not affect the general shape of the patterns,
+          we can assume that $Q=0$ and rewrite it as
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; \nabla^4 u - \frac&#123;12\rho(1 -
+          \nu^2)&#125;&#123;Eh^2&#125;u_&#123;tt&#125; = 0.
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          Apply separation of variables once again, but this time, only separate
+          the time variable, $u(x, y, t) = U(x, y)e^&#123;i\omega t&#125;$.
+          Thus, $u_&#123;tt&#125; = \omega^2 U(x, y)e^&#123;i\omega t&#125;$.
+          Substitute in, and simplify, we obtain
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125;\label&#123;eqn:biharmonic1&#125; \nabla^4 U
+          - \frac&#123;12\rho(1 - \nu^2)\omega^2&#125;&#123;Eh^2&#125;U=
+          \nabla^4 U - k^4U=0. \end&#123;equation&#125;
+        </div>
+        Notice that here, we define $k$ as
+        <div class="equation">
+          \begin&#123;equation&#125; k^2 =
+          \frac&#123;\sqrt&#123;12&#125;\omega&#125;&#123;h&#125;\sqrt&#123;\frac&#123;\rho(1-\nu^2)&#125;&#123;E&#125;&#125;
+          = \frac&#123;\sqrt&#123;12&#125;\omega&#125;&#123;hc_L&#125;.
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          By dimensional analysis, it is not too hard to see that this $k$ is
+          the familiar "wave number" that we like and love. Therefore,
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; f = \frac&#123;\omega&#125;&#123;2\pi&#125;
+          = \frac&#123;1&#125;&#123;2\pi\sqrt&#123;12&#125;&#125;c_Lhk^2.
+          \end&#123;equation&#125;
+        </div>
+        <p>As stated by Rayleigh, Kirchhoff previously proved that</p>
+        <div class="equation">
+          \begin&#123;equation&#125; \tan\lbrac ka -
+          \frac&#123;1&#125;&#123;2&#125;n\pi\rbrac =
+          \frac&#123;\frac&#123;A_2&#125;&#123;8ka&#125; +
+          \frac&#123;A_3&#125;&#123;(8ka)^2&#125; -
+          \frac&#123;A_4&#125;&#123;(8ka)^3&#125; + \ldots&#125;&#123;A_1 +
+          \frac&#123;A_2&#125;&#123;8ka&#125; +
+          \frac&#123;A_4&#125;&#123;(8ka)^3&#125; + \ldots&#125;,
+          \end&#123;equation&#125;
+        </div>
+        where
+        <div class="equation">
+          \begin&#123;equation&#125; \begin&#123;split&#125; A_1 &amp;= \gamma =
+          (1-\nu)^&#123;-1&#125;\\ A_2 &amp;= \gamma(1-4n^2)-8\\ A_3 &amp;=
+          \gamma(1-4n^2)(9-4n^2) + 48(1+4n^2)\\ A_4 &amp;= -
+          \frac&#123;\gamma&#125;&#123;3&#125;[(1-4n^2)(9-4n^2)(13 - 4n^2)] +
+          8(9 + 136n^2 + 80n^4) \end&#123;split&#125; \end&#123;equation&#125;
+        </div>
+        <p>
+          Notice that the numerator approaches zero faster than the denominator
+          as $k\to\infty$. Since $f$ and $k^2$ are proportional, as
+          $f\to\infty$, $k\to\infty$, and hence
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; \tan\lbrac ka -
+          \frac&#123;1&#125;&#123;2&#125;n\pi\rbrac = 0
+          \quad\text&#123;as&#125;\quad k\to\infty. \end&#123;equation&#125;
+        </div>
+        <p>Solving for $k$, we obtain</p>
+        <div class="equation">
+          \begin&#123;equation&#125; k = \frac&#123;\pi&#125;&#123;2a&#125;(n +
+          2m) = \frac&#123;\pi&#125;&#123;d&#125;(n + 2m).
+          \end&#123;equation&#125;
+        </div>
+        <p>Substitute this back into the frequency equation above, we obtain</p>
+        <div class="equation">
+          \begin&#123;equation&#125; f = \frac&#123;1&#125;&#123;\pi
+          4\sqrt&#123;3&#125;&#125;hc_Lk^2 =
+          \frac&#123;h\pi&#125;&#123;4\sqrt&#123;3&#125;d^2&#125;\sqrt&#123;\frac&#123;E&#125;&#123;\rho(1-\nu^2)&#125;&#125;\cdot(n
+          + 2m)^2, \end&#123;equation&#125;
+        </div>
+        <p>
+          where $E$ is Young's modulus, $\rho$ is density, $\nu$ is the ratio of
+          lateral contraction to longitudinal elongation (also known as
+          Poisson's ratio), $h$ is the thickness, and $d$ is the diameter of the
+          plate.
+        </p>
+      </section>
+
+      <section id="effective-wave-speed">
+        <h3>The Effective Wave Speed</h3>
+        <p>
+          At this point, we can already work out the reason why the wave speed
+          is not a constant. Authors Rossing and Fletchers mentioned in <i
+            >Principles of Vibration and Sound</i
+          > that the waves in the bending plate are "dispersive," and their speed
+          depends on the frequency, and therefore, based on the equation that relates
+          wave speed to angular frequency,
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; c(f) = \frac&#123;\omega&#125;&#123;k&#125;
+          = \sqrt&#123;\frac&#123;2\pi hc_L&#125;&#123;4\sqrt&#123;3&#125;&#125;
+          f&#125; = \sqrt&#123;2\pi
+          h\sqrt&#123;\frac&#123;E&#125;&#123;12\rho(1-\nu^2)&#125;&#125;&#125;\cdot
+          f^&#123;1/2&#125;. \end&#123;equation&#125;
+        </div>
+        <p>
+          Thus, the wave speed is an increasing function, it increases as $f$
+          increases, and
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; c \sim \sqrt&#123;f&#125;
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          This might explain why our wave speed has an increasing trend in the
+          last section.
+        </p>
+      </section>
+    </section>
+
+    <section id="analysis">
+      <h2>Data Analysis: Verifying Chladni's Law</h2>
+
+      <section id="experimental-results">
+        <h3>Experimental Results</h3>
+        <p>
+          Here are a few images that matches the description of Chladni's
+          prediction from our experiments:
+        </p>
+        <figure>
+          <img
+            class="image"
+            id="circular-plate"
+            src="/articles/the-quest-to-finding-chladni-patterns-3/circle.webp"
+            alt="Circular Plate Patterns"
+          />
+          <figcaption class="caption">
+            Matching patterns on the Circular Plate.
+          </figcaption>
+        </figure>
+        <p>
+          By counting the number of rings on each pattern listed above, we can
+          make a table as below:
+        </p>
+        <div class="table-wrapper">
+          <table
+            style="margin-left: auto; margin-right: auto; text-align: center;"
+            id="frequency-table"
+          >
+            <tr
+              style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
+            >
+              <td>$m$</td>
+              <td>$4m^2$</td>
+              <td>$f$ (Hz)</td>
+            </tr>
+            <tr><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>4</td><td>131</td></tr>
+            <tr><td>2</td><td>16</td><td>429</td></tr>
+            <tr><td>3</td><td>36</td><td>1079</td></tr>
+            <tr><td>4</td><td>64</td><td>1806</td></tr>
+            <tr><td>5</td><td>100</td><td>3320</td></tr>
+            <tr style="border-bottom: 1px solid var(--grid-text-color);"
+              ><td>6</td><td>144</td><td>4661</td></tr
+            >
+          </table>
+        </div>
+      </section>
+
+      <section id="graph">
+        <h3>Linearity of Chladni's Law</h3>
+        <p>
+          Since there are no diameter lines, $n=0$. The equation for $f$ becomes
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; f = \frac&#123;1&#125;&#123;\pi
+          4\sqrt&#123;3&#125;&#125;hc_Lk^2 =
+          \frac&#123;h\pi&#125;&#123;4\sqrt&#123;3&#125;d^2&#125;\sqrt&#123;\frac&#123;E&#125;&#123;\rho(1-\nu^2)&#125;&#125;\cdot(2m)^2,
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          This implies that $f$ and $(2m)^2$ have a linear relationship.
+          Therefore, we plotted our data below to test this theory.
+        </p>
+        <figure>
+          <img
+            src="/articles/the-quest-to-finding-chladni-patterns-3/chladni-law.webp"
+            alt="Chladni's Law"
+            class="image-block"
+            style="width: 60%"
+          />
+          <figcaption class="caption">
+            Matching patterns on the Circular Plate.
+          </figcaption>
+        </figure>
+        <p>
+          The plate is made of Aluminum, which has the following properties: $E
+          = 68$ GPa, $p = 2710\;kg/m^3$, $\nu = 0.33$, $h=0.8\pm 0.3$ mm, $d =
+          0.241\pm 0.001$ m. Therefore, the coefficient $C$ is determined by
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; C=\frac&#123;1&#125;&#123;\pi
+          4\sqrt&#123;3&#125;&#125;hc_L =
+          \frac&#123;h\pi&#125;&#123;d^2&#125;\sqrt&#123;\frac&#123;E&#125;&#123;12\rho(1-\nu^2)&#125;&#125;=
+          \kappa\pi\frac&#123;h&#125;&#123;d^2&#125; = 33.1430,
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          which is very close to our linear fit. The uncertainty of $C$ can be
+          calculated by
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; \sigma_&#123;C&#125; =
+          \sqrt&#123;\lbrac\pd&#123;C&#125;&#123;h&#125;\sigma_h\rbrac^2 +
+          \lbrac\pd&#123;C&#125;&#123;d&#125;\sigma_d\rbrac^2&#125; =
+          C\sqrt&#123;\lbrac\frac&#123;\sigma_h&#125;&#123;h&#125;\rbrac^2 +
+          \lbrac\frac&#123;2h\sigma_d&#125;&#123;d&#125;\rbrac^2&#125; = 12.43.
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          The coefficient $C$ lies within our uncertainty range, which once
+          again verifies the validity of Chladni's law.
+        </p>
+      </section>
+    </section>
+
+    <section id="conclusion">
+      <h2>Conclusion</h2>
+      <p>
+        The true flaw within this experiment arises from the inaccurate wave
+        equation. The actual equation that describes the plate is the Biharmonic
+        wave equation:
+      </p>
+      <div class="equation">
+        $$\frac&#123;\partial^2 u&#125;&#123;\partial t^2&#125; +
+        k^2\left(\frac&#123;\partial^4 u&#125;&#123;\partial x^4&#125; +
+        2\frac&#123;\partial^4 u&#125;&#123;\partial x^2 y^2&#125; +
+        \frac&#123;\partial^4 u&#125;&#123;\partial y^4&#125;\right) = Q, \quad
+        \text&#123;or&#125; \quad u_&#123;tt&#125; + k^2\nabla^4 u = Q, \quad -a
+        \leq x, y \leq a$$
+      </div>
+      <p>
+        This equation is a fourth-order partial differential equation and,
+        therefore, quite difficult to solve even with simple boundary
+        conditions. However, with the given set of boundary-initial conditions,
+        it was virtually impossible to solve because it required solving for
+        multiple sets of non-elementary eigenvalues.
+      </p>
+      <p>
+        The uncertainty in this project was nearly deterred by the intimidating
+        equations that describe the plate. However, by taking a more elementary
+        and less intimidating approach—finding the $R^2$ of the set of data
+        points in Chladni's Law for effective wave speed—we were able to gauge
+        the validity of the data. Surprisingly, the data was extremely good when
+        looking at our observed linear case. Moreover, I was able to determine
+        an interval in which our coefficient $C$ was valid. The theoretical
+        coefficient was found to be $33.1430 \pm 12.43$, while my experimental
+        value is 33.73, which is surprisingly close! The uncertainty in $C$ was
+        large because Young's modulus $E$ is quite large.
+      </p>
+      <p>
+        For the square plate, I was unable to find a relevant equation relating
+        to the general increasing trend in the wave speed of the plate. It is
+        important to note that the trend is not as noticeable in the square
+        plate because the uncertainty in the frequency for the square plate was
+        much larger than in the circular plate for some unknown reason. At the
+        larger $f$ values, it can be seen that resonance occurred in intervals
+        of $\pm 800 \;\mathrm&#123;Hz&#125;$ for some $f$ values. The wave
+        speed, however, does not depend on the frequency in either case.
+      </p>
+      <p>
+        My knowledge was limited at the time, and I could not proceed further
+        due to time constraints. However, a recent paper from 2020, titled
+        &#8220;Stable and Accurate Numerical Methods for Generalized
+        Kirchhoff-Love Plates,&#8221; by authors Nguyen, Li, and Ji, accurately
+        modeled the patterns on Chladni plates. The plates in their paper have
+        the same dimensions as those in my experiment, and the patterns on the
+        plates are also identical, appearing at frequencies very close to those
+        in this experiment. The paper used the full Biharmonic Equation.
+      </p>
+      <div class="equation">
+        \begin&#123;equation&#125; \rho h\secondpd&#123;w&#125;&#123;t&#125; = -
+        D\nabla^4 w + T\nabla^2 w -K_0w -K_1\pd&#123;w&#125;&#123;t&#125; +
+        T_1\nabla^2\pd&#123;w&#125;&#123;t&#125; + F(\textbf&#123;x&#125;, t),
+        \end&#123;equation&#125;
+      </div>
+      <p>
+        Here, $p$ is the density, $K_0$ is the linear stiffness coefficient,
+        representing the linear storing force, $T$ is the tension coefficient,
+        $K_1$ is the linear damping term, $T_1$ is the visco-elastic damping
+        coefficient, $F(\mathbf&#123;x&#125;, t)$ is the forcing function, and
+        $D$ is defined as
+      </p>
+      <div class="equation">
+        \begin&#123;equation&#125; D =
+        \frac&#123;Eh^3&#125;&#123;12(1-\nu^2)&#125;, \end&#123;equation&#125;
+      </div>
+      <p>
+        which includes the flexural rigidity constant $\nu$, $E$ is young's
+        modulus, and $h$ is the thickness of the plate.
+      </p>
+    </section>
+
+    <section id="References">
+      <h2>References</h2>
+      <ol class="reference">
+        <li>
+          Linqi. Shao. Modeling a square vibrating plate. University of
+          Waterloo, pages 1-58, 2018.
+        </li>
+        <li>
+          Lord Rayleigh. Vibration of Plates, pages 352-361. Princeton
+          University Press, New York, NY, 1894.
+        </li>
+        <li>
+          John M. Davis. Introduction to Applied Partial Differential Equation.
+          W. H. Freeman, New York City, 1st edition, 2012.
+        </li>
+        <li>
+          Richard. Haberman. Applied Partial Differential Equations with Fourier
+          Series and Boundary Value Problems. Pearson, New York City, 5th
+          edition, 2018.
+        </li>
+        <li>
+          Rudolph. Szilard. Theories and Applications of Plates Analysis. John
+          Wiley and Sons, Inc., 111 River Street Hoboken, NJ 07030-5774, 2004
+        </li>
+        <li>
+          Dispersion of flexural waves. <a
+            href="https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html"
+            class="url"
+            >https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html</a
+          >, 2004. Accessed: 2024-05-26
+        </li>
+        <li>
+          Thomas D. Rossing and Neville H. Fletcher. Two-Dimensional Systems:
+          Membranes and Plates, pages 65-94. Springer New York, New York, 2004.
+        </li>
+        <li>
+          Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Stable and
+          accurate numerical methods for generalized kirchhoff-love plates,
+          2020. Accessed: 2024-05-26.
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>More Articles</h2>
+      <div id="rec-article-container"></div>
+    </section>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src="/assets/js/blogpage-setting.js"></script>
+    <script is:inline>
+      loadDate("chladni-3");
+    </script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+      async></script>
+  </Fragment>
+</BaseLayout>

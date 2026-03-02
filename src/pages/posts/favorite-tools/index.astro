@@ -1,0 +1,347 @@
+---
+/**
+ * src/pages/posts/favorite-tools/index.astro
+ * ============================================
+ * Post: Favorite Tools — migrated from /posts/favorite-tools/index.html
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+---
+
+<BaseLayout
+  title="Post - Favorite Tools"
+  description="A list of my favorite tools including VS Code extensions, IDEs, and Chrome extensions"
+  keywords="favorite tools, VS Code extensions, IDEs, software, Chrome extensions, web development tools, programming tools"
+>
+  <Fragment slot="head">
+    <style is:inline>
+      .image-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1em;
+      }
+      .responsive-img {
+        max-width: 100%;
+        height: auto;
+        width: 25em;
+      }
+      @media (max-width: 600px) {
+        .image-row {
+          flex-direction: column;
+        }
+      }
+      .vscode-pet-img {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: auto;
+      }
+      @media all and (max-width: 580px) {
+        .vscode-pet-img {
+          width: 100% !important;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <!-- Sidebar: TOC + highlights -->
+  <Fragment slot="sidebar">
+    <div class="toc">
+      <header class="major">
+        <h2>Table of Contents</h2>
+      </header>
+      <ul>
+        <li><a href="#firefox-extensions">Firefox Extensions</a></li>
+        <li>
+          <a href="#vscode-extensions">VS Code Extensions and Settings</a>
+        </li>
+        <li><a href="#hardware">Hardware</a></li>
+      </ul>
+    </div>
+    <div class="highlights-and-attribute">
+      <HighlightsAndAttribute />
+    </div>
+  </Fragment>
+
+  <Fragment slot="scripts">
+    <script is:inline src="/assets/js/blogpage-setting.js"></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cmake.js"
+    ></script>
+  </Fragment>
+
+  <div class="content-grid" id="home">
+    <header>
+      <div class="topic">
+        VS Code Extensions, IDEs, Softwares, Firefox Extensions
+      </div>
+      <h1 class="post-title">A list of tools that I use</h1>
+      <div class="date">April, 12, 2024</div>
+    </header>
+
+    <section>
+      <section id="firefox-extensions">
+        <h2 class="h3-visual">Firefox Extensions</h2>
+        <ul>
+          <li class="bullet">
+            <a
+              class="url"
+              href="https://addons.mozilla.org/en-US/firefox/addon/octotree/"
+              >Octotree</a
+            >: This tool lets you preview files in a GitHub repo.
+          </li>
+          <li class="bullet">
+            <a
+              href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/"
+              class="url">uBlock Origin</a
+            >: A fast and efficient ad blocker.
+          </li>
+        </ul>
+      </section>
+
+      <section id="vscode-extensions">
+        <h2 class="h3-visual">VS Codes Extensions and Settings</h2>
+        <ul>
+          <li class="bullet">
+            <strong>Web Developments</strong>
+            <ul>
+              <li class="bullet">
+                Crucial: HTML CSS Support (HTML Intellisense), Auto Rename Tag.
+              </li>
+              <li class="bullet">
+                Tailwind CSS IntelliSense and Tailwind Docs. I used to hate
+                Tailwind because I felt like I had less control over things.
+                Now, I've come to appreciate it.
+              </li>
+              <li class="bullet">
+                CSS Peak: peak straight into css, no need to jump around.
+              </li>
+              <li class="bullet">
+                Github Actions. I use this tool to automate some stuff for my
+                website.
+              </li>
+              <li class="bullet">
+                Workspace Settings. Note that the HTML autocomplete does not
+                work with React or Next js by default, so you should enable it
+                manually via
+                <span style="text-decoration: underline">settings.json</span>. I
+                also use an indentation of 2 spaces instead of 4 when writing
+                web projects.
+                <div
+                  class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;"
+                >
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="console"
+                    style="color: oklch(48.8% 0.243 264.376)"> <code class="language-json">&#123;
+  "emmet.includeLanguages": &#123;
+      "javascript": "javascriptreact"
+  &#125;,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false
+&#125;</code></pre>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li class="bullet">
+            <strong>Decorations</strong>
+            <ul>
+              <li class="bullet">
+                <a
+                  href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow"
+                  class="url">indent-rainbow</a
+                >: a tool that keep your code organized by coloring
+                indentations. When you first install it, it will have very thick
+                indentation lines. This look a bit ugly to me, but fortunately,
+                you can adjust that in
+                <span style="text-decoration: underline">settings.json</span>.
+                This is my ideal setting:
+                <div
+                  class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;"
+                >
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="console"
+                    style="color: oklch(48.8% 0.243 264.376)"> <code class="language-json">"indentRainbow.colors": [
+    "rgba(255,255,64,0.3)",
+    "rgba(127,255,127,0.3)",
+    "rgba(255,127,255,0.3)",
+    "rgba(79,236,236,0.3)"
+  ],
+  "indentRainbow.indicatorStyle": "light",
+  "editor.guides.bracketPairs": "active",
+  "indentRainbow.excludedLanguages": [
+      "plaintext"
+  ],
+  "indentRainbow.lightIndicatorStyleLineWidth": 1,
+  "editor.renderWhitespace": "boundary",
+  "indentRainbow.errorColor": "rgba(128,32,32,0)",</code></pre>
+                </div>
+              </li>
+              <li class="bullet">
+                <a
+                  href="https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme"
+                  class="url"
+                >
+                  Material Icon Theme:
+                </a>
+                A very wide variety of very nice-looking folder and file themes.
+              </li>
+              <li class="bullet">
+                <a
+                  class="url"
+                  href="https://marketplace.visualstudio.com/items/?itemName=esbenp.prettier-vscode"
+                  >Prettier - Code formatter</a
+                >: I use this extension mostly for web development, where lots
+                of indentation are required.
+              </li>
+              <li class="bullet">
+                <a
+                  class="url"
+                  href="https://marketplace.visualstudio.com/items/?itemName=dzhavat.bracket-pair-toggler"
+                >
+                  Bracket Pair Colorization Toggler
+                </a>: Useful for languages that use curly braces &#123;&#125;.
+              </li>
+              <li class="bullet">
+                <a
+                  class="url"
+                  href="https://marketplace.visualstudio.com/items/?itemName=tonybaloney.vscode-pets"
+                >
+                  VS Code Pets
+                </a>
+                <div style="margin: 25px 0">
+                  <img
+                    class="vscode-pet-img"
+                    src="/posts/favorite-tools/vscode-pet.gif"
+                    alt="vscode-pet-demo"
+                  />
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li class="bullet">
+            <strong>System Programming</strong>
+            <ul>
+              <li class="bullet">
+                C/C++ IntelliSense, C/C++ Extension Pack, and C/C++ Theme
+              </li>
+              <li class="bullet">
+                CMake and CMake Tools. I've always had a love-hate relationship
+                with CMake. It makes zero sense and is very painful to use, but
+                it's the most popular (and best?) tool we have. These extensions
+                help me write CMake more efficiently, since they rebuild
+                everything every time I made changes to my CMake script.
+                <div
+                  class="code-container"
+                  style="text-align: center; margin: 25px auto; max-width: 40em;"
+                >
+                  <button class="copy-btn">Copy</button>
+                  <pre
+                    class="console"
+                    style="color: oklch(48.8% 0.243 264.376)"><code class="language-cmake">cmake_minimum_required(VERSION 3.18)
+project(FMT_test CXX)
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(fmt CONFIG REQUIRED)
+add_executable(main main.cpp)
+target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
+                </div>
+
+                Test the extension with the script above for the
+                <a href="https://github.com/fmtlib/fmt" class="url">FMT</a>
+                library.
+              </li>
+              <li class="bullet">Rust Analyzer and Rust Syntax.</li>
+              <li class="bullet">
+                MASM/TASM: run assembly directly in VS Code without a compiler.
+              </li>
+              <li class="bullet">
+                Nsight Visual Studio Code Edition: useful for CUDA programming.
+              </li>
+              <li class="bullet">
+                VS Code's Shader languages support: shaders highlighters for
+                GLSL, HLSL, CG.
+              </li>
+              <li class="bullet">Makefile Tools</li>
+            </ul>
+          </li>
+
+          <li class="bullet">
+            <strong>Dev Tools</strong>
+            <ul style="line-height: 1.6">
+              <li class="bullet">
+                IntelliCode and IntelliCode API Usage Examples.
+              </li>
+              <li class="bullet">Docker Extension</li>
+              <li class="bullet">
+                <a
+                  class="url"
+                  href="https://marketplace.visualstudio.com/items/?itemName=mhutchie.git-graph"
+                >
+                  Git Graph.
+                </a> A visual git history viewer.
+              </li>
+            </ul>
+          </li>
+
+          <li class="bullet">
+            <strong>Others</strong>
+            <ul style="line-height: 1.6">
+              <li class="bullet">
+                audio-preview: play and display audio files' information.
+              </li>
+              <li class="bullet">vscode-pdf: view pdf docs within vs code</li>
+              <li class="bullet">Markdown All in One.</li>
+              <li class="bullet">Code Spell Checker.</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section id="hardware">
+        <h2 class="h3-visual">Hardware</h2>
+        <ul>
+          <li class="bullet">
+            Ubuntu Laptop: Lenovo Legion Legion Pro 5, Intel Core i9-14900HX,
+            32GB RAM, 2TB SSD, RTX 4070 Max-Q. This is my current primary
+            laptop.
+          </li>
+          <li class="bullet">
+            Debian Laptop: ASUS ROG Zephyrus S GX531GX, Intel Core i7-8750H,
+            16GB RAM, 512GB SSD, GTX 1070 Max-Q.
+          </li>
+          <li class="bullet">Keyboard: CORSAIR K65 plus wireless 75% RGB.</li>
+          <li class="bullet">Tablet: Ipad Air 6th gen, 256GB.</li>
+          <li class="bullet">
+            Headphone: Sony WH-1000XM3. Soundproof, wireless, a headphone bought
+            back in highschool.
+          </li>
+          <li class="bullet">
+            Earbuds: Airpods 3. I prefer this one over the pro version because
+            it has a longer battery life.
+          </li>
+        </ul>
+      </section>
+    </section>
+  </div>
+</BaseLayout>

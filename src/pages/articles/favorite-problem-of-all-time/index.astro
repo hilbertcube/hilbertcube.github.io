@@ -1,0 +1,338 @@
+---
+/**
+ * src/pages/articles/favorite-problem-of-all-time/index.astro
+ * ============================================================
+ * Article: My Favorite Problems of All Time
+ * Migrated from /articles/favorite-problem-of-all-time/index.html
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Favorite Problems"
+  description="My Favorite Problems of All Time"
+  keywords="data structures, algorithms, c++, cpp, computer science"
+>
+  <Fragment slot="head">
+    <style>
+      .front-img {
+        display: block;
+        width: 100%;
+        border-radius: 10px;
+        height: auto;
+        margin: auto;
+      }
+      .algorithm_box {
+        width: 50%;
+      }
+      @media all and (max-width: 580px) {
+        .algorithm_box {
+          width: 100%;
+        }
+      }
+      #nlogn > .MathJax {
+        font-size: inherit !important;
+      }
+    </style>
+  </Fragment>
+
+  <!-- No TOC for this article — uses default highlights sidebar -->
+
+  <div class="mathjax-definition">
+    \[ \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
+    \newcommand&#123;\rbrac&#125;&#123;\right)&#125;
+    \DeclareMathOperator&#123;\lcm&#125;&#123;lcm&#125;
+    \newcommand&#123;\R&#125;&#123;\mathbb&#123;R&#125;&#125;
+    \newcommand&#123;\Z&#125;&#123;\mathbb&#123;Z&#125;&#125;
+    \newcommand&#123;\N&#125;&#123;\mathbb&#123;N&#125;&#125;
+    \DeclareMathOperator&#123;\modular&#125;&#123;mod&#125; \]
+  </div>
+
+  <div class="content-grid">
+    <header>
+      <div class="topic">Topics: Mathematics</div>
+      <h1 class="title">My Favorite Problems of All Time</h1>
+      <div class="date"></div>
+      <div class="Quote">
+        <div class="Quote-content">
+          &#8220;Real mathematics must be justified as art if it can be
+          justified at all.&#8221;
+        </div>
+        <div class="Author">- G.H. Hardy</div>
+      </div>
+    </header>
+
+    <section>
+      <h2>A Quite Difficult Series Problem</h2>
+      <div class="problem">
+        Let $\lcm(1):=1$. Prove that the series
+        <div class="equation">
+          $$\sum_&#123;k=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;\lcm(1,2,3,...,k)&#125;$$
+        </div>
+        converges to an irrational number.
+      </div>
+
+      <details class="solution">
+        <summary>Proof</summary>
+        <div>
+          To know if the series converges, we use the comparison test. Let
+          $L_k:=\lcm(1,2,...,k)$, for $k=1,2,3,...$. By definition, $L_1:=1$ and
+          note that for $k\geq 2$, $0&lt; L_k\leq k(k-1)$. That is, for each
+          integer $N>0$,
+          <div class="equation">
+            $$\sum_&#123;k=1&#125;^&#123;N&#125;\frac&#123;1&#125;&#123;L_k&#125;\leq
+            1+\sum_&#123;k=2&#125;^&#123;N&#125;\frac&#123;1&#125;&#123;k(k-1)&#125;\leq
+            1+\sum_&#123;k=2&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;k(k-1)&#125;=1+\sum_&#123;k=2&#125;^&#123;\infty&#125;\left(\frac&#123;1&#125;&#123;k-1&#125;-\frac&#123;1&#125;&#123;k&#125;\right)=2.$$
+          </div>
+          This means that $S=\sum_&#123;k=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;L_k&#125;$
+          exists and is a positive real number between 1 and 2. To prove that this
+          number is irrational, we argue by contradiction. Suppose on the contrary
+          that $S$ is rational, and it can be written as
+          <div class="equation">$$S=\frac&#123;a&#125;&#123;b&#125;,$$</div>
+          where $(a,b)\in\Z\times\Z\backslash\&#123;0\&#125;$, and $a, b$ are coprimes.
+          Let $p_1,p_2,p_3,...,p_r,...$ be the increasing sequence of prime numbers
+          greater than $b$. Using the famous Bertrand's Postulate, we know that
+          <div class="equation">
+            $$p_r &lt; p_&#123;r+1&#125;&lt; 2p_r\quad\Rightarrow\quad
+            p_&#123;r+1&#125;-p_r&lt; p_r,\;\forall r=1,2,3,...$$
+          </div>
+          Change this to a non-strict inequality, we have
+          <div class="equation">$$p_&#123;r+1&#125;-p_r\leq p_r-1$$</div>
+          for each $r\in\Z^+$. We will now show that $p_&#123;r+1&#125;-p_r$ is indeed
+          strictly less than $p_r-1$. To do this, we need to recall a useful lemma
+          that we will not prove formally:
+          <div class="lemma">
+            <strong>Lemma 1:</strong> There are infinitely primes of the form $3k+2$.
+          </div>
+          Lemma (1) simply states that for infinitely many primes $p_r$, it holds
+          that $p_r\equiv 2\;(\modular 3)$. Now, note that if $p_&#123;r+1&#125;-p_r=p_r-1$,
+          then $p_&#123;r+1&#125;-2\equiv 1\;(\modular 3)$, which means that $p_&#123;r+1&#125;\equiv
+          0\;(\modular 3)$, and is indeed true for $3$, but not true for infinitely
+          many primes $p_r$. Hence, $p_&#123;r+1&#125;-p_r&lt; p_r-1$ for infinitely
+          many $r$. Now, notice that
+          <div class="equation">
+            $$ \begin&#123;align*&#125;
+            S-S_&#123;p_1-1&#125;&amp;=\left(\sum_&#123;k=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;L_k&#125;-\sum_&#123;k=1&#125;^&#123;p_1-1&#125;\frac&#123;1&#125;&#123;L_k&#125;\right)=\sum_&#123;k=p_1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;L_k&#125;=\frac&#123;1&#125;&#123;L_&#123;p_1&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_1+1&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_1+2&#125;&#125;+\cdots\\
+            &amp;=\left(\frac&#123;1&#125;&#123;L_&#123;p_1&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_1+1&#125;&#125;+\cdots+\frac&#123;1&#125;&#123;L_&#123;p_2-1&#125;&#125;\right)+\left(\frac&#123;1&#125;&#123;L_&#123;p_2&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_2+1&#125;&#125;+\cdots+\frac&#123;1&#125;&#123;L_&#123;p_3-1&#125;&#125;\right)+\cdots\\
+            &amp;=\sum_&#123;r=1&#125;^&#123;\infty&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;\frac&#123;1&#125;&#123;L_k&#125;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;\frac&#123;L_&#123;p_1-1&#125;&#125;&#123;L_k&#125;.
+            \end&#123;align*&#125; $$
+          </div>
+          Notice also that $L_&#123;p_1-1&#125;=\lcm(1,2,...,p_1-1)$ is a multiple
+          of all primes less than $p_1$, and $L_k=\lcm(1,2,...,k)=\lcm(1,...,p_r)$
+          is a multiple of all primes less than $p_r$. Therefore
+          <div class="equation">
+            \begin&#123;align*&#125; 0 &lt; S-S_&#123;p_1-1&#125;&amp;\leq
+            \frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;\frac&#123;2\cdot
+            3\cdot 5\cdots (p_1-1)&#125;&#123;2\cdot 3\cdot 5\cdots
+            (p_1-1)p_1\cdots p_r&#125;\\
+            &amp;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;\frac&#123;1&#125;&#123;p_1p_2...p_r&#125;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;p_1p_2\cdots
+            p_r&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;1\\
+            &amp;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\frac&#123;p_&#123;r+1&#125;-p_r&#125;&#123;p_1p_2\cdots
+            p_r&#125;&lt;
+            \frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\frac&#123;p_r-1&#125;&#123;p_1p_2\cdots
+            p_r&#125;\\
+            &amp;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\left(\frac&#123;1&#125;&#123;p_1\;...\;p_&#123;r-1&#125;&#125;-\frac&#123;1&#125;&#123;p_1...p_r&#125;\right)\\
+            &amp;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\left(1-\frac&#123;1&#125;&#123;p_1&#125;+\frac&#123;1&#125;&#123;p_1&#125;-\frac&#123;1&#125;&#123;p_1p_2&#125;+\frac&#123;1&#125;&#123;p_1p_2&#125;-\frac&#123;1&#125;&#123;p_1p_2p_3&#125;+\cdots\right)\\
+            &amp;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;,
+            \end&#123;align*&#125;
+          </div>
+          which is the same as saying that
+          <div class="equation">
+            $$ \begin&#123;equation*&#125;\label&#123;eqn: lcm_1&#125; 0&lt;
+            SL_&#123;p_1-1&#125;-S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;&lt; 1.
+            \end&#123;equation*&#125; $$
+          </div>
+          Recall that we defined $p_1$ to be a prime number greater than $b$, therefore,
+          $b\in\&#123;1,2,...,p_1-1\&#125;$, and hence $L_&#123;p_1-1&#125;=\lcm(1,2,...,p_1-1)$
+          must be a multiple of $b$; i.e., $L_&#123;p_1-1&#125;=kb$ for some integer
+          $k$. This means that
+          <div class="equation">
+            $$SL_&#123;p_1-1&#125;=\frac&#123;a&#125;&#123;b&#125;\cdot
+            kb=a\cdot k\in\N.$$
+          </div>
+          Let us remind ourselves of the formula of $\lcm$ for a list of numbers.
+          <div class="lemma">
+            <strong>Lemma 2:</strong> For an integer $m\geq k$, we have
+            <div class="equation">
+              $$L_m=\lcm(1,2,...,m)=\lcm(\lcm(1,2,...,k),k+1,...,m).$$
+            </div>
+          </div>
+          Ok, but why? This lemma is left as an exercise for the reader.<br
+          /><br />
+
+          The lemma says that $L_m$ is a number divisible by $\lcm(1,2,...,k)$,
+          and hence $\lcm(1,...,m)=h\lcm(1,...,k)$, for some $h\in\Z$.
+          Therefore, for the term $S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;$,
+          <div class="equation">
+            $$S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;=\sum_&#123;k=1&#125;^&#123;p_1-1&#125;\frac&#123;L_&#123;p_1-1&#125;&#125;&#123;L_k&#125;=\sum_&#123;k=1&#125;^&#123;p_1-1&#125;\frac&#123;\lcm(1,2,...,p_1-1)&#125;&#123;\lcm(1,2,...,k)&#125;\in\N,\;1\leq
+            k\leq p_1-1.$$
+          </div>
+          This means that
+          <div class="equation">
+            $$SL_&#123;p_1-1&#125;-S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;\in\N,$$
+          </div>
+          which is completely nonsensical, since this implies that there is an integer
+          somewhere between $0$ and $1$. Therefore, the original statement must be
+          true and $S$ is irrational.
+        </div>
+      </details>
+    </section>
+
+    <section>
+      <h2>An Interesting Inequality Problem</h2>
+      <p>
+        I encountered this problem back when I was in high school. I remember it
+        took me more than 2 hours to solve.
+      </p>
+      <div class="problem">
+        Consider the set $\mathcal&#123;S&#125;$ of all integers $x$ satisfying
+        <div class="equation">
+          \[ 4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq
+          2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2, \]
+        </div>
+        for some integer $y$. How many integer values of $y$ are there such that the
+        set $\mathcal&#123;S&#125;$ contains no more than 64 elements?
+      </div>
+      <p>You can try solving this, or view the solution right below :)</p>
+      <details class="solution">
+        <summary>Solution</summary>
+        <div>
+          For this inequality to make sense, $x$ and $y$ must be greater than 0.
+          We now restate the problem more generally: if $\mathcal&#123;S&#125;$
+          has $n$ elements, then the inequality must hold for $n$ integers $x$
+          satisfying:
+          <div class="equation">
+            $$4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq
+            2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2.$$
+          </div>
+          Rearranging the inequality, we obtain:
+          <div class="equation">
+            $$ \begin&#123;align*&#125; 4yx^6 + \log_2(yx^6) + \log_2(4)
+            &amp;\geq 2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2 + 2\log_2(x)
+            + 1 \\[0.2em] 2^&#123;\log_2(4yx^6)&#125; + \log_2(4yx^6) &amp;\geq
+            2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x) + 1]^2 \\[0.2em]
+            2^&#123;\log_2(4yx^6)&#125; + \log_2(4yx^6) &amp;\geq
+            2^&#123;[\log_2(2x)]^2&#125; + [\log_2(2x)]^2 \end&#123;align*&#125;
+            $$
+          </div>
+          Let $u(x) = \log_2(4yx^6)$ and $v(x) = [\log_2(2x)]^2$. Then, based on the
+          above, we have: $$ 2^&#123;u(x)&#125; + u(x) \geq 2^&#123;v(x)&#125; + v(x)
+          $$ To proceed, let's introduce a useful property of monotonic functions:
+          <div class="lemma">
+            <strong>Lemma 1:</strong> Let $f: D \to \mathbb&#123;R&#125;$ be a function
+            defined on a subset $D \subseteq \mathbb&#123;R&#125;$. Let $u(x)$ and
+            $v(x)$ be functions such that for all $x$, $u(x), v(x) \in D$ and $u(x)
+            > v(x)$. Then:
+            <ul>
+              <li class="bullet">
+                If $f$ is strictly increasing on $D$, then $f(u(x)) > f(v(x))$.
+              </li>
+              <li class="bullet">
+                If $f$ is strictly decreasing on $D$, then $f(u(x)) &lt;
+                f(v(x))$.
+              </li>
+            </ul>
+            <strong>Note:</strong> If $f$ is non-strictly monotonic (i.e., non-decreasing
+            or non-increasing), then the inequalities become non-strict:
+            <ul>
+              <li class="bullet">
+                If $f$ is non-decreasing on $D$, then $f(u(x)) \geq f(v(x))$.
+              </li>
+              <li class="bullet">
+                If $f$ is non-increasing on $D$, then $f(u(x)) \leq f(v(x))$.
+              </li>
+            </ul>
+            <em
+              >See the definition of monotonic functions
+              <a
+                href="https://en.wikipedia.org/wiki/Monotonic_function#:~:text=In%20calculus%2C%20a%20function,order%20(see%20Figure%202)."
+                class="url">here</a
+              >.</em
+            >
+          </div>
+          Returning to the inequality:
+          <div class="equation">
+            $$2^&#123;\log_2(4yx^6)&#125; + \log_2(4yx^6) \geq
+            2^&#123;[\log_2(2x)]^2&#125; + [\log_2(2x)]^2,$$
+          </div>
+          Let $f(x) = 2^x + x$, a strictly increasing function. Then, by Lemma 1:
+          <div class="equation">$$\log_2(4yx^6) \geq [\log_2(2x)]^2$$</div>
+          Solving for $y$:
+          <div class="equation">
+            $$ \begin&#123;align*&#125; 4yx^6 &amp;\geq
+            2^&#123;[\log_2(2x)]^2&#125; = 2^&#123;\log_2(2x) \cdot
+            \log_2(2x)&#125; = (2x)^&#123;\log_2(2x)&#125; \\ &amp;= 2x \cdot
+            x^&#123;\log_2(2x)&#125; = 2x^&#123;\log_2(x) + 2&#125;
+            \end&#123;align*&#125; $$
+          </div>
+          Therefore:
+          <div class="equation">
+            $$y \geq \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) - 4&#125;
+            > 0$$
+          </div>
+          Define $f(x) = \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) - 4&#125;$.
+          Our goal is to find the minimum of this function. Proceeding via standard
+          calculus:
+          <div class="equation">
+            $$ \begin&#123;align*&#125; f'(x) &amp;=
+            \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) -
+            4&#125;\left[\frac&#123;\log_2(x) - 4&#125;&#123;x&#125; +
+            \frac&#123;\ln(x)&#125;&#123;x\ln(2)&#125;\right] \\ &amp;=
+            \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) - 4&#125; \cdot
+            \frac&#123;1&#125;&#123;x&#125; \left[ \log_2(x) +
+            \frac&#123;\ln(x)&#125;&#123;\ln(2)&#125; - 4 \right] \\ &amp;=
+            \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) - 5&#125; (2\log_2
+            x - 4) \end&#123;align*&#125; $$
+          </div>
+          Setting $f'(x) = 0$, we have either $\frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x)
+          - 5&#125; = 0$ or $2\log_2 x - 4 = 0$. The first case is impossible since
+          $x > 0$. Thus: $$ 2\log_2 x - 4 = 0 \Rightarrow x = 4 $$ It's easy to verify
+          that $f'(x)$ changes sign from negative to positive at $x = 4$, so $x =
+          4$ is a minimum. The core result is that:
+          <div class="equation">
+            $$4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq
+            2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2$$
+          </div>
+          is true if and only if $y \geq f(x) > 0$. For $\mathcal&#123;S&#125;$ to
+          have $n$ elements, it must be true that:
+          <div class="equation">
+            $$0 &lt; y \leq \left\lfloor f(n + 1) \right\rfloor$$
+          </div>
+          Plugging in $n = 64$ gives $0 &lt; y &lt; 2319$. Therefore, there are 2319
+          values of $y$ satisfying the inequality.
+        </div>
+      </details>
+    </section>
+
+    <section>
+      <h2>More Articles</h2>
+      <div id="rec-article-container"></div>
+    </section>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src="/assets/js/blogpage-setting.js"></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
+    ></script>
+    <script
+      is:inline
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </Fragment>
+</BaseLayout>

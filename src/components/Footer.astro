@@ -1,0 +1,60 @@
+---
+/**
+ * Footer.astro
+ * ============
+ * Replaces the runtime fetch of /assets/components/footer.html
+ * The currentYear is now computed at build time.
+ */
+const currentYear = new Date().getFullYear();
+---
+
+<div class="footer-container" id="contact">
+  <div class="footer-block">
+    <div
+      class="footer-items"
+      style="border-top: 1px solid red; padding-top: 12px"
+    >
+      Copyright &copy; 2023-{currentYear}. All rights reserved.
+    </div>
+    <div class="footer-items">
+      <a href="/privacy-policy" class="hyperlink">Privacy Policy</a>
+    </div>
+    <div class="footer-items">
+      Text is available under &nbsp;<a href="/LICENSE" class="hyperlink"
+        >CC-BY-4.0 license</a
+      >
+    </div>
+    <div class="footer-items">
+      <a href="https://ddonle.com/" class="hyperlink">Don D. Le</a>
+    </div>
+  </div>
+  <div class="social-media-footer">
+    <a href="https://ddonle.com/" target="_blank" aria-label="Personal website">
+      <i
+        class="fa-solid fa-globe"
+        style="font-size: 23px; color: oklch(60.231% 0.19661 140.668);"></i>
+    </a>
+    <a href="mailto:ddonle04@ucla.edu" target="_blank" aria-label="Email">
+      <i
+        class="fa-solid fa-envelope"
+        style="font-size: 23px; color: oklch(86.9% 0.022 252.894);"></i>
+    </a>
+    <a
+      href="https://github.com/hilbertcube"
+      target="_blank"
+      aria-label="GitHub"
+    >
+      <i class="fab fa-github" style="font-size: 25px;"></i>
+    </a>
+    <a
+      href="https://www.linkedin.com/in/don-d-le/"
+      target="_blank"
+      aria-label="LinkedIn"
+    >
+      <i class="fab fa-linkedin" style="font-size: 25px; color: #0a66c2;"></i>
+    </a>
+    <a href="https://t.me/doodle_04" target="_blank" aria-label="Telegram">
+      <i class="fab fa-telegram" style="font-size: 25px; color: #24A1DE;"></i>
+    </a>
+  </div>
+</div>

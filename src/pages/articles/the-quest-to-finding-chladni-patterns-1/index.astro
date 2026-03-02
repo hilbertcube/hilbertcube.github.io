@@ -1,0 +1,1106 @@
+---
+/**
+ * src/pages/articles/the-quest-to-finding-chladni-patterns-1/index.astro
+ * ======================================================================
+ * Article: The Quest to Finding Chladni Patterns, Part 1
+ * Migrated from /articles/the-quest-to-finding-chladni-patterns-1/index.html
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+---
+
+<BaseLayout
+  title="Chladni Patterns, Part 1"
+  description="Describing Chladni patterns using the regular and biharmonic wave equations"
+  keywords="Wave equation, python, eigenvalue, boundary conditions"
+>
+  <Fragment slot="head">
+    <style>
+      .front-img {
+        display: block;
+        width: 80%;
+        border-radius: 10px;
+        height: auto;
+        margin: auto;
+      }
+      #circular-plate {
+        width: 80%;
+      }
+      #chladni-gif {
+        width: 85%;
+      }
+      #boundary-table {
+        width: 70%;
+      }
+      @media all and (max-width: 580px) {
+        #circular-plate {
+          width: 100%;
+          margin: 0;
+        }
+        #chladni-gif {
+          width: 100%;
+        }
+        .front-img {
+          width: 100%;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <Fragment slot="sidebar">
+    <div class="toc">
+      <header class="major">
+        <h2>Table of Contents</h2>
+      </header>
+      <ul>
+        <li>
+          <a href="#Introduction">Introduction</a>
+          <ul>
+            <li>
+              <a href="#Background">Background and Mathematical Formulation</a>
+            </li>
+            <li>
+              <a href="#Historical-notes">Read More*: Historical Notes</a>
+            </li>
+            <li><a href="#Chladni-law">Chladni's Law</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#The-Wave-Equation-Model">The wave equation model</a>
+          <ul>
+            <li><a href="#general-model">The free boundary condition</a></li>
+            <li><a href="#wave-square-plate">The Square Plate</a></li>
+            <li><a href="#wave-circular-plate">The Circular Plate</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#algorithm-design">Designing the Plotting Algorithm</a>
+          <ul>
+            <li>
+              <a href="#square-algorithm">Algorithm for the Square Plate</a>
+            </li>
+            <li>
+              <a href="#circular-algorithm">Algorithm for the Circular Plate</a>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#Appendix">Appendix</a></li>
+        <li><a href="#References">References</a></li>
+      </ul>
+    </div>
+    <div class="highlights-and-attribute">
+      <HighlightsAndAttribute />
+    </div>
+  </Fragment>
+
+  <div class="mathjax-definition">
+    \[ \newcommand&#123;\R&#125;&#123;\mathbb&#123;R&#125;&#125;
+    \newcommand\pd[2]&#123;\displaystyle\frac&#123;\partial
+    #1&#125;&#123;\partial #2&#125;&#125;
+    \newcommand\fourthpd[2]&#123;\displaystyle\frac&#123;\partial^&#123;4&#125;
+    #1&#125;&#123;\partial #2^&#123;4&#125;&#125;&#125;
+    \newcommand\secondpd[2]&#123;\displaystyle\frac&#123;\partial^&#123;2&#125;
+    #1&#125;&#123;\partial #2^&#123;2&#125;&#125;&#125;
+    \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
+    \newcommand&#123;\rbrac&#125;&#123;\right)&#125; \]
+  </div>
+
+  <div class="content-grid">
+    <header>
+      <div class="topic">
+        Topics: Mathematics, Physics, Standing Waves, Python
+      </div>
+      <h1 class="title">
+        The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms
+      </h1>
+      <div class="date"></div>
+      <figure style="margin: 0;">
+        <img
+          class="front-img"
+          src="/articles/the-quest-to-finding-chladni-patterns-1/chladni-patterns-sbs.webp"
+          alt="blog-banner"
+        />
+      </figure>
+      <div class="Quote">
+        <div class="Quote-content">
+          &#8220;If you want to find the secrets of the universe, think in terms
+          of energy, frequency and vibration.&#8221;
+        </div>
+        <div class="Author">- Nikola Tesla</div>
+      </div>
+    </header>
+
+    <section id="Introduction">
+      <h2>Introduction</h2>
+      <section id="Background">
+        <h3>Background and Mathematical Formulation</h3>
+        <p>
+          Take a solid metal plate (or any other rigid material) and sprinkle
+          some particles on it. It can either be sand, salt, or even baking
+          soda. Then, generate some vibration on the plate by using either a
+          violin bow to excite the plate, or place it on a wave generator and
+          set it to specific frequencies. What you will observe are the
+          beautiful patterns generated as shown in the figure above. This
+          experiment sounds relatively simple, but as simple as it sounds, this
+          experiment reveals some extremely complex and intensive underlying
+          mathematical principles. In fact, the problem of understanding these
+          patterns challenged some of the brightest mathematical minds of the
+          time, and the research to understand these patterns spans for hundreds
+          of years, and still continues till the modern day.
+        </p>
+
+        <div class="two-columns-block">
+          <div>
+            <p>
+              How does this work? Well, it turns out these are examples of
+              standing waves in the two-dimensional space. In one dimension, a
+              &#8220;node&#8221; in a <a
+                class="url"
+                href="https://en.wikipedia.org/wiki/Standing_wave"
+                >standing wave</a
+              > is a point along the wave where the amplitude is at minimum. Similarly,
+              in two dimensions, there are &#8220;nodal lines,&#8221; which are static
+              points on the plate where the particles settle.
+            </p>
+            <p>
+              In the spring semester of 2024, my physics project required
+              selecting an experiment to demonstrate a scientific law. Chladni's
+              law was a compelling choice, and one good idea was to prove the
+              constant wave speed across a plate using the two-dimensional wave
+              equation model
+            </p>
+            <div class="equation">
+              \begin&#123;equation&#125; u_&#123;tt&#125; = c^2\nabla^2u +
+              Q(\mathbf&#123;x&#125;, t),\quad\quad
+              \mathbf&#123;x&#125;\in\Omega, \end&#123;equation&#125;
+            </div>
+            <p>
+              where $c$ here denotes the wave speed of the plate,
+              $u_&#123;tt&#125;$ is the plate's displacement, and $Q$ is the
+              forcing function (the wave generator).
+            </p>
+          </div>
+          <div>
+            <img
+              id="chladni-gif"
+              class="image"
+              src="/articles/the-quest-to-finding-chladni-patterns-1/animation.webp"
+              loading="lazy"
+              alt="metal plate animation"
+            />
+            <figcaption class="caption">
+              Motion of a vibrating metal plate (greatly exagerated). <a
+                href="#Appendix"
+                class="in-page-link">Source code</a>
+            </figcaption>
+          </div>
+        </div>
+
+        <p>
+          By assuming that the plate is supported by tension, one can derive the
+          two-dimensional wave equation in the Cartersian coordinate to be
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; \secondpd&#123;u&#125;&#123;t&#125; =
+          c^2\left(\secondpd&#123;u&#125;&#123;x&#125; +
+          \secondpd&#123;u&#125;&#123;y&#125;\right) +Q(x, y, t),\quad\quad
+          \mathbf&#123;x&#125;\in\Omega \end&#123;equation&#125;
+        </div>
+        <p>
+          The circular plate is similar, with a slightly different Laplacian
+          since we need to convert the wave equation to the polar coordinate
+          system:
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; \nabla^2 :=
+          \secondpd&#123;&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r&#125;\pd&#123;&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r^2&#125;\secondpd&#123;&#125;&#123;\theta&#125;.
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          In the next <a href="#The-Wave-Equation-Model" class="in-page-link"
+            >grand section</a
+          >, we will discuss the simulation process of this model on the square
+          and circular domain, and to discuss the flaws of this model (lots of
+          flaws, but no spoiler yet). Basically, the emphasized, initial goal of
+          this project is to simulate Chladni patterns, prove that the wave
+          speed is constant, and validate Chladni's law (see the section <a
+            class="in-page-link"
+            href="#Chladni-law">Chladni's Law</a
+          > below). For a much more detailed explanation, please refer to my <a
+            class="url"
+            href="https://www.overleaf.com/read/tgchjdcmwwwp#98e984"
+            >project report</a
+          > and checkout the source code on <a
+            href="https://github.com/hilbertcube/Chladni-Patterns-Generator"
+            class="url">github</a
+          >
+        </p>
+      </section>
+
+      <section id="Historical-notes">
+        <h3>Read more: Historical Notes</h3>
+        <div class="two-columns-block">
+          <div>
+            <p>
+              The study of wave and vibration theory dates its way back to the
+              time of Pythagoras in the fifth century BC, where the Ionian
+              School of Natural Philosophy first introduced the scientific
+              methods to study the real world and natural phenomena. But just as
+              with many other scientific discoveries before Newton, we lacked
+              the tools to rigorously understand the underlying theory behind
+              them. Fast forward to the Renaissance period. Galileo also noticed
+              that pieces of bristle on the sounding board only move in certain
+              areas. Leonardo da Vinci also observed the strange patterns
+              generated by particles in response to vibration.
+            </p>
+            <p>
+              The first rigorous investigation of these patterns so called
+              &#8220;Chladni patterns&#8221; is of course, attributed to German
+              physicist and musician Ernst Chladni (1756 - 1827) (not Euler or
+              Gauss this time). The idea of sprinkling sand on a plate and bow
+              it is not entirely new, but Chladni took our understanding to a
+              new level by coming up with a formula that describe the pattern,
+              and hypothesized a formula that predicts the number of rings on
+              the circular plate. This formula is later proven true by Kirchoff
+              and Rayleigh.
+            </p>
+            <section id="Chladni-law">
+              <h3>Chladni's Law</h3>
+              <p>
+                Part of the formula states that the vibrating frequency is
+                proportional to four times the number of rings on the plate
+                squared, that is, $f \sim 4n^2$, where $n$ is the number of
+                rings (see in Fig. 4). The full formula that he derived is
+                \begin&#123;equation&#125; f \sim (m+2n)^2,
+                \end&#123;equation&#125; where $m$ here is the number of
+                diameter lines. This is called Chladni's law. We don't see any
+                $m$'s in the figure below, there is a reason for this, and I'll
+                get to that part later.
+              </p>
+            </section>
+          </div>
+          <div>
+            <figure style="width: 100%;">
+              <img
+                style="width: 65%;"
+                class="image"
+                src="/articles/the-quest-to-finding-chladni-patterns-1/Bowing_chladni_plate.webp"
+                alt="bowing a plate"
+              />
+              <figcaption class="caption">
+                Generating Chladni patterns using a bow.
+              </figcaption>
+            </figure>
+            <figure style="width: 100%;">
+              <img
+                style="width: 65%;"
+                class="image"
+                src="/articles/the-quest-to-finding-chladni-patterns-1/ChladniG.webp"
+                alt="real life example"
+              />
+              <figcaption class="caption">
+                Generating Chladni patterns using a wave generator.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <figure>
+          <img
+            class="image"
+            id="circular-plate"
+            src="/articles/the-quest-to-finding-chladni-patterns-1/Similar_Circle.webp"
+            alt="circular plates"
+          />
+          <figcaption class="caption">Patterns on Circular Plates.</figcaption>
+        </figure>
+      </section>
+    </section>
+
+    <section id="The-Wave-Equation-Model">
+      <h2>The Wave Equation Model</h2>
+      <section id="general-model">
+        <h3>The general model and the boundary condition</h3>
+        <p>
+          Depends on whether you clamp your edge or not, clamp the edge
+          partially, or simply support the plate by placing some other objects
+          below the plate; the boundary condition may be different. For this
+          project, we will emphasize the free boundary condition. That is, only
+          the wave generator supports the plate.
+        </p>
+
+        <table
+          style="margin-left: auto; margin-right: auto; text-align: center;"
+          id="boundary-table"
+        >
+          <tr
+            style="border-top: 2px solid var(--grid-text-color); text-align: center; border-bottom: 1px solid var(--grid-text-color);"
+          >
+            <th>Type of Boundary</th>
+            <th style="text-align: center;">Boundary Condition</th>
+          </tr>
+          <tr>
+            <td>Clamped (fixed) edge </td>
+            <td>$u(\pm a, y, t) = u(x, \pm a, t) = 0$</td>
+          </tr>
+          <tr>
+            <td>Moving edge</td>
+            <td>$u(a, y, t_0) = f(y, t)$</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--grid-text-color);">
+            <td>Free edge</td>
+            <td>
+              $\pd&#123;u&#125;&#123;x&#125;(\pm a, y, t) =
+              \pd&#123;u&#125;&#123;y&#125;(x, \pm a, t) = 0$</td
+            >
+          </tr>
+        </table>
+
+        <p>
+          The free boundary condition means that there are no forces acting on
+          the edges of the plate; that is, expressed mathematically,
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; \pd&#123;u&#125;&#123;x&#125;(\pm a, y, t)
+          = \pd&#123;u&#125;&#123;y&#125;(x, \pm a, t) = 0
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          which gave us four boundary conditions. The uniqueness of the solution
+          requires our equation to have two more initial conditions. Similar to
+          ordinary differential equations, these conditions are the initial
+          displacement and velocity of the plate at $t=0$. That is,
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; u(x,y,0) = f(x,y)
+          \quad\text&#123;and&#125;\quad u_t(x,y,0) = g(x,y)
+          \end&#123;equation&#125;
+        </div>
+      </section>
+
+      <section id="wave-square-plate">
+        <h3>The Square Plate</h3>
+        <p>
+          Consider the wave equation on a rectangle $\Omega =
+          \&#123;(x,y)\in\R^2\;|\; -a\leq x,y\leq a\&#125;$,
+          <div class="equation">
+            \begin&#123;equation&#125; u_&#123;tt&#125; = c^2\nabla^2u + Q,\quad
+            \mathbf&#123;x&#125;\in\Omega \end&#123;equation&#125;
+          </div>
+          with boundary conditions
+          <div class="equation">
+            \begin&#123;equation&#125; u_x(\pm a, y, t) = u_y(x, \pm a, t) = 0
+            \end&#123;equation&#125;
+          </div>
+          and initial conditions
+          <div class="equation">
+            \begin&#123;equation&#125; u(x,y,0) = f(x,y), \quad\quad u_t(x,y,0)
+            = g(x,y). \end&#123;equation&#125;
+          </div>
+        </p>
+
+        <p>
+          Here, $a$ is half the length of the plate, and also note that we
+          denote the length of the plate to be $L$. A standard way to solve a
+          forced differential equation is to solve its homogenous case first,
+          i.e. when $Q=0$.There are many ways to solve this initial-boundary
+          value problem, and one common, and easy-to-understand technique is via
+          separation of variables. If we assume that $u$ is separable and let
+          $u(x,y,t) = X(x)Y(y)T(t)$, the equation becomes
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; XYT'' = c^2(X''YT + XY''T)
+          \end&#123;equation&#125;
+        </div>
+        <p>Divide both sides by $XYT$, we obtain</p>
+        <div class="equation">
+          \begin&#123;equation&#125;
+          \frac&#123;T''&#125;&#123;c^2T&#125;=\frac&#123;X''&#125;&#123;X&#125;+\frac&#123;Y''&#125;&#123;Y&#125;=-\lambda
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          Notice that
+          $\frac&#123;X''&#125;&#123;X&#125;+\frac&#123;Y''&#125;&#123;Y&#125;=-\lambda$
+          is constant if and only if $X''/X=-\mu$ and $Y''/Y = -\nu$, where
+          $\mu$ and $\nu$ are themselves constants and $\lambda = \mu + \nu$.
+          The two constants above yield two eigenvalue problems with Neumann
+          boundary conditions:
+        </p>
+        <div class="equation">
+          \begin&#123;align&#125; X''(x)+\mu X(x)&amp;=0, \quad X'(-a)=X'(a)=0
+          \label&#123;eq:X1&#125;\\ Y''(y)+\nu Y(y)&amp;=0, \quad Y'(-a)=Y'(a)=0
+          \label&#123;eq:Y1&#125;, \end&#123;align&#125;
+        </div>
+        <p>and the time equation yields the third eigenvalue problem:</p>
+        <div class="equation">
+          \begin&#123;equation&#125; T''(t) + c\lambda^2T(t) = 0
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          The detail solution of these eigenvalue problems is beyond the scope
+          of this article. For the detail solution, again, please refer to my <a
+            class="url"
+            href="https://www.overleaf.com/read/tgchjdcmwwwp#98e984"
+            >project report</a
+          >. The general idea is we need to solve the eigenvalue problems
+          (\ref&#123;eq:X1&#125;) and (\ref&#123;eq:Y1&#125;) first, and from
+          there we solve the third eigenvalue problem, since $\lambda = \mu +
+          \nu$. After carrying out all the hard work, the eigenvalues for
+          equations (\ref&#123;eq:X1&#125;) and (\ref&#123;eq:Y1&#125;) are
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; \mu =
+          \left(\frac&#123;n\pi&#125;&#123;2a&#125;\right)^2 =
+          \left(\frac&#123;n\pi&#125;&#123;L&#125;\right)^2, \quad \nu =
+          \left(\frac&#123;m\pi&#125;&#123;2a&#125;\right)^2 =
+          \left(\frac&#123;m\pi&#125;&#123;L&#125;\right)^2
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          and the solution to the homogeneous equation is the double Fourier
+          series
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; u(x,y,t) =
+          \frac&#123;1&#125;&#123;4&#125;A_&#123;00&#125; +
+          \sum_&#123;n=1&#125;^&#123;\infty&#125;\sum_&#123;m=1&#125;^&#123;\infty&#125;X_n(x)Y_n(y)T_&#123;nm&#125;(t)
+          \end&#123;equation&#125;
+        </div>
+        <p>
+          where,
+          <div class="equation">
+            \begin&#123;align&#125; X_n(x) &amp;= a_n\cos\left(\frac&#123;n\pi
+            x&#125;&#123;L&#125;\right) +
+            \overline&#123;a_n&#125;\sin\left(\frac&#123;n\pi
+            x&#125;&#123;L&#125;\right)\\[0.5em] Y_m(y) &amp;=
+            a_m\cos\left(\frac&#123;m\pi y&#125;&#123;L&#125;\right) +
+            \overline&#123;a_m&#125;\sin\left(\frac&#123;m\pi
+            y&#125;&#123;L&#125;\right)\\[0.5em] T_&#123;nm&#125;(t) &amp;=
+            A_&#123;nm&#125;\cos(\omega t) + B_&#123;nm&#125;\sin(\omega
+            t)\\[0.5em] \omega &amp;=
+            \frac&#123;\pi&#125;&#123;L&#125;c\sqrt&#123;n^2+m^2&#125;.
+            \end&#123;align&#125;
+          </div>
+        </p>
+        <p>
+          The coefficients $a_n$ and $\overline&#123;a_n&#125;$ are defined as
+          $a_n = \frac&#123;1 +
+          (-1)^n&#125;&#123;2&#125;,\overline&#123;a_n&#125; = \frac&#123;1 -
+          (-1)^n&#125;&#123;2&#125;$, and,
+        </p>
+        <div class="equation">
+          \begin&#123;alignat&#125;&#123;2&#125; A_&#123;nm&#125; &amp;=
+          \frac&#123;4&#125;&#123;L^2&#125;\int_&#123;-L/2&#125;^&#123;L/2&#125;\int_&#123;-L/2&#125;^&#123;L/2&#125;
+          f(x, y)X_n(x)Y_m(y)\;dxdy,\quad &amp;&amp; n, m= 0, 1, 2,\ldots\\
+          B_&#123;nm&#125; &amp;= \frac&#123;4&#125;&#123;L^2&#125;
+          \int_&#123;-L/2&#125;^&#123;L/2&#125;\int_&#123;-L/2&#125;^&#123;L/2&#125;
+          \frac&#123;g(x, y)&#125;&#123;\omega&#125;X_n(x)Y_m(y)\;dxdy,\quad
+          &amp;&amp; n, m= 1, 2, 3\ldots \end&#123;alignat&#125;
+        </div>
+        <p>
+          The forcing term $Q$ doesn't change the overall shape of the patterns,
+          but it does change the displacement of the plate overtime, hence the
+          time function $T_&#123;nm&#125;(t)$ becomes
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125; W_&#123;nm&#125;(t) =
+          A_&#123;nm&#125;\cos(\omega t) + B_&#123;nm&#125;\sin(\omega t) +
+          \int_&#123;0&#125;^&#123;t&#125;q_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega
+          t-\omega\tau)&#125;&#123;\omega&#125;d\tau \end&#123;equation&#125;
+        </div>
+        <p>
+          Here, $q_&#123;nm&#125;$ is a function defined on the disk of radius
+          $r$ — the radius of the tip of the wave generator,
+        </p>
+        <div class="equation">
+          \begin&#123;equation&#125;
+          q_&#123;nm&#125;(\tau)=\frac&#123;4\alpha&#125;&#123;L^2&#125;
+          \cos(\omega_0 \tau) \iint_&#123;U(r)&#125;X_n(x)Y_m(y)\;dx dy,\quad
+          U(r)=\&#123;(x,y)\in\R^2\;|\; x^2+y^2\leq r^2\&#125;
+          \end&#123;equation&#125;
+        </div>
+      </section>
+
+      <section id="wave-circular-plate">
+        <h3>The Circular Plate</h3>
+        <p>
+          Consider the polar wave equation on a disk $\Omega =
+          \&#123;(r,\theta)\in\R^2\;|\; 0 \leq r\leq a, 0 \leq \theta\leq
+          2\pi\&#125;,$
+          <div class="equation">
+            \begin&#123;equation&#125;
+            \secondpd&#123;u&#125;&#123;t&#125;=c^2\left(\secondpd&#123;u&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r&#125;\pd&#123;u&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r^2&#125;\secondpd&#123;u&#125;&#123;\theta&#125;\right)
+            + Q(r, \theta, t). \end&#123;equation&#125;
+          </div>
+          Written in compact form with full boundary conditions:
+          <div class="equation">
+            \begin&#123;equation&#125; \begin&#123;cases&#125; u_&#123;tt&#125;
+            = c^2\lbrac u_&#123;rr&#125; + \dfrac&#123;1&#125;&#123;r&#125;u_r +
+            \dfrac&#123;1&#125;&#123;r^2&#125;u_&#123;\theta\theta&#125;\rbrac +
+            Q, &amp; (r,\theta)\in\Omega\\ u_r(a,\theta, t) = 0\\[0.5em]
+            u(r,\theta, 0) = f(r, \theta)\\[0.5em] u_t(r, \theta, 0) = g(r,
+            \theta) \end&#123;cases&#125; \end&#123;equation&#125;
+          </div>
+        </p>
+
+        <p>
+          Let $u(r, \theta, t) = R(r)\Theta(\theta)T(t)$. Skipping all the <a
+            class="url"
+            href="https://www.overleaf.com/read/tgchjdcmwwwp#98e984"
+            >hard work</a
+          >., we may arrive at the final solution to be
+          <div class="equation">
+            \begin&#123;equation&#125; u(r,\theta, t) =
+            \sum_&#123;n=0&#125;^&#123;\infty&#125;\sum_&#123;m=0&#125;^&#123;\infty&#125;J_n\lbrac
+            kr\rbrac[\Psi_&#123;nm&#125;(\theta)y_1(t) +
+            \Phi_&#123;nm&#125;(\theta)y_2(t)], \end&#123;equation&#125;
+          </div>
+          where
+          <div class="equation">
+            \begin&#123;align&#125; \Psi_&#123;nm&#125;(\theta) &amp; =
+            a_&#123;nm&#125;\cos(n\theta) + b_&#123;nm&#125;\sin(n\theta)\\
+            \Phi_&#123;nm&#125;(\theta) &amp;= c_&#123;nm&#125;\cos(n\theta) +
+            d_&#123;nm&#125;\sin(n\theta)\\ y_1(t) &amp;= \alpha\cos(\omega t) +
+            \beta\sin(\omega t) +
+            \int_&#123;0&#125;^&#123;t&#125;p_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega(t-\tau))&#125;&#123;\omega&#125;d\tau\\
+            y_2(t) &amp;= \gamma\cos(\omega t) + \sigma\sin(\omega t) +
+            \int_&#123;0&#125;^&#123;t&#125;q_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega(t-\tau))&#125;&#123;\omega&#125;d\tau\\
+            \omega &amp;= \frac&#123;cz_&#123;nm&#125;&#125;&#123;a&#125; = ck.
+            \end&#123;align&#125;
+          </div>
+          Here, $z_&#123;nm&#125;$ are the zeros of the m-th derivative of the n-th
+          order Bessel function $J_n(x)$. $\alpha, \beta, \gamma, \sigma$ are arbitrary
+          constants that satisfies $\alpha + \gamma = 1,$ $\beta + \sigma = 1$, where
+          $\alpha^2 + \gamma^2 \neq 0$, $\beta^2 + \sigma^2 \neq 0$, and,
+          <div class="equation">
+            \begin&#123;align&#125; a_&#123;nm&#125; &amp;= \frac&#123;\langle
+            J_0\cos(n\theta), f \rangle_w&#125;&#123;\langle J_0, J_0
+            \rangle_w&#125; =
+            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
+            kr\rbrac\cos(n\theta)
+            f(r,\theta)r\;drd\theta&#125;&#123;2\pi\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
+            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots\\ b_&#123;nm&#125;
+            &amp;= \frac&#123;\langle J_0\sin(n\theta), f
+            \rangle_w&#125;&#123;\langle J_0, J_0 \rangle_w&#125; =
+            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
+            kr\rbrac\sin(n\theta)
+            f(r,\theta)r\;drd\theta&#125;&#123;2\pi\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
+            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots\\ c_&#123;nm&#125;
+            &amp;= \frac&#123;\langle J_0\cos(n\theta), g
+            \rangle_w&#125;&#123;\omega\langle J_0, J_0 \rangle_w&#125; =
+            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
+            kr\rbrac\cos(n\theta)
+            g(r,\theta)r\;drd\theta&#125;&#123;2\pi\omega\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
+            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots\\ d_&#123;nm&#125;
+            &amp;= \frac&#123;\langle J_0\sin(n\theta), g
+            \rangle_w&#125;&#123;\omega\langle J_0, J_0 \rangle_w&#125; =
+            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
+            kr\rbrac\sin(n\theta)
+            g(r,\theta)r\;drd\theta&#125;&#123;2\pi\omega\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
+            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots \end&#123;align&#125;
+          </div>
+        </p>
+      </section>
+    </section>
+
+    <section id="algorithm-design">
+      <h2>Designing the Plotting Algorithms</h2>
+
+      <section id="square-algorithm">
+        <h3>Algorithm for the Square Plate</h3>
+
+        <p>
+          The reason for all those derivations above is to plot our theoretical
+          patterns. Recall that our final solution is derived as
+          <div class="equation">
+            \begin&#123;equation&#125; u(x, y, t) =
+            \frac&#123;1&#125;&#123;4&#125;A_&#123;00&#125; +
+            \sum_&#123;n=1&#125;^&#123;\infty&#125;\sum_&#123;m=1&#125;^&#123;\infty&#125;
+            X_n(x)Y_m(y)W_&#123;nm&#125;(t), \end&#123;equation&#125;
+          </div>
+          where
+          <div class="equation">
+            \begin&#123;align&#125; X_n(x) &amp;= a_n\cos\left(\frac&#123;n\pi
+            x&#125;&#123;L&#125;\right) +
+            \overline&#123;a_n&#125;\sin\left(\frac&#123;n\pi
+            x&#125;&#123;L&#125;\right)\\ Y_m(y) &amp;=
+            a_m\cos\left(\frac&#123;m\pi y&#125;&#123;L&#125;\right) +
+            \overline&#123;a_m&#125;\sin\left(\frac&#123;m\pi
+            y&#125;&#123;L&#125;\right)\\ W_&#123;nm&#125;(t) &amp;=
+            A_&#123;nm&#125;\cos(\omega t) + B_&#123;nm&#125;\sin(\omega t) +
+            \int_&#123;0&#125;^&#123;t&#125;q_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega
+            t-\omega\tau)&#125;&#123;\omega&#125;d\tau\\ \omega &amp;=
+            \frac&#123;\pi&#125;&#123;L&#125;c\sqrt&#123;n^2+m^2&#125;
+            \end&#123;align&#125;
+          </div>
+        </p>
+
+        <p>
+          Before we design our algorithm, there are a few things to note:
+          <ul style="line-height: 1.6;">
+            <li style="margin: var(--in-page-li-spacing) 0;">
+              In realistic experimentation, there is no way to tell what the
+              initial conditions $f(x,y)$ and $g(x,y)$ are. However, we can
+              assume that the initial velocity, $u(\mathbf&#123;x&#125;,0) =
+              g(x,y)$ is zero. Moreover, the forcing term is non-zero only when
+              $n=m$, and it approaches zero as $\omega\to\infty$. This means
+              that it does not matter that much for the overall shape of the
+              plot, but it only affects the insignificant microscopic height of
+              the plate. The solution is now simplified to
+              <div class="equation">
+                \begin&#123;equation&#125; u(\mathbf&#123;x&#125;, t) =
+                \sum_&#123;n\geq 0&#125;\sum_&#123;m\geq
+                0&#125;X_n(x)Y_m(y)A_&#123;nm&#125;\cos(\omega t).
+                \end&#123;equation&#125;
+              </div>
+            </li>
+            <li style="margin: var(--in-page-li-spacing) 0;">
+              For the initial condition $f(x,y)$, we can pick a function
+              $f(x,y)$ such that $|A_&#123;ij&#125;|\neq |A_&#123;nm&#125;|$,
+              for any $(i, j)\neq (n,m)$. The reason why we can do this is that
+              the realistic vertical displacement of the plate is extremely
+              small, so the choice of $f$ doesn't matter that much. We simply
+              choose the function $f$ that satisfies $|A_&#123;ij&#125;|\neq
+              |A_&#123;nm&#125;|$ for the clearest patterns.
+            </li>
+            <li style="margin: var(--in-page-li-spacing) 0;">
+              What we are really interested in is the shape of the nodal lines.
+              Therefore, for the sake of simplicity, we can choose certain time
+              points such that $\cos(\omega t) = 1$, that is, $t = 0,\;
+              2\pi/\omega,\; 4\pi/\omega,\ldots$. In this way, if we set
+              $u(\mathbf&#123;x&#125;, t) = 0$, the coefficients
+              $A_&#123;nm&#125;$ will be cancelled out, leaving us with the
+              contour equation
+              <div class="equation">
+                \begin&#123;equation&#125; u(\mathbf&#123;x&#125;, t) =
+                \sum_&#123;n\geq 0&#125;\sum_&#123;m\geq 0&#125;X_n(x)Y_m(y) =
+                0. \end&#123;equation&#125;
+              </div>
+            </li>
+          </ul>
+        </p>
+        <p>
+          The final step is to notice the angular frequency $\omega$. Our
+          solution $u(\mathbf&#123;x&#125;, t)$ is derived as the superposition
+          sum of all other possible solutions. However, this is a double
+          infinite series; how are we going to plot this function? This is a
+          lesson I learned throughout my time as an engineering student:
+          Occasionally, we must reinterpret abstract mathematics to make it
+          meaningful in the context of the physical world..
+          <ul style="line-height: 1.6;">
+            <li style="margin: var(--in-page-li-spacing) 0;">
+              Recall that we derived our angular frequency to be
+              <div class="equation">
+                \begin&#123;equation&#125; \omega = \frac&#123;\pi
+                c&#125;&#123;L&#125;\sqrt&#123;n^2 + m^2&#125;.
+                \end&#123;equation&#125;
+              </div>
+              What we are really interested in is not the general super-position solution,
+              but solutions at certain frequencies $\omega$. After all, each frequencies
+              must only correspond to some certain shape of the plate. This means
+              that each $\omega$ must correspond so some combination of integer pairs
+              $n$ and $m$.
+            </li>
+            <li style="margin: var(--in-page-li-spacing) 0;">
+              For example, if $\omega = \frac&#123;\pi
+              c&#125;&#123;L&#125;\sqrt&#123;5&#125;$, then all possible
+              combinations of $n$ and $m$ must be $(1, 2)$ and $(2, 1)$ (since
+              $1^2 + 2^2 = 5$). Notice previously that we use the coefficients
+              $|A_&#123;nm&#125;|$ in absolute value, so negative coefficients
+              are possible. The two equations that describe the Chladni pattern
+              found at this frequency are
+              <div class="equation">
+                \begin&#123;equation&#125; X_1(x)Y_2(y) \pm X_2(x)Y_1(y)=0,
+                \end&#123;equation&#125;
+              </div>
+              For equations with more sum of squares combinations, there will be more
+              combinations for a single mode. For example, for $\omega = \frac&#123;\pi
+              c&#125;&#123;L&#125;\sqrt&#123;65&#125;$, all the possible implicit
+              functions are
+              <div class="equation">
+                \begin&#123;equation&#125; X_1(x)Y_8(y) \pm X_4(x)Y_7(y) \pm
+                X_7(x)Y_4(y) \pm X_8(x)Y_1(y) =0\ \end&#123;equation&#125;
+              </div>
+              We need not consider the first term due to symmetry. In general, if
+              there are $N$ terms in the equation, there will be a total of $2^&#123;N-1&#125;$
+              possible plots.
+            </li>
+            <li style="margin: var(--in-page-li-spacing) 0;">
+              <b>Special Case: </b>
+              If $n^2 + m^2$ is a perfect square ($1, 4, 9, 16, 25,\ldots$), then
+              we also need to consider the pairs with 0. For example, if $n^2 + m^2
+              = 25$, then besides the standard pairs of $(3, 4)$ and $(4, 3)$, we
+              also need to consider the pairs $(0, 5)$ and $(5, 0)$. This is because
+              since we don't know what $f(x,y)$ is, we also don't know whether $A_&#123;00&#125;$
+              is 0. If it's zero, then we just plot the regular pairs $(3, 4)$ and
+              $(4, 3)$,
+              <div class="equation">
+                \begin&#123;equation&#125; X_3(x)Y_4(y) +
+                X_4(x)Y_3(y)=0,\quad\text&#123;and&#125;\quad X_3(x)Y_4(y) -
+                X_4(x)Y_3(y)=0. \end&#123;equation&#125;
+              </div>
+              If $A_&#123;00&#125;$ is not zero, meaning that the summation actually
+              starts at index $(n,m)=(0,0)$, then we also need to consider eight other
+              patterns
+              <div class="equation">
+                \begin&#123;equation&#125; X_0(x)Y_5(y) \pm X_3(x)Y_4(y) \pm
+                X_4(x)Y_3(y) \pm X_5(x)Y_0(y) =0. \end&#123;equation&#125;
+              </div>
+              In total, for the case of $S = 25$, there will be a total of $2+8=10$
+              plots.
+            </li>
+          </ul>
+        </p>
+
+        <p>
+          In summary, the algorithm to plot the patterns of the square plate is
+          just an algorithm to search for pairs of sum of squares $(n, m)$.
+        </p>
+
+        <span style="font-weight: bold; font-size: 18px; margin: 30px 0;"
+          >Algorithm 1: Square Plate Chladni Pattern Generation</span
+        >
+
+        <div class="box">
+          <pre
+            style="line-height: 1.8; overflow-x: auto; background-color: var(--pre-color); font-size: 12px">
+  <samp><b>Function</b> GenerateSignCombinations(pairs)
+    <b>Input:</b>  List of integer pairs (n, m)
+    <b>Output:</b> Array of sign combinations [+/-1, +/-1, ...] with first element fixed at +1
+
+  <b>Function</b> BasisFunction(x, n)
+      <b>Input:</b>  Spatial coordinate x, mode number n
+      <b>Output:</b> X_n(x) = a_n cos(n*pi*x/L) + a_bar_n sin(n*pi*x/L)
+      <b>Return</b> ((n+1) mod 2) * cos(n*pi*x/2) + (n mod 2) * sin(n*pi*x/2)
+
+  <b>Function</b> WaveFunction(x, y, pairs, signs)
+      <b>Input:</b>  Coordinates (x, y), mode pairs [(n_1,m_1), (n_2,m_2), ...], sign array
+      <b>Output:</b> u(x,y) = sum over i of signs_i * X_n_i(x) * Y_m_i(y)
+      <b>Return</b> sum from i=1 to n of signs_i * BasisFunction(x, n_i) * BasisFunction(y, m_i)
+      <b>Input:</b>  Integer S
+      <b>Output:</b> Set of pairs &#123;(n, m) : n^2 + m^2 = S&#125;
+      pairs = empty_set
+      <b>for</b> n = 0 <b>to</b> floor(sqrt(S)) <b>do</b>
+          m = sqrt(S - n^2)
+          <b>if</b> m is an integer <b>then</b>
+              pairs = pairs union &#123;(n, m), (m, n)&#125;
+      <b>return</b> pairs
+
+  <b>Function</b> IsSumOfSquares(S)
+      <b>Input:</b>  Integer S
+      <b>Output:</b> Boolean indicating if S = n^2 + m^2 for some integers n, m
+      <b>Return</b> size(FindSumOfSquaresPairs(S)) > 0
+
+  <b>Algorithm</b> PlotSquareChladniPatterns(startIndex, endIndex)
+      <b>Input:</b>  Range [startIndex, endIndex] for pattern indices
+      <b>Output:</b> Contour plots of nodal lines at u(x,y) = 0
+
+      totalPlots = endIndex - startIndex
+      equations = [ ]    // Store wave functions
+      sumValues = [ ]    // Store corresponding S values
+      plotCount = 0
+      k = 1
+
+      <b>while</b> plotCount &lt; totalPlots <b>do</b>
+          <b>if</b> IsSumOfSquares(k) <b>then</b>
+              pairs = FindSumOfSquaresPairs(k)
+              signCombos = GenerateSignCombinations(pairs)
+
+              <b>for each</b> combo in signCombos <b>do</b>
+                  <b>if</b> plotCount >= startIndex <b>and</b> plotCount &lt; endIndex <b>then</b>
+                      u_xy = WaveFunction(x, y, pairs, combo)
+                      equations.append(u_xy)
+                      sumValues.append(k)
+                  plotCount = plotCount + 1
+          k = k + 1
+
+      <b>for</b> i = 0 <b>to</b> totalPlots - 1 <b>do</b>
+          AssignColorsByModePairs(pairs[i])
+          PlotContour(equations[i], level=0)    // Plot nodal lines at z = 0
+    </samp>
+</pre>
+        </div>
+      </section>
+
+      <section id="circular-algorithm">
+        <h3>Algorithm for the Circular Plate</h3>
+        <p>
+          The circular plate is a bit easier, since we don't need to design an
+          algorithm to search for sum of squares and perfect squares exceptions.
+          Recall that for a circular plate,
+          <div class="equation">
+            \begin&#123;equation&#125; u(r,\theta, t) =
+            \sum_&#123;n=0&#125;^&#123;\infty&#125;\sum_&#123;m=0&#125;^&#123;\infty&#125;J_n\lbrac
+            kr\rbrac[\Psi_&#123;nm&#125;(\theta)y_1(t) +
+            \Phi_&#123;nm&#125;(\theta)y_2(t)], \end&#123;equation&#125;
+          </div>
+          where
+          <div class="equation">
+            \begin&#123;align&#125; \Psi_&#123;nm&#125;(\theta) &amp; =
+            a_&#123;nm&#125;\cos(n\theta) + b_&#123;nm&#125;\sin(n\theta)\\
+            \Phi_&#123;nm&#125;(\theta) &amp;= c_&#123;nm&#125;\cos(n\theta) +
+            d_&#123;nm&#125;\sin(n\theta)\\ \omega &amp;=
+            \frac&#123;cz_&#123;nm&#125;&#125;&#123;a&#125; = ck
+            \end&#123;align&#125;
+          </div>
+        </p>
+
+        <p>
+          By applying a similar technique as the square plate, we can eliminate
+          $c_&#123;nm&#125;, d_&#123;nm&#125;$, and the forcing term. The
+          circular plate is easier to implement because we don't have to search
+          for any sum of squares, so each Chladni pattern is simply a pair of
+          arbitrary $n$ and $m$. The equations that we need to plot are simply
+          <div class="equation">
+            \begin&#123;equation&#125; u_&#123;nm&#125;(r, \theta, 0) =
+            J_&#123;n&#125;(kr)[a_&#123;nm&#125;\cos(n\theta) +
+            b_&#123;nm&#125;\sin(n\theta)] \end&#123;equation&#125;
+          </div>
+          There is one thing to note, however. Unlike the square plate, the coefficient
+          that constitutes the pattern depends on the initial function $f(r,\theta)$,
+          but after testing out various functions $f(r,\theta)$, I noticed that it
+          doesn't actually do anything to the contour plot at $z=0$, only the plot
+          in three dimensions. Therefore, for this particular equation, I just choose
+          an arbitrary function $f(r,\theta)$ to be
+          <div class="equation">
+            \begin&#123;equation&#125; f(r,\theta) = r\cos(\theta)
+            \end&#123;equation&#125;
+          </div>
+        </p>
+
+        <span style="font-weight: bold; font-size: 18px; margin: 30px 0;"
+          >Algorithm 2: Circular Plate Chladni Pattern Generation</span
+        >
+
+        <div class="box">
+          <pre
+            style="line-height: 1.8; overflow-x: auto; background-color: var(--pre-color); font-size: 12px;">
+  <samp><b>Function</b> BesselDerivativeZero(n, m)
+      <b>Input:</b>  Order n, zero index m
+      <b>Output:</b> m-th zero z_nm of J'_n(x)
+
+      <b>if</b> n = 0 <b>then</b>
+          zeros = ComputeBesselPrimeZeros(0, m + 1)
+          zeros[0] = 0    // Redefine first zero as origin
+          <b>return</b> zeros[m]
+      <b>else</b>
+          zeros = ComputeBesselPrimeZeros(n, m + 1)
+          <b>return</b> zeros[m]
+
+  <b>Function</b> InitialDisplacement(r, theta)
+      <b>Input:</b>  Polar coordinates (r, theta)
+      <b>Output:</b> Initial condition f(r, theta)
+      <b>Return</b> r * cos(theta)
+
+  <b>Function</b> FourierCoefficient_A(n, m, a)
+      <b>Input:</b>  Mode numbers (n, m), plate radius a
+      <b>Output:</b> Coefficient a_nm from initial conditions
+
+      k = z_nm / a
+      numerator = integral from 0 to a, integral from 0 to 2*pi of
+                  J_n(kr) * cos(n*theta) * f(r,theta) * r d(theta) dr
+      denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
+      <b>Return</b> numerator / denominator
+
+  <b>Function</b> FourierCoefficient_B(n, m, a)
+      <b>Input:</b>  Mode numbers (n, m), plate radius a
+      <b>Output:</b> Coefficient b_nm from initial conditions
+
+      k = z_nm / a
+      numerator = integral from 0 to a, integral from 0 to 2*pi of
+                  J_n(kr) * sin(n*theta) * f(r,theta) * r d(theta) dr
+      denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
+      <b>Return</b> numerator / denominator
+
+  <b>Function</b> CircularWaveFunction(n, m, r, theta, a)
+      <b>Input:</b>  Mode numbers (n, m), polar coordinates (r, theta), radius a
+      <b>Output:</b> u_nm(r, theta) = J_n(kr)[a_nm cos(n*theta) + b_nm sin(n*theta)]
+
+      z_nm = BesselDerivativeZero(n, m)
+      k = z_nm / a
+      a_nm = FourierCoefficient_A(n, m, a)
+      b_nm = FourierCoefficient_B(n, m, a)
+      <b>Return</b> J_n(kr) * [a_nm * cos(n*theta) + b_nm * sin(n*theta)]
+
+  <b>Algorithm</b> PlotCircularChladniPattern(n, m, a)
+      <b>Input:</b>  Mode numbers (n, m), plate radius a
+      <b>Output:</b> Contour plot of nodal lines at u(r,theta) = 0
+
+      <b>for each</b> point (r, theta) in [0, a] x [0, 2*pi] <b>do</b>
+          u[r, theta] = CircularWaveFunction(n, m, r, theta, a)
+
+      PlotContour(u, level=0)    // Plot nodal lines where u = 0
+    </samp>
+</pre>
+        </div>
+
+        <p>
+          The next part of this article will be dedicated to implementing the
+          code in python and compare the theoretical results to the experimental
+          result. By then, we may know whether the wave speed is constant or
+          not. You can read Part 2 by pressing the directory below.
+        </p>
+
+        <div style="text-align: center;">
+          <a
+            style="text-align: center;"
+            href="../the-quest-to-finding-chladni-patterns-2"
+            class="redirect-button"
+          >
+            Next
+          </a>
+        </div>
+      </section>
+    </section>
+
+    <h2>Appendix</h2>
+    <section id="Appendix">
+      <h3>Animation Code</h3>
+      <div class="box">
+        <div class="code-container">
+          <button class="copy-btn">Copy</button>
+          <pre
+            class="line-numbers"><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from mpl_toolkits.mplot3d import Axes3D
+
+# Define the function f
+def f(x, y, t):
+    return 0.2 * np.cos(t) * (
+        np.cos(2 * np.pi * x / 2) * np.cos(4 * np.pi * y / 2) +
+        np.cos(4 * np.pi * x / 2) * np.cos(2 * np.pi * y / 2)
+    )
+
+# Create grid for x, y
+x = np.linspace(-1, 1, 40)
+y = np.linspace(-1, 1, 40)
+X, Y = np.meshgrid(x, y)
+
+# Create the figure and axis for the 3D animation
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+# Function to update the 3D surface for each frame
+def update_surface(t):
+    ax.clear()  # Clear previous plot
+
+    # Compute the Z values
+    Z = f(X, Y, t)
+
+    # Plot the dynamic surface
+    surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.85, rstride=1, cstride=1, linewidth=0)
+
+    # Plot the central plane z = 0 as a grid
+    ax.plot_wireframe(X, Y, np.zeros_like(X), color='black', alpha=0.5, linewidth=0.5)
+
+    # Plot the contour lines where f(x,y,t) = 0 on the plane
+    ax.contour(X, Y, Z, levels=[0], colors='red', linewidths=2, linestyles='solid', zdir='z', offset=0)
+
+    # Set consistent axis limits and ensure z-axis is to scale
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
+    ax.set_zlim(-0.5, 0.5)  # Z-axis scaled properly
+
+    # Set axis labels
+    ax.set_xlabel('X axis')
+    ax.set_ylabel('Y axis')
+    ax.set_zlabel('Z axis')
+
+    # Set equal scaling for axes
+    ax.set_box_aspect([1, 1, 0.5])  # Aspect ratio of x:y:z
+
+    # Return the surface to update the animation
+    return surface
+
+# Create the 3D animation for one full cycle (0 to 2π)
+t_values = np.linspace(0, 2 * np.pi, 100)  # 100 frames for one cycle
+ani_3d = animation.FuncAnimation(fig, update_surface, frames=t_values, interval=1, blit=False)
+
+# Show the animation
+plt.show()
+
+output_path = 'animation.gif'
+writer = animation.PillowWriter(fps=50)
+print("Saving...")
+ani_3d.save(output_path, writer=writer)
+
+
+# Print the output path to confirm where it is saved
+print(f"Animation saved to: &#123;output_path&#125;")
+        </code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="References">
+      <h2>References</h2>
+      <ol class="reference">
+        <li>
+          Linqi. Shao. Modeling a square vibrating plate. University of
+          Waterloo, pages 1-58, 2018.
+        </li>
+        <li>
+          Lord Rayleigh. Vibration of Plates, pages 352-361. Princeton
+          University Press, New York, NY, 1894.
+        </li>
+        <li>
+          John M. Davis. Introduction to Applied Partial Differential Equation.
+          W. H. Freeman, New York City, 1st edition, 2012.
+        </li>
+        <li>
+          Richard. Haberman. Applied Partial Differential Equations with Fourier
+          Series and Boundary Value Problems. Pearson, New York City, 5th
+          edition, 2018.
+        </li>
+        <li>
+          Rudolph. Szilard. Theories and Applications of Plates Analysis. John
+          Wiley and Sons, Inc., 111 River Street Hoboken, NJ 07030-5774, 2004
+        </li>
+        <li>
+          Dispersion of flexural waves. <a
+            href="https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html"
+            class="url"
+            >https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html</a
+          >, 2004. Accessed: 2024-05-26
+        </li>
+        <li>
+          Thomas D. Rossing and Neville H. Fletcher. Two-Dimensional Systems:
+          Membranes and Plates, pages 65-94. Springer New York, New York, 2004.
+        </li>
+        <li>
+          Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Stable and
+          accurate numerical methods for generalized kirchhoff-love plates,
+          2020. Accessed: 2024-05-26.
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>More Articles</h2>
+      <div id="rec-article-container"></div>
+    </section>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src="/assets/js/blogpage-setting.js"></script>
+    <script is:inline>
+      loadDate("chladni-1");
+    </script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+      async></script>
+  </Fragment>
+</BaseLayout>

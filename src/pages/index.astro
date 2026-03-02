@@ -1,0 +1,135 @@
+---
+/**
+ * src/pages/index.astro
+ * =====================
+ * Homepage — migrated from /index.html
+ *
+ * What changed:
+ *  - No more runtime fetch() for top-bar, logo, footer, highlights
+ *  - All components are imported via BaseLayout at build time
+ *  - Page-specific styles use <style> in the head slot
+ *  - Page-specific scripts go in the scripts slot
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Banner from "../components/Banner.astro";
+---
+
+<BaseLayout
+  title="Home"
+  description="This is the homepage"
+  activeButton="Home-button"
+>
+  <!-- Extra page-specific styles -->
+  <Fragment slot="head">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+      @media all and (max-width: 580px) {
+        #chladniImage {
+          width: 95% !important;
+        }
+        #chladni-outer-div {
+          padding-top: 25px;
+        }
+      }
+      .repo {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin: 5px 0;
+      }
+      .calendar {
+        padding: 20px;
+      }
+    </style>
+  </Fragment>
+
+  <!-- Page content (same HTML as before, minus the boilerplate) -->
+  <Banner />
+
+  <div class="content-grid" id="home">
+    <header>
+      <div class="topic">Homepage</div>
+    </header>
+
+    <section>
+      <h1 class="home-title">Chladni Patterns - The Wave Equation Model</h1>
+      <div class="two-columns-block">
+        <div>
+          <p>
+            Take a solid metal plate (or any other rigid material) and sprinkle
+            some particles on it. It can either be sand, salt, or even baking
+            soda. Then, generate some vibration on the plate by using either a
+            violin bow to excite the plate, or place it on a wave generator and
+            set it to specific frequencies. What you will observe are the
+            beautiful patterns generated as shown in the figure. This experiment
+            sounds relatively simple, but as simple as it sounds, this
+            experiment reveals some extremely complex and intensive underlying
+            mathematical principles.
+          </p>
+          <p>
+            Ok, so how does this work? Well, it turns out these are examples of
+            standing waves in the two-dimensional space. In one dimension, a
+            &ldquo;node&rdquo; in a
+            <a class="url" href="https://en.wikipedia.org/wiki/Standing_wave"
+              >standing wave</a
+            >
+            is a point along the wave where the amplitude is at minimum. Similarly,
+            in two dimensions, there are &ldquo;nodal lines,&rdquo; which are static
+            points or lines on the plate where the particles settle.
+          </p>
+          <a
+            style="text-align: center;"
+            href="articles/the-quest-to-finding-chladni-patterns-1/"
+            class="redirect-button"
+          >
+            Read More
+          </a>
+        </div>
+        <div id="chladni-outer-div">
+          <img
+            style="width: 75%; border-radius: 10px;"
+            class="image"
+            id="chladniImage"
+            alt="Chladni plate"
+            src="/public/Images/chladni-patterns-sbs.webp"
+          />
+          <figcaption class="caption">
+            Chladni Patterns on a Square Plate.
+          </figcaption>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1 class="home-title">Posts</h1>
+      <div id="post-container"></div>
+    </section>
+
+    <section>
+      <h1 class="home-title">Articles</h1>
+      <div id="rec-article-container" data-aos="fade-up"></div>
+    </section>
+  </div>
+
+  <!-- Page-specific scripts -->
+  <Fragment slot="scripts">
+    <script is:inline>
+      fetch("/assets/json/articles.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const articles = data.articles;
+          article(articles.length, true, false);
+        })
+        .catch((error) => console.error("Error loading JSON:", error));
+      document.addEventListener("DOMContentLoaded", loadPosts);
+    </script>
+    <script is:inline src="/assets/js/canvas-banner.js"></script>
+    <script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script is:inline>
+      AOS.init({
+        easing: "ease-in-quad",
+        once: false,
+      });
+    </script>
+  </Fragment>
+</BaseLayout>

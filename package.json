@@ -1,0 +1,30 @@
+{
+  "name": "neumanncondition",
+  "version": "1.0.0",
+  "description": "Blog website about math, programming, and food. Built from scratch using HTML5, CSS3, and vanilla JS.\r 1.  [About](https://neumanncondition.com/about/)\r 2.  [Privacy Policy](https://neumanncondition.com/privacy-policy/)",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hilbertcube/hilbertcube.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hilbertcube/hilbertcube.github.io/issues"
+  },
+  "homepage": "https://github.com/hilbertcube/hilbertcube.github.io#readme",
+  "dependencies": {
+    "astro": "^5.18.0"
+  }
+}
