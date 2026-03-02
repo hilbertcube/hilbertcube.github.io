@@ -16,7 +16,7 @@
   /* Base colors */
   --body-background-color: #ffffff;
   --grid-text-color: black;
-  --url-color: #2a7ae2;
+  --url-color: #0954b6;
   --url-hover-color: rgb(0, 194, 0);
   --underline-color: oklch(48.8% 0.243 264.376);
   --figcaption-text: rgb(0, 0, 130);
@@ -141,6 +141,8 @@ html.dark-mode {
   
   /* GitHub */
   --github-scroller: #ddd;
+
+  --url-color: #18e9e9;
 }
 
 /* === RESPONSIVE VARIABLE OVERRIDES === */
