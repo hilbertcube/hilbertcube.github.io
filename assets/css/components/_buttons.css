@@ -23,7 +23,7 @@
   color: #dddddd;
 }
 
-body.dark-mode .dark-mode-button {
+html.dark-mode .dark-mode-button {
   color: #fdd835;
 }
 

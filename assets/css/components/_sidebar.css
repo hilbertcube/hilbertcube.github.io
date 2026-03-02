@@ -21,9 +21,14 @@
   width: var(--side-nav-width);
   max-width: var(--side-nav-width);
   transform: translateX(0);
-  transition: transform var(--slide-time) ease;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+/* Transitions are enabled only after JS sets the initial state,
+   preventing a visible slide on mobile first-paint. */
+.navbar.transitions-ready {
+  transition: transform var(--slide-time) ease;
 }
 
 .navbar::-webkit-scrollbar {
@@ -34,9 +39,17 @@
   transform: translateX(-100%);
 }
 
-.navbar *,
-.side-nav ul,
-nav ul {
+/* Before JS runs, hide sidebar on mobile via media query.
+   Once JS adds .open or .closed this selector no longer matches. */
+@media (max-width: 1200px) {
+  .navbar:not(.open):not(.closed) {
+    transform: translateX(-100%);
+  }
+}
+
+.navbar.transitions-ready *,
+.navbar.transitions-ready .side-nav ul,
+.navbar.transitions-ready nav ul {
   opacity: 1;
   transition: opacity var(--fade-in-out-time) ease;
 }
@@ -44,6 +57,14 @@ nav ul {
 .navbar.closed *,
 .navbar.closed ul {
   opacity: 0;
+}
+
+/* Before JS runs, hide sidebar content on mobile */
+@media (max-width: 1200px) {
+  .navbar:not(.open):not(.closed) *,
+  .navbar:not(.open):not(.closed) ul {
+    opacity: 0;
+  }
 }
 
 .navbar::after {

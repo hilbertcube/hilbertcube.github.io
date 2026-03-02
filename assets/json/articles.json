@@ -5,7 +5,12 @@
       "id": "chladni-1",
       "image": "dark_chladni.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-1",
-      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy"],
+      "topics": [
+        "Python",
+        "Eigenvalue Problems",
+        "PDEs",
+        "Numpy"
+      ],
       "description": "Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni's pattern using the wave equation model.",
       "date": "June 1, 2024"
     },
@@ -14,7 +19,16 @@
       "id": "orb-cuda-1",
       "image": "CUDA_process_0_serial_30_imgs.webp",
       "link": "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
-      "topics": ["C++", "OpenCV", "MPI", "OpenMP", "Computer Vision", "Image Processing", "Multithreading", "CUDA"],
+      "topics": [
+        "C++",
+        "OpenCV",
+        "MPI",
+        "OpenMP",
+        "Computer Vision",
+        "Image Processing",
+        "Multithreading",
+        "CUDA"
+      ],
       "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
       "date": "August 10, 2024"
     },
@@ -23,7 +37,11 @@
       "id": "hessian-1",
       "image": "plot2.webp",
       "link": "/articles/maximum-and-minimum",
-      "topics": ["Python", "Hessian Matrix", "Fermat's Theorem"],
+      "topics": [
+        "Python",
+        "Hessian Matrix",
+        "Fermat's Theorem"
+      ],
       "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
       "date": "May 25, 2024"
     },
@@ -32,7 +50,12 @@
       "id": "chladni-2",
       "image": "dark_polar.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-2",
-      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy"],
+      "topics": [
+        "Python",
+        "Eigenvalue Problems",
+        "PDEs",
+        "Numpy"
+      ],
       "description": "Plotting a series of Chladni's patterns using the wave equation model.",
       "date": "June 14, 2024"
     },
@@ -41,7 +64,11 @@
       "id": "problems-1",
       "image": "favorite-problems.webp",
       "link": "/articles/favorite-problem-of-all-time",
-      "topics": ["Math", "Induction", "Contradiction"],
+      "topics": [
+        "Math",
+        "Induction",
+        "Contradiction"
+      ],
       "description": "A collection of some of my favorite math problems that I've encountered throughout the years.",
       "date": "April 24, 2025"
     },
@@ -50,7 +77,13 @@
       "id": "chladni-3",
       "image": "chladni-patterns.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-3",
-      "topics": ["Python", "Eigenvalue Problems", "PDEs", "Numpy", "Biharmonic Equation"],
+      "topics": [
+        "Python",
+        "Eigenvalue Problems",
+        "PDEs",
+        "Numpy",
+        "Biharmonic Equation"
+      ],
       "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
       "date": "June 16, 2024"
     },
@@ -59,7 +92,11 @@
       "id": "dsa-1",
       "image": "time-complexity.webp",
       "link": "/articles/time-complexity-of-an-algorithm",
-      "topics": ["Data Structures and Algorithm", "C++", "Python"],
+      "topics": [
+        "Data Structures and Algorithm",
+        "C++",
+        "Python"
+      ],
       "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
       "date": "December 2, 2024"
     },
@@ -68,18 +105,26 @@
       "id": "moi-1",
       "image": "inertia.webp",
       "link": "/articles/moment-of-inertia",
-      "topics": ["Classical Mechanics", "Dynamics of Rotation"],
+      "topics": [
+        "Classical Mechanics",
+        "Dynamics of Rotation"
+      ],
       "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations.",
       "date": ""
     }
-
   ],
   "posts": [
     {
       "title": "Linux development environment setup",
       "pid": "linux-setup",
       "link": "/posts/linux-setup/",
-      "topics": ["Ubuntu", "Linux", "Development Environment", "Programming", "Productivity"],
+      "topics": [
+        "Ubuntu",
+        "Linux",
+        "Development Environment",
+        "Programming",
+        "Productivity"
+      ],
       "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04 on an NVIDIA machine, including installation steps, configurations, and useful tips for an efficient workflow. Ok, but why Ubuntu though? Ans: Very stable and much easier to use than Debian (my first distro)",
       "date": "December 28, 2025"
     },
@@ -87,15 +132,29 @@
       "title": "A list of places to munch",
       "pid": "munch-places",
       "link": "/posts/tested-food-places/",
-      "topics": ["Life", "Daily life", "Food", "Drinks", "Desserts", "Boba"],
-      "description": "A list of restaurants, cafés, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I’ve tried or want to try. I’ll be using this post as a running to-do list.",
+      "topics": [
+        "Life",
+        "Daily life",
+        "Food",
+        "Drinks",
+        "Desserts",
+        "Boba"
+      ],
+      "description": "A list of restaurants, caf\u00e9s, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I\u2019ve tried or want to try. I\u2019ll be using this post as a running to-do list.",
       "date": "April 18, 2025"
     },
     {
       "title": "A list of tools that I use",
       "pid": "tool-list",
       "link": "/posts/favorite-tools/",
-      "topics": ["VS Code", "Extensions", "Software", "Hardware", "Life", "Work"],
+      "topics": [
+        "VS Code",
+        "Extensions",
+        "Software",
+        "Hardware",
+        "Life",
+        "Work"
+      ],
       "description": "A comprehensive list of software, Firefox extensions, VS Code extensions, and electronics that I use regularly.",
       "date": "April 12, 2025"
     },
@@ -103,7 +162,9 @@
       "title": "Average engineering experience",
       "pid": "avg-engr-exp",
       "link": "/posts/avg-engr-exp",
-      "topics": ["Electrical Engineering"],
+      "topics": [
+        "Electrical Engineering"
+      ],
       "description": "Electrical Engineering: Electrical Circuit Analysis, Spring of 2024.",
       "date": "April, 2024"
     }
@@ -112,70 +173,95 @@
     {
       "title": "Resources - Books",
       "link": "/recommended-materials/#books",
-      "topics": ["Programming", "Image Processing", "DSA", "Math", "Physics"],
+      "topics": [
+        "Programming",
+        "Image Processing",
+        "DSA",
+        "Math",
+        "Physics"
+      ],
       "description": "Book Recommendation",
       "date": "Last updated Nov. 2024"
     },
     {
       "title": "Resources - Lecture Notes",
       "link": "/recommended-materials/#lecture-notes",
-      "topics": ["Physics", "Calculus of Variations", "DE"],
+      "topics": [
+        "Physics",
+        "Calculus of Variations",
+        "DE"
+      ],
       "description": "Lecture Notes Recommendation",
       "date": "Last updated Nov. 2024"
     },
     {
       "title": "Resources - Websites",
       "link": "/recommended-materials/#websites",
-      "topics": ["Useful websites"],
+      "topics": [
+        "Useful websites"
+      ],
       "description": "The internet and digital platforms have made information readily available to anyone with an internet connection. No more barriers.",
       "date": "Last updated Nov. 2024"
     },
     {
       "title": "Resources - Youtube Channels",
       "link": "/recommended-materials/#youtube",
-      "topics": ["Useful Youtube Channels"],
+      "topics": [
+        "Useful Youtube Channels"
+      ],
       "description": "Youtube is fun, but don't watch too much.",
       "date": "Last updated Nov. 2024"
     },
     {
       "title": "Privacy Policy",
       "link": "/privacy-policy/",
-      "topics": ["About the privacy policy of this website"],
+      "topics": [
+        "About the privacy policy of this website"
+      ],
       "description": "This website does not collect or store any personally identifiable information, such as IP addresses. However, it does use Google Analytics to analyze website usage and user behavior. The data collected by Google Analytics includes...",
       "date": "Last updated Oct. 2024"
     },
     {
       "title": "License",
       "link": "/LICENSE-CC-BY.md",
-      "topics": ["License", "CC-BY-4.0"],
+      "topics": [
+        "License",
+        "CC-BY-4.0"
+      ],
       "description": "View license of this website",
       "date": "Last updated April 2025"
     },
     {
       "title": "Source code",
       "link": "https://github.com/hilbertcube/neumanncondition",
-      "topics": ["View the source code of this website"],
+      "topics": [
+        "View the source code of this website"
+      ],
       "description": "View the source code of this website on github.",
       "date": "Updated recently"
     },
     {
       "title": "About",
       "link": "/about/",
-      "topics": ["About this website"],
+      "topics": [
+        "About this website"
+      ],
       "description": "About this website I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar...",
       "date": "Updated recently"
     }
   ],
-  "scratch" : [
+  "scratch": [
     {
       "title": "Simulating the Brachistochrone problem",
       "id": "brachistochrone-1",
       "image": "brachistochrone.webp",
       "link": "https://example.com/js-event-loop",
-      "topics": ["Python", "Calculus of Variations"],
+      "topics": [
+        "Python",
+        "Calculus of Variations"
+      ],
       "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
       "date": ""
     }
   ]
 }
-

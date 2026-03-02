@@ -93,7 +93,7 @@
 }
 
 /* === DARK MODE OVERRIDES === */
-body.dark-mode {
+html.dark-mode {
   /* Base colors */
   --body-background-color: #161616;
   --grid-text-color: #a9a9b3;

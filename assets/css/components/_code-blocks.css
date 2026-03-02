@@ -25,8 +25,8 @@ body.light-mode pre[class*="language-"] {
   line-height: 1.5;
 }
 
-body.dark-mode code[class*="language-"],
-body.dark-mode pre[class*="language-"] {
+html.dark-mode code[class*="language-"],
+html.dark-mode pre[class*="language-"] {
   font-size: 12px;
   line-height: 1.5;
 }

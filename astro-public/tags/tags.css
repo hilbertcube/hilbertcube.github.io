@@ -4,7 +4,7 @@
   --tag-border-color: #bfbfbf;
 }
 
-body.dark-mode{
+html.dark-mode{
   --tag-hover-color: black;
   --tag-border-color: #606060;
 }
