@@ -2124,11 +2124,11 @@ footer {
 
 .home-title {
   font-size: 2.3em;
-  font-family: "Roboto Slab", serif;
+  font-family: var(--top-bar-font);
 }
 
 .title {
-  font-family: "Roboto Slab", serif;
+  font-family: var(--top-bar-font);
   padding-bottom: 5px;
   padding-top: 30px;
 }

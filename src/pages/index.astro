@@ -21,7 +21,6 @@ import Banner from "../components/Banner.astro";
 >
   <!-- Extra page-specific styles -->
   <Fragment slot="head">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <style>
       @media all and (max-width: 580px) {
         #chladniImage {
@@ -107,7 +106,7 @@ import Banner from "../components/Banner.astro";
 
     <section>
       <h1 class="home-title">Articles</h1>
-      <div id="rec-article-container" data-aos="fade-up"></div>
+      <div id="rec-article-container"></div>
     </section>
   </div>
 
@@ -124,12 +123,5 @@ import Banner from "../components/Banner.astro";
       document.addEventListener("DOMContentLoaded", loadPosts);
     </script>
     <script is:inline src="/assets/js/canvas-banner.js"></script>
-    <script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script is:inline>
-      AOS.init({
-        easing: "ease-in-quad",
-        once: false,
-      });
-    </script>
   </Fragment>
 </BaseLayout>

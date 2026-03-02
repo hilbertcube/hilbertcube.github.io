@@ -26,5 +26,8 @@
   "homepage": "https://github.com/hilbertcube/hilbertcube.github.io#readme",
   "dependencies": {
     "astro": "^5.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.3"
   }
 }
