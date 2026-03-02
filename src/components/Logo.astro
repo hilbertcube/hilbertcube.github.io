@@ -1,0 +1,71 @@
+---
+/**
+ * Logo.astro
+ * ==========
+ * Replaces the runtime fetch of /assets/components/logo.html
+ */
+---
+
+<div id="logo">
+  <a
+    href="https://github.com/hilbertcube/neumanncondition"
+    style="text-decoration:none; color: inherit;"
+  >
+    <img
+      id="logoImage"
+      src="/public/Images/Logo/pendulum_logo.webp"
+      style="width: 45%; margin-bottom: 10px; border-radius: 50%;"
+      alt="website-logo"
+    />
+    <div
+      class="logo-title"
+      style="font-family: Computer-Modern; text-align: center; font-size: 1.6em;"
+    >
+      neumanncondition.com <i class="fa fa-external-link" style="font-size:14px"
+      ></i>
+    </div>
+  </a>
+</div>
+
+<div class="side-nav-container">
+  <details open class="side-nav">
+    <summary class="side-summary">Navigation</summary>
+    <ul>
+      <li>
+        <a class="side-buttons" href="/">
+          <summary class="side-nav-summary" id="Home-button">HOME</summary>
+        </a>
+      </li>
+      <li>
+        <a class="side-buttons" href="/about" id="About-button">
+          <summary class="side-nav-summary">ABOUT</summary>
+        </a>
+      </li>
+      <li>
+        <a class="side-buttons" href="/notes" id="Note-button">
+          <summary class="side-nav-summary">NOTES</summary>
+        </a>
+      </li>
+      <li>
+        <a
+          class="side-buttons"
+          href="/recommended-materials"
+          id="Material-button"
+        >
+          <summary class="side-nav-summary">RESOURCES</summary>
+        </a>
+      </li>
+      <li>
+        <a class="side-buttons" href="/tags/">
+          <summary class="side-nav-summary" id="Archive-button">ARCHIVE</summary
+          >
+        </a>
+      </li>
+      <li>
+        <a class="side-buttons" href="#contact" id="Contact-button">
+          <summary class="side-nav-summary">CONTACT</summary>
+        </a>
+      </li>
+    </ul>
+  </details>
+</div>

@@ -1,0 +1,80 @@
+---
+/**
+ * src/pages/test/pendulum.astro
+ * ==============================
+ * Pendulum / code highlight test page — migrated from /test/pendulum.html
+ * Standalone page (no shared layout — uses highlight.js).
+ */
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css"
+    />
+    <style is:inline>
+      pre {
+        font-size: 12px;
+        position: relative;
+      }
+      .hljs-ln-numbers {
+        user-select: none;
+        color: #999;
+        text-align: right;
+        border-right: 1px solid #6d6d6d;
+      }
+      .hljs-ln-code {
+        margin-left: 20px;
+      }
+      .hljs-ln-n:before {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <pre><code>    // code here
+    #include &lt;iostream&gt;
+    using namespace std;
+
+    int binarySearch(int arr[], int low, int high, int x)&#123;
+        while (low &lt;= high) &#123;
+            int mid = low + (high - low) / 2;
+            if (arr[mid] == x) return mid;
+            if (arr[mid] &lt; x) low = mid + 1;
+            else high = mid - 1;
+        &#125;
+        return -1;
+    &#125;
+
+    int main(void)&#123;
+        int arr[] = &#123; 2, 3, 4, 10, 40 &#125;;
+        int x = 10;
+        int n = sizeof(arr) / sizeof(arr[0]);
+        int result = binarySearch(arr, 0, n - 1, x);
+        if(result == -1) cout &lt;&lt; "Element is not present in array";
+        else cout &lt;&lt; "Element is present at index " &lt;&lt; result;
+        return 0;
+    &#125;
+</code></pre>
+    </main>
+
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"
+    ></script>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        hljs.highlightAll();
+        hljs.initLineNumbersOnLoad();
+      });
+    </script>
+  </body>
+</html>

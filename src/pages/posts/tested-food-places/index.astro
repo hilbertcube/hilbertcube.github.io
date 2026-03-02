@@ -1,0 +1,329 @@
+---
+/**
+ * src/pages/posts/tested-food-places/index.astro
+ * =================================================
+ * Post: Tested Food Places — migrated from /posts/tested-food-places/index.html
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+---
+
+<BaseLayout
+  title="Post - Tested Food Places"
+  description="A list of tested food places including restaurants, cafes, and dessert shops"
+  keywords="tested food places, restaurants, cafes, dessert shops, food reviews, dining, eating out"
+>
+  <Fragment slot="head">
+    <style is:inline>
+      .bullet {
+        margin: var(--in-page-li-spacing) 0;
+        padding-left: 0;
+      }
+      .bullet ul {
+        padding-left: 15px;
+        margin-left: 0;
+      }
+      .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+      }
+      .food-img {
+        width: calc(25% - 5px);
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .food {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+      }
+      .food > div {
+        flex: 1;
+      }
+      h2.h3-visual {
+        margin-top: 10px;
+      }
+      @media (max-width: 768px) {
+        .food-img {
+          width: calc(50% - 5px);
+        }
+        .food {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <!-- Sidebar: TOC + highlights -->
+  <Fragment slot="sidebar">
+    <div class="toc">
+      <header class="major">
+        <h2>Table of Contents</h2>
+      </header>
+      <ul>
+        <li><a href="#list">List</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+    </div>
+    <div class="highlights-and-attribute">
+      <HighlightsAndAttribute />
+    </div>
+  </Fragment>
+
+  <Fragment slot="scripts">
+    <script is:inline>
+      // Blog toc section highlight
+      document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll("section");
+        const tocLinks = document.querySelectorAll(".toc a");
+
+        function removeActiveClasses() {
+          tocLinks.forEach((link) => link.classList.remove("active"));
+        }
+
+        function highlightTocLink() {
+          let currentSection = null;
+
+          sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+              currentSection = section;
+            }
+          });
+
+          if (currentSection) {
+            removeActiveClasses();
+            const link = document.querySelector(
+              `.toc a[href="#${currentSection.id}"]`,
+            );
+            if (link) link.classList.add("active");
+          }
+        }
+
+        window.addEventListener("scroll", highlightTocLink);
+      });
+    </script>
+  </Fragment>
+
+  <div class="content-grid" id="home">
+    <header>
+      <div class="topic">Daily life, Food, Drinks, Desserts</div>
+      <h1 class="post-title">A list of places to munch</h1>
+      <div class="date">Updated April, 29, 2024</div>
+    </header>
+
+    <section class="food" id="list">
+      <div>
+        <h2 class="h3-visual">
+          Have Tried <i class="fa-solid fa-check" style="color: green;"></i>
+        </h2>
+        <ul>
+          <li class="bullet">
+            <strong>Restaurants</strong>
+            <ul>
+              <li class="bullet">Shang Artisan Noodle, Las Vegas. 8/10</li>
+              <li class="bullet">Taco El Pastor, Las Vegas. 9/10</li>
+              <li class="bullet">Gladiator Burger, Waterloo, Canada. 8/10.</li>
+              <li class="bullet">
+                Raku Udon, Queen St. Downtown Toronto, Canada. 9.5/10, best udon
+                I've ever had.
+              </li>
+              <li class="bullet">
+                PiChaiYuan Hotpot, Rowland Heights. 8.5/10, reasonable price.
+              </li>
+              <li class="bullet">
+                Tokyo Ramen & Sushi, Diamond Bar, CA. 8/10.
+              </li>
+              <li class="bullet">
+                Los Amigos, Walnut, CA. 9/10, cheap and delicious tacos.
+              </li>
+              <li class="bullet">
+                LA District Market. A large variety of delicious food. A bit
+                pricey though. 8.5/10.
+              </li>
+              <li class="bullet">
+                Euporium Thai, LA. 8.5/10. Free sticky rice cake for birthdays
+              </li>
+              <li class="bullet">
+                Sea Harbor, Rosemead. Best Dim Sum, one Michelin Star, 9.5/10
+              </li>
+              <li class="bullet">
+                Slurpin Ramen Bar, City of Industry, CA. 7/10
+              </li>
+              <li class="bullet">Din Tai Fung, Arcadia, CA. 8/10</li>
+              <li class="bullet">Tatsu Ramen, LA. 8/10</li>
+              <li class="bullet">Lotus of Siam, Las Vegas. 7/10</li>
+              <li class="bullet">Thumbling, West Covina, CA. 7.5/10</li>
+              <li class="bullet">Taiko Japanese Restaurant, Irvine. 8/10</li>
+              <li class="bullet">Coco Ichibanya, LA, Irvine. 8/10</li>
+              <li class="bullet">Pepper Lunch, Irvine. 9/10</li>
+              <li class="bullet">Happy Harbor, Rowland Heights. 9/10</li>
+              <li class="bullet">Young Dong Tofu. 5/10</li>
+              <li class="bullet">88Q Korean BBQ, Rowland Heights. 7.5/10</li>
+              <li class="bullet">
+                Chubby Cattle BBQ. Horrible wait time, but good food, 8/10
+              </li>
+              <li class="bullet">Hokaido Sushi, Saigon, 1st District. 9/10</li>
+              <li class="bullet">
+                Pho Thin by SOL, Saigon, 2nd District. 8.5/10
+              </li>
+            </ul>
+          </li>
+          <li class="bullet">
+            <strong>Boba & Caf&eacute;</strong>
+            <ul>
+              <li class="bullet">
+                The Coffee (ザ•コーヒー), King St. W, Downtown Toronto, Canada.
+                9/10.
+              </li>
+              <li class="bullet">Torotea, Diamond Bar, CA.</li>
+              <li class="bullet">3Catea, Irvine. 9/10</li>
+              <li class="bullet">Gong Cha, City of Industry, CA. 8/10</li>
+              <li class="bullet">GOOMO boba tea shop, Walnut, CA. 8/10</li>
+              <li class="bullet">Phuc Long, Garden Grove, CA. 6/10</li>
+            </ul>
+          </li>
+          <li class="bullet">
+            <strong>Bars</strong>
+            <ul>
+              <li class="bullet">Ghost Bar, Las Vegas. 9.5/10</li>
+              <li class="bullet">The Gallery Lounge, Downtown LA. 8/10</li>
+              <li class="bullet">The Grayson Bar, Downtown LA. 8/10</li>
+              <li class="bullet">Spire 73, InterContinental LA. 9/10</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="h3-visual">
+          Have Yet to Try <i
+            class="fa-solid fa-x"
+            style="font-size: 15px; color: red;"></i>
+        </h2>
+        <ul>
+          <li class="bullet">
+            <strong>Restaurants</strong>
+            <ul>
+              <li class="bullet">dPot, Irvine</li>
+              <li class="bullet">Kokiyo Ramen, NPB</li>
+              <li class="bullet">Niku X, LA</li>
+              <li class="bullet">Noodle Nest, Irvine</li>
+              <li class="bullet">Tijuana Taco, OC, CA</li>
+              <li class="bullet">Koyi Sushi, Costa Mesa, CA</li>
+              <li class="bullet">Izakaya Taiko, Fountain Valley, CA.</li>
+              <li class="bullet">Happy Lamb Hotpot, Westminster, CA.</li>
+              <li class="bullet">Japan Village, NYC, Industry City.</li>
+              <li class="bullet">BBQ Chung Dam, LA.</li>
+              <li class="bullet">Chubby Sushi & Ramen, OC, CA.</li>
+              <li class="bullet">Story Bar + Kitchen, Anaheim, CA.</li>
+            </ul>
+          </li>
+          <li class="bullet">
+            <strong>Desserts</strong>
+            <ul>
+              <li class="bullet">Nostimo Coffee, Westminster</li>
+              <li class="bullet">
+                Heybings Desserts & Caf&eacute;, Costa Mesa
+              </li>
+              <li class="bullet">Sweetheart's Dessert Lounge, Anaheim</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <h2 class="h3-visual">Gallery</h2>
+      <p>Click on image to view full size.</p>
+      <div class="image-container" style="margin: 25px 0">
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/coco.webp"
+          alt="Japanese Curry"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/boba.webp"
+          alt="Boba"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/ramen.webp"
+          alt="Ramen"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/takoyaki.webp"
+          alt="Takoyaki"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/thai.webp"
+          alt="Euporium Thai"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/bar1.webp"
+          alt="Grayson Bar"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/taco.webp"
+          alt="LA Taco"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/burger.webp"
+          alt="Hawaiian Burger"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/los_amigos.webp"
+          alt="Los Amigos Taco"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/white_whine.webp"
+          alt="Sky Bar"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/tokyo_ramen.webp"
+          alt="Tokyo Ramen & Sushi"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/piyaiyuan.webp"
+          alt="piyaiyuan hotpot"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/raku_udon.webp"
+          alt="Raku Udon"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/gladiator_burger.webp"
+          alt="Gladiator Burger"
+        />
+        <img
+          class="food-img"
+          src="/posts/tested-food-places/the_coffee.webp"
+          alt="The Coffee"
+        />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

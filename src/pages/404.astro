@@ -1,0 +1,179 @@
+---
+/**
+ * 404.astro
+ * =========
+ * Custom 404 page — standalone (no BaseLayout).
+ * Blade Runner–themed "You look lonely" typewriter effect.
+ */
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 - Not Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="/public/Images/Logo/pendulum_trace.webp" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+      body {
+        position: relative;
+        background-color: black;
+        background-image: url("/public/background/blade-runner.webp");
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top center;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      /* loading animation */
+      body {
+        animation: fadeInAnimation ease 1.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+      }
+      @keyframes fadeInAnimation {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .not-found {
+        position: fixed;
+        color: white;
+        font-size: 1.1rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0.4rem;
+      }
+      .lonely {
+        position: absolute;
+        color: white;
+        right: 20vw;
+        top: 10vh;
+        font-size: 2.5rem;
+      }
+      .inner {
+        text-align: right;
+      }
+      .yesno {
+        text-align: right;
+        margin-top: 30px;
+      }
+      .yesno a {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+      .yesno a:hover {
+        color: rgb(238, 0, 255);
+      }
+      .yesno {
+        margin-top: 20px;
+        transition:
+          opacity 0.5s ease,
+          visibility 0.5s ease;
+        opacity: 0;
+        visibility: hidden;
+      }
+      .yesno.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      @media all and (max-width: 1080px) {
+        .lonely {
+          font-size: 2.5rem;
+          right: 2vw;
+        }
+      }
+      @media all and (max-width: 945px) {
+        body {
+          background-image: url("/public/background/blade-runner-mobile.webp");
+          background-position: center bottom;
+        }
+        .lonely {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <div class="lonely">
+        <div class="text-container">
+          <span id="text1"></span>
+          <div class="inner" id="text2"></div>
+        </div>
+        <div class="yesno" id="yesno">
+          <a
+            style="border-right: 1px solid white; padding-right: 20px; margin-right: 20px"
+            href="javascript:window.history.back()"
+            id="yes">Yes</a
+          >
+          <a id="no" href="https://www.youtube.com/watch?v=4GSXyo3euR4">No</a>
+        </div>
+      </div>
+      <div class="not-found">404 - Page not found</div>
+    </main>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", function () {
+        const text1 = "You look lonely,";
+        const text2 = "wanna go back?";
+        const textContainer1 = document.getElementById("text1");
+        const textContainer2 = document.getElementById("text2");
+        const yesNoOptions = document.getElementById("yesno");
+
+        const delayText1 = 110;
+        const delayText2 = 80;
+
+        function typeWriter(text, element, delay, callback) {
+          let index = 0;
+          function typing() {
+            if (index < text.length) {
+              element.textContent += text.charAt(index);
+              index++;
+              setTimeout(typing, delay);
+            } else if (callback) {
+              callback();
+            }
+          }
+          typing();
+        }
+
+        typeWriter(text1, textContainer1, delayText1, () => {
+          setTimeout(() => {
+            typeWriter(text2, textContainer2, delayText2, () => {
+              yesNoOptions.classList.add("visible");
+            });
+          }, 500);
+        });
+      });
+
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+      });
+
+      document.onkeydown = function (e) {
+        if (
+          e.ctrlKey &&
+          (e.keyCode === 67 ||
+            e.keyCode === 86 ||
+            e.keyCode === 85 ||
+            e.keyCode === 117)
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      };
+    </script>
+  </body>
+</html>

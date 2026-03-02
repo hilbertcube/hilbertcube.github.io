@@ -1,0 +1,167 @@
+---
+/**
+ * src/pages/notes/index.astro
+ * ===========================
+ * Notes page — migrated from /notes/index.html
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Banner from "../../components/Banner.astro";
+---
+
+<BaseLayout
+  title="Notes"
+  description="This is the homepage"
+  activeButton="Note-button"
+>
+  <Fragment slot="head">
+    <style>
+      .left-section-banner {
+        background: radial-gradient(rgb(64, 64, 64), black);
+      }
+    </style>
+  </Fragment>
+
+  <Banner />
+
+  <div class="content-grid" id="home">
+    <header>
+      <div class="topic">Notes</div>
+    </header>
+
+    <h1 class="home-title">Some notes I made over the years</h1>
+
+    <section>
+      <h2 id="lecture-notes" class="home-h3-headers">Lecture Notes</h2>
+      <p>
+        <b>Algorithms and Complexity (CS 180):</b>
+        <a href="https://www.overleaf.com/read/dczdmsqbdhmj#2ecd3c" class="url"
+          >link</a
+        >
+      </p>
+      <p>
+        <b>Systems and Signals (ECE 102):</b>
+        <a href="https://www.overleaf.com/read/drwssmhqhpcf#160fb9" class="url"
+          >link</a
+        >
+      </p>
+      <p>
+        <b>Ethics for Computer Scientists (ENGR 186):</b>
+        <a href="https://www.overleaf.com/read/ycqtbjpmrcxy#c2ed58" class="url"
+          >link</a
+        >
+      </p>
+      <p>
+        <b>Digital Electronic Circuits (ECE 115C):</b>
+        <a href="https://www.overleaf.com/read/dfnbqndxhcxf#6a9b14" class="url"
+          >link</a
+        >
+      </p>
+    </section>
+
+    <section>
+      <h2 id="calculus" class="home-h3-headers">Calculus</h2>
+      <p>
+        <b>Calc II Practice Sheet: </b><a
+          href="https://www.overleaf.com/read/zdpjxwncqxkv#b4198d"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Analytic Geometry Problems: </b><a
+          href="https://www.overleaf.com/read/ytcvcmhbnrmg#4f5a32"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Application of Integrals to Physics: </b><a
+          href="https://www.overleaf.com/read/bgygvcgbtrxw#1ed5ac"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Vector Calculus Final Review: </b><a
+          href="https://www.overleaf.com/read/bjqzxmvyrmqc#f88914"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Table of Derivatives: </b><a
+          href="https://www.overleaf.com/read/pxktmcmmphng#a269bd"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Table of Integrals: </b><a
+          href="https://www.overleaf.com/read/bymjtsgkzzbv#284e6d"
+          class="url">link</a
+        >
+      </p>
+
+      <h2 id="de" class="home-h3-headers">ODE and PDE</h2>
+      <p>
+        <b>First Order ODEs: </b><a
+          href="https://www.overleaf.com/read/jfmvjspxnbpf#5062c0"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Second and Higher Order ODEs: </b><a
+          href="https://www.overleaf.com/read/vndsqjscgqxv#a5cc47"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Table of Laplace Transforms: </b><a
+          href="https://www.overleaf.com/read/qtcynvckcgxh#8ffdaa"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>The Laplace Transform. Gamma and Beta Function: </b><a
+          href="https://www.overleaf.com/read/cppqndkxrccs#0c4544"
+          class="url">link</a
+        >
+      </p>
+
+      <h2 id="linear-algebra" class="home-h3-headers">Linear Algebra</h2>
+      <p>
+        <b>Vector Space and Inner Product Space: </b><a
+          href="https://www.overleaf.com/read/gkmksjfphysb#20466d"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Linear Transformation: </b><a
+          href="https://www.overleaf.com/read/kjbwgqsxqqmb#87cc08"
+          class="url">link</a
+        >
+      </p>
+    </section>
+
+    <section>
+      <h2 id="others" class="home-h3-headers">Others</h2>
+      <p>
+        <b>Set Theory: </b><a
+          href="https://www.overleaf.com/read/bmsynsfbdcks#2e1a30"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Classical Algebraic Inequalities: </b><a
+          href="https://www.overleaf.com/read/mxvqhcpvrfmm#4eaccc"
+          class="url">link</a
+        >
+      </p>
+      <p>
+        <b>Table of Trigonometric Identities: </b><a
+          href="https://www.overleaf.com/read/yykdzhbmzchr#32abcd"
+          class="url">link</a
+        >
+      </p>
+    </section>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src="/assets/js/canvas-banner.js"></script>
+  </Fragment>
+</BaseLayout>

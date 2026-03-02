@@ -6,3 +6,30 @@ node_modules/
 assets/css/CSS-ORGANIZATION.md
 *.txt
 powershell/
+
+# Dependencies
+node_modules/
+.npm/
+
+# Environment variables
+.env
+.env.local
+
+# Build artifacts
+dist/
+build/
+*.tgz
+
+# Astro
+.astro/
+
+# Optional npm cache dir
+.npm
+
+# Logs
+npm-debug.log*
+*.log
+
+# Editor/OS files (optional, can be in a global gitignore)
+.DS_Store
+.idea/

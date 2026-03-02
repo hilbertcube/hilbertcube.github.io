@@ -12,21 +12,11 @@ MathJax = {
   },
 };
 
-const ROOT = ""; // /neumanncondition
-
-function LoadScript(scriptId, source) {
-  const jsSrc = ROOT + source;
-  const scriptElement = document.createElement("script");
-  scriptElement.id = scriptId;
-  scriptElement.src = jsSrc;
-  document.head.appendChild(scriptElement);
-}
-
 // TAB ICON
 function setFavicon() {
   const link = document.createElement("link");
   link.rel = "icon";
-  link.href = ROOT + "/public/Images/Logo/favicon.webp";
+  link.href = "/public/Images/Logo/favicon.webp";
   link.type = "image/webp";
   document.head.appendChild(link);
 }
@@ -34,7 +24,7 @@ setFavicon();
 
 // // OPEN FULL IMG
 document.addEventListener("DOMContentLoaded", function () {
-    const allImages = document.querySelectorAll("img");
+    const allImages = document.querySelectorAll("img:not(#logoImage):not(#home-banner img)");
     
     allImages.forEach(function (img, index) {
       img.style.cursor = "pointer";
@@ -253,19 +243,6 @@ document.querySelectorAll(".url").forEach(function (element) {
   };
 });
 
-/// NAVIGATE TO IMAGE BASED ON ROOT
-function navigateToImage(element) {
-  const newUrl = ROOT + element.getAttribute("src");
-  location.href = newUrl;
-}
-
-// SET IMAGE DYNAMICALLY
-function setImage(imageId, source) {
-  const imageSrc = ROOT + source;
-  document.getElementById(imageId).src = imageSrc;
-}
-
-
 // SIDE NAV
 function toggleNav() {
   var navbar = document.getElementById("navbar");
@@ -341,62 +318,18 @@ function copyButton() {
 }
 copyButton();
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
-  condition =
-    event.target.matches(".dropbtn") ||
-    event.target.matches(".switch") ||
-    event.target.matches(".slider") ||
-    event.target.matches("#modeToggle");
-  if (!condition) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    for (var i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains("show")) {
-        openDropdown.classList.remove("show");
-      }
-    }
-  }
-};
 
-// drop down menu
-function applyDropdownDelays() {
-  document.querySelectorAll(".dropdown-content").forEach((dropdown) => {
-    dropdown.querySelectorAll("a").forEach((item, index) => {
-      item.style.animationDelay = `${0.06 * index}s`; // Adjust delay increment as needed
-    });
-  });
-}
-
-function dropDown(dropdownId) {
-  var dropdown = document.getElementById(dropdownId);
-  dropdown.classList.toggle("show");
-  applyDropdownDelays(); // Apply delays whenever dropdown is shown
-}
-
-// Ensure delays are set on page load
-document.addEventListener("DOMContentLoaded", applyDropdownDelays);
 
 // ARTICLES
-const image_root = ROOT + "/public/Images/";
-
-/**
-Fetch syntax:
-  fetch('https://api.example.com/data')
-    .then(response => response.json()) // Parse the JSON response
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
- */
+const image_root = "/public/Images/";
 
 function article(NUM_ARTICLE, des, random_article) {
-  // Cache for the articles data to avoid repeated fetches articles
   let articlesCache = null;
   
-  // Check if we already have the data cached
   if (articlesCache) {
     processArticles(articlesCache);
   } else {
-    fetch(ROOT + "/assets/json/articles.json")
+    fetch("/assets/json/articles.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to load articles: " + response.statusText);
@@ -418,8 +351,11 @@ function article(NUM_ARTICLE, des, random_article) {
   }
 
   function processArticles(articles) {
-    // Filter out articles without IDs
-    const validArticles = articles.filter(article => article.id);
+    // Filter out articles without IDs and the current page's article
+    const currentPath = window.location.pathname.replace(/\/$/, '');
+    const validArticles = articles.filter(article => 
+      article.id && article.link && article.link.replace(/\/$/, '') !== currentPath
+    );
     
     // Shuffle if needed
     if (random_article) shuffleArray(validArticles);
@@ -442,7 +378,7 @@ function article(NUM_ARTICLE, des, random_article) {
 
     articles.forEach((article) => {
       const articleLink = document.createElement("a");
-      articleLink.href = ROOT + article.link;
+      articleLink.href = article.link;
       articleLink.classList.add("article");
       // articleLink.target = "_blank";
 
@@ -555,7 +491,7 @@ function changeTab(evt, nav_item_name, switch_target) {
 
 // LOAD SUGGESTIONS ON SIDE NAV
 function loadAndSetupSuggestions() {
-  fetch(ROOT + "/assets/json/articles.json")
+  fetch("/assets/json/articles.json")
     .then((response) => response.json())
     .then((data) => {
       const articles = data.articles;
@@ -566,7 +502,7 @@ function loadAndSetupSuggestions() {
         if (article) {
           // Create a link element for the image
           const articleLink = document.createElement("a");
-          articleLink.href = ROOT + article.link;
+          articleLink.href = article.link;
           articleLink.target = "_blank"; // Open link in a new tab (optional)
           articleLink.className = "recommend-img";
 
@@ -846,11 +782,11 @@ function SearchBar() {
   }
 
   // Load suggestions from JSON file
-  fetch(ROOT + "/assets/json/articles.json")
+  fetch("/assets/json/articles.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error(
-          "Network response is sloppy sloppy: " + response.statusText
+          "Network response error: " + response.statusText
         );
       }
       return response.json();
@@ -993,7 +929,7 @@ function SearchBar() {
               
               container.addEventListener("click", function () {
                 searchBar.value = item.title;
-                window.open(ROOT + item.link, "_blank"); // Open in new tab
+                window.open(item.link, "_blank");
                 searchBar.value = ""; // Clear the search bar
                 dropdown.innerHTML = "";
                 dropdown.style.display = "none";
@@ -1038,7 +974,7 @@ function SearchBar() {
                   (item.description && item.description.toLowerCase() === searchBar.value.toLowerCase())
               );
               if (filteredSuggestion) {
-                window.open(ROOT + filteredSuggestion.link, "_blank");
+                window.open(filteredSuggestion.link, "_blank");
                 searchBar.value = "";
                 dropdown.innerHTML = "";
                 dropdown.style.display = "none";
@@ -1250,11 +1186,6 @@ function scrollIndicator() {
   document.getElementById("myBar").style.width = scrolled + "%";
 }
 
-// Output the current year into the span
-function currentYear() {
-  const currentYear = new Date().getFullYear();
-  document.getElementById("currentYear").textContent = currentYear;
-}
 
 const font_size = [
   "p",
@@ -1265,7 +1196,7 @@ const font_size = [
   ".content-grid"
 ];
 
-// === Load components ===
+// === Initialization ===
 document.addEventListener("DOMContentLoaded", function () {
   // Add smooth scrolling to all links
   document.querySelectorAll("a").forEach(link => {
@@ -1287,78 +1218,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Helper function for fetch operations
-  const fetchAndInsert = (url, selector) => {
-    return fetch(ROOT + url)
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        return response.text();
-      })
-      .then(data => {
-        const element = document.querySelector(selector);
-        if (element) element.innerHTML = data;
-        return data;
-      })
-      .catch(error => console.error(`Error loading ${url}:`, error));
-  };
+  loadAndSetupSuggestions();
+  fetchCommit();
+  window.onscroll = scrollIndicator;
 
-  /// Load components ///
+  const initialLightTheme = codeThemeSwitch("light-theme-select", "lightTheme", 0);
+  const initialDarkTheme = codeThemeSwitch("dark-theme-select", "darkTheme", 0);
+  CodeDarkMode(initialLightTheme, initialDarkTheme);
+  BodyDarkMode();
+  extendSearchBar();
 
-  // Load highlights-and-attribute and setup suggestions
-  fetch(ROOT + "/assets/components/highlights-and-attribute.html")
-    .then(response => response.text())
-    .then(data => {
-      document.querySelector(".highlights-and-attribute").innerHTML = data;
-      loadAndSetupSuggestions();
-      fetchCommit();
-    })
-    .catch(error => console.error('Error loading highlights and attribute:', error));
+  Switcher("fontFamily", "font-select", [".content-grid"], 0);
+  Switcher("fontSize", "font-size-select", font_size, 2);
+  Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 0);
 
-  // Load logo and set image
-  fetch(ROOT + "/assets/components/logo.html")
-    .then(response => response.text())
-    .then(data => {
-      document.querySelector(".logo-and-side-nav").innerHTML = data;
-      setImage("logoImage", "/public/Images/Logo/pendulum_logo.webp");
-    })
-    .catch(error => console.error('Error loading logo:', error));
-
-  // Load footer and set current year
-  fetch(ROOT + "/assets/components/footer.html")
-    .then(response => response.text())
-    .then(data => {
-      document.querySelector("footer").innerHTML = data;
-      currentYear();
-    })
-    .catch(error => console.error('Error loading footer:', error));
-
-  // Load top bar
-  const topNavContainer = document.createElement('div');
-  topNavContainer.classList.add('top-nav');
-  document.body.prepend(topNavContainer);
-  
-  // load top nav twice because the coding theme needs initialization
-  fetchAndInsert("/assets/components/top-bar-and-setting.html", ".top-nav")
-    .then(() => {
-      // Setup scrolling indicator
-      window.onscroll = scrollIndicator;
-      
-      // Initialize themes and UI components
-      const initialLightTheme = codeThemeSwitch("light-theme-select", "lightTheme", 0);
-      const initialDarkTheme = codeThemeSwitch("dark-theme-select", "darkTheme", 0);
-      
-      CodeDarkMode(initialLightTheme, initialDarkTheme);
-      BodyDarkMode();
-      extendSearchBar();
-      
-      // Initialize UI switches
-      Switcher("fontFamily", "font-select", [".content-grid"], 0);
-      Switcher("fontSize", "font-size-select", font_size, 2);
-      Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 0);
-      
-      // Initialize search
-      SearchBar();
-    });
+  SearchBar();
 });
 
 function fetchCommit() {
@@ -1414,7 +1288,7 @@ function fetchCommit() {
       const statsElement = document.getElementById('repo-stats');
       if (statsElement) {
         statsElement.textContent = 
-          `Total Updates: ${formatNumber(totalCommits)}\n` +
+          `\nTotal Updates: ${formatNumber(totalCommits)}\n` +
           `Estimated Lines: ${formatNumber(estimatedLines)}\n` +
           `Articles: ${articleCount} | Posts: ${postCount}\n` +
           `Repository Age: ${ageString}`;
@@ -1468,7 +1342,7 @@ function loadPosts() {
   postContainer.appendChild(loadingElement);
   
   // Fetch posts data from JSON file
-  fetch(ROOT + "/assets/json/articles.json")
+  fetch("/assets/json/articles.json")
     .then(response => {
       if (!response.ok) {
         throw new Error("Network response error: " + response.statusText);
@@ -1476,7 +1350,6 @@ function loadPosts() {
       return response.json();
     })
     .then(data => {
-      // Check if posts array exists
       const posts = data.posts || [];
       
       if (posts.length === 0) {

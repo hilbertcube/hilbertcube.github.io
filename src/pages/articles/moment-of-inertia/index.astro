@@ -1,0 +1,94 @@
+---
+/**
+ * src/pages/articles/moment-of-inertia/index.astro
+ * =================================================
+ * Article: Slightly More Interesting Inertia Problems
+ * Migrated from /articles/moment-of-inertia/index.html
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+---
+
+<BaseLayout
+  title="Article - Moment of Inertia"
+  description="Slightly More Interesting Inertia Problems"
+  keywords="Wave equation, python, eigenvalue, boundary conditions"
+>
+  <Fragment slot="head">
+    <style>
+      .front-img {
+        display: block;
+        width: 100%;
+        border-radius: 10px;
+        height: auto;
+        margin: auto;
+      }
+    </style>
+  </Fragment>
+
+  <Fragment slot="sidebar">
+    <div class="toc">
+      <header class="major">
+        <h2>Table of Contents</h2>
+      </header>
+      <ul>
+        <li>Introduction</li>
+        <li><a href="#Appendix">Appendix</a></li>
+        <li><a href="#References">References</a></li>
+      </ul>
+    </div>
+    <div class="highlights-and-attribute">
+      <HighlightsAndAttribute />
+    </div>
+  </Fragment>
+
+  <div class="mathjax-definition">
+    \[ \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
+    \newcommand&#123;\rbrac&#125;&#123;\right)&#125; \]
+  </div>
+
+  <div class="content-grid">
+    <header>
+      <div class="topic">
+        Topics: Mathematics, Physics, Classical Mechanics, Moment of Inertia
+      </div>
+      <h1 class="title">Slightly More Interesting Inertia Problems</h1>
+      <div class="date">Updated June 14, 2024.</div>
+      <figure style="margin: 0;">
+        <img class="front-img" src="#" alt="image" />
+      </figure>
+    </header>
+
+    <div class="Quote">
+      <div class="Quote-content">&#8220;Some Quote.&#8221;</div>
+      <div class="Author">- Author</div>
+    </div>
+
+    <h2 id="Introduction">Introduction</h2>
+
+    <section>
+      <h2>More Articles</h2>
+      <div id="rec-article-container"></div>
+    </section>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src="/assets/js/blogpage-setting.js"></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+      async></script>
+  </Fragment>
+</BaseLayout>
