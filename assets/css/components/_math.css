@@ -121,7 +121,7 @@ mjx-container[jax="CHTML"][display="true"] {
   margin-left: 0.75em;
 }
 
-body.dark-mode .solution summary::after {
+html.dark-mode .solution summary::after {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23a9a9b3" d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" transform="rotate(90 12 12)"/></svg>');
 }
 

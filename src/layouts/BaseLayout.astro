@@ -74,13 +74,20 @@ const {
 
     <!-- Page-specific head content (extra styles, meta, etc.) -->
     <slot name="head" />
+
+    <!-- Apply dark mode before first paint to prevent flash -->
+    <script is:inline>
+      if (localStorage.getItem("mode") === "dark") {
+        document.documentElement.classList.add("dark-mode");
+      }
+    </script>
   </head>
 
-  <body class="nav-open light-mode">
+  <body class="light-mode">
     <!-- Top bar is now embedded in the HTML at build time -->
     <TopBar />
 
-    <nav class="navbar open" id="navbar">
+    <nav class="navbar" id="navbar">
       <div class="logo-and-side-nav">
         <Logo />
       </div>

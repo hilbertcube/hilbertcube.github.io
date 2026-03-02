@@ -38,17 +38,26 @@ body::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-/* Navigation states */
-body.nav-open {
-  transition: padding-left 0.5s ease;
+/* Navigation states
+   Desktop default: reserve sidebar space via padding.
+   On mobile (<= 1200px) responsive CSS overrides padding to 0. */
+body {
   padding-left: var(--side-nav-width);
   margin-top: 0;
   padding-top: 0;
 }
 
+body.nav-open {
+  padding-left: var(--side-nav-width);
+}
+
 body.nav-closed {
-  transition: padding-left 0.5s ease;
   padding-left: 0;
+}
+
+/* Enable body padding transition only after JS initializes */
+body.transitions-ready {
+  transition: padding-left 0.5s ease;
 }
 
 /* Universal styles for better text rendering */

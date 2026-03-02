@@ -266,7 +266,6 @@ function toggleNav() {
 function checkWidthAndToggle() {
   const body = document.body;
   const navbar = document.querySelector(".navbar");
-  const toggleBtn = document.querySelector(".toggle-btn");
 
   if (window.innerWidth < 1200) {
     body.classList.remove("nav-open");
@@ -279,9 +278,18 @@ function checkWidthAndToggle() {
     navbar.classList.add("open");
     navbar.classList.remove("closed");
   }
+
+  // Enable transitions after the initial state is set (prevents flash)
+  if (!navbar.classList.contains("transitions-ready")) {
+    // Use requestAnimationFrame to ensure classes are painted first
+    requestAnimationFrame(() => {
+      navbar.classList.add("transitions-ready");
+      body.classList.add("transitions-ready");
+    });
+  }
 }
 checkWidthAndToggle();
-window.addEventListener("resize", checkWidthAndToggle); // Event listener for window resize
+window.addEventListener("resize", checkWidthAndToggle);
 
 // COPY BUTTON
 function copyButton() {
@@ -638,17 +646,17 @@ function sharePage(event, platform) {
 function BodyDarkMode() {
   const modeToggle = document.getElementById("modeToggle");
   const toggleIcon = document.getElementById("toggleIcon");
-  const body = document.body;
+  const root = document.documentElement;
 
   // Check for saved mode in localStorage
   let darkMode = localStorage.getItem("mode") === "dark";
 
   function updateMode() {
     if (darkMode) {
-      body.classList.add("dark-mode");
+      root.classList.add("dark-mode");
       toggleIcon.classList.replace("fa-moon", "fa-sun"); // Change to sun icon
     } else {
-      body.classList.remove("dark-mode");
+      root.classList.remove("dark-mode");
       toggleIcon.classList.replace("fa-sun", "fa-moon"); // Change to moon icon
     }
     localStorage.setItem("mode", darkMode ? "dark" : "light");
@@ -694,7 +702,7 @@ function CodeDarkMode(lightThemeHref, darkThemeHref) {
       darkThemeLink.href = darkThemeHref; // Load dark theme
       lightThemeLink.disabled = true; // Disable light theme
       document.head.appendChild(darkThemeLink);
-      document.body.classList.add("dark-mode");
+      document.documentElement.classList.add("dark-mode");
       toggleIcon.classList.replace("fa-moon-o", "fa-sun-o"); // Change to sun icon
     } else {
       const savedLightTheme =
@@ -704,7 +712,7 @@ function CodeDarkMode(lightThemeHref, darkThemeHref) {
       if (document.head.contains(darkThemeLink)) {
         document.head.removeChild(darkThemeLink); // Remove dark theme
       }
-      document.body.classList.remove("dark-mode");
+      document.documentElement.classList.remove("dark-mode");
       toggleIcon.classList.replace("fa-sun-o", "fa-moon-o"); // Change to moon icon
     }
     localStorage.setItem("mode", darkMode ? "dark" : "light");
