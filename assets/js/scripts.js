@@ -1238,11 +1238,11 @@ document.addEventListener("DOMContentLoaded", function () {
 function fetchCommit() {
   // Fetch repository stats
   Promise.all([
-    fetch('https://api.github.com/repos/hilbertcube/neumanncondition'),
-    fetch('https://api.github.com/repos/hilbertcube/neumanncondition/commits?per_page=1'),
+    fetch('https://api.github.com/repos/hilbertcube/hilbertcube.github.io'),
+    fetch('https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits?per_page=1'),
     fetch('/assets/json/latest_commit.json'),
     fetch('/assets/json/articles.json'),
-    fetch('https://api.github.com/repos/hilbertcube/neumanncondition/git/trees/main?recursive=1')
+    fetch('https://api.github.com/repos/hilbertcube/hilbertcube.github.io/git/trees/main?recursive=1')
   ])
     .then(async ([repoRes, commitsRes, localCommitRes, articlesRes, treeRes]) => {
       const repoData = await repoRes.json();
@@ -1316,7 +1316,7 @@ function fetchCommit() {
       });
 
       document.getElementById('commit-info').textContent =
-        `Last Updated: ${datePart}, ${timePart} (PST)\nCommit: ${message}`;
+        `\nLast Updated: ${datePart}, ${timePart} (PST)\nCommit: ${message}`;
     })
     .catch(error => {
       console.error('Error fetching data:', error);
