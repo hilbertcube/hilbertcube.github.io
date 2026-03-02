@@ -1,23 +1,23 @@
 {
-  "sha": "1edbd6931505a99c45842cf35ae2507b2b901e0f",
-  "node_id": "C_kwDONFt089oAKDFlZGJkNjkzMTUwNWE5OWM0NTg0MmNmMzVhZTI1MDdiMmI5MDFlMGY",
+  "sha": "bcd352cfaf69b41e352e033c2d3f63adb742b3f2",
+  "node_id": "C_kwDONFt089oAKGJjZDM1MmNmYWY2OWI0MWUzNTJlMDMzYzJkM2Y2M2FkYjc0MmIzZjI",
   "commit": {
     "author": {
       "name": "Don Le",
       "email": "ledongduu@gmail.com",
-      "date": "2026-03-02T01:01:58Z"
+      "date": "2026-03-02T01:28:40Z"
     },
     "committer": {
       "name": "Don Le",
       "email": "ledongduu@gmail.com",
-      "date": "2026-03-02T01:01:59Z"
+      "date": "2026-03-02T01:28:40Z"
     },
-    "message": "Fix GitHub API repo name (neumanncondition → hilbertcube.github.io)",
+    "message": "Rewrite scripts for Astro, fix dark mode flash, fix sidebar flash on mobile",
     "tree": {
-      "sha": "4cd982030250c8db066b365b73d3dc7e4b084cef",
-      "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/git/trees/4cd982030250c8db066b365b73d3dc7e4b084cef"
+      "sha": "041a556e06066c28058ecfd44754e633e2b94672",
+      "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/git/trees/041a556e06066c28058ecfd44754e633e2b94672"
     },
-    "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/git/commits/1edbd6931505a99c45842cf35ae2507b2b901e0f",
+    "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/git/commits/bcd352cfaf69b41e352e033c2d3f63adb742b3f2",
     "comment_count": 0,
     "verification": {
       "verified": false,
@@ -27,9 +27,9 @@
       "verified_at": null
     }
   },
-  "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits/1edbd6931505a99c45842cf35ae2507b2b901e0f",
-  "html_url": "https://github.com/hilbertcube/hilbertcube.github.io/commit/1edbd6931505a99c45842cf35ae2507b2b901e0f",
-  "comments_url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits/1edbd6931505a99c45842cf35ae2507b2b901e0f/comments",
+  "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits/bcd352cfaf69b41e352e033c2d3f63adb742b3f2",
+  "html_url": "https://github.com/hilbertcube/hilbertcube.github.io/commit/bcd352cfaf69b41e352e033c2d3f63adb742b3f2",
+  "comments_url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits/bcd352cfaf69b41e352e033c2d3f63adb742b3f2/comments",
   "author": {
     "login": "hilbertcube",
     "id": 142064589,
@@ -74,9 +74,9 @@
   },
   "parents": [
     {
-      "sha": "6aaf3c0d4db022eaec932525766c2c2f201c84ae",
-      "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits/6aaf3c0d4db022eaec932525766c2c2f201c84ae",
-      "html_url": "https://github.com/hilbertcube/hilbertcube.github.io/commit/6aaf3c0d4db022eaec932525766c2c2f201c84ae"
+      "sha": "ac67b5fa44fead4b0319a93ee06fdf758ca9d551",
+      "url": "https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits/ac67b5fa44fead4b0319a93ee06fdf758ca9d551",
+      "html_url": "https://github.com/hilbertcube/hilbertcube.github.io/commit/ac67b5fa44fead4b0319a93ee06fdf758ca9d551"
     }
   ]
 }
