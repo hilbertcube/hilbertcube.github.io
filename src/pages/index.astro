@@ -3,12 +3,6 @@
  * src/pages/index.astro
  * =====================
  * Homepage — migrated from /index.html
- *
- * What changed:
- *  - No more runtime fetch() for top-bar, logo, footer, highlights
- *  - All components are imported via BaseLayout at build time
- *  - Page-specific styles use <style> in the head slot
- *  - Page-specific scripts go in the scripts slot
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Banner from "../components/Banner.astro";

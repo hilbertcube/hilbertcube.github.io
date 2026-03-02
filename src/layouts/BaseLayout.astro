@@ -2,8 +2,7 @@
 /**
  * BaseLayout.astro
  * ================
- * Shared layout for all pages. Replaces the boilerplate that was copy-pasted
- * into every index.html. Components are imported at build time — no fetch() calls.
+ * Shared layout for all pages.
  */
 import TopBar from "../components/TopBar.astro";
 import Logo from "../components/Logo.astro";
@@ -58,7 +57,10 @@ const {
     <!-- Bundled site CSS (single file, no @import waterfall) -->
     <link rel="stylesheet" href="/assets/css/bundle.css" />
 
-    <!-- External CDN stylesheets (loaded in parallel) -->
+    <!-- Preconnect to third-party origins -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+    <!-- External CDN stylesheets -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -66,14 +68,6 @@ const {
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap"
     />
 
     <!-- Active nav button highlighting -->
@@ -127,11 +121,6 @@ const {
       </footer>
     </main>
 
-    <!--
-    scripts.js still runs for interactive features (dark mode, search, settings).
-    The fetch-and-insert component-loading code can be removed in a future pass
-    since all HTML components are now baked in.
-  -->
     <script is:inline src="/assets/js/scripts.js"></script>
 
     <!-- Additional page-specific scripts -->
