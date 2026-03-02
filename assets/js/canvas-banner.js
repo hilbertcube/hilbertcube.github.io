@@ -19,7 +19,7 @@ function canvas() {
   // L_{\text{LDM}} = \mathbb{E}_{t, z_0, \varepsilon, y}\left[\lVert \varepsilon - \varepsilon_0(z_t, t, \tau_\theta(y)) \rVert^2\right]
   
   
-  const svgUrls = svgFileNames.map(fileName => `${ROOT}/public/banner-svg/${fileName}`);
+  const svgUrls = svgFileNames.map(fileName => `/public/banner-svg/${fileName}`);
   const svgImages = [];
   const numSvgs = svgUrls.length;
 
