@@ -192,7 +192,43 @@ html.dark-mode {
   font-style: italic;
   font-display: swap;
   src: url("../fonts/computer-modern/cmunsl.woff") format("woff");
-}/*
+}
+
+@font-face {
+  font-family: "Jura";
+  font-weight: 300;
+  font-display: swap;
+  src: url("../fonts/jura-v34-latin/jura-v34-latin-300.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Jura";
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/jura-v34-latin/jura-v34-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Jura";
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/jura-v34-latin/jura-v34-latin-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Jura";
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/jura-v34-latin/jura-v34-latin-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Jura";
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/jura-v34-latin/jura-v34-latin-700.woff2") format("woff2");
+}
+/*
  * Reset & Base Styles
  * Normalize browser defaults and set base styles
  */
