@@ -497,47 +497,8 @@ function changeTab(evt, nav_item_name, switch_target) {
   evt.currentTarget.className += " tab-effect";
 }
 
-// LOAD SUGGESTIONS ON SIDE NAV
-function loadAndSetupSuggestions() {
-  fetch("/assets/json/articles.json")
-    .then((response) => response.json())
-    .then((data) => {
-      const articles = data.articles;
-      document.querySelectorAll(".home-li").forEach((li) => {
-        const title = li.getAttribute("data-id");
-        const article = articles.find((article) => article.id === title);
-
-        if (article) {
-          // Create a link element for the image
-          const articleLink = document.createElement("a");
-          articleLink.href = article.link;
-          articleLink.target = "_blank"; // Open link in a new tab (optional)
-          articleLink.className = "recommend-img";
-
-          // Create and add the image dynamically
-          const img = document.createElement("img");
-          img.src = image_root + article.image;
-          img.alt = article.title;
-
-          // Append the image to the link
-          articleLink.appendChild(img);
-
-          // Create a span element to hold the title
-          const titleSpan = document.createElement("span");
-          titleSpan.textContent = article.title;
-
-          // Clear any existing content and append the title and link (which contains the image) to the li element
-          li.textContent = ""; // Clear any existing text
-          li.appendChild(titleSpan); // Append the title
-          li.appendChild(articleLink); // Append the link with image
-        }
-      });
-
-      // Setup dropdown effect
-      setupDropdownEffect();
-    })
-    .catch((error) => console.error("Error loading articles:", error));
-}
+// Highlights are now rendered at build time by HighlightsAndAttribute.astro.
+// setupDropdownEffect() is called directly from DOMContentLoaded.
 
 // SUGGESTION DROPDOWN BEHAVIOR
 function setupDropdownEffect() {
@@ -1226,7 +1187,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  loadAndSetupSuggestions();
+  setupDropdownEffect();
   fetchCommit();
   window.onscroll = scrollIndicator;
 
