@@ -4,8 +4,8 @@
  * ===============================================================
  * Article: Algorithmic Analysis of an Algorithm
  */
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,6 +14,7 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+import Equation from "@components/math/Equation.astro";
 ---
 
 <BaseLayout
@@ -168,7 +169,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           physical conditions. Therefore, these functions are often expressed
           with additional constant factors, such as:
         </p>
-        <div class="equation">$$f(n) = C_1n + C_0,$$</div>
+        <Equation>$$f(n) = C_1n + C_0,$$</Equation>
         <p>
           where $C_1$ and $C_0$ are factors that depends on outside conditions.
           This expression is quite inconvenient, as we don't usually know what
@@ -176,7 +177,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           the worst-case runtime of an algorithm is through the big-O notation.
           For example, if $f(n) = C_1n + C_0$, then it can be said that
         </p>
-        <div class="equation">$$f(n) \in O(n).$$</div>
+        <Equation>$$f(n) \in O(n).$$</Equation>
         <p>
           There are many categories of such functions $f(n)$, and the most
           important functions used in algorithmic analysis are the constant
@@ -194,10 +195,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           halves, then merges two sorted arrays in linear time. Let $T(n)$ be
           the time to sort $n$ items. The recurrence is
         </p>
-        <div class="equation">
+        <Equation>
           $$T(n) = 2\,T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
           \Theta(n).$$
-        </div>
+        </Equation>
         <p>
           Here $a=2$, $b=2$, and $f(n)=\Theta(n)$ matches Case 2 of the Master
           Theorem with $k=0,\;\log_b a=1$, yielding $T(n) \in \Theta(n\,\log
@@ -210,11 +211,11 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           <div class="definition" data-definition-name=". The Big O">
             Let $f$ and $g$ be real-valued and not necessarily continuous
             functions. We say that $f$ is the big O of $g$, written
-            <div class="equation">$$f(n) = O(g(n)),\quad n \to \infty,$$</div>
+            <Equation>$$f(n) = O(g(n)),\quad n \to \infty,$$</Equation>
             if there exists some value $n_0$ such that
-            <div class="equation">
+            <Equation>
               $$|f(n)| \le M|g(n)|,\quad \forall n \ge n_0.$$
-            </div>
+            </Equation>
             for some constant $M > 0$.
           </div>
 
@@ -230,10 +231,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           Binary search on a sorted array halves the search interval each
           iteration. The recurrence is
         </p>
-        <div class="equation">
+        <Equation>
           $$T(n) = T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
           \Theta(1).$$
-        </div>
+        </Equation>
         <p>
           With $a=1$, $b=2$, $f(n)=\Theta(1)$, we have $\log_b a = 0$ and Case 2
           gives $T(n) \in \Theta(\log n)$. Iterative binary search uses
@@ -246,13 +247,11 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           <div class="definition" data-definition-name=". The Big Omega">
             Big Omega provides a lower bound on the growth of a function. We say
             that $f$ is the big Omega of $g$, written
-            <div class="equation">
-              $$f(n) = \Omega(g(n)),\quad n \to \infty,$$
-            </div>
+            <Equation> $$f(n) = \Omega(g(n)),\quad n \to \infty,$$ </Equation>
             if there exists some value $n_0$ such that
-            <div class="equation">
+            <Equation>
               $$|f(n)| \ge M|g(n)|,\quad \forall n \ge n_0,$$
-            </div>
+            </Equation>
             for some constant $M > 0$.
           </div>
 
@@ -276,13 +275,11 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           <div class="definition" data-definition-name=". The Big Theta">
             Big Theta describes a tight bound on the growth of a function. We
             say that $f$ is the big Theta of $g$, written
-            <div class="equation">
-              $$f(n) = \Theta(g(n)),\quad n \to \infty,$$
-            </div>
+            <Equation> $$f(n) = \Theta(g(n)),\quad n \to \infty,$$ </Equation>
             if there exist constants $M_1, M_2 > 0$ and a value $n_0$ such that
-            <div class="equation">
+            <Equation>
               $$M_1|g(n)| \le |f(n)| \le M_2|g(n)|,\quad \forall n \ge n_0.$$
-            </div>
+            </Equation>
           </div>
 
           <p>
@@ -346,10 +343,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           <p>
             Many divide-and-conquer algorithms lead to recurrences of the form
           </p>
-          <div class="equation">
+          <Equation>
             $$T(n) = a\,T\!\left(\frac&#123;n&#125;&#123;b&#125;\right) + f(n),
             \quad a \ge 1,\; b>1,$$
-          </div>
+          </Equation>
           <p>
             where $a$ subproblems of size $n/b$ are solved and $f(n)$ accounts
             for splitting/merging work. The Master Theorem gives asymptotic
@@ -383,10 +380,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
             both halves, then merges two sorted arrays in linear time. Let
             $T(n)$ be the time to sort $n$ items. The recurrence is
           </p>
-          <div class="equation">
+          <Equation>
             $$T(n) = 2\,T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
             \Theta(n),$$
-          </div>
+          </Equation>
           <p>
             which solves to $T(n) \in \Theta(n\,\log n)$ by the Master Theorem.
             The merge step uses linear extra space, so space complexity is
@@ -400,10 +397,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
             Binary search on a sorted array halves the search interval each
             iteration. The recurrence is
           </p>
-          <div class="equation">
+          <Equation>
             $$T(n) = T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
             \Theta(1) \;\Rightarrow\; T(n) \in \Theta(\log n).$$
-          </div>
+          </Equation>
           <p>
             Iterative binary search uses $\Theta(1)$ extra space; the naive
             recursive form uses $\Theta(\log n)$ stack space.
@@ -436,7 +433,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="constant-function">
           <h3>The constant function</h3>
           <p>The constant time complexity function, denoted</p>
-          <div class="equation">$$f(n) = c \in O(1),$$</div>
+          <Equation>$$f(n) = c \in O(1),$$</Equation>
           <p>
             does not depend on the size of the input (unless the size of the
             input is exceptionally large). Some examples of algorithms with this
@@ -650,13 +647,13 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
               value. A brute-force approach would involve checking every
               possible subset of the set to see if its sum equals the target.
               Time Complexity: $O(2^n)$ because there are
-              <div class="equation">
+              <Equation>
                 $$S =
                 \sum_&#123;k=0&#125;^&#123;n&#125;\binom&#123;n&#125;&#123;k&#125;
                 = \binom&#123;n&#125;&#123;1&#125; +
                 \binom&#123;n&#125;&#123;2&#125; + \ldots +
                 \binom&#123;n&#125;&#123;n&#125; = 2^n.$$
-              </div>
+              </Equation>
               subsets of a set of $n$ elements.
             </li>
             <li style="margin: var(--in-page-li-spacing) 0;">

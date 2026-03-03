@@ -1,0 +1,36 @@
+---
+/**
+ * src/components/code/TabBox.astro
+ * =================================
+ * Tabbed container with clickable tab buttons.
+ * Relies on the global changeTab() function in scripts.js.
+ *
+ * Props
+ * -----
+ * - tabs     : array of { label, id } objects — one per tab
+ * - tabClass : CSS class shared by all tab panes (used by changeTab)
+ */
+
+interface Props {
+  tabs: { label: string; id: string }[];
+  tabClass: string;
+}
+
+const { tabs, tabClass } = Astro.props;
+---
+
+<div class="box" style="margin: 50px auto;">
+  <div class="tab-button-container">
+    {
+      tabs.map((tab, i) => (
+        <button
+          class={`tab-button${i === 0 ? " tab-effect" : ""}`}
+          onclick={`changeTab(event, '${tab.id}', '${tabClass}')`}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+  <slot />
+</div>

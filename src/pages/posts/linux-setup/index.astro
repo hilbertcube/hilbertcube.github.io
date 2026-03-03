@@ -4,8 +4,8 @@
  * =========================================
  * Post: Linux Setup
  */
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,6 +14,8 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
+import ShellScript from "@components/code/ShellScript.astro";
+import CodeBlock from "@components/code/CodeBlock.astro";
 ---
 
 <BaseLayout
@@ -131,49 +133,25 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
           application, navigate to the "Additional Drivers" tab, and select the
           recommended NVIDIA driver for your GPU. Apply the changes and reboot
           when prompted. Alternatively, install via terminal:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo ubuntu-drivers devices
+          <ShellScript>sudo ubuntu-drivers devices
 sudo ubuntu-drivers autoinstall
-sudo reboot</code></pre>
-          </div>
+sudo reboot</ShellScript>
         </li>
         <li class="bullet">
           Power Management (Powertop): Linux's battery management on laptops
           tends to be less optimized than other operating systems. Powertop
           helps optimize power consumption and extend battery life. Install
           with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt update && sudo apt upgrade -y
+          <ShellScript>sudo apt update && sudo apt upgrade -y
 sudo apt install powertop -y
-sudo systemctl enable tlp</code></pre>
-          </div>
+sudo systemctl enable tlp</ShellScript>
         </li>
 
         <li>
           GNOME: I use GNOME desktop environment for simplicity. To further
           customize and optimize it, install GNOME Tweaks by running:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt update && sudo apt upgrade -y
-sudo apt install gnome-tweaks -y</code></pre>
-          </div>
+          <ShellScript>sudo apt update && sudo apt upgrade -y
+sudo apt install gnome-tweaks -y</ShellScript>
           You can use GNOME Tweaks to adjust various settings such as themes, fonts,
           and extensions to enhance your desktop experience. Here are some of my favorite
           GNOME extensions:
@@ -221,15 +199,7 @@ sudo apt install gnome-tweaks -y</code></pre>
           <a href="https://gdm-settings.github.io/" class="url">GDM settings</a
           >: lock screen customization, auto login, etc. Install GDM settings
           with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt install gdm3setup -y</code></pre>
-          </div>
+          <ShellScript>sudo apt install gdm3setup -y</ShellScript>
         </li>
       </ul>
     </section>
@@ -256,19 +226,13 @@ sudo apt install gnome-tweaks -y</code></pre>
         href="https://github.com/hpjansson/chafa"
         class="url">chafa</a
       >:
-      <div
-        class="code-container"
-        style="text-align: center; margin: 25px auto; max-width: 40em;"
-      >
-        <button class="copy-btn">Copy</button>
-        <pre><code class="language-bash">ucla-logo() &#123;
+      <CodeBlock>ucla-logo() &#123;
     # Generate the logo on the fly
     local LOGO=$(chafa --size 50 --symbols block /home/img/ucla.png)
     
     # Print it
     echo -e "$LOGO"
-&#125;</code></pre>
-      </div>
+&#125;</CodeBlock>
     </section>
 
     <section id="change-default-behavior">
@@ -298,47 +262,20 @@ sudo apt install gnome-tweaks -y</code></pre>
         <li class="bullet">
           Better Bash autocompletion: Install bash-completion for improved
           command-line experience:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt update && sudo apt upgrade -y
-sudo apt install bash-completion -y</code></pre>
-          </div>
+          <ShellScript>sudo apt update && sudo apt upgrade -y
+sudo apt install bash-completion -y</ShellScript>
           After installation, verify, and then source it:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">echo $BASH_VERSION
-source /etc/bash_completion</code></pre>
-          </div>
+          <ShellScript>echo $BASH_VERSION
+source /etc/bash_completion</ShellScript>
           Next, add the following line to your <code class="inline-code"
             >~/.bashrc</code
           > file to enable bash-completion automatically on terminal startup:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre><code class="language-bash">if [ -f /etc/bash_completion ]; then
+          <CodeBlock>if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
-fi</code></pre>
-          </div>
+fi</CodeBlock>
           The next thing I did is to enable a menu-style tab completion by adding
           the following lines to <code class="inline-code">~/.inputrc</code>:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre><code class="language-bash"># Show all matches immediately
+          <CodeBlock># Show all matches immediately
 set show-all-if-ambiguous on
 
 # Enable menu-style completion
@@ -349,29 +286,13 @@ set completion-ignore-case on
 set completion-map-case on
 
 # Mark symlinked directories
-set mark-symlinked-directories on</code></pre>
-          </div>
+set mark-symlinked-directories on</CodeBlock>
           Finally, reload it with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">bind -f ~/.inputrc</code></pre>
-          </div>
+          <ShellScript>bind -f ~/.inputrc</ShellScript>
           How this works: let's say you're in a folder called UCLA, with the following
           folders inside:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">ls UCLA
-CS-111  CS-180  CS-35L  CS-M51A  ECE-102 ECE-115C</code></pre>
-          </div>
+          <ShellScript>ls UCLA
+CS-111  CS-180  CS-35L  CS-M51A  ECE-102 ECE-115C</ShellScript>
           now, when you press CS + Tab, it will rotate through different options of
           the CS folders. Then simply press enter to select the desired folder.
         </li>
@@ -381,65 +302,25 @@ CS-111  CS-180  CS-35L  CS-M51A  ECE-102 ECE-115C</code></pre>
           which is located where the right Ctrl key should be. To remap it back
           to Ctrl, first install keyd to tell which keycode corresponds to the
           copilot key:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt install keyd -y
+          <ShellScript>sudo apt install keyd -y
 sudo systemctl enable keyd
-sudo systemctl start keyd</code></pre>
-          </div>
+sudo systemctl start keyd</ShellScript>
           After installation, remember to verify with
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">whereis keyd
-systemctl status keyd</code></pre>
-          </div>
+          <ShellScript>whereis keyd
+systemctl status keyd</ShellScript>
 
           Next, monitor which keycode corresponds to the copilot key by running:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo keyd monitor # or sudo keyd.rvaiya monitor</code></pre>
-          </div>
+          <ShellScript>sudo keyd monitor # or sudo keyd.rvaiya monitor</ShellScript>
           Add the following to <code class="inline-code"
             >/etc/keyd/default.conf</code
           >:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">[ids]
+          <ShellScript>[ids]
 *
 
 [main]
-leftshift+leftmeta+f23 = rightcontrol # this varies, adjust accordingly to your system</code></pre>
-          </div>
+leftshift+leftmeta+f23 = rightcontrol # this varies, adjust accordingly to your system</ShellScript>
           Then, reload with
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo keyd reload # or sudo keyd.rvaiya reload</code></pre>
-          </div>
+          <ShellScript>sudo keyd reload # or sudo keyd.rvaiya reload</ShellScript>
         </li>
       </ul>
     </section>
@@ -451,15 +332,7 @@ leftshift+leftmeta+f23 = rightcontrol # this varies, adjust accordingly to your 
           <a href="https://code.visualstudio.com/" class="url">VSCode</a>: My
           primary code editor. Simply use the Software Center to install it via
           snap. If you dislike snap, install with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"
-              data-continuation-str="\"><code class="language-bash">sudo apt update && sudo apt upgrade -y
+          <ShellScript continuationStr={"\\"}>sudo apt update && sudo apt upgrade -y
 sudo apt install wget gpg -y
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
@@ -467,18 +340,12 @@ sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microso
 https://packages.microsoft.com/repos/code stable main" \
 > /etc/apt/sources.list.d/vscode.list'
 sudo apt install apt-transport-https -y
-sudo apt update && sudo apt install code -y</code></pre>
-          </div>
+sudo apt update && sudo apt install code -y</ShellScript>
 
           <strong>Settings:</strong> on Linux, again, copy and paste is defaulted
           as Ctrl+Shift+C and Ctrl+Shift+V. To change it back to Ctrl+C and Ctrl+V,
           go to Settings > Keyboard Shortcuts, and paste the following JSON:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre><code class="language-json">[
+          <CodeBlock language="json">[
   &#123;
       "key": "ctrl+c",
       "command": "workbench.action.terminal.copySelection",
@@ -495,8 +362,7 @@ sudo apt update && sudo apt install code -y</code></pre>
       "args": &#123; "text": "\u0003" &#125;,
       "when": "terminalFocus"
   &#125;
-]</code></pre>
-          </div>
+]</CodeBlock>
 
           <section id="snap">
             <h3 class="h4-visual">A quick note about Snap</h3>
@@ -512,30 +378,14 @@ sudo apt update && sudo apt install code -y</code></pre>
         <li class="bullet">
           <a href="https://neovim.io/" class="url">Neovim</a>: Terminal-based
           text editor. Install with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt update && sudo apt upgrade -y
-sudo apt install neovim -y</code></pre>
-          </div>
+          <ShellScript>sudo apt update && sudo apt upgrade -y
+sudo apt install neovim -y</ShellScript>
         </li>
         <li class="bullet">
           <a href="https://git-scm.com/" class="url">Git</a>: Version control
           system. Install with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt update && sudo apt upgrade -y
-sudo apt install git -y</code></pre>
-          </div>
+          <ShellScript>sudo apt update && sudo apt upgrade -y
+sudo apt install git -y</ShellScript>
         </li>
         <li class="bullet">
           <a href="https://www.docker.com/" class="url">Docker</a>:
@@ -543,16 +393,7 @@ sudo apt install git -y</code></pre>
             href="https://docs.docker.com/engine/install/ubuntu/"
             class="url">official installation guide</a
           >:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"
-              data-continuation-str="\"
-              data-output="1, 4-5, 7-8, 12-13, 18-19, 22-23"><code class="language-bash"># update and remove old versions
+          <ShellScript output="1, 4-5, 7-8, 12-13, 18-19, 22-23" continuationStr={"\\"}># update and remove old versions
 sudo apt update
 sudo apt remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
 
@@ -576,8 +417,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
 # verify installation
 sudo systemctl status docker
-sudo docker run hello-world</code></pre>
-          </div>
+sudo docker run hello-world</ShellScript>
         </li>
       </ul>
     </section>
@@ -587,29 +427,13 @@ sudo docker run hello-world</code></pre>
         <li class="bullet">
           Essentials: Core development tools including build-essential, gdb,
           g++-multilib, and related packages. Install with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt install build-essential lldb ninja-build clang gdb g++-multilib -y</code></pre>
-          </div>
+          <ShellScript>sudo apt install build-essential lldb ninja-build clang gdb g++-multilib -y</ShellScript>
         </li>
         <li class="bullet">
           <a href="https://cmake.org/" class="url">CMake</a> and CMake GUI: Build
           system generator with GUI support for easier project configuration. Install
           with:
-          <div
-            class="code-container"
-            style="text-align: center; margin: 25px auto; max-width: 40em;"
-          >
-            <button class="copy-btn">Copy</button>
-            <pre
-              class="command-line"
-              data-host="pc"><code class="language-bash">sudo apt install cmake cmake-qt-gui -y</code></pre>
-          </div>
+          <ShellScript>sudo apt install cmake cmake-qt-gui -y</ShellScript>
         </li>
         <li class="bullet">
           Package Managers:
@@ -617,33 +441,17 @@ sudo docker run hello-world</code></pre>
             <li class="bullet">
               <a href="https://github.com/microsoft/vcpkg" class="url">Vcpkg</a
               >: Microsoft's C++ package manager. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">cd ~
+              <ShellScript>cd ~
 git clone https://github.com/microsoft/vcpkg
 ./vcpkg/bootstrap-vcpkg.sh
 export VCPKG_ROOT=~/vcpkg
-export PATH=$VCPKG_ROOT:$PATH</code></pre>
-              </div>
+export PATH=$VCPKG_ROOT:$PATH</ShellScript>
               Add the export lines to your .bashrc file to make them permanent.
             </li>
             <li class="bullet">
               <a href="https://conan.io/" class="url">Conan</a>: Alternative C++
               package manager. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">pip install conan</code></pre>
-              </div>
+              <ShellScript>pip install conan</ShellScript>
             </li>
           </ul>
         </li>
@@ -658,35 +466,13 @@ export PATH=$VCPKG_ROOT:$PATH</code></pre>
               <a href="https://developer.nvidia.com/cuda-downloads" class="url"
                 >NVIDIA website</a
               >. After installation, add these lines to your .bashrc:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre><code class="language-bash"># CUDA Toolkit paths
+              <CodeBlock># CUDA Toolkit paths
 export PATH=/usr/local/cuda-13.1/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH</code></pre>
-              </div>
+export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH</CodeBlock>
               Replace "13.1" with your installed version. Update the environment:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">source ~/.bashrc</code></pre>
-              </div>
+              <ShellScript>source ~/.bashrc</ShellScript>
               to update the environment variables. Verify the installation by running:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">nvcc --version</code></pre>
-              </div>
+              <ShellScript>nvcc --version</ShellScript>
               <li>
                 <a href="https://developer.nvidia.com/cudnn" class="url"
                   >cuDNN</a
@@ -703,27 +489,11 @@ export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH</code></pre>
               <li class="bullet">
                 <a href="https://valgrind.org/" class="url">Valgrind</a>: Memory
                 debugging, leak detection, and profiling tool. Install with:
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <button class="copy-btn">Copy</button>
-                  <pre
-                    class="command-line"
-                    data-host="pc"><code class="language-bash">sudo apt install valgrind -y</code></pre>
-                </div>
+                <ShellScript>sudo apt install valgrind -y</ShellScript>
               </li>
               <li class="bullet">
                 Perf: Performance analysis tool. Install with:
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <button class="copy-btn">Copy</button>
-                  <pre
-                    class="command-line"
-                    data-host="pc"><code class="language-bash">sudo apt install linux-tools-common linux-tools-$(uname -r) -y</code></pre>
-                </div>
+                <ShellScript>sudo apt install linux-tools-common linux-tools-$(uname -r) -y</ShellScript>
               </li>
             </ul>
           </li>
@@ -733,54 +503,22 @@ export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH</code></pre>
               <li class="bullet">
                 <a href="https://www.boost.org/" class="url">Boost</a>:
                 Comprehensive C++ library collection. Install with:
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <button class="copy-btn">Copy</button>
-                  <pre
-                    class="command-line"
-                    data-host="pc"><code class="language-bash">sudo apt install libboost-all-dev -y</code></pre>
-                </div>
+                <ShellScript>sudo apt install libboost-all-dev -y</ShellScript>
               </li>
               <li class="bullet">
                 <a href="https://eigen.tuxfamily.org/" class="url">Eigen</a>:
                 C++ template library for linear algebra. Install with:
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <button class="copy-btn">Copy</button>
-                  <pre
-                    class="command-line"
-                    data-host="pc"><code class="language-bash">sudo apt install libeigen3-dev -y</code></pre>
-                </div>
+                <ShellScript>sudo apt install libeigen3-dev -y</ShellScript>
               </li>
               <li class="bullet">
                 <a href="https://www.open-mpi.org/" class="url">OpenMPI</a>:
                 Parallel programming framework. Install with:
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <button class="copy-btn">Copy</button>
-                  <pre
-                    class="command-line"
-                    data-host="pc"><code class="language-bash">sudo apt install libopenmpi-dev openmpi-bin -y</code></pre>
-                </div>
+                <ShellScript>sudo apt install libopenmpi-dev openmpi-bin -y</ShellScript>
               </li>
               <li class="bullet">
                 <a href="https://www.fftw.org/" class="url">FFTW</a>: Discrete
                 Fourier transform library. Install with:
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <button class="copy-btn">Copy</button>
-                  <pre
-                    class="command-line"
-                    data-host="pc"><code class="language-bash">sudo apt install libfftw3-dev -y</code></pre>
-                </div>
+                <ShellScript>sudo apt install libfftw3-dev -y</ShellScript>
               </li>
             </ul>
           </li>
@@ -792,28 +530,12 @@ export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH</code></pre>
             <li class="bullet">
               <a href="https://www.python.org/" class="url">Python</a>: Most
               Linux distributions include Python by default. Check your version:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">python3 --version</code></pre>
-              </div>
+              <ShellScript>python3 --version</ShellScript>
               To prevent pip from installing packages globally (which helps keep your
               system clean), create a pip configuration file:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">mkdir -p ~/.config/pip
+              <ShellScript>mkdir -p ~/.config/pip
 echo "[global]" > ~/.config/pip/pip.conf
-echo "user = true" >> ~/.config/pip/pip.conf</code></pre>
-              </div>
+echo "user = true" >> ~/.config/pip/pip.conf</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://www.anaconda.com/" class="url">Anaconda</a>:
@@ -823,82 +545,34 @@ echo "user = true" >> ~/.config/pip/pip.conf</code></pre>
                 href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity"
                 class="url">Anaconda website</a
               > and follow the installation instructions. Verify installation:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">source ~/.bashrc
-conda --version</code></pre>
-              </div>
+              <ShellScript>source ~/.bashrc
+conda --version</ShellScript>
               Managing your Anaconda environments:
               <ul>
                 <li class="bullet">
                   Prevent Auto-Activation: If you don't want the (base)
                   environment to start every time you open a terminal, run:
-                  <div
-                    class="code-container"
-                    style="text-align: center; margin: 25px auto; max-width: 40em;"
-                  >
-                    <button class="copy-btn">Copy</button>
-                    <pre
-                      class="command-line"
-                      data-host="pc"><code class="language-bash">conda config --set auto_activate_base false</code></pre>
-                  </div>
+                  <ShellScript>conda config --set auto_activate_base false</ShellScript>
                 </li>
                 <li class="bullet">
                   Create a New Environment: To create a new environment with a
                   specific Python version, run:
-                  <div
-                    class="code-container"
-                    style="text-align: center; margin: 25px auto; max-width: 40em;"
-                  >
-                    <button class="copy-btn">Copy</button>
-                    <pre
-                      class="command-line"
-                      data-host="pc"><code class="language-bash">conda create -n myenv python=3.10</code></pre>
-                  </div>
+                  <ShellScript>conda create -n myenv python=3.10</ShellScript>
                 </li>
                 <li class="bullet">
                   Activate an Environment: To activate an environment, run:
-                  <div
-                    class="code-container"
-                    style="text-align: center; margin: 25px auto; max-width: 40em;"
-                  >
-                    <button class="copy-btn">Copy</button>
-                    <pre
-                      class="command-line"
-                      data-host="pc"><code class="language-bash">conda activate myenv</code></pre>
-                  </div>
+                  <ShellScript>conda activate myenv</ShellScript>
                 </li>
                 <li class="bullet">
                   Deactivate an Environment: To deactivate the current
                   environment, run:
-                  <div
-                    class="code-container"
-                    style="text-align: center; margin: 25px auto; max-width: 40em;"
-                  >
-                    <button class="copy-btn">Copy</button>
-                    <pre
-                      class="command-line"
-                      data-host="pc"><code class="language-bash">conda deactivate</code></pre>
-                  </div>
+                  <ShellScript>conda deactivate</ShellScript>
                 </li>
               </ul>
               <strong>Note:</strong> The global pip restriction mentioned earlier
               can interfere with pip usage inside Anaconda environments. To temporarily
               override it, prefix your pip commands with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">PIP_REQUIRE_VIRTUALENV=false</code></pre>
-              </div>
+              <ShellScript>PIP_REQUIRE_VIRTUALENV=false</ShellScript>
             </li>
           </ul>
         </section>
@@ -909,52 +583,22 @@ conda --version</code></pre>
             <li class="bullet">
               <a href="https://nodejs.org/" class="url">Node.js</a> and npm: JavaScript
               runtime and package manager. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt install nodejs npm -y</code></pre>
-              </div>
+              <ShellScript>sudo apt install nodejs npm -y</ShellScript>
             </li>
             <li class="bullet">
               Yarn: Alternative JavaScript package manager. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">npm install -g yarn</code></pre>
-              </div>
+              <ShellScript>npm install -g yarn</ShellScript>
             </li>
             <li>
               Cwebp: WebP image conversion tool. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt install webp -y</code></pre>
-              </div>
+              <ShellScript>sudo apt install webp -y</ShellScript>
               Now, you can convert images to WebP format using the cwebp command.
               For example:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre><code class="language-bash"># Convert PNG to WebP
+              <CodeBlock># Convert PNG to WebP
 cwebp input.png -o output.webp
 
 # Batch convert all PNGs
-for file in *.png; do cwebp "$file" -o "$&#123;file%.png&#125;.webp"; done</code></pre>
-              </div>
+for file in *.png; do cwebp "$file" -o "$&#123;file%.png&#125;.webp"; done</CodeBlock>
             </li>
           </ul>
         </section>
@@ -966,28 +610,12 @@ for file in *.png; do cwebp "$file" -o "$&#123;file%.png&#125;.webp"; done</code
               <a href="https://www.rust-lang.org/" class="url">Rust</a> and Cargo:
               Systems programming language with built-in package manager. Install
               with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source $HOME/.cargo/env</code></pre>
-              </div>
+              <ShellScript>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env</ShellScript>
             </li>
             Verify the installation by running:
-            <div
-              class="code-container"
-              style="text-align: center; margin: 25px auto; max-width: 40em;"
-            >
-              <button class="copy-btn">Copy</button>
-              <pre
-                class="command-line"
-                data-host="pc"><code class="language-bash">rustc --version
-cargo --version</code></pre>
-            </div>
+            <ShellScript>rustc --version
+cargo --version</ShellScript>
           </ul>
         </section>
 
@@ -1005,12 +633,7 @@ cargo --version</code></pre>
                 >~/.local/share/applications/matlab.desktop</code
               >
               with this content:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre><code class="language-bash">[Desktop Entry]
+              <CodeBlock>[Desktop Entry]
 Version=1.0
 Type=Application
 Name=MATLAB
@@ -1018,32 +641,15 @@ Comment=MATLAB Numerical Computing Environment
 Exec=/usr/local/MATLAB/R2024a/bin/matlab -desktop
 Icon=/usr/local/MATLAB/R2024a/bin/glnxa64/cef_resources/matlab_icon.png
 Terminal=false
-Categories=Development;Science;Engineering;</code></pre>
-              </div>
+Categories=Development;Science;Engineering;</CodeBlock>
 
               Then, refresh the application menu by running:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">update-desktop-database ~/.local/share/applications/</code></pre>
-              </div>
+              <ShellScript>update-desktop-database ~/.local/share/applications/</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://www.kicad.org/" class="url">KiCAD</a>: PCB design
               software. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt install kicad -y</code></pre>
-              </div>
+              <ShellScript>sudo apt install kicad -y</ShellScript>
             </li>
             <li class="bullet">
               <a
@@ -1055,76 +661,30 @@ Categories=Development;Science;Engineering;</code></pre>
                 href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu"
                 class="url">official website</a
               >. Next, download and install LTspice (64 bit) using Wine:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">cd ~/Downloads
+              <ShellScript>cd ~/Downloads
 wget https://LTspice.analog.com/download/latest/LTspice64.msi
-wine msiexec /i LTspice64.msi</code></pre>
-              </div>
+wine msiexec /i LTspice64.msi</ShellScript>
               Next, simply start and run the application with
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">wine ~/.wine/drive_c/users/$USER/AppData/Local/Programs/ADI/LTspice/LTspice.exe</code></pre>
-              </div>
+              <ShellScript>wine ~/.wine/drive_c/users/$USER/AppData/Local/Programs/ADI/LTspice/LTspice.exe</ShellScript>
               You can also create a desktop shortcut for easier access. First, create
               the launcher file. Run this command to create a new .desktop file:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">nano ~/.local/share/applications/ltspice.desktop</code></pre>
-              </div>
+              <ShellScript>nano ~/.local/share/applications/ltspice.desktop</ShellScript>
               Then, add the following content to the file:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre><code class="language-bash">[Desktop Entry]
+              <CodeBlock>[Desktop Entry]
 Name=LTspice
 Comment=Analog Devices LTspice Circuit Simulator
 Exec=wine /home/don-le/.wine/drive_c/users/don-le/AppData/Local/Programs/ADI/LTspice/LTspice.exe
 Icon=application-x-ms-dos-executable
 Terminal=false
 Type=Application
-Categories=Education;Electronics;Engineering;</code></pre>
-              </div>
+Categories=Education;Electronics;Engineering;</CodeBlock>
               Finally, make it executable
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">chmod +x ~/.local/share/applications/ltspice.desktop</code></pre>
-              </div>
+              <ShellScript>chmod +x ~/.local/share/applications/ltspice.desktop</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://www.audacityteam.org/" class="url">Audacity</a>:
               Audio editing software. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt install audacity -y</code></pre>
-              </div>
+              <ShellScript>sudo apt install audacity -y</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://code-industry.net/masterpdfeditor/" class="url"
@@ -1138,16 +698,8 @@ Categories=Education;Electronics;Engineering;</code></pre>
                 <li class="bullet">
                   Next, open the terminal and navigate to the directory where
                   the installer was downloaded, then install it via apt.
-                  <div
-                    class="code-container"
-                    style="text-align: center; margin: 25px auto; max-width: 40em;"
-                  >
-                    <button class="copy-btn">Copy</button>
-                    <pre
-                      class="command-line"
-                      data-host="pc"><code class="language-bash">cd ~/Downloads
-sudo apt install ./master-pdf-editor*.deb</code></pre>
-                  </div>
+                  <ShellScript>cd ~/Downloads
+sudo apt install ./master-pdf-editor*.deb</ShellScript>
                 </li>
                 <li class="bullet">
                   Then, run the installer with: <code class="inline-code"
@@ -1171,59 +723,27 @@ sudo apt install ./master-pdf-editor*.deb</code></pre>
             </li>
             <li class="bullet">
               <a href="https://www.spotify.com/" class="url">Spotify</a>:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt update && sudo apt upgrade -y
+              <ShellScript>sudo apt update && sudo apt upgrade -y
 curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
 echo "deb [signed-by=/usr/share/keyrings/spotify-archive.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt update && sudo apt install spotify-client -y</code></pre>
-              </div>
+sudo apt update && sudo apt install spotify-client -y</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://www.videolan.org/vlc/" class="url"
                 >VLC Media Player</a
               >: Versatile media player. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt install vlc</code></pre>
-              </div>
+              <ShellScript>sudo apt install vlc</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://github.com/ksnip/ksnip" class="url">ksnip</a>:
               Equivalent of Window's snipping tool, a screenshot tool with
               annotation features. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt install ksnip -y</code></pre>
-              </div>
+              <ShellScript>sudo apt install ksnip -y</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://telegram.org/" class="url">Telegram</a>:
               Messaging app. Install with:
-              <div
-                class="code-container"
-                style="text-align: center; margin: 25px auto; max-width: 40em;"
-              >
-                <button class="copy-btn">Copy</button>
-                <pre
-                  class="command-line"
-                  data-host="pc"><code class="language-bash">sudo apt install telegram-desktop -y</code></pre>
-              </div>
+              <ShellScript>sudo apt install telegram-desktop -y</ShellScript>
             </li>
           </ul>
 

@@ -1,6 +1,6 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -9,6 +9,12 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+
+import Equation from "@components/math/Equation.astro";
+import ShellScript from "@components/code/ShellScript.astro";
+import Sample from "@components/code/Sample.astro";
+import TabBox from "@components/code/TabBox.astro";
+import CopyButton from "@components/code/CopyButton.astro";
 ---
 
 <BaseLayout
@@ -141,10 +147,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         as a sum of squares. If it can be represented as sum(s) of squares, then
         we must search for all possible combinations of $n$ and $m$ such that
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; n^2 + m^2 = \mathrm&#123;number&#125;
         \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         including pairs with zero. The circular wave equation model is simpler
         to implement, as we only need to utilize built-in integration methods,
@@ -153,20 +159,13 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         previously.
       </p>
 
-      <div class="box" style="margin: 50px auto;">
-        <div class="tab-button-container">
-          <button
-            class="tab-button tab-effect"
-            onclick="changeTab(event, 'Square-Pseudo-Code', 'pseudo-tab')"
-            >Square</button
-          >
-          <button
-            class="tab-button"
-            onclick="changeTab(event, 'Circular-Pseudo-Code', 'pseudo-tab')"
-            >Circular</button
-          >
-        </div>
-
+      <TabBox
+        tabs={[
+          { label: "Square", id: "Square-Pseudo-Code" },
+          { label: "Circular", id: "Circular-Pseudo-Code" },
+        ]}
+        tabClass="pseudo-tab"
+      >
         <pre
           style="border-radius: 0px 7px 7px 7px;"
           id="Square-Pseudo-Code"
@@ -288,7 +287,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
       PlotContour(u, level=0)    // Plot nodal lines where u = 0
         </samp>
 </pre>
-      </div>
+      </TabBox>
 
       <p>
         In the next part, we will generate these patterns in Python, but before
@@ -296,16 +295,12 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         and download related dependencies by using the pip package manager:
       </p>
 
-      <div style="text-align: center; margin: 25px auto; max-width: 45em;">
-        <pre
-          class="command-line"
-          data-host="pc"><button class="copy-btn">Copy</button><code class="language-bash">python3 -m venv venv
-source venv/bin/activate      # On Windows, use `venv\Scripts\activate`
-pip install matplotlib
-pip install numpy
-pip install itertools
-pip install scipy</code></pre>
-      </div>
+<ShellScript>python3 -m venv venv 
+source venv/bin/activate # On Windows, use venv\Scripts\activate` 
+pip install matplotlib 
+pip install numpy 
+pip install itertools 
+pip install scipy</ShellScript>
 
       <p>
         In this article, we will use matplotlib to plot our coordinate systems,
@@ -328,7 +323,7 @@ pip install scipy</code></pre>
 
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python">def generate_sign_combinations(pairs):
     sign_combinations = list(itertools.product([1, -1], repeat=(len(pairs) - 1)))
     return [[1] + list(comb) for comb in sign_combinations]  # Keep the first sign positive        
@@ -343,11 +338,7 @@ pip install scipy</code></pre>
         > will output
       </p>
 
-      <div style="text-align: center; margin: 25px 0;">
-        <pre
-          class="console"
-          style="display:inline-block"><samp>  AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD </samp></pre>
-      </div>
+      <Sample> AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD </Sample>
 
       <p>
         For our case, <code class="inline-code"
@@ -364,14 +355,7 @@ pip install scipy</code></pre>
           >.product([1, -1], repeat = (len(pairs) - 1))</code
         > will generate
       </p>
-      <div style="text-align: center; margin: 25px 0;">
-        <pre
-          class="console"
-          style="display:inline-block"><samp>    [1, 1, 1] 
-    [1, 1, -1]
-    [1, -1, 1] 
-    [1, -1, -1]    </samp></pre>
-      </div>
+      <Sample> [1, 1, 1] [1, 1, -1] [1, -1, 1] [1, -1, -1] </Sample>
 
       <p>
         The statement <code class="inline-code"
@@ -388,16 +372,12 @@ pip install scipy</code></pre>
         function will return
       </p>
 
-      <div style="text-align: center; margin: 25px 0;">
-        <pre
-          class="console"
-          style="display:inline-block"><samp>[ [1, 1, 1], [1, 1, -1], [1, 1, -1], [1, -1, -1] ]</samp></pre>
-      </div>
+      <Sample>[ [1, 1, 1], [1, 1, -1], [1, 1, -1], [1, -1, -1] ]</Sample>
 
       <p>The next function, $u(x, y, t)$, defined by</p>
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python">def u(x, y, pairs, signs):
     equation = np.zeros_like(x)  # Return an array of 0's with the same type
     for (n, m), sign in zip(pairs, signs):
@@ -416,10 +396,10 @@ pip install scipy</code></pre>
         >, and the sign combinations is <code class="inline-code"
           >[1, -1, -1]</code
         >, then the contour equation $u(x, y, t)$ must be
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; u(x, y, t_0) = X(x, 0)X(y, 5) - X(x, 3)X(y,
           4) - X(x, 4)X(y, 3) - X(x, 5)X(y, 0) = 0 \end&#123;equation&#125;
-        </div>
+        </Equation>
       </p>
 
       <p>
@@ -432,7 +412,7 @@ pip install scipy</code></pre>
 
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python">def find_pairs(number):
     return [(n, m) for n in range(0, int(np.sqrt(number)) + 1)
             for m in range(0, int(np.sqrt(number)) + 1) if n**2 + m**2 == number]
@@ -471,7 +451,7 @@ pip install scipy</code></pre>
       </p>
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python">def plot_sum_of_squares(start_index, end_index):
     # ... something up here        
     
@@ -500,7 +480,7 @@ pip install scipy</code></pre>
       </p>
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python">    # ...something up here
     k = 0
     found_plots = 0
@@ -562,7 +542,7 @@ pip install scipy</code></pre>
 
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python">    colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod',
              'teal', 'darkred', 'darkcyan']
     pair_color_mapping = &#123;&#125;
@@ -580,7 +560,7 @@ pip install scipy</code></pre>
 
       <div class="box" style="margin-top: 30px; margin-bottom: 30px;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre
             class="line-numbers"><code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
@@ -740,7 +720,7 @@ plot_sum_of_squares(start, end)
 
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python"># Function to get the m-th zero of the derivative of the Bessel function of order n
 def bessel_derivative_zero(n, m):
     if n == 0: #Redefine the first zero of J_0 prime to be 0
@@ -774,7 +754,7 @@ def bessel_derivative_zero(n, m):
         the rest of the zeroes by one unit. The next step in the algorithm is to
         calculate the coefficients $a_&#123;nm&#125;$ and $b_&#123;nm&#125;$,
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;align&#125; a_&#123;nm&#125; &= \frac&#123;\langle
         J_0\cos(n\theta), f \rangle_w&#125;&#123;\langle J_0, J_0
         \rangle_w&#125; =
@@ -788,7 +768,7 @@ def bessel_derivative_zero(n, m):
         kr\rbrac\sin(n\theta)
         f(r,\theta)r\;drd\theta&#125;&#123;2\pi\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
         kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots \end&#123;align&#125;
-      </div>
+      </Equation>
       <p>
         We can do this using the built-in methods for double integration: <code
           class="inline-code">scipy.integrate</code
@@ -797,7 +777,7 @@ def bessel_derivative_zero(n, m):
 
       <div class="box" style="width: 80%; margin: 25px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python"># Define the double integrals for coefficients a_nm and b_nm
 def a_nm(n, m, a):
     z_nm = bessel_derivative_zero(n, m)
@@ -824,7 +804,7 @@ def b_nm(n, m, a):
 
       <div class="box" style="width: 80%; margin: 30px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre><code class="language-python"># Plotting function in polar coordinates
 def plot_polar_contour(n_max, m_max, a, resolution=100):
     r = np.linspace(0, a, resolution)
@@ -868,7 +848,7 @@ plot_polar_contour(columns, rows, a)
 
       <div class="box" style="margin: 30px auto;">
         <div class="code-container">
-          <button class="copy-btn">Copy</button>
+          <CopyButton />
           <pre
             class="line-numbers"><code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
@@ -999,26 +979,17 @@ plot_polar_contour(columns, rows, a)
         this:
       </p>
 
-      <div style="text-align: center; margin: 25px 0;">
-        <pre
-          class="console"
-          style="display:inline-block"><samp>    N = 1 | S = 0: [(0, 0)] [1]
-    N = 2 | S = 1: [(0, 1), (1, 0)] [1, 1]
-    N = 3 | S = 1: [(0, 1), (1, 0)] [1, -1]
-    N = 4 | S = 2: [(1, 1)] [1]
-    N = 5 | S = 4: [(0, 2), (2, 0)] [1, 1] 
-    N = 6 | S = 4: [(0, 2), (2, 0)] [1, -1]
-    N = 7 | S = 5: [(1, 2), (2, 1)] [1, 1] 
-    N = 8 | S = 5: [(1, 2), (2, 1)] [1, -1]
-    N = 9 | S = 8: [(2, 2)] [1]
-    N = 10 | S = 9: [(0, 3), (3, 0)] [1, 1] 
-    N = 11 | S = 9: [(0, 3), (3, 0)] [1, -1]
-    N = 12 | S = 10: [(1, 3), (3, 1)] [1, 1] 
-    N = 13 | S = 10: [(1, 3), (3, 1)] [1, -1]
-    N = 14 | S = 13: [(2, 3), (3, 2)] [1, 1]
-    N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
-    ... and so on</samp></pre>
-      </div>
+      <Sample>
+        N = 1 | S = 0: [(0, 0)] [1] N = 2 | S = 1: [(0, 1), (1, 0)] [1, 1] N = 3
+        | S = 1: [(0, 1), (1, 0)] [1, -1] N = 4 | S = 2: [(1, 1)] [1] N = 5 | S
+        = 4: [(0, 2), (2, 0)] [1, 1] N = 6 | S = 4: [(0, 2), (2, 0)] [1, -1] N =
+        7 | S = 5: [(1, 2), (2, 1)] [1, 1] N = 8 | S = 5: [(1, 2), (2, 1)] [1,
+        -1] N = 9 | S = 8: [(2, 2)] [1] N = 10 | S = 9: [(0, 3), (3, 0)] [1, 1]
+        N = 11 | S = 9: [(0, 3), (3, 0)] [1, -1] N = 12 | S = 10: [(1, 3), (3,
+        1)] [1, 1] N = 13 | S = 10: [(1, 3), (3, 1)] [1, -1] N = 14 | S = 13:
+        [(2, 3), (3, 2)] [1, 1] N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1] ...
+        and so on</Sample
+      >
 
       <p>
         If we continue to set <code class="inline-code">start = 73</code> and <code
@@ -1120,10 +1091,10 @@ plot_polar_contour(columns, rows, a)
         table right below. Here, recall from the previous part that the wave
         speed is calculated by the formula
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; c = \frac&#123;2Lf&#125;&#123;\sqrt&#123;n^2
         + m^2&#125;&#125;. \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         For this experiment, the length of our plate is $24.1\pm 0.1$ cm, and we
         are assuming that the thickness is negligible. For better organization,
@@ -1305,10 +1276,10 @@ plot_polar_contour(columns, rows, a)
         From the angular frequency of the plate from the previous part, we can
         easily derive the wave speed equation for the circular plate:
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; c=\frac&#123;2\pi f
         r&#125;&#123;z_&#123;nm&#125;&#125; \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>For our experiment, the plate's radius is $r = 12.1\pm 0.1$ cm.</p>
       <div class="table-wrapper">
         <table

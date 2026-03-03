@@ -4,8 +4,8 @@
  * =================================================
  * Post: Tested Food Places
  */
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -56,9 +56,6 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
       }
       .food > div {
         flex: 1;
-      }
-      h2.h3-visual {
-        margin-top: 10px;
       }
       @media (max-width: 768px) {
         .food-img {
@@ -133,7 +130,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
 
     <section class="food" id="list">
       <div>
-        <h2 class="h3-visual">
+        <h2>
           Have Tried <i class="fa-solid fa-check" style="color: green;"></i>
         </h2>
         <ul>
@@ -215,7 +212,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
       </div>
 
       <div>
-        <h2 class="h3-visual">
+        <h2>
           Have Yet to Try <i
             class="fa-solid fa-x"
             style="font-size: 15px; color: red;"></i>
@@ -253,7 +250,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
     </section>
 
     <section id="gallery">
-      <h2 class="h3-visual">Gallery</h2>
+      <h2>Gallery</h2>
       <p>Click on image to view full size.</p>
       <div class="image-container" style="margin: 25px 0">
         <img

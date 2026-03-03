@@ -1,0 +1,28 @@
+---
+/**
+ * src/components/CodeBlock.astro
+ * ==============================
+ * Generic code container for displaying source code, config files,
+ * or any non-interactive snippet with Prism.js syntax highlighting.
+ *
+ * Props
+ * -----
+ * - language : Prism language class (default: "bash")
+ */
+
+import CopyButton from "@components/code/CopyButton.astro";
+
+interface Props {
+  language?: string;
+}
+
+const { language = "bash" } = Astro.props;
+---
+
+<div
+  class="code-container"
+  style="text-align: center; margin: 25px auto; max-width: 40em;"
+>
+  <CopyButton />
+  <pre><code class={`language-${language}`}><slot /></code></pre>
+</div>

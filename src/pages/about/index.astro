@@ -4,9 +4,13 @@
  * ===========================
  * About page — migrated from /about/index.html
  */
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Banner from "../../components/Banner.astro";
-import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Banner from "@components/Banner.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
+import Theorem from "@components/math/Theorem.astro";
+import Solution from "@components/math/Solution.astro";
+import Equation from "@components/math/Equation.astro";
+import CopyButton from "@components/code/CopyButton.astro";
 ---
 
 <BaseLayout
@@ -41,7 +45,8 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
           <ul>
             <li>
               <a href="#background-and-design"
-                >Background and choice of design</a>
+                >Background and choice of design</a
+              >
             </li>
             <li><a href="#structure">Structure</a></li>
             <li><a href="#third-party-tools">Third-party tools</a></li>
@@ -71,7 +76,7 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
 
     <section id="about-me">
       <h2 class="home-h3-headers">About me</h2>
-      <h3 class="h4-visual">A little bit of detail</h3>
+      <h3>A little bit of detail</h3>
       <p>
         My [English] name is Don. I'm currently an engineering student at
         <a class="url" href="https://ucla.edu/">UCLA</a>, pursuing by Bachelor
@@ -92,7 +97,7 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
         them.
       </p>
 
-      <h3 class="h4-visual">Is that all you have to say about computer science?</h3>
+      <h3>Is that all you have to say about computer science?</h3>
       <p>Of course not. Here's a bit more to my story:</p>
       <p>
         At the age of 15, I was introduced to computers and programming after
@@ -121,10 +126,10 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
     </section>
 
     <section id="about-this-website">
-      <h2 class="home-h3-headers">About this website</h2>
+      <h2>About this website</h2>
 
       <section id="background-and-design">
-        <h3 class="h4-visual">Background and choice of design</h3>
+        <h3>Background and choice of design</h3>
         <p>
           I started digging through the internet back in middle school to
           collect and read scientific textbooks. While doing so, I couldn't help
@@ -161,31 +166,27 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
             static site generator like Jekyll? I feel like static site
             generators offer much less control over things, such as the ability
             to easily create highly customizable components like this one:
-            <div
-              class="theorem"
-              data-theorem-name=" (F.T. of an Impulse Train)"
-            >
+            <Theorem name="F.T. of an Impulse Train">
               The Fourier transform of the impulse train is another impulse
               train:
-              <div class="equation">
+              <Equation>
                 \[ \mathcal&#123;F&#125;\&#123;\delta_T(t)\&#125; =
                 \frac&#123;2\pi&#125;&#123;T&#125;\sum_&#123;k=-\infty&#125;^&#123;\infty&#125;
                 \delta(\omega - k\omega_s), \qquad \omega_s =
                 \frac&#123;2\pi&#125;&#123;T&#125;. \]
-              </div>
-            </div>
+              </Equation>
+            </Theorem>
             <p>or this one below (click on the arrow!)</p>
             <br />
-            <details class="solution">
-              <summary>Proof</summary>
-              <div>The proof is left as an exercise to the reader.</div>
-            </details>
+            <Solution summary="Proof"
+              >The proof is left as an exercise to the reader.</Solution
+            >
           </li>
         </ul>
       </section>
 
       <section id="structure">
-        <h3 class="h4-visual">Structure</h3>
+        <h3>Structure</h3>
         <p>
           There are two types of blogs on this website: articles and posts.
           Articles are technical and focus specifically on topics in math,
@@ -196,7 +197,7 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
       </section>
 
       <section id="third-party-tools">
-        <h3 class="h4-visual">Third party tools</h3>
+        <h3>Third party tools</h3>
         <div
           style="display: flex; justify-content: center; align-items: center; margin: 30px 0;"
         >
@@ -213,12 +214,12 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
           <a href="https://www.mathjax.org/" class="url">MathJax</a>, a
           javascript library that helps display fancy equation like this:
         </p>
-        <div class="equation">
+        <Equation>
           $$ \rho h\frac&#123;\partial^2 w&#125;&#123;\partial t^2&#125; = -
           D\nabla^4 w + T\nabla^2 w -K_0w -K_1\pd&#123;w&#125;&#123;t&#125; +
           T_1\nabla^2\pd&#123;w&#125;&#123;t&#125; + F(\textbf&#123;x&#125;, t).
           $$
-        </div>
+        </Equation>
         <p>
           I also use
           <a href="https://prismjs.com/" class="url">prism.js</a> to provide some
@@ -228,7 +229,7 @@ import HighlightsAndAttribute from "../../components/HighlightsAndAttribute.astr
 
         <div class="box">
           <div class="code-container">
-            <button class="copy-btn">Copy</button>
+            <CopyButton />
             <pre
               class="line-numbers"><code class="language-cpp">#pragma once
 
@@ -246,7 +247,7 @@ double numerical_derivative(Func f, double x, double h) &#123;
       </section>
 
       <section id="check-list">
-        <h3 class="h4-visual">Check list</h3>
+        <h3>Check list</h3>
         <p>
           The general layout of this website should be completed, but I will
           still add some new features every once in a while, if I have time.

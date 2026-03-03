@@ -49,3 +49,16 @@ npm run dev
 # Build for production
 npm run build
 ```
+
+#### Code Block Components
+```bash
+# Preview replacements (dry-run, prints diff)
+python3 scripts/convert-code-blocks.py src/pages/posts/linux-setup/index.astro
+
+# Apply replacements in-place
+python3 scripts/convert-code-blocks.py src/pages/posts/linux-setup/index.astro --apply
+```
+
+`convert-code-blocks.py` converts raw `<div class="code-container">` blocks
+into `<ShellScript>` (command-line prompts) or `<CodeBlock>` (generic code /
+config) Astro components. Imports are added automatically.

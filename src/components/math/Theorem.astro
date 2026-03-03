@@ -1,0 +1,12 @@
+---
+interface Props {
+  name?: string;
+}
+
+const { name } = Astro.props;
+const dataName = name ? ` (${name})` : "";
+---
+
+<div class="theorem" data-theorem-name={dataName}>
+  <slot />
+</div>
