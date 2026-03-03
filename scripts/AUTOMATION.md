@@ -15,8 +15,7 @@
 
 `new-article.sh` creates:
 - An `.astro` page under `src/pages/articles/<slug>/` or `src/pages/posts/<slug>/`
-- A symlink in `astro-public/articles/<slug>` for serving images (articles only)
-- An entry in `assets/json/articles.json`
+- An entry in `public/assets/json/articles.json`
 
 #### Table of Contents
 ```bash
