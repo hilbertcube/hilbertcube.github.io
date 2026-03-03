@@ -4,8 +4,8 @@
  * ======================================================================
  * Article: The Quest to Finding Chladni Patterns, Part 3
  */
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,6 +14,7 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+import Equation from "@components/math/Equation.astro";
 ---
 
 <BaseLayout
@@ -158,51 +159,51 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         of the plate is called the Biharmonic wave equation, a fourth-order,
         time-dependent partial differential equation, described by
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; \secondpd&#123;u&#125;&#123;t&#125; +
         \kappa^2\left(\fourthpd&#123;u&#125;&#123;x&#125; +
         2\frac&#123;\partial^4 u&#125;&#123;\partial x^2y^2&#125;
         +\fourthpd&#123;u&#125;&#123;y&#125;\right)=Q(x,y,t),
         \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>or, written in a more compact form:</p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; u_&#123;tt&#125; + \kappa^2\nabla^4 u =
         Q,\quad -a\leq x, y\leq a, \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>here, $\nabla^4 = \nabla^2 (\nabla^2)$, and</p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; \kappa^2 =
         \frac&#123;Eh^2&#125;&#123;12\rho(1-\nu^2)&#125;,
         \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         where $p$ is the density, $\nu$ is Poisson's ratio, $E$ is Young's
         modulus, and $h$ is the thickness of the plate. For a free-edge plate,
         the conditions that apply to this equation are the boundary conditions
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;alignat*&#125;&#123;2&#125; &amp;u_&#123;xx&#125;+\nu
         u_&#123;yy&#125; = 0,\quad &amp;&amp; u_&#123;xxx&#125;
         +(2-\nu)u_&#123;yyx&#125; = 0\;\text&#123;along &#125; x=\pm a\\
         &amp;u_&#123;yy&#125;+\nu u_&#123;xx&#125; = 0,\quad &amp;&amp;
         u_&#123;yyy&#125; +(2-\nu)u_&#123;yxx&#125; = 0\;\text&#123;along &#125;
         y=\pm a \end&#123;alignat*&#125;
-      </div>
+      </Equation>
       <p>and initial conditions:</p>
-      <div class="equation">
+      <Equation>
         $$u(x, y, 0) = f(x,y)\quad \text&#123; and &#125;\quad u_t(x, y, 0) =
         g(x, y)$$
-      </div>
+      </Equation>
       <p>
         Any attempts to solve this Boundary-Initial Condition using separation
         of variables is apparently not possible. While we were on our journey to
         find the eigenvalues with the first two boundary conditions, we ran into
         an very difficult problem: having to solve the equation
       </p>
-      <div class="equation">
+      <Equation>
         $$(p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,$$
-      </div>
+      </Equation>
       where $$\zeta = (2-\nu)Y''(y)$$
       <p>
         This is a very difficult task since $\zeta$ is not a numeric value, but
@@ -229,9 +230,9 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         other hand, is... also difficult to solve. However, due to the symmetric
         nature of the circular plate, Rayleigh was able to show that
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; f = C(n+2m)^2. \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         To understand the work of Rayleigh, we need to go back to the
         one-dimensional space. Take a 2-meter wooden ruler that we usually see
@@ -241,29 +242,29 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         reason similar to as stated above, but by the bending beam - flexural
         wave equation
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; \secondpd&#123;u&#125;&#123;t&#125; + c^2_L
         K^2\secondpd&#123;u&#125;&#123;x&#125; = 0. \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         Here, $c_L$ is the longitudinal wave speed, defined by the square root
         of the Young's modulus, $E$ divided by the density $\rho$
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; c_L =
         \sqrt&#123;\frac&#123;E&#125;&#123;\rho&#125;&#125;,
         \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         This is a bit different in two dimensions since there are lateral
         expansions in 2D. Authors Rossing and Fletcher mentioned in their work,
         that the correct equation for $c_L$ for a plate is
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; c_L =
         \sqrt&#123;\frac&#123;E&#125;&#123;\rho(1-\nu^2)&#125;&#125;,
         \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         where $\nu$ is the ratio of lateral contraction to longitudinal
         elongation (also known as Poisson's ratio).
@@ -276,40 +277,40 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           forcing function should not affect the general shape of the patterns,
           we can assume that $Q=0$ and rewrite it as
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; \nabla^4 u - \frac&#123;12\rho(1 -
           \nu^2)&#125;&#123;Eh^2&#125;u_&#123;tt&#125; = 0.
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           Apply separation of variables once again, but this time, only separate
           the time variable, $u(x, y, t) = U(x, y)e^&#123;i\omega t&#125;$.
           Thus, $u_&#123;tt&#125; = \omega^2 U(x, y)e^&#123;i\omega t&#125;$.
           Substitute in, and simplify, we obtain
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125;\label&#123;eqn:biharmonic1&#125; \nabla^4 U
           - \frac&#123;12\rho(1 - \nu^2)\omega^2&#125;&#123;Eh^2&#125;U=
           \nabla^4 U - k^4U=0. \end&#123;equation&#125;
-        </div>
+        </Equation>
         Notice that here, we define $k$ as
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; k^2 =
           \frac&#123;\sqrt&#123;12&#125;\omega&#125;&#123;h&#125;\sqrt&#123;\frac&#123;\rho(1-\nu^2)&#125;&#123;E&#125;&#125;
           = \frac&#123;\sqrt&#123;12&#125;\omega&#125;&#123;hc_L&#125;.
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           By dimensional analysis, it is not too hard to see that this $k$ is
           the familiar "wave number" that we like and love. Therefore,
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; f = \frac&#123;\omega&#125;&#123;2\pi&#125;
           = \frac&#123;1&#125;&#123;2\pi\sqrt&#123;12&#125;&#125;c_Lhk^2.
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>As stated by Rayleigh, Kirchhoff previously proved that</p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; \tan\lbrac ka -
           \frac&#123;1&#125;&#123;2&#125;n\pi\rbrac =
           \frac&#123;\frac&#123;A_2&#125;&#123;8ka&#125; +
@@ -318,38 +319,38 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           \frac&#123;A_2&#125;&#123;8ka&#125; +
           \frac&#123;A_4&#125;&#123;(8ka)^3&#125; + \ldots&#125;,
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         where
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; \begin&#123;split&#125; A_1 &amp;= \gamma =
           (1-\nu)^&#123;-1&#125;\\ A_2 &amp;= \gamma(1-4n^2)-8\\ A_3 &amp;=
           \gamma(1-4n^2)(9-4n^2) + 48(1+4n^2)\\ A_4 &amp;= -
           \frac&#123;\gamma&#125;&#123;3&#125;[(1-4n^2)(9-4n^2)(13 - 4n^2)] +
           8(9 + 136n^2 + 80n^4) \end&#123;split&#125; \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           Notice that the numerator approaches zero faster than the denominator
           as $k\to\infty$. Since $f$ and $k^2$ are proportional, as
           $f\to\infty$, $k\to\infty$, and hence
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; \tan\lbrac ka -
           \frac&#123;1&#125;&#123;2&#125;n\pi\rbrac = 0
           \quad\text&#123;as&#125;\quad k\to\infty. \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>Solving for $k$, we obtain</p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; k = \frac&#123;\pi&#125;&#123;2a&#125;(n +
           2m) = \frac&#123;\pi&#125;&#123;d&#125;(n + 2m).
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>Substitute this back into the frequency equation above, we obtain</p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; f = \frac&#123;1&#125;&#123;\pi
           4\sqrt&#123;3&#125;&#125;hc_Lk^2 =
           \frac&#123;h\pi&#125;&#123;4\sqrt&#123;3&#125;d^2&#125;\sqrt&#123;\frac&#123;E&#125;&#123;\rho(1-\nu^2)&#125;&#125;\cdot(n
           + 2m)^2, \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           where $E$ is Young's modulus, $\rho$ is density, $\nu$ is the ratio of
           lateral contraction to longitudinal elongation (also known as
@@ -368,21 +369,21 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           depends on the frequency, and therefore, based on the equation that relates
           wave speed to angular frequency,
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; c(f) = \frac&#123;\omega&#125;&#123;k&#125;
           = \sqrt&#123;\frac&#123;2\pi hc_L&#125;&#123;4\sqrt&#123;3&#125;&#125;
           f&#125; = \sqrt&#123;2\pi
           h\sqrt&#123;\frac&#123;E&#125;&#123;12\rho(1-\nu^2)&#125;&#125;&#125;\cdot
           f^&#123;1/2&#125;. \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           Thus, the wave speed is an increasing function, it increases as $f$
           increases, and
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; c \sim \sqrt&#123;f&#125;
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           This might explain why our wave speed has an increasing trend in the
           last section.
@@ -444,12 +445,12 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <p>
           Since there are no diameter lines, $n=0$. The equation for $f$ becomes
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; f = \frac&#123;1&#125;&#123;\pi
           4\sqrt&#123;3&#125;&#125;hc_Lk^2 =
           \frac&#123;h\pi&#125;&#123;4\sqrt&#123;3&#125;d^2&#125;\sqrt&#123;\frac&#123;E&#125;&#123;\rho(1-\nu^2)&#125;&#125;\cdot(2m)^2,
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           This implies that $f$ and $(2m)^2$ have a linear relationship.
           Therefore, we plotted our data below to test this theory.
@@ -470,25 +471,25 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           = 68$ GPa, $p = 2710\;kg/m^3$, $\nu = 0.33$, $h=0.8\pm 0.3$ mm, $d =
           0.241\pm 0.001$ m. Therefore, the coefficient $C$ is determined by
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; C=\frac&#123;1&#125;&#123;\pi
           4\sqrt&#123;3&#125;&#125;hc_L =
           \frac&#123;h\pi&#125;&#123;d^2&#125;\sqrt&#123;\frac&#123;E&#125;&#123;12\rho(1-\nu^2)&#125;&#125;=
           \kappa\pi\frac&#123;h&#125;&#123;d^2&#125; = 33.1430,
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           which is very close to our linear fit. The uncertainty of $C$ can be
           calculated by
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; \sigma_&#123;C&#125; =
           \sqrt&#123;\lbrac\pd&#123;C&#125;&#123;h&#125;\sigma_h\rbrac^2 +
           \lbrac\pd&#123;C&#125;&#123;d&#125;\sigma_d\rbrac^2&#125; =
           C\sqrt&#123;\lbrac\frac&#123;\sigma_h&#125;&#123;h&#125;\rbrac^2 +
           \lbrac\frac&#123;2h\sigma_d&#125;&#123;d&#125;\rbrac^2&#125; = 12.43.
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           The coefficient $C$ lies within our uncertainty range, which once
           again verifies the validity of Chladni's law.
@@ -503,14 +504,14 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         equation. The actual equation that describes the plate is the Biharmonic
         wave equation:
       </p>
-      <div class="equation">
+      <Equation>
         $$\frac&#123;\partial^2 u&#125;&#123;\partial t^2&#125; +
         k^2\left(\frac&#123;\partial^4 u&#125;&#123;\partial x^4&#125; +
         2\frac&#123;\partial^4 u&#125;&#123;\partial x^2 y^2&#125; +
         \frac&#123;\partial^4 u&#125;&#123;\partial y^4&#125;\right) = Q, \quad
         \text&#123;or&#125; \quad u_&#123;tt&#125; + k^2\nabla^4 u = Q, \quad -a
         \leq x, y \leq a$$
-      </div>
+      </Equation>
       <p>
         This equation is a fourth-order partial differential equation and,
         therefore, quite difficult to solve even with simple boundary
@@ -550,12 +551,12 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         plates are also identical, appearing at frequencies very close to those
         in this experiment. The paper used the full Biharmonic Equation.
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; \rho h\secondpd&#123;w&#125;&#123;t&#125; = -
         D\nabla^4 w + T\nabla^2 w -K_0w -K_1\pd&#123;w&#125;&#123;t&#125; +
         T_1\nabla^2\pd&#123;w&#125;&#123;t&#125; + F(\textbf&#123;x&#125;, t),
         \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         Here, $p$ is the density, $K_0$ is the linear stiffness coefficient,
         representing the linear storing force, $T$ is the tension coefficient,
@@ -563,10 +564,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         coefficient, $F(\mathbf&#123;x&#125;, t)$ is the forcing function, and
         $D$ is defined as
       </p>
-      <div class="equation">
+      <Equation>
         \begin&#123;equation&#125; D =
         \frac&#123;Eh^3&#125;&#123;12(1-\nu^2)&#125;, \end&#123;equation&#125;
-      </div>
+      </Equation>
       <p>
         which includes the flexural rigidity constant $\nu$, $E$ is young's
         modulus, and $h$ is the thickness of the plate.

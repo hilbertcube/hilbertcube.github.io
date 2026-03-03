@@ -1,0 +1,15 @@
+---
+/**
+ * src/components/code/Sample.astro
+ * =================================
+ * Console output / sample block displayed as centered preformatted text.
+ * Wraps content in <pre class="console"><samp>…</samp></pre>.
+ */
+---
+
+<div
+  class="code-container"
+  style="text-align: center; margin: 25px auto; max-width: 40em;"
+>
+  <pre class="console" style="display:inline-block"><samp><slot /></samp></pre>
+</div>

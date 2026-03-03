@@ -204,7 +204,7 @@ import ArticleCards from "../../../components/ArticleCards.astro";
     </header>
 
     <section id="section-1">
-      <h2 class="h3-visual">Section 1</h2>
+      <h2 >Section 1</h2>
       <p>Write your content here.</p>
     </section>
 
@@ -284,7 +284,7 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
 
     <section>
       <section id="section-1">
-        <h2 class="h3-visual">Section 1</h2>
+        <h2 >Section 1</h2>
         <p>Write your content here.</p>
       </section>
     </section>

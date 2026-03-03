@@ -4,8 +4,8 @@
  * =============================================================================================
  * Article: Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA
  */
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,6 +14,9 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+import Equation from "@components/math/Equation.astro";
+import Sample from "@components/code/Sample.astro";
+import CopyButton from "@components/code/CopyButton.astro";
 ---
 
 <BaseLayout
@@ -284,12 +287,9 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation
           of any module that uses OpenMP:
         </p>
-        <div style="text-align: center; margin: 25px 0;  overflow: auto;">
-          <pre
-            class="console"
-            style="display:inline-block;"><samp>    g++ -c test.cpp -o test.o -fopenmp
-    g++ test.o -o test -fopenmp -lpthread    </samp></pre>
-        </div>
+<Sample>g++ -c test.cpp -o test.o -fopenmp 
+g++ test.o -o test -fopenmp -lpthread
+</Sample>
         <p>
           What's the difference between this and the stl threads, or unix
           pthreads? Not that much differences, but OpenMP are usually used in
@@ -305,20 +305,20 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           vision to extract invariant features from an image. SIFT primarily works
           based on the Difference of Gaussian (D.o.G), defined as
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; D(\mathbf&#123;x&#125;,\sigma) =
           \frac&#123;1&#125;&#123;2\pi\sigma&#125;\left[\frac&#123;1&#125;&#123;k&#125;\exp\lbrac-\frac&#123;\lVert\mathbf&#123;x&#125;\rVert^2&#125;&#123;2(k\sigma)^2&#125;\rbrac
           -
           \exp\lbrac-\frac&#123;\lVert\mathbf&#123;x&#125;\rVert^2&#125;&#123;2\sigma^2&#125;\rbrac
           \right]. \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>Since</p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; D(\mathbf&#123;0&#125;,\sigma) =
           \frac&#123;1&#125;&#123;2\pi k \sigma&#125; &lt;
           \frac&#123;1&#125;&#123;\sqrt&#123;2&#125;&#125;D_&#123;max&#125;\quad\text&#123;and&#125;\quad
           D(\mathbf&#123;\infty&#125;,\sigma)=0, \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           the D.o.G is a bandpass filter, which means that it only lets selected
           frequencies through. One characteristic of the bandpass filter is that
@@ -338,17 +338,17 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           magnitude $M(x,y)$ and orientation angle $\theta(x,y)$ using
           differences of pixels:
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; M(x,y) = \sqrt&#123;(L(x+1, y) -
           L(x-1,y))^2 + (L(x,y+1) - L(x,y-1))^2&#125; \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>and,</p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; \theta(x,y) =
           \tan^&#123;-1&#125;\lbrac\frac&#123;L(x,y+1) -
           L(x,y-1)&#125;&#123;L(x+1, y) - L(x-1,y)&#125;\rbrac.
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           The final output is an $n$-dimensional feature vector whose elements
           are invariant feature descriptors. In 2018, authors Griwodz, Calvet,
@@ -371,19 +371,19 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           using the intensity centroid method, which leverages the moments of the
           patch around the keypoint, defined as:
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; m_&#123;pq&#125; =
           \sum_&#123;x,y&#125;x^py^qI(x,y) \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           These moments are used to determine the dominant orientation of the
           keypoint. The centroid can be then computed by
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; C =
           \lbrac\frac&#123;m_&#123;10&#125;&#125;&#123;m_&#123;00&#125;&#125;,\frac&#123;m_&#123;01&#125;&#125;&#123;m_&#123;00&#125;&#125;\rbrac
           \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           By optimizing the BRIEF (Binary Robust Independent Elementary
           Features) algorithm, binary descriptors are generated by simple pixel
@@ -504,10 +504,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           parallelization is limited by the portion of the process that cannot
           be parallelized, which can be formalized by the equation
         </p>
-        <div class="equation">
+        <Equation>
           \begin&#123;equation&#125; S = \frac&#123;1&#125;&#123;(1-P) +
           \frac&#123;P&#125;&#123;N&#125;&#125;, \end&#123;equation&#125;
-        </div>
+        </Equation>
         <p>
           where $S$ is the speedup ratio, $P$ is the proportion of the task that
           can be parallelized, $N$ is the number of processors or cores, and
@@ -529,11 +529,8 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           the same purpose as its regular version. We call this new function
         </p>
 
-        <div style="text-align: center; margin: 25px 0;  overflow: auto;">
-          <pre
-            class="console"
-            style="display:inline-block;"><samp>    void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const cuda::GpuMat&amp; img,ImageFeatures&amp; features)    </samp></pre>
-        </div>
+<Sample>void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const
+cuda::GpuMat&amp; img,ImageFeatures&amp; features)</Sample>
         <p>
           to compute GPU images. This is an analogous version of the <code
             class="inline-code">detectAndCompute</code
@@ -545,7 +542,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         </p>
         <div class="box">
           <div class="code-container">
-            <button class="copy-btn">Copy</button>
+            <CopyButton />
             <pre
               class="line-numbers"><code class="language-cpp">// A peak inside computeImageFeatures()
 
@@ -778,10 +775,10 @@ features.img_size = grayImg.size();</code></pre>
         <div class="definition" data-definition-name=" (Speedup)">
           Speedup is defined as the ratio between the serial runtime to the time
           taken by parallel runtime,
-          <div class="equation">
+          <Equation>
             \begin&#123;equation&#125; S=\frac&#123;T_S&#125;&#123;T_P&#125;
             \end&#123;equation&#125;
-          </div>
+          </Equation>
           The speedup of a parallel algorithm measures how much faster an algorithm
           is than its sequential counterpart.
         </div>
@@ -789,19 +786,19 @@ features.img_size = grayImg.size();</code></pre>
         <div class="definition" data-definition-name=" (Cost)">
           The cost of processing a program on a parallel system is defined as
           the product of run time and the number of processors,
-          <div class="equation">
+          <Equation>
             \begin&#123;equation&#125; C = T_P\cdot p, \end&#123;equation&#125;
-          </div>
+          </Equation>
           where $p$ denotes the number of processors.
         </div>
 
         <div class="definition" data-definition-name=" (Efficiency)">
           The efficiency of a parallel program that uses $p$ processors is
           defined by
-          <div class="equation">
+          <Equation>
             \begin&#123;equation&#125; E = \frac&#123;T_S&#125;&#123;p\cdot
             T_P&#125;=\frac&#123;S&#125;&#123;p&#125; \end&#123;equation&#125;
-          </div>
+          </Equation>
         </div>
       </section>
 
@@ -954,7 +951,6 @@ features.img_size = grayImg.size();</code></pre>
         generate more consistent and reliable results.
       </p>
     </section>
-
   </div>
 
   <Fragment slot="scripts">

@@ -4,7 +4,7 @@
  * ============================================================
  * Article: My Favorite Problems of All Time
  */
-import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -13,6 +13,9 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+import Problem from "@components/math/Problem.astro";
+import Solution from "@components/math/Solution.astro";
+import Equation from "@components/math/Equation.astro";
 ---
 
 <BaseLayout
@@ -71,63 +74,61 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 
     <section>
       <h2>A Quite Difficult Series Problem</h2>
-      <div class="problem">
+      <Problem>
         Let $\lcm(1):=1$. Prove that the series
-        <div class="equation">
+        <Equation>
           $$\sum_&#123;k=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;\lcm(1,2,3,...,k)&#125;$$
-        </div>
+        </Problem>
         converges to an irrational number.
-      </div>
+      </Equation>
 
-      <details class="solution">
-        <summary>Proof</summary>
-        <div>
+      <Solution summary="Proof">
           To know if the series converges, we use the comparison test. Let
           $L_k:=\lcm(1,2,...,k)$, for $k=1,2,3,...$. By definition, $L_1:=1$ and
           note that for $k\geq 2$, $0&lt; L_k\leq k(k-1)$. That is, for each
           integer $N>0$,
-          <div class="equation">
+          <Equation>
             $$\sum_&#123;k=1&#125;^&#123;N&#125;\frac&#123;1&#125;&#123;L_k&#125;\leq
             1+\sum_&#123;k=2&#125;^&#123;N&#125;\frac&#123;1&#125;&#123;k(k-1)&#125;\leq
             1+\sum_&#123;k=2&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;k(k-1)&#125;=1+\sum_&#123;k=2&#125;^&#123;\infty&#125;\left(\frac&#123;1&#125;&#123;k-1&#125;-\frac&#123;1&#125;&#123;k&#125;\right)=2.$$
-          </div>
+          </Equation>
           This means that $S=\sum_&#123;k=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;L_k&#125;$
           exists and is a positive real number between 1 and 2. To prove that this
           number is irrational, we argue by contradiction. Suppose on the contrary
           that $S$ is rational, and it can be written as
-          <div class="equation">$$S=\frac&#123;a&#125;&#123;b&#125;,$$</div>
+          <Equation>$$S=\frac&#123;a&#125;&#123;b&#125;,$$</div>
           where $(a,b)\in\Z\times\Z\backslash\&#123;0\&#125;$, and $a, b$ are coprimes.
           Let $p_1,p_2,p_3,...,p_r,...$ be the increasing sequence of prime numbers
           greater than $b$. Using the famous Bertrand's Postulate, we know that
-          <div class="equation">
+          <Equation>
             $$p_r &lt; p_&#123;r+1&#125;&lt; 2p_r\quad\Rightarrow\quad
             p_&#123;r+1&#125;-p_r&lt; p_r,\;\forall r=1,2,3,...$$
-          </div>
+          </Equation>
           Change this to a non-strict inequality, we have
-          <div class="equation">$$p_&#123;r+1&#125;-p_r\leq p_r-1$$</div>
+          <Equation>$$p_&#123;r+1&#125;-p_r\leq p_r-1$$</div>
           for each $r\in\Z^+$. We will now show that $p_&#123;r+1&#125;-p_r$ is indeed
           strictly less than $p_r-1$. To do this, we need to recall a useful lemma
           that we will not prove formally:
           <div class="lemma">
             <strong>Lemma 1:</strong> There are infinitely primes of the form $3k+2$.
-          </div>
+          </Equation>
           Lemma (1) simply states that for infinitely many primes $p_r$, it holds
           that $p_r\equiv 2\;(\modular 3)$. Now, note that if $p_&#123;r+1&#125;-p_r=p_r-1$,
           then $p_&#123;r+1&#125;-2\equiv 1\;(\modular 3)$, which means that $p_&#123;r+1&#125;\equiv
           0\;(\modular 3)$, and is indeed true for $3$, but not true for infinitely
           many primes $p_r$. Hence, $p_&#123;r+1&#125;-p_r&lt; p_r-1$ for infinitely
           many $r$. Now, notice that
-          <div class="equation">
+          <Equation>
             $$ \begin&#123;align*&#125;
             S-S_&#123;p_1-1&#125;&amp;=\left(\sum_&#123;k=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;L_k&#125;-\sum_&#123;k=1&#125;^&#123;p_1-1&#125;\frac&#123;1&#125;&#123;L_k&#125;\right)=\sum_&#123;k=p_1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;L_k&#125;=\frac&#123;1&#125;&#123;L_&#123;p_1&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_1+1&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_1+2&#125;&#125;+\cdots\\
             &amp;=\left(\frac&#123;1&#125;&#123;L_&#123;p_1&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_1+1&#125;&#125;+\cdots+\frac&#123;1&#125;&#123;L_&#123;p_2-1&#125;&#125;\right)+\left(\frac&#123;1&#125;&#123;L_&#123;p_2&#125;&#125;+\frac&#123;1&#125;&#123;L_&#123;p_2+1&#125;&#125;+\cdots+\frac&#123;1&#125;&#123;L_&#123;p_3-1&#125;&#125;\right)+\cdots\\
             &amp;=\sum_&#123;r=1&#125;^&#123;\infty&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;\frac&#123;1&#125;&#123;L_k&#125;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;\frac&#123;L_&#123;p_1-1&#125;&#125;&#123;L_k&#125;.
             \end&#123;align*&#125; $$
-          </div>
+          </Equation>
           Notice also that $L_&#123;p_1-1&#125;=\lcm(1,2,...,p_1-1)$ is a multiple
           of all primes less than $p_1$, and $L_k=\lcm(1,2,...,k)=\lcm(1,...,p_r)$
           is a multiple of all primes less than $p_r$. Therefore
-          <div class="equation">
+          <Equation>
             \begin&#123;align*&#125; 0 &lt; S-S_&#123;p_1-1&#125;&amp;\leq
             \frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\sum_&#123;r=1&#125;^&#123;\infty&#125;\sum_&#123;k=p_r&#125;^&#123;p_&#123;r+1&#125;-1&#125;\frac&#123;2\cdot
             3\cdot 5\cdots (p_1-1)&#125;&#123;2\cdot 3\cdot 5\cdots
@@ -142,47 +143,46 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
             &amp;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;\left(1-\frac&#123;1&#125;&#123;p_1&#125;+\frac&#123;1&#125;&#123;p_1&#125;-\frac&#123;1&#125;&#123;p_1p_2&#125;+\frac&#123;1&#125;&#123;p_1p_2&#125;-\frac&#123;1&#125;&#123;p_1p_2p_3&#125;+\cdots\right)\\
             &amp;=\frac&#123;1&#125;&#123;L_&#123;p_1-1&#125;&#125;,
             \end&#123;align*&#125;
-          </div>
+          </Equation>
           which is the same as saying that
-          <div class="equation">
+          <Equation>
             $$ \begin&#123;equation*&#125;\label&#123;eqn: lcm_1&#125; 0&lt;
             SL_&#123;p_1-1&#125;-S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;&lt; 1.
             \end&#123;equation*&#125; $$
-          </div>
+          </Equation>
           Recall that we defined $p_1$ to be a prime number greater than $b$, therefore,
           $b\in\&#123;1,2,...,p_1-1\&#125;$, and hence $L_&#123;p_1-1&#125;=\lcm(1,2,...,p_1-1)$
           must be a multiple of $b$; i.e., $L_&#123;p_1-1&#125;=kb$ for some integer
           $k$. This means that
-          <div class="equation">
+          <Equation>
             $$SL_&#123;p_1-1&#125;=\frac&#123;a&#125;&#123;b&#125;\cdot
             kb=a\cdot k\in\N.$$
-          </div>
+          </Equation>
           Let us remind ourselves of the formula of $\lcm$ for a list of numbers.
           <div class="lemma">
             <strong>Lemma 2:</strong> For an integer $m\geq k$, we have
-            <div class="equation">
+            <Equation>
               $$L_m=\lcm(1,2,...,m)=\lcm(\lcm(1,2,...,k),k+1,...,m).$$
-            </div>
-          </div>
+            </Equation>
+          </Equation>
           Ok, but why? This lemma is left as an exercise for the reader.<br
           /><br />
 
           The lemma says that $L_m$ is a number divisible by $\lcm(1,2,...,k)$,
           and hence $\lcm(1,...,m)=h\lcm(1,...,k)$, for some $h\in\Z$.
           Therefore, for the term $S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;$,
-          <div class="equation">
+          <Equation>
             $$S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;=\sum_&#123;k=1&#125;^&#123;p_1-1&#125;\frac&#123;L_&#123;p_1-1&#125;&#125;&#123;L_k&#125;=\sum_&#123;k=1&#125;^&#123;p_1-1&#125;\frac&#123;\lcm(1,2,...,p_1-1)&#125;&#123;\lcm(1,2,...,k)&#125;\in\N,\;1\leq
             k\leq p_1-1.$$
-          </div>
+          </Equation>
           This means that
-          <div class="equation">
+          <Equation>
             $$SL_&#123;p_1-1&#125;-S_&#123;p_1-1&#125;L_&#123;p_1-1&#125;\in\N,$$
-          </div>
+          </Equation>
           which is completely nonsensical, since this implies that there is an integer
           somewhere between $0$ and $1$. Therefore, the original statement must be
           true and $S$ is irrational.
-        </div>
-      </details>
+        </Solution>
     </section>
 
     <section>
@@ -191,29 +191,27 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         I encountered this problem back when I was in high school. I remember it
         took me more than 2 hours to solve.
       </p>
-      <div class="problem">
+      <Problem>
         Consider the set $\mathcal&#123;S&#125;$ of all integers $x$ satisfying
-        <div class="equation">
+        <Equation>
           \[ 4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq
           2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2, \]
-        </div>
+        </Problem>
         for some integer $y$. How many integer values of $y$ are there such that the
         set $\mathcal&#123;S&#125;$ contains no more than 64 elements?
-      </div>
+      </Equation>
       <p>You can try solving this, or view the solution right below :)</p>
-      <details class="solution">
-        <summary>Solution</summary>
-        <div>
+      <Solution>
           For this inequality to make sense, $x$ and $y$ must be greater than 0.
           We now restate the problem more generally: if $\mathcal&#123;S&#125;$
           has $n$ elements, then the inequality must hold for $n$ integers $x$
           satisfying:
-          <div class="equation">
+          <Equation>
             $$4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq
             2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2.$$
-          </div>
+          </Equation>
           Rearranging the inequality, we obtain:
-          <div class="equation">
+          <Equation>
             $$ \begin&#123;align*&#125; 4yx^6 + \log_2(yx^6) + \log_2(4)
             &amp;\geq 2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2 + 2\log_2(x)
             + 1 \\[0.2em] 2^&#123;\log_2(4yx^6)&#125; + \log_2(4yx^6) &amp;\geq
@@ -221,7 +219,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
             2^&#123;\log_2(4yx^6)&#125; + \log_2(4yx^6) &amp;\geq
             2^&#123;[\log_2(2x)]^2&#125; + [\log_2(2x)]^2 \end&#123;align*&#125;
             $$
-          </div>
+          </Equation>
           Let $u(x) = \log_2(4yx^6)$ and $v(x) = [\log_2(2x)]^2$. Then, based on the
           above, we have: $$ 2^&#123;u(x)&#125; + u(x) \geq 2^&#123;v(x)&#125; + v(x)
           $$ To proceed, let's introduce a useful property of monotonic functions:
@@ -258,29 +256,29 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
             >
           </div>
           Returning to the inequality:
-          <div class="equation">
+          <Equation>
             $$2^&#123;\log_2(4yx^6)&#125; + \log_2(4yx^6) \geq
             2^&#123;[\log_2(2x)]^2&#125; + [\log_2(2x)]^2,$$
-          </div>
+          </Equation>
           Let $f(x) = 2^x + x$, a strictly increasing function. Then, by Lemma 1:
-          <div class="equation">$$\log_2(4yx^6) \geq [\log_2(2x)]^2$$</div>
+          <Equation>$$\log_2(4yx^6) \geq [\log_2(2x)]^2$$</div>
           Solving for $y$:
-          <div class="equation">
+          <Equation>
             $$ \begin&#123;align*&#125; 4yx^6 &amp;\geq
             2^&#123;[\log_2(2x)]^2&#125; = 2^&#123;\log_2(2x) \cdot
             \log_2(2x)&#125; = (2x)^&#123;\log_2(2x)&#125; \\ &amp;= 2x \cdot
             x^&#123;\log_2(2x)&#125; = 2x^&#123;\log_2(x) + 2&#125;
             \end&#123;align*&#125; $$
-          </div>
+          </Equation>
           Therefore:
-          <div class="equation">
+          <Equation>
             $$y \geq \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) - 4&#125;
             > 0$$
-          </div>
+          </Equation>
           Define $f(x) = \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) - 4&#125;$.
           Our goal is to find the minimum of this function. Proceeding via standard
           calculus:
-          <div class="equation">
+          <Equation>
             $$ \begin&#123;align*&#125; f'(x) &amp;=
             \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) -
             4&#125;\left[\frac&#123;\log_2(x) - 4&#125;&#123;x&#125; +
@@ -290,27 +288,26 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
             \frac&#123;\ln(x)&#125;&#123;\ln(2)&#125; - 4 \right] \\ &amp;=
             \frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x) - 5&#125; (2\log_2
             x - 4) \end&#123;align*&#125; $$
-          </div>
+          </Equation>
           Setting $f'(x) = 0$, we have either $\frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x)
           - 5&#125; = 0$ or $2\log_2 x - 4 = 0$. The first case is impossible since
           $x > 0$. Thus: $$ 2\log_2 x - 4 = 0 \Rightarrow x = 4 $$ It's easy to verify
           that $f'(x)$ changes sign from negative to positive at $x = 4$, so $x =
           4$ is a minimum. The core result is that:
-          <div class="equation">
+          <Equation>
             $$4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq
             2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2$$
-          </div>
+          </Equation>
           is true if and only if $y \geq f(x) > 0$. For $\mathcal&#123;S&#125;$ to
           have $n$ elements, it must be true that:
-          <div class="equation">
+          <Equation>
             $$0 &lt; y \leq \left\lfloor f(n + 1) \right\rfloor$$
-          </div>
+          </Equation>
           Plugging in $n = 64$ gives $0 &lt; y &lt; 2319$. Therefore, there are 2319
           values of $y$ satisfying the inequality.
-        </div>
-      </details>
+        </Solution>
     </section>
-  </div>
+  </Equation>
 
   <Fragment slot="scripts">
     <script is:inline src="/assets/js/blogpage-setting.js"></script>

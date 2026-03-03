@@ -1,0 +1,37 @@
+---
+/**
+ * src/components/ShellScript.astro
+ * =================================
+ * Reusable code container for interactive shell snippets with Prism.js
+ * syntax highlighting and a command-line prompt.
+ *
+ * Props
+ * -----
+ * - host            : hostname shown in prompt     (default: "pc")
+ * - output          : data-output line numbers     (optional)
+ * - continuationStr : data-continuation-str value  (optional)
+ */
+
+import CopyButton from "@components/code/CopyButton.astro";
+
+interface Props {
+  host?: string;
+  output?: string;
+  continuationStr?: string;
+}
+
+const { host = "pc", output, continuationStr } = Astro.props;
+---
+
+<div
+  class="code-container"
+  style="text-align: center; margin: 25px auto; max-width: 40em;"
+>
+  <CopyButton />
+  <pre
+    class="command-line"
+    data-host={host}
+    data-output={output ?? undefined}
+    data-continuation-str={continuationStr ??
+      undefined}><code class="language-bash"><slot /></code></pre>
+</div>

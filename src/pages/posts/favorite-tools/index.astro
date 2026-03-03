@@ -4,8 +4,8 @@
  * ============================================
  * Post: Favorite Tools
  */
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,6 +14,7 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
+import CopyButton from "@components/code/CopyButton.astro";
 ---
 
 <BaseLayout
@@ -100,7 +101,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
 
     <section>
       <section id="firefox-extensions">
-        <h2 class="h3-visual">Firefox Extensions</h2>
+        <h2>Firefox Extensions</h2>
         <ul>
           <li class="bullet">
             <a
@@ -119,7 +120,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
       </section>
 
       <section id="vscode-extensions">
-        <h2 class="h3-visual">VS Codes Extensions and Settings</h2>
+        <h2>VS Codes Extensions and Settings</h2>
         <ul>
           <li class="bullet">
             <strong>Web Developments</strong>
@@ -150,7 +151,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
                   class="code-container"
                   style="text-align: center; margin: 25px auto; max-width: 40em;"
                 >
-                  <button class="copy-btn">Copy</button>
+                  <CopyButton />
                   <pre
                     class="console"
                     style="color: oklch(48.8% 0.243 264.376)"> <code class="language-json">&#123;
@@ -183,7 +184,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
                   class="code-container"
                   style="text-align: center; margin: 25px auto; max-width: 40em;"
                 >
-                  <button class="copy-btn">Copy</button>
+                  <CopyButton />
                   <pre
                     class="console"
                     style="color: oklch(48.8% 0.243 264.376)"> <code class="language-json">"indentRainbow.colors": [
@@ -261,7 +262,7 @@ const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
                   class="code-container"
                   style="text-align: center; margin: 25px auto; max-width: 40em;"
                 >
-                  <button class="copy-btn">Copy</button>
+                  <CopyButton />
                   <pre
                     class="console"
                     style="color: oklch(48.8% 0.243 264.376)"><code class="language-cmake">cmake_minimum_required(VERSION 3.18)
@@ -325,7 +326,7 @@ target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
       </section>
 
       <section id="hardware">
-        <h2 class="h3-visual">Hardware</h2>
+        <h2>Hardware</h2>
         <ul>
           <li class="bullet">
             Ubuntu Laptop: Lenovo Legion Legion Pro 5, Intel Core i9-14900HX,
