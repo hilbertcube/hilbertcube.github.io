@@ -6,6 +6,14 @@
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import fs from "node:fs";
+import path from "node:path";
+
+const data = JSON.parse(
+  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
+);
+const slug = Astro.url.pathname.replace(/\/$/, "");
+const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
 ---
 
 <BaseLayout
@@ -116,11 +124,11 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
     </script>
   </Fragment>
 
-  <div class="content-grid" id="home">
+  <div class="content-grid">
     <header>
-      <div class="topic">Daily life, Food, Drinks, Desserts</div>
-      <h1 class="post-title">A list of places to munch</h1>
-      <div class="date">Updated April, 29, 2024</div>
+      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <h1 class="post-title">{meta.title}</h1>
+      <div class="date">{meta.date}</div>
     </header>
 
     <section class="food" id="list">

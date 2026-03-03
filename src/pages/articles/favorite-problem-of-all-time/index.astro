@@ -5,7 +5,14 @@
  * Article: My Favorite Problems of All Time
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import ArticleCards from "../../../components/ArticleCards.astro";
+import fs from "node:fs";
+import path from "node:path";
+
+const data = JSON.parse(
+  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
+);
+const slug = Astro.url.pathname.replace(/\/$/, "");
+const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 ---
 
 <BaseLayout
@@ -50,9 +57,9 @@ import ArticleCards from "../../../components/ArticleCards.astro";
 
   <div class="content-grid">
     <header>
-      <div class="topic">Topics: Mathematics</div>
-      <h1 class="title">My Favorite Problems of All Time</h1>
-      <div class="date">Updated April 24, 2025</div>
+      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <h1 class="title">{meta.title}</h1>
+      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
       <div class="Quote">
         <div class="Quote-content">
           &#8220;Real mathematics must be justified as art if it can be
@@ -302,16 +309,6 @@ import ArticleCards from "../../../components/ArticleCards.astro";
           values of $y$ satisfying the inequality.
         </div>
       </details>
-    </section>
-
-    <section>
-      <h2>More Articles</h2>
-      <ArticleCards
-        count={4}
-        showDetails={true}
-        shuffle={true}
-        excludePath="/articles/favorite-problem-of-all-time"
-      />
     </section>
   </div>
 
