@@ -23,13 +23,13 @@ jobs:
       run: |
         curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
         https://api.github.com/repos/${{ github.repository }}/commits \
-        | jq '[.[] | select(.commit.author.name != "github-actions")] | .[0]' > assets/json/latest_commit.json
+        | jq '[.[] | select(.commit.author.name != "github-actions")] | .[0]' > public/assets/json/latest_commit.json
 
     - name: Commit latest commit to repo
       run: |
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
-        git add assets/json/latest_commit.json
+        git add public/assets/json/latest_commit.json
         if git diff --staged --quiet; then
           echo "No changes to commit"
         else
