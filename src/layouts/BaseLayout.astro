@@ -10,9 +10,6 @@ import Logo from "../components/Logo.astro";
 import Footer from "../components/Footer.astro";
 import HighlightsAndAttribute from "../components/HighlightsAndAttribute.astro";
 
-// Vite resolves all @import statements inside main.css at build time,
-import "../../assets/css/main.css";
-
 interface Props {
   title: string;
   description?: string;
@@ -46,11 +43,7 @@ const {
       gtag("config", "G-00W722FWP2");
     </script>
 
-    <link
-      rel="icon"
-      href="/public/Images/Logo/favicon.webp"
-      type="image/webp"
-    />
+    <link rel="icon" href="/Images/Logo/favicon.webp" type="image/webp" />
     <title>{title} - neumanncondition</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,6 +82,9 @@ const {
         />
       )
     }
+
+    <!-- Global stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
 
     <!-- Page-specific head content (extra styles, meta, etc.) -->
     <slot name="head" />

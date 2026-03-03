@@ -10,7 +10,11 @@
  *   shuffle: randomise order (default: false)
  *   excludePath URL path to exclude (e.g. the current article)
  */
-import articlesData from "../../assets/json/articles.json";
+import fs from "node:fs";
+import nodePath from "node:path";
+
+const jsonFilePath = nodePath.resolve("public/assets/json/articles.json");
+const articlesData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
 
 interface Props {
   count?: number;
@@ -26,7 +30,7 @@ const {
   excludePath = "",
 } = Astro.props;
 
-const IMAGE_ROOT = "/public/Images/";
+const IMAGE_ROOT = "/Images/";
 
 // Filter articles that have an id and link, excluding the current page
 let articles = articlesData.articles.filter(

@@ -14,4 +14,10 @@
       "**/.vscode/**": true
     },
     // "github.copilot.enable": false,
+    "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "css.validate": true
 }
