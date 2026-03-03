@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
 import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
@@ -88,6 +89,9 @@ import ArticleCards from "../../../components/ArticleCards.astro";
         </li>
       </ul>
     </div>
+    <div class="highlights-and-attribute">
+      <HighlightsAndAttribute />
+    </div>
   </Fragment>
 
   <div class="content-grid">
@@ -113,7 +117,7 @@ import ArticleCards from "../../../components/ArticleCards.astro";
           class="front-img"
           src="/articles/maximum-and-minimum/banner.webp"
           alt="image"
-          fetchpriority=high
+          fetchpriority="high"
         />
       </figure>
       <div class="Quote">

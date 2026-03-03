@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
 import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
@@ -89,6 +90,9 @@ import ArticleCards from "../../../components/ArticleCards.astro";
         <li><a href="#References">References</a></li>
       </ul>
     </div>
+    <div class="highlights-and-attribute">
+      <HighlightsAndAttribute />
+    </div>
   </Fragment>
 
   <div class="content-grid">
@@ -110,7 +114,7 @@ import ArticleCards from "../../../components/ArticleCards.astro";
           class="front-img"
           src="/articles/the-quest-to-finding-chladni-patterns-2/Chladni_patterns_2.webp"
           alt="banner"
-          fetchpriority=high
+          fetchpriority="high"
         />
       </figure>
       <div class="Quote">
