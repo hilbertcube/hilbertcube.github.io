@@ -6,6 +6,7 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -57,34 +58,29 @@ import CodeBlock from "@components/code/CodeBlock.astro";
 
   <!-- Sidebar: TOC + highlights -->
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li><a href="#system">Preparation (after OS installation)</a></li>
-        <li><a href="#basic-rice">Basic Rice</a></li>
-        <li>
-          <a href="#change-default-behavior">Change Some Default Behaviors</a>
-          <ul>
-            <li><a href="#emacs">A quick word about Emacs</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#devops">DevOps and Text Editors</a>
-          <ul>
-            <li><a href="#snap">A quick word about Snap</a></li>
-          </ul>
-        </li>
-        <li><a href="#cpp">C and C++ Development Environment</a></li>
-        <li><a href="#python">Python and Anaconda</a></li>
-        <li><a href="#javascript">JavaScript and Web</a></li>
-        <li><a href="#rust">Rust and Cargo</a></li>
-        <li><a href="#engineering">Engineering Softwares</a></li>
-        <li><a href="#other-softwares">Other Useful Softwares</a></li>
-        <li><a href="#final-words">Final Words</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        { label: "Preparation (after OS installation)", href: "#system" },
+        { label: "Basic Rice", href: "#basic-rice" },
+        {
+          label: "Change Some Default Behaviors",
+          href: "#change-default-behavior",
+          children: [{ label: "A quick word about Emacs", href: "#emacs" }],
+        },
+        {
+          label: "DevOps and Text Editors",
+          href: "#devops",
+          children: [{ label: "A quick word about Snap", href: "#snap" }],
+        },
+        { label: "C and C++ Development Environment", href: "#cpp" },
+        { label: "Python and Anaconda", href: "#python" },
+        { label: "JavaScript and Web", href: "#javascript" },
+        { label: "Rust and Cargo", href: "#rust" },
+        { label: "Engineering Softwares", href: "#engineering" },
+        { label: "Other Useful Softwares", href: "#other-softwares" },
+        { label: "Final Words", href: "#final-words" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>
@@ -126,7 +122,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
     </header>
 
     <section id="system">
-      <h2 class="h3-visual">Preparation (after OS installation)</h2>
+      <h2>Preparation (after OS installation)</h2>
       <ul>
         <li class="bullet">
           Install recommended NVIDIA drivers: Open the "Software & Updates"
@@ -205,7 +201,7 @@ sudo apt install gnome-tweaks -y</ShellScript>
     </section>
 
     <section id="basic-rice">
-      <h2 class="h3-visual">Basic Rice</h2>
+      <h2 >Basic Rice</h2>
       <p>
         Simple GNOME desktop rice using <a
           href="https://github.com/fastfetch-cli/fastfetch"
@@ -236,7 +232,7 @@ sudo apt install gnome-tweaks -y</ShellScript>
     </section>
 
     <section id="change-default-behavior">
-      <h2 class="h3-visual">Change Some Default Behaviors</h2>
+      <h2 >Change Some Default Behaviors</h2>
       <ul>
         <li class="bullet">
           Change keybinding: on Linux, copy and paste in the terminal is
@@ -326,7 +322,7 @@ leftshift+leftmeta+f23 = rightcontrol # this varies, adjust accordingly to your 
     </section>
 
     <section id="devops">
-      <h2 class="h3-visual">DevOps and Text Editors</h2>
+      <h2 >DevOps and Text Editors</h2>
       <ul>
         <li class="bullet">
           <a href="https://code.visualstudio.com/" class="url">VSCode</a>: My
@@ -422,7 +418,7 @@ sudo docker run hello-world</ShellScript>
       </ul>
     </section>
     <section id="cpp">
-      <h2 class="h3-visual">C and C++ Development Environment</h2>
+      <h2 >C and C++ Development Environment</h2>
       <ul>
         <li class="bullet">
           Essentials: Core development tools including build-essential, gdb,
@@ -525,7 +521,7 @@ export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH</CodeBlock>
         </li>
 
         <section id="python">
-          <h2 class="h3-visual">Python and Anaconda</h2>
+          <h2 >Python and Anaconda</h2>
           <ul>
             <li class="bullet">
               <a href="https://www.python.org/" class="url">Python</a>: Most
@@ -578,7 +574,7 @@ conda --version</ShellScript>
         </section>
 
         <section id="javascript">
-          <h2 class="h3-visual">JavaScript and Web</h2>
+          <h2 >JavaScript and Web</h2>
           <ul>
             <li class="bullet">
               <a href="https://nodejs.org/" class="url">Node.js</a> and npm: JavaScript
@@ -604,7 +600,7 @@ for file in *.png; do cwebp "$file" -o "$&#123;file%.png&#125;.webp"; done</Code
         </section>
 
         <section id="rust">
-          <h2 class="h3-visual">Rust and Cargo</h2>
+          <h2 >Rust and Cargo</h2>
           <ul>
             <li class="bullet">
               <a href="https://www.rust-lang.org/" class="url">Rust</a> and Cargo:
@@ -620,7 +616,7 @@ cargo --version</ShellScript>
         </section>
 
         <section id="engineering">
-          <h2 class="h3-visual">Engineering Softwares</h2>
+          <h2 >Engineering Softwares</h2>
           <ul>
             <li class="bullet">
               <a
@@ -716,7 +712,7 @@ sudo apt install ./master-pdf-editor*.deb</ShellScript>
         </section>
 
         <section class="" id="other-softwares">
-          <h2 class="h3-visual">Other Useful Softwares</h2>
+          <h2 >Other Useful Softwares</h2>
           <ul>
             <li class="bullet">
               <a href="https://www.mozilla.org/firefox/" class="url">Firefox</a>
@@ -748,7 +744,7 @@ sudo apt update && sudo apt install spotify-client -y</ShellScript>
           </ul>
 
           <section id="final-words">
-            <h2 class="h3-visual">Final Words</h2>
+            <h2 >Final Words</h2>
             <p>
               Try not to worry too much about what other people say. Choose what
               works best for you, but take some time to research before settling

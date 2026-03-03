@@ -6,6 +6,7 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,7 +15,7 @@ const data = JSON.parse(
 );
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.posts.find((p: any) => p.link.replace(/\/$/, "") === slug);
-import CopyButton from "@components/code/CopyButton.astro";
+import CodeBlock from "@components/code/CodeBlock.astro";
 ---
 
 <BaseLayout
@@ -59,18 +60,16 @@ import CopyButton from "@components/code/CopyButton.astro";
 
   <!-- Sidebar: TOC + highlights -->
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li><a href="#firefox-extensions">Firefox Extensions</a></li>
-        <li>
-          <a href="#vscode-extensions">VS Code Extensions and Settings</a>
-        </li>
-        <li><a href="#hardware">Hardware</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        { label: "Firefox Extensions", href: "#firefox-extensions" },
+        {
+          label: "VS Code Extensions and Settings",
+          href: "#vscode-extensions",
+        },
+        { label: "Hardware", href: "#hardware" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>
@@ -147,22 +146,15 @@ import CopyButton from "@components/code/CopyButton.astro";
                 <span style="text-decoration: underline">settings.json</span>. I
                 also use an indentation of 2 spaces instead of 4 when writing
                 web projects.
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <CopyButton />
-                  <pre
-                    class="console"
-                    style="color: oklch(48.8% 0.243 264.376)"> <code class="language-json">&#123;
+<CodeBlock language="json">&#123;
   "emmet.includeLanguages": &#123;
       "javascript": "javascriptreact"
   &#125;,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false
-&#125;</code></pre>
-                </div>
+&#125;
+                </CodeBlock>
               </li>
             </ul>
           </li>
@@ -180,14 +172,8 @@ import CopyButton from "@components/code/CopyButton.astro";
                 you can adjust that in
                 <span style="text-decoration: underline">settings.json</span>.
                 This is my ideal setting:
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <CopyButton />
-                  <pre
-                    class="console"
-                    style="color: oklch(48.8% 0.243 264.376)"> <code class="language-json">"indentRainbow.colors": [
+
+<CodeBlock language="json">"indentRainbow.colors": [
     "rgba(255,255,64,0.3)",
     "rgba(127,255,127,0.3)",
     "rgba(255,127,255,0.3)",
@@ -200,8 +186,7 @@ import CopyButton from "@components/code/CopyButton.astro";
   ],
   "indentRainbow.lightIndicatorStyleLineWidth": 1,
   "editor.renderWhitespace": "boundary",
-  "indentRainbow.errorColor": "rgba(128,32,32,0)",</code></pre>
-                </div>
+  "indentRainbow.errorColor": "rgba(128,32,32,0)",</CodeBlock>
               </li>
               <li class="bullet">
                 <a
@@ -258,22 +243,13 @@ import CopyButton from "@components/code/CopyButton.astro";
                 it's the most popular (and best?) tool we have. These extensions
                 help me write CMake more efficiently, since they rebuild
                 everything every time I made changes to my CMake script.
-                <div
-                  class="code-container"
-                  style="text-align: center; margin: 25px auto; max-width: 40em;"
-                >
-                  <CopyButton />
-                  <pre
-                    class="console"
-                    style="color: oklch(48.8% 0.243 264.376)"><code class="language-cmake">cmake_minimum_required(VERSION 3.18)
+<CodeBlock language="cmake">cmake_minimum_required(VERSION 3.18) 
 project(FMT_test CXX)
-set(CMAKE_CXX_STANDARD 17)
-
+set(CMAKE_CXX_STANDARD 17) 
 find_package(fmt CONFIG REQUIRED)
-add_executable(main main.cpp)
-target_link_libraries(main PRIVATE fmt::fmt)</code></pre>
-                </div>
-
+add_executable(main main.cpp) 
+target_link_libraries(main PRIVATE fmt::fmt)
+</CodeBlock>
                 Test the extension with the script above for the
                 <a href="https://github.com/fmtlib/fmt" class="url">FMT</a>
                 library.

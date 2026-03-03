@@ -1,0 +1,55 @@
+---
+/**
+ * src/components/MaterialCard.astro
+ * =================================
+ * Reusable card component for recommended books/materials.
+ *
+ * Props:
+ *   title       – Book/material title
+ *   author      – Author name(s)
+ *   description – Short description
+ *   links       – Array of { label, href } purchase/view links
+ *   image       – Path to the cover image
+ *   imageId     – Optional id attribute for the <img> (e.g. for CSS overrides)
+ */
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  author: string;
+  description: string;
+  links: Link[];
+  image: string;
+  imageId?: string;
+}
+
+const { title, author, description, links, image, imageId } = Astro.props;
+---
+
+<div class="materials">
+  <div class="materials-left">
+    <div class="material-title">{title}</div>
+    <div class="author">by {author}</div>
+    <div class="material-description">{description}</div>
+    <div class="material-link">
+      You can buy this on:
+      {links.map((link, i) => (
+        <>
+          {i > 0 && ", "}
+          <a href={link.href} class="url">{link.label}</a>
+        </>
+      ))}
+    </div>
+  </div>
+  <div class="line-6"></div>
+  <div class="materials-right">
+    <img
+      src={image}
+      class="material-images"
+      id={imageId}
+    />
+  </div>
+</div>

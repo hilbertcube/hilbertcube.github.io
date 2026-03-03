@@ -12,9 +12,10 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 
 import Equation from "@components/math/Equation.astro";
 import ShellScript from "@components/code/ShellScript.astro";
-import Sample from "@components/code/Sample.astro";
 import TabBox from "@components/code/TabBox.astro";
 import CopyButton from "@components/code/CopyButton.astro";
+import CodeBox from "@components/code/CodeBox.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 ---
 
 <BaseLayout
@@ -60,49 +61,45 @@ import CopyButton from "@components/code/CopyButton.astro";
   </Fragment>
 
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li><a href="#review-of-part-1">Review of Part 1</a></li>
-        <li>
-          <a href="#generate-patterns">Generate Patterns in Python</a>
-          <ul>
-            <li><a href="#square-plate-code">Code for the Square Plate</a></li>
-            <li>
-              <a href="#circular-plate-code">Code for the Circular Plate</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#results-and-analysis"
-            >Theoretical, Experimental Results and Data Analysis</a
-          >
-          <ul>
-            <li>
-              <a href="#square-theoretical"
-                >Theoretical Results for the Square Plate</a
-              >
-            </li>
-            <li>
-              <a href="#square-analysis">Data Analysis for the Square Plate</a>
-            </li>
-            <li>
-              <a href="#circular-theoretical"
-                >Theoretical Results for the Circular Plate</a
-              >
-            </li>
-            <li>
-              <a href="#circular-analysis"
-                >Data Analysis for the Circular Plate</a
-              >
-            </li>
-          </ul>
-        </li>
-        <li><a href="#References">References</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        { label: "Review of Part 1", href: "#review-of-part-1" },
+        {
+          label: "Generate Patterns in Python",
+          href: "#generate-patterns",
+          children: [
+            { label: "Code for the Square Plate", href: "#square-plate-code" },
+            {
+              label: "Code for the Circular Plate",
+              href: "#circular-plate-code",
+            },
+          ],
+        },
+        {
+          label: "Theoretical, Experimental Results and Data Analysis",
+          href: "#results-and-analysis",
+          children: [
+            {
+              label: "Theoretical Results for the Square Plate",
+              href: "#square-theoretical",
+            },
+            {
+              label: "Data Analysis for the Square Plate",
+              href: "#square-analysis",
+            },
+            {
+              label: "Theoretical Results for the Circular Plate",
+              href: "#circular-theoretical",
+            },
+            {
+              label: "Data Analysis for the Circular Plate",
+              href: "#circular-analysis",
+            },
+          ],
+        },
+        { label: "References", href: "#References" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>
@@ -295,12 +292,11 @@ import CopyButton from "@components/code/CopyButton.astro";
         and download related dependencies by using the pip package manager:
       </p>
 
-<ShellScript>python3 -m venv venv 
-source venv/bin/activate # On Windows, use venv\Scripts\activate` 
-pip install matplotlib 
-pip install numpy 
-pip install itertools 
-pip install scipy</ShellScript>
+      <ShellScript
+        >python3 -m venv venv source venv/bin/activate # On Windows, use
+        venv\Scripts\activate` pip install matplotlib pip install numpy pip
+        install itertools pip install scipy</ShellScript
+      >
 
       <p>
         In this article, we will use matplotlib to plot our coordinate systems,
@@ -338,7 +334,7 @@ pip install scipy</ShellScript>
         > will output
       </p>
 
-      <Sample> AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD </Sample>
+      <ShellScript>AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD</ShellScript>
 
       <p>
         For our case, <code class="inline-code"
@@ -355,7 +351,7 @@ pip install scipy</ShellScript>
           >.product([1, -1], repeat = (len(pairs) - 1))</code
         > will generate
       </p>
-      <Sample> [1, 1, 1] [1, 1, -1] [1, -1, 1] [1, -1, -1] </Sample>
+      <ShellScript> [1, 1, 1] [1, 1, -1] [1, -1, 1] [1, -1, -1] </ShellScript>
 
       <p>
         The statement <code class="inline-code"
@@ -372,7 +368,9 @@ pip install scipy</ShellScript>
         function will return
       </p>
 
-      <Sample>[ [1, 1, 1], [1, 1, -1], [1, 1, -1], [1, -1, -1] ]</Sample>
+      <ShellScript
+        >[ [1, 1, 1], [1, 1, -1], [1, 1, -1], [1, -1, -1] ]</ShellScript
+      >
 
       <p>The next function, $u(x, y, t)$, defined by</p>
       <div class="box" style="width: 80%; margin: 25px auto;">
@@ -558,11 +556,7 @@ pip install scipy</ShellScript>
         adjust based on your own preference.
       </p>
 
-      <div class="box" style="margin-top: 30px; margin-bottom: 30px;">
-        <div class="code-container">
-          <CopyButton />
-          <pre
-            class="line-numbers"><code class="language-python">import matplotlib.pyplot as plt
+      <CodeBox language="python" lineNumbers>import matplotlib.pyplot as plt
 import numpy as np
 import itertools
 
@@ -698,9 +692,7 @@ def plot_sum_of_squares(start_index, end_index):
 
 # Plotting the sum of squares patterns for all perfect squares
 plot_sum_of_squares(start, end)
-        </code></pre>
-        </div>
-      </div>
+      </CodeBox>
     </section>
 
     <section id="circular-plate-code">
@@ -718,10 +710,7 @@ plot_sum_of_squares(start, end)
         > from <code class="inline-code">scipy.special</code>
       </p>
 
-      <div class="box" style="width: 80%; margin: 25px auto;">
-        <div class="code-container">
-          <CopyButton />
-          <pre><code class="language-python"># Function to get the m-th zero of the derivative of the Bessel function of order n
+  <CodeBox language="python"># Function to get the m-th zero of the derivative of the Bessel function of order n
 def bessel_derivative_zero(n, m):
     if n == 0: #Redefine the first zero of J_0 prime to be 0
         zeros = list(jnp_zeros(n, m + 1))
@@ -729,9 +718,7 @@ def bessel_derivative_zero(n, m):
         return zeros[m]
     else:
         return jnp_zeros(n, m + 1)[-1]  # Get the m-th zero, treating first zero as the 0th zero
-        </code></pre>
-        </div>
-      </div>
+</CodeBox>
 
       <p>
         One of the weird things about the <code class="inline-code"
@@ -775,10 +762,7 @@ def bessel_derivative_zero(n, m):
         >, <code class="inline-code">dblquad</code>:
       </p>
 
-      <div class="box" style="width: 80%; margin: 25px auto;">
-        <div class="code-container">
-          <CopyButton />
-          <pre><code class="language-python"># Define the double integrals for coefficients a_nm and b_nm
+<CodeBox language="python"># Define the double integrals for coefficients a_nm and b_nm
 def a_nm(n, m, a):
     z_nm = bessel_derivative_zero(n, m)
     numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.cos(n * theta) * 
@@ -792,9 +776,7 @@ def b_nm(n, m, a):
                         f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
     denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
     return numerator / (2 * np.pi * denominator)
-        </code></pre>
-        </div>
-      </div>
+</CodeBox>
 
       <p>
         After calculating the coefficients, the final step is straight forward.
@@ -802,10 +784,7 @@ def b_nm(n, m, a):
         the figure.
       </p>
 
-      <div class="box" style="width: 80%; margin: 30px auto;">
-        <div class="code-container">
-          <CopyButton />
-          <pre><code class="language-python"># Plotting function in polar coordinates
+<CodeBox language="python"># Plotting function in polar coordinates
 def plot_polar_contour(n_max, m_max, a, resolution=100):
     r = np.linspace(0, a, resolution)
     theta = np.linspace(0, 2 * np.pi, resolution)
@@ -837,20 +816,14 @@ def plot_polar_contour(n_max, m_max, a, resolution=100):
     plt.show()
 
 plot_polar_contour(columns, rows, a)
-        </code></pre>
-        </div>
-      </div>
-
+</CodeBox>
       <p>
         Put together all the pieces, and we may arrive at the final code for the
         circular plate, using the 2d wave equation to be:
       </p>
 
-      <div class="box" style="margin: 30px auto;">
-        <div class="code-container">
-          <CopyButton />
-          <pre
-            class="line-numbers"><code class="language-python">import matplotlib.pyplot as plt
+<CodeBox language="python" lineNumbers>
+import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate as integrate
 from scipy.special import jn, jnp_zeros
@@ -933,10 +906,7 @@ def plot_polar_contour(n_max, m_max, a, resolution=100):
     plt.show()
 
 plot_polar_contour(columns, rows, a)
-        </code></pre>
-        </div>
-      </div>
-      <!--box ends here-->
+</CodeBox>
     </section>
 
     <h2>Theoretical, Experimental Results and Data Analysis</h2>
@@ -979,16 +949,22 @@ plot_polar_contour(columns, rows, a)
         this:
       </p>
 
-      <Sample>
-        N = 1 | S = 0: [(0, 0)] [1] N = 2 | S = 1: [(0, 1), (1, 0)] [1, 1] N = 3
-        | S = 1: [(0, 1), (1, 0)] [1, -1] N = 4 | S = 2: [(1, 1)] [1] N = 5 | S
-        = 4: [(0, 2), (2, 0)] [1, 1] N = 6 | S = 4: [(0, 2), (2, 0)] [1, -1] N =
-        7 | S = 5: [(1, 2), (2, 1)] [1, 1] N = 8 | S = 5: [(1, 2), (2, 1)] [1,
-        -1] N = 9 | S = 8: [(2, 2)] [1] N = 10 | S = 9: [(0, 3), (3, 0)] [1, 1]
-        N = 11 | S = 9: [(0, 3), (3, 0)] [1, -1] N = 12 | S = 10: [(1, 3), (3,
-        1)] [1, 1] N = 13 | S = 10: [(1, 3), (3, 1)] [1, -1] N = 14 | S = 13:
-        [(2, 3), (3, 2)] [1, 1] N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1] ...
-        and so on</Sample
+<ShellScript>N = 1 | S = 0: [(0, 0)] [1] 
+N = 2 | S = 1: [(0, 1), (1, 0)] [1, 1] 
+N = 3| S = 1: [(0, 1), (1, 0)] [1, -1] 
+N = 4 | S = 2: [(1, 1)] [1] 
+N = 5 | S = 4: [(0, 2), (2, 0)] [1, 1] 
+N = 6 | S = 4: [(0, 2), (2, 0)] [1, -1] 
+N = 7 | S = 5: [(1, 2), (2, 1)] [1, 1] 
+N = 8 | S = 5: [(1, 2), (2, 1)] [1,-1] 
+N = 9 | S = 8: [(2, 2)] [1] 
+N = 10 | S = 9: [(0, 3), (3, 0)] [1, 1]
+N = 11 | S = 9: [(0, 3), (3, 0)] [1, -1] 
+N = 12 | S = 10: [(1, 3), (3, 1)] [1, 1] 
+N = 13 | S = 10: [(1, 3), (3, 1)] [1, -1] 
+N = 14 | S = 13: [(2, 3), (3, 2)] [1, 1] 
+N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1] 
+...and so on</ShellScript
       >
 
       <p>

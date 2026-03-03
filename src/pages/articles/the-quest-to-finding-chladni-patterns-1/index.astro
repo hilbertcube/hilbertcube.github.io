@@ -16,6 +16,8 @@ const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 import Equation from "@components/math/Equation.astro";
 import CopyButton from "@components/code/CopyButton.astro";
+import TwoColumns from "@components/TwoColumns.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 ---
 
 <BaseLayout
@@ -57,46 +59,50 @@ import CopyButton from "@components/code/CopyButton.astro";
   </Fragment>
 
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li>
-          <a href="#Introduction">Introduction</a>
-          <ul>
-            <li>
-              <a href="#Background">Background and Mathematical Formulation</a>
-            </li>
-            <li>
-              <a href="#Historical-notes">Read More*: Historical Notes</a>
-            </li>
-            <li><a href="#Chladni-law">Chladni's Law</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#The-Wave-Equation-Model">The wave equation model</a>
-          <ul>
-            <li><a href="#general-model">The free boundary condition</a></li>
-            <li><a href="#wave-square-plate">The Square Plate</a></li>
-            <li><a href="#wave-circular-plate">The Circular Plate</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#algorithm-design">Designing the Plotting Algorithm</a>
-          <ul>
-            <li>
-              <a href="#square-algorithm">Algorithm for the Square Plate</a>
-            </li>
-            <li>
-              <a href="#circular-algorithm">Algorithm for the Circular Plate</a>
-            </li>
-          </ul>
-        </li>
-        <li><a href="#Appendix">Appendix</a></li>
-        <li><a href="#References">References</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        {
+          label: "Introduction",
+          href: "#Introduction",
+          children: [
+            {
+              label: "Background and Mathematical Formulation",
+              href: "#Background",
+            },
+            {
+              label: "Read More*: Historical Notes",
+              href: "#Historical-notes",
+            },
+            { label: "Chladni's Law", href: "#Chladni-law" },
+          ],
+        },
+        {
+          label: "The wave equation model",
+          href: "#The-Wave-Equation-Model",
+          children: [
+            { label: "The free boundary condition", href: "#general-model" },
+            { label: "The Square Plate", href: "#wave-square-plate" },
+            { label: "The Circular Plate", href: "#wave-circular-plate" },
+          ],
+        },
+        {
+          label: "Designing the Plotting Algorithm",
+          href: "#algorithm-design",
+          children: [
+            {
+              label: "Algorithm for the Square Plate",
+              href: "#square-algorithm",
+            },
+            {
+              label: "Algorithm for the Circular Plate",
+              href: "#circular-algorithm",
+            },
+          ],
+        },
+        { label: "Appendix", href: "#Appendix" },
+        { label: "References", href: "#References" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>
@@ -155,7 +161,7 @@ import CopyButton from "@components/code/CopyButton.astro";
           of years, and still continues till the modern day.
         </p>
 
-        <div class="two-columns-block">
+        <TwoColumns>
           <div>
             <p>
               How does this work? Well, it turns out these are examples of
@@ -201,7 +207,7 @@ import CopyButton from "@components/code/CopyButton.astro";
               >
             </figcaption>
           </div>
-        </div>
+        </TwoColumns>
 
         <p>
           By assuming that the plate is supported by tension, one can derive the
@@ -246,7 +252,7 @@ import CopyButton from "@components/code/CopyButton.astro";
 
       <section id="Historical-notes">
         <h3>Read more: Historical Notes</h3>
-        <div class="two-columns-block">
+        <TwoColumns>
           <div>
             <p>
               The study of wave and vibration theory dates its way back to the
@@ -310,7 +316,7 @@ import CopyButton from "@components/code/CopyButton.astro";
               </figcaption>
             </figure>
           </div>
-        </div>
+        </TwoColumns>
         <figure>
           <img
             class="image"

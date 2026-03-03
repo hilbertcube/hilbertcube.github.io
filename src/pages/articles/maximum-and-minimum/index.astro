@@ -5,6 +5,7 @@ import Theorem from "@components/math/Theorem.astro";
 import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import Equation from "@components/math/Equation.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -47,59 +48,57 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
   </Fragment>
 
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li>
-          <a href="#Introduction">Local Maximum, Local Minimum, and Extremum</a>
-        </li>
-        <li>
-          <a href="#points-definitions"
-            >Stationary Points, Critical Points, and Saddle Points</a
-          >
-        </li>
-        <li>
-          <a href="#sylvester-criterion"
-            >The Hessian Matrix and the Sylvester Criterion</a
-          >
-        </li>
-        <li>
-          <a href="#maximum-minimum"
-            >The Maximum/Minimum Algorithm for an n-Variable Function</a
-          >
-          <ul>
-            <li><a href="#general-case">The General Case</a></li>
-            <li><a href="#special-case">The Special Case: $n=2$</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#example-problems">Example Problems with Solutions</a>
-          <ul>
-            <li>
-              <a href="#3d-space">In 3 dimensional Space</a>
-              <ul>
-                <li><a href="#problem1">Problem 1</a></li>
-                <li><a href="#problem2">Problem 2</a></li>
-                <li><a href="#problem3">Problem 3</a></li>
-                <li><a href="#problem4">Problem 4</a></li>
-                <li><a href="#problem5">Problem 5</a></li>
-                <li><a href="#problem6">Problem 6</a></li>
-                <li><a href="#problem7">Problem 7</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#4d-space">In 4 dimensional Space</a>
-              <ul>
-                <li><a href="#problem8">Problem 8</a></li>
-                <li><a href="#problem9">Problem 9</a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        {
+          label: "Local Maximum, Local Minimum, and Extremum",
+          href: "#Introduction",
+        },
+        {
+          label: "Stationary Points, Critical Points, and Saddle Points",
+          href: "#points-definitions",
+        },
+        {
+          label: "The Hessian Matrix and the Sylvester Criterion",
+          href: "#sylvester-criterion",
+        },
+        {
+          label: "The Maximum/Minimum Algorithm for an n-Variable Function",
+          href: "#maximum-minimum",
+          children: [
+            { label: "The General Case", href: "#general-case" },
+            { label: "The Special Case: $n=2$", href: "#special-case" },
+          ],
+        },
+        {
+          label: "Example Problems with Solutions",
+          href: "#example-problems",
+          children: [
+            {
+              label: "In 3 dimensional Space",
+              href: "#3d-space",
+              children: [
+                { label: "Problem 1", href: "#problem1" },
+                { label: "Problem 2", href: "#problem2" },
+                { label: "Problem 3", href: "#problem3" },
+                { label: "Problem 4", href: "#problem4" },
+                { label: "Problem 5", href: "#problem5" },
+                { label: "Problem 6", href: "#problem6" },
+                { label: "Problem 7", href: "#problem7" },
+              ],
+            },
+            {
+              label: "In 4 dimensional Space",
+              href: "#4d-space",
+              children: [
+                { label: "Problem 8", href: "#problem8" },
+                { label: "Problem 9", href: "#problem9" },
+              ],
+            },
+          ],
+        },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>

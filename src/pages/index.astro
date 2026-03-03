@@ -8,6 +8,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import Banner from "@components/Banner.astro";
 import ArticleCards from "@components/ArticleCards.astro";
 import PostList from "@components/PostList.astro";
+import TwoColumns from "@components/TwoColumns.astro";
 ---
 
 <BaseLayout
@@ -45,10 +46,10 @@ import PostList from "@components/PostList.astro";
     <header>
       <div class="topic">Homepage</div>
     </header>
-    
+
     <section>
       <h1 class="home-title">Chladni Patterns - The Wave Equation Model</h1>
-      <div class="two-columns-block">
+      <TwoColumns>
         <div>
           <p>
             Take a solid metal plate (or any other rigid material) and sprinkle
@@ -92,7 +93,7 @@ import PostList from "@components/PostList.astro";
             Chladni Patterns on a Square Plate.
           </figcaption>
         </div>
-      </div>
+      </TwoColumns>
     </section>
 
     <section>
