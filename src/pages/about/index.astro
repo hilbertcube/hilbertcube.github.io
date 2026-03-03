@@ -130,10 +130,9 @@ import { tex } from "@components/math/tex.astro";
         <p>
           This website was formally built back in summer of 2024, but I've been
           writing a lot of the content on this website on LaTeX documentations
-          way before that. I coded this website from scratch using HTML, CSS,
+          way before that. I coded the first prototype of this website from scratch using HTML, CSS,
           and vanilla Javascript (ancient and primitive, I know, but they
-          works). For this reason, the website might not be very well-optimized,
-          so please excuse me. To view the source code, click on the logo on the
+          worked). Because of this approach, the site was not very well optimized or scalable, and it can sometimes be a bit slow. To fix this issue, I later migrated everything to <a href="https://astro.build/" class="url">Astro</a>, a static site generator that still allows for the same level of customization as plain HTML, CSS, and JavaScript. To view the source code, click on the logo on the
           side navigation bar or follow this
           <a href="https://github.com/hilbertcube/neumanncondition" class="url"
             >link</a
@@ -142,17 +141,14 @@ import { tex } from "@components/math/tex.astro";
         <ul style="line-height: 1.6">
           <li style="margin: var(--in-page-li-spacing) 0">
             <strong>Question</strong>: Why not use a framework or a static site
-            generator?
+            generator initially?
           </li>
           <li style="margin: var(--in-page-li-spacing) 0">
             <strong>Answer</strong>: I wanted to learn the basics of web
             development, so in order to learn, I must create things. This
             website the became my first web project. Plus, this site has no
             complex API calls, so a framework would be overkill, although using
-            a framework would have probably been a bit easier. Ok, but why not a
-            static site generator like Jekyll? I feel like static site
-            generators offer much less control over things, such as the ability
-            to easily create highly customizable components like this one:
+            a framework would have probably been a bit easier. Ok, But why not use a static site generator like Jekyll? My impression is that static site generators give you less direct control over certain aspects of the site, especially when creating highly customizable components like the one shown below.
             <Theorem name="F.T. of an Impulse Train">
               The Fourier transform of the impulse train is another impulse
               train:
@@ -168,7 +164,8 @@ import { tex } from "@components/math/tex.astro";
             <br />
             <Solution summary="Proof"
               >The proof is left as an exercise to the reader.</Solution
-            >
+            ><br />
+              Much later, after the site was already built, I discovered Astro. It lets me create custom components with the same flexibility as my earlier approach, but in a much cleaner way, since I can define them as proper components instead of stitching together a bunch of divs and classes.
           </li>
         </ul>
       </section>
