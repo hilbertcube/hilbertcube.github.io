@@ -6,7 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const jsonPath = path.resolve("assets/json/articles.json");
+const jsonPath = path.resolve("public/assets/json/articles.json");
 const { articles } = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
 
 const highlightIds = ["orb-cuda-1", "chladni-1", "chladni-2", "hessian-1"];
@@ -83,7 +83,7 @@ const highlights = highlightIds
                 <span>{article.title}</span>
                 <a href={article.link} target="_blank" class="recommend-img">
                   <img
-                    src={`/public/Images/${article.image}`}
+                    src={`/Images/${article.image}`}
                     alt={article.title}
                     loading="lazy"
                     style="max-height: 0; opacity: 0;"

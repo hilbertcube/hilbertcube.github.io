@@ -3,8 +3,11 @@
  * PostList.astro
  * ==============
  */
-import articlesData from "../../assets/json/articles.json";
+import fs from "node:fs";
+import path from "node:path";
 
+const jsonPath = path.resolve("public/assets/json/articles.json");
+const articlesData = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
 const posts = articlesData.posts || [];
 ---
 

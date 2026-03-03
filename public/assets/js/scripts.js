@@ -1048,7 +1048,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.hash !== "") {
         event.preventDefault();
         
-        const target = document.querySelector(this.hash);
+        const target = document.getElementById(this.hash.substring(1));
         if (!target) return;
         
         const navbarOffset = 120;
@@ -1159,8 +1159,11 @@ function fetchCommit() {
         minute: '2-digit'
       });
 
-      document.getElementById('commit-info').textContent =
-        `\nLast Updated: ${datePart}, ${timePart} (PST)\nCommit: ${message}`;
+      const commitEl = document.getElementById('commit-info');
+      if (commitEl) {
+        commitEl.textContent =
+          `\nLast Updated: ${datePart}, ${timePart} (PST)\nCommit: ${message}`;
+      }
     })
     .catch(error => {
       console.error('Error fetching data:', error);
