@@ -12,6 +12,7 @@ import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
 import Equation from "@components/math/Equation.astro";
 import CodeBox from "@components/code/CodeBox.astro";
+import { tex } from "@components/math/tex.astro";
 ---
 
 <BaseLayout
@@ -156,10 +157,11 @@ import CodeBox from "@components/code/CodeBox.astro";
               The Fourier transform of the impulse train is another impulse
               train:
               <Equation>
-                \[ \mathcal&#123;F&#125;\&#123;\delta_T(t)\&#125; =
-                \frac&#123;2\pi&#125;&#123;T&#125;\sum_&#123;k=-\infty&#125;^&#123;\infty&#125;
-                \delta(\omega - k\omega_s), \qquad \omega_s =
-                \frac&#123;2\pi&#125;&#123;T&#125;. \]
+              {tex`\[ 
+              \mathcal{F}\{\delta_T(t)\} = 
+              \frac{2\pi}{T}\sum_{k=-\infty}^{\infty} \delta(\omega - k\omega_s), 
+              \qquad \omega_s = \frac{2\pi}{T}.
+              \]`}
               </Equation>
             </Theorem>
             <p>or this one below (click on the arrow!)</p>

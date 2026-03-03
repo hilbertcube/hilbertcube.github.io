@@ -16,6 +16,7 @@ import TabBox from "@components/code/TabBox.astro";
 import CopyButton from "@components/code/CopyButton.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import TableOfContents from "@components/TableOfContents.astro";
+import ContinueButton from "@components/ContinueButton.astro"
 ---
 
 <BaseLayout
@@ -292,11 +293,13 @@ import TableOfContents from "@components/TableOfContents.astro";
         and download related dependencies by using the pip package manager:
       </p>
 
-      <ShellScript
-        >python3 -m venv venv source venv/bin/activate # On Windows, use
-        venv\Scripts\activate` pip install matplotlib pip install numpy pip
-        install itertools pip install scipy</ShellScript
-      >
+<ShellScript
+>python3 -m venv 
+venv source venv/bin/activate # On Windows, use venv\Scripts\activate` 
+pip install matplotlib 
+pip install numpy pip
+install itertools 
+pip install scipy</ShellScript>
 
       <p>
         In this article, we will use matplotlib to plot our coordinate systems,
@@ -1333,15 +1336,10 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         accurately describe these patterns.
       </p>
 
-      <div style="text-align: center;">
-        <a
-          style="text-align: center;"
-          href="../the-quest-to-finding-chladni-patterns-3"
-          class="redirect-button"
-        >
-          Next
-        </a>
-      </div>
+      <ContinueButton
+        prevHref="../articles/the-quest-to-finding-chladni-patterns-1"
+        nextHref="../articles/the-quest-to-finding-chladni-patterns-3"
+      />
     </section>
 
     <section id="References">

@@ -1,0 +1,88 @@
+---
+interface Props {
+  prevHref?: string;
+  prevLabel?: string;
+  nextHref?: string;
+  nextLabel?: string;
+}
+
+const {
+  prevHref,
+  prevLabel = "Previous part",
+  nextHref,
+  nextLabel = "Next part",
+} = Astro.props;
+
+const hasPrev = !!prevHref;
+const hasNext = !!nextHref;
+---
+
+<nav class="article-nav">
+  <a
+    href={hasPrev ? prevHref : "#"}
+    class:list={["nav-button", "nav-prev", { hidden: !hasPrev }]}
+  >
+    &larr;&ensp;{prevLabel}
+  </a>
+  <a
+    href={hasNext ? nextHref : "#"}
+    class:list={["nav-button", "nav-next", { hidden: !hasNext }]}
+  >
+    {nextLabel}&ensp;&rarr;
+  </a>
+</nav>
+
+<style is:global>
+  .article-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3rem 0 2rem;
+    gap: 1rem;
+  }
+
+  .article-nav .nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.8rem;
+    font-family: "Computer-Modern", "Times New Roman", serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--grid-text-color);
+    background: transparent;
+    border: 1px solid var(--next-border);
+    border-radius: 0;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: border-color 0.3s ease,
+                color 0.3s ease,
+                background-color 0.3s ease;
+  }
+
+  .article-nav .nav-button:hover {
+    border-color: var(--url-color);
+    color: var(--url-color);
+    background-color: color-mix(in srgb, var(--url-color) 6%, transparent);
+  }
+
+  .article-nav .nav-prev {
+    margin-right: auto;
+  }
+
+  .article-nav .nav-next {
+    margin-left: auto;
+  }
+
+  .article-nav .nav-button.hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @media all and (max-width: 580px) {
+    .article-nav .nav-button {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.95rem;
+    }
+  }
+</style>

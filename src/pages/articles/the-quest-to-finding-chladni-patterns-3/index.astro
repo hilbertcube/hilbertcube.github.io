@@ -8,6 +8,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import fs from "node:fs";
 import path from "node:path";
+import ContinueButton from "@components/ContinueButton.astro"
 
 const data = JSON.parse(
   fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
@@ -570,6 +571,8 @@ import TableOfContents from "@components/TableOfContents.astro";
         which includes the flexural rigidity constant $\nu$, $E$ is young's
         modulus, and $h$ is the thickness of the plate.
       </p>
+
+      <ContinueButton prevHref="../articles/the-quest-to-finding-chladni-patterns-2" />
     </section>
 
     <section id="References">

@@ -15,7 +15,7 @@ const data = JSON.parse(
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 import Equation from "@components/math/Equation.astro";
-import CopyButton from "@components/code/CopyButton.astro";
+import ContinueButton from "@components/ContinueButton.astro"
 import TwoColumns from "@components/TwoColumns.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import CodeBox from "@components/code/CodeBox.astro";
@@ -954,15 +954,7 @@ import CodeBox from "@components/code/CodeBox.astro";
           not. You can read Part 2 by pressing the directory below.
         </p>
 
-        <div style="text-align: center;">
-          <a
-            style="text-align: center;"
-            href="../the-quest-to-finding-chladni-patterns-2"
-            class="redirect-button"
-          >
-            Next
-          </a>
-        </div>
+        <ContinueButton nextHref="../articles/the-quest-to-finding-chladni-patterns-2" />
       </section>
     </section>
 
