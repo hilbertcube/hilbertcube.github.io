@@ -1,7 +1,14 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
-import ArticleCards from "../../../components/ArticleCards.astro";
+import fs from "node:fs";
+import path from "node:path";
+
+const data = JSON.parse(
+  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
+);
+const slug = Astro.url.pathname.replace(/\/$/, "");
+const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 ---
 
 <BaseLayout
@@ -102,13 +109,9 @@ import ArticleCards from "../../../components/ArticleCards.astro";
     </div>
 
     <header>
-      <div class="topic">
-        Topics: Mathematics, Physics, Standing Waves, Python
-      </div>
-      <h1 class="title">
-        The Quest to Finding Chladni Patterns, Part 2: Codes and Results
-      </h1>
-      <div class="date">Updated June 14, 2024</div>
+      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <h1 class="title">{meta.title}</h1>
+      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -1436,16 +1439,6 @@ plot_polar_contour(columns, rows, a)
           2020. Accessed: 2024-05-26.
         </li>
       </ol>
-    </section>
-
-    <section>
-      <h2>More Articles</h2>
-      <ArticleCards
-        count={4}
-        showDetails={true}
-        shuffle={true}
-        excludePath="/articles/the-quest-to-finding-chladni-patterns-2"
-      />
     </section>
   </div><!-- .content-grid -->
 

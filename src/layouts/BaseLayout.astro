@@ -9,6 +9,7 @@ import ShareButton from "../components/ShareButton.astro";
 import Logo from "../components/Logo.astro";
 import Footer from "../components/Footer.astro";
 import HighlightsAndAttribute from "../components/HighlightsAndAttribute.astro";
+import ArticleCards from "../components/ArticleCards.astro";
 
 // Vite bundles all @import statements into one minified CSS file
 import "../assets/css/main.css";
@@ -27,6 +28,8 @@ const {
   keywords = "math, physics, programming, coding, computer science, computer simulation",
   activeButton = "",
 } = Astro.props;
+
+const isArticle = Astro.url.pathname.startsWith("/articles/");
 ---
 
 <!doctype html>
@@ -50,10 +53,7 @@ const {
     <title>{title} - neumanncondition</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="subject"
-      content="Mathematics, Physics, and Computer Science Articles"
-    />
+    <meta name="subject" content="Mathematics, Physics, and Computer Science Articles, Posts, Tutorials, and more" />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     <meta name="author" content="Don Le, ledongduu@gmail.com" />
@@ -62,15 +62,8 @@ const {
     <!-- Preconnect to third-party origins -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
-    <!-- External CDN stylesheets -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
     <!-- Active nav button highlighting -->
     {
@@ -113,9 +106,25 @@ const {
       </slot>
     </nav>
 
-    <main class="general-wrapper" id="content-grid">
+    <main class="general-wrapper">
       <!-- Page-specific content goes here -->
       <slot />
+
+      {
+        isArticle && (
+          <div class="content-grid" style="margin-top: -100px">
+            <section>
+              <h2>More Articles</h2>
+              <ArticleCards
+                count={4}
+                showDetails={true}
+                shuffle={true}
+                excludePath={Astro.url.pathname.replace(/\/$/, "")}
+              />
+            </section>
+          </div>
+        )
+      }
 
       <footer>
         <Footer />

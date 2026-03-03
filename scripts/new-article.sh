@@ -275,7 +275,7 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
     <script is:inline src="/assets/js/blogpage-setting.js"><\/script>
   </Fragment>
 
-  <div class="content-grid" id="home">
+  <div class="content-grid" >
     <header>
       <div class="topic">$TOPIC_LINE</div>
       <h1 class="post-title">$TITLE</h1>

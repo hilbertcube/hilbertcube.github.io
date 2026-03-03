@@ -6,7 +6,14 @@
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
-import ArticleCards from "../../../components/ArticleCards.astro";
+import fs from "node:fs";
+import path from "node:path";
+
+const data = JSON.parse(
+  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
+);
+const slug = Astro.url.pathname.replace(/\/$/, "");
+const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 ---
 
 <BaseLayout
@@ -99,14 +106,9 @@ import ArticleCards from "../../../components/ArticleCards.astro";
 
   <div class="content-grid">
     <header>
-      <div class="topic">
-        Topics: C++, OpenCV, CUDA, MPI, OPENMP, Image Stitching
-      </div>
-      <h1 class="title">
-        Accelerating Feature Extraction and Image Stitching Algorithm Using
-        Nvidia CUDA
-      </h1>
-      <div class="date">Updated August 10, 2024</div>
+      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <h1 class="title">{meta.title}</h1>
+      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -953,15 +955,6 @@ features.img_size = grayImg.size();</code></pre>
       </p>
     </section>
 
-    <section>
-      <h2>More Articles</h2>
-      <ArticleCards
-        count={4}
-        showDetails={true}
-        shuffle={true}
-        excludePath="/articles/accelerating-feature-extraction-and-image-stitching-algorithm"
-      />
-    </section>
   </div>
 
   <Fragment slot="scripts">

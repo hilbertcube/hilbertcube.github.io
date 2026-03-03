@@ -6,7 +6,14 @@
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
-import ArticleCards from "../../../components/ArticleCards.astro";
+import fs from "node:fs";
+import path from "node:path";
+
+const data = JSON.parse(
+  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
+);
+const slug = Astro.url.pathname.replace(/\/$/, "");
+const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 ---
 
 <BaseLayout
@@ -116,17 +123,15 @@ import ArticleCards from "../../../components/ArticleCards.astro";
 
   <div class="content-grid">
     <header>
-      <div class="topic">
-        Topics: Computer Science, Data Structures, Algorithms, C++
-      </div>
-      <h1 class="title">Algorithmic Analysis of an Algorithm</h1>
-      <div class="date">Updated December 2, 2024</div>
+      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <h1 class="title">{meta.title}</h1>
+      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
           src="/articles/time-complexity-of-an-algorithm/time-complexity.webp"
           alt="image"
-          fetchpriority=high
+          fetchpriority="high"
         />
       </figure>
       <div class="Quote">
@@ -740,16 +745,6 @@ import ArticleCards from "../../../components/ArticleCards.astro";
             > – Reference for definitions and properties.
           </li>
         </ul>
-      </section>
-
-      <section>
-        <h2>More Articles</h2>
-        <ArticleCards
-          count={4}
-          showDetails={true}
-          shuffle={true}
-          excludePath="/articles/time-complexity-of-an-algorithm"
-        />
       </section>
     </section>
   </div>
