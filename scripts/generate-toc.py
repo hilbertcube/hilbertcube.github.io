@@ -115,30 +115,28 @@ def build_hierarchy(sections: list[dict]) -> list[dict]:
 # HTML generation
 # ============================================================================
 
-def toc_html(sections: list[dict], indent: int = 3) -> str:
-    """Recursively render <ul>…</ul> from a hierarchy."""
+def toc_items_str(sections: list[dict], indent: int = 3) -> str:
+    """Recursively render TocItem[] array syntax from a hierarchy."""
     pad = "  " * indent
-    lines = [f"{pad}<ul>"]
+    lines = []
     for sec in sections:
-        lines.append(f'{pad}  <li><a href="#{sec["id"]}">{sec["title"]}</a>')
         kids = sec.get("children")
         if kids:
-            lines.append(toc_html(kids, indent + 2))
-        lines.append(f"{pad}  </li>")
-    lines.append(f"{pad}</ul>")
+            lines.append(f'{pad}{{ label: "{sec["title"]}", href: "#{sec["id"]}", children: [')
+            lines.append(toc_items_str(kids, indent + 1))
+            lines.append(f"{pad}]}},")
+        else:
+            lines.append(f'{pad}{{ label: "{sec["title"]}", href: "#{sec["id"]}" }},')
     return "\n".join(lines)
 
 
 def toc_block(sections: list[dict]) -> str:
     hierarchy = build_hierarchy(sections)
-    inner = toc_html(hierarchy, indent=3)
+    inner = toc_items_str(hierarchy, indent=3)
     return (
-        '    <div class="toc">\n'
-        '      <header class="major">\n'
-        "        <h2>Table of Contents</h2>\n"
-        "      </header>\n"
+        '    <TableOfContents items={[\n'
         f"{inner}\n"
-        "    </div>"
+        '    ]} />'
     )
 
 
@@ -166,24 +164,33 @@ def read_template_body(path: Path) -> tuple[str, str]:
 
 _TOC_PAT = re.compile(
     r'(?P<before>)'                         # (captured below via a wider pattern)
-    r'<div\s+class="toc">\s*.*?</div>',     # existing TOC div
+    r'<TableOfContents\s+items=\{\[.*?\]\}\s*/>',  # existing TableOfContents component
     re.DOTALL,
 )
 
 def insert_toc(file_text: str, new_toc: str) -> str | None:
-    """Replace the existing <div class="toc">…</div> block, or insert one
+    """Replace the existing <TableOfContents .../> component, or insert one
     before <div class="highlights-and-attribute"> inside the sidebar slot."""
 
-    # 1) Try to replace an existing TOC div
+    # 1) Try to replace an existing TableOfContents component
     existing = re.search(
-        r'<div\s+class="toc">.*?</div>\s*(?=\n\s*<div\s+class="highlights-and-attribute">)',
+        r'<TableOfContents\s+items=\{\[.*?\]\}\s*/>\s*(?=\n\s*<div\s+class="highlights-and-attribute">)',
         file_text,
         re.DOTALL,
     )
     if existing:
         return file_text[: existing.start()] + new_toc + "\n" + file_text[existing.end():]
 
-    # 2) No existing TOC — insert before highlights-and-attribute
+    # 2) Try to replace legacy <div class="toc"> block
+    legacy = re.search(
+        r'<div\s+class="toc">.*?</div>\s*(?=\n\s*<div\s+class="highlights-and-attribute">)',
+        file_text,
+        re.DOTALL,
+    )
+    if legacy:
+        return file_text[: legacy.start()] + new_toc + "\n" + file_text[legacy.end():]
+
+    # 3) No existing TOC — insert before highlights-and-attribute
     marker = re.search(
         r'(\s*)<div\s+class="highlights-and-attribute">',
         file_text,

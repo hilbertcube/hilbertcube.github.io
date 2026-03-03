@@ -15,8 +15,10 @@ const data = JSON.parse(
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 import Equation from "@components/math/Equation.astro";
-import Sample from "@components/code/Sample.astro";
-import CopyButton from "@components/code/CopyButton.astro";
+import TwoColumns from "@components/TwoColumns.astro";
+import CodeBox from "@components/code/CodeBox.astro";
+import ShellScript from "@components/code/ShellScript.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 ---
 
 <BaseLayout
@@ -42,61 +44,57 @@ import CopyButton from "@components/code/CopyButton.astro";
         }
       }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.css"
+    />
   </Fragment>
 
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li>
-          <a href="#feature-extraction"
-            >Feature Extraction from Images and the ORB Feature Detector</a
-          >
-          <ul>
-            <li><a href="#Introduction">Introduction</a></li>
-            <li><a href="#utilizing-gpu">Project's Objective</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#literature-review">Literature Review and Technologies</a>
-          <ul>
-            <li><a href="#mpi">Message Passing Interfaces (MPI)</a></li>
-            <li><a href="#openmp">Open Multi-Processing (OpenMP)</a></li>
-            <li>
-              <a href="#sift-and-orb">The SIFT and ORB Feature Detectors</a>
-            </li>
-            <li>
-              <a href="#gpu-and-cuda"
-                >Overview of General GPU Architecture and Nvidia's Compute
-                Unified Device Architecture (CUDA)</a
-              >
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#implementation">Implementations</a>
-          <ul>
-            <li><a href="#workflow">Image Stitching Workflow</a></li>
-            <li><a href="#optimization">Optimization</a></li>
-          </ul>
-        </li>
-        <li><a href="#benchmarks">Data Collection and Benchmarks</a></li>
-        <li>
-          <a href="#results">Results</a>
-          <ul>
-            <li><a href="#performance-metrics">Performance Metrics</a></li>
-            <li><a href="#runtime">Runtime Comparison</a></li>
-            <li><a href="#speedup">Speedup</a></li>
-            <li><a href="#cost">Cost</a></li>
-            <li><a href="#efficiency">Efficiency</a></li>
-          </ul>
-        </li>
-        <li><a href="#future-work">Ending Remarks and Future Work</a></li>
-        <li><a href="#References">References</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        {
+          label: "Feature Extraction from Images and the ORB Feature Detector",
+          href: "#feature-extraction",
+          children: [
+            { label: "Introduction", href: "#Introduction" },
+            { label: "Project's Objective", href: "#utilizing-gpu" },
+          ],
+        },
+        {
+          label: "Literature Review and Technologies",
+          href: "#literature-review",
+          children: [
+            { label: "Message Passing Interfaces (MPI)", href: "#mpi" },
+            { label: "Open Multi-Processing (OpenMP)", href: "#openmp" },
+            { label: "The SIFT and ORB Feature Detectors", href: "#sift-and-orb",},
+            { label: "Overview of General GPU Architecture and Nvidia's CUDA", href: "#gpu-and-cuda",},
+          ],
+        },
+        {
+          label: "Implementations",
+          href: "#implementation",
+          children: [
+            { label: "Image Stitching Workflow", href: "#workflow" },
+            { label: "Optimization", href: "#optimization" },
+          ],
+        },
+        { label: "Data Collection and Benchmarks", href: "#benchmarks" },
+        {
+          label: "Results",
+          href: "#results",
+          children: [
+            { label: "Performance Metrics", href: "#performance-metrics" },
+            { label: "Runtime Comparison", href: "#runtime" },
+            { label: "Speedup", href: "#speedup" },
+            { label: "Cost", href: "#cost" },
+            { label: "Efficiency", href: "#efficiency" },
+          ],
+        },
+        { label: "Ending Remarks and Future Work", href: "#future-work" },
+        { label: "References", href: "#References" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>
@@ -150,7 +148,7 @@ import CopyButton from "@components/code/CopyButton.astro";
           (GPU).
         </p>
 
-        <div class="two-columns-block">
+        <TwoColumns>
           <div>
             <p>
               Image stitching requires feature detection algorithms. The first
@@ -192,12 +190,12 @@ import CopyButton from "@components/code/CopyButton.astro";
               </figcaption>
             </figure>
           </div>
-        </div>
+        </TwoColumns>
       </section>
 
       <section id="utilizing-gpu">
         <h3>Project's Objective</h3>
-        <div class="two-columns-block">
+        <TwoColumns>
           <div>
             <p>
               This project mainly focuses on images captured by Unmanned Aerial
@@ -244,7 +242,7 @@ import CopyButton from "@components/code/CopyButton.astro";
               <figcaption>Final Map Obtained from Stitching Process</figcaption>
             </figure>
           </div>
-        </div>
+        </TwoColumns>
       </section>
     </section>
 
@@ -287,9 +285,9 @@ import CopyButton from "@components/code/CopyButton.astro";
           For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation
           of any module that uses OpenMP:
         </p>
-<Sample>g++ -c test.cpp -o test.o -fopenmp 
+<ShellScript>g++ -c test.cpp -o test.o -fopenmp 
 g++ test.o -o test -fopenmp -lpthread
-</Sample>
+</ShellScript>
         <p>
           What's the difference between this and the stl threads, or unix
           pthreads? Not that much differences, but OpenMP are usually used in
@@ -529,8 +527,11 @@ g++ test.o -o test -fopenmp -lpthread
           the same purpose as its regular version. We call this new function
         </p>
 
-<Sample>void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const
-cuda::GpuMat&amp; img,ImageFeatures&amp; features)</Sample>
+        <CodeBox language="cpp"
+          >void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const
+          cuda::GpuMat&amp; img,ImageFeatures&amp; features);
+        </CodeBox>
+
         <p>
           to compute GPU images. This is an analogous version of the <code
             class="inline-code">detectAndCompute</code
@@ -540,11 +541,8 @@ cuda::GpuMat&amp; img,ImageFeatures&amp; features)</Sample>
           upload the descriptors from the CPU to the GPU, and then download it back
           to the CPU.
         </p>
-        <div class="box">
-          <div class="code-container">
-            <CopyButton />
-            <pre
-              class="line-numbers"><code class="language-cpp">// A peak inside computeImageFeatures()
+
+<CodeBox language="cpp" lineNumbers>// A peak inside computeImageFeatures()
 
 cuda::GpuMat keypointsGPU;
 orb-&gt;detectAndComputeAsync(grayImg, cuda::GpuMat(), keypointsGPU, descriptorsGPU);
@@ -585,9 +583,8 @@ if (keypointsCPU.size() != descriptors.rows) &#123;
 // Store detected features and descriptors
 features.keypoints = keypointsCPU;
 features.descriptors = descriptors;
-features.img_size = grayImg.size();</code></pre>
-          </div>
-        </div>
+features.img_size = grayImg.size();
+</CodeBox>
       </section>
     </section>
 
@@ -681,10 +678,7 @@ features.img_size = grayImg.size();</code></pre>
         problem.
       </p>
 
-      <div
-        class="two-columns-block"
-        style="margin: 30px 0 10px; column-gap: 1.2em;"
-      >
+      <TwoColumns style="margin: 30px 0 10px; column-gap: 1.2em;">
         <div>
           <span style="font-size: large;"
             ><strong>Performance Testing without CUDA Acceleration</strong
@@ -745,7 +739,7 @@ features.img_size = grayImg.size();</code></pre>
             </li>
           </ul>
         </div>
-      </div>
+      </TwoColumns>
     </section>
 
     <section id="results">
@@ -808,7 +802,7 @@ features.img_size = grayImg.size();</code></pre>
           As mentioned, I will compare the two runtime of the setup with, and
           without multi-threading.
         </p>
-        <div class="two-columns-block">
+        <TwoColumns>
           <div>
             <figure style="padding: 0; margin: 0;">
               <img
@@ -831,7 +825,7 @@ features.img_size = grayImg.size();</code></pre>
             </figure>
             <figcaption>With OpenMP for CPU vs GPU (1 thread)</figcaption>
           </div>
-        </div>
+        </TwoColumns>
 
         <p>
           I initially ran our code on Setup 1. The original goal of this
@@ -969,11 +963,19 @@ features.img_size = grayImg.size();</code></pre>
     ></script>
     <script
       is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+    ></script>
+    <script
+      is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
     ></script>
     <script
       is:inline
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
       async></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.min.js"
+    ></script>
   </Fragment>
 </BaseLayout>

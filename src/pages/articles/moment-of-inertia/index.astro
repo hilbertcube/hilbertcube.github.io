@@ -6,6 +6,7 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -34,16 +35,13 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
   </Fragment>
 
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li>Introduction</li>
-        <li><a href="#Appendix">Appendix</a></li>
-        <li><a href="#References">References</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        { label: "Introduction" },
+        { label: "Appendix", href: "#Appendix" },
+        { label: "References", href: "#References" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>

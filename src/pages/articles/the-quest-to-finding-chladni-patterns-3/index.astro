@@ -15,6 +15,7 @@ const data = JSON.parse(
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 import Equation from "@components/math/Equation.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 ---
 
 <BaseLayout
@@ -50,42 +51,39 @@ import Equation from "@components/math/Equation.astro";
   </Fragment>
 
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li>
-          <a href="#biharmonic-equation"
-            >The Biharmonic Wave Equation of Plates</a
-          >
-        </li>
-        <li>
-          <a href="#rayleight-and-wave-speed"
-            >Rayleigh's Derivation of Chladni's Law and the Effective Wave Speed</a
-          >
-          <ul>
-            <li>
-              <a href="#rayleigh-derivation"
-                >Rayleigh's Derivation of the Formula</a
-              >
-            </li>
-            <li>
-              <a href="#effective-wave-speed">The Effective Wave Speed</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#analysis">Data Analysis: Verifying Chladni's Law</a>
-          <ul>
-            <li><a href="#experimental-results">Experimental Results</a></li>
-            <li><a href="#graph">Linearity of Chladni's Law</a></li>
-          </ul>
-        </li>
-        <li><a href="#conclusion">Conclusion</a></li>
-        <li><a href="#References">References</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        {
+          label: "The Biharmonic Wave Equation of Plates",
+          href: "#biharmonic-equation",
+        },
+        {
+          label:
+            "Rayleigh's Derivation of Chladni's Law and the Effective Wave Speed",
+          href: "#rayleight-and-wave-speed",
+          children: [
+            {
+              label: "Rayleigh's Derivation of the Formula",
+              href: "#rayleigh-derivation",
+            },
+            {
+              label: "The Effective Wave Speed",
+              href: "#effective-wave-speed",
+            },
+          ],
+        },
+        {
+          label: "Data Analysis: Verifying Chladni's Law",
+          href: "#analysis",
+          children: [
+            { label: "Experimental Results", href: "#experimental-results" },
+            { label: "Linearity of Chladni's Law", href: "#graph" },
+          ],
+        },
+        { label: "Conclusion", href: "#conclusion" },
+        { label: "References", href: "#References" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>

@@ -165,6 +165,7 @@ ASTRO_EOF
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import TableOfContents from "../../../components/TableOfContents.astro";
 import ArticleCards from "../../../components/ArticleCards.astro";
 ---
 
@@ -181,14 +182,9 @@ import ArticleCards from "../../../components/ArticleCards.astro";
 
   <!-- Sidebar: TOC + highlights -->
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li><a href="#section-1">Section 1</a></li>
-      </ul>
-    </div>
+    <TableOfContents items={[
+      { label: "Section 1", href: "#section-1" },
+    ]} />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>
@@ -243,6 +239,7 @@ ASTRO_EOF
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
+import TableOfContents from "../../../components/TableOfContents.astro";
 ---
 
 <BaseLayout
@@ -258,14 +255,9 @@ import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.a
 
   <!-- Sidebar: TOC + highlights -->
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li><a href="#section-1">Section 1</a></li>
-      </ul>
-    </div>
+    <TableOfContents items={[
+      { label: "Section 1", href: "#section-1" },
+    ]} />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>

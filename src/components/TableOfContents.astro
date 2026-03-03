@@ -1,0 +1,53 @@
+---
+/**
+ * src/components/TableOfContents.astro
+ * =====================================
+ * Sidebar Table of Contents component.
+ *
+ * Props
+ * -----
+ * - items : Array of TocItem objects (label, href?, children?)
+ *
+ * Usage
+ * -----
+ * <TableOfContents items={[
+ *   { label: "Introduction", href: "#intro" },
+ *   { label: "Methods", href: "#methods", children: [
+ *     { label: "Subsection A", href: "#sub-a" },
+ *   ]},
+ * ]} />
+ */
+
+interface TocItem {
+  label: string;
+  href?: string;
+  children?: TocItem[];
+}
+
+interface Props {
+  items: TocItem[];
+}
+
+const { items } = Astro.props;
+
+function renderItems(items: TocItem[]): string {
+  return items
+    .map((item) => {
+      const link = item.href
+        ? `<a href="${item.href}">${item.label}</a>`
+        : item.label;
+      const children = item.children
+        ? `\n<ul>${renderItems(item.children)}</ul>`
+        : "";
+      return `<li>${link}${children}</li>`;
+    })
+    .join("\n");
+}
+---
+
+<div class="toc">
+  <header class="major">
+    <h2>Table of Contents</h2>
+  </header>
+  <ul set:html={renderItems(items)} />
+</div>

@@ -6,6 +6,7 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -46,72 +47,72 @@ import Equation from "@components/math/Equation.astro";
   </Fragment>
 
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li>
-          <a href="#introduction">Introduction</a>
-          <ul>
-            <li>
-              <a href="#compare-efficiency"
-                >What is the Best Way to Compare Algorithms' Efficiency?</a
-              >
-            </li>
-            <li>
-              <a href="#big-o-omega-theta"
-                >The Big O, Big Omega, Big Theta, and Their Properties</a
-              >
-              <ul>
-                <li><a href="#big-o">The Big O</a></li>
-                <li><a href="#big-omega">The Big Omega</a></li>
-                <li><a href="#big-theta">The Big Theta</a></li>
-                <li><a href="#useful-properties">Useful Properties</a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#runtime-analysis">Runtime Analysis of an Algorithm</a>
-          <ul>
-            <li><a href="#master-theorem">The Master Theorem</a></li>
-            <li><a href="#example-merge-sort">Example 1: Merge Sort</a></li>
-            <li>
-              <a href="#example-binary-search">Example 2: Binary Search</a>
-            </li>
-            <li>
-              <a href="#example-topological-sort">Example 3: Topological Sort</a
-              >
-            </li>
-            <li>
-              <a href="#example-dijkstra">Example 4: Dijkstra's Algorithm</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#fundamental-functions"
-            >The Fundamental Functions of Algorithmic Analysis</a
-          >
-          <ul>
-            <li><a href="#constant-function">The Constant Function</a></li>
-            <li><a href="#logarithm-function">The Logarithm Function</a></li>
-            <li><a href="#linear-function">The Linear Function</a></li>
-            <li><a href="#nlogn-function">The n log n Function</a></li>
-            <li><a href="#quadratic-function">The Quadratic Function</a></li>
-            <li><a href="#cubic-function">The Cubic Function</a></li>
-            <li>
-              <a href="#exponential-function">The Exponential Function</a>
-            </li>
-            <li><a href="#factorial-function">The Factorial Function</a></li>
-            <li>
-              <a href="#irregular-functions">Other Irregular Functions</a>
-            </li>
-          </ul>
-        </li>
-        <li><a href="#references">References</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        {
+          label: "Introduction",
+          href: "#introduction",
+          children: [
+            {
+              label: "What is the Best Way to Compare Algorithms' Efficiency?",
+              href: "#compare-efficiency",
+            },
+            {
+              label: "The Big O, Big Omega, Big Theta, and Their Properties",
+              href: "#big-o-omega-theta",
+              children: [
+                { label: "The Big O", href: "#big-o" },
+                { label: "The Big Omega", href: "#big-omega" },
+                { label: "The Big Theta", href: "#big-theta" },
+                { label: "Useful Properties", href: "#useful-properties" },
+              ],
+            },
+          ],
+        },
+        {
+          label: "Runtime Analysis of an Algorithm",
+          href: "#runtime-analysis",
+          children: [
+            { label: "The Master Theorem", href: "#master-theorem" },
+            { label: "Example 1: Merge Sort", href: "#example-merge-sort" },
+            {
+              label: "Example 2: Binary Search",
+              href: "#example-binary-search",
+            },
+            {
+              label: "Example 3: Topological Sort",
+              href: "#example-topological-sort",
+            },
+            {
+              label: "Example 4: Dijkstra's Algorithm",
+              href: "#example-dijkstra",
+            },
+          ],
+        },
+        {
+          label: "The Fundamental Functions of Algorithmic Analysis",
+          href: "#fundamental-functions",
+          children: [
+            { label: "The Constant Function", href: "#constant-function" },
+            { label: "The Logarithm Function", href: "#logarithm-function" },
+            { label: "The Linear Function", href: "#linear-function" },
+            { label: "The n log n Function", href: "#nlogn-function" },
+            { label: "The Quadratic Function", href: "#quadratic-function" },
+            { label: "The Cubic Function", href: "#cubic-function" },
+            {
+              label: "The Exponential Function",
+              href: "#exponential-function",
+            },
+            { label: "The Factorial Function", href: "#factorial-function" },
+            {
+              label: "Other Irregular Functions",
+              href: "#irregular-functions",
+            },
+          ],
+        },
+        { label: "References", href: "#references" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>

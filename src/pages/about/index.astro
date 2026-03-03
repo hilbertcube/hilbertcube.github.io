@@ -7,10 +7,11 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Banner from "@components/Banner.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
 import Equation from "@components/math/Equation.astro";
-import CopyButton from "@components/code/CopyButton.astro";
+import CodeBox from "@components/code/CodeBox.astro";
 ---
 
 <BaseLayout
@@ -19,42 +20,27 @@ import CopyButton from "@components/code/CopyButton.astro";
   keywords="About, neumanncondition, Don Le, UCLA, Computer Science, Engineering"
   activeButton="About-button"
 >
-  <!-- Extra page-specific styles -->
-  <Fragment slot="head">
-    <style>
-      .left-section-banner {
-        background: linear-gradient(
-          170deg,
-          rgb(42, 39, 203) 0%,
-          rgb(18, 3, 76) 100%
-        );
-      }
-    </style>
-  </Fragment>
 
   <!-- Sidebar: TOC + highlights -->
   <Fragment slot="sidebar">
-    <div class="toc">
-      <header class="major">
-        <h2>Table of Contents</h2>
-      </header>
-      <ul>
-        <li><a href="#about-me">About me</a></li>
-        <li>
-          <a href="#about-this-website">About this website</a>
-          <ul>
-            <li>
-              <a href="#background-and-design"
-                >Background and choice of design</a
-              >
-            </li>
-            <li><a href="#structure">Structure</a></li>
-            <li><a href="#third-party-tools">Third-party tools</a></li>
-          </ul>
-        </li>
-        <li><a href="#disclaimer">Disclaimer</a></li>
-      </ul>
-    </div>
+    <TableOfContents
+      items={[
+        { label: "About me", href: "#about-me" },
+        {
+          label: "About this website",
+          href: "#about-this-website",
+          children: [
+            {
+              label: "Background and choice of design",
+              href: "#background-and-design",
+            },
+            { label: "Structure", href: "#structure" },
+            { label: "Third-party tools", href: "#third-party-tools" },
+          ],
+        },
+        { label: "Disclaimer", href: "#disclaimer" },
+      ]}
+    />
     <div class="highlights-and-attribute">
       <HighlightsAndAttribute />
     </div>
@@ -227,19 +213,15 @@ import CopyButton from "@components/code/CopyButton.astro";
           code theme in the setting
         </p>
 
-        <div class="box">
-          <div class="code-container">
-            <CopyButton />
-            <pre
-              class="line-numbers"><code class="language-cpp">#pragma once
+<CodeBox language="cpp">#pragma once template&lt;typename Func&gt; 
+[[nodiscard]] inline __attribute__((always_inline)) 
+double numerical_derivative(Func f, double x, double h) 
+&#123; 
+    // Use the central difference formula for
+    better accuracy return (f(x + h) - f(x - h)) / (2.0 * h); 
+&#125;
+</CodeBox>
 
-template&lt;typename Func&gt;
-double numerical_derivative(Func f, double x, double h) &#123;
-    // Use the central difference formula for better accuracy
-    return (f(x + h) - f(x - h)) / (2.0 * h);
-&#125;</code></pre>
-          </div>
-        </div>
         <p>
           About the logo: that's the trajectory of a double pendulum in a
           computer simulation.
