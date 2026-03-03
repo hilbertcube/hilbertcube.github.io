@@ -4,8 +4,7 @@
 # new-article.sh — Create a new article or post for the Astro site
 # =============================================================================
 # Creates an .astro page under src/pages/articles/ or src/pages/posts/,
-# adds an entry to assets/json/articles.json, and (for articles) creates
-# a symlink in astro-public/ so static images are served correctly.
+# adds an entry to public/assets/json/articles.json.
 #
 # Usage:
 #   ./scripts/new-article.sh                              # Interactive mode
@@ -300,27 +299,10 @@ fi
 echo -e "${GREEN}✓ Created Astro page: $ASTRO_FILE${NC}"
 
 # ---------------------------------------------------------------------------
-# Create symlink in astro-public/ for article images (articles only)
-# ---------------------------------------------------------------------------
-if [ "$TYPE" = "article" ]; then
-    SYMLINK_DIR="astro-public/articles/$SLUG"
-    if [ ! -d "astro-public/articles" ]; then
-        mkdir -p "astro-public/articles"
-    fi
-    # Symlink points to the src page directory so images placed next to the
-    # .astro file are served at /articles/<slug>/<filename>
-    RELATIVE_TARGET="../../$TARGET_DIR"
-    if [ ! -e "$SYMLINK_DIR" ]; then
-        ln -s "$RELATIVE_TARGET" "$SYMLINK_DIR"
-        echo -e "${GREEN}✓ Created symlink: $SYMLINK_DIR -> $RELATIVE_TARGET${NC}"
-    fi
-fi
-
-# ---------------------------------------------------------------------------
-# Update assets/json/articles.json
+# Update public/assets/json/articles.json
 # ---------------------------------------------------------------------------
 CURRENT_DATE=$(date "+%B %-d, %Y")
-JSON_FILE="assets/json/articles.json"
+JSON_FILE="public/assets/json/articles.json"
 
 echo ""
 echo -e "${YELLOW}Adding entry to $JSON_FILE...${NC}"

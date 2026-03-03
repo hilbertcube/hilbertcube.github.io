@@ -10,6 +10,9 @@ import Logo from "../components/Logo.astro";
 import Footer from "../components/Footer.astro";
 import HighlightsAndAttribute from "../components/HighlightsAndAttribute.astro";
 
+// Vite bundles all @import statements into one minified CSS file
+import "../assets/css/main.css";
+
 interface Props {
   title: string;
   description?: string;
@@ -82,9 +85,6 @@ const {
         />
       )
     }
-
-    <!-- Global stylesheet -->
-    <link rel="stylesheet" href="/assets/css/main.css" />
 
     <!-- Page-specific head content (extra styles, meta, etc.) -->
     <slot name="head" />

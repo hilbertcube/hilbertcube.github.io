@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Default parameters
-INPUT_PATH="assets/json/articles.json"
-OUTPUT_PATH="rss/feed.xml"
+INPUT_PATH="public/assets/json/articles.json"
+OUTPUT_PATH="public/rss/feed.xml"
 BASE_URL="https://neumanncondition.com"
 
 # Parse command line arguments
@@ -94,8 +94,8 @@ def convert_to_rfc2822_date(date_string):
     return ""
 
 # Read input parameters from environment
-input_path = sys.argv[1] if len(sys.argv) > 1 else "assets/json/articles.json"
-output_path = sys.argv[2] if len(sys.argv) > 2 else "rss/feed.xml"
+input_path = sys.argv[1] if len(sys.argv) > 1 else "public/assets/json/articles.json"
+output_path = sys.argv[2] if len(sys.argv) > 2 else "public/rss/feed.xml"
 base_url = sys.argv[3] if len(sys.argv) > 3 else "https://neumanncondition.com"
 
 try:
@@ -227,8 +227,8 @@ def convert_to_rfc2822_date(date_string):
     return ""
 
 # Read input parameters from environment
-input_path = sys.argv[1] if len(sys.argv) > 1 else "assets/json/articles.json"
-output_path = sys.argv[2] if len(sys.argv) > 2 else "rss/feed.xml"
+input_path = sys.argv[1] if len(sys.argv) > 1 else "public/assets/json/articles.json"
+output_path = sys.argv[2] if len(sys.argv) > 2 else "public/rss/feed.xml"
 base_url = sys.argv[3] if len(sys.argv) > 3 else "https://neumanncondition.com"
 
 try:

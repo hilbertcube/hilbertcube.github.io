@@ -51,7 +51,7 @@ update_rss_feed() {
     echo -e "\033[0;36mChecking if RSS feed needs updating...\033[0m"
     
     # Check if articles.json exists
-    if [ ! -f "assets/json/articles.json" ]; then
+    if [ ! -f "public/assets/json/articles.json" ]; then
         echo -e "\033[0;33marticles.json not found, skipping RSS generation\033[0m"
         return
     fi
