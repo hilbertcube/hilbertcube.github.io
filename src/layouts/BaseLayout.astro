@@ -11,6 +11,7 @@ import Footer from "@components/Footer.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import ArticleCards from "@components/ArticleCards.astro";
 
+
 // Vite bundles all @import statements into one minified CSS file
 import "../assets/css/main.css";
 
@@ -30,6 +31,7 @@ const {
 } = Astro.props;
 
 const isArticle = Astro.url.pathname.startsWith("/articles/");
+const tex = String.raw;
 ---
 
 <!doctype html>
