@@ -3,6 +3,7 @@
  * ShareButton.astro
  * =================
  */
+import Icon from './Icon.astro';
 ---
 
 <button
@@ -10,7 +11,7 @@
   class="share-button"
   onclick="toggleShareOptions(event)"
 >
-  <i class="fa-solid fa-share-nodes" aria-hidden="true" id="share-expand"></i>
+  <Icon name="share-nodes" id="share-expand" />
   <span class="share-tooltip">Share this page</span>
 </button>
 
@@ -21,7 +22,7 @@
       onclick='sharePage(event,"facebook")'
       id="share-facebook"
     >
-      <i class="fa-brands fa-facebook" aria-hidden="true"></i>
+      <Icon name="facebook" prefix="fab" />
     </button>
   </abbr>
   <abbr title="Twitter">
@@ -30,7 +31,7 @@
       onclick='sharePage(event,"twitter")'
       id="share-twitter"
     >
-      <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+      <Icon name="x-twitter" prefix="fab" />
     </button>
   </abbr>
   <abbr title="Whatsapp">
@@ -39,7 +40,7 @@
       onclick='sharePage(event,"whatsapp")'
       id="share-whatsapp"
     >
-      <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+      <Icon name="whatsapp" prefix="fab" />
     </button>
   </abbr>
   <abbr title="Reddit">
@@ -48,7 +49,7 @@
       onclick='sharePage(event,"reddit")'
       id="share-reddit"
     >
-      <i class="fa-brands fa-reddit" aria-hidden="true"></i>
+      <Icon name="reddit" prefix="fab" />
     </button>
   </abbr>
   <abbr title="Hacker News">
@@ -57,7 +58,7 @@
       onclick='sharePage(event,"hackernews")'
       id="share-hackernews"
     >
-      <i class="fa-brands fa-hacker-news" aria-hidden="true"></i>
+      <Icon name="hacker-news" prefix="fab" />
     </button>
   </abbr>
   <abbr title="Telegram">
@@ -66,7 +67,7 @@
       onclick='sharePage(event,"telegram")'
       id="share-telegram"
     >
-      <i class="fa-brands fa-telegram" aria-hidden="true"></i>
+      <Icon name="telegram" prefix="fab" />
     </button>
   </abbr>
 </div>

@@ -3,25 +3,25 @@
  * Logo.astro
  * ==========
  */
+import { Image } from 'astro:assets';
+import logoSrc from '../assets/images/Logo/pendulum_logo.webp';
+import Icon from './Icon.astro';
 ---
 
 <div id="logo">
   <a
     href="https://github.com/hilbertcube/neumanncondition"
-    style="text-decoration:none; color: inherit;"
+    class="logo-link"
   >
-    <img
+    <Image
       id="logoImage"
-      src="/media/Images/Logo/pendulum_logo.webp"
-      style="width: 45%; margin-bottom: 10px; border-radius: 50%;"
+      src={logoSrc}
       alt="website-logo"
+      widths={[150, 300, 450]}
+      sizes="(max-width: 600px) 150px, 300px"
     />
-    <div
-      class="logo-title"
-      style="font-family: Computer-Modern; text-align: center; font-size: 1.6em;"
-    >
-      neumanncondition.com <i class="fa fa-external-link" style="font-size:14px"
-      ></i>
+    <div class="logo-title">
+      neumanncondition.com <Icon name="up-right-from-square" style="font-size:14px" />
     </div>
   </a>
 </div>
@@ -68,3 +68,23 @@
     </ul>
   </details>
 </div>
+
+<style>
+  .logo-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #logoImage {
+    width: 45%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 50%;
+  }
+
+  .logo-title {
+    font-family: Computer-Modern;
+    text-align: center;
+    font-size: 1.6em;
+  }
+</style>

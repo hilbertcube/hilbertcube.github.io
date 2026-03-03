@@ -1,0 +1,53 @@
+---
+/**
+ * Icon.astro
+ * ==========
+ * Renders a single Font Awesome icon as inline SVG.
+ *
+ * Usage:
+ *   <Icon name="moon" />
+ *   <Icon name="github" prefix="fab" />
+ *   <Icon name="check" style="color: green;" />
+ */
+import { getIconSvg } from "../utils/fontawesome";
+
+interface Props {
+  /** Icon name without the "fa-" prefix, e.g. "moon", "github" */
+  name: string;
+  /** "fas" for solid (default), "fab" for brands */
+  prefix?: "fas" | "fab";
+  class?: string;
+  style?: string;
+  id?: string;
+}
+
+const {
+  name,
+  prefix = "fas",
+  class: className = "",
+  style = "",
+  id,
+} = Astro.props;
+
+const svg = getIconSvg(prefix, name);
+---
+
+<span
+  class:list={["svg-icon", className]}
+  style={style}
+  set:html={svg}
+  {...(id ? { id } : {})}
+/>
+
+<style>
+  .svg-icon {
+    display: inline-block;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+  .svg-icon :global(svg) {
+    height: 1em;
+    width: auto;
+    fill: currentColor;
+  }
+</style>

@@ -3,6 +3,11 @@
  * TopBar.astro
  * ============
  */
+import Icon from './Icon.astro';
+import { getIconSvg } from '../utils/fontawesome';
+
+const moonSvg = getIconSvg('fas', 'moon');
+const sunSvg = getIconSvg('fas', 'sun');
 ---
 
 <div class="top-nav">
@@ -55,7 +60,7 @@
     <div class="buttons-container">
       <abbr title="RSS" class="rss">
         <a aria-label="rss" href="/rss/feed.xml">
-          <i class="fa-solid fa-rss"></i>
+          <Icon name="rss" />
         </a>
       </abbr>
       <abbr
@@ -67,8 +72,13 @@
           aria-label="dark-mode-button"
           id="modeToggle"
         >
-          <i class="fa-solid fa-moon" id="toggleIcon"></i>
+          <span id="toggleIcon">
+            <Icon name="moon" />
+          </span>
         </button>
+        <script is:inline define:vars={{ moonSvg, sunSvg }}>
+          window.__iconSvg = { moon: moonSvg, sun: sunSvg };
+        </script>
       </abbr>
       <abbr title="settings" class="setting-container">
         <input id="toggle" type="checkbox" />
@@ -104,8 +114,7 @@
                   <option value="et-book">et book, palantino</option>
                   <option value="sans-serif">Arial, sans-serif</option>
                   <option value="Georgia">Georgia, serif</option>
-                  <option value="Times New Roman">Times New Roman, serif</option
-                  >
+                  <option value="Times New Roman">Times New Roman, serif</option>
                   <option value="Verdana">Verdana, sans-serif</option>
                 </select>
               </div>
@@ -217,3 +226,17 @@
     <div class="progress-bar" id="myBar"></div>
   </div>
 </div>
+
+<style>
+  #toggleIcon {
+    display: inline-flex;
+    align-items: center;
+    height: 0.9em;
+  }
+  #toggleIcon :global(svg),
+  #toggleIcon :global(.svg-icon svg) {
+    height: 0.9em;
+    width: auto;
+    fill: currentColor;
+  }
+</style>

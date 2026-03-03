@@ -14,211 +14,211 @@ MathJax = {
 
 // // OPEN FULL IMG
 document.addEventListener("DOMContentLoaded", function () {
-    const allImages = document.querySelectorAll("img:not(#logoImage):not(#home-banner img):not(.no-lightbox):not(.recommend-img img):not(.front-img)");
-    
-    allImages.forEach(function (img, index) {
-      img.style.cursor = "pointer";
-      img.addEventListener("click", function () {
-        openImageViewer(index);
-      });
+  const allImages = document.querySelectorAll("img:not(#logoImage):not(#home-banner img):not(.no-lightbox):not(.recommend-img img):not(.front-img)");
+
+  allImages.forEach(function (img, index) {
+    img.style.cursor = "pointer";
+    img.addEventListener("click", function () {
+      openImageViewer(index);
     });
-    
-    function openImageViewer(currentIndex) {
-      // Create overlay
-      const overlay = document.createElement("div");
-      overlay.style.position = "fixed";
-      overlay.style.top = 0;
-      overlay.style.left = 0;
-      overlay.style.width = "100%";
-      overlay.style.height = "100%";
-      overlay.style.backgroundColor = "rgba(0, 0, 0)";
-      overlay.style.display = "flex";
-      overlay.style.alignItems = "center";
-      overlay.style.justifyContent = "center";
-      overlay.style.zIndex = 9999;
-      overlay.style.overscrollBehavior = "none"; // Prevent pull-to-refresh and bounce effects
-      
-      // Prevent scrolling when overlay is open and lock to current position
-      const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
+  });
 
-      // Create wrapper that contains everything
-      const viewerWrapper = document.createElement("div");
-      viewerWrapper.style.position = "absolute";
-      viewerWrapper.style.top = "50%";
-      viewerWrapper.style.left = "50%";
-      viewerWrapper.style.transform = "translate(-50%, -50%)";
-      viewerWrapper.style.display = "flex";
-      viewerWrapper.style.alignItems = "center";
-      viewerWrapper.style.justifyContent = "center";
-      
-      // Create image container
-      const imgContainer = document.createElement("div");
-      imgContainer.style.position = "relative";
-      imgContainer.style.display = "inline-block";
+  function openImageViewer(currentIndex) {
+    // Create overlay
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(0, 0, 0)";
+    overlay.style.display = "flex";
+    overlay.style.alignItems = "center";
+    overlay.style.justifyContent = "center";
+    overlay.style.zIndex = 9999;
+    overlay.style.overscrollBehavior = "none"; // Prevent pull-to-refresh and bounce effects
 
-      // Create image
-      const fullscreenImg = document.createElement("img");
-      fullscreenImg.src = allImages[currentIndex].src;
-      fullscreenImg.style.maxWidth = "90vw"; // Reduced to make room for buttons
-      fullscreenImg.style.maxHeight = "90vh";
-      fullscreenImg.style.boxShadow = "0 0 20px black";
-      fullscreenImg.style.display = "block";
+    // Prevent scrolling when overlay is open and lock to current position
+    const scrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
 
-      // Create close button
-      const closeButton = document.createElement("div");
-      closeButton.textContent = "✕";
-      closeButton.style.position = "absolute";
-      closeButton.style.top = "20px";
-      closeButton.style.right = "20px";
-      closeButton.style.fontSize = "24px";
-      closeButton.style.color = "white";
-      closeButton.style.backgroundColor = "rgba(0,0,0,0.5)";
-      closeButton.style.borderRadius = "50%";
-      closeButton.style.width = "32px";
-      closeButton.style.height = "32px";
-      closeButton.style.display = "flex";
-      closeButton.style.alignItems = "center";
-      closeButton.style.justifyContent = "center";
-      closeButton.style.cursor = "pointer";
-      closeButton.style.userSelect = "none";
-      closeButton.style.pointerEvents = "auto";
+    // Create wrapper that contains everything
+    const viewerWrapper = document.createElement("div");
+    viewerWrapper.style.position = "absolute";
+    viewerWrapper.style.top = "50%";
+    viewerWrapper.style.left = "50%";
+    viewerWrapper.style.transform = "translate(-50%, -50%)";
+    viewerWrapper.style.display = "flex";
+    viewerWrapper.style.alignItems = "center";
+    viewerWrapper.style.justifyContent = "center";
 
-      // Create navigation buttons container
-      const navContainer = document.createElement("div");
-      navContainer.style.position = "absolute";
-      navContainer.style.top = "0";
-      navContainer.style.left = "0";
-      navContainer.style.width = "100%";
-      navContainer.style.height = "100%";
-      navContainer.style.pointerEvents = "none"; // Allow clicks to pass through to underlying elements
-      navContainer.style.zIndex = "10000";
+    // Create image container
+    const imgContainer = document.createElement("div");
+    imgContainer.style.position = "relative";
+    imgContainer.style.display = "inline-block";
 
-      // Buttons settings
-      const radius = "35px";
-      const arrowFontSize = "20px";
-      
-      // Create left navigation button - positioned absolutely within the overlay
-      const leftButton = document.createElement("div");
-      leftButton.textContent = "❮";
-      leftButton.style.position = "absolute";
-      leftButton.style.top = "50%";
-      leftButton.style.left = "20px"; // Position from the edge of overlay
-      leftButton.style.transform = "translateY(-50%)";
-      leftButton.style.fontSize = arrowFontSize;
-      leftButton.style.color = "white";
-      leftButton.style.backgroundColor = "rgba(0,0,0,0.5)";
-      leftButton.style.borderRadius = "50%";
-      leftButton.style.width = radius;
-      leftButton.style.height = radius;
-      leftButton.style.display = "flex";
-      leftButton.style.alignItems = "center";
-      leftButton.style.justifyContent = "center";
-      leftButton.style.cursor = "pointer";
-      leftButton.style.userSelect = "none";
-      leftButton.style.pointerEvents = "auto"; // Make this element clickable
-      
-      // Create right navigation button - positioned absolutely within the overlay
-      const rightButton = document.createElement("div");
-      rightButton.textContent = "❯";
-      rightButton.style.position = "absolute";
-      rightButton.style.top = "50%";
-      rightButton.style.right = "20px"; // Position from the edge of overlay
-      rightButton.style.transform = "translateY(-50%)";
-      rightButton.style.fontSize = arrowFontSize;
-      rightButton.style.color = "white";
-      rightButton.style.backgroundColor = "rgba(0,0,0,0.5)";
-      rightButton.style.borderRadius = "50%";
-      rightButton.style.width = radius;
-      rightButton.style.height = radius;
-      rightButton.style.display = "flex";
-      rightButton.style.alignItems = "center";
-      rightButton.style.justifyContent = "center";
-      rightButton.style.cursor = "pointer";
-      rightButton.style.userSelect = "none"; 
-      rightButton.style.pointerEvents = "auto"; // Make this element clickable
+    // Create image
+    const fullscreenImg = document.createElement("img");
+    fullscreenImg.src = allImages[currentIndex].src;
+    fullscreenImg.style.maxWidth = "90vw"; // Reduced to make room for buttons
+    fullscreenImg.style.maxHeight = "90vh";
+    fullscreenImg.style.boxShadow = "0 0 20px black";
+    fullscreenImg.style.display = "block";
 
-      // Image counter display
-      const counterDisplay = document.createElement("div");
-      counterDisplay.textContent = `${currentIndex + 1} / ${allImages.length}`;
-      counterDisplay.style.position = "absolute";
-      counterDisplay.style.bottom = "20px";
-      counterDisplay.style.left = "50%";
-      counterDisplay.style.transform = "translateX(-50%)";
-      counterDisplay.style.color = "white";
-      counterDisplay.style.backgroundColor = "rgba(0,0,0,0.5)";
-      counterDisplay.style.padding = "8px 15px";
-      counterDisplay.style.borderRadius = "20px";
-      counterDisplay.style.fontSize = "16px";
-      counterDisplay.style.pointerEvents = "auto";
-      counterDisplay.style.fontFamily = "Jura";
+    // Create close button
+    const closeButton = document.createElement("div");
+    closeButton.textContent = "✕";
+    closeButton.style.position = "absolute";
+    closeButton.style.top = "20px";
+    closeButton.style.right = "20px";
+    closeButton.style.fontSize = "24px";
+    closeButton.style.color = "white";
+    closeButton.style.backgroundColor = "rgba(0,0,0,0.5)";
+    closeButton.style.borderRadius = "50%";
+    closeButton.style.width = "32px";
+    closeButton.style.height = "32px";
+    closeButton.style.display = "flex";
+    closeButton.style.alignItems = "center";
+    closeButton.style.justifyContent = "center";
+    closeButton.style.cursor = "pointer";
+    closeButton.style.userSelect = "none";
+    closeButton.style.pointerEvents = "auto";
 
-      // Assemble elements
-      imgContainer.appendChild(fullscreenImg);
-      viewerWrapper.appendChild(imgContainer);
-      
-      // Add navigation buttons to the nav container
-      navContainer.appendChild(leftButton);
-      navContainer.appendChild(rightButton);
-      navContainer.appendChild(counterDisplay);
-      navContainer.appendChild(closeButton);
-      
-      // Add all elements to the overlay
-      overlay.appendChild(viewerWrapper);
-      overlay.appendChild(navContainer);
-      document.body.appendChild(overlay);
+    // Create navigation buttons container
+    const navContainer = document.createElement("div");
+    navContainer.style.position = "absolute";
+    navContainer.style.top = "0";
+    navContainer.style.left = "0";
+    navContainer.style.width = "100%";
+    navContainer.style.height = "100%";
+    navContainer.style.pointerEvents = "none"; // Allow clicks to pass through to underlying elements
+    navContainer.style.zIndex = "10000";
 
-      // Close logic
-      function closeOverlay() {
-        document.body.removeChild(overlay);
-        document.removeEventListener("keydown", keyListener);
-        
-        // Restore scrolling and position
-        const scrollY = parseInt(document.body.style.top || '0');
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        window.scrollTo(0, Math.abs(scrollY));
-      }
+    // Buttons settings
+    const radius = "35px";
+    const arrowFontSize = "20px";
 
-      closeButton.addEventListener("click", closeOverlay);
+    // Create left navigation button - positioned absolutely within the overlay
+    const leftButton = document.createElement("div");
+    leftButton.textContent = "❮";
+    leftButton.style.position = "absolute";
+    leftButton.style.top = "50%";
+    leftButton.style.left = "20px"; // Position from the edge of overlay
+    leftButton.style.transform = "translateY(-50%)";
+    leftButton.style.fontSize = arrowFontSize;
+    leftButton.style.color = "white";
+    leftButton.style.backgroundColor = "rgba(0,0,0,0.5)";
+    leftButton.style.borderRadius = "50%";
+    leftButton.style.width = radius;
+    leftButton.style.height = radius;
+    leftButton.style.display = "flex";
+    leftButton.style.alignItems = "center";
+    leftButton.style.justifyContent = "center";
+    leftButton.style.cursor = "pointer";
+    leftButton.style.userSelect = "none";
+    leftButton.style.pointerEvents = "auto"; // Make this element clickable
 
-      // Navigation logic
-      function showImage(index) {
-        // Handle wrapping around the array
-        if (index < 0) index = allImages.length - 1;
-        if (index >= allImages.length) index = 0;
-        
-        currentIndex = index;
-        fullscreenImg.src = allImages[currentIndex].src;
-        counterDisplay.textContent = `${currentIndex + 1} / ${allImages.length}`;
-      }
+    // Create right navigation button - positioned absolutely within the overlay
+    const rightButton = document.createElement("div");
+    rightButton.textContent = "❯";
+    rightButton.style.position = "absolute";
+    rightButton.style.top = "50%";
+    rightButton.style.right = "20px"; // Position from the edge of overlay
+    rightButton.style.transform = "translateY(-50%)";
+    rightButton.style.fontSize = arrowFontSize;
+    rightButton.style.color = "white";
+    rightButton.style.backgroundColor = "rgba(0,0,0,0.5)";
+    rightButton.style.borderRadius = "50%";
+    rightButton.style.width = radius;
+    rightButton.style.height = radius;
+    rightButton.style.display = "flex";
+    rightButton.style.alignItems = "center";
+    rightButton.style.justifyContent = "center";
+    rightButton.style.cursor = "pointer";
+    rightButton.style.userSelect = "none";
+    rightButton.style.pointerEvents = "auto"; // Make this element clickable
 
-      leftButton.addEventListener("click", function(e) {
-        e.stopPropagation();
-        showImage(currentIndex - 1);
-      });
+    // Image counter display
+    const counterDisplay = document.createElement("div");
+    counterDisplay.textContent = `${currentIndex + 1} / ${allImages.length}`;
+    counterDisplay.style.position = "absolute";
+    counterDisplay.style.bottom = "20px";
+    counterDisplay.style.left = "50%";
+    counterDisplay.style.transform = "translateX(-50%)";
+    counterDisplay.style.color = "white";
+    counterDisplay.style.backgroundColor = "rgba(0,0,0,0.5)";
+    counterDisplay.style.padding = "8px 15px";
+    counterDisplay.style.borderRadius = "20px";
+    counterDisplay.style.fontSize = "16px";
+    counterDisplay.style.pointerEvents = "auto";
+    counterDisplay.style.fontFamily = "Jura";
 
-      rightButton.addEventListener("click", function(e) {
-        e.stopPropagation();
-        showImage(currentIndex + 1);
-      });
+    // Assemble elements
+    imgContainer.appendChild(fullscreenImg);
+    viewerWrapper.appendChild(imgContainer);
 
-      // Keyboard navigation
-      function keyListener(e) {
-        if (e.key === "Escape") {
-          closeOverlay();
-        } else if (e.key === "ArrowLeft") {
-          showImage(currentIndex - 1);
-        } else if (e.key === "ArrowRight") {
-          showImage(currentIndex + 1);
-        }
-      }
+    // Add navigation buttons to the nav container
+    navContainer.appendChild(leftButton);
+    navContainer.appendChild(rightButton);
+    navContainer.appendChild(counterDisplay);
+    navContainer.appendChild(closeButton);
 
-      document.addEventListener("keydown", keyListener);
+    // Add all elements to the overlay
+    overlay.appendChild(viewerWrapper);
+    overlay.appendChild(navContainer);
+    document.body.appendChild(overlay);
+
+    // Close logic
+    function closeOverlay() {
+      document.body.removeChild(overlay);
+      document.removeEventListener("keydown", keyListener);
+
+      // Restore scrolling and position
+      const scrollY = parseInt(document.body.style.top || '0');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, Math.abs(scrollY));
     }
+
+    closeButton.addEventListener("click", closeOverlay);
+
+    // Navigation logic
+    function showImage(index) {
+      // Handle wrapping around the array
+      if (index < 0) index = allImages.length - 1;
+      if (index >= allImages.length) index = 0;
+
+      currentIndex = index;
+      fullscreenImg.src = allImages[currentIndex].src;
+      counterDisplay.textContent = `${currentIndex + 1} / ${allImages.length}`;
+    }
+
+    leftButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      showImage(currentIndex - 1);
+    });
+
+    rightButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      showImage(currentIndex + 1);
+    });
+
+    // Keyboard navigation
+    function keyListener(e) {
+      if (e.key === "Escape") {
+        closeOverlay();
+      } else if (e.key === "ArrowLeft") {
+        showImage(currentIndex - 1);
+      } else if (e.key === "ArrowRight") {
+        showImage(currentIndex + 1);
+      }
+    }
+
+    document.addEventListener("keydown", keyListener);
+  }
 });
 
 // OPEN URL IN NEW WINDOWS
@@ -490,10 +490,10 @@ function BodyDarkMode() {
   function updateMode() {
     if (darkMode) {
       root.classList.add("dark-mode");
-      toggleIcon.classList.replace("fa-moon", "fa-sun"); // Change to sun icon
+      toggleIcon.innerHTML = window.__iconSvg.sun; // Change to sun icon
     } else {
       root.classList.remove("dark-mode");
-      toggleIcon.classList.replace("fa-sun", "fa-moon"); // Change to moon icon
+      toggleIcon.innerHTML = window.__iconSvg.moon; // Change to moon icon
     }
     localStorage.setItem("mode", darkMode ? "dark" : "light");
   }
@@ -539,7 +539,7 @@ function CodeDarkMode(lightThemeHref, darkThemeHref) {
       lightThemeLink.disabled = true; // Disable light theme
       document.head.appendChild(darkThemeLink);
       document.documentElement.classList.add("dark-mode");
-      toggleIcon.classList.replace("fa-moon-o", "fa-sun-o"); // Change to sun icon
+      toggleIcon.innerHTML = window.__iconSvg.sun; // Change to sun icon
     } else {
       const savedLightTheme =
         localStorage.getItem("lightTheme") || lightThemeHref;
@@ -549,7 +549,7 @@ function CodeDarkMode(lightThemeHref, darkThemeHref) {
         document.head.removeChild(darkThemeLink); // Remove dark theme
       }
       document.documentElement.classList.remove("dark-mode");
-      toggleIcon.classList.replace("fa-sun-o", "fa-moon-o"); // Change to moon icon
+      toggleIcon.innerHTML = window.__iconSvg.moon; // Change to moon icon
     }
     localStorage.setItem("mode", darkMode ? "dark" : "light");
   }
@@ -640,7 +640,7 @@ function SearchBar() {
       const articles = data.articles || [];
       const others = data.others || [];
       const posts = data.posts || [];
-      
+
       // Combine both arrays for searching
       const allSuggestions = [...articles, ...others, ...posts];
 
@@ -661,13 +661,13 @@ function SearchBar() {
                 (item.date && item.date.toLowerCase().includes(query))
               );
             });
-            
+
             // Get total matches count before slicing
             const totalMatches = filteredSuggestions.length;
-            
+
             // Slice for display
             const displayedSuggestions = filteredSuggestions.slice(0, maxItems);
-            
+
             // Create and add the results count indicator
             if (totalMatches > 0) {
               const countDiv = document.createElement("div");
@@ -686,13 +686,13 @@ function SearchBar() {
               container.className = "autocomplete-item-container";
               container.style.padding = "10px";
               container.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
-              
+
               // Title section with highlighting
               const titleDiv = document.createElement("div");
               titleDiv.className = "autocomplete-item-title";
               titleDiv.style.fontWeight = "bold";
               titleDiv.style.marginBottom = "3px";
-              
+
               // Apply highlighting to title
               const highlightedTitle = item.title.replace(
                 new RegExp(query, "gi"),
@@ -700,14 +700,14 @@ function SearchBar() {
                   `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
               );
               titleDiv.innerHTML = highlightedTitle;
-              
+
               // Topic section with highlighting if topics exist
               if (item.topics && item.topics.length > 0) {
                 const topicDiv = document.createElement("div");
                 topicDiv.className = "autocomplete-item-topic";
                 topicDiv.style.fontSize = "0.85em";
                 topicDiv.style.marginBottom = "3px";
-                
+
                 // Apply highlighting to topic
                 const topicText = Array.isArray(item.topics) ? item.topics.join(", ") : "";
                 const highlightedTopic = topicText.replace(
@@ -718,14 +718,14 @@ function SearchBar() {
                 topicDiv.innerHTML = `<strong>Tags:</strong> ${highlightedTopic}`;
                 container.appendChild(topicDiv);
               }
-              
+
               // Description section with highlighting if description exists
               if (item.description) {
                 const descDiv = document.createElement("div");
                 descDiv.className = "autocomplete-item-description";
                 descDiv.style.fontSize = "0.85em";
                 descDiv.style.marginBottom = "3px";
-                
+
                 // Apply highlighting to description
                 const highlightedDesc = item.description.replace(
                   new RegExp(query, "gi"),
@@ -735,7 +735,7 @@ function SearchBar() {
                 descDiv.innerHTML = highlightedDesc;
                 container.appendChild(descDiv);
               }
-              
+
               // Date section with highlighting if date exists
               if (item.date) {
                 const dateDiv = document.createElement("div");
@@ -743,7 +743,7 @@ function SearchBar() {
                 dateDiv.style.fontSize = "0.85em";
                 dateDiv.style.fontStyle = "italic";
                 dateDiv.style.color = "var(--muted-text-color, #888)";
-                
+
                 // Apply highlighting to date
                 const highlightedDate = item.date.replace(
                   new RegExp(query, "gi"),
@@ -753,7 +753,7 @@ function SearchBar() {
                 dateDiv.innerHTML = highlightedDate;
                 container.appendChild(dateDiv);
               }
-              
+
               // Source indicator (article or other)
               const sourceDiv = document.createElement("div");
               sourceDiv.className = "autocomplete-item-source";
@@ -761,16 +761,16 @@ function SearchBar() {
               sourceDiv.style.marginTop = "3px";
               let sourceType = "Resource"; // Default value
               if (item.hasOwnProperty("id")) {
-                  sourceType = "Article";
+                sourceType = "Article";
               } else if (item.hasOwnProperty("pid")) {
-                  sourceType = "Post";
+                sourceType = "Post";
               }
               sourceDiv.textContent = sourceType;
               container.appendChild(sourceDiv);
-              
+
               // Assemble the title component
               container.prepend(titleDiv);
-              
+
               container.addEventListener("click", function () {
                 searchBar.value = item.title;
                 window.open(item.link, "_blank");
@@ -778,7 +778,7 @@ function SearchBar() {
                 dropdown.innerHTML = "";
                 dropdown.style.display = "none";
               });
-              
+
               dropdown.appendChild(container);
             });
 
@@ -841,7 +841,7 @@ function SearchBar() {
           if (currentFocus >= items.length) currentFocus = 0;
           if (currentFocus < 0) currentFocus = items.length - 1;
           items[currentFocus].classList.add("autocomplete-active");
-          
+
           // Add some styling to make active item clearly visible
           items[currentFocus].style.backgroundColor = "var(--highlight-bg-color, #f5f5f5)";
         }
@@ -861,12 +861,12 @@ function SearchBar() {
           ![...searchBars].some((bar) => bar.contains(target)) &&
           !dropdown.contains(target)
         ) {
-            // Clear all search bars when clicking outside
-            searchBars.forEach(searchBar => {
-              searchBar.value = "";
-            });
-            dropdown.innerHTML = ""; // Clear dropdown content
-            dropdown.style.display = "none"; // Hide dropdown
+          // Clear all search bars when clicking outside
+          searchBars.forEach(searchBar => {
+            searchBar.value = "";
+          });
+          dropdown.innerHTML = ""; // Clear dropdown content
+          dropdown.style.display = "none"; // Hide dropdown
         }
       });
     })
@@ -885,7 +885,7 @@ function collapseSearchBar() {
   searchBarContainer.classList.remove("expanded");
   leftSection.classList.remove("hidden"); // Show the left section again
   overlay.style.display = "none"; // Hide overlay
-  
+
   // Show these elements again when collapsing the search bar
   if (window.innerWidth <= 640) { // Mobile viewport check
     if (settingContainer) settingContainer.classList.remove("hidden");
@@ -907,7 +907,7 @@ function extendSearchBar() {
     searchBarContainer.classList.add("expanded");
     leftSection.classList.add("hidden"); // Hide the left section (for all viewports)
     overlay.style.display = "block"; // Show overlay
-    
+
     // Only hide these elements on mobile
     if (window.innerWidth <= 640) {
       if (settingContainer) settingContainer.classList.add("hidden");
@@ -929,7 +929,7 @@ function extendSearchBar() {
       collapseSearchBar(); // Collapse the search bar after a short delay
     }, 100);
   });
-  
+
   // Allow clicking on the overlay to close the search
   overlay.addEventListener("click", collapseSearchBar);
 
@@ -958,11 +958,11 @@ function extendSearchBar() {
       }
     });
   });
-  
+
   // Handle window resize to adjust visibility appropriately
-  window.addEventListener("resize", function() {
+  window.addEventListener("resize", function () {
     if (!searchBarContainer.classList.contains("expanded")) return;
-    
+
     // If expanded and viewport changes, update element visibility
     if (window.innerWidth <= 768) {
       if (searchOverlay) searchOverlay.classList.add("hidden");
@@ -1047,13 +1047,13 @@ document.addEventListener("DOMContentLoaded", function () {
     link.addEventListener("click", function (event) {
       if (this.hash !== "") {
         event.preventDefault();
-        
+
         const target = document.getElementById(this.hash.substring(1));
         if (!target) return;
-        
+
         const navbarOffset = 120;
         const targetOffset = target.offsetTop - navbarOffset;
-        
+
         window.scrollTo({
           top: targetOffset,
           behavior: "smooth"
@@ -1092,52 +1092,52 @@ function fetchCommit() {
       const repoData = await repoRes.json();
       const articlesData = await articlesRes.json();
       const treeData = await treeRes.json();
-      const totalCommits = Math.round((commitsRes.headers.get('Link') 
+      const totalCommits = Math.round((commitsRes.headers.get('Link')
         ? parseInt(commitsRes.headers.get('Link').match(/page=(\d+)>; rel="last"/)?.[1] || '0')
         : 1) / 2);
-      
+
       // Calculate lines of code by filtering out binary/image files
       const codeExtensions = ['.html', '.css', '.js', '.json', '.md', '.txt', '.py', '.sh', '.xml', '.yml', '.yaml'];
       const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico', '.bmp', '.pdf', '.woff', '.woff2', '.ttf', '.otf', '.eot'];
-      
+
       const codeFiles = treeData.tree?.filter(file => {
         const hasCodeExt = codeExtensions.some(ext => file.path.toLowerCase().endsWith(ext));
         const hasImageExt = imageExtensions.some(ext => file.path.toLowerCase().endsWith(ext));
         return hasCodeExt && !hasImageExt && file.type === 'blob';
       }) || [];
-      
+
       // Estimate lines: smaller multiplier since we're only counting actual code files
       // Average code file has ~50-100 lines, and average line is ~50 bytes
       const totalCodeSize = codeFiles.reduce((sum, file) => sum + (file.size || 0), 0);
       const estimatedLines = Math.round(totalCodeSize / 50); // ~50 bytes per line of code
-      
+
       // Count articles and posts
       const articleCount = articlesData.articles?.length || 0;
       const postCount = articlesData.posts?.length || 0;
-      
+
       // Calculate repository age
       const createdDate = new Date(repoData.created_at);
       const now = new Date();
       const ageInDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
       const years = Math.floor(ageInDays / 365);
       const months = Math.floor((ageInDays % 365) / 30);
-      const ageString = years > 0 
+      const ageString = years > 0
         ? `${years} year${years > 1 ? 's' : ''}, ${months} month${months !== 1 ? 's' : ''}`
         : `${months} month${months !== 1 ? 's' : ''}`;
-      
+
       // Format numbers with commas
       const formatNumber = (num) => num.toLocaleString('en-US');
-      
+
       // Update repo stats
       const statsElement = document.getElementById('repo-stats');
       if (statsElement) {
-        statsElement.textContent = 
+        statsElement.textContent =
           `\nTotal Updates: ${formatNumber(totalCommits)}\n` +
           `Estimated Lines: ${formatNumber(estimatedLines)}\n` +
           `Articles: ${articleCount} | Posts: ${postCount}\n` +
           `Repository Age: ${ageString}`;
       }
-      
+
       // Handle latest commit info
       return localCommitRes.json();
     })

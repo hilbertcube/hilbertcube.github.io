@@ -1,12 +1,18 @@
+---
+import { Image } from 'astro:assets';
+import bannerSrc from '../assets/images/code-banner.webp';
+---
+
 <div class="home-banner" id="home-banner">
   <div class="left-section-banner">
     <canvas id="bannerCanvas" width="80" height="50"></canvas>
   </div>
   <div class="right-section-banner">
-    <img
-      src="/media/Images/code-banner.webp"
+    <Image
+      src={bannerSrc}
       alt="Banner Image"
-      decoding="async"
+      widths={[480, 800, 1200, 1600]}
+      sizes="(max-width: 600px) 480px, (max-width: 1024px) 800px, 1200px"
     />
     <span class="banner-title">neumanncondition</span>
   </div>
