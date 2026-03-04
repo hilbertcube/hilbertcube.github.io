@@ -78,9 +78,9 @@ import Equation from "@components/math/Equation.astro";
         Let $\lcm(1):=1$. Prove that the series
         <Equation>
           $$\sum_&#123;k=1&#125;^&#123;\infty&#125;\frac&#123;1&#125;&#123;\lcm(1,2,3,...,k)&#125;$$
-        </Problem>
+        </Equation>
         converges to an irrational number.
-      </Equation>
+      </Problem>
 
       <Solution summary="Proof">
           To know if the series converges, we use the comparison test. Let
@@ -96,7 +96,7 @@ import Equation from "@components/math/Equation.astro";
           exists and is a positive real number between 1 and 2. To prove that this
           number is irrational, we argue by contradiction. Suppose on the contrary
           that $S$ is rational, and it can be written as
-          <Equation>$$S=\frac&#123;a&#125;&#123;b&#125;,$$</div>
+          <Equation>$$S=\frac&#123;a&#125;&#123;b&#125;,$$</Equation>
           where $(a,b)\in\Z\times\Z\backslash\&#123;0\&#125;$, and $a, b$ are coprimes.
           Let $p_1,p_2,p_3,...,p_r,...$ be the increasing sequence of prime numbers
           greater than $b$. Using the famous Bertrand's Postulate, we know that
@@ -105,13 +105,13 @@ import Equation from "@components/math/Equation.astro";
             p_&#123;r+1&#125;-p_r&lt; p_r,\;\forall r=1,2,3,...$$
           </Equation>
           Change this to a non-strict inequality, we have
-          <Equation>$$p_&#123;r+1&#125;-p_r\leq p_r-1$$</div>
+          <Equation>$$p_&#123;r+1&#125;-p_r\leq p_r-1$$</Equation>
           for each $r\in\Z^+$. We will now show that $p_&#123;r+1&#125;-p_r$ is indeed
           strictly less than $p_r-1$. To do this, we need to recall a useful lemma
           that we will not prove formally:
           <div class="lemma">
             <strong>Lemma 1:</strong> There are infinitely primes of the form $3k+2$.
-          </Equation>
+          </div>
           Lemma (1) simply states that for infinitely many primes $p_r$, it holds
           that $p_r\equiv 2\;(\modular 3)$. Now, note that if $p_&#123;r+1&#125;-p_r=p_r-1$,
           then $p_&#123;r+1&#125;-2\equiv 1\;(\modular 3)$, which means that $p_&#123;r+1&#125;\equiv
@@ -164,7 +164,7 @@ import Equation from "@components/math/Equation.astro";
             <Equation>
               $$L_m=\lcm(1,2,...,m)=\lcm(\lcm(1,2,...,k),k+1,...,m).$$
             </Equation>
-          </Equation>
+          </div>
           Ok, but why? This lemma is left as an exercise for the reader.<br
           /><br />
 
@@ -196,10 +196,10 @@ import Equation from "@components/math/Equation.astro";
         <Equation>
           \[ 4yx^6 + \log_2(yx^6) - 2\log_2(x) + 1 \geq
           2^&#123;[\log_2(2x)]^2&#125; + [\log_2(x)]^2, \]
-        </Problem>
+        </Equation>
         for some integer $y$. How many integer values of $y$ are there such that the
         set $\mathcal&#123;S&#125;$ contains no more than 64 elements?
-      </Equation>
+      </Problem>
       <p>You can try solving this, or view the solution right below :)</p>
       <Solution>
           For this inequality to make sense, $x$ and $y$ must be greater than 0.
@@ -261,7 +261,7 @@ import Equation from "@components/math/Equation.astro";
             2^&#123;[\log_2(2x)]^2&#125; + [\log_2(2x)]^2,$$
           </Equation>
           Let $f(x) = 2^x + x$, a strictly increasing function. Then, by Lemma 1:
-          <Equation>$$\log_2(4yx^6) \geq [\log_2(2x)]^2$$</div>
+          <Equation>$$\log_2(4yx^6) \geq [\log_2(2x)]^2$$</Equation>
           Solving for $y$:
           <Equation>
             $$ \begin&#123;align*&#125; 4yx^6 &amp;\geq
@@ -307,7 +307,8 @@ import Equation from "@components/math/Equation.astro";
           values of $y$ satisfying the inequality.
         </Solution>
     </section>
-  </Equation>
+  </div>
+  
 
   <Fragment slot="scripts">
     <script is:inline src="/assets/js/blogpage-setting.js"></script>
