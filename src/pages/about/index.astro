@@ -212,7 +212,8 @@ import { tex } from "@components/math/tex.astro";
           code theme in the setting
         </p>
 
-<CodeBox language="cpp">#pragma once template&lt;typename Func&gt; 
+<CodeBox language="cpp">#pragma once 
+template&lt;typename Func&gt; 
 [[nodiscard]] inline __attribute__((always_inline)) 
 double numerical_derivative(Func f, double x, double h) 
 &#123; 
