@@ -1,6 +1,21 @@
 {
   "articles": [
     {
+      "title": "Debugging and Profiling C and C++ with Valgrind",
+      "id": "valgrind-1",
+      "image": "valgrind.webp",
+      "link": "/articles/valgrind-debug-and-profile",
+      "topics": [
+        "C",
+        "C++",
+        "Debugging",
+        "Memory",
+        "Profiling"
+      ],
+      "description": "A practical guide to Valgrind: detecting memory leaks, invalid accesses, and use-after-free bugs with Memcheck, profiling call graphs with Callgrind, and tracking heap usage with Massif.",
+      "date": "May 6, 2025"
+    },
+    {
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
       "id": "chladni-1",
       "image": "dark_chladni.webp",
@@ -99,18 +114,6 @@
       ],
       "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
       "date": "December 2, 2024"
-    },
-    {
-      "title": "Simulating Moment of Inertia with OpenGL and GLM",
-      "id": "moi-1",
-      "image": "inertia.webp",
-      "link": "/articles/moment-of-inertia",
-      "topics": [
-        "Classical Mechanics",
-        "Dynamics of Rotation"
-      ],
-      "description": "If mass is an object's resistance to change of motion due to force, then moment of inertia is its resistance to rotation due to torque.  Unlike mass, moments of inertia varies based on shapes and axis of rotations.",
-      "date": ""
     }
   ],
   "posts": [

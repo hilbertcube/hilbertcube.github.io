@@ -14,35 +14,47 @@ document.querySelectorAll("img").forEach((img) => {
 
 // Blog toc section highlight
 document.addEventListener("DOMContentLoaded", function () {
-  const sections = document.querySelectorAll("section");
-  const tocLinks = document.querySelectorAll(".toc a");
+  const tocLinks = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+  const targets = tocLinks
+    .map((link) => {
+      const href = link.getAttribute("href");
+      return href ? document.getElementById(href.slice(1)) : null;
+    })
+    .filter((target) => target !== null);
+
+  if (!tocLinks.length || !targets.length) {
+    return;
+  }
 
   function removeActiveClasses() {
     tocLinks.forEach((link) => link.classList.remove("active"));
   }
 
   function highlightTocLink() {
-    let currentSection = null;
+    let currentTarget = targets[0];
+    const offset = 140;
 
-    sections.forEach((section) => {
-      const rect = section.getBoundingClientRect();
+    targets.forEach((target) => {
+      const rect = target.getBoundingClientRect();
 
-      // Check if any part of the section is within the viewport
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        currentSection = section;
+      if (rect.top - offset <= 0) {
+        currentTarget = target;
       }
     });
 
-    // Highlight the corresponding TOC link if we found a current section
-    if (currentSection) {
+    if (currentTarget) {
       removeActiveClasses();
       const link = document.querySelector(
-        `.toc a[href="#${currentSection.id}"]`
+        `.toc a[href="#${currentTarget.id}"]`
       );
-      if (link) link.classList.add("active");
+      if (link) {
+        link.classList.add("active");
+      }
     }
   }
 
-  window.addEventListener("scroll", highlightTocLink);
+  highlightTocLink();
+  window.addEventListener("scroll", highlightTocLink, { passive: true });
+  window.addEventListener("resize", highlightTocLink);
 });
 
