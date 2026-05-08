@@ -195,24 +195,7 @@ nav ul {
   white-space: nowrap;
 }
 
-/* Logo section */
-#logo {
-  margin-bottom: 20px;
-  overflow: hidden;
-}
 
-#logoImage {
-  display: block;
-  object-fit: contain;
-  width: 80%;
-  height: auto;
-  margin: 30px auto;
-  transition: transform .2s ease;
-}
-
-#logoImage:hover {
-  transform: scale(1.05);
-}
 
 /* Mobile toggle button */
 .toggle-btn-container {

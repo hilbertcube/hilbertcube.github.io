@@ -52,6 +52,7 @@
   /* Code and content colors */
   --code-box-color: #fff;
   --inline-code-color: rgb(247, 247, 247);
+  --inline-code-text: black;
   --box-border: #bfbfbf;
   --pre-color: #fcfcfc;
   --tab-color: #ededed;
@@ -123,6 +124,7 @@ html.dark-mode {
   /* Code */
   --code-box-color: #2a2a2a;
   --inline-code-color: rgb(55, 55, 55);
+  --inline-code-text: rgb(0, 194, 0);
   --box-border: #424242;
   --pre-color: #1a1a1a;
   --tab-color: black;

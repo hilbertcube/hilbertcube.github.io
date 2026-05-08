@@ -70,16 +70,33 @@ import Icon from './Icon.astro';
 </div>
 
 <style>
-  .logo-link {
-    text-decoration: none;
-    color: inherit;
+
+  /* Logo section */
+  #logo {
+    margin-bottom: 20px;
+    overflow: hidden;
   }
 
   #logoImage {
-    width: 45%;
+    display: block;
+    object-fit: contain;
     height: auto;
+    margin: 30px auto;
+    transition: transform .2s ease;
+  }
+  #logoImage {
+    width: 45%;
     margin-bottom: 10px;
     border-radius: 50%;
+  }
+
+  #logoImage:hover {
+    transform: scale(1.05);
+  }
+
+  .logo-link {
+    text-decoration: none;
+    color: inherit;
   }
 
   .logo-title {

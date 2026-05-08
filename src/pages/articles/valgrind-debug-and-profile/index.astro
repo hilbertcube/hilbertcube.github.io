@@ -15,7 +15,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 ---
 
 <BaseLayout
-  title="Article - Valgrind"
+  title="Valgrind"
   description="Debugging and Profiling C/C++ Programs with Valgrind"
   keywords="Valgrind, C, C++, memory leak, debugging, profiling, memcheck, callgrind, massif, dynamic binary instrumentation"
 >
@@ -242,7 +242,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
       <li><code class="inline-code">--tool=memcheck</code> - selects Memcheck explicitly (it is the default; included here for clarity).</li>
       <li><code class="inline-code">--leak-check=full</code> - after the program exits, report every individual leak with a full allocation stack trace. Without this, Valgrind only prints a summary count.</li>
       <li><code class="inline-code">--show-leak-kinds=all</code> - report all four categories of leaks (definite, indirect, possible, and still-reachable). The default omits "possibly lost" and "still reachable".</li>
-      <li><code class="inline-code">--track-origins=yes</code> - when an uninitialized-value error fires, show where the uninitialized memory originated (which <code>malloc</code> call or stack frame). This roughly doubles Memcheck's memory overhead but is almost always worth it.</li>
+      <li><code class="inline-code">--track-origins=yes</code> - when an uninitialized-value error fires, show where the uninitialized memory originated (which <code class="inline-code">malloc</code> call or stack frame). This roughly doubles Memcheck's memory overhead but is almost always worth it.</li>
       <li><code class="inline-code">--verbose</code> - print extra information, including the list of suppressed errors.</li>
       <li><code class="inline-code">--error-exitcode=1</code> - makes Valgrind exit with a nonzero code if any errors were found, enabling CI integration.</li>
     </ul>
@@ -266,7 +266,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
     </ul>
 
     <p>
-      When you call <code class="inline-code">malloc(n)</code>, Memcheck sets the A-bits for the returned block to "addressable" and the V-bits to "undefined" (because <code>malloc</code> does not zero-initialize). When you call <code class="inline-code">free(p)</code>, the A-bits for that block flip back to "not addressable". Any subsequent access is immediately caught, even if the OS has not yet reclaimed or reused that memory (which is why use-after-free bugs so often escape the normal allocator - the OS does not immediately repossess the page).
+      When you call <code class="inline-code">malloc(n)</code>, Memcheck sets the A-bits for the returned block to "addressable" and the V-bits to "undefined" (because <code class="inline-code">malloc</code> does not zero-initialize). When you call <code class="inline-code">free(p)</code>, the A-bits for that block flip back to "not addressable". Any subsequent access is immediately caught, even if the OS has not yet reclaimed or reused that memory (which is why use-after-free bugs so often escape the normal allocator - the OS does not immediately repossess the page).
     </p>
 
     <p>
@@ -297,7 +297,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <strong>Possibly lost:</strong> An interior pointer exists - some pointer points into the middle of the block rather than at its start. This can happen with certain custom allocators or pointer arithmetic. It may be legitimate or it may indicate the pointer was accidentally advanced past the start of the block.
       </li>
       <li>
-        <strong>Still reachable:</strong> A pointer to the block exists at exit, but the block was never freed. This is common and often benign: C++ standard library implementations frequently allocate global state (string caches, locale objects, thread-local storage) that they intentionally never free, relying on the OS to reclaim memory at process exit. In your own code, static or global containers fall into this category. These are usually not real bugs, which is why <code>--show-leak-kinds=all</code> is needed to see them.
+        <strong>Still reachable:</strong> A pointer to the block exists at exit, but the block was never freed. This is common and often benign: C++ standard library implementations frequently allocate global state (string caches, locale objects, thread-local storage) that they intentionally never free, relying on the OS to reclaim memory at process exit. In your own code, static or global containers fall into this category. These are usually not real bugs, which is why <code class="inline-code">--show-leak-kinds=all</code> is needed to see them.
       </li>
     </ul>
 
@@ -419,7 +419,7 @@ int main() &#123;
     return 0;
 &#125;</CodeBlock>
   
-      <p>Valgrind catches the out-of-bounds write at <code>i == 5</code>:</p>
+      <p>Valgrind catches the out-of-bounds write at <code class="inline-code">i == 5</code>:</p>
   
       <CodeBlock language="bash">==19001== Invalid write of size 4
 ==19001==    at 0x401185: main (overflow.cpp:7)
@@ -428,11 +428,11 @@ int main() &#123;
 ==19001==    at 0x401166: main (overflow.cpp:4)</CodeBlock>
   
       <p>
-        Valgrind tells us: the invalid write is at <code class="inline-code">overflow.cpp:7</code> (the <code class="inline-code">buf[i] = i * 10</code> line when <code>i == 5</code>), the address is <em>0 bytes after</em> the end of the block (so exactly one element off the end), and the block was allocated at <code class="inline-code">overflow.cpp:4</code>.
+        Valgrind tells us: the invalid write is at <code class="inline-code">overflow.cpp:7</code> (the <code class="inline-code">buf[i] = i * 10</code> line when <code class="inline-code">i == 5</code>), the address is <em>0 bytes after</em> the end of the block (so exactly one element off the end), and the block was allocated at <code class="inline-code">overflow.cpp:4</code>.
       </p>
   
       <p>
-        Note that Valgrind detects this <em>on the loop iteration that causes the violation</em>, not when the program crashes or produces wrong output. Without Valgrind, this bug might silently corrupt the allocator's internal bookkeeping, causing a crash inside <code>free(buf)</code> far from the actual cause.
+        Note that Valgrind detects this <em>on the loop iteration that causes the violation</em>, not when the program crashes or produces wrong output. Without Valgrind, this bug might silently corrupt the allocator's internal bookkeeping, causing a crash inside <code class="inline-code">free(buf)</code> far from the actual cause.
       </p>
     </section>
 
@@ -683,7 +683,7 @@ callgrind_control -i off 12345</ShellScript>
     </p>
   
     <ul>
-      <li><code class="inline-code">--time-unit=ms</code> - use wall-clock milliseconds as the x-axis in the profile. Alternatives are <code class="inline-code">i</code> (instructions, the default) and <code>B</code> (bytes allocated). Wall-clock time is the most intuitive for understanding heap growth over real time.</li>
+      <li><code class="inline-code">--time-unit=ms</code> - use wall-clock milliseconds as the x-axis in the profile. Alternatives are <code class="inline-code">i</code> (instructions, the default) and <code class="inline-code">B</code> (bytes allocated). Wall-clock time is the most intuitive for understanding heap growth over real time.</li>
       <li><code class="inline-code">--pages-as-heap=yes</code> - profile <em>all</em> memory the program touches, not just malloc/new. This includes the text segment, stack, and mmapped files. Useful when hunting for total-process RSS growth rather than just heap growth.</li>
       <li><code class="inline-code">--detailed-freq=N</code> - take a "detailed" snapshot (with full allocation trees) every N snapshots. The default is 10.</li>
     </ul>
@@ -750,7 +750,7 @@ callgrind_control -i off 12345</ShellScript>
          ./my_program</ShellScript>
 
     <p>
-      To generate a suppression entry for an error you want to silence, run Valgrind with <code>--gen-suppressions=all</code>. It will print a suppression block after each error that you can copy into your <code>.supp</code> file. A suppression entry looks like:
+      To generate a suppression entry for an error you want to silence, run Valgrind with <code class="inline-code">--gen-suppressions=all</code>. It will print a suppression block after each error that you can copy into your <code class="inline-code">.supp</code> file. A suppression entry looks like:
     </p>
 
     <CodeBlock language="bash">&#123;
