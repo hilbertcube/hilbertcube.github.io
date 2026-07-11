@@ -617,7 +617,6 @@ document.addEventListener("keydown", function (event) {
 function SearchBar() {
   const searchBars = document.querySelectorAll("#searchBar, #searchBarMobile");
   const dropdown = document.getElementById("autocomplete-dropdown");
-  const maxItems = 7;
   let currentFocus = -1;
 
   if (!searchBars.length || !dropdown) {
@@ -681,10 +680,119 @@ function SearchBar() {
     }
   }
 
+  // --- Custom excerpt building (Pagefind gives us every match position) ---
+  const CONTEXT = 16; // words of context on each side of a match cluster
+  const CLUSTER_GAP = 30; // matches farther apart than this become separate snippets
+  const MAX_SNIPPETS = 4; // per page
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // Group sorted match word-positions: nearby matches share a snippet, far-apart
+  // ones (e.g. two paragraphs) split into separate snippets.
+  function clusterLocations(locations) {
+    const sorted = [...new Set(locations)].sort((a, b) => a - b);
+    const clusters = [];
+    for (const loc of sorted) {
+      const last = clusters[clusters.length - 1];
+      // Same snippet if nearby AND the cluster hasn't already grown too large.
+      if (last && loc - last[last.length - 1] <= CLUSTER_GAP && last.length < 10)
+        last.push(loc);
+      else clusters.push([loc]);
+    }
+    return clusters;
+  }
+
+  // Build one highlighted snippet (…word word MATCH word…) around a cluster.
+  function buildSnippet(words, cluster) {
+    const matches = new Set(cluster);
+    const start = Math.max(0, cluster[0] - CONTEXT);
+    const end = Math.min(words.length - 1, cluster[cluster.length - 1] + CONTEXT);
+    const parts = [];
+    for (let i = start; i <= end; i++) {
+      if (words[i] === undefined) continue;
+      const w = escapeHtml(words[i]);
+      parts.push(matches.has(i) ? `${HL_OPEN}${w}${HL_CLOSE}` : w);
+    }
+    let html = parts.join(" ");
+    if (start > 0) html = "… " + html;
+    if (end < words.length - 1) html = html + " …";
+    return html;
+  }
+
+  // Append ?pagefind-highlight=<query> (before any #anchor) so the destination
+  // page scrolls to and highlights the exact match via pagefind-highlight.js.
+  function withHighlight(url, q) {
+    const [path, hash] = url.split("#");
+    const sep = path.includes("?") ? "&" : "?";
+    return `${path}${sep}pagefind-highlight=${encodeURIComponent(q)}${hash ? "#" + hash : ""}`;
+  }
+
+  // Turn one Pagefind result into a render item: the page title plus one snippet
+  // per match cluster, each linked to (and headed by) the section it falls in.
+  function buildPageItem(d, query) {
+    const title = (d.meta && d.meta.title) || d.url;
+    const words = (d.content || "").split(/\s+/);
+
+    // Section anchors sorted by word position. anchor.location and the match
+    // locations share the same index base into d.content, so a match maps to the
+    // nearest heading above it, which we link straight to.
+    const anchors = (d.anchors || [])
+      .filter((a) => a.id && typeof a.location === "number")
+      .sort((a, b) => a.location - b.location);
+    const headingById = {}; // readable section titles come from sub_results
+    for (const sr of d.sub_results || []) {
+      const h = (sr.url || "").indexOf("#");
+      if (h >= 0 && sr.title) headingById[sr.url.slice(h + 1)] = sr.title;
+    }
+    const sectionFor = (pos) => {
+      let found = null;
+      for (const a of anchors) {
+        if (a.location > pos) break;
+        found = a;
+      }
+      return found;
+    };
+    const prettify = (id) =>
+      id.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+    // Score clusters by Pagefind's match weights so the tightest / most relevant
+    // match (e.g. an exact phrase) leads, rather than the first one in the page.
+    const weighted = d.weighted_locations || [];
+    const scoreByLoc = {};
+    for (const w of weighted) scoreByLoc[w.location] = w.balanced_score || w.weight || 1;
+    const positions = weighted.length ? weighted.map((w) => w.location) : d.locations || [];
+
+    let hits = clusterLocations(positions)
+      .map((cluster) => ({
+        cluster,
+        score: cluster.reduce((s, l) => s + (scoreByLoc[l] || 1), 0),
+      }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, MAX_SNIPPETS)
+      .map(({ cluster }) => {
+        const sec = sectionFor(cluster[0]);
+        const heading = sec ? headingById[sec.id] || prettify(sec.id) : null;
+        return {
+          heading: heading && heading !== title ? heading : null,
+          url: withHighlight(d.url + (sec ? "#" + sec.id : ""), query),
+          excerptHtml: buildSnippet(words, cluster),
+        };
+      });
+
+    // Fallback if the page exposed no match positions (e.g. meta-only match).
+    if (!hits.length) {
+      const excerptHtml = (d.excerpt || "")
+        .replace(/<mark>/g, HL_OPEN)
+        .replace(/<\/mark>/g, HL_CLOSE);
+      hits = [{ heading: null, url: withHighlight(d.url, query), excerptHtml }];
+    }
+    return { title, url: d.url, type: typeFromUrl(d.url), hits };
+  }
+
   // Normalised item shape used by the renderer:
-  //   { title, link, type, topics?, description?, descriptionHtml?, date? }
-  // `descriptionHtml` is pre-highlighted HTML (Pagefind excerpt); `description`
-  // is plain text that the renderer highlights against the query.
+  //   { title, url, type, hits: [{ heading, url, excerptHtml }], topicsHtml? }
   async function search(query) {
     const engine = await getEngine();
 
@@ -692,42 +800,38 @@ function SearchBar() {
       // Pagefind's debouncedSearch resolves to null when superseded by a newer call.
       const result = await engine.pagefind.debouncedSearch(query, {}, 180);
       if (!result) return null;
-      const total = result.results.length;
-      const datas = await Promise.all(
-        result.results.slice(0, maxItems).map((r) => r.data()),
-      );
-      const items = datas.map((d) => ({
-        title: (d.meta && d.meta.title) || d.url,
-        link: d.url,
-        type: typeFromUrl(d.url),
-        // Excerpt already contains <mark>…</mark>; recolour to match the UI.
-        descriptionHtml: (d.excerpt || "")
-          .replace(/<mark>/g, HL_OPEN)
-          .replace(/<\/mark>/g, HL_CLOSE),
-      }));
-      return { total, items };
+      const datas = await Promise.all(result.results.map((r) => r.data()));
+      return {
+        total: result.results.length,
+        items: datas.map((d) => buildPageItem(d, query)),
+      };
     }
 
     if (engine.kind === "fallback") {
       const q = query.toLowerCase();
-      const filtered = engine.suggestions.filter(
-        (item) =>
-          item.title.toLowerCase().includes(q) ||
-          (item.topics && item.topics.some((t) => t.toLowerCase().includes(q))) ||
-          (item.description && item.description.toLowerCase().includes(q)) ||
-          (item.date && item.date.toLowerCase().includes(q)),
+      // Title-only: Pagefind handles full-text; this fallback just matches titles.
+      const filtered = engine.suggestions.filter((item) =>
+        item.title.toLowerCase().includes(q),
       );
-      const items = filtered.slice(0, maxItems).map((item) => ({
+      const items = filtered.map((item) => ({
         title: item.title,
-        link: item.link,
+        url: item.link,
         type: item.hasOwnProperty("id")
           ? "Article"
           : item.hasOwnProperty("pid")
             ? "Post"
             : "Resource",
-        topics: item.topics,
-        description: item.description,
-        date: item.date,
+        topicsHtml:
+          item.topics && item.topics.length
+            ? highlight(item.topics.join(", "), query)
+            : null,
+        hits: [
+          {
+            heading: null,
+            url: item.link,
+            excerptHtml: item.description ? highlight(item.description, query) : "",
+          },
+        ],
       }));
       return { total: filtered.length, items };
     }
@@ -744,73 +848,76 @@ function SearchBar() {
       return;
     }
 
+    const go = (url) => {
+      const dest = new URL(url, location.href);
+      const samePage =
+        dest.pathname.replace(/\/+$/, "") === location.pathname.replace(/\/+$/, "");
+      // On the same page: scroll to the match in place. Otherwise open a new tab.
+      if (samePage && typeof window.__pagefindGoInPage === "function") {
+        window.__pagefindGoInPage(url);
+      } else {
+        window.open(url, "_blank");
+      }
+      searchBar.value = "";
+      dropdown.innerHTML = "";
+      dropdown.style.display = "none";
+    };
+
     const countDiv = document.createElement("div");
-    countDiv.className = "results-count";
-    countDiv.textContent = `Displaying ${Math.min(maxItems, total)} out of ${total} results`;
-    countDiv.style.padding = "8px 10px";
-    countDiv.style.color = "var(--text-color, #666)";
-    countDiv.style.fontSize = "0.9em";
-    countDiv.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
+    countDiv.className = "search-count";
+    countDiv.textContent = `Displaying ${total} result${total === 1 ? "" : "s"}`;
     dropdown.appendChild(countDiv);
 
+    // One group (card) per article; one row per matching section within it.
     items.forEach((item) => {
-      const container = document.createElement("div");
-      container.className = "autocomplete-item-container";
-      container.style.padding = "10px";
-      container.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
+      const group = document.createElement("div");
+      group.className = "search-group";
 
-      const titleDiv = document.createElement("div");
-      titleDiv.className = "autocomplete-item-title";
-      titleDiv.style.fontWeight = "bold";
-      titleDiv.style.marginBottom = "3px";
-      titleDiv.innerHTML = highlight(item.title, query);
-      container.appendChild(titleDiv);
+      const head = document.createElement("div");
+      head.className = "search-group-head";
 
-      if (item.topics && item.topics.length > 0) {
-        const topicDiv = document.createElement("div");
-        topicDiv.className = "autocomplete-item-topic";
-        topicDiv.style.fontSize = "0.85em";
-        topicDiv.style.marginBottom = "3px";
-        topicDiv.innerHTML = `<strong>Tags:</strong> ${highlight(item.topics.join(", "), query)}`;
-        container.appendChild(topicDiv);
+      const titleEl = document.createElement("span");
+      titleEl.className = "search-group-title";
+      titleEl.innerHTML = highlight(item.title, query);
+      titleEl.addEventListener("click", () => go(item.url));
+      head.appendChild(titleEl);
+
+      const badge = document.createElement("span");
+      badge.className = "search-type-badge";
+      badge.textContent = item.type;
+      head.appendChild(badge);
+
+      group.appendChild(head);
+
+      if (item.topicsHtml) {
+        const tags = document.createElement("div");
+        tags.className = "search-group-tags";
+        tags.innerHTML = `<strong>Tags:</strong> ${item.topicsHtml}`;
+        group.appendChild(tags);
       }
 
-      if (item.descriptionHtml || item.description) {
-        const descDiv = document.createElement("div");
-        descDiv.className = "autocomplete-item-description";
-        descDiv.style.fontSize = "0.85em";
-        descDiv.style.marginBottom = "3px";
-        descDiv.innerHTML = item.descriptionHtml
-          ? item.descriptionHtml
-          : highlight(item.description, query);
-        container.appendChild(descDiv);
-      }
+      item.hits.forEach((hit) => {
+        const row = document.createElement("div");
+        row.className = "search-hit";
 
-      if (item.date) {
-        const dateDiv = document.createElement("div");
-        dateDiv.className = "autocomplete-item-date";
-        dateDiv.style.fontSize = "0.85em";
-        dateDiv.style.fontStyle = "italic";
-        dateDiv.style.color = "var(--muted-text-color, #888)";
-        dateDiv.innerHTML = highlight(item.date, query);
-        container.appendChild(dateDiv);
-      }
+        if (hit.heading) {
+          const h = document.createElement("div");
+          h.className = "search-hit-heading";
+          h.innerHTML = highlight(hit.heading, query);
+          row.appendChild(h);
+        }
+        if (hit.excerptHtml) {
+          const ex = document.createElement("div");
+          ex.className = "search-hit-excerpt";
+          ex.innerHTML = hit.excerptHtml;
+          row.appendChild(ex);
+        }
 
-      const sourceDiv = document.createElement("div");
-      sourceDiv.className = "autocomplete-item-source";
-      sourceDiv.style.fontSize = "0.75em";
-      sourceDiv.style.marginTop = "3px";
-      sourceDiv.textContent = item.type;
-      container.appendChild(sourceDiv);
-
-      container.addEventListener("click", function () {
-        window.open(item.link, "_blank");
-        searchBar.value = "";
-        dropdown.innerHTML = "";
-        dropdown.style.display = "none";
+        row.addEventListener("click", () => go(hit.url));
+        group.appendChild(row);
       });
 
-      dropdown.appendChild(container);
+      dropdown.appendChild(group);
     });
 
     dropdown.style.display = "block";
@@ -837,7 +944,7 @@ function SearchBar() {
     });
 
     searchBar.addEventListener("keydown", function (event) {
-      const items = dropdown.getElementsByClassName("autocomplete-item-container");
+      const items = dropdown.getElementsByClassName("search-hit");
 
       if (event.key === "ArrowDown") {
         event.preventDefault();
@@ -873,14 +980,11 @@ function SearchBar() {
       if (currentFocus >= items.length) currentFocus = 0;
       if (currentFocus < 0) currentFocus = items.length - 1;
       items[currentFocus].classList.add("autocomplete-active");
-      items[currentFocus].style.backgroundColor = "var(--highlight-bg-color, #f5f5f5)";
+      items[currentFocus].scrollIntoView({ block: "nearest" });
     }
 
     function removeActive(items) {
-      for (let item of items) {
-        item.classList.remove("autocomplete-active");
-        item.style.backgroundColor = "";
-      }
+      for (let item of items) item.classList.remove("autocomplete-active");
     }
   });
 
