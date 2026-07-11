@@ -104,7 +104,7 @@ input#toggle:checked ~ div#settings_window {
   color: var(--grid-text-color);
   background: var(--body-background-color);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .share-button:hover {
@@ -137,7 +137,6 @@ input#toggle:checked ~ div#settings_window {
 
 #share-expand {
   font-size: 16px;
-  transition: color 0.25s ease;
 }
 
 .share-button:hover #share-expand {

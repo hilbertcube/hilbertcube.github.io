@@ -3,6 +3,28 @@
  * Form elements, selects, and settings window
  */
 
+/* Settings-window theme tokens — theme-aware panel matching the site's
+   content surfaces (search dropdown / nav dropdowns), blue interactive accent. */
+:root {
+  --settings-bg: #ffffff;
+  --settings-text: #1c1c1c;
+  --settings-muted: #595959;
+  --settings-border: #d4d4d4;
+  --settings-accent: #0954b6;
+  --settings-select-bg: #f7f7f7;
+  --settings-select-hover: #ededed;
+}
+
+html.dark-mode {
+  --settings-bg: #1c1c1c;
+  --settings-text: #dddddd;
+  --settings-muted: #a9a9b3;
+  --settings-border: #3a3a3a;
+  --settings-accent: #0091ff;
+  --settings-select-bg: #262626;
+  --settings-select-hover: #303030;
+}
+
 .custom-select {
   position: relative;
   width: auto;
@@ -10,82 +32,131 @@
 
 .custom-select select {
   width: 100%;
+  box-sizing: border-box;
+  padding: 0.4em 2em 0.4em 0.7em;
+  font-family: var(--top-bar-font);
   font-size: inherit;
-  height: 100%;
-  padding: 0.5em 0em 0.5em 1em;
-  background-color: #fff;
-  border: 1px solid #caced1;
-  border-radius: 0.25rem;
-  color: #000;
-  cursor: pointer;
-  font-family: 'Jura', sans-serif;
-  font-size: inherit;
-  border: 1px solid #5f5f5f;
-  border-radius: 6px;
   font-weight: 550;
-  background-color: #3a3a3a;
-  color: #fff;
+  color: var(--settings-text);
+  background-color: var(--settings-select-bg);
+  border: 1px solid var(--settings-border);
+  border-radius: 4px;
+  cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23888888" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
   background-repeat: no-repeat;
-  background-position: right 10px center;
+  background-position: right 8px center;
   background-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
 }
 
-.custom-select option:focus {
-  outline: none;
-  box-shadow: none;
+.custom-select select:hover {
+  background-color: var(--settings-select-hover);
 }
 
 .custom-select select:focus {
   outline: none;
-  box-shadow: none;
+  border-color: var(--settings-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--settings-accent) 25%, transparent);
 }
 
 /* Settings window */
 #settings_window {
   display: none;
   position: fixed;
-  color: white;
-  font-family: "Jura", sans-serif;
-  padding: 20px;
   top: 50%;
   left: 50%;
-  width: 500px;
-  height: auto;
   transform: translate(-50%, -50%);
-  border-radius: 10px;
-  background-color: rgb(26, 26, 26, 0.86);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  width: 460px;
+  max-width: calc(100vw - 32px);
+  height: auto;
+  padding: 0;
+  color: var(--settings-text);
+  font-family: var(--top-bar-font);
+  background-color: var(--settings-bg);
+  border: 1px solid var(--settings-border);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
   z-index: 5000;
+}
+
+/* Header — title with a subtle neutral divider */
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--settings-border);
+}
+
+.settings-title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.settings-close {
+  font-size: 22px;
+  line-height: 1;
+  color: var(--settings-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.settings-close:hover {
+  color: var(--settings-accent);
+  background-color: var(--settings-select-hover);
 }
 
 .settings_window-container {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  row-gap: 10px;
-  column-gap: 0;
+  grid-template-columns: 190px 1fr;
+  grid-template-rows: repeat(5, auto);
+  column-gap: 16px;
+  padding: 6px 20px 16px;
   font-size: 14px;
 }
 
-.sw_1st_column_items {
-  font-size: inherit;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  width: 100%;
-}
-
+/* Both columns share the parent's rows via subgrid so the row
+   dividers line up exactly across labels and controls. */
 .setting-window-right {
   display: grid;
-  row-gap: 10px;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+}
+
+.setting-window-right:first-child {
+  grid-column: 1;
+}
+
+.setting-window-right:last-child {
+  grid-column: 2;
   overflow: hidden;
+}
+
+.sw_1st_column_items {
+  display: flex;
+  align-items: center;
+  font-size: inherit;
+  color: var(--settings-muted);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--settings-border);
+}
+
+.setting-window-right:last-child .custom-select {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--settings-border);
+}
+
+/* Trim the last row's divider on both columns */
+.sw_1st_column_items:last-child,
+.setting-window-right:last-child .custom-select:last-child {
+  border-bottom: none;
 }
 
 .dropdown-item-container {

@@ -74,7 +74,7 @@
   
   .top-buttons:hover,
   .dropbtn:hover {
-    color: white;
+    text-decoration: underline;
   }
   
   .home-banner {
@@ -235,16 +235,13 @@
   
   /* Settings and modals */
   #settings_window {
-    max-width: 80%;
+    width: 92%;
+    max-width: 92%;
   }
-  
+
   .settings_window-container {
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 130px 1fr;
     font-size: 12px;
-  }
-  
-  .custom-select select {
-    height: 30px;
   }
   
   /* Content grids */

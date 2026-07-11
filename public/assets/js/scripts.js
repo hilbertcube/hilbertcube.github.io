@@ -1248,7 +1248,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   Switcher("fontFamily", "font-select", [".content-grid"], 0);
   Switcher("fontSize", "font-size-select", font_size, 2);
-  Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 0);
+  Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 1);
 
   SearchBar();
 });
