@@ -32,7 +32,7 @@
   --next-button: rgb(26, 26, 26);
   --next-text: black;
   --next-border: #a9a9b3;
-  --toggle-bar: white;
+  --toggle-bar: #dddddd;
   --top-buttons-hover-color: rgb(0, 185, 226);
   
   /* Dropdown colors */
@@ -48,6 +48,14 @@
   --autocomplete-item-container-hover: #f0f0f0;
   --autocomplete-dropdown-left-border: #0006b1;
   --search-item-border-color: #b0b0b0;
+
+  /* Search input: sits on the always-dark top nav, so it stays dark
+     in both light and dark mode to blend with the bar. */
+  --search-bar-bg: #242424;
+  --search-bar-border: #3a3a3a;
+  --search-bar-text: #e0e0e0;
+  --search-bar-placeholder: #808080;
+  --search-bar-focus: #0091ff;
   
   /* Code and content colors */
   --code-box-color: #fff;
@@ -79,10 +87,7 @@
   
   /* Share button positioning */
   --share-button-position: 80px;
-  
-  /* Gear button */
-  --gear-button-height: 28px;
-  
+
   /* GitHub */
   --github-scroller: gray;
   
@@ -163,6 +168,5 @@ html.dark-mode {
 @media all and (max-width: 580px) {
   :root {
     --side-nav-width: 330px;
-    --gear-button-height: 25px;
   }
 }

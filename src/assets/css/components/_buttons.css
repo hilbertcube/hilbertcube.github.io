@@ -13,24 +13,33 @@
   gap: 8px;
 }
 
-/* Dark mode button */
-.dark-mode-button {
-  background: none;
+/* Shared style for every icon button on the top bar
+   (search, RSS, dark mode, settings) — keeps size, spacing,
+   and colour consistent. */
+.topbar-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
   border: none;
-  font-size: 24px;
+  background: none;
+  color: #dddddd;
+  font-size: 20px;
+  line-height: 1;
   cursor: pointer;
   outline: none;
-  color: #dddddd;
+  transition: width 0.3s ease, opacity 0.2s ease, color 0.15s ease;
 }
 
+.topbar-icon-btn:hover {
+  color: #ffffff;
+}
+
+/* Dark mode button: shows a sun in dark mode */
 html.dark-mode .dark-mode-button {
   color: #fdd835;
-}
-
-/* RSS button */
-.rss a {
-  color: white;
-  font-size: 20px;
 }
 
 /* Redirect/navigation buttons */
@@ -59,62 +68,16 @@ input[type="checkbox"] {
   display: none;
 }
 
+/* Spin the gear a quarter turn while the settings panel is open */
 #toggleButton {
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  position: relative;
-  width: calc(0.8 * var(--gear-button-height));
-  height: calc(0.8 * var(--gear-button-height));
-  background: #e6e6e6;
-  border-radius: 50%;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease, color 0.15s ease;
 }
 
-.center {
-  position: absolute;
-  top: calc(0.2 * var(--gear-button-height));
-  left: calc(0.2 * var(--gear-button-height));
-  width: calc(0.4 * var(--gear-button-height));
-  height: calc(0.4 * var(--gear-button-height));
-  background: rgb(26, 26, 26);
-  border-radius: 50%;
-  z-index: 100;
-}
-
-.tooth {
-  position: absolute;
-  top: calc(-0.1 * var(--gear-button-height));
-  left: calc(0.3 * var(--gear-button-height));
-  z-index: 1;
-  width: calc(0.2 * var(--gear-button-height));
-  height: var(--gear-button-height);
-  border-radius: 0.1px;
-  background: #e6e6e6;
-}
-
-.tooth:nth-child(2) {
-  transform: rotate(45deg);
-}
-
-.tooth:nth-child(3) {
+input#toggle:checked + #toggleButton {
   transform: rotate(90deg);
 }
 
-.tooth:nth-child(4) {
-  transform: rotate(135deg);
-}
-
-input[type="checkbox"]:checked + #toggleButton {
-  transform: rotate(90deg);
-}
-
-input[type="checkbox"]:not(:checked) + #toggleButton {
-  transform: rotate(-90deg);
-}
-
-input[type="checkbox"]:checked ~ div#settings_window {
+input#toggle:checked ~ div#settings_window {
   display: block;
 }
 

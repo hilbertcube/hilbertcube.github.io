@@ -641,6 +641,11 @@ Categories=Development;Science;Engineering;</CodeBlock>
 
               Then, refresh the application menu by running:
               <ShellScript>update-desktop-database ~/.local/share/applications/</ShellScript>
+
+              Note that in some cases, Linux might not let you update or install new packages due to MATLAB installation not having access to root. If that's the case, then you need to give yourself ownership of the MATLAB install:
+              <ShellScript>sudo chown -R $USER:$USER /usr/local/MATLAB/R2025b</ShellScript>
+              then ensure write permission
+              <ShellScript>chmod -R u+rw /usr/local/MATLAB/R2025b</ShellScript>
             </li>
             <li class="bullet">
               <a href="https://www.kicad.org/" class="url">KiCAD</a>: PCB design

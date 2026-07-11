@@ -85,9 +85,46 @@
   .search-bar {
     display: none;
   }
-  
+
+  .search-bar-container {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    /* Keep the expanded search bar off the screen edges */
+    margin-left: 12px;
+    margin-right: 12px;
+    justify-content: flex-end;
+  }
+
+  /* Show the search icon next to the other control buttons */
+  .buttons-container .search-icon-btn {
+    display: inline-flex;
+  }
+
+  .buttons-container {
+    width: auto;
+  }
+
+  /* Search bar starts collapsed and slides open when the icon is tapped */
   .search-bar-mobile {
     display: inline-block;
+    width: 0;
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    border-width: 0;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  }
+
+  .search-bar-container.expanded .search-bar-mobile {
+    width: 100%;
+    padding-left: 35px;
+    border-width: 1px;
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
@@ -97,11 +134,11 @@
     width: 90%;
   }
   
-  .search-bar-container {
+  .search-bar-container.expanded {
     width: 100%;
     max-width: 100%;
   }
-  
+
   .side-nav {
     display: block;
   }
@@ -132,7 +169,7 @@
   /* Layout adjustments */
   .buttons-container {
     gap: 6px;
-    width: 50px;
+    width: auto;
     padding-left: 7px;
   }
   
@@ -142,9 +179,8 @@
   
   :root {
     --side-nav-width: 330px;
-    --gear-button-height: 25px;
   }
-  
+
   .switch {
     display: block;
     margin: 0;

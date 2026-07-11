@@ -886,6 +886,9 @@ function collapseSearchBar() {
   leftSection.classList.remove("hidden"); // Show the left section again
   overlay.style.display = "none"; // Hide overlay
 
+  const iconBtn = document.getElementById("searchIconBtn");
+  if (iconBtn) iconBtn.classList.remove("search-icon-hidden"); // Restore the search icon
+
   // Show these elements again when collapsing the search bar
   if (window.innerWidth <= 640) { // Mobile viewport check
     if (settingContainer) settingContainer.classList.remove("hidden");
@@ -908,11 +911,23 @@ function extendSearchBar() {
     leftSection.classList.add("hidden"); // Hide the left section (for all viewports)
     overlay.style.display = "block"; // Show overlay
 
+    const iconBtn = document.getElementById("searchIconBtn");
+    if (iconBtn) iconBtn.classList.add("search-icon-hidden"); // Fade out the search icon
+
     // Only hide these elements on mobile
     if (window.innerWidth <= 640) {
       if (settingContainer) settingContainer.classList.add("hidden");
       if (toggleButton) toggleButton.classList.add("hidden");
     }
+  }
+
+  // Tapping the mobile search icon reveals the search bar
+  const searchIconBtn = document.getElementById("searchIconBtn");
+  if (searchIconBtn) {
+    searchIconBtn.addEventListener("click", function () {
+      expandSearchBar();
+      searchBarMobile.focus();
+    });
   }
 
   // Listen for focus on both desktop and mobile search bars

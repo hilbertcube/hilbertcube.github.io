@@ -8,7 +8,9 @@ import { library, icon } from "@fortawesome/fontawesome-svg-core";
 import {
   faCheck,
   faEnvelope,
+  faGear,
   faGlobe,
+  faMagnifyingGlass,
   faMoon,
   faRss,
   faShareNodes,
@@ -31,7 +33,9 @@ library.add(
   // Solid
   faCheck,
   faEnvelope,
+  faGear,
   faGlobe,
+  faMagnifyingGlass,
   faMoon,
   faRss,
   faShareNodes,
