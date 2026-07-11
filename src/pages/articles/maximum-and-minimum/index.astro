@@ -6,14 +6,12 @@ import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import Equation from "@components/math/Equation.astro";
 import TableOfContents from "@components/TableOfContents.astro";
-import fs from "node:fs";
-import path from "node:path";
+import { getCollection } from "astro:content";
 
-const data = JSON.parse(
-  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
-);
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+const meta = (await getCollection("articles")).find(
+  (e) => e.data.link.replace(/\/$/, "") === slug,
+)?.data;
 ---
 
 <BaseLayout
@@ -229,7 +227,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           point if it is a stationary point and for all $V_\varepsilon(\mathbf&#123;a&#125;)$,
           and there exists $\mathbf&#123;y&#125;=(y_1, y_2,\ldots,y_n)\in V_\varepsilon$
           and $\mathbf&#123;z&#125;=(z_1,z_2,\ldots,z_n)\in V_\varepsilon$ such that
-          $$f(\mathbf&#123;y&#125;)&lt; f(\mathbf&#123;a&#125;)&lt; f(\mathbf&#123;z&#125;).$$
+          <Equation>$$f(\mathbf&#123;y&#125;)&lt; f(\mathbf&#123;a&#125;)&lt; f(\mathbf&#123;z&#125;).$$</Equation>
         </li>
       </ol>
     </section>
@@ -289,7 +287,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
 
       <p>
         <strong>Definite Matrix.</strong> A symmetric real matrix $\mathbf&#123;A&#125;$
-        is called positive definite if the associated quadratic form $$\phi( \mathbf&#123;x&#125;)=\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;$$
+        is called positive definite if the associated quadratic form <Equation>$$\phi( \mathbf&#123;x&#125;)=\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;$$</Equation>
         is positive for every column ($n\times 1$), non-zero vector $\mathbf&#123;x&#125;$
         in $\R^n$. Similarly, if $\phi(\mathbf&#123;x&#125;)$ only yields negative
         values, then $\mathbf&#123;A&#125;$ is called negative definite. Finally,
@@ -525,7 +523,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="problem1">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function $$f(x,y)=x^2-xy+y^2-2x+y$$
+            function <Equation>$$f(x,y)=x^2-xy+y^2-2x+y$$</Equation>
           </Problem>
           <Solution>
             We first need to find the domain of $f$, which is just simply
@@ -539,8 +537,8 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
               \end&#123;cases&#125; \end&#123;equation*&#125;
             </Equation>
             The function $f$ has one critical point $(x,y)=(1,0)$. The next step is
-            to find second partial derivatives of $f$: $$f_&#123;xx&#125;(x,y)=2,
-            \;f_&#123;xy&#125;(x,y)=1,\;\text&#123;and&#125;\;f_&#123;yy&#125;(x,y)=2$$
+            to find second partial derivatives of $f$: <Equation>$$f_&#123;xx&#125;(x,y)=2,
+            \;f_&#123;xy&#125;(x,y)=1,\;\text&#123;and&#125;\;f_&#123;yy&#125;(x,y)=2$$</Equation>
             At $(1,0)$, we have $f_&#123;xx&#125;(1,0)=2$, $f_&#123;xy&#125;(1,0)=1$
             and $f_&#123;yy&#125;(1,0)=2$. Since, $\Delta_2(1,0)=f_&#123;xx&#125;f_&#123;yy&#125;-f_&#123;xy&#125;^2=3>0$
             and $f_&#123;xx&#125;(1,0)=2>0$, therefore, $(1,0)$ is a minimum of $f(x,y)$
@@ -551,7 +549,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="problem2">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function $$f(x,y)=\sqrt&#123;x^2+y^2&#125;$$
+            function <Equation>$$f(x,y)=\sqrt&#123;x^2+y^2&#125;$$</Equation>
           </Problem>
 
           <Solution>
@@ -580,7 +578,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function
-            $$f(x,y)=xy+\dfrac&#123;50&#125;&#123;x&#125;+\dfrac&#123;20&#125;&#123;y&#125;$$
+            <Equation>$$f(x,y)=xy+\dfrac&#123;50&#125;&#123;x&#125;+\dfrac&#123;20&#125;&#123;y&#125;$$</Equation>
           </Problem>
 
           <Solution>
@@ -633,7 +631,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="problem4">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function $$f(x,y)=xy\ln(x^2+y^2)$$
+            function <Equation>$$f(x,y)=xy\ln(x^2+y^2)$$</Equation>
           </Problem>
 
           <Solution>
@@ -811,7 +809,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="problem5">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function $$f(x,y)=y^2-2y\cos x,\quad -1\leq x\leq 7$$
+            function <Equation>$$f(x,y)=y^2-2y\cos x,\quad -1\leq x\leq 7$$</Equation>
           </Problem>
 
           <Solution>
@@ -897,7 +895,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="problem6">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function $$f(x,y)=2x^4+y^4-x^2-2y^2$$
+            function <Equation>$$f(x,y)=2x^4+y^4-x^2-2y^2$$</Equation>
           </Problem>
 
           <Solution>
@@ -1007,7 +1005,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="problem7">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function $$f(x,y)=x+y+4\sin x\sin y$$
+            function <Equation>$$f(x,y)=x+y+4\sin x\sin y$$</Equation>
           </Problem>
 
           <Solution>
@@ -1116,7 +1114,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
                   <td>$\sqrt&#123;3&#125;+2&gt;0$</td>
                   <td
                     >Local Minimum, where
-                    $$f_&#123;\min&#125;=m\pi-\frac&#123;\pi&#125;&#123;6&#125;-2-\sqrt&#123;3&#125;$$
+                    <Equation>$$f_&#123;\min&#125;=m\pi-\frac&#123;\pi&#125;&#123;6&#125;-2-\sqrt&#123;3&#125;$$</Equation>
                   </td>
                 </tr>
                 <tr>
@@ -1128,7 +1126,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
                   <td>$-\sqrt&#123;3&#125;-2&lt;0$</td>
                   <td
                     >Local maximum, where
-                    $$f_&#123;\max&#125;=m\pi+\frac&#123;\pi&#125;&#123;6&#125;+2+\sqrt&#123;3&#125;$$
+                    <Equation>$$f_&#123;\max&#125;=m\pi+\frac&#123;\pi&#125;&#123;6&#125;+2+\sqrt&#123;3&#125;$$</Equation>
                   </td>
                 </tr>
               </table>
@@ -1142,7 +1140,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
         <section id="problem8">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function $$f(x,y,z)=x^2+y^2+z^2-xy+x-2z$$
+            function <Equation>$$f(x,y,z)=x^2+y^2+z^2-xy+x-2z$$</Equation>
           </Problem>
 
           <Solution>
@@ -1183,7 +1181,7 @@ const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
               \end&#123;vmatrix&#125;=6>0,$$
             </Equation>
             we see that the matrix $H_f(M)$ is positive-definite, therefore $M=\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)$
-            is a minimum of $f$ and $$f_&#123;\min&#125;=f\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)=-\dfrac&#123;4&#125;&#123;3&#125;$$
+            is a minimum of $f$ and <Equation>$$f_&#123;\min&#125;=f\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)=-\dfrac&#123;4&#125;&#123;3&#125;$$</Equation>
           </Solution>
         </section>
 

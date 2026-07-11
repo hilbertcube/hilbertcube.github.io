@@ -3,12 +3,9 @@
  * PostList.astro
  * ==============
  */
-import fs from "node:fs";
-import path from "node:path";
+import { getCollection } from "astro:content";
 
-const jsonPath = path.resolve("public/assets/json/articles.json");
-const articlesData = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
-const posts = articlesData.posts || [];
+const posts = (await getCollection("posts")).map((entry) => entry.data);
 ---
 
 <div id="post-container">

@@ -4,14 +4,12 @@ import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
-import fs from "node:fs";
-import path from "node:path";
+import { getCollection } from "astro:content";
 
-const data = JSON.parse(
-  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
-);
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+const meta = (await getCollection("articles")).find(
+  (e) => e.data.link.replace(/\/$/, "") === slug,
+)?.data;
 ---
 
 <BaseLayout

@@ -3,11 +3,9 @@
  * HighlightsAndAttribute.astro
  * ============================
  */
-import fs from "node:fs";
-import path from "node:path";
+import { getCollection } from "astro:content";
 
-const jsonPath = path.resolve("public/assets/json/articles.json");
-const { articles } = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
+const articles = (await getCollection("articles")).map((entry) => entry.data);
 
 const highlightIds = ["orb-cuda-1", "chladni-1", "chladni-2", "hessian-1"];
 const highlights = highlightIds

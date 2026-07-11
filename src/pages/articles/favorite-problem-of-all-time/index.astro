@@ -5,14 +5,12 @@
  * Article: My Favorite Problems of All Time
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import fs from "node:fs";
-import path from "node:path";
+import { getCollection } from "astro:content";
 
-const data = JSON.parse(
-  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
-);
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+const meta = (await getCollection("articles")).find(
+  (e) => e.data.link.replace(/\/$/, "") === slug,
+)?.data;
 import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import Equation from "@components/math/Equation.astro";
@@ -221,8 +219,8 @@ import Equation from "@components/math/Equation.astro";
             $$
           </Equation>
           Let $u(x) = \log_2(4yx^6)$ and $v(x) = [\log_2(2x)]^2$. Then, based on the
-          above, we have: $$ 2^&#123;u(x)&#125; + u(x) \geq 2^&#123;v(x)&#125; + v(x)
-          $$ To proceed, let's introduce a useful property of monotonic functions:
+          above, we have: <Equation>$$ 2^&#123;u(x)&#125; + u(x) \geq 2^&#123;v(x)&#125; + v(x)
+          $$</Equation> To proceed, let's introduce a useful property of monotonic functions:
           <div class="lemma">
             <strong>Lemma 1:</strong> Let $f: D \to \mathbb&#123;R&#125;$ be a function
             defined on a subset $D \subseteq \mathbb&#123;R&#125;$. Let $u(x)$ and
@@ -291,7 +289,7 @@ import Equation from "@components/math/Equation.astro";
           </Equation>
           Setting $f'(x) = 0$, we have either $\frac&#123;1&#125;&#123;2&#125;x^&#123;\log_2(x)
           - 5&#125; = 0$ or $2\log_2 x - 4 = 0$. The first case is impossible since
-          $x > 0$. Thus: $$ 2\log_2 x - 4 = 0 \Rightarrow x = 4 $$ It's easy to verify
+          $x > 0$. Thus: <Equation>$$ 2\log_2 x - 4 = 0 \Rightarrow x = 4 $$</Equation> It's easy to verify
           that $f'(x)$ changes sign from negative to positive at $x = 4$, so $x =
           4$ is a minimum. The core result is that:
           <Equation>
