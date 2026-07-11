@@ -117,8 +117,8 @@ import Equation from "@components/math/Equation.astro";
   </Fragment>
 
   <div class="mathjax-definition">
-    \[ \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
-    \newcommand&#123;\rbrac&#125;&#123;\right)&#125; \]
+    \begin&#123;equation&#125; \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
+    \newcommand&#123;\rbrac&#125;&#123;\right)&#125; \end&#123;equation&#125;
   </div>
 
   <div class="content-grid">
@@ -168,7 +168,7 @@ import Equation from "@components/math/Equation.astro";
           physical conditions. Therefore, these functions are often expressed
           with additional constant factors, such as:
         </p>
-        <Equation>$$f(n) = C_1n + C_0,$$</Equation>
+        <Equation>\begin&#123;equation&#125;f(n) = C_1n + C_0,\end&#123;equation&#125;</Equation>
         <p>
           where $C_1$ and $C_0$ are factors that depends on outside conditions.
           This expression is quite inconvenient, as we don't usually know what
@@ -176,7 +176,7 @@ import Equation from "@components/math/Equation.astro";
           the worst-case runtime of an algorithm is through the big-O notation.
           For example, if $f(n) = C_1n + C_0$, then it can be said that
         </p>
-        <Equation>$$f(n) \in O(n).$$</Equation>
+        <Equation>\begin&#123;equation&#125;f(n) \in O(n).\end&#123;equation&#125;</Equation>
         <p>
           There are many categories of such functions $f(n)$, and the most
           important functions used in algorithmic analysis are the constant
@@ -195,8 +195,8 @@ import Equation from "@components/math/Equation.astro";
           the time to sort $n$ items. The recurrence is
         </p>
         <Equation>
-          $$T(n) = 2\,T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
-          \Theta(n).$$
+          \begin&#123;equation&#125;T(n) = 2\,T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
+          \Theta(n).\end&#123;equation&#125;
         </Equation>
         <p>
           Here $a=2$, $b=2$, and $f(n)=\Theta(n)$ matches Case 2 of the Master
@@ -210,10 +210,10 @@ import Equation from "@components/math/Equation.astro";
           <div class="definition" data-definition-name=". The Big O">
             Let $f$ and $g$ be real-valued and not necessarily continuous
             functions. We say that $f$ is the big O of $g$, written
-            <Equation>$$f(n) = O(g(n)),\quad n \to \infty,$$</Equation>
+            <Equation>\begin&#123;equation&#125;f(n) = O(g(n)),\quad n \to \infty,\end&#123;equation&#125;</Equation>
             if there exists some value $n_0$ such that
             <Equation>
-              $$|f(n)| \le M|g(n)|,\quad \forall n \ge n_0.$$
+              \begin&#123;equation&#125;|f(n)| \le M|g(n)|,\quad \forall n \ge n_0.\end&#123;equation&#125;
             </Equation>
             for some constant $M > 0$.
           </div>
@@ -231,8 +231,8 @@ import Equation from "@components/math/Equation.astro";
           iteration. The recurrence is
         </p>
         <Equation>
-          $$T(n) = T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
-          \Theta(1).$$
+          \begin&#123;equation&#125;T(n) = T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
+          \Theta(1).\end&#123;equation&#125;
         </Equation>
         <p>
           With $a=1$, $b=2$, $f(n)=\Theta(1)$, we have $\log_b a = 0$ and Case 2
@@ -246,10 +246,10 @@ import Equation from "@components/math/Equation.astro";
           <div class="definition" data-definition-name=". The Big Omega">
             Big Omega provides a lower bound on the growth of a function. We say
             that $f$ is the big Omega of $g$, written
-            <Equation> $$f(n) = \Omega(g(n)),\quad n \to \infty,$$ </Equation>
+            <Equation> \begin&#123;equation&#125;f(n) = \Omega(g(n)),\quad n \to \infty,\end&#123;equation&#125; </Equation>
             if there exists some value $n_0$ such that
             <Equation>
-              $$|f(n)| \ge M|g(n)|,\quad \forall n \ge n_0,$$
+              \begin&#123;equation&#125;|f(n)| \ge M|g(n)|,\quad \forall n \ge n_0,\end&#123;equation&#125;
             </Equation>
             for some constant $M > 0$.
           </div>
@@ -274,10 +274,10 @@ import Equation from "@components/math/Equation.astro";
           <div class="definition" data-definition-name=". The Big Theta">
             Big Theta describes a tight bound on the growth of a function. We
             say that $f$ is the big Theta of $g$, written
-            <Equation> $$f(n) = \Theta(g(n)),\quad n \to \infty,$$ </Equation>
+            <Equation> \begin&#123;equation&#125;f(n) = \Theta(g(n)),\quad n \to \infty,\end&#123;equation&#125; </Equation>
             if there exist constants $M_1, M_2 > 0$ and a value $n_0$ such that
             <Equation>
-              $$M_1|g(n)| \le |f(n)| \le M_2|g(n)|,\quad \forall n \ge n_0.$$
+              \begin&#123;equation&#125;M_1|g(n)| \le |f(n)| \le M_2|g(n)|,\quad \forall n \ge n_0.\end&#123;equation&#125;
             </Equation>
           </div>
 
@@ -343,8 +343,8 @@ import Equation from "@components/math/Equation.astro";
             Many divide-and-conquer algorithms lead to recurrences of the form
           </p>
           <Equation>
-            $$T(n) = a\,T\!\left(\frac&#123;n&#125;&#123;b&#125;\right) + f(n),
-            \quad a \ge 1,\; b>1,$$
+            \begin&#123;equation&#125;T(n) = a\,T\!\left(\frac&#123;n&#125;&#123;b&#125;\right) + f(n),
+            \quad a \ge 1,\; b>1,\end&#123;equation&#125;
           </Equation>
           <p>
             where $a$ subproblems of size $n/b$ are solved and $f(n)$ accounts
@@ -380,8 +380,8 @@ import Equation from "@components/math/Equation.astro";
             $T(n)$ be the time to sort $n$ items. The recurrence is
           </p>
           <Equation>
-            $$T(n) = 2\,T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
-            \Theta(n),$$
+            \begin&#123;equation&#125;T(n) = 2\,T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
+            \Theta(n),\end&#123;equation&#125;
           </Equation>
           <p>
             which solves to $T(n) \in \Theta(n\,\log n)$ by the Master Theorem.
@@ -397,8 +397,8 @@ import Equation from "@components/math/Equation.astro";
             iteration. The recurrence is
           </p>
           <Equation>
-            $$T(n) = T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
-            \Theta(1) \;\Rightarrow\; T(n) \in \Theta(\log n).$$
+            \begin&#123;equation&#125;T(n) = T\!\left(\tfrac&#123;n&#125;&#123;2&#125;\right) +
+            \Theta(1) \;\Rightarrow\; T(n) \in \Theta(\log n).\end&#123;equation&#125;
           </Equation>
           <p>
             Iterative binary search uses $\Theta(1)$ extra space; the naive
@@ -432,7 +432,7 @@ import Equation from "@components/math/Equation.astro";
         <section id="constant-function">
           <h3>The constant function</h3>
           <p>The constant time complexity function, denoted</p>
-          <Equation>$$f(n) = c \in O(1),$$</Equation>
+          <Equation>\begin&#123;equation&#125;f(n) = c \in O(1),\end&#123;equation&#125;</Equation>
           <p>
             does not depend on the size of the input (unless the size of the
             input is exceptionally large). Some examples of algorithms with this
@@ -647,11 +647,11 @@ import Equation from "@components/math/Equation.astro";
               possible subset of the set to see if its sum equals the target.
               Time Complexity: $O(2^n)$ because there are
               <Equation>
-                $$S =
+                \begin&#123;equation&#125;S =
                 \sum_&#123;k=0&#125;^&#123;n&#125;\binom&#123;n&#125;&#123;k&#125;
                 = \binom&#123;n&#125;&#123;1&#125; +
                 \binom&#123;n&#125;&#123;2&#125; + \ldots +
-                \binom&#123;n&#125;&#123;n&#125; = 2^n.$$
+                \binom&#123;n&#125;&#123;n&#125; = 2^n.\end&#123;equation&#125;
               </Equation>
               subsets of a set of $n$ elements.
             </li>
