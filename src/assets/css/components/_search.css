@@ -146,6 +146,26 @@ input.search-bar:focus {
   background: transparent;
 }
 
+/* Loading state (shown while Pagefind's index loads on the first query) */
+.search-loading {
+  padding: 16px 14px;
+  text-align: center;
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--article-date-color);
+  animation: search-loading-pulse 1s ease-in-out infinite;
+}
+@keyframes search-loading-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 /* Grouped search results: one card per article, one row per section match */
 .search-count {
   padding: 10px 14px;

@@ -839,6 +839,15 @@ function SearchBar() {
     return { total: 0, items: [] };
   }
 
+  function showLoading() {
+    dropdown.innerHTML = "";
+    const el = document.createElement("div");
+    el.className = "search-loading";
+    el.textContent = "Loading…";
+    dropdown.appendChild(el);
+    dropdown.style.display = "block";
+  }
+
   function renderResults(query, total, items, searchBar) {
     dropdown.innerHTML = "";
     currentFocus = -1;
@@ -934,7 +943,14 @@ function SearchBar() {
         return;
       }
 
+      // Show "Loading…" only if the search is genuinely slow (mainly the first
+      // query, while Pagefind's index loads) — avoids flicker on fast ones.
+      const loadingTimer = setTimeout(() => {
+        if (searchBar.value.trim() === query) showLoading();
+      }, 250);
+
       const result = await search(query);
+      clearTimeout(loadingTimer);
       // Null => superseded by a newer keystroke (Pagefind debounce).
       if (!result) return;
       // Guard against out-of-order async results: only render for the live query.
