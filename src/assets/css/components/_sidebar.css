@@ -205,13 +205,13 @@ nav ul {
   width: 60px;
 }
 
+/* Flat, borderless burger to match the other top-bar icons
+   (.topbar-icon-btn) while keeping the animated bars. */
 .toggle-btn {
-  position: fixed;
-  width: 35px;
-  height: 35px;
-  background-color: #1a1a1a;
-  border: 1px solid #b4b4b4;
-  border-radius: 5px;
+  width: 34px;
+  height: 34px;
+  background: none;
+  border: none;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -232,7 +232,7 @@ nav ul {
 }
 
 .toggle-btn:hover .bar {
-  background-color: #1681c4;
+  background-color: #ffffff;
 }
 
 body.nav-open .toggle-btn .bar:nth-child(1) {
