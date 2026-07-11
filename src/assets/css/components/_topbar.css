@@ -170,7 +170,13 @@
   top: calc(var(--top-bar-height) - var(--progressive-bar-height) + 1px);
   position: fixed;
   height: var(--progressive-bar-height);
-  background: var(--progressive-bar-color);
+  background: linear-gradient(
+    90deg,
+    var(--progress-bar-start),
+    var(--progress-bar-end)
+  );
+  box-shadow: 0 0 6px var(--progress-bar-glow);
   width: 0%;
   z-index: 1000;
+  transition: width 0.1s linear;
 }

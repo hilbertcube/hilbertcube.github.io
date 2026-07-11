@@ -239,6 +239,12 @@ body.nav-open .toggle-btn .bar:nth-child(1) {
   transform: rotate(45deg) translate(0,-2px) scaleX(1.251);
 }
 
+/* Middle bar only fades, so give it a snappier opacity transition
+   than the .3s the outer bars use for their rotate/translate. */
+.toggle-btn .bar:nth-child(2) {
+  transition: opacity .12s ease;
+}
+
 body.nav-open .toggle-btn .bar:nth-child(2) {
   opacity: 0;
 }

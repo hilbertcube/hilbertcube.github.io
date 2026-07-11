@@ -137,6 +137,86 @@ const tex = String.raw;
 
     <script is:inline src="/assets/js/scripts.js"></script>
 
+    <!-- Pagefind on-page highlight (via ?pagefind-highlight=…). The script only
+         marks matches; it doesn't scroll — so we scroll to the first match,
+         preferring one inside the linked #section. No-ops without the index (dev). -->
+    <script is:inline type="module">
+      import("/pagefind/pagefind-highlight.js")
+        .then((m) => {
+          const Highlighter = m.default;
+
+          // Scroll to the first match, preferring one inside section `id`.
+          function scrollToMatch(id) {
+            let tries = 0;
+            (function poll() {
+              const marks = document.querySelectorAll("mark.pagefind-highlight");
+              if (!marks.length) {
+                if (tries++ < 25) setTimeout(poll, 60);
+                return;
+              }
+              let target = null;
+              if (id) {
+                const sec = document.getElementById(id);
+                if (sec) {
+                  for (const mk of marks) {
+                    if (
+                      sec.contains(mk) ||
+                      sec.compareDocumentPosition(mk) &
+                        Node.DOCUMENT_POSITION_FOLLOWING
+                    ) {
+                      target = mk;
+                      break;
+                    }
+                  }
+                }
+              }
+              (target || marks[0]).scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+            })();
+          }
+
+          // Initial run: page opened with ?pagefind-highlight=…
+          new Highlighter({ addStyles: false });
+          const hash = decodeURIComponent((location.hash || "").slice(1));
+          scrollToMatch(hash);
+
+          // Late-loading images can shift the target after the first scroll, so
+          // re-scroll once the page has fully loaded — unless the reader has
+          // already taken over scrolling.
+          if (document.readyState !== "complete") {
+            let userMoved = false;
+            const flag = () => (userMoved = true);
+            ["wheel", "touchstart", "keydown", "pointerdown"].forEach((e) =>
+              addEventListener(e, flag, { once: true, passive: true }),
+            );
+            addEventListener(
+              "load",
+              () => {
+                if (!userMoved) scrollToMatch(hash);
+              },
+              { once: true },
+            );
+          }
+
+          // Same-page search navigation: re-highlight for a new query and scroll,
+          // without a page reload / new tab.
+          window.__pagefindGoInPage = function (url) {
+            const u = new URL(url, location.href);
+            history.replaceState(null, "", u.pathname + u.search + u.hash);
+            document.querySelectorAll("mark.pagefind-highlight").forEach((mk) => {
+              const p = mk.parentNode;
+              p.replaceChild(document.createTextNode(mk.textContent), mk);
+              p.normalize();
+            });
+            new Highlighter({ addStyles: false });
+            scrollToMatch(decodeURIComponent((u.hash || "").slice(1)));
+          };
+        })
+        .catch(() => {});
+    </script>
+
     <!-- Additional page-specific scripts -->
     <slot name="scripts" />
   </body>
