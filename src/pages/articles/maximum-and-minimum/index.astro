@@ -183,18 +183,18 @@ if (!meta) {
           $\mathbf&#123;a&#125;$ and obtain its extrema at
           $\mathbf&#123;a&#125;$, then
           <Equation>
-            $$\pd&#123;f&#125;&#123;x_i&#125;(a_1,a_2,...,a_n)=\pd&#123;f(\mathbf&#123;a&#125;)&#125;&#123;x_i&#125;=0\quad\text&#123;for&#125;\;
-            i=1,2,...,n$$
+            \begin&#123;equation*&#125;\pd&#123;f&#125;&#123;x_i&#125;(a_1,a_2,...,a_n)=\pd&#123;f(\mathbf&#123;a&#125;)&#125;&#123;x_i&#125;=0\quad\text&#123;for&#125;\;
+            i=1,2,...,n\end&#123;equation*&#125;
           </Equation>
           That is, for each first partial derivative of $f$,
           <Equation>
-            \[ \left\&#123; \begin&#123;array&#125;&#123;cc&#125;
+            \begin&#123;equation*&#125; \left\&#123; \begin&#123;array&#125;&#123;cc&#125;
             \pd&#123;f(\mathbf&#123;a&#125;)&#125;&#123;x_1&#125;=f_&#123;x_1&#125;(a_1,a_2,...,a_n)=0
             \\[0.1em]
             \pd&#123;f(\mathbf&#123;a&#125;)&#125;&#123;x_2&#125;=f_&#123;x_2&#125;(a_1,a_2,...,a_n)=0
             \\[0.1em] \vdots \\[-0.1em]
             \pd&#123;f(\mathbf&#123;a&#125;)&#125;&#123;x_n&#125;=f_&#123;x_n&#125;(a_1,a_2,...,a_n)=0
-            \end&#123;array&#125; \right., \]
+            \end&#123;array&#125; \right., \end&#123;equation*&#125;
           </Equation>
         </Theorem>
       </p>
@@ -216,8 +216,8 @@ if (!meta) {
           The points where all of the partial derivatives of $f$ equals 0 is called
           the stationary points of $f$. That is,
           <Equation>
-            $$\pd&#123;f&#125;&#123;x_i&#125;(a_1,a_2,...,a_n)=\pd&#123;f(\mathbf&#123;a&#125;)&#125;&#123;x_i&#125;=0\quad\forall\;
-            i=1,2,...,n$$
+            \begin&#123;equation*&#125;\pd&#123;f&#125;&#123;x_i&#125;(a_1,a_2,...,a_n)=\pd&#123;f(\mathbf&#123;a&#125;)&#125;&#123;x_i&#125;=0\quad\forall\;
+            i=1,2,...,n\end&#123;equation*&#125;
           </Equation>
         </li>
         <li style="margin: var(--in-page-li-spacing) 0;">
@@ -232,7 +232,7 @@ if (!meta) {
           point if it is a stationary point and for all $V_\varepsilon(\mathbf&#123;a&#125;)$,
           and there exists $\mathbf&#123;y&#125;=(y_1, y_2,\ldots,y_n)\in V_\varepsilon$
           and $\mathbf&#123;z&#125;=(z_1,z_2,\ldots,z_n)\in V_\varepsilon$ such that
-          <Equation>$$f(\mathbf&#123;y&#125;)&lt; f(\mathbf&#123;a&#125;)&lt; f(\mathbf&#123;z&#125;).$$</Equation>
+          <Equation>\begin&#123;equation*&#125;f(\mathbf&#123;y&#125;)&lt; f(\mathbf&#123;a&#125;)&lt; f(\mathbf&#123;z&#125;).\end&#123;equation*&#125;</Equation>
         </li>
       </ol>
     </section>
@@ -248,7 +248,7 @@ if (!meta) {
         the matrix
       </p>
       <Equation>
-        $$H_f(\mathbf&#123;a&#125;)= \begin&#123;bmatrix&#125;
+        \begin&#123;equation*&#125;H_f(\mathbf&#123;a&#125;)= \begin&#123;bmatrix&#125;
         f_&#123;x_1x_1&#125;(\mathbf&#123;a&#125;) &
         f_&#123;x_1x_2&#125;(\mathbf&#123;a&#125;) & \cdots &
         f_&#123;x_1x_n&#125;(\mathbf&#123;a&#125;)\\
@@ -257,7 +257,7 @@ if (!meta) {
         f_&#123;x_2x_n&#125;(\mathbf&#123;a&#125;)\\ \vdots & \vdots & \ddots &
         \vdots\\ f_&#123;x_nx_1&#125;(\mathbf&#123;a&#125;) &
         f_&#123;x_nx_2&#125;(\mathbf&#123;a&#125;) & \cdots &
-        f_&#123;x_nx_n&#125;(\mathbf&#123;a&#125;) \end&#123;bmatrix&#125;$$
+        f_&#123;x_nx_n&#125;(\mathbf&#123;a&#125;) \end&#123;bmatrix&#125;\end&#123;equation*&#125;
       </Equation>
       <p>
         is called the Hessian matrix of the function $f$ at point
@@ -271,17 +271,17 @@ if (!meta) {
         a second-degree multi-variable polynomial such as
       </p>
       <Equation>
-        $$\phi(x,y,z) = ax^2 + bxy + cy^2 + dyz + ez^2 + fxz.$$
+        \begin&#123;equation*&#125;\phi(x,y,z) = ax^2 + bxy + cy^2 + dyz + ez^2 + fxz.\end&#123;equation*&#125;
       </Equation>
       <p>
         One interesting about quadratic forms is that every symmetric matrix
         defines a quadratic form; that is, given that $\mathbf&#123;A&#125; =
         [a]_&#123;ij&#125;$, the polynomial
         <Equation>
-          $$\phi(\mathbf&#123;x&#125;) =
+          \begin&#123;equation*&#125;\phi(\mathbf&#123;x&#125;) =
           \sum_&#123;i=1&#125;^&#123;n&#125;\sum_&#123;j=1&#125;^&#123;n&#125;a_&#123;ij&#125;x_ix_j
           =
-          \mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;$$
+          \mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;\end&#123;equation*&#125;
         </Equation>
       </p>
       <p>
@@ -292,7 +292,7 @@ if (!meta) {
 
       <p>
         <strong>Definite Matrix.</strong> A symmetric real matrix $\mathbf&#123;A&#125;$
-        is called positive definite if the associated quadratic form <Equation>$$\phi( \mathbf&#123;x&#125;)=\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;$$</Equation>
+        is called positive definite if the associated quadratic form <Equation>\begin&#123;equation*&#125;\phi( \mathbf&#123;x&#125;)=\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;\end&#123;equation*&#125;</Equation>
         is positive for every column ($n\times 1$), non-zero vector $\mathbf&#123;x&#125;$
         in $\R^n$. Similarly, if $\phi(\mathbf&#123;x&#125;)$ only yields negative
         values, then $\mathbf&#123;A&#125;$ is called negative definite. Finally,
@@ -331,17 +331,17 @@ if (!meta) {
         denote the $k\times k$ submatrix taken from the top left corner of $\mathbf&#123;A&#125;$.
         These matrices are called major sub-matrices of $A$. That is,
         <Equation>
-          $$\mathbf&#123;A&#125;^&#123;(k)&#125;= \begin&#123;bmatrix&#125;
+          \begin&#123;equation*&#125;\mathbf&#123;A&#125;^&#123;(k)&#125;= \begin&#123;bmatrix&#125;
           a_&#123;11&#125; & a_&#123;12&#125; & \cdots & a_&#123;1k&#125; \\
           a_&#123;21&#125; & a_&#123;22&#125; & \cdots & a_&#123;2k&#125; \\
           \vdots & \vdots & \ddots & \vdots \\ a_&#123;k1&#125; &
           a_&#123;k2&#125; & \cdots & a_&#123;kk&#125;
-          \end&#123;bmatrix&#125;,\quad 1\leq k\leq n$$
+          \end&#123;bmatrix&#125;,\quad 1\leq k\leq n\end&#123;equation*&#125;
         </Equation>
       </p>
       <p>In particular,</p>
       <Equation>
-        $$\mathbf&#123;A&#125;^&#123;(1)&#125;= \begin&#123;bmatrix&#125;
+        \begin&#123;equation*&#125;\mathbf&#123;A&#125;^&#123;(1)&#125;= \begin&#123;bmatrix&#125;
         a_&#123;11&#125; \end&#123;bmatrix&#125;,\quad
         \mathbf&#123;A&#125;^&#123;(2)&#125;= \begin&#123;bmatrix&#125;
         a_&#123;11&#125; & a_&#123;12&#125;\\ a_&#123;21&#125; &
@@ -351,7 +351,7 @@ if (!meta) {
         a_&#123;21&#125; & a_&#123;22&#125; & a_&#123;23&#125;\\
         a_&#123;31&#125; & a_&#123;32&#125; & a_&#123;33&#125;
         \end&#123;bmatrix&#125;,\cdots,
-        \mathbf&#123;A&#125;^&#123;(n)&#125;=\mathbf&#123;A&#125; $$
+        \mathbf&#123;A&#125;^&#123;(n)&#125;=\mathbf&#123;A&#125; \end&#123;equation*&#125;
       </Equation>
       <p>
         Let $\Delta_k=\det(\mathbf&#123;A&#125;^&#123;k&#125;)\;,1\leq k\leq n$.
@@ -373,8 +373,8 @@ if (!meta) {
               $\mathbf&#123;A&#125;\prec 0$ if and only if the signs of
               $\Delta_i$ alternates, with $\Delta_1 &lt; 0$; that is,
               <Equation>
-                $$(-1)^1\Delta_1>0,
-                \;(-1)^2\Delta_2>0,\ldots,\;(-1)^n\Delta_n>0.$$
+                \begin&#123;equation*&#125;(-1)^1\Delta_1>0,
+                \;(-1)^2\Delta_2>0,\ldots,\;(-1)^n\Delta_n>0.\end&#123;equation*&#125;
               </Equation>
             </li>
             <li style="margin: var(--in-page-li-spacing) 0;">
@@ -411,13 +411,13 @@ if (!meta) {
               f(\mathbf&#123;x&#125;)=\mathbf&#123;0&#125;$; that is, solve the
               system of $n$-equations
               <Equation>
-                \[ \left\&#123; \begin&#123;array&#125;&#123;cc&#125;
+                \begin&#123;equation*&#125; \left\&#123; \begin&#123;array&#125;&#123;cc&#125;
                 \pd&#123;f(\mathbf&#123;x&#125;)&#125;&#123;x_1&#125;=f_&#123;x_1&#125;(x_1,x_2,...,x_n)=0
                 \\[0.1em]
                 \pd&#123;f(\mathbf&#123;x&#125;)&#125;&#123;x_2&#125;=f_&#123;x_2&#125;(x_1,x_2,...,x_n)=0
                 \\[0.1em] \vdots \\[-0.1em]
                 \pd&#123;f(\mathbf&#123;x&#125;)&#125;&#123;x_n&#125;=f_&#123;x_n&#125;(x_1,x_2,...,x_n)=0
-                \end&#123;array&#125; \right., \]
+                \end&#123;array&#125; \right., \end&#123;equation*&#125;
               </Equation>
               to find all stationary points of $f(\mathbf&#123;x&#125;)$ (if they
               exist). Label these points, for instance, $\mathbf&#123;a&#125;_0=(a_1^0,
@@ -528,7 +528,7 @@ if (!meta) {
         <section id="problem1">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function <Equation>$$f(x,y)=x^2-xy+y^2-2x+y$$</Equation>
+            function <Equation>\begin&#123;equation*&#125;f(x,y)=x^2-xy+y^2-2x+y\end&#123;equation*&#125;</Equation>
           </Problem>
           <Solution>
             We first need to find the domain of $f$, which is just simply
@@ -542,8 +542,8 @@ if (!meta) {
               \end&#123;cases&#125; \end&#123;equation*&#125;
             </Equation>
             The function $f$ has one critical point $(x,y)=(1,0)$. The next step is
-            to find second partial derivatives of $f$: <Equation>$$f_&#123;xx&#125;(x,y)=2,
-            \;f_&#123;xy&#125;(x,y)=1,\;\text&#123;and&#125;\;f_&#123;yy&#125;(x,y)=2$$</Equation>
+            to find second partial derivatives of $f$: <Equation>\begin&#123;equation*&#125;f_&#123;xx&#125;(x,y)=2,
+            \;f_&#123;xy&#125;(x,y)=1,\;\text&#123;and&#125;\;f_&#123;yy&#125;(x,y)=2\end&#123;equation*&#125;</Equation>
             At $(1,0)$, we have $f_&#123;xx&#125;(1,0)=2$, $f_&#123;xy&#125;(1,0)=1$
             and $f_&#123;yy&#125;(1,0)=2$. Since, $\Delta_2(1,0)=f_&#123;xx&#125;f_&#123;yy&#125;-f_&#123;xy&#125;^2=3>0$
             and $f_&#123;xx&#125;(1,0)=2>0$, therefore, $(1,0)$ is a minimum of $f(x,y)$
@@ -554,7 +554,7 @@ if (!meta) {
         <section id="problem2">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function <Equation>$$f(x,y)=\sqrt&#123;x^2+y^2&#125;$$</Equation>
+            function <Equation>\begin&#123;equation*&#125;f(x,y)=\sqrt&#123;x^2+y^2&#125;\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
@@ -583,31 +583,31 @@ if (!meta) {
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function
-            <Equation>$$f(x,y)=xy+\dfrac&#123;50&#125;&#123;x&#125;+\dfrac&#123;20&#125;&#123;y&#125;$$</Equation>
+            <Equation>\begin&#123;equation*&#125;f(x,y)=xy+\dfrac&#123;50&#125;&#123;x&#125;+\dfrac&#123;20&#125;&#123;y&#125;\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
             Domain of $f$: $D=\R^2\backslash\&#123;(0,0)\&#125;$. We then solve
             for $\nabla f(x,y)=(0,0)$
             <Equation>
-              \[ \begin&#123;cases&#125;
+              \begin&#123;equation*&#125; \begin&#123;cases&#125;
               f_x(x,y)=y-\dfrac&#123;50&#125;&#123;x^2&#125;=0\\[1em]
               f_y(x,y)=x-\dfrac&#123;20&#125;&#123;y^2&#125;=0
-              \end&#123;cases&#125; \]
+              \end&#123;cases&#125; \end&#123;equation*&#125;
             </Equation>
             For this system to be well-defined, $x$ and $y$ must not be equal to zero.
             We have already defined that in the domain of $f$, so now, we can simply
             multiple both sides of the first equations by $x$, both sides of the second
             equation by $y$, we will obtain
             <Equation>
-              \[ \begin&#123;cases&#125; x^2y=50\\ xy^2=20 \end&#123;cases&#125;
+              \begin&#123;equation*&#125; \begin&#123;cases&#125; x^2y=50\\ xy^2=20 \end&#123;cases&#125;
               \quad\Rightarrow&#123;y = 50/x^2 \to x^2y = 50&#125;\quad
               x\left(\frac&#123;50&#125;&#123;x^2&#125;\right)^2=\frac&#123;50^2&#125;&#123;x^3&#125;=20\;\Rightarrow
-              \begin&#123;cases&#125; x=50\\ y=2 \end&#123;cases&#125;. \]
+              \begin&#123;cases&#125; x=50\\ y=2 \end&#123;cases&#125;. \end&#123;equation*&#125;
             </Equation>
             The next step is to find the partial derivatives of $f$:
             <Equation>
-              $$f_&#123;xx&#125;=\frac&#123;100&#125;&#123;x^3&#125;,\;f_&#123;xy&#125;=1,\;f_&#123;yy&#125;=\frac&#123;40&#125;&#123;y^3&#125;$$
+              \begin&#123;equation*&#125;f_&#123;xx&#125;=\frac&#123;100&#125;&#123;x^3&#125;,\;f_&#123;xy&#125;=1,\;f_&#123;yy&#125;=\frac&#123;40&#125;&#123;y^3&#125;\end&#123;equation*&#125;
             </Equation>
             At $(5,2)$, $f_&#123;xx&#125;=4/5$, $f_&#123;xy&#125;=1$, $f_&#123;yy&#125;=5$,
             and thus $\Delta_2=3>0$. Therefore, $(5,2)$ is a local minimum of $f$
@@ -618,15 +618,15 @@ if (!meta) {
             non-negative, which they are, so we don't have to worry about them.
             Simply apply the inequality and we may obtain
             <Equation>
-              $$ xy + \frac&#123;50&#125;&#123;x&#125; +
+              \begin&#123;equation*&#125; xy + \frac&#123;50&#125;&#123;x&#125; +
               \frac&#123;20&#125;&#123;y&#125;\geq 3\cdot\sqrt[3]&#123;(xy)\cdot
               \frac&#123;50&#125;&#123;x&#125; \cdot
-              \frac&#123;20&#125;&#123;y&#125;&#125; = 3\cdot 10 = 30, $$
+              \frac&#123;20&#125;&#123;y&#125;&#125; = 3\cdot 10 = 30, \end&#123;equation*&#125;
             </Equation>
             with equality if and only if
             <Equation>
-              $$xy = \frac&#123;50&#125;&#123;x&#125; =
-              \frac&#123;20&#125;&#123;y&#125;.$$
+              \begin&#123;equation*&#125;xy = \frac&#123;50&#125;&#123;x&#125; =
+              \frac&#123;20&#125;&#123;y&#125;.\end&#123;equation*&#125;
             </Equation>
             Solve for these equations one by one, we will obtain $(x, y) = (5, 2)$,
             verifying our solution that uses the Hessian matrix.
@@ -636,7 +636,7 @@ if (!meta) {
         <section id="problem4">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function <Equation>$$f(x,y)=xy\ln(x^2+y^2)$$</Equation>
+            function <Equation>\begin&#123;equation*&#125;f(x,y)=xy\ln(x^2+y^2)\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
@@ -677,35 +677,35 @@ if (!meta) {
                 x^2+y^2=\dfrac&#123;1&#125;&#123;e&#125;$. Substitute this into (3)
                 (or (4)), we obtain the quadratic equation
                 <Equation>
-                  $$-1+2ex^2=0\quad\Rightarrow\quad x = \pm
-                  \frac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;$$
+                  \begin&#123;equation*&#125;-1+2ex^2=0\quad\Rightarrow\quad x = \pm
+                  \frac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\end&#123;equation*&#125;
                 </Equation>
                 If we substitute these solutions to the equation $x^2+y^2=\dfrac&#123;1&#125;&#123;e&#125;$,
                 we can obtain the $y$'s: If $x = 1/\sqrt&#123;2e&#125;$, then
                 <Equation>
-                  $$y = \pm
-                  \dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,$$
+                  \begin&#123;equation*&#125;y = \pm
+                  \dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\end&#123;equation*&#125;
                 </Equation>
                 similarly, if $x = -1/\sqrt&#123;2e&#125;$, then we have two more
                 of the same $y$
                 <Equation>
-                  $$y = \pm
-                  \dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,$$
+                  \begin&#123;equation*&#125;y = \pm
+                  \dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\end&#123;equation*&#125;
                 </Equation>
 
                 This gives four more stationary points:
 
                 <Equation>
-                  $$\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right),\;\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right),\;\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right),\;
+                  \begin&#123;equation*&#125;\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right),\;\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right),\;\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right),\;
                   \text&#123;and&#125;
-                  \;\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right).$$
+                  \;\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right).\end&#123;equation*&#125;
                 </Equation>
               </li>
             </ol>
             We now have a total of eight stationary points. Now let's find the second
             partial derivatives of $f$ and $\Delta_2(x,y)$.
             <Equation>
-              $$f_&#123;xx&#125;=\frac&#123;2x^3+6xy^3&#125;&#123;(x^2+y^2)^2&#125;,\;f_&#123;xy&#125;=\ln(x^2+y^2)+\frac&#123;2y^2&#125;&#123;x^2+y^2&#125;+\frac&#123;2x^4-2xy^2&#125;&#123;(x^2+y^2)^2&#125;,\;\text&#123;and&#125;\;f_&#123;yy&#125;=\frac&#123;6yx^3+2xy^3&#125;&#123;(x^2+y^2)^2&#125;$$
+              \begin&#123;equation*&#125;f_&#123;xx&#125;=\frac&#123;2x^3+6xy^3&#125;&#123;(x^2+y^2)^2&#125;,\;f_&#123;xy&#125;=\ln(x^2+y^2)+\frac&#123;2y^2&#125;&#123;x^2+y^2&#125;+\frac&#123;2x^4-2xy^2&#125;&#123;(x^2+y^2)^2&#125;,\;\text&#123;and&#125;\;f_&#123;yy&#125;=\frac&#123;6yx^3+2xy^3&#125;&#123;(x^2+y^2)^2&#125;\end&#123;equation*&#125;
             </Equation>
             For this problem, it is easier to calculate each second partial derivative
             at a point independently (just use a good calculator that allows variable-passing).
@@ -814,17 +814,17 @@ if (!meta) {
         <section id="problem5">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function <Equation>$$f(x,y)=y^2-2y\cos x,\quad -1\leq x\leq 7$$</Equation>
+            function <Equation>\begin&#123;equation*&#125;f(x,y)=y^2-2y\cos x,\quad -1\leq x\leq 7\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
             Domain of $f$: $D=\&#123;(x,y)\in\R^2 | -1\leq x\leq 7\&#125;$. We
             then solve for $\nabla f(x,y)=(0,0)$
             <Equation>
-              $$ \begin&#123;cases&#125; f_x(x,y)=2y\sin x=0\\[0.5em]
+              \begin&#123;equation*&#125; \begin&#123;cases&#125; f_x(x,y)=2y\sin x=0\\[0.5em]
               f_y(x,y)=2y-2\cos x=0 \end&#123;cases&#125;\quad \Rightarrow\quad
               \begin&#123;cases&#125; x=k\pi,\; y=0\\[0.5em] y=\cos x
-              \end&#123;cases&#125; $$
+              \end&#123;cases&#125; \end&#123;equation*&#125;
             </Equation>
             For $x=k\pi$, since $-1\leq x\leq 7$, we have $x\in \&#123;0,\;\pi,\;2\pi\&#125;$.
             This gives us three stationary points.
@@ -845,12 +845,12 @@ if (!meta) {
             stationary point $(\pi/2,0)$ and $(3\pi/2,0)$. We then find the
             second partial derivatives of $f$ and $\Delta_2(x,y)$
             <Equation>
-              $$f_&#123;xx&#125;=2y\cos x,\;f_&#123;xy&#125;=2\sin
-              x,\;\text&#123;and&#125;\;f_&#123;yy&#125;=2$$
+              \begin&#123;equation*&#125;f_&#123;xx&#125;=2y\cos x,\;f_&#123;xy&#125;=2\sin
+              x,\;\text&#123;and&#125;\;f_&#123;yy&#125;=2\end&#123;equation*&#125;
             </Equation>
             <Equation>
-              $$\Delta_2(x,y)=f_&#123;xx&#125;f_&#123;yy&#125;-f_&#123;xy&#125;^2=4y\cos
-              x-4\sin^2 x=4(y\cos x-\sin^2 x)$$
+              \begin&#123;equation*&#125;\Delta_2(x,y)=f_&#123;xx&#125;f_&#123;yy&#125;-f_&#123;xy&#125;^2=4y\cos
+              x-4\sin^2 x=4(y\cos x-\sin^2 x)\end&#123;equation*&#125;
             </Equation>
             For this kind of problem, we should draw a table to govern all the stationary
             points.
@@ -900,7 +900,7 @@ if (!meta) {
         <section id="problem6">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function <Equation>$$f(x,y)=2x^4+y^4-x^2-2y^2$$</Equation>
+            function <Equation>\begin&#123;equation*&#125;f(x,y)=2x^4+y^4-x^2-2y^2\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
@@ -914,12 +914,12 @@ if (!meta) {
             </Equation>
             This system of equations gives $3\cdot 3=9$ stationary points, namely
             <Equation>
-              $$(0,0),\;(0,1),\;(0,-1),\;\left(\frac&#123;1&#125;&#123;2&#125;,0\right),\;\left(\frac&#123;1&#125;&#123;2&#125;,1\right),\;\left(\frac&#123;1&#125;&#123;2&#125;,-1\right),\left(-\frac&#123;1&#125;&#123;2&#125;,0\right),\;\left(-\frac&#123;1&#125;&#123;2&#125;,1\right),\;\text&#123;and&#125;\;\left(-\frac&#123;1&#125;&#123;2&#125;,-1\right)$$
+              \begin&#123;equation*&#125;(0,0),\;(0,1),\;(0,-1),\;\left(\frac&#123;1&#125;&#123;2&#125;,0\right),\;\left(\frac&#123;1&#125;&#123;2&#125;,1\right),\;\left(\frac&#123;1&#125;&#123;2&#125;,-1\right),\left(-\frac&#123;1&#125;&#123;2&#125;,0\right),\;\left(-\frac&#123;1&#125;&#123;2&#125;,1\right),\;\text&#123;and&#125;\;\left(-\frac&#123;1&#125;&#123;2&#125;,-1\right)\end&#123;equation*&#125;
             </Equation>
             We then follow the procedure and find the partial derivatives of $f$ and
             $\Delta_2$:
             <Equation>
-              $$f_&#123;xx&#125;=24x^2-2,\;f_&#123;xy&#125;=0,\;f_&#123;yy&#125;=12y^2-4,\;\text&#123;and&#125;\;\Delta_2(x,y)=(24x^2-2)(12y^2-4)$$
+              \begin&#123;equation*&#125;f_&#123;xx&#125;=24x^2-2,\;f_&#123;xy&#125;=0,\;f_&#123;yy&#125;=12y^2-4,\;\text&#123;and&#125;\;\Delta_2(x,y)=(24x^2-2)(12y^2-4)\end&#123;equation*&#125;
             </Equation>
             Now, we draw a table, of course.
             <div class="table-wrapper">
@@ -1010,7 +1010,7 @@ if (!meta) {
         <section id="problem7">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function <Equation>$$f(x,y)=x+y+4\sin x\sin y$$</Equation>
+            function <Equation>\begin&#123;equation*&#125;f(x,y)=x+y+4\sin x\sin y\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
@@ -1026,41 +1026,41 @@ if (!meta) {
             Treat this system as linear and solve for $\sin(x+y)$ and $\sin(x-y)$,
             we obtain
             <Equation>
-              $$\begin&#123;cases&#125; \sin(x-y)=0\\
-              \sin(x+y)=-\frac&#123;1&#125;&#123;2&#125; \end&#123;cases&#125;$$
+              \begin&#123;equation*&#125;\begin&#123;cases&#125; \sin(x-y)=0\\
+              \sin(x+y)=-\frac&#123;1&#125;&#123;2&#125; \end&#123;cases&#125;\end&#123;equation*&#125;
             </Equation>
             The first equation gives $x-y=n\pi$, where $n\in\Z$. The second equation
             gives
             <Equation>
-              $$x+y=-\dfrac&#123;\pi&#125;&#123;6&#125;+m2\pi\quad\text&#123;and&#125;\quad
-              x+y=\dfrac&#123;7\pi&#125;&#123;6&#125;+m2\pi,\quad m\in\Z$$
+              \begin&#123;equation*&#125;x+y=-\dfrac&#123;\pi&#125;&#123;6&#125;+m2\pi\quad\text&#123;and&#125;\quad
+              x+y=\dfrac&#123;7\pi&#125;&#123;6&#125;+m2\pi,\quad m\in\Z\end&#123;equation*&#125;
             </Equation>
             To make things a bit easer, we can combine the two solutions of $x+y$
             and obtain
             <Equation>
-              $$ x+y=(-1)^&#123;m+1&#125;\dfrac&#123;\pi&#125;&#123;6&#125;+m\pi
-              $$
+              \begin&#123;equation*&#125; x+y=(-1)^&#123;m+1&#125;\dfrac&#123;\pi&#125;&#123;6&#125;+m\pi
+              \end&#123;equation*&#125;
             </Equation>
             We now have a simplified system of equations
             <Equation>
-              $$\begin&#123;cases&#125; x - y = n\pi\\
+              \begin&#123;equation*&#125;\begin&#123;cases&#125; x - y = n\pi\\
               x+y=(-1)^&#123;m+1&#125;\dfrac&#123;\pi&#125;&#123;6&#125;+m\pi
-              \end&#123;cases&#125;$$
+              \end&#123;cases&#125;\end&#123;equation*&#125;
             </Equation>
             Continuing solving for $x$ and $y$ as a linear system, we obtain
             <Equation>
-              $$ \begin&#123;cases&#125;
+              \begin&#123;equation*&#125; \begin&#123;cases&#125;
               x=(-1)^&#123;m+1&#125;\dfrac&#123;\pi&#125;&#123;12&#125;+(m+n)\dfrac&#123;\pi&#125;&#123;2&#125;\\[1em]
               y=(-1)^&#123;m+1&#125;\dfrac&#123;\pi&#125;&#123;12&#125;+(m-n)\dfrac&#123;\pi&#125;&#123;2&#125;
               \end&#123;cases&#125; ,\quad\text&#123;where&#125;\; (m,n)\in\Z^2.
-              $$
+              \end&#123;equation*&#125;
             </Equation>
 
             Follow the standard procedure again and find the second partial
             derivatives of the function,
             <Equation>
-              $$f_&#123;xx&#125;=-4\sin x\sin y,\;f_&#123;xy&#125;=4\cos x\cos
-              y,\;\text&#123;and&#125;\;f_&#123;yy&#125;=-4\sin x\sin y.$$
+              \begin&#123;equation*&#125;f_&#123;xx&#125;=-4\sin x\sin y,\;f_&#123;xy&#125;=4\cos x\cos
+              y,\;\text&#123;and&#125;\;f_&#123;yy&#125;=-4\sin x\sin y.\end&#123;equation*&#125;
             </Equation>
             By then,
             <Equation>
@@ -1072,13 +1072,13 @@ if (!meta) {
             </Equation>
             Substituting
             <Equation>
-              $$x-y=n\pi \quad\text&#123;and&#125;\quad
-              x+y=(-1)^&#123;m+1&#125;\dfrac&#123;\pi&#125;&#123;6&#125;+m\pi$$
+              \begin&#123;equation*&#125;x-y=n\pi \quad\text&#123;and&#125;\quad
+              x+y=(-1)^&#123;m+1&#125;\dfrac&#123;\pi&#125;&#123;6&#125;+m\pi\end&#123;equation*&#125;
             </Equation>
             derived from the equations above into $\Delta_2(x,y)$, we obtain
             <Equation>
-              $$ \Delta_2(x,y)
-              \Big|^&#123;x-y=n\pi&#125;_&#123;x+y=(-1)^&#123;m+1&#125;\frac&#123;\pi&#125;&#123;6&#125;+m\pi&#125;=-16\cos(n\pi)\cos\left((-1)^&#123;m+1&#125;\frac&#123;\pi&#125;&#123;6&#125;+m\pi\right)$$
+              \begin&#123;equation*&#125; \Delta_2(x,y)
+              \Big|^&#123;x-y=n\pi&#125;_&#123;x+y=(-1)^&#123;m+1&#125;\frac&#123;\pi&#125;&#123;6&#125;+m\pi&#125;=-16\cos(n\pi)\cos\left((-1)^&#123;m+1&#125;\frac&#123;\pi&#125;&#123;6&#125;+m\pi\right)\end&#123;equation*&#125;
             </Equation>
             Since $m$ and $n$ are integers, and therefore the signs of $\Delta_2(x,y)$
             depend on the even and odd properties of $m$ and $n$. Thus, we set up
@@ -1119,7 +1119,7 @@ if (!meta) {
                   <td>$\sqrt&#123;3&#125;+2&gt;0$</td>
                   <td
                     >Local Minimum, where
-                    <Equation>$$f_&#123;\min&#125;=m\pi-\frac&#123;\pi&#125;&#123;6&#125;-2-\sqrt&#123;3&#125;$$</Equation>
+                    <Equation>\begin&#123;equation*&#125;f_&#123;\min&#125;=m\pi-\frac&#123;\pi&#125;&#123;6&#125;-2-\sqrt&#123;3&#125;\end&#123;equation*&#125;</Equation>
                   </td>
                 </tr>
                 <tr>
@@ -1131,7 +1131,7 @@ if (!meta) {
                   <td>$-\sqrt&#123;3&#125;-2&lt;0$</td>
                   <td
                     >Local maximum, where
-                    <Equation>$$f_&#123;\max&#125;=m\pi+\frac&#123;\pi&#125;&#123;6&#125;+2+\sqrt&#123;3&#125;$$</Equation>
+                    <Equation>\begin&#123;equation*&#125;f_&#123;\max&#125;=m\pi+\frac&#123;\pi&#125;&#123;6&#125;+2+\sqrt&#123;3&#125;\end&#123;equation*&#125;</Equation>
                   </td>
                 </tr>
               </table>
@@ -1145,7 +1145,7 @@ if (!meta) {
         <section id="problem8">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
-            function <Equation>$$f(x,y,z)=x^2+y^2+z^2-xy+x-2z$$</Equation>
+            function <Equation>\begin&#123;equation*&#125;f(x,y,z)=x^2+y^2+z^2-xy+x-2z\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
@@ -1163,30 +1163,30 @@ if (!meta) {
             point $M=\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)$.
             We then proceed to find all the second derivatives of $f$:
             <Equation>
-              $$f_&#123;xx&#125;=2,\;f_&#123;yy&#125;=2,\;f_&#123;zz&#125;=2,\;f_&#123;xy&#125;=-1,f_&#123;xz&#125;=0,\;\text&#123;and&#125;\;
-              f_&#123;yz&#125;=0$$
+              \begin&#123;equation*&#125;f_&#123;xx&#125;=2,\;f_&#123;yy&#125;=2,\;f_&#123;zz&#125;=2,\;f_&#123;xy&#125;=-1,f_&#123;xz&#125;=0,\;\text&#123;and&#125;\;
+              f_&#123;yz&#125;=0\end&#123;equation*&#125;
             </Equation>
             The Hessian matrix at $\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)$:
             <Equation>
-              $$H_f(M)= \begin&#123;bmatrix&#125; f_&#123;xx&#125; &
+              \begin&#123;equation*&#125;H_f(M)= \begin&#123;bmatrix&#125; f_&#123;xx&#125; &
               f_&#123;xy&#125; & f_&#123;xz&#125;\\ f_&#123;yx&#125; &
               f_&#123;yy&#125; & f_&#123;yz&#125;\\ f_&#123;zx&#125; &
               f_&#123;zy&#125; & f_&#123;zz&#125; \end&#123;bmatrix&#125;=
               \begin&#123;bmatrix&#125; 2 & -1 & 0\\ -1 & 2 & 0\\ 0 & 0 & 2
-              \end&#123;bmatrix&#125;$$
+              \end&#123;bmatrix&#125;\end&#123;equation*&#125;
             </Equation>
             Apply the Sylvester's criterion on $H_f(M)$ by calculating the major sub-matrices
             of $H_f(M)$:
             <Equation>
-              $$\Delta_1=2>0,\;\; \Delta_2= \begin&#123;vmatrix&#125; 2 & -1\\
+              \begin&#123;equation*&#125;\Delta_1=2>0,\;\; \Delta_2= \begin&#123;vmatrix&#125; 2 & -1\\
               -1 & 2 \end&#123;vmatrix&#125;=3>0 \;\;\text&#123;and&#125;\;\;
               \Delta_3= \begin&#123;vmatrix&#125; 2 & -1 & 0\\ -1 & 2 & 0\\ 0 &
               0 & 2 \end&#123;vmatrix&#125;=
               (-1)^&#123;3+3&#125;\begin&#123;vmatrix&#125; 2 & -1\\ -1 & 2
-              \end&#123;vmatrix&#125;=6>0,$$
+              \end&#123;vmatrix&#125;=6>0,\end&#123;equation*&#125;
             </Equation>
             we see that the matrix $H_f(M)$ is positive-definite, therefore $M=\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)$
-            is a minimum of $f$ and <Equation>$$f_&#123;\min&#125;=f\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)=-\dfrac&#123;4&#125;&#123;3&#125;$$</Equation>
+            is a minimum of $f$ and <Equation>\begin&#123;equation*&#125;f_&#123;\min&#125;=f\left(-\dfrac&#123;2&#125;&#123;3&#125;,-\dfrac&#123;1&#125;&#123;3&#125;,1\right)=-\dfrac&#123;4&#125;&#123;3&#125;\end&#123;equation*&#125;</Equation>
           </Solution>
         </section>
 
@@ -1194,7 +1194,7 @@ if (!meta) {
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function
-            <Equation>$$f(x,y,z)=x^3+xy+y^2-2xz+2z^2+3y-1$$</Equation>
+            <Equation>\begin&#123;equation*&#125;f(x,y,z)=x^3+xy+y^2-2xz+2z^2+3y-1\end&#123;equation*&#125;</Equation>
           </Problem>
 
           <Solution>
@@ -1215,30 +1215,30 @@ if (!meta) {
             Solve for $x$ from the quadratic equation and plug it back into $y$ and
             $z$, we obtain two stationary points,
             <Equation>
-              $$M=\left(1,-2,\dfrac&#123;1&#125;&#123;2&#125;\right),\;\text&#123;and&#125;\;N=\left(-\dfrac&#123;1&#125;&#123;2&#125;,-\dfrac&#123;5&#125;&#123;4&#125;,-\dfrac&#123;1&#125;&#123;4&#125;\right).$$
+              \begin&#123;equation*&#125;M=\left(1,-2,\dfrac&#123;1&#125;&#123;2&#125;\right),\;\text&#123;and&#125;\;N=\left(-\dfrac&#123;1&#125;&#123;2&#125;,-\dfrac&#123;5&#125;&#123;4&#125;,-\dfrac&#123;1&#125;&#123;4&#125;\right).\end&#123;equation*&#125;
             </Equation>
             The partial derivatives of $f$:
             <Equation>
-              $$f_&#123;xx&#125;=6x,\;f_&#123;yy&#125;=2,\;f_&#123;zz&#125;=4,\;f_&#123;xy&#125;=1,f_&#123;xz&#125;=-2,\;\text&#123;and&#125;\;
-              f_&#123;yz&#125;=0$$
+              \begin&#123;equation*&#125;f_&#123;xx&#125;=6x,\;f_&#123;yy&#125;=2,\;f_&#123;zz&#125;=4,\;f_&#123;xy&#125;=1,f_&#123;xz&#125;=-2,\;\text&#123;and&#125;\;
+              f_&#123;yz&#125;=0\end&#123;equation*&#125;
             </Equation>
             At $M=\left(1,-2,\dfrac&#123;1&#125;&#123;2&#125;\right)$,
             <Equation>
-              $$H_f(M)= \begin&#123;bmatrix&#125; f_&#123;xx&#125; &
+              \begin&#123;equation*&#125;H_f(M)= \begin&#123;bmatrix&#125; f_&#123;xx&#125; &
               f_&#123;xy&#125; & f_&#123;xz&#125;\\ f_&#123;yx&#125; &
               f_&#123;yy&#125; & f_&#123;yz&#125;\\ f_&#123;zx&#125; &
               f_&#123;zy&#125; & f_&#123;zz&#125; \end&#123;bmatrix&#125;=
               \begin&#123;bmatrix&#125; 6 & 1 & -2\\ 1 & 2 & 0\\ -2 & 0 & 4
-              \end&#123;bmatrix&#125;$$
+              \end&#123;bmatrix&#125;\end&#123;equation*&#125;
             </Equation>
             The major sub-matrices of $H_f(M)$:
             <Equation>
-              $$\Delta_1=6>0,\;\; \Delta_2= \begin&#123;vmatrix&#125; 6 & 1\\ 1
+              \begin&#123;equation*&#125;\Delta_1=6>0,\;\; \Delta_2= \begin&#123;vmatrix&#125; 6 & 1\\ 1
               & 2 \end&#123;vmatrix&#125;=7>0 \;\;\text&#123;and&#125;\;\;
               \Delta_3= \begin&#123;vmatrix&#125; 6 & 1 & -2\\ 1 & 2 & 0\\ -2 &
               0 & 4 \end&#123;vmatrix&#125; \;\xrightarrow&#123;-2R_1+R_2\to
               R_2&#125;\; \begin&#123;vmatrix&#125; 6 & 1 & -2\\ -11 & 0 & 4\\
-              -2 & 0 & 4 \end&#123;vmatrix&#125;=36>0.$$
+              -2 & 0 & 4 \end&#123;vmatrix&#125;=36>0.\end&#123;equation*&#125;
             </Equation>
             We conclude that $H_f(M)$ is positive definite, therefore $M$ is a minimum
             and $f_&#123;\min&#125;=-\frac&#123;3&#125;&#123;2&#125;$. <br />
@@ -1246,21 +1246,21 @@ if (!meta) {
             At
             $N=\left(-\dfrac&#123;1&#125;&#123;2&#125;,-\dfrac&#123;5&#125;&#123;4&#125;,-\dfrac&#123;1&#125;&#123;4&#125;\right)$,
             <Equation>
-              $$H_f(M)= \begin&#123;bmatrix&#125; f_&#123;xx&#125; &
+              \begin&#123;equation*&#125;H_f(M)= \begin&#123;bmatrix&#125; f_&#123;xx&#125; &
               f_&#123;xy&#125; & f_&#123;xz&#125;\\ f_&#123;yx&#125; &
               f_&#123;yy&#125; & f_&#123;yz&#125;\\ f_&#123;zx&#125; &
               f_&#123;zy&#125; & f_&#123;zz&#125; \end&#123;bmatrix&#125;=
               \begin&#123;bmatrix&#125; -3 & 1 & -2\\ 1 & 2 & 0\\ -2 & 0 & 4
-              \end&#123;bmatrix&#125;$$
+              \end&#123;bmatrix&#125;\end&#123;equation*&#125;
             </Equation>
             The major sub-matrices of $H_f(N)$:
             <Equation>
-              $$\Delta_1=-3&lt;0,\;\; \Delta_2=\begin&#123;vmatrix&#125; -3 &
+              \begin&#123;equation*&#125;\Delta_1=-3&lt;0,\;\; \Delta_2=\begin&#123;vmatrix&#125; -3 &
               1\\ 1 & 2 \end&#123;vmatrix&#125;=7>0 \;\;\text&#123;and&#125;\;\;
               \Delta_3= \begin&#123;vmatrix&#125; -3 & 1 & -2\\ 1 & 2 & 0\\ -2 &
               0 & 4 \end&#123;vmatrix&#125; \;\xrightarrow&#123;-2R_1+R_2\to
               R_2&#125;\; \begin&#123;vmatrix&#125; -3 & 1 & -2\\ 7 & 0 & 4\\ -2
-              & 0 & 4 \end&#123;vmatrix&#125;=36>0.$$
+              & 0 & 4 \end&#123;vmatrix&#125;=36>0.\end&#123;equation*&#125;
             </Equation>
             We conclude that $H_f(N)$ is neither positive nor negative definite, therefore
             $N$ is a saddle point.
