@@ -110,13 +110,13 @@ const tex = String.raw;
       </slot>
     </nav>
 
-    <main class="general-wrapper">
+    <main class="general-wrapper" data-pagefind-body>
       <!-- Page-specific content goes here -->
       <slot />
 
       {
         isArticle && (
-          <div class="content-grid" style="margin-top: -100px">
+          <div class="content-grid" style="margin-top: -100px" data-pagefind-ignore>
             <section>
               <h2>More Articles</h2>
               <ArticleCards
@@ -130,7 +130,7 @@ const tex = String.raw;
         )
       }
 
-      <footer>
+      <footer data-pagefind-ignore>
         <Footer />
       </footer>
     </main>

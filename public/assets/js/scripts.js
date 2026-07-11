@@ -625,254 +625,279 @@ function SearchBar() {
     return;
   }
 
-  // Load suggestions from JSON file
-  fetch("/assets/json/articles.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          "Network response error: " + response.statusText
-        );
+  const HL_OPEN =
+    '<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">';
+  const HL_CLOSE = "</span>";
+
+  function escapeRegExp(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  // Highlight every case-insensitive occurrence of `query` in a PLAIN-TEXT string.
+  function highlight(text, query) {
+    if (!query) return text;
+    return text.replace(
+      new RegExp(escapeRegExp(query), "gi"),
+      (match) => `${HL_OPEN}${match}${HL_CLOSE}`,
+    );
+  }
+
+  // Map a result URL to the Article / Post / Resource label the UI shows.
+  function typeFromUrl(url) {
+    if (url.includes("/articles/")) return "Article";
+    if (url.includes("/posts/")) return "Post";
+    return "Resource";
+  }
+
+  // Lazily pick a search engine: Pagefind (full-text) when its index is present
+  // in the built site, otherwise fall back to the articles.json metadata list so
+  // `astro dev` and offline still search titles/topics/descriptions.
+  let enginePromise = null;
+  function getEngine() {
+    return (enginePromise ||= loadEngine());
+  }
+  async function loadEngine() {
+    try {
+      // Native dynamic import of the statically-hosted Pagefind bundle.
+      const pagefind = await import("/pagefind/pagefind.js");
+      await pagefind.init();
+      return { kind: "pagefind", pagefind };
+    } catch (err) {
+      console.warn("Pagefind unavailable, falling back to articles.json:", err);
+      try {
+        const res = await fetch("/assets/json/articles.json");
+        if (!res.ok) throw new Error("Network response error: " + res.statusText);
+        const data = await res.json();
+        const suggestions = [
+          ...(data.articles || []),
+          ...(data.others || []),
+          ...(data.posts || []),
+        ];
+        return { kind: "fallback", suggestions };
+      } catch (err2) {
+        console.error("Error loading search fallback:", err2);
+        return { kind: "none" };
       }
-      return response.json();
-    })
-    .then((data) => {
-      // Get both articles and others from the JSON file
-      const articles = data.articles || [];
-      const others = data.others || [];
-      const posts = data.posts || [];
+    }
+  }
 
-      // Combine both arrays for searching
-      const allSuggestions = [...articles, ...others, ...posts];
+  // Normalised item shape used by the renderer:
+  //   { title, link, type, topics?, description?, descriptionHtml?, date? }
+  // `descriptionHtml` is pre-highlighted HTML (Pagefind excerpt); `description`
+  // is plain text that the renderer highlights against the query.
+  async function search(query) {
+    const engine = await getEngine();
 
-      searchBars.forEach((searchBar) => {
-        searchBar.addEventListener("input", function () {
-          const query = searchBar.value.toLowerCase();
-          dropdown.innerHTML = "";
-          currentFocus = -1;
+    if (engine.kind === "pagefind") {
+      // Pagefind's debouncedSearch resolves to null when superseded by a newer call.
+      const result = await engine.pagefind.debouncedSearch(query, {}, 180);
+      if (!result) return null;
+      const total = result.results.length;
+      const datas = await Promise.all(
+        result.results.slice(0, maxItems).map((r) => r.data()),
+      );
+      const items = datas.map((d) => ({
+        title: (d.meta && d.meta.title) || d.url,
+        link: d.url,
+        type: typeFromUrl(d.url),
+        // Excerpt already contains <mark>…</mark>; recolour to match the UI.
+        descriptionHtml: (d.excerpt || "")
+          .replace(/<mark>/g, HL_OPEN)
+          .replace(/<\/mark>/g, HL_CLOSE),
+      }));
+      return { total, items };
+    }
 
-          if (query) {
-            // Enhanced search across multiple fields
-            const filteredSuggestions = allSuggestions.filter((item) => {
-              // Search in title, topic, description
-              return (
-                item.title.toLowerCase().includes(query) ||
-                (item.topics && item.topics.some(t => t.toLowerCase().includes(query))) ||
-                (item.description && item.description.toLowerCase().includes(query)) ||
-                (item.date && item.date.toLowerCase().includes(query))
-              );
-            });
+    if (engine.kind === "fallback") {
+      const q = query.toLowerCase();
+      const filtered = engine.suggestions.filter(
+        (item) =>
+          item.title.toLowerCase().includes(q) ||
+          (item.topics && item.topics.some((t) => t.toLowerCase().includes(q))) ||
+          (item.description && item.description.toLowerCase().includes(q)) ||
+          (item.date && item.date.toLowerCase().includes(q)),
+      );
+      const items = filtered.slice(0, maxItems).map((item) => ({
+        title: item.title,
+        link: item.link,
+        type: item.hasOwnProperty("id")
+          ? "Article"
+          : item.hasOwnProperty("pid")
+            ? "Post"
+            : "Resource",
+        topics: item.topics,
+        description: item.description,
+        date: item.date,
+      }));
+      return { total: filtered.length, items };
+    }
 
-            // Get total matches count before slicing
-            const totalMatches = filteredSuggestions.length;
+    return { total: 0, items: [] };
+  }
 
-            // Slice for display
-            const displayedSuggestions = filteredSuggestions.slice(0, maxItems);
+  function renderResults(query, total, items, searchBar) {
+    dropdown.innerHTML = "";
+    currentFocus = -1;
 
-            // Create and add the results count indicator
-            if (totalMatches > 0) {
-              const countDiv = document.createElement("div");
-              countDiv.className = "results-count";
-              countDiv.textContent = `Displaying ${Math.min(maxItems, totalMatches)} out of ${totalMatches} results`;
-              countDiv.style.padding = "8px 10px";
-              countDiv.style.color = "var(--text-color, #666)";
-              countDiv.style.fontSize = "0.9em";
-              countDiv.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
-              dropdown.appendChild(countDiv);
-            }
+    if (!items.length) {
+      dropdown.style.display = "none";
+      return;
+    }
 
-            // Display suggestions with enhanced information
-            displayedSuggestions.forEach((item) => {
-              const container = document.createElement("div");
-              container.className = "autocomplete-item-container";
-              container.style.padding = "10px";
-              container.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
+    const countDiv = document.createElement("div");
+    countDiv.className = "results-count";
+    countDiv.textContent = `Displaying ${Math.min(maxItems, total)} out of ${total} results`;
+    countDiv.style.padding = "8px 10px";
+    countDiv.style.color = "var(--text-color, #666)";
+    countDiv.style.fontSize = "0.9em";
+    countDiv.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
+    dropdown.appendChild(countDiv);
 
-              // Title section with highlighting
-              const titleDiv = document.createElement("div");
-              titleDiv.className = "autocomplete-item-title";
-              titleDiv.style.fontWeight = "bold";
-              titleDiv.style.marginBottom = "3px";
+    items.forEach((item) => {
+      const container = document.createElement("div");
+      container.className = "autocomplete-item-container";
+      container.style.padding = "10px";
+      container.style.borderBottom = "1px solid var(--border-color, var(--search-item-border-color))";
 
-              // Apply highlighting to title
-              const highlightedTitle = item.title.replace(
-                new RegExp(query, "gi"),
-                (match) =>
-                  `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
-              );
-              titleDiv.innerHTML = highlightedTitle;
+      const titleDiv = document.createElement("div");
+      titleDiv.className = "autocomplete-item-title";
+      titleDiv.style.fontWeight = "bold";
+      titleDiv.style.marginBottom = "3px";
+      titleDiv.innerHTML = highlight(item.title, query);
+      container.appendChild(titleDiv);
 
-              // Topic section with highlighting if topics exist
-              if (item.topics && item.topics.length > 0) {
-                const topicDiv = document.createElement("div");
-                topicDiv.className = "autocomplete-item-topic";
-                topicDiv.style.fontSize = "0.85em";
-                topicDiv.style.marginBottom = "3px";
+      if (item.topics && item.topics.length > 0) {
+        const topicDiv = document.createElement("div");
+        topicDiv.className = "autocomplete-item-topic";
+        topicDiv.style.fontSize = "0.85em";
+        topicDiv.style.marginBottom = "3px";
+        topicDiv.innerHTML = `<strong>Tags:</strong> ${highlight(item.topics.join(", "), query)}`;
+        container.appendChild(topicDiv);
+      }
 
-                // Apply highlighting to topic
-                const topicText = Array.isArray(item.topics) ? item.topics.join(", ") : "";
-                const highlightedTopic = topicText.replace(
-                  new RegExp(query, "gi"),
-                  (match) =>
-                    `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
-                );
-                topicDiv.innerHTML = `<strong>Tags:</strong> ${highlightedTopic}`;
-                container.appendChild(topicDiv);
-              }
+      if (item.descriptionHtml || item.description) {
+        const descDiv = document.createElement("div");
+        descDiv.className = "autocomplete-item-description";
+        descDiv.style.fontSize = "0.85em";
+        descDiv.style.marginBottom = "3px";
+        descDiv.innerHTML = item.descriptionHtml
+          ? item.descriptionHtml
+          : highlight(item.description, query);
+        container.appendChild(descDiv);
+      }
 
-              // Description section with highlighting if description exists
-              if (item.description) {
-                const descDiv = document.createElement("div");
-                descDiv.className = "autocomplete-item-description";
-                descDiv.style.fontSize = "0.85em";
-                descDiv.style.marginBottom = "3px";
+      if (item.date) {
+        const dateDiv = document.createElement("div");
+        dateDiv.className = "autocomplete-item-date";
+        dateDiv.style.fontSize = "0.85em";
+        dateDiv.style.fontStyle = "italic";
+        dateDiv.style.color = "var(--muted-text-color, #888)";
+        dateDiv.innerHTML = highlight(item.date, query);
+        container.appendChild(dateDiv);
+      }
 
-                // Apply highlighting to description
-                const highlightedDesc = item.description.replace(
-                  new RegExp(query, "gi"),
-                  (match) =>
-                    `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
-                );
-                descDiv.innerHTML = highlightedDesc;
-                container.appendChild(descDiv);
-              }
+      const sourceDiv = document.createElement("div");
+      sourceDiv.className = "autocomplete-item-source";
+      sourceDiv.style.fontSize = "0.75em";
+      sourceDiv.style.marginTop = "3px";
+      sourceDiv.textContent = item.type;
+      container.appendChild(sourceDiv);
 
-              // Date section with highlighting if date exists
-              if (item.date) {
-                const dateDiv = document.createElement("div");
-                dateDiv.className = "autocomplete-item-date";
-                dateDiv.style.fontSize = "0.85em";
-                dateDiv.style.fontStyle = "italic";
-                dateDiv.style.color = "var(--muted-text-color, #888)";
-
-                // Apply highlighting to date
-                const highlightedDate = item.date.replace(
-                  new RegExp(query, "gi"),
-                  (match) =>
-                    `<span style="color: var(--highlight-dropdown-color); text-decoration: underline;">${match}</span>`
-                );
-                dateDiv.innerHTML = highlightedDate;
-                container.appendChild(dateDiv);
-              }
-
-              // Source indicator (article or other)
-              const sourceDiv = document.createElement("div");
-              sourceDiv.className = "autocomplete-item-source";
-              sourceDiv.style.fontSize = "0.75em";
-              sourceDiv.style.marginTop = "3px";
-              let sourceType = "Resource"; // Default value
-              if (item.hasOwnProperty("id")) {
-                sourceType = "Article";
-              } else if (item.hasOwnProperty("pid")) {
-                sourceType = "Post";
-              }
-              sourceDiv.textContent = sourceType;
-              container.appendChild(sourceDiv);
-
-              // Assemble the title component
-              container.prepend(titleDiv);
-
-              container.addEventListener("click", function () {
-                searchBar.value = item.title;
-                window.open(item.link, "_blank");
-                searchBar.value = ""; // Clear the search bar
-                dropdown.innerHTML = "";
-                dropdown.style.display = "none";
-              });
-
-              dropdown.appendChild(container);
-            });
-
-            dropdown.style.display = "block"; // Show dropdown
-          } else {
-            dropdown.style.display = "none"; // Hide dropdown
-          }
-        });
-
-        searchBar.addEventListener("keydown", function (event) {
-          const items = dropdown.getElementsByClassName("autocomplete-item-container");
-
-          if (event.key === "ArrowDown") {
-            event.preventDefault();
-            currentFocus++;
-            if (currentFocus >= items.length) currentFocus = 0;
-            addActive(items);
-          } else if (event.key === "ArrowUp") {
-            event.preventDefault();
-            currentFocus--;
-            if (currentFocus < 0) currentFocus = items.length - 1;
-            addActive(items);
-          } else if (event.key === "Enter") {
-            event.preventDefault();
-            if (typeof collapseSearchBar === 'function') {
-              collapseSearchBar();
-            }
-            if (currentFocus > -1 && items[currentFocus]) {
-              // Simulate click event when pressing Enter on an active item
-              items[currentFocus].click();
-            } else {
-              // If no active item, find the suggestion that matches the search term
-              const filteredSuggestion = allSuggestions.find(
-                (item) =>
-                  item.title.toLowerCase() === searchBar.value.toLowerCase() ||
-                  (item.topics && item.topics.some(t => t.toLowerCase() === searchBar.value.toLowerCase())) ||
-                  (item.description && item.description.toLowerCase() === searchBar.value.toLowerCase())
-              );
-              if (filteredSuggestion) {
-                window.open(filteredSuggestion.link, "_blank");
-                searchBar.value = "";
-                dropdown.innerHTML = "";
-                dropdown.style.display = "none";
-              }
-            }
-          } else if (event.key === "Escape") {
-            // Enhanced Escape key functionality: clear search bar and hide dropdown
-            event.preventDefault();
-            searchBar.value = ""; // Clear the input value
-            dropdown.innerHTML = ""; // Clear dropdown content
-            dropdown.style.display = "none"; // Hide dropdown
-            searchBar.blur(); // Remove focus from search bar
-            collapseSearchBar(); // Collapse the expanded search bar
-          }
-        });
-
-        function addActive(items) {
-          if (!items) return false;
-          removeActive(items);
-          if (currentFocus >= items.length) currentFocus = 0;
-          if (currentFocus < 0) currentFocus = items.length - 1;
-          items[currentFocus].classList.add("autocomplete-active");
-
-          // Add some styling to make active item clearly visible
-          items[currentFocus].style.backgroundColor = "var(--highlight-bg-color, #f5f5f5)";
-        }
-
-        function removeActive(items) {
-          for (let item of items) {
-            item.classList.remove("autocomplete-active");
-            item.style.backgroundColor = "";
-          }
-        }
+      container.addEventListener("click", function () {
+        window.open(item.link, "_blank");
+        searchBar.value = "";
+        dropdown.innerHTML = "";
+        dropdown.style.display = "none";
       });
 
-      // Hide dropdown when clicking outside
-      document.addEventListener("click", function (event) {
-        const target = event.target;
-        if (
-          ![...searchBars].some((bar) => bar.contains(target)) &&
-          !dropdown.contains(target)
-        ) {
-          // Clear all search bars when clicking outside
-          searchBars.forEach(searchBar => {
-            searchBar.value = "";
-          });
-          dropdown.innerHTML = ""; // Clear dropdown content
-          dropdown.style.display = "none"; // Hide dropdown
-        }
-      });
-    })
-    .catch((error) => {
-      console.error("Error loading suggestions:", error);
+      dropdown.appendChild(container);
     });
+
+    dropdown.style.display = "block";
+  }
+
+  searchBars.forEach((searchBar) => {
+    searchBar.addEventListener("input", async function () {
+      const query = searchBar.value.trim();
+      currentFocus = -1;
+
+      if (!query) {
+        dropdown.innerHTML = "";
+        dropdown.style.display = "none";
+        return;
+      }
+
+      const result = await search(query);
+      // Null => superseded by a newer keystroke (Pagefind debounce).
+      if (!result) return;
+      // Guard against out-of-order async results: only render for the live query.
+      if (searchBar.value.trim() !== query) return;
+
+      renderResults(query, result.total, result.items, searchBar);
+    });
+
+    searchBar.addEventListener("keydown", function (event) {
+      const items = dropdown.getElementsByClassName("autocomplete-item-container");
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        currentFocus++;
+        if (currentFocus >= items.length) currentFocus = 0;
+        addActive(items);
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        currentFocus--;
+        if (currentFocus < 0) currentFocus = items.length - 1;
+        addActive(items);
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        if (typeof collapseSearchBar === "function") {
+          collapseSearchBar();
+        }
+        // Open the highlighted result, or the first one if none is highlighted.
+        const target = items[currentFocus] || items[0];
+        if (target) target.click();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        searchBar.value = "";
+        dropdown.innerHTML = "";
+        dropdown.style.display = "none";
+        searchBar.blur();
+        collapseSearchBar();
+      }
+    });
+
+    function addActive(items) {
+      if (!items) return false;
+      removeActive(items);
+      if (currentFocus >= items.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = items.length - 1;
+      items[currentFocus].classList.add("autocomplete-active");
+      items[currentFocus].style.backgroundColor = "var(--highlight-bg-color, #f5f5f5)";
+    }
+
+    function removeActive(items) {
+      for (let item of items) {
+        item.classList.remove("autocomplete-active");
+        item.style.backgroundColor = "";
+      }
+    }
+  });
+
+  // Hide dropdown when clicking outside
+  document.addEventListener("click", function (event) {
+    const target = event.target;
+    if (
+      ![...searchBars].some((bar) => bar.contains(target)) &&
+      !dropdown.contains(target)
+    ) {
+      searchBars.forEach((searchBar) => {
+        searchBar.value = "";
+      });
+      dropdown.innerHTML = "";
+      dropdown.style.display = "none";
+    }
+  });
 }
 
 function collapseSearchBar() {

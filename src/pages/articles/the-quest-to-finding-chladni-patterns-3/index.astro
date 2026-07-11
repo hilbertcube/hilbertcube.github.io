@@ -6,15 +6,13 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
-import fs from "node:fs";
-import path from "node:path";
 import ContinueButton from "@components/ContinueButton.astro"
+import { getCollection } from "astro:content";
 
-const data = JSON.parse(
-  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
-);
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+const meta = (await getCollection("articles")).find(
+  (e) => e.data.link.replace(/\/$/, "") === slug,
+)?.data;
 import Equation from "@components/math/Equation.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 ---
@@ -203,7 +201,7 @@ import TableOfContents from "@components/TableOfContents.astro";
       <Equation>
         $$(p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,$$
       </Equation>
-      where $$\zeta = (2-\nu)Y''(y)$$
+      where <Equation>$$\zeta = (2-\nu)Y''(y)$$</Equation>
       <p>
         This is a very difficult task since $\zeta$ is not a numeric value, but
         a function of $y$, so attempting to solve the eigenvalue numerically is

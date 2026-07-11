@@ -6,14 +6,12 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
-import fs from "node:fs";
-import path from "node:path";
+import { getCollection } from "astro:content";
 
-const data = JSON.parse(
-  fs.readFileSync(path.resolve("public/assets/json/articles.json"), "utf-8"),
-);
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = data.articles.find((a: any) => a.link.replace(/\/$/, "") === slug);
+const meta = (await getCollection("articles")).find(
+  (e) => e.data.link.replace(/\/$/, "") === slug,
+)?.data;
 import Equation from "@components/math/Equation.astro";
 import ContinueButton from "@components/ContinueButton.astro"
 import TwoColumns from "@components/TwoColumns.astro";
@@ -285,8 +283,8 @@ import CodeBox from "@components/code/CodeBox.astro";
                 proportional to four times the number of rings on the plate
                 squared, that is, $f \sim 4n^2$, where $n$ is the number of
                 rings (see in Fig. 4). The full formula that he derived is
-                \begin&#123;equation&#125; f \sim (m+2n)^2,
-                \end&#123;equation&#125; where $m$ here is the number of
+                <Equation>\begin&#123;equation&#125; f \sim (m+2n)^2,
+                \end&#123;equation&#125;</Equation> where $m$ here is the number of
                 diameter lines. This is called Chladni's law. We don't see any
                 $m$'s in the figure below, there is a reason for this, and I'll
                 get to that part later.
