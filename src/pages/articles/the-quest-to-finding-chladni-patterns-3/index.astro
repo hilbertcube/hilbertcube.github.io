@@ -10,9 +10,14 @@ import ContinueButton from "@components/ContinueButton.astro"
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = (await getCollection("articles")).find(
+const article = (await getCollection("articles")).find(
   (e) => e.data.link.replace(/\/$/, "") === slug,
-)?.data;
+);
+const meta = article?.data;
+
+if (!meta) {
+  throw new Error(`Article metadata not found for slug: ${slug}`);
+}
 import Equation from "@components/math/Equation.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 ---
@@ -189,8 +194,9 @@ import TableOfContents from "@components/TableOfContents.astro";
       </Equation>
       <p>and initial conditions:</p>
       <Equation>
-        $$u(x, y, 0) = f(x,y)\quad \text&#123; and &#125;\quad u_t(x, y, 0) =
-        g(x, y)$$
+        \begin&#123;equation&#125;
+        u(x, y, 0) = f(x,y)\quad \text&#123; and &#125;\quad u_t(x, y, 0) =
+        g(x, y)\end&#123;equation&#125;
       </Equation>
       <p>
         Any attempts to solve this Boundary-Initial Condition using separation
@@ -199,9 +205,10 @@ import TableOfContents from "@components/TableOfContents.astro";
         an very difficult problem: having to solve the equation
       </p>
       <Equation>
-        $$(p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,$$
+        \begin&#123;equation&#125;(p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,\end&#123;equation&#125;
       </Equation>
-      where <Equation>$$\zeta = (2-\nu)Y''(y)$$</Equation>
+      where 
+      <Equation>\begin&#123;equation&#125;\zeta = (2-\nu)Y''(y)\end&#123;equation&#125;</Equation>
       <p>
         This is a very difficult task since $\zeta$ is not a numeric value, but
         a function of $y$, so attempting to solve the eigenvalue numerically is

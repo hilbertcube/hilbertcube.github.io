@@ -9,9 +9,14 @@ import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = (await getCollection("articles")).find(
+const article = (await getCollection("articles")).find(
   (e) => e.data.link.replace(/\/$/, "") === slug,
-)?.data;
+);
+const meta = article?.data;
+
+if (!meta) {
+  throw new Error(`Article metadata not found for slug: ${slug}`);
+}
 import Equation from "@components/math/Equation.astro";
 import ContinueButton from "@components/ContinueButton.astro"
 import TwoColumns from "@components/TwoColumns.astro";
