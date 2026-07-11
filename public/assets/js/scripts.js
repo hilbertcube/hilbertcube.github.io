@@ -505,6 +505,13 @@ function BodyDarkMode() {
     });
   }
 
+  // Re-sync from localStorage when the page is shown, including bfcache
+  // restores (back/forward navigation), where DOMContentLoaded does not fire.
+  window.addEventListener("pageshow", () => {
+    darkMode = localStorage.getItem("mode") === "dark";
+    updateMode();
+  });
+
   updateMode(); // Initialize mode on page load
 }
 
@@ -560,6 +567,13 @@ function CodeDarkMode(lightThemeHref, darkThemeHref) {
       updateTheme();
     });
   }
+
+  // Re-sync from localStorage when the page is shown, including bfcache
+  // restores (back/forward navigation), where DOMContentLoaded does not fire.
+  window.addEventListener("pageshow", () => {
+    darkMode = localStorage.getItem("mode") === "dark";
+    updateTheme();
+  });
 
   updateTheme(); // Initialize mode on page load
 }
