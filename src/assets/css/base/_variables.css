@@ -81,12 +81,10 @@
   --top-bar-height: 60px;
   --in-page-li-spacing: 15px;
   
-  /* Progress bar — themed to the site's blue→cyan accent */
-  --progressive-bar-height: 3px;
-  --progressive-bar-color: #0954b6;
-  --progress-bar-start: #0954b6;
-  --progress-bar-end: rgb(0, 185, 226);
-  --progress-bar-glow: rgba(0, 185, 226, 0.5);
+  /* Progress bar — flat red accent to match the site's Wikipedia-like theme */
+  --progressive-bar-height: 2px;
+  --progressive-bar-color: #ca0000;
+  --progress-bar-color: #ca0000;
   
   /* Share button positioning */
   --share-button-position: 80px;
@@ -146,11 +144,9 @@ html.dark-mode {
   --material-link-color: #aaa;
   --article-shadow-color: rgba(255, 255, 255, 0.1);
   
-  /* Progress bar */
+  /* Progress bar — slightly brighter red for contrast on dark backgrounds */
   --progressive-bar-height: 2px;
-  --progress-bar-start: rgb(0, 150, 255);
-  --progress-bar-end: #18e9e9;
-  --progress-bar-glow: rgba(24, 233, 233, 0.45);
+  --progress-bar-color: #e53935;
   
   /* GitHub */
   --github-scroller: #ddd;

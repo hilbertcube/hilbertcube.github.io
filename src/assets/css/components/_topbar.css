@@ -144,7 +144,7 @@
 
 .top-buttons:hover,
 .dropbtn:hover {
-  color: rgb(0, 185, 226);
+  text-decoration: underline;
   transition-duration: 50ms;
   cursor: pointer;
 }
@@ -158,6 +158,8 @@
 
 /* Progress bar */
 .progress-container {
+  /* Hidden by default; the settings toggle (Switcher) sets display inline when shown */
+  display: none;
   top: calc(var(--top-bar-height) - var(--progressive-bar-height) + 1px);
   position: fixed;
   width: 100%;
@@ -170,12 +172,7 @@
   top: calc(var(--top-bar-height) - var(--progressive-bar-height) + 1px);
   position: fixed;
   height: var(--progressive-bar-height);
-  background: linear-gradient(
-    90deg,
-    var(--progress-bar-start),
-    var(--progress-bar-end)
-  );
-  box-shadow: 0 0 6px var(--progress-bar-glow);
+  background: var(--progress-bar-color);
   width: 0%;
   z-index: 1000;
   transition: width 0.1s linear;

@@ -71,7 +71,7 @@
 .banner-title::after {
   position: absolute;
   content: "";
-  background: linear-gradient(to right, red, orange, yellow, green, blue, purple);
+  background: #ca0000;
   height: 3px;
   width: 60%;
   bottom: 0;
