@@ -10,9 +10,14 @@ import TableOfContents from "@components/TableOfContents.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = (await getCollection("posts")).find(
+const post = (await getCollection("posts")).find(
   (e) => e.data.link.replace(/\/$/, "") === slug,
-)?.data;
+);
+const meta = post?.data;
+
+if (!meta) {
+  throw new Error(`Post metadata not found for slug: ${slug}`);
+}
 import CodeBlock from "@components/code/CodeBlock.astro";
 ---
 
