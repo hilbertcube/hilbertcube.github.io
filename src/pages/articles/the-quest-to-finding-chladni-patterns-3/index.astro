@@ -36,9 +36,6 @@ import TableOfContents from "@components/TableOfContents.astro";
         height: auto;
         margin: auto;
       }
-      #circular-plate {
-        width: 80%;
-      }
       @media all and (max-width: 580px) {
         #circular-plate {
           width: 100%;
@@ -404,43 +401,50 @@ import TableOfContents from "@components/TableOfContents.astro";
           Here are a few images that matches the description of Chladni's
           prediction from our experiments:
         </p>
-        <figure>
-          <img
-            class="image"
-            id="circular-plate"
-            src="/articles/the-quest-to-finding-chladni-patterns-3/circle.webp"
-            alt="Circular Plate Patterns"
-          />
-          <figcaption class="caption">
-            Matching patterns on the Circular Plate.
-          </figcaption>
-        </figure>
-        <p>
-          By counting the number of rings on each pattern listed above, we can
-          make a table as below:
-        </p>
-        <div class="table-wrapper">
-          <table
-            style="margin-left: auto; margin-right: auto; text-align: center;"
-            id="frequency-table"
-          >
-            <tr
-              style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
-            >
-              <td>$m$</td>
-              <td>$4m^2$</td>
-              <td>$f$ (Hz)</td>
-            </tr>
-            <tr><td>0</td><td>0</td><td>0</td></tr>
-            <tr><td>1</td><td>4</td><td>131</td></tr>
-            <tr><td>2</td><td>16</td><td>429</td></tr>
-            <tr><td>3</td><td>36</td><td>1079</td></tr>
-            <tr><td>4</td><td>64</td><td>1806</td></tr>
-            <tr><td>5</td><td>100</td><td>3320</td></tr>
-            <tr style="border-bottom: 1px solid var(--grid-text-color);"
-              ><td>6</td><td>144</td><td>4661</td></tr
-            >
-          </table>
+        <div class="two-columns-block">
+          <div>
+            <figure style="margin: 0; width: 100%;">
+              <img
+                class="image"
+                id="circular-plate"
+                src="/articles/the-quest-to-finding-chladni-patterns-3/circle.webp"
+                alt="Circular Plate Patterns"
+                style="width: 100%;"
+              />
+              <figcaption class="caption">
+                Matching patterns on the Circular Plate.
+              </figcaption>
+            </figure>
+          </div>
+          <div>
+            <p>
+              By counting the number of rings on each pattern listed above, we
+              can make a table as below:
+            </p>
+            <div class="table-wrapper">
+              <table
+                style="margin-left: auto; margin-right: auto; text-align: center;"
+                id="frequency-table"
+              >
+                <tr
+                  style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
+                >
+                  <td>$m$</td>
+                  <td>$4m^2$</td>
+                  <td>$f$ (Hz)</td>
+                </tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>4</td><td>131</td></tr>
+                <tr><td>2</td><td>16</td><td>429</td></tr>
+                <tr><td>3</td><td>36</td><td>1079</td></tr>
+                <tr><td>4</td><td>64</td><td>1806</td></tr>
+                <tr><td>5</td><td>100</td><td>3320</td></tr>
+                <tr style="border-bottom: 1px solid var(--grid-text-color);"
+                  ><td>6</td><td>144</td><td>4661</td></tr
+                >
+              </table>
+            </div>
+          </div>
         </div>
       </section>
 
