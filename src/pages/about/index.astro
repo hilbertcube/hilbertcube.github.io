@@ -36,10 +36,11 @@ import { tex } from "@components/math/tex.astro";
               href: "#background-and-design",
             },
             { label: "Structure", href: "#structure" },
-            { label: "Third-party tools", href: "#third-party-tools" },
+            // { label: "Third-party tools", href: "#third-party-tools" },
+            { label: "Disclaimer", href: "#disclaimer" },
           ],
         },
-        { label: "Disclaimer", href: "#disclaimer" },
+        
       ]}
     />
     <div class="highlights-and-attribute">
@@ -65,23 +66,15 @@ import { tex } from "@components/math/tex.astro";
       <h2 class="home-h3-headers">About me</h2>
       <h3>A little bit of detail</h3>
       <p>
-        My [English] name is Don. I'm currently an engineering student at
+        My name is Don. I'm currently an engineering student at
         <a class="url" href="https://ucla.edu/">UCLA</a>, pursuing by Bachelor
-        of Science in Computer Science and Engineering. Outside of school, I
-        enjoy writing (on this website), reading, movies, and traveling. I love
-        exploring new places, especially trying out new food. I also enjoy
-        poker, blackjack and board games in general.
-      </p>
-      <p>
-        If you want to know more about my curriculum and professional
+        of Science in Computer Science and Engineering, with a technical breadth in Mathematics. If you want to know more about my curriculum and professional
         experiences, please check out my portfolio and résumé at
         <a href="https://ddonle.com/" class="url">ddonle.com</a> or my <a
           href="https://www.linkedin.com/in/don-d-le/"
           class="url"
           style="text-decoration-line: line-through;">Linkedin</a
-        >. I also left some of my personal notes in the <b>Notes</b> section above,
-        either from my classes or from when I worked as a tutor, feel free to use
-        them.
+        >.
       </p>
 
       <h3>Is that all you have to say about computer science?</h3>
@@ -120,19 +113,17 @@ import { tex } from "@components/math/tex.astro";
         <p>
           I started digging through the internet back in middle school to
           collect and read scientific textbooks. While doing so, I couldn't help
-          but encounter a lot of interesting computer science and math blogs. As
-          a result, I got inspired by some of them and decided to create this
+          but encounter a lot of interesting computer science and math blogs. I got inspired by some of them and eventually decided to create this
           website: a place for me to upload my writings and projects. I
           primarily write about math, programming, and physics, and occasionally
-          about everyday topics like
+          about topics like
           <a class="url" href="/posts/tested-food-places">food reviews</a>.
         </p>
         <p>
           This website was formally built back in summer of 2024, but I've been
           writing a lot of the content on this website on LaTeX documentations
-          way before that. I coded the first prototype of this website from scratch using HTML, CSS,
-          and vanilla Javascript (ancient and primitive, I know, but they
-          worked). Because of this approach, the site was not very well optimized or scalable, and it can sometimes be a bit slow. To fix this issue, I later migrated everything to <a href="https://astro.build/" class="url">Astro</a>, a static site generator that still allows for the same level of customization as plain HTML, CSS, and JavaScript. To view the source code, click on the logo on the
+          way before that. I coded most of the current functionalities of this website from scratch using HTML, CSS,
+          and vanilla Javascript. Because of this approach, the site was not very well optimized or scalable, and it can sometimes be a bit slow. To fix this issue, I later migrated everything to <a href="https://astro.build/" class="url">Astro</a>, a static site generator that still allows for the same level of customization as plain HTML, CSS, and JavaScript. To view the source code, click on the logo on the
           side navigation bar or follow this
           <a href="https://github.com/hilbertcube/neumanncondition" class="url"
             >link</a
@@ -144,11 +135,7 @@ import { tex } from "@components/math/tex.astro";
             generator initially?
           </li>
           <li style="margin: var(--in-page-li-spacing) 0">
-            <strong>Answer</strong>: I wanted to learn the basics of web
-            development, so in order to learn, I must create things. This
-            website the became my first web project. Plus, this site has no
-            complex API calls, so a framework would be overkill, although using
-            a framework would have probably been a bit easier. Ok, But why not use a static site generator like Jekyll? My impression is that static site generators give you less direct control over certain aspects of the site, especially when creating highly customizable components like the one shown below.
+            <strong>Answer</strong>: My impression is that static site generators give you less direct control over certain aspects of the site, especially when creating highly customizable components like the one shown below.
             <Theorem name="F.T. of an Impulse Train">
               The Fourier transform of the impulse train is another impulse
               train:
@@ -164,8 +151,7 @@ import { tex } from "@components/math/tex.astro";
             <br />
             <Solution summary="Proof"
               >The proof is left as an exercise to the reader.</Solution
-            ><br />
-              Much later, after the site was already built, I discovered Astro. It lets me create custom components with the same flexibility as my earlier approach, but in a much cleaner way, since I can define them as proper components instead of stitching together a bunch of divs and classes.
+            >
           </li>
         </ul>
       </section>
@@ -181,7 +167,7 @@ import { tex } from "@components/math/tex.astro";
         </p>
       </section>
 
-      <section id="third-party-tools">
+      <!-- <section id="third-party-tools">
         <h3>Third party tools</h3>
         <div
           style="display: flex; justify-content: center; align-items: center; margin: 30px 0;"
@@ -226,62 +212,44 @@ double numerical_derivative(Func f, double x, double h)
           About the logo: that's the trajectory of a double pendulum in a
           computer simulation.
         </p>
-      </section>
+      </section> -->
 
-      <section id="check-list">
-        <h3>Check list</h3>
+      <section id="disclaimer">
+        <h3>Disclaimer</h3>
         <p>
-          The general layout of this website should be completed, but I will
-          still add some new features every once in a while, if I have time.
-          This website is still relatively new anyway.
+          This website is private, and it was created solely to display my
+          writings, projects, and personal things that are interesting to me;
+          therefore, the quality of this website is subjective only to me. If you
+          have any suggestions on how this website can be improved, or if you find
+          any:
         </p>
-        <p>Some features I might add in the future:</p>
-        <ul style="line-height: 1.6">
-          <li style="margin: var(--in-page-li-spacing) 0">A comment system.</li>
+        <ul id="contact-ul">
+          <li style="margin: var(--in-page-li-spacing) 0">wrong information,</li>
           <li style="margin: var(--in-page-li-spacing) 0">
-            A screen reader for better accessibility.
+            errors in the source code,
           </li>
           <li style="margin: var(--in-page-li-spacing) 0">
-            Export page as pdf.
+            contents that you are not happy about,
+          </li>
+          <li style="margin: var(--in-page-li-spacing) 0">
+            spelling or grammar errors,
           </li>
         </ul>
+        <p>
+          feel free to reach out to me using the email address below. Any feedback
+          or thoughts about this website would be greatly appreciated.
+        </p>
+        <p>
+          I am also open for conversations, so if you just want to have a chat,
+          you can reach out to me via
+          <a href="https://discordapp.com/users/750019342518714398" class="url"
+            >discord</a
+          >
+          or <a href="https://t.me/doodle_04" class="url">telegram</a>.
+        </p>
       </section>
     </section>
 
-    <section id="disclaimer">
-      <h2 class="home-h3-headers">Disclaimer</h2>
-      <p>
-        This website is private, and it was created solely to display my
-        writings, projects, and personal things that are interesting to me;
-        therefore, the quality of this website is subjective only to me. If you
-        have any suggestions on how this website can be improved, or if you find
-        any:
-      </p>
-      <ul id="contact-ul">
-        <li style="margin: var(--in-page-li-spacing) 0">wrong information,</li>
-        <li style="margin: var(--in-page-li-spacing) 0">
-          errors in the source code,
-        </li>
-        <li style="margin: var(--in-page-li-spacing) 0">
-          contents that you are not happy about,
-        </li>
-        <li style="margin: var(--in-page-li-spacing) 0">
-          spelling or grammar errors,
-        </li>
-      </ul>
-      <p>
-        feel free to reach out to me using the email address below. Any feedback
-        or thoughts about this website would be greatly appreciated.
-      </p>
-      <p>
-        I am also open for conversations, so if you just want to have a chat,
-        you can reach out to me via
-        <a href="https://discordapp.com/users/750019342518714398" class="url"
-          >discord</a
-        >
-        or <a href="https://t.me/doodle_04" class="url">telegram</a>.
-      </p>
-    </section>
   </div>
 
   <!-- Page-specific scripts -->
