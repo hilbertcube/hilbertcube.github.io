@@ -33,7 +33,8 @@
   transition: width 0.3s ease, opacity 0.2s ease, color 0.15s ease;
 }
 
-.topbar-icon-btn:hover {
+.topbar-icon-btn:hover,
+.tags-icon-btn.active {
   color: #ffffff;
 }
 

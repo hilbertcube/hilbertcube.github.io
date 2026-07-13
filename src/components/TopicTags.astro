@@ -2,12 +2,14 @@
 /**
  * TopicTags.astro
  * ===============
- * Renders an article/post's topics as clickable chips under the banner.
+ * Renders an article/post's topics as a plain, comma-separated list under the
+ * banner.
  *
- * - Each chip carries `data-pagefind-filter="topic"`, so Pagefind indexes the
- *   topic as a real filter facet (used by the search bar's "Browse by tag" panel).
- * - Clicking a chip opens the top search bar filtered by that tag via the global
- *   `window.__openSearchWithTag` defined in scripts.js.
+ * - Each topic is wrapped in a span carrying `data-pagefind-filter="topic"`, so
+ *   Pagefind still indexes the topic as a real filter facet (used by the top
+ *   bar's tags dropdown chip cloud). The commas sit OUTSIDE those spans so they
+ *   aren't part of the filter value.
+ * - Non-interactive: browsing by tag happens through the tags icon in the top bar.
  */
 interface Props {
   topics?: string[];
@@ -19,53 +21,23 @@ const { topics = [] } = Astro.props;
 {
   topics.length > 0 && (
     <div class="topic topic-tags">
-      <span class="topic-tags-label">Topics:</span>
-      {topics.map((topic) => (
-        <button
-          type="button"
-          class="topic-chip"
-          data-pagefind-filter="topic"
-          onclick={`window.__openSearchWithTag && window.__openSearchWithTag(${JSON.stringify(topic)})`}
-        >
-          {topic}
-        </button>
+      <span class="topic-tags-label">Topics:</span>{" "}
+      {topics.map((topic, i) => (
+        <Fragment>
+          <span data-pagefind-filter="topic">{topic}</span>{i < topics.length - 1 ? ", " : ""}
+        </Fragment>
       ))}
     </div>
   )
 }
 
 <style>
+  /* The shared .topic style is bold; keep only the "Topics:" label bold and
+     render the tag list itself in normal weight. */
   .topic-tags {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 5px;
+    font-weight: normal;
   }
-
   .topic-tags-label {
-    margin-right: 2px;
-  }
-
-  .topic-chip {
-    font-family: inherit;
-    font-size: 0.75em;
-    line-height: 1.3;
-    cursor: pointer;
-    padding: 2px 7px;
-    border-radius: 3px;
-    border: 1px solid var(--box-border);
-    background-color: var(--nav-bar-color);
-    color: inherit;
-    transition:
-      color 0.15s ease,
-      border-color 0.15s ease,
-      background-color 0.15s ease;
-  }
-
-  .topic-chip:hover,
-  .topic-chip:focus-visible {
-    color: var(--highlight-dropdown-color);
-    border-color: var(--highlight-dropdown-color);
-    outline: none;
+    font-weight: bold;
   }
 </style>

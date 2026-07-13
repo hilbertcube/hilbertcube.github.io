@@ -63,6 +63,16 @@ const sunSvg = getIconSvg('fas', 'sun');
       >
         <Icon name="magnifying-glass" />
       </button>
+      <abbr title="browse by tag">
+        <button
+          type="button"
+          id="tagsBtn"
+          class="topbar-icon-btn tags-icon-btn"
+          aria-label="browse-tags"
+        >
+          <Icon name="tags" />
+        </button>
+      </abbr>
       <abbr title="RSS" class="rss">
         <a aria-label="rss" href="/rss/feed.xml" class="topbar-icon-btn">
           <Icon name="rss" />
@@ -219,6 +229,9 @@ const sunSvg = getIconSvg('fas', 'sun');
         </div>
       </abbr>
     </div>
+
+    <div class="autocomplete-dropdown tags-dropdown" id="tags-dropdown"></div>
+    <div class="search-overlay" id="tagsOverlay"></div>
   </div>
 
   <div class="progress-container">
