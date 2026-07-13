@@ -5,6 +5,7 @@
  * Post: Tested Food Places
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
+import TopicTags from "@components/TopicTags.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Icon from "@components/Icon.astro";
@@ -125,7 +126,7 @@ if (!meta) {
 
   <div class="content-grid">
     <header>
-      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <TopicTags topics={meta.topics} />
       <h1 class="post-title">{meta.title}</h1>
       <div class="date">{meta.date}</div>
     </header>
