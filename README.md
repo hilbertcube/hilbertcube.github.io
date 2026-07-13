@@ -10,7 +10,8 @@ Visit website at [neumanncondition.com](https://neumanncondition.com/) or [hilbe
 ## Tools used:
 
 1. [Astro](https://astro.build/): static site generator
-2. [Mathjax](https://www.mathjax.org/): a library to display math equations
-3. [Prism.js](https://prismjs.com/): a library for code syntax-highlighting
-4. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
-5. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
+2. [Mathjax](https://www.mathjax.org/): display LaTeX math equations
+3. [Prism.js](https://prismjs.com/): code syntax-highlighting
+4. [Pagefind](https://pagefind.app/): search system
+5. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
+6. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
