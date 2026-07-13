@@ -146,6 +146,26 @@ input.search-bar:focus {
   background: transparent;
 }
 
+/* Tags dropdown
+   Reuses the search dropdown's visuals but is anchored to the top bar (dropping
+   from the tags icon) rather than to a search input. Fixed so it sits below the
+   navbar regardless of where the markup lives in the flow. */
+.tags-dropdown {
+  position: fixed;
+  top: var(--top-bar-height);
+  right: 12px;
+  left: auto;
+  width: min(440px, calc(100vw - 24px));
+  border-top: 1px solid var(--autocomplete-dropdown-border);
+  border-radius: 4px;
+  /* No text input here, so nothing overlaps the viewport — let the panel run
+     nearly the full height below the navbar instead of the search bar's 70vh. */
+  max-height: calc(100vh - var(--top-bar-height) - 24px);
+}
+
+/* (The open-state highlight for #tagsBtn lives with .topbar-icon-btn:hover in
+   _buttons.css, since it's the same "icon lit up" white.) */
+
 /* Loading state (shown while Pagefind's index loads on the first query) */
 .search-loading {
   padding: 16px 14px;
@@ -310,22 +330,31 @@ input.search-bar:focus {
   border: 1px solid var(--search-item-border-color);
   background-color: var(--autocomplete-item-container-hover);
   color: var(--autocomplete-dropdown-text-color);
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease,
-    background-color 0.15s ease;
+  /* No transition: the color/background change on dark-mode toggle must be
+     instant rather than fading over 0.15s. */
+  transition: none;
 }
 .search-tag-chip:hover {
   border-color: var(--autocomplete-dropdown-left-border);
 }
 .search-tag-chip.active {
   color: #fff;
-  background-color: var(--autocomplete-dropdown-left-border);
-  border-color: var(--autocomplete-dropdown-left-border);
+  background-color: var(--search-chip-active-bg);
+  border-color: var(--search-chip-active-bg);
+}
+/* The shared --autocomplete-dropdown-text-color is dimmed (#aaa) for excerpts;
+   on the small chips over the #3b3b3b fill that's too low-contrast to read, so
+   brighten the chip label in dark mode. Exclude .active — it keeps its white
+   text on the accent fill. */
+.dark-mode .search-tag-chip:not(.active) {
+  color: #e8e8e8;
 }
 .search-tag-count {
   opacity: 0.7;
   font-size: 0.9em;
+}
+.dark-mode .search-tag-count {
+  opacity: 0.85;
 }
 
 /* Pagefind on-page highlight (marks the matched words on the destination page) */

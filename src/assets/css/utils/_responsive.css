@@ -304,10 +304,21 @@
     max-height: 50vh;
   }
 
-  /* Bound the tag cloud so it can't fill the short mobile dropdown and push
-     results below the fold; it scrolls on its own instead. */
+  /* Tags dropdown goes full-width on mobile, and — with no keyboard covering
+     the screen — runs nearly the full height below the navbar (overriding the
+     search dropdown's 50vh cap above via source order at equal specificity). */
+  .tags-dropdown {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-height: calc(100vh - var(--top-bar-height) - 16px);
+  }
+
+  /* Bound the tag cloud so it can't fill the mobile dropdown and push results
+     below the fold; it scrolls on its own instead. Roomier now that the tags
+     dropdown runs nearly full-height. */
   .search-tag-chips {
-    max-height: 26vh;
+    max-height: 40vh;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;

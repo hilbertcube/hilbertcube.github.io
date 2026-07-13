@@ -48,6 +48,8 @@
   --autocomplete-item-container-hover: #f0f0f0;
   --autocomplete-dropdown-left-border: #0006b1;
   --search-item-border-color: #b0b0b0;
+  /* Fill for a selected tag chip; tracks the accent in light mode. */
+  --search-chip-active-bg: var(--autocomplete-dropdown-left-border);
 
   /* Search input: sits on the always-dark top nav, so it stays dark
      in both light and dark mode to blend with the bar. */
@@ -126,6 +128,9 @@ html.dark-mode {
   --autocomplete-item-container-hover: #3b3b3b;
   --autocomplete-dropdown-left-border: rgb(0, 150, 255);
   --search-item-border-color: #8a8a8a;
+  /* Deeper than the accent (rgb(0,150,255)) so white chip text stays readable
+     (~5.5:1 vs ~3:1) on the filled selected pill. */
+  --search-chip-active-bg: #0066cc;
   
   /* Code */
   --code-box-color: #2a2a2a;

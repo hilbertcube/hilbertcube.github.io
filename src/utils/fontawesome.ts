@@ -15,6 +15,7 @@ import {
   faRss,
   faShareNodes,
   faSun,
+  faTags,
   faUpRightFromSquare,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -40,6 +41,7 @@ library.add(
   faRss,
   faShareNodes,
   faSun,
+  faTags,
   faUpRightFromSquare,
   faXmark,
   // Brands
