@@ -303,7 +303,30 @@
   .autocomplete-dropdown {
     max-height: 50vh;
   }
-  
+
+  /* Bound the tag cloud so it can't fill the short mobile dropdown and push
+     results below the fold; it scrolls on its own instead. */
+  .search-tag-chips {
+    max-height: 26vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--search-item-border-color) transparent;
+    /* room for the scrollbar so chips aren't clipped under it */
+    padding-right: 4px;
+  }
+  .search-tag-chips::-webkit-scrollbar {
+    width: 6px;
+  }
+  .search-tag-chips::-webkit-scrollbar-thumb {
+    background-color: var(--search-item-border-color);
+    border-radius: 2px;
+  }
+  .search-tag-chips::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
   /* Tables */
   table {
     width: 100% !important;

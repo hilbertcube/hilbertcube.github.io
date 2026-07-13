@@ -260,6 +260,74 @@ input.search-bar:focus {
   overflow: hidden;
 }
 
+/* "Browse by tag" panel: chip cloud shown on focus and while tag-filtering */
+.search-tag-panel {
+  padding: 10px 14px 12px;
+  border-bottom: 1px solid var(--search-item-border-color);
+}
+
+.search-tag-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--article-date-color);
+}
+
+.search-tag-clear {
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--highlight-dropdown-color);
+}
+.search-tag-clear:hover {
+  text-decoration: underline;
+}
+
+.search-tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.search-tag-chip {
+  font-family: inherit;
+  font-size: 0.72em;
+  cursor: pointer;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--search-item-border-color);
+  background-color: var(--autocomplete-item-container-hover);
+  color: var(--autocomplete-dropdown-text-color);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+.search-tag-chip:hover {
+  border-color: var(--autocomplete-dropdown-left-border);
+}
+.search-tag-chip.active {
+  color: #fff;
+  background-color: var(--autocomplete-dropdown-left-border);
+  border-color: var(--autocomplete-dropdown-left-border);
+}
+.search-tag-count {
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
 /* Pagefind on-page highlight (marks the matched words on the destination page) */
 mark.pagefind-highlight {
   background-color: rgba(255, 213, 0, 0.4);
