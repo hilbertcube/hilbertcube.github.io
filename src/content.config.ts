@@ -3,8 +3,8 @@
  * =================
  * Typed, validated data collections layered over the existing
  * `public/assets/json/articles.json`. The JSON file stays where it is (it is
- * still fetched at runtime by tags.js / the search fallback, and edited by the
- * new-article.sh / generate-rss.sh scripts). These collections give the
+ * still fetched at runtime by the search fallback / tag-browse panel, and edited
+ * by the new-article.sh / generate-rss.sh scripts). These collections give the
  * build-time consumers (ArticleCards, PostList, HighlightsAndAttribute, and each
  * article/post page) type-safe access via getCollection(), and a Zod schema that
  * fails the build on a missing/malformed entry instead of silently dropping it.

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import TopicTags from "@components/TopicTags.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import { getCollection } from "astro:content";
 
@@ -116,7 +117,7 @@ import ContinueButton from "@components/ContinueButton.astro"
     </div>
 
     <header>
-      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
       <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
       <figure style="margin: 0;">

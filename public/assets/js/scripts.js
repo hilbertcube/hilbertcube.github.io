@@ -686,12 +686,43 @@ function SearchBar() {
           ...(data.others || []),
           ...(data.posts || []),
         ];
-        return { kind: "fallback", suggestions };
+        // Tag browsing mirrors the old /tags cloud: articles + posts only.
+        const taggable = [...(data.articles || []), ...(data.posts || [])];
+        const facets = {};
+        taggable.forEach((item) =>
+          (item.topics || []).forEach((t) => {
+            facets[t] = (facets[t] || 0) + 1;
+          }),
+        );
+        return { kind: "fallback", suggestions, taggable, facets };
       } catch (err2) {
         console.error("Error loading search fallback:", err2);
         return { kind: "none" };
       }
     }
+  }
+
+  // --- Tag / topic facets (powers the "Browse by tag" panel) ---
+  // Tags currently selected in the browse panel; results must match ALL of them.
+  let activeTags = [];
+  // Monotonic token: each update() bumps it so a slower, superseded run (e.g. an
+  // in-flight tag search that resolves after the user has already unselected the
+  // tag) bails out instead of clobbering the newer render.
+  let updateSeq = 0;
+  // Resolves { tag: count } once per page from whichever engine is live.
+  let facetsPromise = null;
+  function getFacets() {
+    return (facetsPromise ||= loadFacets());
+  }
+  async function loadFacets() {
+    const engine = await getEngine();
+    if (engine.kind === "pagefind") {
+      // Pagefind exposes filter values + counts without needing a query.
+      const filters = await engine.pagefind.filters();
+      return filters.topic || {};
+    }
+    if (engine.kind === "fallback") return engine.facets || {};
+    return {};
   }
 
   // --- Custom excerpt building (Pagefind gives us every match position) ---
@@ -805,6 +836,31 @@ function SearchBar() {
     return { title, url: d.url, type: typeFromUrl(d.url), hits };
   }
 
+  // Build the renderer item shape for one articles.json entry (dev/offline
+  // fallback path). Shared by full-text search() and tag-filtered searchWithTags().
+  function buildFallbackItem(item, query) {
+    return {
+      title: item.title,
+      url: item.link,
+      type: item.hasOwnProperty("id")
+        ? "Article"
+        : item.hasOwnProperty("pid")
+          ? "Post"
+          : "Resource",
+      topicsHtml:
+        item.topics && item.topics.length
+          ? highlight(item.topics.join(", "), query)
+          : null,
+      hits: [
+        {
+          heading: null,
+          url: item.link,
+          excerptHtml: item.description ? highlight(item.description, query) : "",
+        },
+      ],
+    };
+  }
+
   // Normalised item shape used by the renderer:
   //   { title, url, type, hits: [{ heading, url, excerptHtml }], topicsHtml? }
   async function search(query) {
@@ -827,27 +883,51 @@ function SearchBar() {
       const filtered = engine.suggestions.filter((item) =>
         item.title.toLowerCase().includes(q),
       );
-      const items = filtered.map((item) => ({
-        title: item.title,
-        url: item.link,
-        type: item.hasOwnProperty("id")
-          ? "Article"
-          : item.hasOwnProperty("pid")
-            ? "Post"
-            : "Resource",
-        topicsHtml:
-          item.topics && item.topics.length
-            ? highlight(item.topics.join(", "), query)
-            : null,
-        hits: [
-          {
-            heading: null,
-            url: item.link,
-            excerptHtml: item.description ? highlight(item.description, query) : "",
-          },
-        ],
-      }));
-      return { total: filtered.length, items };
+      return {
+        total: filtered.length,
+        items: filtered.map((item) => buildFallbackItem(item, query)),
+      };
+    }
+
+    return { total: 0, items: [] };
+  }
+
+  // Search constrained to the active tags (optionally also by a typed query).
+  // AND semantics: a page must carry every active tag — matching the old /tags
+  // page. For Pagefind we run one filtered search per tag and intersect by id.
+  async function searchWithTags(query) {
+    const engine = await getEngine();
+
+    if (engine.kind === "pagefind") {
+      if (!activeTags.length) return search(query);
+      const perTag = await Promise.all(
+        activeTags.map((t) =>
+          engine.pagefind.search(query || null, { filters: { topic: t } }),
+        ),
+      );
+      let common = perTag[0].results;
+      for (let i = 1; i < perTag.length; i++) {
+        const ids = new Set(perTag[i].results.map((r) => r.id));
+        common = common.filter((r) => ids.has(r.id));
+      }
+      const datas = await Promise.all(common.map((r) => r.data()));
+      return {
+        total: common.length,
+        items: datas.map((d) => buildPageItem(d, query || "")),
+      };
+    }
+
+    if (engine.kind === "fallback") {
+      const q = (query || "").toLowerCase();
+      const filtered = (engine.taggable || []).filter(
+        (item) =>
+          activeTags.every((t) => (item.topics || []).includes(t)) &&
+          (!q || item.title.toLowerCase().includes(q)),
+      );
+      return {
+        total: filtered.length,
+        items: filtered.map((item) => buildFallbackItem(item, query || "")),
+      };
     }
 
     return { total: 0, items: [] };
@@ -862,12 +942,74 @@ function SearchBar() {
     dropdown.style.display = "block";
   }
 
-  function renderResults(query, total, items, searchBar) {
+  // "Browse by tag" panel: every tag with its count, active ones highlighted.
+  // Clicking a chip toggles it and re-runs the (tag-filtered) search.
+  function renderTagPanel(facets, searchBar) {
+    const panel = document.createElement("div");
+    panel.className = "search-tag-panel";
+
+    const head = document.createElement("div");
+    head.className = "search-tag-head";
+    const label = document.createElement("span");
+    label.textContent = activeTags.length ? "Filtering by tag" : "Browse by tag";
+    head.appendChild(label);
+
+    if (activeTags.length) {
+      const clear = document.createElement("button");
+      clear.type = "button";
+      clear.className = "search-tag-clear";
+      clear.textContent = "Clear";
+      // Keep focus on the input so the panel doesn't collapse on click.
+      clear.addEventListener("mousedown", (e) => e.preventDefault());
+      clear.addEventListener("click", () => {
+        activeTags = [];
+        update(searchBar);
+      });
+      head.appendChild(clear);
+    }
+    panel.appendChild(head);
+
+    const chips = document.createElement("div");
+    chips.className = "search-tag-chips";
+    Object.keys(facets)
+      .sort((a, b) => a.localeCompare(b))
+      .forEach((tag) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "search-tag-chip";
+        if (activeTags.includes(tag)) chip.classList.add("active");
+        chip.innerHTML = `${escapeHtml(tag)} <span class="search-tag-count">[${facets[tag]}]</span>`;
+        chip.addEventListener("mousedown", (e) => e.preventDefault());
+        chip.addEventListener("click", () => {
+          const i = activeTags.indexOf(tag);
+          if (i === -1) activeTags.push(tag);
+          else activeTags.splice(i, 1);
+          update(searchBar);
+        });
+        chips.appendChild(chip);
+      });
+    panel.appendChild(chips);
+    dropdown.appendChild(panel);
+  }
+
+  function renderResults(query, total, items, searchBar, facets) {
     dropdown.innerHTML = "";
     currentFocus = -1;
 
+    // While filtering by tag, always show the chip panel (even with no results)
+    // so the user can adjust the selection.
+    if (activeTags.length) renderTagPanel(facets || {}, searchBar);
+
     if (!items.length) {
-      dropdown.style.display = "none";
+      if (!activeTags.length) {
+        dropdown.style.display = "none";
+        return;
+      }
+      const none = document.createElement("div");
+      none.className = "search-count";
+      none.textContent = "No results for the selected tags";
+      dropdown.appendChild(none);
+      dropdown.style.display = "block";
       return;
     }
 
@@ -882,6 +1024,7 @@ function SearchBar() {
         window.open(url, "_blank");
       }
       searchBar.value = "";
+      activeTags = [];
       dropdown.innerHTML = "";
       dropdown.style.display = "none";
     };
@@ -946,31 +1089,68 @@ function SearchBar() {
     dropdown.style.display = "block";
   }
 
+  // Single entry point for (re)rendering the dropdown. Routes between three
+  // modes: browse-by-tag (empty query, no tags), tag-filtered, and full-text.
+  async function update(searchBar) {
+    const mySeq = ++updateSeq;
+    const query = searchBar.value.trim();
+    currentFocus = -1;
+
+    // Browse mode: nothing typed and no tags picked → show the tag panel.
+    if (!query && !activeTags.length) {
+      const facets = await getFacets();
+      if (mySeq !== updateSeq) return; // superseded while facets loaded
+      dropdown.innerHTML = "";
+      renderTagPanel(facets, searchBar);
+      dropdown.style.display = Object.keys(facets).length ? "block" : "none";
+      return;
+    }
+
+    // Need the facet counts on hand so renderResults can draw the chip panel.
+    const facets = activeTags.length ? await getFacets() : null;
+    if (mySeq !== updateSeq) return;
+
+    // Show "Loading…" only if the search is genuinely slow (mainly the first
+    // query, while Pagefind's index loads) — avoids flicker on fast ones.
+    const loadingTimer = setTimeout(() => {
+      if (mySeq === updateSeq && searchBar.value.trim() === query) showLoading();
+    }, 250);
+
+    const result = activeTags.length
+      ? await searchWithTags(query)
+      : await search(query);
+    clearTimeout(loadingTimer);
+    // Superseded by a newer interaction (e.g. the tag was unselected) => bail so
+    // this stale result can't overwrite the current render.
+    if (mySeq !== updateSeq) return;
+    // Null => superseded by a newer keystroke (Pagefind debounce).
+    if (!result) return;
+    // Guard against out-of-order async results: only render for the live query.
+    if (searchBar.value.trim() !== query) return;
+
+    renderResults(query, result.total, result.items, searchBar, facets);
+  }
+
+  // Let per-article topic chips drive the search bar (via window.__openSearchWithTag).
+  window.__searchActivateTag = function (tag) {
+    const bar =
+      window.innerWidth <= 640
+        ? document.getElementById("searchBarMobile")
+        : document.getElementById("searchBar");
+    if (!bar) return;
+    bar.focus();
+    if (tag && !activeTags.includes(tag)) activeTags.push(tag);
+    update(bar);
+  };
+
   searchBars.forEach((searchBar) => {
-    searchBar.addEventListener("input", async function () {
-      const query = searchBar.value.trim();
-      currentFocus = -1;
+    searchBar.addEventListener("input", function () {
+      update(searchBar);
+    });
 
-      if (!query) {
-        dropdown.innerHTML = "";
-        dropdown.style.display = "none";
-        return;
-      }
-
-      // Show "Loading…" only if the search is genuinely slow (mainly the first
-      // query, while Pagefind's index loads) — avoids flicker on fast ones.
-      const loadingTimer = setTimeout(() => {
-        if (searchBar.value.trim() === query) showLoading();
-      }, 250);
-
-      const result = await search(query);
-      clearTimeout(loadingTimer);
-      // Null => superseded by a newer keystroke (Pagefind debounce).
-      if (!result) return;
-      // Guard against out-of-order async results: only render for the live query.
-      if (searchBar.value.trim() !== query) return;
-
-      renderResults(query, result.total, result.items, searchBar);
+    // Focusing an empty bar opens the browse-by-tag panel.
+    searchBar.addEventListener("focus", function () {
+      if (!searchBar.value.trim()) update(searchBar);
     });
 
     searchBar.addEventListener("keydown", function (event) {
@@ -997,6 +1177,7 @@ function SearchBar() {
       } else if (event.key === "Escape") {
         event.preventDefault();
         searchBar.value = "";
+        activeTags = [];
         dropdown.innerHTML = "";
         dropdown.style.display = "none";
         searchBar.blur();
@@ -1021,6 +1202,10 @@ function SearchBar() {
   // Hide dropdown when clicking outside
   document.addEventListener("click", function (event) {
     const target = event.target;
+    // Toggling a tag re-renders the dropdown, which detaches the clicked chip
+    // before this bubbles up. A detached target isn't a real "outside" click, so
+    // `dropdown.contains(target)` would wrongly report outside — skip those.
+    if (!target.isConnected) return;
     if (
       ![...searchBars].some((bar) => bar.contains(target)) &&
       !dropdown.contains(target)
@@ -1028,6 +1213,7 @@ function SearchBar() {
       searchBars.forEach((searchBar) => {
         searchBar.value = "";
       });
+      activeTags = [];
       dropdown.innerHTML = "";
       dropdown.style.display = "none";
     }
@@ -1079,6 +1265,9 @@ function extendSearchBar() {
       if (toggleButton) toggleButton.classList.add("hidden");
     }
   }
+
+  // Let topic chips / the Archive nav open the search UI from anywhere.
+  window.__expandSearchBar = expandSearchBar;
 
   // Tapping the mobile search icon reveals the search bar
   const searchIconBtn = document.getElementById("searchIconBtn");
@@ -1147,6 +1336,17 @@ function extendSearchBar() {
     }
   });
 }
+
+// Open the top search bar and (optionally) pre-select a tag. Called by the
+// per-article topic chips (TopicTags.astro) and the "Archive" nav link.
+// With no tag it just opens the browse-by-tag panel.
+window.__openSearchWithTag = function (tag) {
+  if (typeof window.__expandSearchBar === "function") window.__expandSearchBar();
+  // __searchActivateTag resolves + focuses the right bar, then renders.
+  if (typeof window.__searchActivateTag === "function") {
+    window.__searchActivateTag(tag);
+  }
+};
 
 function Switcher(target, id, selectors, defaultIndex) {
   const selectElement = document.getElementById(id);

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import TopicTags from "@components/TopicTags.astro";
 import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Problem from "@components/math/Problem.astro";
@@ -118,7 +119,7 @@ if (!meta) {
     </div>
 
     <header>
-      <div class="topic">Topics: {meta.topics.join(", ")}</div>
+      <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
       <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
       <figure style="margin: 0;">
