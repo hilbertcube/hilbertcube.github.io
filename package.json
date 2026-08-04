@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.3.3",
+    "katex": "^0.18.1",
     "pagefind": "^1.4.0"
   }
 }

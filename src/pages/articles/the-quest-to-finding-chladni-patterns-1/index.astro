@@ -18,7 +18,9 @@ const meta = article?.data;
 if (!meta) {
   throw new Error(`Article metadata not found for slug: ${slug}`);
 }
-import Equation from "@components/math/Equation.astro";
+import E from "@components/math/E.astro";
+import M from "@components/math/M.astro";
+import { tex } from "@components/math/tex.astro";
 import ContinueButton from "@components/ContinueButton.astro"
 import TwoColumns from "@components/TwoColumns.astro";
 import TableOfContents from "@components/TableOfContents.astro";
@@ -113,18 +115,6 @@ import CodeBox from "@components/code/CodeBox.astro";
     </div>
   </Fragment>
 
-  <div class="mathjax-definition">
-    \[ \newcommand&#123;\R&#125;&#123;\mathbb&#123;R&#125;&#125;
-    \newcommand\pd[2]&#123;\displaystyle\frac&#123;\partial
-    #1&#125;&#123;\partial #2&#125;&#125;
-    \newcommand\fourthpd[2]&#123;\displaystyle\frac&#123;\partial^&#123;4&#125;
-    #1&#125;&#123;\partial #2^&#123;4&#125;&#125;&#125;
-    \newcommand\secondpd[2]&#123;\displaystyle\frac&#123;\partial^&#123;2&#125;
-    #1&#125;&#123;\partial #2^&#123;2&#125;&#125;&#125;
-    \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
-    \newcommand&#123;\rbrac&#125;&#123;\right)&#125; \]
-  </div>
-
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
@@ -186,15 +176,14 @@ import CodeBox from "@components/code/CodeBox.astro";
               constant wave speed across a plate using the two-dimensional wave
               equation model
             </p>
-            <Equation>
-              \begin&#123;equation&#125; u_&#123;tt&#125; = c^2\nabla^2u +
-              Q(\mathbf&#123;x&#125;, t),\quad\quad
-              \mathbf&#123;x&#125;\in\Omega, \end&#123;equation&#125;
-            </Equation>
+            <E>{tex
+            `\begin{equation} 
+            u_{tt} = c^2\nabla^2u + Q(\mathbf{x}, t),\quad\quad \mathbf{x}\in\Omega, 
+            \end{equation}`}</E>
             <p>
-              where $c$ here denotes the wave speed of the plate,
-              $u_&#123;tt&#125;$ is the plate's displacement, and $Q$ is the
-              forcing function (the wave generator).
+              where <M>c</M> here denotes the wave speed of the plate,
+              <M>{tex`u_{tt}`}</M> is the plate's displacement, and <M>Q</M> is
+              the forcing function (the wave generator).
             </p>
           </div>
           <div>
@@ -218,22 +207,13 @@ import CodeBox from "@components/code/CodeBox.astro";
           By assuming that the plate is supported by tension, one can derive the
           two-dimensional wave equation in the Cartersian coordinate to be
         </p>
-        <Equation>
-          \begin&#123;equation&#125; \secondpd&#123;u&#125;&#123;t&#125; =
-          c^2\left(\secondpd&#123;u&#125;&#123;x&#125; +
-          \secondpd&#123;u&#125;&#123;y&#125;\right) +Q(x, y, t),\quad\quad
-          \mathbf&#123;x&#125;\in\Omega \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} \secondpd{u}{t} = c^2\left(\secondpd{u}{x} + \secondpd{u}{y}\right) +Q(x, y, t),\quad\quad \mathbf{x}\in\Omega \end{equation}`}</E>
         <p>
           The circular plate is similar, with a slightly different Laplacian
           since we need to convert the wave equation to the polar coordinate
           system:
         </p>
-        <Equation>
-          \begin&#123;equation&#125; \nabla^2 :=
-          \secondpd&#123;&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r&#125;\pd&#123;&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r^2&#125;\secondpd&#123;&#125;&#123;\theta&#125;.
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} \nabla^2 := \secondpd{}{r}+\frac{1}{r}\pd{}{r}+\frac{1}{r^2}\secondpd{}{\theta}. \end{equation}`}</E>
         <p>
           In the next <a href="#The-Wave-Equation-Model" class="in-page-link"
             >grand section</a
@@ -289,8 +269,7 @@ import CodeBox from "@components/code/CodeBox.astro";
                 proportional to four times the number of rings on the plate
                 squared, that is, $f \sim 4n^2$, where $n$ is the number of
                 rings (see in Fig. 4). The full formula that he derived is
-                <Equation>\begin&#123;equation&#125; f \sim (m+2n)^2,
-                \end&#123;equation&#125;</Equation> where $m$ here is the number of
+                <E>{tex`\begin{equation} f \sim (m+2n)^2, \end{equation}`}</E> where $m$ here is the number of
                 diameter lines. This is called Chladni's law. We don't see any
                 $m$'s in the figure below, there is a reason for this, and I'll
                 get to that part later.
@@ -377,22 +356,14 @@ import CodeBox from "@components/code/CodeBox.astro";
           The free boundary condition means that there are no forces acting on
           the edges of the plate; that is, expressed mathematically,
         </p>
-        <Equation>
-          \begin&#123;equation&#125; \pd&#123;u&#125;&#123;x&#125;(\pm a, y, t)
-          = \pd&#123;u&#125;&#123;y&#125;(x, \pm a, t) = 0
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} \pd{u}{x}(\pm a, y, t) = \pd{u}{y}(x, \pm a, t) = 0 \end{equation}`}</E>
         <p>
           which gave us four boundary conditions. The uniqueness of the solution
           requires our equation to have two more initial conditions. Similar to
           ordinary differential equations, these conditions are the initial
           displacement and velocity of the plate at $t=0$. That is,
         </p>
-        <Equation>
-          \begin&#123;equation&#125; u(x,y,0) = f(x,y)
-          \quad\text&#123;and&#125;\quad u_t(x,y,0) = g(x,y)
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} u(x,y,0) = f(x,y) \quad\text{and}\quad u_t(x,y,0) = g(x,y) \end{equation}`}</E>
       </section>
 
       <section id="wave-square-plate">
@@ -400,20 +371,11 @@ import CodeBox from "@components/code/CodeBox.astro";
         <p>
           Consider the wave equation on a rectangle $\Omega =
           \&#123;(x,y)\in\R^2\;|\; -a\leq x,y\leq a\&#125;$,
-          <Equation>
-            \begin&#123;equation&#125; u_&#123;tt&#125; = c^2\nabla^2u + Q,\quad
-            \mathbf&#123;x&#125;\in\Omega \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2u + Q,\quad \mathbf{x}\in\Omega \end{equation}`}</E>
           with boundary conditions
-          <Equation>
-            \begin&#123;equation&#125; u_x(\pm a, y, t) = u_y(x, \pm a, t) = 0
-            \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} u_x(\pm a, y, t) = u_y(x, \pm a, t) = 0 \end{equation}`}</E>
           and initial conditions
-          <Equation>
-            \begin&#123;equation&#125; u(x,y,0) = f(x,y), \quad\quad u_t(x,y,0)
-            = g(x,y). \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} u(x,y,0) = f(x,y), \quad\quad u_t(x,y,0) = g(x,y). \end{equation}`}</E>
         </p>
 
         <p>
@@ -425,16 +387,9 @@ import CodeBox from "@components/code/CodeBox.astro";
           separation of variables. If we assume that $u$ is separable and let
           $u(x,y,t) = X(x)Y(y)T(t)$, the equation becomes
         </p>
-        <Equation>
-          \begin&#123;equation&#125; XYT'' = c^2(X''YT + XY''T)
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} XYT'' = c^2(X''YT + XY''T) \end{equation}`}</E>
         <p>Divide both sides by $XYT$, we obtain</p>
-        <Equation>
-          \begin&#123;equation&#125;
-          \frac&#123;T''&#125;&#123;c^2T&#125;=\frac&#123;X''&#125;&#123;X&#125;+\frac&#123;Y''&#125;&#123;Y&#125;=-\lambda
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} \frac{T''}{c^2T}=\frac{X''}{X}+\frac{Y''}{Y}=-\lambda \end{equation}`}</E>
         <p>
           Notice that
           $\frac&#123;X''&#125;&#123;X&#125;+\frac&#123;Y''&#125;&#123;Y&#125;=-\lambda$
@@ -443,61 +398,29 @@ import CodeBox from "@components/code/CodeBox.astro";
           The two constants above yield two eigenvalue problems with Neumann
           boundary conditions:
         </p>
-        <Equation>
-          \begin&#123;align&#125; X''(x)+\mu X(x)&amp;=0, \quad X'(-a)=X'(a)=0
-          \label&#123;eq:X1&#125;\\ Y''(y)+\nu Y(y)&amp;=0, \quad Y'(-a)=Y'(a)=0
-          \label&#123;eq:Y1&#125;, \end&#123;align&#125;
-        </Equation>
+        <E>{tex`\begin{align} X''(x)+\mu X(x)&=0, \quad X'(-a)=X'(a)=0 \\ Y''(y)+\nu Y(y)&=0, \quad Y'(-a)=Y'(a)=0, \end{align}`}</E>
         <p>and the time equation yields the third eigenvalue problem:</p>
-        <Equation>
-          \begin&#123;equation&#125; T''(t) + c\lambda^2T(t) = 0
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} T''(t) + c\lambda^2T(t) = 0 \end{equation}`}</E>
         <p>
           The detail solution of these eigenvalue problems is beyond the scope
           of this article. For the detail solution, again, please refer to my <a
             class="url"
             href="https://www.overleaf.com/read/tgchjdcmwwwp#98e984"
             >project report</a
-          >. The general idea is we need to solve the eigenvalue problems
-          (\ref&#123;eq:X1&#125;) and (\ref&#123;eq:Y1&#125;) first, and from
-          there we solve the third eigenvalue problem, since $\lambda = \mu +
-          \nu$. After carrying out all the hard work, the eigenvalues for
-          equations (\ref&#123;eq:X1&#125;) and (\ref&#123;eq:Y1&#125;) are
+          >. The general idea is we need to solve the $X$ and $Y$ eigenvalue
+          problems above first, and from there we solve the third eigenvalue
+          problem, since $\lambda = \mu + \nu$. After carrying out all the hard
+          work, the eigenvalues for the $X$ and $Y$ equations above are
         </p>
-        <Equation>
-          \begin&#123;equation&#125; \mu =
-          \left(\frac&#123;n\pi&#125;&#123;2a&#125;\right)^2 =
-          \left(\frac&#123;n\pi&#125;&#123;L&#125;\right)^2, \quad \nu =
-          \left(\frac&#123;m\pi&#125;&#123;2a&#125;\right)^2 =
-          \left(\frac&#123;m\pi&#125;&#123;L&#125;\right)^2
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} \mu = \left(\frac{n\pi}{2a}\right)^2 = \left(\frac{n\pi}{L}\right)^2, \quad \nu = \left(\frac{m\pi}{2a}\right)^2 = \left(\frac{m\pi}{L}\right)^2 \end{equation}`}</E>
         <p>
           and the solution to the homogeneous equation is the double Fourier
           series
         </p>
-        <Equation>
-          \begin&#123;equation&#125; u(x,y,t) =
-          \frac&#123;1&#125;&#123;4&#125;A_&#123;00&#125; +
-          \sum_&#123;n=1&#125;^&#123;\infty&#125;\sum_&#123;m=1&#125;^&#123;\infty&#125;X_n(x)Y_n(y)T_&#123;nm&#125;(t)
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} u(x,y,t) = \frac{1}{4}A_{00} + \sum_{n=1}^{\infty}\sum_{m=1}^{\infty}X_n(x)Y_n(y)T_{nm}(t) \end{equation}`}</E>
         <p>
           where,
-          <Equation>
-            \begin&#123;align&#125; X_n(x) &amp;= a_n\cos\left(\frac&#123;n\pi
-            x&#125;&#123;L&#125;\right) +
-            \overline&#123;a_n&#125;\sin\left(\frac&#123;n\pi
-            x&#125;&#123;L&#125;\right)\\[0.5em] Y_m(y) &amp;=
-            a_m\cos\left(\frac&#123;m\pi y&#125;&#123;L&#125;\right) +
-            \overline&#123;a_m&#125;\sin\left(\frac&#123;m\pi
-            y&#125;&#123;L&#125;\right)\\[0.5em] T_&#123;nm&#125;(t) &amp;=
-            A_&#123;nm&#125;\cos(\omega t) + B_&#123;nm&#125;\sin(\omega
-            t)\\[0.5em] \omega &amp;=
-            \frac&#123;\pi&#125;&#123;L&#125;c\sqrt&#123;n^2+m^2&#125;.
-            \end&#123;align&#125;
-          </Equation>
+          <E>{tex`\begin{align} X_n(x) &= a_n\cos\left(\frac{n\pi x}{L}\right) + \overline{a_n}\sin\left(\frac{n\pi x}{L}\right)\\[0.5em] Y_m(y) &= a_m\cos\left(\frac{m\pi y}{L}\right) + \overline{a_m}\sin\left(\frac{m\pi y}{L}\right)\\[0.5em] T_{nm}(t) &= A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t)\\[0.5em] \omega &= \frac{\pi}{L}c\sqrt{n^2+m^2}. \end{align}`}</E>
         </p>
         <p>
           The coefficients $a_n$ and $\overline&#123;a_n&#125;$ are defined as
@@ -505,37 +428,18 @@ import CodeBox from "@components/code/CodeBox.astro";
           (-1)^n&#125;&#123;2&#125;,\overline&#123;a_n&#125; = \frac&#123;1 -
           (-1)^n&#125;&#123;2&#125;$, and,
         </p>
-        <Equation>
-          \begin&#123;alignat&#125;&#123;2&#125; A_&#123;nm&#125; &amp;=
-          \frac&#123;4&#125;&#123;L^2&#125;\int_&#123;-L/2&#125;^&#123;L/2&#125;\int_&#123;-L/2&#125;^&#123;L/2&#125;
-          f(x, y)X_n(x)Y_m(y)\;dxdy,\quad &amp;&amp; n, m= 0, 1, 2,\ldots\\
-          B_&#123;nm&#125; &amp;= \frac&#123;4&#125;&#123;L^2&#125;
-          \int_&#123;-L/2&#125;^&#123;L/2&#125;\int_&#123;-L/2&#125;^&#123;L/2&#125;
-          \frac&#123;g(x, y)&#125;&#123;\omega&#125;X_n(x)Y_m(y)\;dxdy,\quad
-          &amp;&amp; n, m= 1, 2, 3\ldots \end&#123;alignat&#125;
-        </Equation>
+        <E>{tex`\begin{alignat}{2} A_{nm} &= \frac{4}{L^2}\int_{-L/2}^{L/2}\int_{-L/2}^{L/2} f(x, y)X_n(x)Y_m(y)\;dxdy,\quad && n, m= 0, 1, 2,\ldots\\ B_{nm} &= \frac{4}{L^2} \int_{-L/2}^{L/2}\int_{-L/2}^{L/2} \frac{g(x, y)}{\omega}X_n(x)Y_m(y)\;dxdy,\quad && n, m= 1, 2, 3\ldots \end{alignat}`}</E>
         <p>
           The forcing term $Q$ doesn't change the overall shape of the patterns,
           but it does change the displacement of the plate overtime, hence the
           time function $T_&#123;nm&#125;(t)$ becomes
         </p>
-        <Equation>
-          \begin&#123;equation&#125; W_&#123;nm&#125;(t) =
-          A_&#123;nm&#125;\cos(\omega t) + B_&#123;nm&#125;\sin(\omega t) +
-          \int_&#123;0&#125;^&#123;t&#125;q_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega
-          t-\omega\tau)&#125;&#123;\omega&#125;d\tau \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} W_{nm}(t) = A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega t-\omega\tau)}{\omega}d\tau \end{equation}`}</E>
         <p>
           Here, $q_&#123;nm&#125;$ is a function defined on the disk of radius
           $r$ — the radius of the tip of the wave generator,
         </p>
-        <Equation>
-          \begin&#123;equation&#125;
-          q_&#123;nm&#125;(\tau)=\frac&#123;4\alpha&#125;&#123;L^2&#125;
-          \cos(\omega_0 \tau) \iint_&#123;U(r)&#125;X_n(x)Y_m(y)\;dx dy,\quad
-          U(r)=\&#123;(x,y)\in\R^2\;|\; x^2+y^2\leq r^2\&#125;
-          \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} q_{nm}(\tau)=\frac{4\alpha}{L^2} \cos(\omega_0 \tau) \iint_{U(r)}X_n(x)Y_m(y)\;dx dy,\quad U(r)=\{(x,y)\in\R^2\;|\; x^2+y^2\leq r^2\} \end{equation}`}</E>
       </section>
 
       <section id="wave-circular-plate">
@@ -544,20 +448,9 @@ import CodeBox from "@components/code/CodeBox.astro";
           Consider the polar wave equation on a disk $\Omega =
           \&#123;(r,\theta)\in\R^2\;|\; 0 \leq r\leq a, 0 \leq \theta\leq
           2\pi\&#125;,$
-          <Equation>
-            \begin&#123;equation&#125;
-            \secondpd&#123;u&#125;&#123;t&#125;=c^2\left(\secondpd&#123;u&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r&#125;\pd&#123;u&#125;&#123;r&#125;+\frac&#123;1&#125;&#123;r^2&#125;\secondpd&#123;u&#125;&#123;\theta&#125;\right)
-            + Q(r, \theta, t). \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} \secondpd{u}{t}=c^2\left(\secondpd{u}{r}+\frac{1}{r}\pd{u}{r}+\frac{1}{r^2}\secondpd{u}{\theta}\right) + Q(r, \theta, t). \end{equation}`}</E>
           Written in compact form with full boundary conditions:
-          <Equation>
-            \begin&#123;equation&#125; \begin&#123;cases&#125; u_&#123;tt&#125;
-            = c^2\lbrac u_&#123;rr&#125; + \dfrac&#123;1&#125;&#123;r&#125;u_r +
-            \dfrac&#123;1&#125;&#123;r^2&#125;u_&#123;\theta\theta&#125;\rbrac +
-            Q, &amp; (r,\theta)\in\Omega\\ u_r(a,\theta, t) = 0\\[0.5em]
-            u(r,\theta, 0) = f(r, \theta)\\[0.5em] u_t(r, \theta, 0) = g(r,
-            \theta) \end&#123;cases&#125; \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} \begin{cases} u_{tt} = c^2\lbrac u_{rr} + \dfrac{1}{r}u_r + \dfrac{1}{r^2}u_{\theta\theta}\rbrac + Q, & (r,\theta)\in\Omega\\ u_r(a,\theta, t) = 0\\[0.5em] u(r,\theta, 0) = f(r, \theta)\\[0.5em] u_t(r, \theta, 0) = g(r, \theta) \end{cases} \end{equation}`}</E>
         </p>
 
         <p>
@@ -566,56 +459,16 @@ import CodeBox from "@components/code/CodeBox.astro";
             href="https://www.overleaf.com/read/tgchjdcmwwwp#98e984"
             >hard work</a
           >., we may arrive at the final solution to be
-          <Equation>
-            \begin&#123;equation&#125; u(r,\theta, t) =
-            \sum_&#123;n=0&#125;^&#123;\infty&#125;\sum_&#123;m=0&#125;^&#123;\infty&#125;J_n\lbrac
-            kr\rbrac[\Psi_&#123;nm&#125;(\theta)y_1(t) +
-            \Phi_&#123;nm&#125;(\theta)y_2(t)], \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} u(r,\theta, t) = \sum_{n=0}^{\infty}\sum_{m=0}^{\infty}J_n\lbrac kr\rbrac[\Psi_{nm}(\theta)y_1(t) + \Phi_{nm}(\theta)y_2(t)], \end{equation}`}</E>
           where
-          <Equation>
-            \begin&#123;align&#125; \Psi_&#123;nm&#125;(\theta) &amp; =
-            a_&#123;nm&#125;\cos(n\theta) + b_&#123;nm&#125;\sin(n\theta)\\
-            \Phi_&#123;nm&#125;(\theta) &amp;= c_&#123;nm&#125;\cos(n\theta) +
-            d_&#123;nm&#125;\sin(n\theta)\\ y_1(t) &amp;= \alpha\cos(\omega t) +
-            \beta\sin(\omega t) +
-            \int_&#123;0&#125;^&#123;t&#125;p_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega(t-\tau))&#125;&#123;\omega&#125;d\tau\\
-            y_2(t) &amp;= \gamma\cos(\omega t) + \sigma\sin(\omega t) +
-            \int_&#123;0&#125;^&#123;t&#125;q_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega(t-\tau))&#125;&#123;\omega&#125;d\tau\\
-            \omega &amp;= \frac&#123;cz_&#123;nm&#125;&#125;&#123;a&#125; = ck.
-            \end&#123;align&#125;
-          </Equation>
+          <E>{tex`
+          \begin{align} \Psi_{nm}(\theta) & = a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)\\ \Phi_{nm}(\theta) &= c_{nm}\cos(n\theta) + d_{nm}\sin(n\theta)\\ y_1(t) &= \alpha\cos(\omega t) + \beta\sin(\omega t) + \int_{0}^{t}p_{nm}(\tau)\frac{\sin(\omega(t-\tau))}{\omega}d\tau\\ y_2(t) &= \gamma\cos(\omega t) + \sigma\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega(t-\tau))}{\omega}d\tau\\ \omega &= \frac{cz_{nm}}{a} = ck. \end{align}
+          `}</E>
           Here, $z_&#123;nm&#125;$ are the zeros of the m-th derivative of the n-th
           order Bessel function $J_n(x)$. $\alpha, \beta, \gamma, \sigma$ are arbitrary
           constants that satisfies $\alpha + \gamma = 1,$ $\beta + \sigma = 1$, where
           $\alpha^2 + \gamma^2 \neq 0$, $\beta^2 + \sigma^2 \neq 0$, and,
-          <Equation>
-            \begin&#123;align&#125; a_&#123;nm&#125; &amp;= \frac&#123;\langle
-            J_0\cos(n\theta), f \rangle_w&#125;&#123;\langle J_0, J_0
-            \rangle_w&#125; =
-            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
-            kr\rbrac\cos(n\theta)
-            f(r,\theta)r\;drd\theta&#125;&#123;2\pi\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
-            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots\\ b_&#123;nm&#125;
-            &amp;= \frac&#123;\langle J_0\sin(n\theta), f
-            \rangle_w&#125;&#123;\langle J_0, J_0 \rangle_w&#125; =
-            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
-            kr\rbrac\sin(n\theta)
-            f(r,\theta)r\;drd\theta&#125;&#123;2\pi\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
-            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots\\ c_&#123;nm&#125;
-            &amp;= \frac&#123;\langle J_0\cos(n\theta), g
-            \rangle_w&#125;&#123;\omega\langle J_0, J_0 \rangle_w&#125; =
-            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
-            kr\rbrac\cos(n\theta)
-            g(r,\theta)r\;drd\theta&#125;&#123;2\pi\omega\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
-            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots\\ d_&#123;nm&#125;
-            &amp;= \frac&#123;\langle J_0\sin(n\theta), g
-            \rangle_w&#125;&#123;\omega\langle J_0, J_0 \rangle_w&#125; =
-            \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
-            kr\rbrac\sin(n\theta)
-            g(r,\theta)r\;drd\theta&#125;&#123;2\pi\omega\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
-            kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots \end&#123;align&#125;
-          </Equation>
+          <E>{tex`\begin{align} a_{nm} &= \frac{\langle J_0\cos(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ b_{nm} &= \frac{\langle J_0\sin(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ c_{nm} &= \frac{\langle J_0\cos(n\theta), g \rangle_w}{\omega\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) g(r,\theta)r\;drd\theta}{2\pi\omega\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ d_{nm} &= \frac{\langle J_0\sin(n\theta), g \rangle_w}{\omega\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) g(r,\theta)r\;drd\theta}{2\pi\omega\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots \end{align}`}</E>
         </p>
       </section>
     </section>
@@ -629,33 +482,15 @@ import CodeBox from "@components/code/CodeBox.astro";
         <p>
           The reason for all those derivations above is to plot our theoretical
           patterns. Recall that our final solution is derived as
-          <Equation>
-            \begin&#123;equation&#125; u(x, y, t) =
-            \frac&#123;1&#125;&#123;4&#125;A_&#123;00&#125; +
-            \sum_&#123;n=1&#125;^&#123;\infty&#125;\sum_&#123;m=1&#125;^&#123;\infty&#125;
-            X_n(x)Y_m(y)W_&#123;nm&#125;(t), \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} u(x, y, t) = \frac{1}{4}A_{00} + \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} X_n(x)Y_m(y)W_{nm}(t), \end{equation}`}</E>
           where
-          <Equation>
-            \begin&#123;align&#125; X_n(x) &amp;= a_n\cos\left(\frac&#123;n\pi
-            x&#125;&#123;L&#125;\right) +
-            \overline&#123;a_n&#125;\sin\left(\frac&#123;n\pi
-            x&#125;&#123;L&#125;\right)\\ Y_m(y) &amp;=
-            a_m\cos\left(\frac&#123;m\pi y&#125;&#123;L&#125;\right) +
-            \overline&#123;a_m&#125;\sin\left(\frac&#123;m\pi
-            y&#125;&#123;L&#125;\right)\\ W_&#123;nm&#125;(t) &amp;=
-            A_&#123;nm&#125;\cos(\omega t) + B_&#123;nm&#125;\sin(\omega t) +
-            \int_&#123;0&#125;^&#123;t&#125;q_&#123;nm&#125;(\tau)\frac&#123;\sin(\omega
-            t-\omega\tau)&#125;&#123;\omega&#125;d\tau\\ \omega &amp;=
-            \frac&#123;\pi&#125;&#123;L&#125;c\sqrt&#123;n^2+m^2&#125;
-            \end&#123;align&#125;
-          </Equation>
+          <E>{tex`\begin{align} X_n(x) &= a_n\cos\left(\frac{n\pi x}{L}\right) + \overline{a_n}\sin\left(\frac{n\pi x}{L}\right)\\ Y_m(y) &= a_m\cos\left(\frac{m\pi y}{L}\right) + \overline{a_m}\sin\left(\frac{m\pi y}{L}\right)\\ W_{nm}(t) &= A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega t-\omega\tau)}{\omega}d\tau\\ \omega &= \frac{\pi}{L}c\sqrt{n^2+m^2} \end{align}`}</E>
         </p>
 
         <p>
           Before we design our algorithm, there are a few things to note:
           <ul style="line-height: 1.6;">
-            <li style="margin: var(--in-page-li-spacing) 0;">
+            <li class="bullet">
               In realistic experimentation, there is no way to tell what the
               initial conditions $f(x,y)$ and $g(x,y)$ are. However, we can
               assume that the initial velocity, $u(\mathbf&#123;x&#125;,0) =
@@ -664,14 +499,9 @@ import CodeBox from "@components/code/CodeBox.astro";
               that it does not matter that much for the overall shape of the
               plot, but it only affects the insignificant microscopic height of
               the plate. The solution is now simplified to
-              <Equation>
-                \begin&#123;equation&#125; u(\mathbf&#123;x&#125;, t) =
-                \sum_&#123;n\geq 0&#125;\sum_&#123;m\geq
-                0&#125;X_n(x)Y_m(y)A_&#123;nm&#125;\cos(\omega t).
-                \end&#123;equation&#125;
-              </Equation>
+              <E>{tex`\begin{equation} u(\mathbf{x}, t) = \sum_{n\geq 0}\sum_{m\geq 0}X_n(x)Y_m(y)A_{nm}\cos(\omega t). \end{equation}`}</E>
             </li>
-            <li style="margin: var(--in-page-li-spacing) 0;">
+            <li class="bullet">
               For the initial condition $f(x,y)$, we can pick a function
               $f(x,y)$ such that $|A_&#123;ij&#125;|\neq |A_&#123;nm&#125;|$,
               for any $(i, j)\neq (n,m)$. The reason why we can do this is that
@@ -680,7 +510,7 @@ import CodeBox from "@components/code/CodeBox.astro";
               choose the function $f$ that satisfies $|A_&#123;ij&#125;|\neq
               |A_&#123;nm&#125;|$ for the clearest patterns.
             </li>
-            <li style="margin: var(--in-page-li-spacing) 0;">
+            <li class="bullet">
               What we are really interested in is the shape of the nodal lines.
               Therefore, for the sake of simplicity, we can choose certain time
               points such that $\cos(\omega t) = 1$, that is, $t = 0,\;
@@ -688,11 +518,7 @@ import CodeBox from "@components/code/CodeBox.astro";
               $u(\mathbf&#123;x&#125;, t) = 0$, the coefficients
               $A_&#123;nm&#125;$ will be cancelled out, leaving us with the
               contour equation
-              <Equation>
-                \begin&#123;equation&#125; u(\mathbf&#123;x&#125;, t) =
-                \sum_&#123;n\geq 0&#125;\sum_&#123;m\geq 0&#125;X_n(x)Y_m(y) =
-                0. \end&#123;equation&#125;
-              </Equation>
+              <E>{tex`\begin{equation} u(\mathbf{x}, t) = \sum_{n\geq 0}\sum_{m\geq 0}X_n(x)Y_m(y) = 0. \end{equation}`}</E>
             </li>
           </ul>
         </p>
@@ -705,20 +531,16 @@ import CodeBox from "@components/code/CodeBox.astro";
           Occasionally, we must reinterpret abstract mathematics to make it
           meaningful in the context of the physical world..
           <ul style="line-height: 1.6;">
-            <li style="margin: var(--in-page-li-spacing) 0;">
+            <li class="bullet">
               Recall that we derived our angular frequency to be
-              <Equation>
-                \begin&#123;equation&#125; \omega = \frac&#123;\pi
-                c&#125;&#123;L&#125;\sqrt&#123;n^2 + m^2&#125;.
-                \end&#123;equation&#125;
-              </Equation>
+              <E>{tex`\begin{equation} \omega = \frac{\pi c}{L}\sqrt{n^2 + m^2}. \end{equation}`}</E>
               What we are really interested in is not the general super-position solution,
               but solutions at certain frequencies $\omega$. After all, each frequencies
               must only correspond to some certain shape of the plate. This means
               that each $\omega$ must correspond so some combination of integer pairs
               $n$ and $m$.
             </li>
-            <li style="margin: var(--in-page-li-spacing) 0;">
+            <li class="bullet">
               For example, if $\omega = \frac&#123;\pi
               c&#125;&#123;L&#125;\sqrt&#123;5&#125;$, then all possible
               combinations of $n$ and $m$ must be $(1, 2)$ and $(2, 1)$ (since
@@ -726,23 +548,17 @@ import CodeBox from "@components/code/CodeBox.astro";
               $|A_&#123;nm&#125;|$ in absolute value, so negative coefficients
               are possible. The two equations that describe the Chladni pattern
               found at this frequency are
-              <Equation>
-                \begin&#123;equation&#125; X_1(x)Y_2(y) \pm X_2(x)Y_1(y)=0,
-                \end&#123;equation&#125;
-              </Equation>
+              <E>{tex`\begin{equation} X_1(x)Y_2(y) \pm X_2(x)Y_1(y)=0, \end{equation}`}</E>
               For equations with more sum of squares combinations, there will be more
               combinations for a single mode. For example, for $\omega = \frac&#123;\pi
               c&#125;&#123;L&#125;\sqrt&#123;65&#125;$, all the possible implicit
               functions are
-              <Equation>
-                \begin&#123;equation&#125; X_1(x)Y_8(y) \pm X_4(x)Y_7(y) \pm
-                X_7(x)Y_4(y) \pm X_8(x)Y_1(y) =0\ \end&#123;equation&#125;
-              </Equation>
+              <E>{tex`\begin{equation} X_1(x)Y_8(y) \pm X_4(x)Y_7(y) \pm X_7(x)Y_4(y) \pm X_8(x)Y_1(y) =0\ \end{equation}`}</E>
               We need not consider the first term due to symmetry. In general, if
               there are $N$ terms in the equation, there will be a total of $2^&#123;N-1&#125;$
               possible plots.
             </li>
-            <li style="margin: var(--in-page-li-spacing) 0;">
+            <li class="bullet">
               <b>Special Case: </b>
               If $n^2 + m^2$ is a perfect square ($1, 4, 9, 16, 25,\ldots$), then
               we also need to consider the pairs with 0. For example, if $n^2 + m^2
@@ -751,18 +567,11 @@ import CodeBox from "@components/code/CodeBox.astro";
               since we don't know what $f(x,y)$ is, we also don't know whether $A_&#123;00&#125;$
               is 0. If it's zero, then we just plot the regular pairs $(3, 4)$ and
               $(4, 3)$,
-              <Equation>
-                \begin&#123;equation&#125; X_3(x)Y_4(y) +
-                X_4(x)Y_3(y)=0,\quad\text&#123;and&#125;\quad X_3(x)Y_4(y) -
-                X_4(x)Y_3(y)=0. \end&#123;equation&#125;
-              </Equation>
+              <E>{tex`\begin{equation} X_3(x)Y_4(y) + X_4(x)Y_3(y)=0,\quad\text{and}\quad X_3(x)Y_4(y) - X_4(x)Y_3(y)=0. \end{equation}`}</E>
               If $A_&#123;00&#125;$ is not zero, meaning that the summation actually
               starts at index $(n,m)=(0,0)$, then we also need to consider eight other
               patterns
-              <Equation>
-                \begin&#123;equation&#125; X_0(x)Y_5(y) \pm X_3(x)Y_4(y) \pm
-                X_4(x)Y_3(y) \pm X_5(x)Y_0(y) =0. \end&#123;equation&#125;
-              </Equation>
+              <E>{tex`\begin{equation} X_0(x)Y_5(y) \pm X_3(x)Y_4(y) \pm X_4(x)Y_3(y) \pm X_5(x)Y_0(y) =0. \end{equation}`}</E>
               In total, for the case of $S = 25$, there will be a total of $2+8=10$
               plots.
             </li>
@@ -845,21 +654,9 @@ import CodeBox from "@components/code/CodeBox.astro";
           The circular plate is a bit easier, since we don't need to design an
           algorithm to search for sum of squares and perfect squares exceptions.
           Recall that for a circular plate,
-          <Equation>
-            \begin&#123;equation&#125; u(r,\theta, t) =
-            \sum_&#123;n=0&#125;^&#123;\infty&#125;\sum_&#123;m=0&#125;^&#123;\infty&#125;J_n\lbrac
-            kr\rbrac[\Psi_&#123;nm&#125;(\theta)y_1(t) +
-            \Phi_&#123;nm&#125;(\theta)y_2(t)], \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} u(r,\theta, t) = \sum_{n=0}^{\infty}\sum_{m=0}^{\infty}J_n\lbrac kr\rbrac[\Psi_{nm}(\theta)y_1(t) + \Phi_{nm}(\theta)y_2(t)], \end{equation}`}</E>
           where
-          <Equation>
-            \begin&#123;align&#125; \Psi_&#123;nm&#125;(\theta) &amp; =
-            a_&#123;nm&#125;\cos(n\theta) + b_&#123;nm&#125;\sin(n\theta)\\
-            \Phi_&#123;nm&#125;(\theta) &amp;= c_&#123;nm&#125;\cos(n\theta) +
-            d_&#123;nm&#125;\sin(n\theta)\\ \omega &amp;=
-            \frac&#123;cz_&#123;nm&#125;&#125;&#123;a&#125; = ck
-            \end&#123;align&#125;
-          </Equation>
+          <E>{tex`\begin{align} \Psi_{nm}(\theta) & = a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)\\ \Phi_{nm}(\theta) &= c_{nm}\cos(n\theta) + d_{nm}\sin(n\theta)\\ \omega &= \frac{cz_{nm}}{a} = ck \end{align}`}</E>
         </p>
 
         <p>
@@ -868,21 +665,14 @@ import CodeBox from "@components/code/CodeBox.astro";
           circular plate is easier to implement because we don't have to search
           for any sum of squares, so each Chladni pattern is simply a pair of
           arbitrary $n$ and $m$. The equations that we need to plot are simply
-          <Equation>
-            \begin&#123;equation&#125; u_&#123;nm&#125;(r, \theta, 0) =
-            J_&#123;n&#125;(kr)[a_&#123;nm&#125;\cos(n\theta) +
-            b_&#123;nm&#125;\sin(n\theta)] \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} u_{nm}(r, \theta, 0) = J_{n}(kr)[a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)] \end{equation}`}</E>
           There is one thing to note, however. Unlike the square plate, the coefficient
           that constitutes the pattern depends on the initial function $f(r,\theta)$,
           but after testing out various functions $f(r,\theta)$, I noticed that it
           doesn't actually do anything to the contour plot at $z=0$, only the plot
           in three dimensions. Therefore, for this particular equation, I just choose
           an arbitrary function $f(r,\theta)$ to be
-          <Equation>
-            \begin&#123;equation&#125; f(r,\theta) = r\cos(\theta)
-            \end&#123;equation&#125;
-          </Equation>
+          <E>{tex`\begin{equation} f(r,\theta) = r\cos(\theta) \end{equation}`}</E>
         </p>
 
         <span style="font-weight: bold; font-size: 18px; margin: 30px 0;"
@@ -1095,9 +885,5 @@ print(f"Animation saved to: &#123;output_path&#125;")
       is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
     ></script>
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
-      async></script>
   </Fragment>
 </BaseLayout>

@@ -10,7 +10,7 @@ import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
-import Equation from "@components/math/Equation.astro";
+import E from "@components/math/E.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import { tex } from "@components/math/tex.astro";
 ---
@@ -49,10 +49,6 @@ import { tex } from "@components/math/tex.astro";
   </Fragment>
 
   <!-- Page content -->
-  <div class="mathjax-definition">
-    \[ \newcommand\pd[2]&#123;\displaystyle\frac&#123;\partial
-    #1&#125;&#123;\partial #2&#125;&#125; \]
-  </div>
 
   <Banner />
 
@@ -130,22 +126,20 @@ import { tex } from "@components/math/tex.astro";
           >.
         </p>
         <ul style="line-height: 1.6">
-          <li style="margin: var(--in-page-li-spacing) 0">
+          <li class="bullet">
             <strong>Question</strong>: Why not use a framework or a static site
             generator initially?
           </li>
-          <li style="margin: var(--in-page-li-spacing) 0">
+          <li class="bullet">
             <strong>Answer</strong>: My impression is that static site generators give you less direct control over certain aspects of the site, especially when creating highly customizable components like the one shown below.
             <Theorem name="F.T. of an Impulse Train">
               The Fourier transform of the impulse train is another impulse
               train:
-              <Equation>
-              {tex`\[ 
+              <E>{tex`\[ 
               \mathcal{F}\{\delta_T(t)\} = 
               \frac{2\pi}{T}\sum_{k=-\infty}^{\infty} \delta(\omega - k\omega_s), 
               \qquad \omega_s = \frac{2\pi}{T}.
-              \]`}
-              </Equation>
+              \]`}</E>
             </Theorem>
             <p>or this one below (click on the arrow!)</p>
             <br />
@@ -170,52 +164,6 @@ import { tex } from "@components/math/tex.astro";
         </p>
       </section>
 
-      <!-- <section id="third-party-tools">
-        <h3>Third party tools</h3>
-        <div
-          style="display: flex; justify-content: center; align-items: center; margin: 30px 0;"
-        >
-          <img
-            src="/about/carl-sagan.webp"
-            alt="carl sagan apple pie quote"
-            style="width: 100%; max-width: 520px; height: auto"
-          />
-        </div>
-        <p>
-          Earlier, I did say that I built this website from scratch. I was
-          lying. Nobody builds anything from scratch, we're all standing on the
-          shoulder of someone. Some other tools I used are
-          <a href="https://www.mathjax.org/" class="url">MathJax</a>, a
-          javascript library that helps display fancy equation like this:
-        </p>
-        <Equation>
-          $$ \rho h\frac&#123;\partial^2 w&#125;&#123;\partial t^2&#125; = -
-          D\nabla^4 w + T\nabla^2 w -K_0w -K_1\pd&#123;w&#125;&#123;t&#125; +
-          T_1\nabla^2\pd&#123;w&#125;&#123;t&#125; + F(\textbf&#123;x&#125;, t).
-          $$
-        </Equation>
-        <p>
-          I also use
-          <a href="https://prismjs.com/" class="url">prism.js</a> to provide some
-          nice code syntax-highlighting for websites like below. You can change the
-          code theme in the setting
-        </p>
-
-<CodeBox language="cpp">#pragma once 
-template&lt;typename Func&gt; 
-[[nodiscard]] inline __attribute__((always_inline)) 
-double numerical_derivative(Func f, double x, double h) 
-&#123; 
-    // Use the central difference formula for better accuracy 
-    return (f(x + h) - f(x - h)) / (2.0 * h); 
-&#125;
-</CodeBox>
-
-        <p>
-          About the logo: that's the trajectory of a double pendulum in a
-          computer simulation.
-        </p>
-      </section> -->
 
       <section id="disclaimer">
         <h3>Disclaimer</h3>
@@ -227,14 +175,14 @@ double numerical_derivative(Func f, double x, double h)
           any:
         </p>
         <ul id="contact-ul">
-          <li style="margin: var(--in-page-li-spacing) 0">wrong information,</li>
-          <li style="margin: var(--in-page-li-spacing) 0">
+          <li class="bullet">wrong information,</li>
+          <li class="bullet">
             errors in the source code,
           </li>
-          <li style="margin: var(--in-page-li-spacing) 0">
+          <li class="bullet">
             contents that you are not happy about,
           </li>
-          <li style="margin: var(--in-page-li-spacing) 0">
+          <li class="bullet">
             spelling or grammar errors,
           </li>
         </ul>
@@ -275,9 +223,5 @@ double numerical_derivative(Func f, double x, double h)
       is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"
     ></script>
-    <script
-      is:inline
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   </Fragment>
 </BaseLayout>

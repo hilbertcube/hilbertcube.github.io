@@ -69,6 +69,9 @@ const tex = String.raw;
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
+    <!-- KaTeX (self-hosted) for math rendering -->
+    <link rel="stylesheet" href="/katex/katex.min.css" />
+
     <!-- Active nav button highlighting -->
     {
       activeButton && (
@@ -136,6 +139,11 @@ const tex = String.raw;
     </main>
 
     <script is:inline src="/assets/js/scripts.js"></script>
+
+    <!-- KaTeX: library, then auto-render extension, then our render driver -->
+    <script is:inline defer src="/katex/katex.min.js"></script>
+    <script is:inline defer src="/katex/contrib/auto-render.min.js"></script>
+    <script is:inline defer src="/assets/js/katex-render.js"></script>
 
     <!-- Pagefind on-page highlight (via ?pagefind-highlight=…). The script only
          marks matches; it doesn't scroll — so we scroll to the first match,

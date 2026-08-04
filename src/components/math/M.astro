@@ -1,0 +1,22 @@
+---
+/**
+ * M.astro  —  inline math (short name for convenience)
+ * ----------------------------------------------------
+ * Inline counterpart of <Equation>. Renders `$...$`-style math inline, without
+ * HTML-entity escaping. Because a quoted attribute / JSX text can't hold raw
+ * braces or backslashes, pass the LaTeX as a `tex` raw template literal:
+ *
+ *   <M>{tex`u_{tt}`}</M>        (braces / backslashes → use tex)
+ *   <M>x^2</M>                  (no braces, no backslash → plain text is fine)
+ *   <M code={tex`\lambda = \mu + \nu`} />
+ *
+ * The content lands as textContent inside `.inline-math`; katex-render.js
+ * typesets it in inline mode (displayMode: false).
+ */
+interface Props {
+  code?: string;
+}
+const { code } = Astro.props;
+---
+
+<span class="inline-math">{code !== undefined ? code : <slot />}</span>

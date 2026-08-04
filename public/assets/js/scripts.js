@@ -1,17 +1,3 @@
-MathJax = {
-  tex: {
-    tags: "ams",
-    inlineMath: [
-      ["$", "$"],
-      ["\\(", "\\)"],
-    ],
-  },
-  svg: { fontCache: "global", scale: 1.0 },
-  chtml: {
-    scale: 1.0,
-  },
-};
-
 // // OPEN FULL IMG
 document.addEventListener("DOMContentLoaded", function () {
   const allImages = document.querySelectorAll("img:not(#logoImage):not(#home-banner img):not(.no-lightbox):not(.recommend-img img):not(.front-img)");

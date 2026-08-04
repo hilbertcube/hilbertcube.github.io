@@ -14,7 +14,8 @@ if (!meta) {
   throw new Error(`Article metadata not found for slug: ${slug}`);
 }
 
-import Equation from "@components/math/Equation.astro";
+import E from "@components/math/E.astro";
+import { tex } from "@components/math/tex.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import TabBox from "@components/code/TabBox.astro";
 import CopyButton from "@components/code/CopyButton.astro";
@@ -111,10 +112,6 @@ import ContinueButton from "@components/ContinueButton.astro"
   </Fragment>
 
   <div class="content-grid">
-    <div class="mathjax-definition">
-      \[ \newcommand&#123;\lbrac&#125;&#123;\left(&#125;
-      \newcommand&#123;\rbrac&#125;&#123;\right)&#125; \]
-    </div>
 
     <header>
       <TopicTags topics={meta.topics} />
@@ -149,10 +146,7 @@ import ContinueButton from "@components/ContinueButton.astro"
         as a sum of squares. If it can be represented as sum(s) of squares, then
         we must search for all possible combinations of $n$ and $m$ such that
       </p>
-      <Equation>
-        \begin&#123;equation&#125; n^2 + m^2 = \mathrm&#123;number&#125;
-        \end&#123;equation&#125;
-      </Equation>
+      <E>{tex`\begin{equation} n^2 + m^2 = \mathrm{number} \end{equation}`}</E>
       <p>
         including pairs with zero. The circular wave equation model is simpler
         to implement, as we only need to utilize built-in integration methods,
@@ -401,10 +395,7 @@ pip install scipy</ShellScript>
         >, and the sign combinations is <code class="inline-code"
           >[1, -1, -1]</code
         >, then the contour equation $u(x, y, t)$ must be
-        <Equation>
-          \begin&#123;equation&#125; u(x, y, t_0) = X(x, 0)X(y, 5) - X(x, 3)X(y,
-          4) - X(x, 4)X(y, 3) - X(x, 5)X(y, 0) = 0 \end&#123;equation&#125;
-        </Equation>
+        <E>{tex`\begin{equation} u(x, y, t_0) = X(x, 0)X(y, 5) - X(x, 3)X(y, 4) - X(x, 4)X(y, 3) - X(x, 5)X(y, 0) = 0 \end{equation}`}</E>
       </p>
 
       <p>
@@ -748,21 +739,7 @@ def bessel_derivative_zero(n, m):
         the rest of the zeroes by one unit. The next step in the algorithm is to
         calculate the coefficients $a_&#123;nm&#125;$ and $b_&#123;nm&#125;$,
       </p>
-      <Equation>
-        \begin&#123;align&#125; a_&#123;nm&#125; &= \frac&#123;\langle
-        J_0\cos(n\theta), f \rangle_w&#125;&#123;\langle J_0, J_0
-        \rangle_w&#125; =
-        \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
-        kr\rbrac\cos(n\theta)
-        f(r,\theta)r\;drd\theta&#125;&#123;2\pi\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
-        kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots\\ b_&#123;nm&#125; &=
-        \frac&#123;\langle J_0\sin(n\theta), f \rangle_w&#125;&#123;\langle J_0,
-        J_0 \rangle_w&#125; =
-        \frac&#123;\int_&#123;0&#125;^&#123;a&#125;\int_&#123;0&#125;^&#123;2\pi&#125;J_n\lbrac
-        kr\rbrac\sin(n\theta)
-        f(r,\theta)r\;drd\theta&#125;&#123;2\pi\int_&#123;0&#125;^&#123;a&#125;J_n^2\lbrac
-        kr\rbrac rdr&#125;,\quad n, m = 0, 1, \ldots \end&#123;align&#125;
-      </Equation>
+      <E>{tex`\begin{align} a_{nm} &= \frac{\langle J_0\cos(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ b_{nm} &= \frac{\langle J_0\sin(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots \end{align}`}</E>
       <p>
         We can do this using the built-in methods for double integration: <code
           class="inline-code">scipy.integrate</code
@@ -1074,10 +1051,7 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         table right below. Here, recall from the previous part that the wave
         speed is calculated by the formula
       </p>
-      <Equation>
-        \begin&#123;equation&#125; c = \frac&#123;2Lf&#125;&#123;\sqrt&#123;n^2
-        + m^2&#125;&#125;. \end&#123;equation&#125;
-      </Equation>
+      <E>{tex`\begin{equation} c = \frac{2Lf}{\sqrt{n^2 + m^2}}. \end{equation}`}</E>
       <p>
         For this experiment, the length of our plate is $24.1\pm 0.1$ cm, and we
         are assuming that the thickness is negligible. For better organization,
@@ -1259,10 +1233,7 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         From the angular frequency of the plate from the previous part, we can
         easily derive the wave speed equation for the circular plate:
       </p>
-      <Equation>
-        \begin&#123;equation&#125; c=\frac&#123;2\pi f
-        r&#125;&#123;z_&#123;nm&#125;&#125; \end&#123;equation&#125;
-      </Equation>
+      <E>{tex`\begin{equation} c=\frac{2\pi f r}{z_{nm}} \end{equation}`}</E>
       <p>For our experiment, the plate's radius is $r = 12.1\pm 0.1$ cm.</p>
       <div class="table-wrapper">
         <table
@@ -1409,10 +1380,6 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
       is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
     ></script>
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
-      async></script>
     <script
       is:inline
       src="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.min.js"
