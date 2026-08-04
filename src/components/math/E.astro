@@ -1,0 +1,23 @@
+---
+/**
+ * E.astro  —  display equation (short name; inline counterpart is <M>)
+ * -------------------------------------------------------------------
+ * Renders a centered block equation, typeset by katex-render.js. Pass the LaTeX
+ * as a `tex` raw template literal so braces/backslashes need no escaping:
+ *
+ *   <E code={tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`} />
+ *
+ * A plain quoted attribute won't work (Astro eats backslashes); the raw template
+ * literal is required. The default <slot /> still works for the legacy escaped
+ * form (`&#123;` `&#125;` `&amp;`).
+ *
+ * `\begin{equation}` / `\begin{align}` get document-wide sequential numbers;
+ * `$$...$$` / `\[...\]` stay unnumbered (see katex-render.js).
+ */
+interface Props {
+  code?: string;
+}
+const { code } = Astro.props;
+---
+
+<div class="equation">{code !== undefined ? code : <slot />}</div>

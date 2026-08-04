@@ -1,7 +1,11 @@
 ---
-
+/**
+ * Equation.astro  —  backward-compatible alias of <E>.
+ * Prefer the shorter <E> (see E.astro) in new articles. This wrapper keeps
+ * existing `<Equation>` usages working unchanged.
+ */
+import E from "./E.astro";
+const { code } = Astro.props;
 ---
 
-<div class="equation">
-  <slot />
-</div>
+<E code={code}><slot /></E>

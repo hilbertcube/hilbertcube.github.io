@@ -9,16 +9,24 @@
   white-space: nowrap;
 }
 
-mjx-container[jax="CHTML"][display="true"] {
+/* KaTeX display equations rendered into .equation containers */
+.equation .katex-display {
   margin: 0.5em 0;
 }
 
-.MathJax {
-  font-size: 18px !important;
+.katex {
+  font-size: 1.1em;
 }
 
-.mathjax-definition {
-  display: none;
+/* Equation numbers: KaTeX pins the tag to the container's right edge, so a wide
+   equation on a narrow screen slides underneath it and overlaps. Size the math
+   box to its own content and reserve room on both sides so the number sits just
+   past the equation with a gap, and the whole thing scrolls together. */
+.equation .katex-display > .katex > .katex-html:has(> .katex-tag) {
+  display: inline-block;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 0 3em;
 }
 
 /* Academic elements */
