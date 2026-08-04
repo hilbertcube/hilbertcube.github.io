@@ -1,6 +1,6 @@
 ---
 /**
- * src/pages/recommended-materials/index.astro
+ * src/pages/posts/resources/index.astro
  * ============================================
  * Resources page
  */
@@ -14,10 +14,9 @@ import MaterialCard from "@components/MaterialCard.astro";
 <BaseLayout
   title="Materials"
   description="This is the material page"
-  activeButton="Material-button"
 >
   <Fragment slot="head">
-    <link rel="stylesheet" href="/recommended-materials/resources-page.css" />
+    <link rel="stylesheet" href="/posts/resources/resources-page.css" />
   </Fragment>
 
   <Fragment slot="sidebar">
@@ -58,7 +57,7 @@ import MaterialCard from "@components/MaterialCard.astro";
           links={[
             { label: "Amazon", href: "https://www.amazon.com/C-Templates-Complete-Guide-2nd/dp/0321714121" },
           ]}
-          image="/recommended-materials/materials-images/templates.webp"
+          image="/posts/resources/materials-images/templates.webp"
         />
 
         <MaterialCard
@@ -69,7 +68,7 @@ import MaterialCard from "@components/MaterialCard.astro";
             { label: "Amazon", href: "https://www.amazon.com/C-Concurrency-Action-Practical-Multithreading/dp/1933988770" },
             { label: "Manning", href: "https://www.manning.com/books/c-plus-plus-concurrency-in-action" },
           ]}
-          image="/recommended-materials/materials-images/concurrency.webp"
+          image="/posts/resources/materials-images/concurrency.webp"
         />
 
         <MaterialCard
@@ -79,7 +78,7 @@ import MaterialCard from "@components/MaterialCard.astro";
           links={[
             { label: "Amazon", href: "https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/0133356728" },
           ]}
-          image="/recommended-materials/materials-images/digital_processing.webp"
+          image="/posts/resources/materials-images/digital_processing.webp"
         />
 
         <MaterialCard
@@ -90,7 +89,7 @@ import MaterialCard from "@components/MaterialCard.astro";
             { label: "Amazon", href: "https://www.amazon.com/Introduction-Applied-Partial-Differential-Equations/dp/1429275928" },
             { label: "Abebooks", href: "https://www.abebooks.com/9781429275927/Introduction-Applied-Partial-Differential-Equations-1429275928/plp" },
           ]}
-          image="/recommended-materials/materials-images/pde2.webp"
+          image="/posts/resources/materials-images/pde2.webp"
         />
 
         <MaterialCard
@@ -100,7 +99,7 @@ import MaterialCard from "@components/MaterialCard.astro";
           links={[
             { label: "Amazon", href: "https://www.amazon.com/Differential-Equations-Boundary-Problems-Featured/dp/0321797051" },
           ]}
-          image="/recommended-materials/materials-images/pde1.webp"
+          image="/posts/resources/materials-images/pde1.webp"
         />
 
         <!-- <MaterialCard
@@ -112,7 +111,7 @@ import MaterialCard from "@components/MaterialCard.astro";
             { label: "Ebay", href: "https://www.ebay.com/itm/332769940414" },
             { label: "Abebooks", href: "https://www.abebooks.com/9781108420419/Introduction-Electrodynamics-Griffiths-David-J-1108420419/plp" },
           ]}
-          image="/recommended-materials/materials-images/griffith_electrodymaics.webp"
+          image="/posts/resources/materials-images/griffith_electrodymaics.webp"
         /> -->
       </div>
     </section>
