@@ -10,6 +10,11 @@ export default defineConfig({
   // Your site URL for canonical links, sitemaps, etc.
   site: 'https://neumanncondition.com',
 
+  // The resources page used to live at the root; keep old links working.
+  redirects: {
+    '/recommended-materials': '/posts/resources',
+  },
+
   vite: {
     server: {
       fs: {

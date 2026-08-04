@@ -129,7 +129,7 @@
         "Productivity"
       ],
       "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04 on an NVIDIA machine, including installation steps, configurations, and useful tips for an efficient workflow. Ok, but why Ubuntu though? Ans: Very stable and much easier to use than Debian (my first distro)",
-      "date": "December 28, 2025"
+      "date": "Dec. 2025"
     },
     {
       "title": "A list of places to munch",
@@ -144,7 +144,7 @@
         "Boba"
       ],
       "description": "A list of restaurants, caf\u00e9s, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I\u2019ve tried or want to try. I\u2019ll be using this post as a running to-do list.",
-      "date": "April 18, 2025"
+      "date": "Apr. 2025"
     },
     {
       "title": "A list of tools that I use",
@@ -159,7 +159,26 @@
         "Work"
       ],
       "description": "A comprehensive list of software, Firefox extensions, VS Code extensions, and electronics that I use regularly.",
-      "date": "April 12, 2025"
+      "date": "Apr. 2025"
+    },
+    {
+      "title": "Recommended Materials",
+      "pid": "resources",
+      "link": "/posts/resources/",
+      "topics": [
+        "Books",
+        "Lecture Notes",
+        "Websites",
+        "Youtube",
+        "Programming",
+        "C++",
+        "Math",
+        "Physics",
+        "Image Processing",
+        "PDEs"
+      ],
+      "description": "Books, lecture notes, websites, and YouTube channels that I think serve as good learning materials.",
+      "date": "Nov. 2024"
     },
     {
       "title": "Average engineering experience",
@@ -169,52 +188,10 @@
         "Electrical Engineering"
       ],
       "description": "Electrical Engineering: Electrical Circuit Analysis, Spring of 2024.",
-      "date": "April, 2024"
+      "date": "Apr. 2024"
     }
   ],
   "others": [
-    {
-      "title": "Resources - Books",
-      "link": "/recommended-materials/#books",
-      "topics": [
-        "Programming",
-        "Image Processing",
-        "DSA",
-        "Math",
-        "Physics"
-      ],
-      "description": "Book Recommendation",
-      "date": "Last updated Nov. 2024"
-    },
-    {
-      "title": "Resources - Lecture Notes",
-      "link": "/recommended-materials/#lecture-notes",
-      "topics": [
-        "Physics",
-        "Calculus of Variations",
-        "DE"
-      ],
-      "description": "Lecture Notes Recommendation",
-      "date": "Last updated Nov. 2024"
-    },
-    {
-      "title": "Resources - Websites",
-      "link": "/recommended-materials/#websites",
-      "topics": [
-        "Useful websites"
-      ],
-      "description": "The internet and digital platforms have made information readily available to anyone with an internet connection. No more barriers.",
-      "date": "Last updated Nov. 2024"
-    },
-    {
-      "title": "Resources - Youtube Channels",
-      "link": "/recommended-materials/#youtube",
-      "topics": [
-        "Useful Youtube Channels"
-      ],
-      "description": "Youtube is fun, but don't watch too much.",
-      "date": "Last updated Nov. 2024"
-    },
     {
       "title": "Privacy Policy",
       "link": "/privacy-policy/",

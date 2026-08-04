@@ -23,10 +23,10 @@
 }
 
 .left {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
+  flex: 1;
+  display: flex;
   gap: 30px;
-  justify-content: space-between;
+  justify-content: center;
   padding-left: 20px;
   padding-right: 20px;
   align-items: center;
@@ -46,11 +46,6 @@
 #Home-Icon {
   width: 25px;
   align-items: center;
-}
-
-#Material-button,
-#Note-button {
-  font-family: var(--top-bar-font);
 }
 
 /* Dropdown menus */
@@ -122,10 +117,8 @@
 
 .top-buttons {
   margin: 0;
-  display: grid;
-  width: 100%;
-  grid-template-columns: 1fr;
-  gap: 20%;
+  display: inline-flex;
+  flex: none;
   align-items: center;
   color: inherit;
   text-decoration: none;
