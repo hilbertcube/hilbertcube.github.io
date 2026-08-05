@@ -202,7 +202,7 @@ nav ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
+  width: var(--burger-width);
 }
 
 /* Flat, borderless burger to match the other top-bar icons

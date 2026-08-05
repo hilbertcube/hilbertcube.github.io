@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/TopicTags.astro";
-import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -106,9 +105,6 @@ import ContinueButton from "@components/ContinueButton.astro"
         { label: "References", href: "#References" },
       ]}
     />
-    <div class="highlights-and-attribute">
-      <HighlightsAndAttribute />
-    </div>
   </Fragment>
 
   <div class="content-grid">

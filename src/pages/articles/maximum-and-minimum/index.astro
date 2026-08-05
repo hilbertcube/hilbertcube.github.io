@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/TopicTags.astro";
-import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
@@ -104,9 +103,6 @@ if (!meta) {
         },
       ]}
     />
-    <div class="highlights-and-attribute">
-      <HighlightsAndAttribute />
-    </div>
   </Fragment>
 
   <div class="content-grid">

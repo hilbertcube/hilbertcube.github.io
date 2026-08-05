@@ -6,7 +6,6 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/TopicTags.astro";
-import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import { getCollection } from "astro:content";
 
@@ -62,7 +61,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
     </style>
   </Fragment>
 
-  <!-- Sidebar: TOC + highlights -->
+  <!-- Sidebar: TOC -->
   <Fragment slot="sidebar">
     <TableOfContents
       items={[
@@ -74,9 +73,6 @@ import CodeBlock from "@components/code/CodeBlock.astro";
         { label: "Hardware", href: "#hardware" },
       ]}
     />
-    <div class="highlights-and-attribute">
-      <HighlightsAndAttribute />
-    </div>
   </Fragment>
 
   <Fragment slot="scripts">

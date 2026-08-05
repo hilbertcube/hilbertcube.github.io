@@ -140,9 +140,9 @@ input#toggle:checked ~ div#settings_window {
   font-size: 16px;
 }
 
-.share-button:hover #share-expand {
+/* .share-button:hover #share-expand {
   color: var(--top-buttons-hover-color);
-}
+} */
 
 .share-button:hover .share-tooltip {
   opacity: 1;

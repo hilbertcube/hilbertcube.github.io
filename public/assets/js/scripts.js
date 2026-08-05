@@ -1549,7 +1549,8 @@ function fetchCommit() {
         statsElement.textContent =
           `\nTotal Updates: ${formatNumber(totalCommits)}\n` +
           `Estimated Lines: ${formatNumber(estimatedLines)}\n` +
-          `Articles: ${articleCount} | Posts: ${postCount}\n` +
+          `Total Articles: ${articleCount}\n` +
+          `Total Posts: ${postCount}\n` +
           `Repository Age: ${ageString}`;
       }
 
