@@ -81,6 +81,8 @@
   --general-wrapper-width: 60rem;
   --side-nav-width: 375px;
   --top-bar-height: 60px;
+  /* Width of the burger button's container — the top bar's first slot */
+  --burger-width: 60px;
   --in-page-li-spacing: 15px;
   
   /* Progress bar — flat red accent to match the site's Wikipedia-like theme */

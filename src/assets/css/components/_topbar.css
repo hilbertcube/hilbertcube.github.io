@@ -22,16 +22,17 @@
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
+/* Centered on the side nav's midpoint: the box starts one burger-width in, so
+   trimming that same amount off both ends of the side-nav width leaves it
+   symmetric about var(--side-nav-width) / 2. */
 .left {
-  flex: 1;
+  flex: 0 0 calc(var(--side-nav-width) - 2 * var(--burger-width));
   display: flex;
   gap: 30px;
   justify-content: center;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0;
   align-items: center;
-  margin-left: 100px;
-  margin-right: 0px;
+  margin: 0;
 }
 
 .right {

@@ -21,7 +21,10 @@ import Icon from './Icon.astro';
       sizes="(max-width: 600px) 150px, 300px"
     />
     <div class="logo-title">
-      neumanncondition.com <Icon name="up-right-from-square" style="font-size:14px" />
+      <Icon name="github" prefix="fab" class="logo-github-icon" />
+      <span class="logo-repo">
+        hilbertcube/hilbertcube.github.io 
+      </span>
     </div>
   </a>
 </div>
@@ -79,9 +82,32 @@ import Icon from './Icon.astro';
     color: inherit;
   }
 
+  /* GitHub-badge style title: mark on the left, repo path beside it. */
   .logo-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45em;
     font-family: Computer-Modern;
-    text-align: center;
-    font-size: 1.6em;
+    text-align: left;
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  .logo-title:hover {
+    text-decoration: underline;
+  }
+
+  .logo-title :global(.logo-github-icon) {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .logo-repo {
+    word-break: break-word;
+  }
+
+  .logo-repo :global(.logo-external-icon) {
+    font-size: 0.6rem;
   }
 </style>

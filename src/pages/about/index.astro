@@ -6,7 +6,6 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Banner from "@components/Banner.astro";
-import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
@@ -22,7 +21,7 @@ import { tex } from "@components/math/tex.astro";
   activeButton="About-button"
 >
 
-  <!-- Sidebar: TOC + highlights -->
+  <!-- Sidebar: TOC -->
   <Fragment slot="sidebar">
     <TableOfContents
       items={[
@@ -43,9 +42,6 @@ import { tex } from "@components/math/tex.astro";
         
       ]}
     />
-    <div class="highlights-and-attribute">
-      <HighlightsAndAttribute />
-    </div>
   </Fragment>
 
   <!-- Page content -->

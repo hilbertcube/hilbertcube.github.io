@@ -6,7 +6,6 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/TopicTags.astro";
-import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Icon from "@components/Icon.astro";
 import { getCollection } from "astro:content";
@@ -67,7 +66,7 @@ if (!meta) {
     </style>
   </Fragment>
 
-  <!-- Sidebar: TOC + highlights -->
+  <!-- Sidebar: TOC -->
   <Fragment slot="sidebar">
     <TableOfContents
       items={[
@@ -75,9 +74,6 @@ if (!meta) {
         { label: "Gallery", href: "#gallery" },
       ]}
     />
-    <div class="highlights-and-attribute">
-      <HighlightsAndAttribute />
-    </div>
   </Fragment>
 
   <Fragment slot="scripts">

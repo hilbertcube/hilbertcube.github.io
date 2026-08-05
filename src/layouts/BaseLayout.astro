@@ -104,12 +104,13 @@ const tex = String.raw;
       <div class="logo-and-side-nav">
         <Logo />
       </div>
-      <!-- Sidebar: use the "sidebar" slot to override (e.g. TOC on about/article pages) -->
-      <slot name="sidebar">
-        <div class="highlights-and-attribute">
-          <HighlightsAndAttribute />
-        </div>
-      </slot>
+      <!-- Sidebar: the "sidebar" slot adds page-specific content above the
+           highlights (e.g. a TOC on about/article pages); the highlights and
+           attribution below are rendered on every page. -->
+      <slot name="sidebar" />
+      <div class="highlights-and-attribute">
+        <HighlightsAndAttribute />
+      </div>
     </nav>
 
     <main class="general-wrapper" data-pagefind-body>
