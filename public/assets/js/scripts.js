@@ -1455,6 +1455,16 @@ const font_size = [
   ".content-grid"
 ];
 
+// The body font covers the page chrome too, not just the article body.
+// Widgets that pin their own font (settings panel, search bar, code blocks)
+// declare font-family on themselves and so stay put.
+const font_family = [
+  ".content-grid",
+  ".navbar",
+  ".top-nav",
+  ".footer-container"
+];
+
 // === Initialization ===
 document.addEventListener("DOMContentLoaded", function () {
   // Add smooth scrolling to all links
@@ -1487,7 +1497,7 @@ document.addEventListener("DOMContentLoaded", function () {
   BodyDarkMode();
   extendSearchBar();
 
-  Switcher("fontFamily", "font-select", [".content-grid"], 0);
+  Switcher("fontFamily", "font-select", font_family, 0);
   Switcher("fontSize", "font-size-select", font_size, 2);
   Switcher("display", "indicator-select", [".progress-container", ".progress-bar"], 1);
 

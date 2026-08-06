@@ -128,7 +128,7 @@
         "Programming",
         "Productivity"
       ],
-      "description": "A detailed guide on how I set up my Linux development environment using Ubuntu 24.04 on an NVIDIA machine, including installation steps, configurations, and useful tips for an efficient workflow. Ok, but why Ubuntu though? Ans: Very stable and much easier to use than Debian (my first distro)",
+      "description": "How I set up my Linux development environment using Ubuntu/Debian on an NVIDIA machine. A quick checklist of all necessary software and configs.",
       "date": "Dec. 2025"
     },
     {
