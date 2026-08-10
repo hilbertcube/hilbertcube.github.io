@@ -1,7 +1,9 @@
 {
     "emmet.includeLanguages": {
-        "javascript": "javascriptreact"
+        "javascript": "javascriptreact",
+        "astro": "html"
     },
+    "emmet.triggerExpansionOnTab": true,
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
@@ -21,10 +23,13 @@
   },
   "css.validate": true,
   "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode",
     "editor.formatOnSave": false,
     "editor.formatOnPaste": false,
-    "editor.formatOnType": false
+    "editor.formatOnType": false,
+    "editor.suggest.showWords": false
   },
+  "astro.content-intellisense": true,
   "github.copilot.enable": {
     "*": false
 }
