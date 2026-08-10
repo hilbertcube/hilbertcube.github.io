@@ -20,6 +20,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history: the sidebar's commit count and repository age are read
+          # from git at build time (src/utils/repoStats.ts).
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
