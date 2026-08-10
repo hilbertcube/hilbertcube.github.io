@@ -40,7 +40,7 @@ import Sample from "@components/code/Sample.astro";
         margin: auto;
       }
       /* Proof environment: a quiet left rule, opened by an italic "Proof."
-         lead-in and closed by a $\blacksquare$ at the end of the last line. */
+         lead-in and closed by a  at the end of the last line. */
       .proof {
         margin: 1.75rem 0 1.75rem 0;
         padding-left: 1rem;
@@ -128,17 +128,17 @@ import Sample from "@components/code/Sample.astro";
           href: "#runtime-analysis",
           children: [
             { label: "The Cost Model", href: "#cost-model" },
-            { label: "Example 1: Merge Sort", href: "#example-merge-sort" },
+            // { label: "Example 1: Merge Sort", href: "#example-merge-sort" },
             {
-              label: "Example 2: Binary Search",
+              label: "Example 1: Binary Search",
               href: "#example-binary-search",
             },
             {
-              label: "Example 3: Topological Sort",
+              label: "Example 2: Topological Sort",
               href: "#example-topological-sort",
             },
             {
-              label: "Example 4: Dijkstra's Algorithm",
+              label: "Example 3: Dijkstra's Algorithm",
               href: "#example-dijkstra",
             },
           ],
@@ -408,7 +408,7 @@ import Sample from "@components/code/Sample.astro";
           <li class="bullet">
             a matching
           <em>lower bound</em>, exhibiting an infinite family of inputs on which
-          the algorithm really is that slow — without it, one has only proved
+          the algorithm really is that slow; without it, one has only proved
           $O$, never $\Theta$.
           </li>
         </ol>
@@ -475,7 +475,7 @@ import Sample from "@components/code/Sample.astro";
               has exactly one tail and therefore appears in exactly one pair.
               The two counts of the same finite set agree. Repeating the
               argument with "tail" replaced by "head" gives the second equality.
-              $\blacksquare$
+              
             </p>
           </div>
 
@@ -501,20 +501,19 @@ import Sample from "@components/code/Sample.astro";
               i.e. <M>{tex`m = \lfloor x/(ab) \rfloor`}</M>. The ceiling identity
               follows by the same argument with all inequalities reversed, using
               that an integer is <M>{tex`\ge \lceil y \rceil`}</M> if and only if
-              it is $\ge y$. $\blacksquare$
+              it is $\ge y$. 
             </p>
           </div>
         </section>
 
-        <section id="example-merge-sort">
+        <!-- <section id="example-merge-sort">
           <h3>Example 1: Merge Sort</h3>
           <p>
             We analyze the following standard formulation, which sorts the
             subarray $A[p \ldots r]$ in place using an auxiliary buffer. The
             input size is $n = r - p + 1$.
           </p>
-          <Sample>
-Merge-Sort(A, p, r)                        // sorts A[p..r]
+          <Sample>Merge-Sort(A, p, r)                        // sorts A[p..r]
     if p &gt;= r then return                  // 0 or 1 element: already sorted
     q &lt;- floor((p + r) / 2)
     Merge-Sort(A, p, q)
@@ -572,7 +571,7 @@ Merge(A, p, q, r)
               soon as one of the two runs is exhausted. If $t = m$ were possible,
               both runs would have to be non-empty at the start of the $m$-th
               iteration, yet $m-1$ elements have already been consumed, leaving
-              exactly one element in total — a contradiction. Hence $t \le m-1$.
+              exactly one element in total, a contradiction. Hence $t \le m-1$.
               For the lower bound, let $X$ be whichever of $L$, $R$ is exhausted
               first; every one of its elements was output during loop 1, and each
               iteration of loop 1 outputs one element, so <M
@@ -582,14 +581,14 @@ Merge(A, p, q, r)
             <p>
               <em>Time.</em> Copying $L$ and $R$ costs $2m$ reads and $2m$ writes,
               and the loop bodies consist of a fixed number of primitive
-              operations — one comparison, one array read, one array write and two
-              increments — so each of the $m$ iterations costs at least $1$ and at
+              operations (one comparison, one array read, one array write and two
+              increments), so each of the $m$ iterations costs at least $1$ and at
               most some constant $c$ time units. Adding the $O(1)$ initialization
               of $i,j,k$, which for $m \ge 1$ is at most a constant multiple of
               $m$, the total lies between $m$ and <M>{tex`(4 + c + c')m`}</M> for
               a constant $c'$. Take <M>{tex`a_1 = 1`}</M> and <M
                 >{tex`a_2 = 4 + c + c'`}</M
-              >. $\blacksquare$
+              >. 
             </p>
           </div>
 
@@ -649,7 +648,7 @@ Merge(A, p, q, r)
               only if <M>{tex`k \ge \log_2 n`}</M>. The least such integer $k$ is
               <M>{tex`\lceil \log_2 n \rceil`}</M>, and for every smaller $k$ the
               bound <M>{tex`\lceil n/2^k \rceil \ge 2`}</M> shows some node still
-              splits. $\blacksquare$
+              splits. 
             </p>
           </div>
 
@@ -703,7 +702,7 @@ Merge(A, p, q, r)
               which is stronger than the $\Omega$ that the definition requires.
               Combining the two displays gives <M
                 >{tex`T(n) \in \Theta(n\log n)`}</M
-              >. $\blacksquare$
+              >. 
             </p>
           </div>
 
@@ -733,7 +732,7 @@ Merge(A, p, q, r)
               <E
                 >{tex`\begin{align*} T(2^{m+1}) &= 2\,T(2^m) + c\,2^{m+1} = 2\left( c\,m\,2^m + d\,2^m \right) + c\,2^{m+1} \\ &= c\,m\,2^{m+1} + c\,2^{m+1} + d\,2^{m+1} = c\,(m+1)\,2^{m+1} + d\,2^{m+1}, \end{align*}`}</E
               >
-              which is the formula for $m+1$. $\blacksquare$
+              which is the formula for $m+1$. 
             </p>
           </div>
 
@@ -778,13 +777,13 @@ Merge(A, p, q, r)
             their buffers, so the buffers alive at any instant lie on a single
             root-to-node path with only the deepest one in use; the peak is
             therefore the largest single buffer, $\Theta(n)$, at the root's merge.
-            Adding the $\Theta(\log n)$ words of stack — one frame per level, by
-            Lemma 4 — gives $\Theta(n)$ in total.
+            Adding the $\Theta(\log n)$ words of stack (one frame per level, by
+            Lemma 4) gives $\Theta(n)$ in total.
           </p>
-        </section>
+        </section> -->
 
         <section id="example-binary-search">
-          <h3>Example 2: Binary Search</h3>
+          <h3>Example 1: Binary Search</h3>
           <p>
             Binary search looks for a key $x$ in a sorted array
             $A[1 \ldots n]$. The claim "it halves the interval, therefore it is
@@ -793,8 +792,7 @@ Merge(A, p, q, r)
             <M>{tex`\lceil (s-1)/2 \rceil`}</M>, and one has to check that this
             still forces $\Theta(\log n)$ from both sides.
           </p>
-    <Sample>
-Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
+    <Sample>Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
   lo &lt;- 1;  hi &lt;- n
   while lo &lt;= hi do
   mid &lt;- floor((lo + hi) / 2)
@@ -837,7 +835,7 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
               > holds because for even $s$ the left side is $s/2$ exactly, and for
               odd $s$ it equals $(s-1)/2 &lt; s/2$; and <M
                 >{tex`\lfloor (s-1)/2 \rfloor \ge (s-2)/2`}</M
-              > because <M>{tex`\lfloor y \rfloor > y-1`}</M>. $\blacksquare$
+              > because <M>{tex`\lfloor y \rfloor > y-1`}</M>. 
             </p>
           </div>
 
@@ -865,9 +863,9 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
               >. The iterations are therefore indexed by <M
                 >{tex`k = 0, 1, \ldots, \lfloor \log_2 n \rfloor`}</M
               >, at most <M>{tex`\lfloor \log_2 n \rfloor + 1`}</M> of them. Each
-              iteration executes a fixed number of primitive operations — one
+              iteration executes a fixed number of primitive operations (one
               addition, one halving, one array read and at most two comparisons
-              and one assignment — say at most $c$; adding the constant $d$ for
+              and one assignment), say at most $c$; adding the constant $d$ for
               initialization and the final return,
               <E
                 >{tex`\begin{equation}T(n) \;\le\; c\left( \lfloor \log_2 n \rfloor + 1 \right) + d \;\le\; 2c \log_2 n \quad\text{for } n \ge 2^{(c+d)/c},\end{equation}`}</E
@@ -886,8 +884,8 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
               <E
                 >{tex`\begin{equation}s_{k+1} \;\ge\; \frac{s_k - 2}{2} \;\ge\; \frac{n/2^k - 4}{2} \;=\; \frac{n}{2^{k+1}} - 2.\end{equation}`}</E
               >
-              Consequently <M>{tex`s_k \ge 1`}</M> — and hence another iteration
-              runs — whenever <M>{tex`n/2^k \ge 3`}</M>, that is whenever <M
+              Consequently <M>{tex`s_k \ge 1`}</M>, and hence another iteration
+              runs, whenever <M>{tex`n/2^k \ge 3`}</M>, that is whenever <M
                 >{tex`k \le \log_2 n - \log_2 3`}</M
               >. The number of iterations on this input is therefore at least
               <M>{tex`\log_2 n - \log_2 3 \ge \log_2 n - 2`}</M>, and since each
@@ -895,7 +893,7 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
                 >{tex`T(n) \ge \log_2 n - 2 \ge \tfrac12 \log_2 n`}</M
               > for $n \ge 16$. With the upper bound this gives <M
                 >{tex`T(n) \in \Theta(\log n)`}</M
-              >. $\blacksquare$
+              >. 
             </p>
           </div>
 
@@ -905,7 +903,7 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
               >{tex`T(n) = T(\lfloor n/2 \rfloor) + \Theta(1)`}</M
             >, which is the Master Theorem with $a=1$, $b=2$, <M
               >{tex`\log_b a = 0`}</M
-            > and <M>{tex`f(n) = \Theta(1) = \Theta(n^0 \log^0 n)`}</M> — Case 2
+            > and <M>{tex`f(n) = \Theta(1) = \Theta(n^0 \log^0 n)`}</M>: Case 2
             with $k=0$, giving <M>{tex`T(n) \in \Theta(\log n)`}</M>. Unrolling by
             hand is just as quick: <M
               >{tex`T(n) = T(n/2^k) + \Theta(k)`}</M
@@ -932,7 +930,7 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
               each of height at most $h-1$; every leaf of the tree is a leaf of
               one of the subtrees, so the leaf count is at most <M
                 >{tex`2 \cdot 2^{h-1} = 2^h`}</M
-              >. $\blacksquare$
+              >. 
             </p>
           </div>
 
@@ -964,7 +962,7 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
                 >{tex`h \ge \lceil \log_2(n+1) \rceil`}</M
               >. A root-to-leaf path of that length is an input on which <M
                 >{tex`\mathcal{A}`}</M
-              > makes that many comparisons. $\blacksquare$
+              > makes that many comparisons. 
             </p>
           </div>
 
@@ -982,13 +980,13 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
             iteration and, by the theorem above, makes at most <M
               >{tex`\lfloor \log_2 n \rfloor + 1`}</M
             > of them before returning, so its stack usage is $\Theta(\log n)$ in
-            the worst case — unless the compiler eliminates the tail call, in
+            the worst case, unless the compiler eliminates the tail call, in
             which case it is again $\Theta(1)$.
           </p>
         </section>
 
         <section id="example-topological-sort">
-          <h3>Example 3: Topological Sort</h3>
+          <h3>Example 2: Topological Sort</h3>
           <p>
             Let $G = (V,E)$ be a directed graph given by adjacency lists, and
             write $V$ and $E$ for both the sets and their cardinalities, as is
@@ -996,11 +994,10 @@ Binary-Search(A, n, x)                 // A[1..n] sorted nondecreasingly
             which every edge points forward. The statement "each vertex and each
             edge is visited a constant number of times" is the whole content of
             the $\Theta(V+E)$ bound, so it is precisely that statement which has
-            to be proved — and it is not obvious, because a vertex could in
+            to be proved, and it is not obvious, because a vertex could in
             principle be pushed onto the queue once per incoming edge.
           </p>
-          <Sample>
-Kahn(G)
+          <Sample>Kahn(G)
     for each v in V do indeg[v] &lt;- 0                      // pass 1
     for each u in V do                                    // pass 2
         for each v in Adj[u] do indeg[v] &lt;- indeg[v] + 1
@@ -1030,11 +1027,11 @@ Kahn(G)
               it changes. A strictly decreasing integer-valued function takes the
               value $0$ at most once, so there is at most one instant $t_v$ at
               which <M>{tex`\mathit{indeg}[v] = 0`}</M> holds and can be observed. Every
-              enqueue of $v$ is guarded by a test <M>{tex`\mathit{indeg}[v] = 0`}</M> — in
+              enqueue of $v$ is guarded by a test <M>{tex`\mathit{indeg}[v] = 0`}</M> (in
               pass 3 if <M>{tex`\deg^-(v) = 0`}</M> already, and in the main loop
-              immediately after a decrement — hence every enqueue of $v$ happens
+              immediately after a decrement); hence every enqueue of $v$ happens
               at $t_v$, and the tests in question occur at most once each at that
-              instant. $\blacksquare$
+              instant. 
             </p>
           </div>
 
@@ -1054,7 +1051,7 @@ Kahn(G)
               removes one item, the number of dequeues of $u$ is at most the
               number of enqueues of $u$, which is at most one by Lemma 8. The
               count of decrements follows from the handshake identity of Lemma 1.
-              $\blacksquare$
+              
             </p>
           </div>
 
@@ -1090,13 +1087,13 @@ Kahn(G)
                 >{tex`i < j`}</M
               >, and then <M
                 >{tex`v_j \to v_{j-1} \to \cdots \to v_i`}</M
-              > is a directed cycle — contradicting acyclicity. Hence $W$ is
+              > is a directed cycle, contradicting acyclicity. Hence $W$ is
               empty. Conversely, if $G$ contains a cycle $C$, no vertex of $C$ can
               ever be dequeued: the first vertex of $C$ to be dequeued would have
               had its counter reach $0$, yet its predecessor on $C$ had not been
               dequeued at that time and so had not contributed its decrement, and
               the counter never dips below the number of undecremented in-edges.
-              Therefore <M>{tex`\mathit{count} \le |V| - |C| < |V|`}</M>. $\blacksquare$
+              Therefore <M>{tex`\mathit{count} \le |V| - |C| < |V|`}</M>. 
             </p>
           </div>
 
@@ -1133,7 +1130,7 @@ Kahn(G)
               cost of at least one primitive operation each, so <M
                 >{tex`T \ge V + E`}</M
               > on every input. Hence <M>{tex`T \in \Theta(V+E)`}</M>.
-              $\blacksquare$
+              
             </p>
           </div>
 
@@ -1179,21 +1176,21 @@ Kahn(G)
             scan of every adjacency list gives $\Omega(V+E)$. The order produced
             is correct because for every edge $(u,v)$ one has $f(v) &lt; f(u)$ for
             the finishing times: when the edge is explored $u$ is gray, and $v$ is
-            then either white — so it becomes a descendant of $u$ and finishes
-            first — or black, so it has already finished, or gray, which would
+            then either white, in which case it becomes a descendant of $u$ and
+            finishes first, or black, so it has already finished, or gray, which would
             make $(u,v)$ a back edge and produce a cycle, impossible in a DAG.
           </p>
 
           <p>
             <strong>Space.</strong> Both formulations use $\Theta(V)$ auxiliary
-            space — the counters and queue for Kahn, the colors and the
-            recursion stack (depth at most $V$) for DFS — on top of the
+            space (the counters and queue for Kahn, the colors and the
+            recursion stack of depth at most $V$ for DFS) on top of the
             $\Theta(V+E)$ occupied by the input itself.
           </p>
         </section>
 
         <section id="example-dijkstra">
-          <h3>Example 4: Dijkstra's Algorithm</h3>
+          <h3>Example 3: Dijkstra's Algorithm</h3>
           <p>
             Dijkstra's algorithm computes single-source shortest paths in a
             directed graph with non-negative edge weights <M
@@ -1205,8 +1202,7 @@ Kahn(G)
             makes the array, binary-heap and Fibonacci-heap variants three
             corollaries of one theorem instead of three separate arguments.
           </p>
-          <Sample>
-Dijkstra(G, w, s)
+          <Sample>Dijkstra(G, w, s)
     for each v in V do d[v] &lt;- infinity;  parent[v] &lt;- nil;  done[v] &lt;- false
     d[s] &lt;- 0
     Q &lt;- priority queue containing every v in V, keyed by d[v]
@@ -1242,7 +1238,7 @@ Dijkstra(G, w, s)
               decrease-keys by $E$. Outside the queue, the initialization is
               $\Theta(V)$, the main loop's per-iteration bookkeeping is $O(1)$,
               and the adjacency scans cost $\Theta(1)$ per entry, $\Theta(E)$ in
-              total; the sum is $\Theta(V+E)$. $\blacksquare$
+              total; the sum is $\Theta(V+E)$. 
             </p>
           </div>
 
@@ -1250,8 +1246,8 @@ Dijkstra(G, w, s)
             Note what this proof did <em>not</em> use: non-negativity of the
             weights. The counting holds because of the <code>done</code> flag,
             which lets a vertex be extracted only once. Non-negativity is what
-            makes that safe — it is needed for correctness, to guarantee that
-            <M>{tex`d[u]`}</M> is already final when $u$ is extracted — and a
+            makes that safe: it is needed for correctness, to guarantee that
+            <M>{tex`d[u]`}</M> is already final when $u$ is extracted. A
             "lazy" implementation that reinserts vertices instead of decreasing
             keys can, on graphs with negative edges, perform exponentially many
             extractions. Correctness and the running-time bound are entangled
@@ -1294,7 +1290,7 @@ Dijkstra(G, w, s)
                 >{tex`\lceil h/2^{\ell+1} \rceil`}</M
               > nodes whose sift-down travels at most <M>{tex`\eta - \ell`}</M>
               levels, and that <M>{tex`\sum_{i \ge 0} i/2^i = 2`}</M>. It is also
-              $\Omega(h)$ since every element is touched. $\blacksquare$
+              $\Omega(h)$ since every element is touched. 
             </p>
           </div>
 
@@ -1363,7 +1359,7 @@ Dijkstra(G, w, s)
                 >{tex`O(V + E + V \log V)`}</M
               >, and adding the $\Theta(V+E)$ of Lemma 11 gives <M
                 >{tex`O(E + V\log V)`}</M
-              >. $\blacksquare$
+              >. 
             </p>
           </div>
 
@@ -1372,7 +1368,7 @@ Dijkstra(G, w, s)
             bound <M>{tex`\Theta((V+E)\log V)`}</M> is quoted so often that it is
             worth saying exactly why it is an abuse of notation. Lemma 11 bounds
             the number of decrease-keys by $E$, but on many inputs almost none of
-            them fire — if the edges are scanned in an order that never improves a
+            them fire: if the edges are scanned in an order that never improves a
             tentative distance, the cost is <M>{tex`\Theta(V \log V + E)`}</M>,
             which is smaller. And an individual heap operation costs
             <M>{tex`\Theta(\log V)`}</M> only in the worst case; a sift-up that
@@ -1396,8 +1392,8 @@ Dijkstra(G, w, s)
             <E
               >{tex`\begin{equation}T \;\in\; \Omega\big(E + V \log V\big)\end{equation}`}</E
             >
-            for every implementation with a comparison-based priority queue —
-            exactly the Fibonacci-heap upper bound. In that model Dijkstra with a
+            for every implementation with a comparison-based priority queue,
+            which is exactly the Fibonacci-heap upper bound. In that model Dijkstra with a
             Fibonacci heap is optimal, and the binary heap's extra <M
               >{tex`\log V`}</M
             > factor on the $E$ term is the price of its cheaper decrease-key.
@@ -1542,7 +1538,7 @@ Dijkstra(G, w, s)
                 <td>Linearithmic</td>
                 <td>
                   $\Theta(\log n)$ divide-and-conquer levels, each doing
-                  $\Theta(n)$ work — and the optimum for comparison sorting
+                  $\Theta(n)$ work, and the optimum for comparison sorting
                 </td>
                 <td>
                   Merge sort, heap sort, quicksort (average case); the Fast
@@ -1567,9 +1563,9 @@ Dijkstra(G, w, s)
                 <td>Cubic</td>
                 <td>Three nested loops over the input</td>
                 <td>
-                  Naive matrix multiplication — Strassen's algorithm improves it
+                  Naive matrix multiplication (Strassen's algorithm improves it
                   to <M>{tex`\Theta(n^{\log_2 7})`}</M> at the cost of a large
-                  constant; Floyd–Warshall all-pairs shortest paths
+                  constant); Floyd–Warshall all-pairs shortest paths
                 </td>
               </tr>
               <tr>
@@ -1603,7 +1599,7 @@ Dijkstra(G, w, s)
                 <td>Exponential with a growing base</td>
                 <td>
                   Each of $n$ positions chooses independently among $n$ values,
-                  rather than consuming one of them as a permutation does —
+                  rather than consuming one of them as a permutation does,
                   hence <M>{tex`n^n/n! \approx e^n`}</M>
                 </td>
                 <td>
@@ -1619,7 +1615,7 @@ Dijkstra(G, w, s)
                 <td>Doubly exponential, non-elementary, Ackermannian</td>
                 <td>
                   Decision procedures whose search space is itself exponential
-                  in an exponential — or, past that, bounded by no fixed tower
+                  in an exponential, or past that, bounded by no fixed tower
                   of exponentials at all. These are the mirror image of the
                   <M>{tex`\alpha(n)`}</M> row at the top of the table
                 </td>
@@ -1634,16 +1630,6 @@ Dijkstra(G, w, s)
             </tbody>
           </table>
         </div>
-
-        <p>
-          The last two rows deserve a caveat. The factorial is where the table
-          stops being about programs anyone runs: below it, the growth no longer
-          comes from combinatorial search but from decision procedures in logic
-          and computer algebra, which terminate in principle and are useless on
-          anything but the smallest inputs. Past those rows one leaves
-          algorithms altogether — the busy-beaver function grows faster than
-          every computable function, so nothing computes it at all.
-        </p>
       </section>
 
       <section id="references">
