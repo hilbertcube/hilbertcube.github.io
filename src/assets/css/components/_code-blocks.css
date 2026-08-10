@@ -3,6 +3,11 @@
  * Code blocks, syntax highlighting, math equations, and academic elements
  */
 
+code {
+  color: var(--inline-code-text);
+  font-size: 13px;
+}
+
 /* Inline code */
 .inline-code {
   font-size: 13px;
@@ -69,10 +74,10 @@ pre {
   font-size: 12px;
   text-align: left;
   position: relative;
+  box-sizing: border-box;
   width: 100%;
-  height: 100%;
   overflow-x: auto;
-  padding: 0 25px;
+  padding: 10px 25px;
 }
 
 /* Copy button */
