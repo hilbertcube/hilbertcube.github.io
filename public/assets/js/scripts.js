@@ -1488,7 +1488,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   setupDropdownEffect();
-  fetchCommit();
   window.onscroll = scrollIndicator;
 
   const initialLightTheme = codeThemeSwitch("light-theme-select", "lightTheme", 0);
@@ -1503,101 +1502,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
   SearchBar();
 });
-
-function fetchCommit() {
-  // Fetch repository stats
-  Promise.all([
-    fetch('https://api.github.com/repos/hilbertcube/hilbertcube.github.io'),
-    fetch('https://api.github.com/repos/hilbertcube/hilbertcube.github.io/commits?per_page=1'),
-    fetch('/assets/json/latest_commit.json'),
-    fetch('/assets/json/articles.json'),
-    fetch('https://api.github.com/repos/hilbertcube/hilbertcube.github.io/git/trees/main?recursive=1')
-  ])
-    .then(async ([repoRes, commitsRes, localCommitRes, articlesRes, treeRes]) => {
-      const repoData = await repoRes.json();
-      const articlesData = await articlesRes.json();
-      const treeData = await treeRes.json();
-      const totalCommits = Math.round((commitsRes.headers.get('Link')
-        ? parseInt(commitsRes.headers.get('Link').match(/page=(\d+)>; rel="last"/)?.[1] || '0')
-        : 1) / 2);
-
-      // Calculate lines of code by filtering out binary/image files
-      const codeExtensions = ['.html', '.css', '.js', '.json', '.md', '.txt', '.py', '.sh', '.xml', '.yml', '.yaml'];
-      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico', '.bmp', '.pdf', '.woff', '.woff2', '.ttf', '.otf', '.eot'];
-
-      const codeFiles = treeData.tree?.filter(file => {
-        const hasCodeExt = codeExtensions.some(ext => file.path.toLowerCase().endsWith(ext));
-        const hasImageExt = imageExtensions.some(ext => file.path.toLowerCase().endsWith(ext));
-        return hasCodeExt && !hasImageExt && file.type === 'blob';
-      }) || [];
-
-      // Estimate lines: smaller multiplier since we're only counting actual code files
-      // Average code file has ~50-100 lines, and average line is ~50 bytes
-      const totalCodeSize = codeFiles.reduce((sum, file) => sum + (file.size || 0), 0);
-      const estimatedLines = Math.round(totalCodeSize / 50); // ~50 bytes per line of code
-
-      // Count articles and posts
-      const articleCount = articlesData.articles?.length || 0;
-      const postCount = articlesData.posts?.length || 0;
-
-      // Calculate repository age
-      const createdDate = new Date(repoData.created_at);
-      const now = new Date();
-      const ageInDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
-      const years = Math.floor(ageInDays / 365);
-      const months = Math.floor((ageInDays % 365) / 30);
-      const ageString = years > 0
-        ? `${years} year${years > 1 ? 's' : ''}, ${months} month${months !== 1 ? 's' : ''}`
-        : `${months} month${months !== 1 ? 's' : ''}`;
-
-      // Format numbers with commas
-      const formatNumber = (num) => num.toLocaleString('en-US');
-
-      // Update repo stats
-      const statsElement = document.getElementById('repo-stats');
-      if (statsElement) {
-        statsElement.textContent =
-          `\nTotal Updates: ${formatNumber(totalCommits)}\n` +
-          `Estimated Lines: ${formatNumber(estimatedLines)}\n` +
-          `Total Articles: ${articleCount}\n` +
-          `Total Posts: ${postCount}\n` +
-          `Repository Age: ${ageString}`;
-      }
-
-      // Handle latest commit info
-      return localCommitRes.json();
-    })
-    .then(commit => {
-      const message = commit.commit.message;
-      const utcDateStr = commit.commit.author.date;
-
-      // Convert to California time with comma instead of 'at'
-      const localDateObj = new Date(utcDateStr);
-      const datePart = localDateObj.toLocaleDateString('en-US', {
-        timeZone: 'America/Los_Angeles',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-      });
-      const timePart = localDateObj.toLocaleTimeString('en-US', {
-        timeZone: 'America/Los_Angeles',
-        hour: 'numeric',
-        minute: '2-digit'
-      });
-
-      const commitEl = document.getElementById('commit-info');
-      if (commitEl) {
-        commitEl.textContent =
-          `\nLast Updated: ${datePart}, ${timePart} (PST)\nCommit: ${message}`;
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-      const statsElement = document.getElementById('repo-stats');
-      if (statsElement) {
-        statsElement.textContent = 'Unable to load stats';
-      }
-    });
-}
 
 // js minifier: https://www.toptal.com/developers/javascript-minifier

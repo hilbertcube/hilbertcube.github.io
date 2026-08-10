@@ -2,14 +2,20 @@
 /**
  * src/components/code/Sample.astro
  * =================================
- * Console output / sample block displayed as centered preformatted text.
- * Wraps content in <pre class="console"><samp>…</samp></pre>.
+ * Console output / sample block displayed as preformatted text.
+ * Wraps content in <pre class="console"><code>…</code></pre>.
+ *
+ * Pass listings as a `raw` template literal (see code/raw.astro) so that
+ * indentation and `<` survive:
+ *
+ *   <Sample>{raw`…`}</Sample>      or      <Sample code={raw`…`} />
  */
+interface Props {
+  code?: string;
+}
+const { code } = Astro.props;
 ---
 
-<div
-  class="code-container"
-  style="text-align: center; margin: 25px auto; max-width: 40em;"
->
-  <pre class="console" style="display:inline-block"><code><slot /></code></pre>
+<div class="code-container" style="margin: 25px auto;">
+  <pre class="console"><code>{code !== undefined ? code : <slot />}</code></pre>
 </div>

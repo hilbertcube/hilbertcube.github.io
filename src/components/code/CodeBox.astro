@@ -20,7 +20,7 @@ interface Props {
 const { language = "bash", lineNumbers = false } = Astro.props;
 ---
 
-<div class="box" style="width: 80%; margin: 25px auto;">
+<div class="box" style="width: auto; max-width: none; margin: 25px auto;">
   <div class="code-container">
     <CopyButton />
     <pre

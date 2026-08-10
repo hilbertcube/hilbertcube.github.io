@@ -19,10 +19,7 @@ interface Props {
 const { language = "bash" } = Astro.props;
 ---
 
-<div
-  class="code-container"
-  style="text-align: center; margin: 25px auto; max-width: 40em;"
->
+<div class="code-container" style="margin: 25px auto;">
   <CopyButton />
   <pre><code class={`language-${language}`}><slot /></code></pre>
 </div>
