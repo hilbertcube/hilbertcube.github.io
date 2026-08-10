@@ -19,7 +19,7 @@ interface Props {
 const { tabs, tabClass } = Astro.props;
 ---
 
-<div class="box" style="margin: 50px auto;">
+<div class="box" style="width: auto; max-width: none; margin: 50px auto;">
   <div class="tab-button-container">
     {
       tabs.map((tab, i) => (

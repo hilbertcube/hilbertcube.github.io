@@ -4,13 +4,35 @@
  * ============================
  */
 import { getCollection } from "astro:content";
+import { getRepoStats } from "../utils/repoStats";
 
 const articles = (await getCollection("articles")).map((entry) => entry.data);
+const posts = await getCollection("posts");
 
 const highlightIds = ["orb-cuda-1", "chladni-1", "chladni-2", "hessian-1"];
 const highlights = highlightIds
   .map((id) => articles.find((a: { id: string }) => a.id === id))
   .filter(Boolean);
+
+// Read from git during the build instead of from the GitHub API in the browser.
+const stats = getRepoStats();
+
+// Built without indentation: the panel renders with `white-space: pre-line`,
+// which keeps the newlines but would collapse any leading spaces into one.
+const repoStats = [
+  "",
+  `Total Updates: ${stats.totalUpdates}`,
+  `Lines of Code: ${stats.linesOfCode}`,
+  `Total Articles: ${articles.length}`,
+  `Total Posts: ${posts.length}`,
+  `Repository Age: ${stats.repositoryAge}`,
+].join("\n");
+
+const commitInfo = [
+  "",
+  `Last Updated: ${stats.lastUpdated}`,
+  `Commit: ${stats.lastCommitMessage}`,
+].join("\n");
 ---
 
 <div class="side-nav-content-container">
@@ -20,9 +42,9 @@ const highlights = highlightIds
     </header>
     <div class="commit-log-container">
       <div class="commit-log-content">
-        <span class="commit-log-header">&gt; Fetched via Github API</span>
-        <span id="repo-stats">Loading...</span>
-        <span id="commit-info">Loading...</span>
+        <span class="commit-log-header">&gt; Read from git at build time</span>
+        <span id="repo-stats">{repoStats}</span>
+        <span id="commit-info">{commitInfo}</span>
       </div>
     </div>
     <style is:global>

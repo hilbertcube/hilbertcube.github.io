@@ -23,10 +23,7 @@ interface Props {
 const { host = "pc", output, continuationStr } = Astro.props;
 ---
 
-<div
-  class="code-container"
-  style="text-align: center; margin: 25px auto; max-width: 40em;"
->
+<div class="code-container" style="margin: 25px auto;">
   <CopyButton />
   <pre
     class="command-line"
