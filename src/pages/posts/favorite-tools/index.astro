@@ -18,6 +18,7 @@ if (!meta) {
   throw new Error(`Post metadata not found for slug: ${slug}`);
 }
 import CodeBlock from "@components/code/CodeBlock.astro";
+import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -62,19 +63,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
   </Fragment>
 
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cmake.js"
-    ></script>
+    <Scripts use={["blog-setting", "json", "cmake"]} />
   </Fragment>
 
   <div class="content-grid">

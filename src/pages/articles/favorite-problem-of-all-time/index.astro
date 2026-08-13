@@ -22,6 +22,7 @@ import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
+import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -57,7 +58,7 @@ import { tex } from "@components/math/tex.astro";
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
+      <div class="date">{meta.date}</div>
       <div class="Quote">
         <div class="Quote-content">
           &#8220;Real mathematics must be justified as art if it can be
@@ -220,22 +221,6 @@ import { tex } from "@components/math/tex.astro";
   
 
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
-    ></script>
+    <Scripts use={["blog-setting", "cpp", "line-numbers"]} />
   </Fragment>
 </BaseLayout>

@@ -22,6 +22,7 @@ import { tex } from "@components/math/tex.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import ShellScript from "@components/code/ShellScript.astro";
+import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -58,7 +59,7 @@ import ShellScript from "@components/code/ShellScript.astro";
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
+      <div class="date">{meta.date}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -509,156 +510,164 @@ features.img_size = grayImg.size();
 
     <section id="benchmarks">
       <h2>Data Collection and Benchmarks</h2>
-      <h3>System Specs</h3>
-      <div class="table-wrapper">
-        <table
-          style="margin-left: auto; margin-right: auto; text-align: center; min-width: 90%;"
-          id="setup-table"
-        >
-          <tr
-            style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
+
+      <section id="system-specs">
+
+        <h3>System Specs</h3>
+        <div class="table-wrapper">
+          <table
+            style="margin-left: auto; margin-right: auto; text-align: center; min-width: 90%;"
+            id="setup-table"
           >
-            <th></th>
-            <th style="border-left: 1px solid var(--grid-text-color)"
-              ><strong>First Setup</strong></th
+            <tr
+              style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
             >
-            <th><strong>Second Setup</strong></th>
-            <th><strong>Third Setup</strong></th>
-            <th><strong>Fourth Setup</strong></th>
-          </tr>
-          <tr style="border: 0; ">
-            <td>CPU</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >Intel Core i7-8750H</td
-            >
-            <td>Intel Core i9-13900KF</td>
-            <td>Intel Core i7-7700k</td>
-            <td>Intel Xeon Gold</td>
-          </tr>
-          <tr>
-            <td>GPU</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >NVIDIA GTX 1070 Max-Q</td
-            >
-            <td>NVIDIA RTX 4060Ti</td>
-            <td>NVIDIA GTX 1070</td>
-            <td>NVIDIA Tesla-v100</td>
-          </tr>
-          <tr>
-            <td>OpenCV Version</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >OpenCV 4.10.0</td
-            >
-            <td>OpenCV 4.10.0</td>
-            <td>OpenCV 4.5.5</td>
-            <td>OpenCV 4.5.5</td>
-          </tr>
-          <tr>
-            <td>RAM</td>
-            <td style="border-left: 1px solid var(--grid-text-color)">16GB</td>
-            <td>32GB</td>
-            <td>64GB</td>
-            <td>192GB</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--grid-text-color);">
-            <td>GPU Memory</td>
-            <td style="border-left: 1px solid var(--grid-text-color)">8GB</td>
-            <td>16GB</td>
-            <td>8GB</td>
-            <td>16GB</td>
-          </tr>
-        </table>
-      </div>
-
-      <h3>CUDA-accelerated Setups</h3>
-      <p>
-        The data set for this project is a set of 500 4k images, but we process
-        them in a patch of 64 images, each with a resolution of 3840 $\times$
-        2160 px. The setups that used CUDA to accelerate the processing of these
-        high-resolution images will be limited to the first and second setup.
-      </p>
-
-      <p>
-        <strong>CPU Implementation.</strong> We will evaluate the algorithm's performance
-        under different conditions, including with and without CUDA acceleration.
-        In the absence of CUDA acceleration, we will record the impact of distributed
-        memory design (utilizing MPI) and shared memory design (utilizing OpenMP)
-        on the algorithm's speed. Given our limited resources, we will test the processing
-        speed using 1, 2, 4, 8, 16, and 32 CPU cores, as well as using 1, 2, 4, 8,
-        16, 24 threads, and 32 threads.
-      </p>
-
-      <p>
-        <strong>GPU Implementation.</strong> For the CUDA-accelerated version of the
-        algorithm, the tests will concentrate exclusively on the distributed memory
-        design. This focus is due to the current limitations of the experiment, which
-        prevent us from utilizing the GPU implementation across multiple threads.
-        In simple words, OpenMP is not available for CUDA. I am still working on this
-        problem.
-      </p>
-
-      <TwoColumns style="margin: 30px 0 10px; column-gap: 1.2em;">
-        <div>
-          <span style="font-size: large;"
-            ><strong>Performance Testing without CUDA Acceleration</strong
-            ></span
-          >
-          <ul style="line-height: 1.6;">
-            <li class="bullet">
-              <strong>Benchmark Test:</strong> Record the processing speed of 64 images
-              without any optimization, which will serve as the initial benchmark
-              for the experiment.
-            </li>
-            <li class="bullet">
-              <strong>Single-Core Execution (Serial Processing):</strong> Test the
-              processing speed of 64 images using a single CPU core.
-            </li>
-            <li class="bullet">
-              <strong>Distributed Memory Design (Parallel Processing):</strong> Test
-              the processing speed for 1, 2, 4, 8, 16, and 32 CPU cores.
-            </li>
-            <li class="bullet">
-              <strong
-                >Single-Core Execution and Shared Memory Design (Serial
-                Threading):</strong
-              > Test the processing speed for 1, 2, 4, 8, 16, 24, and 32 threads with
-              1 core.
-            </li>
-            <li class="bullet">
-              <strong
-                >Distributed Memory and Shared Memory Design (Parallel
-                Processing and Multi-threading):</strong
+              <th></th>
+              <th style="border-left: 1px solid var(--grid-text-color)"
+                ><strong>First Setup</strong></th
               >
-              Test the processing speed using combinations such as 2 cores 2 threads,
-              2 cores 4 threads, 4 cores 2 threads, 4 cores 4 threads, etc.
-            </li>
-          </ul>
+              <th><strong>Second Setup</strong></th>
+              <th><strong>Third Setup</strong></th>
+              <th><strong>Fourth Setup</strong></th>
+            </tr>
+            <tr style="border: 0; ">
+              <td>CPU</td>
+              <td style="border-left: 1px solid var(--grid-text-color)"
+                >Intel Core i7-8750H</td
+              >
+              <td>Intel Core i9-13900KF</td>
+              <td>Intel Core i7-7700k</td>
+              <td>Intel Xeon Gold</td>
+            </tr>
+            <tr>
+              <td>GPU</td>
+              <td style="border-left: 1px solid var(--grid-text-color)"
+                >NVIDIA GTX 1070 Max-Q</td
+              >
+              <td>NVIDIA RTX 4060Ti</td>
+              <td>NVIDIA GTX 1070</td>
+              <td>NVIDIA Tesla-v100</td>
+            </tr>
+            <tr>
+              <td>OpenCV Version</td>
+              <td style="border-left: 1px solid var(--grid-text-color)"
+                >OpenCV 4.10.0</td
+              >
+              <td>OpenCV 4.10.0</td>
+              <td>OpenCV 4.5.5</td>
+              <td>OpenCV 4.5.5</td>
+            </tr>
+            <tr>
+              <td>RAM</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">16GB</td>
+              <td>32GB</td>
+              <td>64GB</td>
+              <td>192GB</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--grid-text-color);">
+              <td>GPU Memory</td>
+              <td style="border-left: 1px solid var(--grid-text-color)">8GB</td>
+              <td>16GB</td>
+              <td>8GB</td>
+              <td>16GB</td>
+            </tr>
+          </table>
         </div>
-        <div>
-          <span style="font-size: large;"
-            ><strong>Performance Testing with CUDA Acceleration</strong></span
-          >
-          <ul style="line-height: 1.6;">
-            <li class="bullet">
-              <strong>Benchmark Test:</strong> Record the processing speed of 64 images
-              under the optimized design of 1 core and 1 threads with CUDA was recorded
-              as the second part experimental initial benchmark.
-            </li>
-            <li class="bullet">
-              <strong>Single-Core Execution (Serial Processing):</strong> Test the
-              processing speed of 64 images using a single CPU core and GPU acceleration
-              with 1 core.
-            </li>
-            <li class="bullet">
-              <strong
-                >Distributed Memory Design (Parallel Processing and
-                Serial-threading):</strong
-              > Test the processing speed using 1, 2, 4, 8, 16, and 24 CPU cores with
-              GPU acceleration.
-            </li>
-          </ul>
-        </div>
-      </TwoColumns>
+      </section>
+
+      <section id="cuda-accelerated-setup">
+
+        <h3>CUDA-accelerated Setups</h3>
+        <p>
+          The data set for this project is a set of 500 4k images, but we process
+          them in a patch of 64 images, each with a resolution of 3840 $\times$
+          2160 px. The setups that used CUDA to accelerate the processing of these
+          high-resolution images will be limited to the first and second setup.
+        </p>
+  
+        <p>
+          <strong>CPU Implementation.</strong> We will evaluate the algorithm's performance
+          under different conditions, including with and without CUDA acceleration.
+          In the absence of CUDA acceleration, we will record the impact of distributed
+          memory design (utilizing MPI) and shared memory design (utilizing OpenMP)
+          on the algorithm's speed. Given our limited resources, we will test the processing
+          speed using 1, 2, 4, 8, 16, and 32 CPU cores, as well as using 1, 2, 4, 8,
+          16, 24 threads, and 32 threads.
+        </p>
+  
+        <p>
+          <strong>GPU Implementation.</strong> For the CUDA-accelerated version of the
+          algorithm, the tests will concentrate exclusively on the distributed memory
+          design. This focus is due to the current limitations of the experiment, which
+          prevent us from utilizing the GPU implementation across multiple threads.
+          In simple words, OpenMP is not available for CUDA. I am still working on this
+          problem.
+        </p>
+  
+        <TwoColumns style="margin: 30px 0 10px; column-gap: 1.2em;">
+          <div>
+            <span style="font-size: large;"
+              ><strong>Performance Testing without CUDA Acceleration</strong
+              ></span
+            >
+            <ul style="line-height: 1.6;">
+              <li class="bullet">
+                <strong>Benchmark Test:</strong> Record the processing speed of 64 images
+                without any optimization, which will serve as the initial benchmark
+                for the experiment.
+              </li>
+              <li class="bullet">
+                <strong>Single-Core Execution (Serial Processing):</strong> Test the
+                processing speed of 64 images using a single CPU core.
+              </li>
+              <li class="bullet">
+                <strong>Distributed Memory Design (Parallel Processing):</strong> Test
+                the processing speed for 1, 2, 4, 8, 16, and 32 CPU cores.
+              </li>
+              <li class="bullet">
+                <strong
+                  >Single-Core Execution and Shared Memory Design (Serial
+                  Threading):</strong
+                > Test the processing speed for 1, 2, 4, 8, 16, 24, and 32 threads with
+                1 core.
+              </li>
+              <li class="bullet">
+                <strong
+                  >Distributed Memory and Shared Memory Design (Parallel
+                  Processing and Multi-threading):</strong
+                >
+                Test the processing speed using combinations such as 2 cores 2 threads,
+                2 cores 4 threads, 4 cores 2 threads, 4 cores 4 threads, etc.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <span style="font-size: large;"
+              ><strong>Performance Testing with CUDA Acceleration</strong></span
+            >
+            <ul style="line-height: 1.6;">
+              <li class="bullet">
+                <strong>Benchmark Test:</strong> Record the processing speed of 64 images
+                under the optimized design of 1 core and 1 threads with CUDA was recorded
+                as the second part experimental initial benchmark.
+              </li>
+              <li class="bullet">
+                <strong>Single-Core Execution (Serial Processing):</strong> Test the
+                processing speed of 64 images using a single CPU core and GPU acceleration
+                with 1 core.
+              </li>
+              <li class="bullet">
+                <strong
+                  >Distributed Memory Design (Parallel Processing and
+                  Serial-threading):</strong
+                > Test the processing speed using 1, 2, 4, 8, 16, and 24 CPU cores with
+                GPU acceleration.
+              </li>
+            </ul>
+          </div>
+        </TwoColumns>
+      </section>
+
     </section>
 
     <section id="results">
@@ -859,30 +868,8 @@ features.img_size = grayImg.size();
   </div>
 
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.min.js"
-    ></script>
+    <Scripts
+      use={["blog-setting", "cpp", "bash", "line-numbers", "command-line"]}
+    />
   </Fragment>
 </BaseLayout>

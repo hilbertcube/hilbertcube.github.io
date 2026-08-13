@@ -4,6 +4,7 @@ import TopicTags from "@components/article/TopicTags.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import { getCollection } from "astro:content";
+import Scripts from "@components/site/Scripts.astro";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const article = (await getCollection("articles")).find(
@@ -60,7 +61,7 @@ if (!meta) {
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
+      <div class="date">{meta.date}</div>
       <figure style="margin: 0;">
         <img class="front-img" src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
       </figure>
@@ -758,34 +759,8 @@ callgrind_control -i off 12345</ShellScript>
   </div>
 
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.css"
+    <Scripts
+      use={["blog-setting", "command-line", "cpp", "bash", "line-numbers"]}
     />
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-c.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-bash.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
-    ></script>
   </Fragment>
 </BaseLayout>
