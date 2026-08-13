@@ -38,10 +38,14 @@ src/
     articles/<slug>/index.astro  One article per folder
     posts/<slug>/index.astro     One post per folder
     about, tags, ...             Standalone pages
-  components/
-    math/    Equation, Theorem, Problem, Solution, tex
-    code/    ShellScript, CodeBlock, CodeBox, TabBox, CopyButton, Sample
-    ArticleCards, PostList, HighlightsAndAttribute, TableOfContents, ...
+  components/                  Grouped by role; every component lives in one
+    site/       Chrome on every page: TopBar, Logo, Footer, ShareButton,
+                HighlightsAndAttribute, Banner
+    article/    Article/post furniture: TableOfContents, TopicTags, ContinueButton
+    listings/   Catalog views: ArticleCards, PostList, MaterialCard
+    ui/         Primitives: Icon, TwoColumns
+    math/       Equation, Theorem, Problem, Solution, E, M, tex
+    code/       ShellScript, CodeBlock, CodeBox, TabBox, CopyButton, Sample
   content.config.ts            Typed, validated data collections over articles.json
   assets/css/                  Styles (imported once via main.css)
 public/
@@ -85,9 +89,8 @@ Every page wraps its content in `BaseLayout`:
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Valgrind" description="…" keywords="…" activeButton="Archive-button">
+<BaseLayout title="Valgrind" description="…" keywords="…" activeButton="Archive-button" toc>
   <Fragment slot="head"> <style>/* page-specific CSS */</style> </Fragment>
-  <Fragment slot="sidebar"> <TableOfContents items={[…]} /> … </Fragment>
 
   <div class="content-grid">
     <header>
@@ -105,9 +108,10 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 Rules:
 
 - **Props**: `title` (required), `description`, `keywords`, `activeButton` (id of
-  the nav link to highlight, e.g. `"Archive-button"`).
-- **Slots**: `head` (extra styles/meta), `sidebar` (defaults to the highlights
-  panel; override with a `TableOfContents`), `scripts` (page-specific scripts).
+  the nav link to highlight, e.g. `"Archive-button"`), `toc` (sidebar Table of
+  Contents — see below).
+- **Slots**: `head` (extra styles/meta), `sidebar` (extra content above the
+  highlights panel), `scripts` (page-specific scripts).
 - Put the main content in a `<div class="content-grid">`.
 - **To render math you must load MathJax** in the `scripts` slot — the scaffold
   adds this automatically:
@@ -120,6 +124,33 @@ Rules:
   `public/assets/js/scripts.js`.)
 - Article/post metadata (title, topics, date) can be pulled from the data
   collection instead of hardcoding — see §5.
+
+### Table of Contents
+
+`toc` builds the sidebar TOC from the page's own markup at build time, so adding
+a section is all it takes to add a TOC entry — there is no list to keep in sync.
+Every `<h2>`/`<h3>` becomes an entry, anchored to its own `id` or to the `id` of
+the `<section>` it opens; a heading with neither is skipped. Nesting follows
+heading level (`<h3>` under the preceding `<h2>`), not `<section>` nesting.
+
+```astro
+<BaseLayout title="…" toc>            <!-- or toc={{ maxLevel: 4 }} for <h4> too -->
+  <section id="analysis">
+    <h2>Data Analysis</h2>            <!-- → "Data Analysis" → #analysis -->
+    <h3 id="graph">Linearity</h3>     <!-- → nested "Linearity" → #graph -->
+  </section>
+</BaseLayout>
+```
+
+Overrides, on a heading or on its `<section>`:
+
+- `data-toc="Short label"` — use this text instead of the heading's. On a
+  `<section>` with no heading of its own (e.g. one wrapping a `<Problem>`), it is
+  what puts the section in the TOC at all.
+- `data-toc="skip"` — leave it out.
+
+The extractor lives in `src/utils/toc.ts`; `TableOfContents.astro` still takes a
+manual `items` array for the rare page that needs one.
 
 ---
 

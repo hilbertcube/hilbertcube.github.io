@@ -5,8 +5,7 @@
  * Post: Linux Setup
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
-import TableOfContents from "@components/TableOfContents.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -26,6 +25,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
   title="Post - Linux Setup"
   description="My Linux development environment setup"
   keywords="linux setup, linux development environment, vscode extensions, ide setup, software tools, chrome extensions"
+  toc
 >
   <Fragment slot="head">
     <style is:inline>
@@ -57,33 +57,6 @@ import CodeBlock from "@components/code/CodeBlock.astro";
         }
       }
     </style>
-  </Fragment>
-
-  <!-- Sidebar: TOC -->
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        { label: "Preparation (after OS installation)", href: "#system" },
-        { label: "Basic Rice", href: "#basic-rice" },
-        {
-          label: "Change Some Default Behaviors",
-          href: "#change-default-behavior",
-          children: [{ label: "A quick word about Emacs", href: "#emacs" }],
-        },
-        {
-          label: "DevOps and Text Editors",
-          href: "#devops",
-          children: [{ label: "A quick word about Snap", href: "#snap" }],
-        },
-        { label: "C and C++ Development Environment", href: "#cpp" },
-        { label: "Python and Anaconda", href: "#python" },
-        { label: "JavaScript and Web", href: "#javascript" },
-        { label: "Rust and Cargo", href: "#rust" },
-        { label: "Engineering Softwares", href: "#engineering" },
-        { label: "Other Useful Softwares", href: "#other-softwares" },
-        { label: "Final Words", href: "#final-words" },
-      ]}
-    />
   </Fragment>
 
   <Fragment slot="scripts">

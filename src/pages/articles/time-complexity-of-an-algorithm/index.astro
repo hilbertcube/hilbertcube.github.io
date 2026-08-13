@@ -5,8 +5,7 @@
  * Article: Algorithmic Analysis of an Algorithm
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
-import TableOfContents from "@components/TableOfContents.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -29,6 +28,7 @@ import Sample from "@components/code/Sample.astro";
   title="The Big O Notation"
   description="Algorithmic Analysis of an Algorithm"
   keywords="data structures, algorithms, c++, cpp, computer science"
+  toc={{ maxLevel: 4 }}
 >
   <Fragment slot="head">
     <style>
@@ -99,64 +99,11 @@ import Sample from "@components/code/Sample.astro";
     </style>
   </Fragment>
 
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        {
-          label: "Introduction",
-          href: "#introduction",
-          children: [
-            {
-              label: "What is the Best Way to Compare Algorithms' Efficiency?",
-              href: "#compare-efficiency",
-            },
-            {
-              label: "The Big O, Big Omega, Big Theta, and Their Properties",
-              href: "#big-o-omega-theta",
-              children: [
-                { label: "The Big O", href: "#big-o" },
-                { label: "The Big Omega", href: "#big-omega" },
-                { label: "The Big Theta", href: "#big-theta" },
-                { label: "Useful Properties", href: "#useful-properties" },
-                { label: "The Master Theorem", href: "#master-theorem" },
-              ],
-            },
-          ],
-        },
-        {
-          label: "Runtime Analysis of an Algorithm",
-          href: "#runtime-analysis",
-          children: [
-            { label: "The Cost Model", href: "#cost-model" },
-            // { label: "Example 1: Merge Sort", href: "#example-merge-sort" },
-            {
-              label: "Example 1: Binary Search",
-              href: "#example-binary-search",
-            },
-            {
-              label: "Example 2: Topological Sort",
-              href: "#example-topological-sort",
-            },
-            {
-              label: "Example 3: Dijkstra's Algorithm",
-              href: "#example-dijkstra",
-            },
-          ],
-        },
-        {
-          label: "The Fundamental Functions of Algorithmic Analysis",
-          href: "#fundamental-functions",
-        },
-        { label: "References", href: "#references" },
-      ]}
-    />
-  </Fragment>
-
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
+      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"

@@ -5,7 +5,7 @@
  * Article: Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -19,16 +19,16 @@ if (!meta) {
 }
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
-import TwoColumns from "@components/TwoColumns.astro";
+import TwoColumns from "@components/ui/TwoColumns.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import ShellScript from "@components/code/ShellScript.astro";
-import TableOfContents from "@components/TableOfContents.astro";
 ---
 
 <BaseLayout
   title="Accelerate ORB with CUDA"
   description="Accelerating Feature Extraction and Image Stitching Algorithm using Nvidia CUDA"
   keywords="image stitching, CUDA, MPI, openmp, image processing, parallel processing, multi-core, multi-threads"
+  toc
 >
   <Fragment slot="head">
     <style>
@@ -54,58 +54,11 @@ import TableOfContents from "@components/TableOfContents.astro";
     />
   </Fragment>
 
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        {
-          label: "Feature Extraction from Images and the ORB Feature Detector",
-          href: "#feature-extraction",
-          children: [
-            { label: "Introduction", href: "#Introduction" },
-            { label: "Project's Objective", href: "#utilizing-gpu" },
-          ],
-        },
-        {
-          label: "Literature Review and Technologies",
-          href: "#literature-review",
-          children: [
-            { label: "Message Passing Interfaces (MPI)", href: "#mpi" },
-            { label: "Open Multi-Processing (OpenMP)", href: "#openmp" },
-            { label: "The SIFT and ORB Feature Detectors", href: "#sift-and-orb",},
-            { label: "Overview of General GPU Architecture and Nvidia's CUDA", href: "#gpu-and-cuda",},
-          ],
-        },
-        {
-          label: "Implementations",
-          href: "#implementation",
-          children: [
-            { label: "Image Stitching Workflow", href: "#workflow" },
-            { label: "Optimization", href: "#optimization" },
-          ],
-        },
-        { label: "Data Collection and Benchmarks", href: "#benchmarks" },
-        {
-          label: "Results",
-          href: "#results",
-          children: [
-            { label: "Performance Metrics", href: "#performance-metrics" },
-            { label: "Runtime Comparison", href: "#runtime" },
-            { label: "Speedup", href: "#speedup" },
-            { label: "Cost", href: "#cost" },
-            { label: "Efficiency", href: "#efficiency" },
-          ],
-        },
-        { label: "Ending Remarks and Future Work", href: "#future-work" },
-        { label: "References", href: "#References" },
-      ]}
-    />
-  </Fragment>
-
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
+      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"

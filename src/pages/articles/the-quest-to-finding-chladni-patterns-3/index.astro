@@ -5,8 +5,8 @@
  * Article: The Quest to Finding Chladni Patterns, Part 3
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
-import ContinueButton from "@components/ContinueButton.astro"
+import TopicTags from "@components/article/TopicTags.astro";
+import ContinueButton from "@components/article/ContinueButton.astro"
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -20,13 +20,13 @@ if (!meta) {
 }
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
-import TableOfContents from "@components/TableOfContents.astro";
 ---
 
 <BaseLayout
   title="Chladni Patterns, Part 3"
   description="Describing Chladni patterns using the regular and biharmonic wave equations"
   keywords="Wave equation, python, eigenvalue, boundary conditions"
+  toc
 >
   <Fragment slot="head">
     <style>
@@ -52,51 +52,12 @@ import TableOfContents from "@components/TableOfContents.astro";
     </style>
   </Fragment>
 
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        {
-          label: "The Biharmonic Wave Equation of Plates",
-          href: "#biharmonic-equation",
-        },
-        {
-          label:
-            "Rayleigh's Derivation of Chladni's Law and the Effective Wave Speed",
-          href: "#rayleight-and-wave-speed",
-          children: [
-            {
-              label: "An Equation from Material Science",
-              href : "#material-science-equation"
-            },
-            {
-              label: "Rayleigh's Derivation of the Formula",
-              href: "#rayleigh-derivation",
-            },
-            {
-              label: "The Effective Wave Speed",
-              href: "#effective-wave-speed",
-            },
-          ],
-        },
-        {
-          label: "Data Analysis: Verifying Chladni's Law",
-          href: "#analysis",
-          children: [
-            { label: "Experimental Results", href: "#experimental-results" },
-            { label: "Linearity of Chladni's Law", href: "#graph" },
-          ],
-        },
-        { label: "Conclusion", href: "#conclusion" },
-        { label: "References", href: "#References" },
-      ]}
-    />
-  </Fragment>
 
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
+      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"

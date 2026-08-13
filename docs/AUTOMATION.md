@@ -18,13 +18,12 @@
 - An entry in `public/assets/json/articles.json`
 
 #### Table of Contents
-```bash
-# Preview TOC (prints to stdout) — works with .astro and .html files
-python3 scripts/generate-toc.py src/pages/articles/my-article/index.astro
 
-# Insert/replace TOC in the sidebar slot (creates .bak backup)
-python3 scripts/generate-toc.py src/pages/articles/my-article/index.astro --insert
-```
+Nothing to run: pass `toc` to `BaseLayout` and the sidebar TOC is built at build
+time from the page's own `<section>` / `<h2>` / `<h3>` markup. See
+"Table of Contents" in [DEVELOPMENT.md](DEVELOPMENT.md). (This replaces
+`scripts/generate-toc.py`, which pasted a hand-maintained list into the sidebar
+slot.)
 
 #### Git & Deployment
 ```bash

@@ -164,13 +164,12 @@ ASTRO_EOF
  * Article: $TITLE
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
-import TableOfContents from "../../../components/TableOfContents.astro";
-import ArticleCards from "../../../components/ArticleCards.astro";
+import ArticleCards from "../../../components/listings/ArticleCards.astro";
 ---
 
 <BaseLayout
   title="$TITLE"
+  toc
   description="$DESCRIPTION"
   keywords=""
 >
@@ -178,16 +177,6 @@ import ArticleCards from "../../../components/ArticleCards.astro";
     <style>
       /* page-specific styles */
     </style>
-  </Fragment>
-
-  <!-- Sidebar: TOC + highlights -->
-  <Fragment slot="sidebar">
-    <TableOfContents items={[
-      { label: "Section 1", href: "#section-1" },
-    ]} />
-    <div class="highlights-and-attribute">
-      <HighlightsAndAttribute />
-    </div>
   </Fragment>
 
   <div class="content-grid">
@@ -238,12 +227,11 @@ ASTRO_EOF
  * Post: $TITLE
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import HighlightsAndAttribute from "../../../components/HighlightsAndAttribute.astro";
-import TableOfContents from "../../../components/TableOfContents.astro";
 ---
 
 <BaseLayout
   title="Post - $TITLE"
+  toc
   description="$DESCRIPTION"
   keywords=""
 >
@@ -251,16 +239,6 @@ import TableOfContents from "../../../components/TableOfContents.astro";
     <style>
       /* page-specific styles */
     </style>
-  </Fragment>
-
-  <!-- Sidebar: TOC + highlights -->
-  <Fragment slot="sidebar">
-    <TableOfContents items={[
-      { label: "Section 1", href: "#section-1" },
-    ]} />
-    <div class="highlights-and-attribute">
-      <HighlightsAndAttribute />
-    </div>
   </Fragment>
 
   <Fragment slot="scripts">
@@ -367,10 +345,7 @@ echo -e "${GRAY}  1. Edit content in: ${NC}$ASTRO_FILE"
 echo -e "${GRAY}  2. Place images in: ${NC}$TARGET_DIR/"
 if [ "$TYPE" = "article" ]; then
     echo -e "${GRAY}  3. Images are served at: ${NC}/articles/$SLUG/<filename>"
-    echo -e "${GRAY}  4. Update the TOC in the sidebar slot${NC}"
-    echo -e "${GRAY}  5. Update 'image' field in $JSON_FILE if needed${NC}"
-else
-    echo -e "${GRAY}  3. Update the TOC in the sidebar slot${NC}"
+    echo -e "${GRAY}  4. Update 'image' field in $JSON_FILE if needed${NC}"
 fi
 echo -e "${GRAY}  Run the dev server:  ${NC}npm run dev"
 echo ""
