@@ -8,9 +8,9 @@ interface Props {
 
 const {
   prevHref,
-  prevLabel = "Previous part",
+  prevLabel = "Previous",
   nextHref,
-  nextLabel = "Next part",
+  nextLabel = "Next",
 } = Astro.props;
 
 const hasPrev = !!prevHref;
@@ -22,13 +22,13 @@ const hasNext = !!nextHref;
     href={hasPrev ? prevHref : "#"}
     class:list={["nav-button", "nav-prev", { hidden: !hasPrev }]}
   >
-    &larr;&ensp;{prevLabel}
+    &lt; {prevLabel}
   </a>
   <a
     href={hasNext ? nextHref : "#"}
     class:list={["nav-button", "nav-next", { hidden: !hasNext }]}
   >
-    {nextLabel}&ensp;&rarr;
+    {nextLabel} &gt;
   </a>
 </nav>
 
@@ -48,7 +48,6 @@ const hasNext = !!nextHref;
     padding: 0.6rem 1.8rem;
     font-family: "Computer-Modern", "Times New Roman", serif;
     font-size: 1.05rem;
-    font-style: italic;
     color: var(--grid-text-color);
     background: transparent;
     border: 1px solid var(--next-border);
