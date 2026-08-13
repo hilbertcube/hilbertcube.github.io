@@ -65,6 +65,10 @@ import TableOfContents from "@components/TableOfContents.astro";
           href: "#rayleight-and-wave-speed",
           children: [
             {
+              label: "An Equation from Material Science",
+              href : "#material-science-equation"
+            },
+            {
               label: "Rayleigh's Derivation of the Formula",
               href: "#rayleigh-derivation",
             },
@@ -181,26 +185,45 @@ import TableOfContents from "@components/TableOfContents.astro";
     </section>
 
     <section id="rayleight-and-wave-speed">
+      
       <h2>
         Rayleigh's Derivation of Chladni's Law and the Effective Wave Speed
       </h2>
+
+      <section id="material-science-equation">
+        <h3>An Equation from Material Science</h3>
+        <p>
+          As challenging as the problem is, it does not mean that nothing
+          meaningful can be discovered from this equation. Although the square
+          plate is indeed extremely difficult to solve, the circular plate, on the
+          other hand, is... also difficult to solve. However, due to the symmetric
+          nature of the circular plate, Rayleigh was able to show that
+        </p>
+        <E>{tex`\begin{equation} f = C(n+2m)^2. \end{equation}`}</E>
+        <p>
+          To understand the work of Rayleigh, we need to go back to the
+          one-dimensional space. Take a long wooden ruler that we usually see
+          in our average college classroom, and wave it. We will see that the
+          ruler creates a standing wave. 
+        </p>
+        <figure>
+        <img
+          src="/articles/the-quest-to-finding-chladni-patterns-3/wooden-ruler.webp"
+          alt="Long wooden ruler"
+          class="image-block"
+          style="width: 40%"
+        />
+        <figcaption class="caption">
+          A classic long wooden ruler
+        </figcaption>
+      </figure>
       <p>
-        As challenging as the problem is, it does not mean that nothing
-        meaningful can be discovered from this equation. Although the square
-        plate is indeed extremely difficult to solve, the circular plate, on the
-        other hand, is... also difficult to solve. However, due to the symmetric
-        nature of the circular plate, Rayleigh was able to show that
-      </p>
-      <E>{tex`\begin{equation} f = C(n+2m)^2. \end{equation}`}</E>
-      <p>
-        To understand the work of Rayleigh, we need to go back to the
-        one-dimensional space. Take a 2-meter wooden ruler that we usually see
-        in our average college classroom, and wave it. We will see that the
-        ruler creates a standing wave. However, the equation governing the
+        However, the equation governing the
         motion of the ruler is not the regular wave equation because of the
         reason similar to as stated above, but by the bending beam - flexural
         wave equation
       </p>
+  
       <E>{tex`\begin{equation} \secondpd{u}{t} + c^2_L K^2\secondpd{u}{x} = 0. \end{equation}`}</E>
       <p>
         Here, $c_L$ is the longitudinal wave speed, defined by the square root
@@ -217,6 +240,7 @@ import TableOfContents from "@components/TableOfContents.astro";
         where $\nu$ is the ratio of lateral contraction to longitudinal
         elongation (also known as Poisson's ratio).
       </p>
+    </section>
 
       <section id="rayleigh-derivation">
         <h3>Rayleigh's Derivation of the Formula.</h3>
@@ -240,7 +264,7 @@ import TableOfContents from "@components/TableOfContents.astro";
           the familiar "wave number" that we like and love. Therefore,
         </p>
         <E>{tex`\begin{equation} f = \frac{\omega}{2\pi} = \frac{1}{2\pi\sqrt{12}}c_Lhk^2. \end{equation}`}</E>
-        <p>As stated by Rayleigh, Kirchhoff previously proved that</p>
+        <p>Stated within Rayleigh's work, the famous Kirchhoff previously proved that</p>
         <E>{tex`\begin{equation} \tan\lbrac ka - \frac{1}{2}n\pi\rbrac = \frac{\frac{A_2}{8ka} + \frac{A_3}{(8ka)^2} - \frac{A_4}{(8ka)^3} + \ldots}{A_1 + \frac{A_2}{8ka} + \frac{A_4}{(8ka)^3} + \ldots}, \end{equation}`}</E>
         where
         <E>{tex`\begin{equation} \begin{split} A_1 &= \gamma = (1-\nu)^{-1}\\ A_2 &= \gamma(1-4n^2)-8\\ A_3 &= \gamma(1-4n^2)(9-4n^2) + 48(1+4n^2)\\ A_4 &= - \frac{\gamma}{3}[(1-4n^2)(9-4n^2)(13 - 4n^2)] + 8(9 + 136n^2 + 80n^4) \end{split} \end{equation}`}</E>
@@ -291,8 +315,9 @@ import TableOfContents from "@components/TableOfContents.astro";
       <section id="experimental-results">
         <h3>Experimental Results</h3>
         <p>
-          Here are a few images that matches the description of Chladni's
-          prediction from our experiments:
+          Right below are a few images that matches the description of Chladni's
+          prediction from our experiments. By counting the number of rings on each pattern listed above, we
+          make a table as.
         </p>
         <div class="two-columns-block">
           <div>
@@ -310,10 +335,6 @@ import TableOfContents from "@components/TableOfContents.astro";
             </figure>
           </div>
           <div>
-            <p>
-              By counting the number of rings on each pattern listed above, we
-              can make a table as below:
-            </p>
             <div class="table-wrapper">
               <table
                 style="margin-left: auto; margin-right: auto; text-align: center;"
@@ -356,10 +377,10 @@ import TableOfContents from "@components/TableOfContents.astro";
             src="/articles/the-quest-to-finding-chladni-patterns-3/chladni-law.webp"
             alt="Chladni's Law"
             class="image-block"
-            style="width: 60%"
+            style="width: 50%"
           />
           <figcaption class="caption">
-            Matching patterns on the Circular Plate.
+            Frequency vs 4 times the number of rings squared
           </figcaption>
         </figure>
         <p>
@@ -418,8 +439,7 @@ import TableOfContents from "@components/TableOfContents.astro";
         speed, however, does not depend on the frequency in either case.
       </p>
       <p>
-        My knowledge was limited at the time, and I could not proceed further
-        due to time constraints. However, a recent paper from 2020, titled
+        A recent paper from 2020, titled
         &#8220;Stable and Accurate Numerical Methods for Generalized
         Kirchhoff-Love Plates,&#8221; by authors Nguyen, Li, and Ji, accurately
         modeled the patterns on Chladni plates. The plates in their paper have
