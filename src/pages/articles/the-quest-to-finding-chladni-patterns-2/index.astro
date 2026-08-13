@@ -19,6 +19,7 @@ import ShellScript from "@components/code/ShellScript.astro";
 import TabBox from "@components/code/TabBox.astro";
 import CopyButton from "@components/code/CopyButton.astro";
 import CodeBox from "@components/code/CodeBox.astro";
+import Scripts from "@components/site/Scripts.astro";
 import ContinueButton from "@components/article/ContinueButton.astro"
 ---
 
@@ -70,7 +71,7 @@ import ContinueButton from "@components/article/ContinueButton.astro"
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
+      <div class="date">{meta.date}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -1317,26 +1318,8 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
   </div><!-- .content-grid -->
 
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.min.js"
-    ></script>
+    <Scripts
+      use={["blog-setting", "python", "bash", "line-numbers", "command-line"]}
+    />
   </Fragment>
 </BaseLayout>

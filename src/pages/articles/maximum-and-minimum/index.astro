@@ -7,6 +7,7 @@ import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
 import { getCollection } from "astro:content";
+import Scripts from "@components/site/Scripts.astro";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
 const article = (await getCollection("articles")).find(
@@ -56,7 +57,7 @@ if (!meta) {
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
+      <div class="date">{meta.date}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -958,18 +959,6 @@ if (!meta) {
   </div><!-- .content-grid -->
 
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"
-    ></script>
+    <Scripts use={["blog-setting", "python", "line-numbers"]} />
   </Fragment>
 </BaseLayout>

@@ -12,6 +12,7 @@ import HighlightsAndAttribute from "@components/site/HighlightsAndAttribute.astr
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import TableOfContents from "@components/article/TableOfContents.astro";
 import { extractToc, type TocOptions } from "@utils/toc";
+import { prism } from "@utils/scripts";
 
 
 // Vite bundles all @import statements into one minified CSS file
@@ -87,7 +88,9 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
     <!-- Preconnect to third-party origins -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <!-- Every code block is line-numbered, so this one is global; the rest of
+         the Prism assets are per-page (see src/utils/scripts.ts). -->
+    <link rel="stylesheet" href={prism("plugins/line-numbers/prism-line-numbers.min.css")} />
 
     <!-- KaTeX (self-hosted) for math rendering -->
     <link rel="stylesheet" href="/katex/katex.min.css" />

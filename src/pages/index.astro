@@ -9,6 +9,7 @@ import Banner from "@components/site/Banner.astro";
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import PostList from "@components/listings/PostList.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
+import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -109,6 +110,6 @@ import TwoColumns from "@components/ui/TwoColumns.astro";
 
   <!-- Page-specific scripts -->
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/canvas-banner.js"></script>
+    <Scripts use={["banner"]} />
   </Fragment>
 </BaseLayout>

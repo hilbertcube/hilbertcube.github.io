@@ -11,6 +11,7 @@ import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import { tex } from "@components/math/tex.astro";
+import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -178,23 +179,6 @@ import { tex } from "@components/math/tex.astro";
 
   <!-- Page-specific scripts -->
   <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"></script>
-    <script is:inline src="/assets/js/canvas-banner.js"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"
-    ></script>
+    <Scripts use={["blog-setting", "banner", "cpp", "line-numbers"]} />
   </Fragment>
 </BaseLayout>
