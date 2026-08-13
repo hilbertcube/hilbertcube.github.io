@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
-import TableOfContents from "@components/TableOfContents.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import { getCollection } from "astro:content";
@@ -21,6 +20,7 @@ if (!meta) {
   title="Valgrind"
   description="Debugging and Profiling C/C++ Programs with Valgrind"
   keywords="Valgrind, C, C++, memory leak, debugging, profiling, memcheck, callgrind, massif, dynamic binary instrumentation"
+  toc
 >
   <Fragment slot="head">
     <style>
@@ -56,82 +56,11 @@ if (!meta) {
     </style>
   </Fragment>
 
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        { label: "Introduction", href: "#introduction" },
-        {
-          label: "How Valgrind Works: Dynamic Binary Instrumentation",
-          href: "#how-valgrind-works",
-        },
-        {
-          label: "Installation and Compilation", href: "#installation",
-          children: [
-            { label: "Compiling for Valgrind", href: "#compiling-for-valgrind" },
-          ],
-        },
-        {
-          label: "Memcheck: Finding Memory Errors", href: "#memcheck",
-        },
-        {
-          label: "How Memcheck Knows: Shadow Memory",
-          href: "#shadow-memory",
-        },
-        {
-          label: "Memory Leaks", href: "#memory-leaks",
-          children: [
-            { label: "Indirect Leaks", href: "#indirect-leaks" },
-          ],
-        },
-        {
-          label: "Invalid Heap Reads, Invalid Writes, and Use-After-Free",
-          href: "#invalid-access",
-          children: [
-            { label: "Heap Buffer Overflow", href: "#heap-buffer-overflow" },
-            { label: "Use-After-Free", href: "#use-after-free" },
-          ],
-        },
-        {
-          label: "Use of Uninitialized Memory",
-          href: "#uninitialized-reads",
-        },
-        {
-          label: "Double Free and Mismatched Deallocation",
-          href: "#double-free",
-        },
-        {
-          label: "Callgrind: Call-Graph and Cache Profiling",
-          href: "#callgrind",
-          children: [
-            { label: "Visualizing with KCacheGrind", href: "#kcachegrind" },
-            { label: "Command-Line Annotation", href: "#command-line-annotation" },
-            { label: "Profiling a Region", href: "#profiling-a-region" },
-          ],
-        },
-        {
-          label: "Massif: Heap Memory Profiling", href: "#massif",
-          children: [
-            { label: "Reading ms_print", href: "#reading-ms-print" },
-          ],
-        },
-        {
-          label: "Appendix", href: "#appendix",
-          children: [
-            { label: "Suppression Files", href: "#suppression-files" },
-            { label: "Valgrind vs. ASan", href: "#valgrind-vs-asan" },
-            { label: "Quick Reference", href: "#quick-reference" },
-          ],
-        },
-        { label: "References", href: "#references" },
-      ]}
-    />
-  </Fragment>
-
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
+      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img class="front-img" src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
       </figure>

@@ -24,6 +24,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Aug 2026:** [MAJOR] Added smart Table of Contents
 - **Aug 2026:** [MAJOR] Replaced MathJax with self-hosted KaTeX for faster math rendering, added escape-free `<E>` (display) and `<M>` (inline) math components backed by a `tex` template helper.
 - **Jul 2026:** Added a new tag button and edited the About page.
 - **Jul 2026:** Consolidated archive tags into the search bar.

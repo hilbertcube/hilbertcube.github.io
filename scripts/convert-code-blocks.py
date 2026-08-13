@@ -6,8 +6,8 @@ Replace raw HTML code-container divs with <ShellScript> and <CodeBlock>
 Astro components.
 
 The components must already exist at:
-  - src/components/ShellScript.astro   (command-line terminal blocks)
-  - src/components/CodeBlock.astro     (generic code / config blocks)
+  - src/components/code/ShellScript.astro   (command-line terminal blocks)
+  - src/components/code/CodeBlock.astro     (generic code / config blocks)
 
 Usage
 -----

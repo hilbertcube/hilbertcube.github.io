@@ -4,16 +4,18 @@
  * ================
  * Shared layout for all pages.
  */
-import TopBar from "@components/TopBar.astro";
-import ShareButton from "@components/ShareButton.astro";
-import Logo from "@components/Logo.astro";
-import Footer from "@components/Footer.astro";
-import HighlightsAndAttribute from "@components/HighlightsAndAttribute.astro";
-import ArticleCards from "@components/ArticleCards.astro";
+import TopBar from "@components/site/TopBar.astro";
+import ShareButton from "@components/site/ShareButton.astro";
+import Logo from "@components/site/Logo.astro";
+import Footer from "@components/site/Footer.astro";
+import HighlightsAndAttribute from "@components/site/HighlightsAndAttribute.astro";
+import ArticleCards from "@components/listings/ArticleCards.astro";
+import TableOfContents from "@components/article/TableOfContents.astro";
+import { extractToc, type TocOptions } from "@utils/toc";
 
 
 // Vite bundles all @import statements into one minified CSS file
-import "../assets/css/main.css";
+import "@assets/css/main.css";
 
 interface Props {
   title: string;
@@ -21,6 +23,14 @@ interface Props {
   keywords?: string;
   /** ID of the nav button to highlight, e.g. "Home-button" */
   activeButton?: string;
+  /**
+   * Sidebar Table of Contents, built from this page's own markup: every
+   * `<h2>`/`<h3>` that sits in (or carries) an `id` becomes an entry, so adding
+   * a section to the page is all it takes to add it to the TOC. Pass `true` for
+   * the defaults, or an options object (e.g. `toc={{ maxLevel: 4 }}`).
+   * See src/utils/toc.ts for label overrides and skipping.
+   */
+  toc?: boolean | TocOptions;
 }
 
 const {
@@ -28,10 +38,20 @@ const {
   description = "",
   keywords = "math, physics, programming, coding, computer science, computer simulation",
   activeButton = "",
+  toc = false,
 } = Astro.props;
 
 const isArticle = Astro.url.pathname.startsWith("/articles/");
 const tex = String.raw;
+
+// The page body is rendered here (rather than left to `<slot />` below) so the
+// TOC can be derived from the finished HTML before the sidebar is emitted. The
+// body is then injected as markup, which is fine for this site because every
+// page is static HTML — a hydrated island (`client:*`) would not survive it.
+const body = Astro.slots.has("default")
+  ? await Astro.slots.render("default")
+  : "";
+const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
 ---
 
 <!doctype html>
@@ -104,9 +124,11 @@ const tex = String.raw;
       <div class="logo-and-side-nav">
         <Logo />
       </div>
-      <!-- Sidebar: the "sidebar" slot adds page-specific content above the
-           highlights (e.g. a TOC on about/article pages); the highlights and
-           attribution below are rendered on every page. -->
+      <!-- Sidebar: `toc` renders a Table of Contents built from the page's own
+           sections, and the "sidebar" slot adds any other page-specific content
+           above the highlights; the highlights and attribution below are
+           rendered on every page. -->
+      <TableOfContents items={tocItems} />
       <slot name="sidebar" />
       <div class="highlights-and-attribute">
         <HighlightsAndAttribute />
@@ -114,8 +136,8 @@ const tex = String.raw;
     </nav>
 
     <main class="general-wrapper" data-pagefind-body>
-      <!-- Page-specific content goes here -->
-      <slot />
+      <!-- Page-specific content goes here (rendered in the frontmatter above) -->
+      <Fragment set:html={body} />
 
       {
         isArticle && (

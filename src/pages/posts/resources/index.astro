@@ -5,28 +5,17 @@
  * Resources page
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/Banner.astro";
-import TableOfContents from "@components/TableOfContents.astro";
-import MaterialCard from "@components/MaterialCard.astro";
+import Banner from "@components/site/Banner.astro";
+import MaterialCard from "@components/listings/MaterialCard.astro";
 ---
 
 <BaseLayout
   title="Materials"
   description="This is the material page"
+  toc
 >
   <Fragment slot="head">
     <link rel="stylesheet" href="/posts/resources/resources-page.css" />
-  </Fragment>
-
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        { label: "Books", href: "#books" },
-        { label: "Read More", href: "#read-more" },
-        { label: "Websites", href: "#websites" },
-        { label: "Youtube Channels", href: "#youtube" },
-      ]}
-    />
   </Fragment>
 
   <Banner />

@@ -1,12 +1,11 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
-import TableOfContents from "@components/TableOfContents.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -25,6 +24,7 @@ if (!meta) {
   description="Utilizing the Hessian to find maximum and minimum of a function"
   keywords="Hessian Matrix, Sylvester Criterion, Maximum, Minimum of a function"
   activeButton="articles"
+  toc={{ maxLevel: 4 }}
 >
   <Fragment slot="head">
     <style>
@@ -51,66 +51,12 @@ if (!meta) {
     </style>
   </Fragment>
 
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        {
-          label: "Local Maximum, Local Minimum, and Extremum",
-          href: "#Introduction",
-        },
-        {
-          label: "Stationary Points, Critical Points, and Saddle Points",
-          href: "#points-definitions",
-        },
-        {
-          label: "The Hessian Matrix and the Sylvester Criterion",
-          href: "#sylvester-criterion",
-        },
-        {
-          label: "The Maximum/Minimum Algorithm for an n-Variable Function",
-          href: "#maximum-minimum",
-          children: [
-            { label: "The General Case", href: "#general-case" },
-            { label: "The Special Case: $n=2$", href: "#special-case" },
-          ],
-        },
-        {
-          label: "Example Problems with Solutions",
-          href: "#example-problems",
-          children: [
-            {
-              label: "In 3 dimensional Space",
-              href: "#3d-space",
-              children: [
-                { label: "Problem 1", href: "#problem1" },
-                { label: "Problem 2", href: "#problem2" },
-                { label: "Problem 3", href: "#problem3" },
-                { label: "Problem 4", href: "#problem4" },
-                { label: "Problem 5", href: "#problem5" },
-                { label: "Problem 6", href: "#problem6" },
-                { label: "Problem 7", href: "#problem7" },
-              ],
-            },
-            {
-              label: "In 4 dimensional Space",
-              href: "#4d-space",
-              children: [
-                { label: "Problem 8", href: "#problem8" },
-                { label: "Problem 9", href: "#problem9" },
-              ],
-            },
-          ],
-        },
-      ]}
-    />
-  </Fragment>
-
   <div class="content-grid">
 
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
+      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -453,7 +399,7 @@ if (!meta) {
       <h2>Example Problems with Solutions</h2>
       <section id="3d-space">
         <h3>In 3D Space</h3>
-        <section id="problem1">
+        <section id="problem1" data-toc="Problem 1">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function <E>{tex`\begin{equation*}f(x,y)=x^2-xy+y^2-2x+y\end{equation*}`}</E>
@@ -473,7 +419,7 @@ if (!meta) {
           </Solution>
         </section>
 
-        <section id="problem2">
+        <section id="problem2" data-toc="Problem 2">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function <E>{tex`\begin{equation*}f(x,y)=\sqrt{x^2+y^2}\end{equation*}`}</E>
@@ -496,7 +442,7 @@ if (!meta) {
           </Solution>
         </section>
 
-        <section id="problem3">
+        <section id="problem3" data-toc="Problem 3">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function
@@ -530,7 +476,7 @@ if (!meta) {
           </Solution>
         </section>
 
-        <section id="problem4">
+        <section id="problem4" data-toc="Problem 4">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function <E>{tex`\begin{equation*}f(x,y)=xy\ln(x^2+y^2)\end{equation*}`}</E>
@@ -681,7 +627,7 @@ if (!meta) {
           </Solution>
         </section>
 
-        <section id="problem5">
+        <section id="problem5" data-toc="Problem 5">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function <E>{tex`\begin{equation*}f(x,y)=y^2-2y\cos x,\quad -1\leq x\leq 7\end{equation*}`}</E>
@@ -756,7 +702,7 @@ if (!meta) {
           </Solution>
         </section>
 
-        <section id="problem6">
+        <section id="problem6" data-toc="Problem 6">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function <E>{tex`\begin{equation*}f(x,y)=2x^4+y^4-x^2-2y^2\end{equation*}`}</E>
@@ -856,7 +802,7 @@ if (!meta) {
           </Solution>
         </section>
 
-        <section id="problem7">
+        <section id="problem7" data-toc="Problem 7">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function <E>{tex`\begin{equation*}f(x,y)=x+y+4\sin x\sin y\end{equation*}`}</E>
@@ -950,7 +896,7 @@ if (!meta) {
 
       <section id="4d-space">
         <h3>In 4D Space</h3>
-        <section id="problem8">
+        <section id="problem8" data-toc="Problem 8">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function <E>{tex`\begin{equation*}f(x,y,z)=x^2+y^2+z^2-xy+x-2z\end{equation*}`}</E>
@@ -975,7 +921,7 @@ if (!meta) {
           </Solution>
         </section>
 
-        <section id="problem9">
+        <section id="problem9" data-toc="Problem 9">
           <Problem>
             Find all local maximum, minimum, and saddle points of the following
             function

@@ -5,8 +5,7 @@
  * About page — migrated from /about/index.html
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/Banner.astro";
-import TableOfContents from "@components/TableOfContents.astro";
+import Banner from "@components/site/Banner.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
@@ -19,30 +18,8 @@ import { tex } from "@components/math/tex.astro";
   description="This is the about page"
   keywords="About, neumanncondition, Don Le, UCLA, Computer Science, Engineering"
   activeButton="About-button"
+  toc
 >
-
-  <!-- Sidebar: TOC -->
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        { label: "About me", href: "#about-me" },
-        {
-          label: "About this website",
-          href: "#about-this-website",
-          children: [
-            {
-              label: "Background and choice of design",
-              href: "#background-and-design",
-            },
-            { label: "Structure", href: "#structure" },
-            // { label: "Third-party tools", href: "#third-party-tools" },
-            { label: "Disclaimer", href: "#disclaimer" },
-          ],
-        },
-        
-      ]}
-    />
-  </Fragment>
 
   <!-- Page content -->
 

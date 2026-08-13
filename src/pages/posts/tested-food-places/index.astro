@@ -5,9 +5,8 @@
  * Post: Tested Food Places
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
-import TableOfContents from "@components/TableOfContents.astro";
-import Icon from "@components/Icon.astro";
+import TopicTags from "@components/article/TopicTags.astro";
+import Icon from "@components/ui/Icon.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -25,6 +24,7 @@ if (!meta) {
   title="Post - Tested Food Places"
   description="A list of tested food places including restaurants, cafes, and dessert shops"
   keywords="tested food places, restaurants, cafes, dessert shops, food reviews, dining, eating out"
+  toc
 >
   <Fragment slot="head">
     <style is:inline>
@@ -64,16 +64,6 @@ if (!meta) {
         }
       }
     </style>
-  </Fragment>
-
-  <!-- Sidebar: TOC -->
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        { label: "List", href: "#list" },
-        { label: "Gallery", href: "#gallery" },
-      ]}
-    />
   </Fragment>
 
   <Fragment slot="scripts">

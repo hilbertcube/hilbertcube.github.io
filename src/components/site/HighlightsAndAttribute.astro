@@ -4,7 +4,7 @@
  * ============================
  */
 import { getCollection } from "astro:content";
-import { getRepoStats } from "../utils/repoStats";
+import { getRepoStats } from "@utils/repoStats";
 
 const articles = (await getCollection("articles")).map((entry) => entry.data);
 const posts = await getCollection("posts");

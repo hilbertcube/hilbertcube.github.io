@@ -5,8 +5,7 @@
  * Post: Favorite Tools
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
-import TableOfContents from "@components/TableOfContents.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -25,6 +24,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
   title="Post - Favorite Tools"
   description="A list of my favorite tools including VS Code extensions, IDEs, and Chrome extensions"
   keywords="favorite tools, VS Code extensions, IDEs, software, Chrome extensions, web development tools, programming tools"
+  toc
 >
   <Fragment slot="head">
     <style is:inline>
@@ -59,20 +59,6 @@ import CodeBlock from "@components/code/CodeBlock.astro";
         }
       }
     </style>
-  </Fragment>
-
-  <!-- Sidebar: TOC -->
-  <Fragment slot="sidebar">
-    <TableOfContents
-      items={[
-        { label: "Firefox Extensions", href: "#firefox-extensions" },
-        {
-          label: "VS Code Extensions and Settings",
-          href: "#vscode-extensions",
-        },
-        { label: "Hardware", href: "#hardware" },
-      ]}
-    />
   </Fragment>
 
   <Fragment slot="scripts">

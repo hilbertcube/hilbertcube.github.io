@@ -5,7 +5,7 @@
  * Article: My Favorite Problems of All Time
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TopicTags from "@components/TopicTags.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.url.pathname.replace(/\/$/, "");
@@ -28,6 +28,7 @@ import { tex } from "@components/math/tex.astro";
   title="Favorite Problems"
   description="My Favorite Problems of All Time"
   keywords="data structures, algorithms, c++, cpp, computer science"
+  toc
 >
   <Fragment slot="head">
     <style>
@@ -52,13 +53,11 @@ import { tex } from "@components/math/tex.astro";
     </style>
   </Fragment>
 
-  <!-- No TOC for this article — uses default highlights sidebar -->
-
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date ? `Updated ${meta.date}` : ""}</div>
+      <div class="date">{meta.date ? `${meta.date}` : ""}</div>
       <div class="Quote">
         <div class="Quote-content">
           &#8220;Real mathematics must be justified as art if it can be
@@ -68,7 +67,7 @@ import { tex } from "@components/math/tex.astro";
       </div>
     </header>
 
-    <section>
+    <section id="series-problem">
       <h2>A Quite Difficult Series Problem</h2>
       <Problem>
         Let $\lcm(1):=1$. Prove that the series
@@ -137,7 +136,7 @@ import { tex } from "@components/math/tex.astro";
         </Solution>
     </section>
 
-    <section>
+    <section id="inequality-problem">
       <h2>An Interesting Inequality Problem</h2>
       <p>
         I encountered this problem back when I was in high school. I remember it
