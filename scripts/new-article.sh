@@ -271,7 +271,7 @@ echo -e "${GREEN}✓ Created Astro page: $ASTRO_FILE${NC}"
 # ---------------------------------------------------------------------------
 # Update public/assets/json/articles.json
 # ---------------------------------------------------------------------------
-CURRENT_DATE=$(date "+%B %-d, %Y")
+CURRENT_ISO_DATE=$(date "+%Y-%m-%d")
 JSON_FILE="public/assets/json/articles.json"
 
 echo ""
@@ -308,7 +308,7 @@ try:
         "link": "$LINK_VALUE",
         "topics": $TOPICS_JSON,
         "description": "$DESCRIPTION",
-        "date": "$CURRENT_DATE"
+        "pubDate": "$CURRENT_ISO_DATE"
     }
 
     # Articles also carry an "image" field

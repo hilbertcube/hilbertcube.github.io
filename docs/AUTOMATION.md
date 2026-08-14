@@ -25,19 +25,19 @@ time from the page's own `<section>` / `<h2>` / `<h3>` markup. See
 `scripts/generate-toc.py`, which pasted a hand-maintained list into the sidebar
 slot.)
 
+#### RSS Feed
+
+Nothing to run: `src/pages/rss/feed.xml.ts` builds the feed at build time from
+the `articles` and `posts` collections (same source as the JSON catalog), so
+it can't drift out of sync. `new-article.sh` sets the `pubDate` field
+automatically; see "RSS feed" in [DEVELOPMENT.md](DEVELOPMENT.md). (This
+replaces `scripts/generate-rss.sh` and `scripts/commit-with-rss.sh`.)
+
 #### Git & Deployment
+
 ```bash
-# Commit with RSS generation
-./scripts/commit-with-rss.sh "Your commit message"
-
-# Commit without RSS generation
-./scripts/commit-with-rss.sh "Your commit message" --skip-rss
-
-# Simple commit (pull → add → commit → push)
+# Commit (pull → add → commit → push)
 ./scripts/commit.sh "Your commit message"
-
-# Generate RSS feed only
-./scripts/generate-rss.sh
 ```
 
 #### Development

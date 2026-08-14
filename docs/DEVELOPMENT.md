@@ -177,8 +177,10 @@ const meta = (await getCollection("articles")).find(
 
 Rules:
 
-- Every entry needs `title`, `link`, `topics[]`, `description`, `date`
-  (articles also `id` + `image`; posts also `pid`). A missing/misspelled field
+- Every entry needs `title`, `link`, `topics[]`, `description`, `pubDate`
+  (ISO `YYYY-MM-DD`; articles also `id` + `image`; posts also `pid`). `others`
+  entries use a free-form `date` string instead, since they have no real
+  publish date. A missing/misspelled field
   **fails the build** with a Zod error — that's intentional, it stops content
   from silently vanishing from the homepage/RSS.
 - Collection order follows the array order in the JSON (newest first, since
@@ -267,11 +269,19 @@ Note: `$` inside code (`$USER`, `$(uname -r)`) is safe — the search step skips
 
 ---
 
-## 10. RSS & committing
+## 10. RSS feed & committing
 
-- Regenerate the feed from `articles.json`: `./scripts/generate-rss.sh`.
-- Commit with RSS regeneration: `./scripts/commit-with-rss.sh "message"`
-  (or `--skip-rss`). See AUTOMATION.md.
+- The feed lives at `src/pages/rss/feed.xml.ts`, a build-time Astro endpoint
+  (using `@astrojs/rss`) that reads straight from the `articles` and `posts`
+  content collections — the same `public/assets/json/articles.json` catalog
+  everything else uses. It regenerates on every `npm run build`; there is no
+  script to run and nothing to keep in sync manually.
+- Each article/post entry's `pubDate` (`YYYY-MM-DD`) is the single source of
+  truth for both the feed's `<pubDate>` and the on-page date, formatted via
+  `formatDate()` in `src/utils/formatDate.ts` — `new-article.sh` sets it for
+  you. If you hand-edit `articles.json`, add `pubDate` yourself or the entry
+  will fail the `content.config.ts` schema check at build time.
+- Commit: `./scripts/commit.sh "message"`. See AUTOMATION.md.
 
 ---
 
@@ -282,4 +292,4 @@ Note: `$` inside code (`$USER`, `$(uname -r)`) is safe — the search step skips
 - [ ] All display math wrapped in `<Equation>`; macros in `.mathjax-definition`
 - [ ] MathJax script present in the `scripts` slot (if the page uses math)
 - [ ] `npm run dev` to write; `npm run build && npm run preview` to verify search + final render
-- [ ] `./scripts/commit-with-rss.sh "Add: <title>"`
+- [ ] `./scripts/commit.sh "Add: <title>"`
