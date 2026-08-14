@@ -17,27 +17,6 @@ import Figure from "@components/article/Figure.astro";
   description="This is the homepage"
   activeButton="Home-button"
 >
-  <!-- Extra page-specific styles -->
-  <Fragment slot="head">
-    <style>
-      @media all and (max-width: 580px) {
-        #chladni-outer-div {
-          padding-top: 25px;
-        }
-      }
-      .repo {
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin: 5px 0;
-      }
-      .calendar {
-        padding: 20px;
-      }
-    </style>
-  </Fragment>
-
-  <!-- Page content (same HTML as before, minus the boilerplate) -->
   <Banner />
 
   <div class="content-grid">
@@ -78,12 +57,11 @@ import Figure from "@components/article/Figure.astro";
             Read More
           </a>
         </div>
-        <div id="chladni-outer-div">
+        <div>
           <Figure
             src="/media/Images/chladni-patterns-sbs.webp"
             alt="Chladni plate"
             width="75%"
-            flush
           >
             Chladni Patterns on a Square Plate.
           </Figure>
