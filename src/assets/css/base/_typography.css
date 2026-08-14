@@ -99,9 +99,22 @@ caption::before {
 }
 
 /* Link styles */
+
+/* Links stay on one line: a URL or a site name split across a line break reads
+   as two separate things, and the second half often looks like body text. The
+   whole link moves to the next line instead of breaking in the middle.
+   Long link text in a narrow column can then overrun it — the two-column
+   layout clips its overflow — so labels longer than a few words take
+   `.url.wrap` and break normally. */
 .url {
   color: var(--url-color);
   text-decoration: none;
+  white-space: nowrap;
+}
+
+.url.wrap,
+ol.reference .url {
+  white-space: normal;
 }
 
 .url:hover {
