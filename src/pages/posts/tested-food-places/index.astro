@@ -89,7 +89,7 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
 
     <section class="food" id="list">
       <h3>
-        Have Tried <Icon name="check" style="color: green;" />
+        Have Tried <Icon name="check" />
       </h3>
       <div class="table-wrapper">
         <table class="p-table">
@@ -105,39 +105,21 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
           <tbody>
             <tr>
               <td class="category" rowspan="24">Restaurants</td>
-              <td>Shang Artisan Noodle</td>
-              <td>Las Vegas</td>
-              <td class="rating">8/10</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Taco El Pastor</td>
-              <td>Las Vegas</td>
-              <td class="rating">9/10</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Gladiator Burger</td>
-              <td>Waterloo, Canada</td>
-              <td class="rating">8/10</td>
-              <td></td>
-            </tr>
-            <tr>
               <td>Raku Udon</td>
               <td>Queen St., Downtown Toronto, Canada</td>
               <td class="rating">9.5/10</td>
               <td>Best udon I've ever had</td>
             </tr>
             <tr>
-              <td>PiChaiYuan Hotpot</td>
-              <td>Rowland Heights</td>
-              <td class="rating">8.5/10</td>
-              <td>Reasonable price</td>
+              <td>Sea Harbor</td>
+              <td>Rosemead, CA</td>
+              <td class="rating">9.5/10</td>
+              <td>Best dim sum, one Michelin star</td>
             </tr>
             <tr>
-              <td>Tokyo Ramen &amp; Sushi</td>
-              <td>Diamond Bar, CA</td>
-              <td class="rating">8/10</td>
+              <td>Taco El Pastor</td>
+              <td>Las Vegas, NV</td>
+              <td class="rating">9/10</td>
               <td></td>
             </tr>
             <tr>
@@ -147,27 +129,63 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
               <td>Cheap and delicious tacos</td>
             </tr>
             <tr>
+              <td>Pepper Lunch</td>
+              <td>Irvine, CA</td>
+              <td class="rating">9/10</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Happy Harbor</td>
+              <td>Rowland Heights, CA</td>
+              <td class="rating">9/10</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Hokaido Sushi</td>
+              <td>Saigon, 1st District, Vietnam</td>
+              <td class="rating">9/10</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>PiChaiYuan Hotpot</td>
+              <td>Rowland Heights, CA</td>
+              <td class="rating">8.5/10</td>
+              <td>Reasonable price</td>
+            </tr>
+            <tr>
               <td>LA District Market</td>
-              <td>&mdash;</td>
+              <td>Los Angeles, CA</td>
               <td class="rating">8.5/10</td>
               <td>A large variety of delicious food. A bit pricey though</td>
             </tr>
             <tr>
               <td>Euporium Thai</td>
-              <td>LA</td>
+              <td>Los Angeles, CA</td>
               <td class="rating">8.5/10</td>
               <td>Free sticky rice cake for birthdays</td>
             </tr>
             <tr>
-              <td>Sea Harbor</td>
-              <td>Rosemead</td>
-              <td class="rating">9.5/10</td>
-              <td>Best dim sum, one Michelin star</td>
+              <td>Pho Thin by SOL</td>
+              <td>Saigon, 2nd District, Vietnam</td>
+              <td class="rating">8.5/10</td>
+              <td></td>
             </tr>
             <tr>
-              <td>Slurpin Ramen Bar</td>
-              <td>City of Industry, CA</td>
-              <td class="rating">7/10</td>
+              <td>Shang Artisan Noodle</td>
+              <td>Las Vegas, NV</td>
+              <td class="rating">8/10</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Gladiator Burger</td>
+              <td>Waterloo, Canada</td>
+              <td class="rating">8/10</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Tokyo Ramen &amp; Sushi</td>
+              <td>Diamond Bar, CA</td>
+              <td class="rating">8/10</td>
               <td></td>
             </tr>
             <tr>
@@ -178,15 +196,27 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
             </tr>
             <tr>
               <td>Tatsu Ramen</td>
-              <td>LA</td>
+              <td>Los Angeles, CA</td>
               <td class="rating">8/10</td>
               <td></td>
             </tr>
             <tr>
-              <td>Lotus of Siam</td>
-              <td>Las Vegas</td>
-              <td class="rating">7/10</td>
+              <td>Taiko Japanese Restaurant</td>
+              <td>Irvine, CA</td>
+              <td class="rating">8/10</td>
+              <td>Decent food, too much rice</td>
+            </tr>
+            <tr>
+              <td>Coco Ichibanya</td>
+              <td>LA, Irvine, CA</td>
+              <td class="rating">8/10</td>
               <td></td>
+            </tr>
+            <tr>
+              <td>Chubby Cattle BBQ</td>
+              <td>Rowland Heights, CA</td>
+              <td class="rating">8/10</td>
+              <td>Horrible wait time, but good food</td>
             </tr>
             <tr>
               <td>Thumbling</td>
@@ -195,77 +225,47 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
               <td></td>
             </tr>
             <tr>
-              <td>Taiko Japanese Restaurant</td>
-              <td>Irvine</td>
-              <td class="rating">8/10</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Coco Ichibanya</td>
-              <td>LA, Irvine</td>
-              <td class="rating">8/10</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Pepper Lunch</td>
-              <td>Irvine</td>
-              <td class="rating">9/10</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Happy Harbor</td>
-              <td>Rowland Heights</td>
-              <td class="rating">9/10</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Young Dong Tofu</td>
-              <td>&mdash;</td>
-              <td class="rating">5/10</td>
-              <td></td>
-            </tr>
-            <tr>
               <td>88Q Korean BBQ</td>
-              <td>Rowland Heights</td>
+              <td>Rowland Heights, CA</td>
               <td class="rating">7.5/10</td>
               <td></td>
             </tr>
             <tr>
-              <td>Chubby Cattle BBQ</td>
-              <td>&mdash;</td>
-              <td class="rating">8/10</td>
-              <td>Horrible wait time, but good food</td>
-            </tr>
-            <tr>
-              <td>Hokaido Sushi</td>
-              <td>Saigon, 1st District</td>
-              <td class="rating">9/10</td>
+              <td>Slurpin Ramen Bar</td>
+              <td>City of Industry, CA</td>
+              <td class="rating">7/10</td>
               <td></td>
             </tr>
             <tr>
-              <td>Pho Thin by SOL</td>
-              <td>Saigon, 2nd District</td>
-              <td class="rating">8.5/10</td>
+              <td>Lotus of Siam</td>
+              <td>Las Vegas, NV</td>
+              <td class="rating">7/10</td>
               <td></td>
             </tr>
             <tr>
-              <td class="category" rowspan="6">Boba &amp; Caf&eacute;</td>
+              <td>Young Dong Tofu</td>
+              <td>Chino Hills, CA</td>
+              <td class="rating">5/10</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="category" rowspan="7">Boba &amp; Caf&eacute;</td>
               <td>The Coffee (ザ•コーヒー)</td>
               <td>King St. W, Downtown Toronto, Canada</td>
               <td class="rating">9/10</td>
               <td></td>
             </tr>
             <tr>
-              <td>Torotea</td>
-              <td>Diamond Bar, CA</td>
-              <td class="rating">&mdash;</td>
+              <td>3Catea</td>
+              <td>Irvine, CA</td>
+              <td class="rating">9/10</td>
               <td></td>
             </tr>
             <tr>
-              <td>3Catea</td>
-              <td>Irvine</td>
-              <td class="rating">9/10</td>
-              <td></td>
+              <td>Molly Tea</td>
+              <td>Rosemead, CA</td>
+              <td class="rating">8.5/10</td>
+              <td>Good shit</td>
             </tr>
             <tr>
               <td>Gong Cha</td>
@@ -280,6 +280,12 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
               <td></td>
             </tr>
             <tr>
+              <td>Torotea</td>
+              <td>Diamond Bar, CA</td>
+              <td class="rating">7.5/10</td>
+              <td></td>
+            </tr>
+            <tr>
               <td>Phuc Long</td>
               <td>Garden Grove, CA</td>
               <td class="rating">6/10</td>
@@ -288,8 +294,14 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
             <tr>
               <td class="category" rowspan="4">Bars</td>
               <td>Ghost Bar</td>
-              <td>Las Vegas</td>
+              <td>Las Vegas, NV</td>
               <td class="rating">9.5/10</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Spire 73</td>
+              <td>InterContinental LA</td>
+              <td class="rating">9/10</td>
               <td></td>
             </tr>
             <tr>
@@ -304,18 +316,12 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
               <td class="rating">8/10</td>
               <td></td>
             </tr>
-            <tr>
-              <td>Spire 73</td>
-              <td>InterContinental LA</td>
-              <td class="rating">9/10</td>
-              <td></td>
-            </tr>
           </tbody>
         </table>
       </div>
 
       <h3>
-        Have Yet to Try <Icon name="xmark" style="font-size: 15px; color: red;" />
+        Have Yet to Try <Icon name="xmark" style="font-size: 15px;" />
       </h3>
       <div class="table-wrapper">
         <table class="p-table">
@@ -330,7 +336,7 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
             <tr>
               <td class="category" rowspan="12">Restaurants</td>
               <td>dPot</td>
-              <td>Irvine</td>
+              <td>Irvine, CA</td>
             </tr>
             <tr>
               <td>Kokiyo Ramen</td>
@@ -338,11 +344,11 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
             </tr>
             <tr>
               <td>Niku X</td>
-              <td>LA</td>
+              <td>Los Angeles, CA</td>
             </tr>
             <tr>
               <td>Noodle Nest</td>
-              <td>Irvine</td>
+              <td>Irvine, CA</td>
             </tr>
             <tr>
               <td>Tijuana Taco</td>
@@ -366,7 +372,7 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
             </tr>
             <tr>
               <td>BBQ Chung Dam</td>
-              <td>LA</td>
+              <td>Los Angeles, CA</td>
             </tr>
             <tr>
               <td>Chubby Sushi &amp; Ramen</td>
@@ -379,15 +385,15 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
             <tr>
               <td class="category" rowspan="3">Desserts</td>
               <td>Nostimo Coffee</td>
-              <td>Westminster</td>
+              <td>Westminster, CA</td>
             </tr>
             <tr>
               <td>Heybings Desserts &amp; Caf&eacute;</td>
-              <td>Costa Mesa</td>
+              <td>Costa Mesa, CA</td>
             </tr>
             <tr>
               <td>Sweetheart's Dessert Lounge</td>
-              <td>Anaheim</td>
+              <td>Anaheim, CA</td>
             </tr>
           </tbody>
         </table>
