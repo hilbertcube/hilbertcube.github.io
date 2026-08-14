@@ -5,35 +5,39 @@
  * Resources page
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/site/Banner.astro";
+import TopicTags from "@components/article/TopicTags.astro";
 import MaterialCard from "@components/listings/MaterialCard.astro";
 import Scripts from "@components/site/Scripts.astro";
+import { formatDate } from "@utils/formatDate";
+import { getEntryMeta } from "@utils/getEntryMeta";
+
+const meta = await getEntryMeta("posts", Astro.url.pathname);
 ---
 
 <BaseLayout
-  title="Materials"
-  description="This is the material page"
+  title="Post - Recommended Materials"
+  description="Books, lecture notes, websites, and YouTube channels that I think serve as good learning materials."
+  keywords="books, lecture notes, websites, youtube, programming, C++, math, physics, image processing, PDEs"
   toc
 >
   <Fragment slot="head">
     <link rel="stylesheet" href="/posts/resources/resources-page.css" />
   </Fragment>
 
-  <Banner />
-
   <div class="content-grid">
     <header>
-      <div class="topic">Materials - Math, CS, Websites, and more</div>
+      <TopicTags topics={meta.topics} />
+      <h1 class="post-title">{meta.title}</h1>
+      <div class="date">{formatDate(meta.pubDate)}</div>
     </header>
-    <h1 class="home-title">Recommended Materials</h1>
 
     <p>
       These are some resources that I think would serve as good learning
       materials.
     </p>
 
-    <section>
-      <h2 id="books" class="home-h3-headers">Books</h2>
+    <section id="books">
+      <h2>Books</h2>
 
       <div class="material-container">
         <MaterialCard
@@ -102,8 +106,8 @@ import Scripts from "@components/site/Scripts.astro";
       </div>
     </section>
 
-    <section>
-      <h2 id="read-more" class="home-h3-headers">Read More</h2>
+    <section id="read-more">
+      <h2>Read More</h2>
       <p>
         <b>What Every Programmer Should Know About Memory</b>:
         <a
@@ -146,8 +150,8 @@ import Scripts from "@components/site/Scripts.astro";
       </p>
     </section>
 
-    <section>
-      <h2 id="websites" class="home-h3-headers">Websites</h2>
+    <section id="websites">
+      <h2>Websites</h2>
       <p>
         <b>beltoforion: </b>
         <a href="https://beltoforion.de/de/" class="url">beltoforion.de</a>. One
@@ -191,8 +195,8 @@ import Scripts from "@components/site/Scripts.astro";
       </p>
     </section>
 
-    <section>
-      <h2 id="youtube" class="home-h3-headers">Youtube Channels</h2>
+    <section id="youtube">
+      <h2>Youtube Channels</h2>
 
       <p>
         <b>Mathematics: </b>
@@ -339,6 +343,6 @@ import Scripts from "@components/site/Scripts.astro";
   </div>
 
   <Fragment slot="scripts">
-    <Scripts use={["banner"]} />
+    <Scripts use={["blog-setting"]} />
   </Fragment>
 </BaseLayout>

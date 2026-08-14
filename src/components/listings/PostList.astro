@@ -4,6 +4,7 @@
  * ==============
  */
 import { getCollection } from "astro:content";
+import { formatDate } from "@utils/formatDate";
 
 const posts = (await getCollection("posts")).map((entry) => entry.data);
 ---
@@ -20,7 +21,7 @@ const posts = (await getCollection("posts")).map((entry) => entry.data);
               <a href={post.link} class="post">
                 <div class="post-header-row">
                   <h3>{post.title}</h3>
-                  <div class="post-date">Posted {post.date}</div>
+                  <div class="post-date">{formatDate(post.pubDate)}</div>
                 </div>
                 <p>{post.description}</p>
               </a>

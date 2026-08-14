@@ -6,18 +6,11 @@ import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
-import { getCollection } from "astro:content";
+import { formatDate } from "@utils/formatDate";
+import { getEntryMeta } from "@utils/getEntryMeta";
 import Scripts from "@components/site/Scripts.astro";
 
-const slug = Astro.url.pathname.replace(/\/$/, "");
-const article = (await getCollection("articles")).find(
-  (e) => e.data.link.replace(/\/$/, "") === slug,
-);
-const meta = article?.data;
-
-if (!meta) {
-  throw new Error(`Article metadata not found for slug: ${slug}`);
-}
+const meta = await getEntryMeta("articles", Astro.url.pathname);
 ---
 
 <BaseLayout
@@ -57,7 +50,7 @@ if (!meta) {
     <header>
       <TopicTags topics={meta.topics} />
       <h1 class="title">{meta.title}</h1>
-      <div class="date">{meta.date}</div>
+      <div class="date">{formatDate(meta.pubDate)}</div>
       <figure style="margin: 0;">
         <img
           class="front-img"

@@ -13,7 +13,7 @@
         "Profiling"
       ],
       "description": "A practical guide to Valgrind: detecting memory leaks, invalid accesses, and use-after-free bugs with Memcheck, profiling call graphs with Callgrind, and tracking heap usage with Massif.",
-      "date": "May 6, 2025"
+      "pubDate": "2025-05-06"
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
@@ -27,7 +27,7 @@
         "Numpy"
       ],
       "description": "Solve the two-dimensional wave equation via separation of variables and design algorithms to plot Chladni's pattern using the wave equation model.",
-      "date": "June 1, 2024"
+      "pubDate": "2024-06-01"
     },
     {
       "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
@@ -45,7 +45,7 @@
         "CUDA"
       ],
       "description": "Accelerate ORB, feature matching, warping, seam finding, and image composition using C++ OpenCV and CUDA.",
-      "date": "August 10, 2024"
+      "pubDate": "2024-08-10"
     },
     {
       "title": "Maxima and Minima of an n-th Dimensional Function - The Hessian Matrix",
@@ -58,7 +58,7 @@
         "Fermat's Theorem"
       ],
       "description": "Utilizing the Hessian matrix and related numerical methods to find maxima/minima/saddle point.",
-      "date": "May 25, 2024"
+      "pubDate": "2024-05-25"
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
@@ -72,7 +72,7 @@
         "Numpy"
       ],
       "description": "Plotting a series of Chladni's patterns using the wave equation model.",
-      "date": "June 14, 2024"
+      "pubDate": "2024-06-14"
     },
     {
       "title": "My Favorite Problems of All Time",
@@ -85,7 +85,7 @@
         "Contradiction"
       ],
       "description": "A collection of some of my favorite math problems that I've encountered throughout the years.",
-      "date": "April 24, 2025"
+      "pubDate": "2025-04-24"
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
@@ -100,7 +100,7 @@
         "Biharmonic Equation"
       ],
       "description": "Explaining Chladni's patterns via the Biharmonic wave equation model. Introducing the Kirchoff-Love plate.",
-      "date": "June 16, 2024"
+      "pubDate": "2024-06-16"
     },
     {
       "title": "Runtime Analysis of an Algorithm",
@@ -113,7 +113,7 @@
         "Python"
       ],
       "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
-      "date": "December 2, 2024"
+      "pubDate": "2024-12-02"
     }
   ],
   "posts": [
@@ -129,7 +129,7 @@
         "Productivity"
       ],
       "description": "How I set up my Linux development environment using Ubuntu/Debian on an NVIDIA machine. A quick checklist of all necessary software and configs.",
-      "date": "Dec. 2025"
+      "pubDate": "2025-12-01"
     },
     {
       "title": "A list of places to munch",
@@ -143,8 +143,8 @@
         "Desserts",
         "Boba"
       ],
-      "description": "A list of restaurants, caf\u00e9s, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I\u2019ve tried or want to try. I\u2019ll be using this post as a running to-do list.",
-      "date": "Apr. 2025"
+      "description": "A list of restaurants, cafés, boba spots, and ice cream shops around Los Angeles, nearby areas, California, and beyond that I’ve tried or want to try. I’ll be using this post as a running to-do list.",
+      "pubDate": "2025-04-01"
     },
     {
       "title": "A list of tools that I use",
@@ -159,7 +159,7 @@
         "Work"
       ],
       "description": "A comprehensive list of software, Firefox extensions, VS Code extensions, and electronics that I use regularly.",
-      "date": "Apr. 2025"
+      "pubDate": "2025-04-01"
     },
     {
       "title": "Recommended Materials",
@@ -178,7 +178,7 @@
         "PDEs"
       ],
       "description": "Books, lecture notes, websites, and YouTube channels that I think serve as good learning materials.",
-      "date": "Nov. 2024"
+      "pubDate": "2024-11-01"
     },
     {
       "title": "Average engineering experience",
@@ -188,7 +188,7 @@
         "Electrical Engineering"
       ],
       "description": "Electrical Engineering: Electrical Circuit Analysis, Spring of 2024.",
-      "date": "Apr. 2024"
+      "pubDate": "2024-04-01"
     }
   ],
   "others": [
@@ -228,20 +228,6 @@
       ],
       "description": "About this website I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar...",
       "date": "Updated recently"
-    }
-  ],
-  "scratch": [
-    {
-      "title": "Simulating the Brachistochrone problem",
-      "id": "brachistochrone-1",
-      "image": "brachistochrone.webp",
-      "link": "https://example.com/js-event-loop",
-      "topics": [
-        "Python",
-        "Calculus of Variations"
-      ],
-      "description": "The shortest path is not always the fastest path. An introduction to calculus of variation.",
-      "date": ""
     }
   ]
 }

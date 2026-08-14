@@ -11,6 +11,7 @@
  *   excludePath URL path to exclude (e.g. the current article)
  */
 import { getCollection } from "astro:content";
+import { formatDate } from "@utils/formatDate";
 
 interface Props {
   count?: number;
@@ -72,7 +73,7 @@ if (count !== undefined) {
                 Tags: {article.topics ? article.topics.join(", ") : "N/A"}
               </div>
               <div class="article-description">{article.description}</div>
-              <div class="article-date">Posted {article.date}</div>
+              <div class="article-date">Posted {formatDate(article.pubDate)}</div>
             </>
           )}
         </div>

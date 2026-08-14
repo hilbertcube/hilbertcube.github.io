@@ -1,5 +1,9 @@
 # Technical Blog
 
+<div style="text-align: center;">
+  <img src="src/assets/images/Logo/hilbert.png" alt="Description" width="200">
+</div>
+
 ## About
 
 Blog website about math, programming, and food. Initial prototype built from scratch using HTML5, CSS3, and vanilla JS. Migrated to Astro for portability and performance.
@@ -12,11 +16,12 @@ Visit website at [neumanncondition.com](https://neumanncondition.com/) or [hilbe
 ## Tools used:
 
 1. [Astro](https://astro.build/): static site generator
-2. [KaTeX](https://katex.org/): display LaTeX math equations
-3. [Prism.js](https://prismjs.com/): code syntax-highlighting
-4. [Pagefind](https://pagefind.app/): search system
-5. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
-6. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
+2. [Astro RSS](https://www.npmjs.com/package/@astrojs/rss): RSS generation
+3. [KaTeX](https://katex.org/): display LaTeX math equations
+4. [Prism.js](https://prismjs.com/): code syntax-highlighting
+5. [Pagefind](https://pagefind.app/): search system
+6. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
+7. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
 
 ## Change Log
 
@@ -24,6 +29,8 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Aug 2026:** Replaced the hand-run RSS generation script with a build-time Astro endpoint sourced from the article/post collections.
+- **Aug 2026:** Updated logo and favicon
 - **Aug 2026:** [MAJOR] Added smart Table of Contents
 - **Aug 2026:** [MAJOR] Replaced MathJax with self-hosted KaTeX for faster math rendering, added escape-free `<E>` (display) and `<M>` (inline) math components backed by a `tex` template helper.
 - **Jul 2026:** Added a new tag button and edited the About page.
