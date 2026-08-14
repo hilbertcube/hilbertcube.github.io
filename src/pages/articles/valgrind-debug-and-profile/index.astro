@@ -5,6 +5,7 @@ import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import FrontImage from "@components/article/FrontImage.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 import Scripts from "@components/site/Scripts.astro";
 
@@ -17,26 +18,12 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
   keywords="Valgrind, C, C++, memory leak, debugging, profiling, memcheck, callgrind, massif, dynamic binary instrumentation"
   toc
 >
-  <Fragment slot="head">
-    <style>
-      .front-img {
-        display: block;
-        width: 100%;
-        border-radius: 10px;
-        height: auto;
-        margin: auto;
-      }
-    </style>
-  </Fragment>
-
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <PageTitle title={meta.title} />
       <PubDate pubDate={meta.pubDate} />
-      <figure style="margin: 0;">
-        <img class="front-img" src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
-      </figure>
+      <FrontImage src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
     </header>
 
     <div class="Quote">

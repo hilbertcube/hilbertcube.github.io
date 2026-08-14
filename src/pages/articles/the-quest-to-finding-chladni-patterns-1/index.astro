@@ -8,6 +8,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import FrontImage from "@components/article/FrontImage.astro";
+import Figure from "@components/article/Figure.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -26,49 +28,16 @@ import Scripts from "@components/site/Scripts.astro";
   keywords="Wave equation, python, eigenvalue, boundary conditions"
   toc
 >
-  <Fragment slot="head">
-    <style>
-      .front-img {
-        display: block;
-        width: 80%;
-        border-radius: 10px;
-        height: auto;
-        margin: auto;
-      }
-      #circular-plate {
-        width: 80%;
-      }
-      #chladni-gif {
-        width: 85%;
-      }
-      @media all and (max-width: 580px) {
-        #circular-plate {
-          width: 100%;
-          margin: 0;
-        }
-        #chladni-gif {
-          width: 100%;
-        }
-        .front-img {
-          width: 100%;
-        }
-      }
-    </style>
-  </Fragment>
-
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <PageTitle title={meta.title} />
       <PubDate pubDate={meta.pubDate} />
-      <figure style="margin: 0;">
-        <img
-          class="front-img"
-          src="/articles/the-quest-to-finding-chladni-patterns-1/chladni-patterns-sbs.webp"
-          alt="blog-banner"
-          fetchpriority="high"
-        />
-      </figure>
+      <FrontImage
+        src="/articles/the-quest-to-finding-chladni-patterns-1/chladni-patterns-sbs.webp"
+        alt="blog-banner"
+        width="80%"
+      />
       <div class="Quote">
         <div class="Quote-content">If you want to find the secrets of the universe, think in terms of energy,
           frequency and vibration.</div>
@@ -126,19 +95,17 @@ import Scripts from "@components/site/Scripts.astro";
             </p>
           </div>
           <div>
-            <img
-              id="chladni-gif"
-              class="image"
+            <Figure
               src="/articles/the-quest-to-finding-chladni-patterns-1/animation.webp"
-              loading="lazy"
               alt="metal plate animation"
-            />
-            <figcaption class="caption">
+              width="85%"
+              loading="lazy"
+            >
               Motion of a vibrating metal plate (greatly exagerated). <a
                 href="#Appendix"
                 class="in-page-link">Source code</a
               >
-            </figcaption>
+            </Figure>
           </div>
         </TwoColumns>
 
@@ -216,39 +183,29 @@ import Scripts from "@components/site/Scripts.astro";
             </section>
           </div>
           <div>
-            <figure style="width: 100%;">
-              <img
-                style="width: 65%;"
-                class="image"
-                src="/articles/the-quest-to-finding-chladni-patterns-1/Bowing_chladni_plate.webp"
-                alt="bowing a plate"
-              />
-              <figcaption class="caption">
-                Generating Chladni patterns using a bow.
-              </figcaption>
-            </figure>
-            <figure style="width: 100%;">
-              <img
-                style="width: 65%;"
-                class="image"
-                src="/articles/the-quest-to-finding-chladni-patterns-1/ChladniG.webp"
-                alt="real life example"
-              />
-              <figcaption class="caption">
-                Generating Chladni patterns using a wave generator.
-              </figcaption>
-            </figure>
+            <Figure
+              src="/articles/the-quest-to-finding-chladni-patterns-1/Bowing_chladni_plate.webp"
+              alt="bowing a plate"
+              width="65%"
+            >
+              Generating Chladni patterns using a bow.
+            </Figure>
+            <Figure
+              src="/articles/the-quest-to-finding-chladni-patterns-1/ChladniG.webp"
+              alt="real life example"
+              width="65%"
+            >
+              Generating Chladni patterns using a wave generator.
+            </Figure>
           </div>
         </TwoColumns>
-        <figure>
-          <img
-            class="image"
-            id="circular-plate"
-            src="/articles/the-quest-to-finding-chladni-patterns-1/Similar_Circle.webp"
-            alt="circular plates"
-          />
-          <figcaption class="caption">Patterns on Circular Plates.</figcaption>
-        </figure>
+        <Figure
+          src="/articles/the-quest-to-finding-chladni-patterns-1/Similar_Circle.webp"
+          alt="circular plates"
+          width="80%"
+        >
+          Patterns on Circular Plates.
+        </Figure>
       </section>
     </section>
 

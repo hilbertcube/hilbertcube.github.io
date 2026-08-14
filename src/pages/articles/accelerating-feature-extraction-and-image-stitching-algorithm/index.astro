@@ -8,6 +8,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import FrontImage from "@components/article/FrontImage.astro";
+import Figure from "@components/article/Figure.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -26,23 +28,6 @@ import Scripts from "@components/site/Scripts.astro";
   toc
 >
   <Fragment slot="head">
-    <style>
-      .front-img {
-        display: block;
-        width: 100%;
-        border-radius: 10px;
-        height: auto;
-        margin: auto;
-      }
-      #flowchart-caption {
-        width: 70%;
-      }
-      @media all and (max-width: 580px) {
-        #flowchart-caption {
-          width: 100%;
-        }
-      }
-    </style>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.css"
@@ -54,14 +39,10 @@ import Scripts from "@components/site/Scripts.astro";
       <TopicTags topics={meta.topics} />
       <PageTitle title={meta.title} />
       <PubDate pubDate={meta.pubDate} />
-      <figure style="margin: 0;">
-        <img
-          class="front-img"
-          src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/banner.webp"
-          alt="image"
-          fetchpriority="high"
-        />
-      </figure>
+      <FrontImage
+        src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/banner.webp"
+        alt="image"
+      />
       <div class="Quote">
         <div class="Quote-content">The images attempt to capture scientific thought. They represent the physical manifestation of the thought process. Everything in the laboratory is a product of a stream of conscious or unconscious thought.</div>
         <div class="Quote-author">Peter Fraser</div>
@@ -114,20 +95,15 @@ import Scripts from "@components/site/Scripts.astro";
             </p>
           </div>
           <div>
-            <figure>
-              <img
-                src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/capital.webp"
-                alt="Capitol Building"
-                class="image-block"
-                style="width: 100%"
-              />
-              <figcaption>
-                The United States Capitol, Washington D.C., United States.
-                Feature detection using the Oriented FAST and Rotated BRIEF
-                (ORB) Algorithm. The colored circular regions are called key
-                points of the image.
-              </figcaption>
-            </figure>
+            <Figure
+              src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/capital.webp"
+              alt="Capitol Building"
+            >
+              The United States Capitol, Washington D.C., United States. Feature
+              detection using the Oriented FAST and Rotated BRIEF (ORB)
+              Algorithm. The colored circular regions are called key points of
+              the image.
+            </Figure>
           </div>
         </TwoColumns>
       </section>
@@ -161,25 +137,21 @@ import Scripts from "@components/site/Scripts.astro";
             </p>
           </div>
           <div>
-            <figure>
-              <img
-                src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/30_images.webp"
-                alt="30 images"
-                class="image-block"
-                style="width: 98%"
-              />
-              <figcaption>Patch of 30 images captured by the UAV</figcaption>
-            </figure>
+            <Figure
+              src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/30_images.webp"
+              alt="30 images"
+              width="98%"
+            >
+              Patch of 30 images captured by the UAV
+            </Figure>
 
-            <figure>
-              <img
-                src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/banner.webp"
-                alt="Final Map"
-                class="image-block"
-                style="width: 95%"
-              />
-              <figcaption>Final Map Obtained from Stitching Process</figcaption>
-            </figure>
+            <Figure
+              src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/banner.webp"
+              alt="Final Map"
+              width="95%"
+            >
+              Final Map Obtained from Stitching Process
+            </Figure>
           </div>
         </TwoColumns>
       </section>
@@ -315,17 +287,13 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
           GPU's key advantage lies in its ability to perform large-scale
           parallel computations. Take a look at an image, for instance:
         </p>
-        <figure>
-          <img
-            src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/pixels.webp"
-            alt="Zooming into pixels"
-            class="image-block"
-            style="width: 55%"
-          />
-          <figcaption>
-            Zooming into an image. Image by Julie Waterhouse Photography
-          </figcaption>
-        </figure>
+        <Figure
+          src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/pixels.webp"
+          alt="Zooming into pixels"
+          width="55%"
+        >
+          Zooming into an image. Image by Julie Waterhouse Photography
+        </Figure>
 
         <p>
           Images are composed of millions of pixels. When processing an image,
@@ -376,19 +344,16 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
           Instead, I will be summarizing the image stitching process using the
           flow chart below:
         </p>
-        <figure>
-          <img
-            src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/flowchart.webp"
-            alt="Final Map"
-            class="image-block"
-            style="width: 90%"
-          />
-          <figcaption id="flowchart-caption">
-            Image Stitching workflow. Green are the steps that can be further
-            accelerated with CUDA, and blue are steps that can be further
-            accelerated with OpenMP.
-          </figcaption>
-        </figure>
+        <Figure
+          src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/flowchart.webp"
+          alt="Final Map"
+          width="90%"
+          captionWidth="70%"
+        >
+          Image Stitching workflow. Green are the steps that can be further
+          accelerated with CUDA, and blue are steps that can be further
+          accelerated with OpenMP.
+        </Figure>
         <p>
           In order to further improve the speed of image processing, the author
           of the CPU implementation used a distributed memory design to
@@ -704,26 +669,22 @@ features.img_size = grayImg.size();
         </p>
         <TwoColumns>
           <div>
-            <figure style="padding: 0; margin: 0;">
-              <img
-                src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/no_openmp.webp"
-                alt="Final Map"
-                class="image-block"
-                style="width: 100%; padding: 0;"
-              />
-            </figure>
-            <figcaption>Without OpenMP for CPU vs GPU (1 thread)</figcaption>
+            <Figure
+              src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/no_openmp.webp"
+              alt="Final Map"
+              flush
+            >
+              Without OpenMP for CPU vs GPU (1 thread)
+            </Figure>
           </div>
           <div>
-            <figure style="padding: 0; margin: 0;">
-              <img
-                src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/with_openmp.webp"
-                alt="Final Map"
-                class="image-block"
-                style="width: 100%; padding: 0;"
-              />
-            </figure>
-            <figcaption>With OpenMP for CPU vs GPU (1 thread)</figcaption>
+            <Figure
+              src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/with_openmp.webp"
+              alt="Final Map"
+              flush
+            >
+              With OpenMP for CPU vs GPU (1 thread)
+            </Figure>
           </div>
         </TwoColumns>
 
@@ -765,14 +726,11 @@ features.img_size = grayImg.size();
           uploading and downloading of images to the GPU, which costs much more
           resources due to the high quality of the image patch.
         </p>
-        <figure>
-          <img
-            src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/speedup.webp"
-            alt="Final Map"
-            class="image-block"
-            style="width: 60%"
-          />
-        </figure>
+        <Figure
+          src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/speedup.webp"
+          alt="Final Map"
+          width="60%"
+        />
       </section>
 
       <section id="cost">
@@ -787,14 +745,11 @@ features.img_size = grayImg.size();
           applications compared to traditional CPU implementations, resulting in
           lower operational costs for these specific workloads.
         </p>
-        <figure>
-          <img
-            src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/cost.webp"
-            alt="Final Map"
-            class="image-block"
-            style="width: 60%"
-          />
-        </figure>
+        <Figure
+          src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/cost.webp"
+          alt="Final Map"
+          width="60%"
+        />
       </section>
 
       <section id="efficiency">
@@ -806,14 +761,11 @@ features.img_size = grayImg.size();
           implementation eventually matches that of the CPU, 1 thread
           implementation as $p=32$.
         </p>
-        <figure>
-          <img
-            src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/efficiency.webp"
-            alt="Final Map"
-            class="image-block"
-            style="width: 60%"
-          />
-        </figure>
+        <Figure
+          src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/efficiency.webp"
+          alt="Final Map"
+          width="60%"
+        />
       </section>
     </section>
 

@@ -3,6 +3,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import FrontImage from "@components/article/FrontImage.astro";
+import Figure from "@components/article/Figure.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -25,30 +27,6 @@ import ContinueButton from "@components/article/ContinueButton.astro"
   toc
 >
   <Fragment slot="head">
-    <style>
-      .front-img {
-        display: block;
-        width: 100%;
-        border-radius: 10px;
-        height: auto;
-        margin: auto;
-      }
-
-      #circular-plate {
-        width: 80%;
-      }
-
-      @media all and (max-width: 580px) {
-        #circular-plate {
-          width: 100%;
-          margin: 0;
-        }
-      }
-
-      .image-block {
-        width: 65%;
-      }
-    </style>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.css"
@@ -61,14 +39,9 @@ import ContinueButton from "@components/article/ContinueButton.astro"
       <TopicTags topics={meta.topics} />
       <PageTitle title={meta.title} />
       <PubDate pubDate={meta.pubDate} />
-      <figure style="margin: 0;">
-        <img
-          class="front-img"
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Chladni_patterns_2.webp"
-          alt="banner"
-          fetchpriority="high"
-        />
-      </figure>
+      <FrontImage
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Chladni_patterns_2.webp"
+      />
       <div class="Quote">
         <div class="Quote-content">That there are such limits to our knowledge of nature, must be borne with
           patience by every sound mind whether he be a scientist or a workman.</div>
@@ -666,14 +639,12 @@ def bessel_derivative_zero(n, m):
         is one of the zeroes of the derivative of the zeroth-order Bessel function,
         $J_0'(x)$. You can see this right in the figure below:
       </p>
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Bessel1st.webp"
-          alt=""
-          class="image-block"
-        />
-        <figcaption>First few Bessel functions of the 1st kind.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Bessel1st.webp"
+        width="65%"
+      >
+        First few Bessel functions of the 1st kind.
+      </Figure>
       <p>
         As seen, $J_0(x)$ attains a maximum at $x=0$, hence $x=0$ is one of the
         zeroes of $J_0'(x)$. Therefore, we must add it to the list, and shift
@@ -858,15 +829,12 @@ plot_polar_contour(columns, rows, a)
         >, we shall obtain the patterns right below:
       </p>
 
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_1-72_1.webp"
-          alt=""
-          class="image-block"
-          style="width: 70%"
-        />
-        <figcaption>Pattern #1 to #72.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_1-72_1.webp"
+        width="70%"
+      >
+        Pattern #1 to #72.
+      </Figure>
 
       <p>
         Furthermore, if you want more information about each pattern, open the
@@ -897,35 +865,26 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
           class="inline-code">end = 144</code
         >, we will obtain even more mesmerizing patterns like these:
       </p>
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_73-144_1.webp"
-          alt=""
-          class="image-block"
-          style="width: 70%"
-        />
-        <figcaption>Pattern #73 to #144.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_73-144_1.webp"
+        width="70%"
+      >
+        Pattern #73 to #144.
+      </Figure>
       <p>and more, if we go further</p>
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_145-216_1.webp"
-          alt=""
-          class="image-block"
-          style="width: 70%"
-        />
-        <figcaption>Pattern #145 to #216.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_145-216_1.webp"
+        width="70%"
+      >
+        Pattern #145 to #216.
+      </Figure>
       <p>and so much more,</p>
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_217-288_1.webp"
-          alt=""
-          class="image-block"
-          style="width: 70%"
-        />
-        <figcaption>Pattern #217 to #288..</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_217-288_1.webp"
+        width="70%"
+      >
+        Pattern #217 to #288..
+      </Figure>
       <p>
         There is no limit in how far you can go in a theoretical sense. But in
         reality, there will be no more new patterns after around $f= 5000$ Hz
@@ -948,15 +907,12 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         Turn on the wave generator, put on the ear plugs, and these patterns
         will arise as we increases the frequency $f$.
       </p>
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Square1.webp"
-          alt=""
-          class="image-block"
-          style="width: 70%"
-        />
-        <figcaption>Experimental Results of the Square Plate.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Square1.webp"
+        width="70%"
+      >
+        Experimental Results of the Square Plate.
+      </Figure>
     </section>
 
     <section id="square-analysis">
@@ -967,25 +923,19 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         patterns are similar, while some other are not so much. I just pick that
         ones that are closest to our actual results.
       </p>
-      <figure>
-        <img
-          class="image"
-          id="circular-plate"
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Square.webp"
-        />
-        <figcaption class="caption">
-          Matching patterns on the Square Plate.
-        </figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Square.webp"
+        width="80%"
+      >
+        Matching patterns on the Square Plate.
+      </Figure>
 
-      <figure>
-        <img
-          class="image"
-          id="circular-plate"
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Square_Theoretical.webp"
-        />
-        <figcaption class="caption">(Somewhat) similar patterns.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Square_Theoretical.webp"
+        width="80%"
+      >
+        (Somewhat) similar patterns.
+      </Figure>
 
       <p>
         The modes and predicted wave speed of the patterns are listed in the
@@ -1097,15 +1047,12 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         as below. The computer-generated patterns for the circular plate a bit less
         interesting, and is not as versatile and mesmerizing as the square patterns.
       </p>
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/CCircle1.webp"
-          alt=""
-          class="image-block"
-          style="width: 70%"
-        />
-        <figcaption>First 35 patterns of the Circular Plate.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/CCircle1.webp"
+        width="70%"
+      >
+        First 35 patterns of the Circular Plate.
+      </Figure>
 
       <p>
         On the other hand, our experimental results for the circular yield much
@@ -1114,15 +1061,12 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         than just rings like our theoretical analysis.
       </p>
 
-      <figure>
-        <img
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Circle1.webp"
-          alt=""
-          class="image-block"
-          style="width: 70%"
-        />
-        <figcaption>Experimental Results of the Circular Plate.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Circle1.webp"
+        width="70%"
+      >
+        Experimental Results of the Circular Plate.
+      </Figure>
     </section>
 
     <section id="circular-analysis">
@@ -1133,25 +1077,19 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         experimental patterns.
       </p>
 
-      <figure>
-        <img
-          class="image"
-          id="circular-plate"
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Circle.webp"
-        />
-        <figcaption class="caption">
-          Matching patterns on the Circular Plate.
-        </figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Circle.webp"
+        width="80%"
+      >
+        Matching patterns on the Circular Plate.
+      </Figure>
 
-      <figure>
-        <img
-          class="image"
-          id="circular-plate"
-          src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Circle_Theoretical.webp"
-        />
-        <figcaption class="caption">Similar Patterns.</figcaption>
-      </figure>
+      <Figure
+        src="/articles/the-quest-to-finding-chladni-patterns-2/Similar_Circle_Theoretical.webp"
+        width="80%"
+      >
+        Similar Patterns.
+      </Figure>
 
       <p>
         From the angular frequency of the plate from the previous part, we can

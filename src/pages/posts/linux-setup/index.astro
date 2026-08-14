@@ -8,6 +8,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import Figure from "@components/article/Figure.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("posts", Astro.url.pathname);
@@ -24,33 +25,6 @@ import Scripts from "@components/site/Scripts.astro";
 >
   <Fragment slot="head">
     <style is:inline>
-      .image-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1em;
-      }
-      .responsive-img {
-        max-width: 100%;
-        height: auto;
-        width: 25em;
-      }
-      .desktop-img {
-        max-width: 70%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-      }
-      @media (max-width: 600px) {
-        .image-row {
-          flex-direction: column;
-        }
-        .desktop-img {
-          max-width: 100%;
-        }
-      }
     </style>
   </Fragment>
 
@@ -155,13 +129,7 @@ sudo apt install gnome-tweaks -y</ShellScript>
           class="url">github</a
         >
       </p>
-      <div style="margin: 25px 0">
-        <img
-          class="desktop-img"
-          src="/posts/linux-setup/rice.webp"
-          alt="vscode-pet-demo"
-        />
-      </div>
+      <Figure src="/posts/linux-setup/rice.webp" alt="GNOME desktop rice" width="70%" />
       Display any image on the terminal using <a
         href="https://github.com/hpjansson/chafa"
         class="url">chafa</a
