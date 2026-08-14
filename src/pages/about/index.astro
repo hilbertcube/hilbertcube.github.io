@@ -9,7 +9,8 @@ import Banner from "@components/site/Banner.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
-import CodeBox from "@components/code/CodeBox.astro";
+import TwoColumns from "@components/ui/TwoColumns.astro";
+import Figure from "@components/article/Figure.astro";
 import { tex } from "@components/math/tex.astro";
 import Scripts from "@components/site/Scripts.astro";
 ---
@@ -34,44 +35,56 @@ import Scripts from "@components/site/Scripts.astro";
 
     <section id="about-me">
       <h2 class="home-h3-headers">About me</h2>
-      <h3>A little bit of detail</h3>
-      <p>
-        My name is Don. I'm currently an engineering student at
-        <a class="url" href="https://ucla.edu/">UCLA</a>, pursuing by Bachelor
-        of Science in Computer Science and Engineering, with a technical breadth in Mathematics. If you want to know more about my curriculum and professional
-        experiences, please check out my portfolio and cv at
-        <a href="https://ddonle.com/" class="url">ddonle.com</a> or my <a
-          href="https://www.linkedin.com/in/don-d-le/"
-          class="url"
-          style="text-decoration-line: line-through;">Linkedin</a
-        >.
-      </p>
+      <TwoColumns>
+        <div>
+          <p>
+            My name is Don. I'm currently an engineering student at 
+            <a class="url wrap" href="https://ucla.edu/">University of California, Los Angeles (UCLA)</a>, pursuing by Bachelor
+            of Science in Computer Science and Engineering. If you want to know more about my curriculum and professional
+            experiences, please check out my portfolio and cv at
+            <a href="https://ddonle.com/" class="url">ddonle.com</a> or my <a
+              href="https://www.linkedin.com/in/don-d-le/"
+              class="url"
+              style="text-decoration-line: line-through;">Linkedin</a
+            >.
+          </p>
 
-      <h3>Is that all you have to say about computer science?</h3>
-      <p>Of course not. Here's a bit more to my story:</p>
+          <p style="font-weight: bold;">
+            Is that all you have to say about computer science?
+          </p>
+          <p>
+            Of course not. Here's a bit more to my story:
+          </p>
+          <p>
+            At the age of 15, I was introduced to computers and programming after
+            inheriting my first laptop from my older brother. I wrote my first few
+            lines of code in C, starting with a simple script to solve quadratic and
+            cubic equations, and then an unsuccessful attempt at solving the
+            quartic. Soon after, I built a simple scientific calculator, a game of
+            tic-tac-toe, followed by a basic version of Snake on the terminal.
+          </p>
+          <p>
+            Throughout my teenage years, I experimented with many other programming languages, including Python and JavaScript. Along the way, I realized that I preferred languages that are strongly typed and relatively close to the hardware, while still being high-level enough to remain productive like C or C++. 
+          </p>
+          <p>
+            Over time, I also found myself increasingly drawn to the engineering side of computing: computer architecture, control systems, signal processing, and related fields,
+            which ultimately led to my choice of major in college.
+          </p>
+        </div>
+        <div>
+          <Figure
+          src="/about/boelter_3420.webp"
+          width="90%"
+          alt="Birthplace of the Internet"
+        >
+          A picture I took---birthplace of the internet at UCLA
+        </Figure>
+        </div>
+      </TwoColumns>
       <p>
-        At the age of 15, I was introduced to computers and programming after
-        inheriting my first laptop from my older brother. I wrote my first few
-        lines of code in C, starting with a simple script to solve quadratic and
-        cubic equations, and then an unsuccessful attempt at solving the
-        quartic. Soon after, I built a simple scientific calculator, a game of
-        tic-tac-toe, followed by a basic version of Snake on the terminal.
-      </p>
-      <p>
-        Throughout my teenage years, I've tried many other programming languages
-        (like Python or JavaScript), but it turns out I prefer languages that
-        are strongly typed, closer to the hardware, yet high-level enough to be
-        productive like C or C++, and most recently, Rust. Overtime, I also
-        found myself drawn slightly more to the engineering side of computers
-        (i.e. computer architecture, digital systems, signal processing, etc.)
-        which ultimately led to my choice of major in college.
-      </p>
-      <p>
-        The majority of my programming experience is in C and C++, primarily
-        within the aerospace industry and in the fields of image processing,
-        SLAM, GPUs, and computer graphics. While I have worked in web
-        development, it is not my main focus. I enjoy programming in general,
-        but I am particularly drawn to low-level and systems programming.
+        Most of my programming experience has been in the aerospace industry, where I've worked with control systems, digital image processing, GPUs, and computer graphics. I also enjoy mathematics, particularly partial differential equations (PDEs) and numerical analysis.
+
+        Outside of engineering, I spend my time hiking in national parks, working on this website, and <a href="https://ddonle.com/photos" class="url">photography</a>.
       </p>
     </section>
 
@@ -83,7 +96,7 @@ import Scripts from "@components/site/Scripts.astro";
         <p>
           I started digging through the internet back in middle school to
           collect and read scientific textbooks. While doing so, I couldn't help
-          but encounter a lot of interesting computer science and math blogs. I got inspired by some of them and eventually decided to create this
+          but encounter a lot of interesting computer science and math blogs. I was inspired by some of them and eventually decided to create this
           website: a place for me to upload my writings and projects. I
           primarily write about math, programming, and physics, and occasionally
           about topics like
@@ -93,38 +106,17 @@ import Scripts from "@components/site/Scripts.astro";
           This website was formally built back in summer of 2024, but I've been
           writing a lot of the content on this website on LaTeX documentations
           way before that. I coded most of the current functionalities of this website from scratch using HTML, CSS,
-          and vanilla Javascript. Because of this approach, the site was not very well optimized or scalable, and it can sometimes be a bit slow. To fix this issue, I later migrated everything to <a href="https://astro.build/" class="url">Astro</a>, a static site generator that still allows for the same level of customization as plain HTML, CSS, and JavaScript. To view the source code, click on the logo on the
-          side navigation bar or follow this
-          <a href="https://github.com/hilbertcube/hilbertcube.github.io" class="url"
-            >link</a
-          >.
+          and vanilla Javascript, then later migrated everything to <a href="https://astro.build/" class="url">Astro</a>, a static site generator that still allows for the same level of customization as plain HTML, CSS, and JavaScript.
         </p>
-        <ul style="line-height: 1.6">
+        <ul>
           <li class="bullet">
             <strong>Question</strong>: Why not use a framework or a static site
             generator initially?
           </li>
           <li class="bullet">
-            <strong>Answer</strong>: My impression is that static site generators give you less direct control over certain aspects of the site, especially when creating highly customizable components like the one shown below.
-            <Theorem name="F.T. of an Impulse Train">
-              The Fourier transform of the impulse train is another impulse
-              train:
-              <E>{tex`\[ 
-              \mathcal{F}\{\delta_T(t)\} = 
-              \frac{2\pi}{T}\sum_{k=-\infty}^{\infty} \delta(\omega - k\omega_s), 
-              \qquad \omega_s = \frac{2\pi}{T}.
-              \]`}</E>
-            </Theorem>
-            <p>or this one below (click on the arrow!)</p>
-            <br />
-            <Solution summary="Proof"
-              >The proof is left as an exercise to the reader.</Solution
-            >
+            <strong>Answer</strong>: My impression was that static site generators can limit your control over certain parts of a website, especially when creating highly customized components that can't be built with Markdown or MDX alone. Astro addresses this by allowing you to create custom components with .astro files, giving you much more control over the structure, styling, and behavior of your site.
           </li>
         </ul>
-        <p>
-          However, later on, I discovered Astro, which let me do all the things above.
-        </p>
       </section>
 
       <section id="structure">
@@ -148,7 +140,7 @@ import Scripts from "@components/site/Scripts.astro";
           have any suggestions on how this website can be improved, or if you find
           any:
         </p>
-        <ul id="contact-ul">
+        <ul>
           <li class="bullet">wrong information,</li>
           <li class="bullet">
             errors in the source code,
