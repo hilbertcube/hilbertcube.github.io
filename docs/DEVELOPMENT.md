@@ -2,9 +2,16 @@
 
 A practical guide to working on this site. It's an [Astro](https://astro.build) 5
 static site: content is authored as hand-written `.astro` pages (not Markdown),
-math is rendered with MathJax, and search is powered by Pagefind. For the helper
-scripts (`new-article.sh`, RSS, TOC, code-block conversion) see
-[`scripts/AUTOMATION.md`](../scripts/AUTOMATION.md).
+math is typeset by self-hosted KaTeX, and search is powered by Pagefind.
+
+This guide covers the **workflow** — commands, project layout, creating a page,
+the data model, and how content reaches search and RSS. Its companions:
+
+| Doc | Covers |
+|---|---|
+| [`COMPONENTS.md`](COMPONENTS.md) | Every component, its props, and its gotchas |
+| [`SEARCH.md`](SEARCH.md) | How search is built, indexed and served |
+| [`AUTOMATION.md`](AUTOMATION.md) | The helper scripts in `scripts/` |
 
 ---
 
@@ -19,13 +26,14 @@ scripts (`new-article.sh`, RSS, TOC, code-block conversion) see
 **Rule of thumb:**
 
 - Writing content or CSS → `npm run dev`.
-- Testing search, MathJax exclusion, or anything that depends on the built
+- Testing search, math exclusion, or anything that depends on the built
   output → `npm run build && npm run preview`.
 - In `dev`, the search bar falls back to a **title-only** match over
-  `articles.json` (see §7) because Pagefind's index only exists after a build.
+  `articles.json` (see §6) because Pagefind's index only exists after a build.
 
-Deployment is automatic: GitHub Actions runs `npm run build` and publishes
-`dist/` (including `dist/pagefind/`). You don't commit `dist/`.
+Deployment is automatic: `.github/workflows/static-pages.yml` runs `npm ci &&
+npm run build` on every push to `main` and publishes `dist/` (including
+`dist/pagefind/`). `dist/` is gitignored — never commit it.
 
 ---
 
@@ -33,31 +41,44 @@ Deployment is automatic: GitHub Actions runs `npm run build` and publishes
 
 ```
 src/
-  layouts/BaseLayout.astro     Shared shell for every page (nav, sidebar, footer)
+  layouts/BaseLayout.astro     Shared shell for every page (head, nav, sidebar, footer)
   pages/
     articles/<slug>/index.astro  One article per folder
     posts/<slug>/index.astro     One post per folder
-    about, tags, ...             Standalone pages
-  components/                  Grouped by role; every component lives in one
-    site/       Chrome on every page: TopBar, Logo, Footer, ShareButton,
-                HighlightsAndAttribute, Banner
-    article/    Article/post furniture: TableOfContents, TopicTags, ContinueButton
-    listings/   Catalog views: ArticleCards, PostList, MaterialCard
-    ui/         Primitives: Icon, TwoColumns
-    math/       Equation, Theorem, Problem, Solution, E, M, tex
-    code/       ShellScript, CodeBlock, CodeBox, TabBox, CopyButton, Sample
+    rss/feed.xml.ts              Build-time RSS endpoint
+    about/, privacy-policy/, template/, test/, index.astro, 404.astro
+  components/                  Grouped by role — see COMPONENTS.md
+    site/  article/  listings/  math/  code/  ui/
+  utils/                       Build-time helpers shared by components and pages
   content.config.ts            Typed, validated data collections over articles.json
-  assets/css/                  Styles (imported once via main.css)
+  assets/
+    css/                       Styles (bundled once via main.css)
+    images/                    Images imported through astro:assets (logo, banner)
 public/
   assets/json/articles.json    Catalog of all articles/posts (source of truth)
-  assets/js/scripts.js         Global client JS (search, MathJax config, UI)
+  assets/js/katex-render.js    KaTeX driver: macros, display math, numbering
+  assets/js/scripts.js         Image lightbox + smooth in-page scrolling
+  assets/js/blogpage-setting.js  Opens <Solution> blocks, lazy-loads images
+  katex/                       Self-hosted KaTeX library and fonts
   articles/<slug>/             Article body images
   media/Images/                Card thumbnail images
 scripts/                       Automation (see AUTOMATION.md)
 ```
 
-**Path aliases** (from `tsconfig.json`): `@layouts/*`, `@components/*`.
-Prefer `import BaseLayout from "@layouts/BaseLayout.astro"` over relative paths.
+**Path aliases** (from `tsconfig.json`) — prefer these over relative paths:
+
+| Alias | Resolves to |
+|---|---|
+| `@layouts/*` | `src/layouts/*` |
+| `@components/*` | `src/components/*` |
+| `@utils/*` | `src/utils/*` |
+| `@assets/*` | `src/assets/*` |
+
+**Where client JS lives.** Behaviour tied to a component ships in that
+component's own `<script>` (nav, dark mode, settings, search, share, copy
+buttons, TOC highlighting, the banner canvas). `public/assets/js/scripts.js`
+holds only the two site-wide behaviours that have no owning component — the
+image lightbox and smooth anchor scrolling.
 
 ---
 
@@ -70,68 +91,48 @@ Use the scaffolder — don't hand-create folders:
 ./scripts/new-article.sh --type post --slug "my-slug" --title "My Title"
 ```
 
-It creates `src/pages/<type>/<slug>/index.astro` **and** appends an entry to
-`public/assets/json/articles.json`. Both are required — the page renders the
-prose; the JSON entry drives homepage cards, the tags/archive page, RSS, and
-"More Articles". A page without a JSON entry won't appear in those lists (and the
-build will fail if the entry is malformed — see §5).
+It creates `src/pages/<type>/<slug>/index.astro` **and** inserts an entry at the
+top of `public/assets/json/articles.json`. Both are required — the page renders
+the prose; the JSON entry drives homepage cards, RSS, search and "More
+Articles". A page without a JSON entry won't appear in those lists, and a
+malformed entry fails the build (see §4).
 
-After scaffolding: fill in the content, drop images in `public/articles/<slug>/`,
-and reference them as `/articles/<slug>/<file>.webp`.
+> ⚠️ **The scaffolder's template predates the component library** and is due for
+> an update. What it emits still works, but it is not the shape any current page
+> uses. After scaffolding, replace its header with the canonical one — the
+> skeleton in [`COMPONENTS.md` §8](COMPONENTS.md#8-cheat-sheet) is the reference.
+> Specifically:
+>
+> | Scaffold emits | Should be |
+> |---|---|
+> | `import … from "../../../layouts/…"` | the `@layouts` / `@components` aliases |
+> | `<div class="topic">`, `<h1 class="title">`, `<div class="date">` | `<TopicTags>`, `<PageTitle>`, `<PubDate>` fed from `getEntryMeta()` |
+> | a hand-written "More Articles" `<section>` | nothing — `BaseLayout` adds it to every article automatically |
+> | `<script is:inline src="/assets/js/blogpage-setting.js">` | `<Scripts use={["blog-setting", …]} />` |
+> | a MathJax CDN `<script>` | nothing — KaTeX loads on every page (§5) |
 
----
+Then: fill in the content, drop images in `public/articles/<slug>/`, and
+reference them as `/articles/<slug>/<file>.webp` through `<Figure>`.
 
-## 4. Page & layout conventions
+**Page conventions** beyond the components themselves:
 
-Every page wraps its content in `BaseLayout`:
+- Wrap the body in a single `<div class="content-grid">`.
+- Give each `<section>` an `id` — that is what the Table of Contents anchors to
+  (§3.1) and what search results deep-link into.
+- Page-specific CSS goes in the `head` slot; page-specific scripts go through
+  `<Scripts>` in the `scripts` slot.
 
-```astro
----
-import BaseLayout from "@layouts/BaseLayout.astro";
----
-<BaseLayout title="Valgrind" description="…" keywords="…" activeButton="Archive-button" toc>
-  <Fragment slot="head"> <style>/* page-specific CSS */</style> </Fragment>
+### 3.1 Table of Contents
 
-  <div class="content-grid">
-    <header>
-      <div class="topic">Topics: …</div>
-      <h1 class="title">…</h1>
-      <div class="date">…</div>
-    </header>
-    <section id="…"> … </section>
-  </div>
+Pass `toc` to `BaseLayout` and the sidebar TOC is built from the page's own
+markup at build time, so adding a section is all it takes to add an entry —
+there is no list to keep in sync.
 
-  <Fragment slot="scripts"> … </Fragment>
-</BaseLayout>
-```
-
-Rules:
-
-- **Props**: `title` (required), `description`, `keywords`, `activeButton` (id of
-  the nav link to highlight, e.g. `"Archive-button"`), `toc` (sidebar Table of
-  Contents — see below).
-- **Slots**: `head` (extra styles/meta), `sidebar` (extra content above the
-  highlights panel), `scripts` (page-specific scripts).
-- Put the main content in a `<div class="content-grid">`.
-- **To render math you must load MathJax** in the `scripts` slot — the scaffold
-  adds this automatically:
-  ```astro
-  <Fragment slot="scripts">
-    <script is:inline src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
-  </Fragment>
-  ```
-  (The MathJax *config* — delimiters, `ams` tags — lives globally in
-  `public/assets/js/scripts.js`.)
-- Article/post metadata (title, topics, date) can be pulled from the data
-  collection instead of hardcoding — see §5.
-
-### Table of Contents
-
-`toc` builds the sidebar TOC from the page's own markup at build time, so adding
-a section is all it takes to add a TOC entry — there is no list to keep in sync.
 Every `<h2>`/`<h3>` becomes an entry, anchored to its own `id` or to the `id` of
-the `<section>` it opens; a heading with neither is skipped. Nesting follows
-heading level (`<h3>` under the preceding `<h2>`), not `<section>` nesting.
+the innermost enclosing `<section>` that no earlier heading has claimed. **A
+heading with no anchor is skipped** — a TOC row that can't be linked is dead
+weight. Nesting follows heading level (`<h3>` under the preceding `<h2>`), not
+`<section>` nesting.
 
 ```astro
 <BaseLayout title="…" toc>            <!-- or toc={{ maxLevel: 4 }} for <h4> too -->
@@ -149,147 +150,167 @@ Overrides, on a heading or on its `<section>`:
   what puts the section in the TOC at all.
 - `data-toc="skip"` — leave it out.
 
-The extractor lives in `src/utils/toc.ts`; `TableOfContents.astro` still takes a
-manual `items` array for the rare page that needs one.
+Only *rendered* HTML is inspected, so headings produced by components or `.map()`
+loops are picked up like any other, and commented-out markup is not. The
+extractor lives in `src/utils/toc.ts`.
 
 ---
 
-## 5. Data model — `articles.json` + typed collections
+## 4. Data model — `articles.json` + typed collections
 
 `public/assets/json/articles.json` is the single catalog. It has three arrays:
-`articles` (have `id`, `image`), `posts` (have `pid`), and `others` (resources).
+`articles` (carry `id`, `image`), `posts` (carry `pid`), and `others`
+(resources such as About and the license).
 
 It is wrapped by typed, **Zod-validated** collections in `src/content.config.ts`.
-Read it in `.astro` files via the content API — **not** `fs.readFileSync`:
+Read it through the content API — **never** `fs.readFileSync`.
+
+A page looking up **its own** entry should use `getEntryMeta`, which matches
+`Astro.url.pathname` against `data.link` and throws if there is no match, so a
+page and its catalog entry can't drift apart silently:
 
 ```astro
 ---
-import { getCollection } from "astro:content";
-
-// e.g. this page's own metadata:
-const slug = Astro.url.pathname.replace(/\/$/, "");
-const meta = (await getCollection("articles")).find(
-  (e) => e.data.link.replace(/\/$/, "") === slug,
-)?.data;
+import { getEntryMeta } from "@utils/getEntryMeta";
+const meta = await getEntryMeta("articles", Astro.url.pathname);
 ---
-<h1 class="title">{meta.title}</h1>
+<PageTitle title={meta.title} />
 ```
 
-Rules:
+For everything else (listings, feeds, panels) use `getCollection("articles" |
+"posts" | "others")` directly.
 
-- Every entry needs `title`, `link`, `topics[]`, `description`, `pubDate`
-  (ISO `YYYY-MM-DD`; articles also `id` + `image`; posts also `pid`). `others`
-  entries use a free-form `date` string instead, since they have no real
-  publish date. A missing/misspelled field
-  **fails the build** with a Zod error — that's intentional, it stops content
-  from silently vanishing from the homepage/RSS.
-- Collection order follows the array order in the JSON (newest first, since
-  `new-article.sh` inserts at the top).
-- The raw file is still fetched at runtime by the tags page and the search
-  fallback, so keep it in `public/`.
+**Rules**
 
----
-
-## 6. Math — the `Equation` tag and friends
-
-MathJax delimiters: inline `$…$` / `\(…\)`, display `$$…$$` / `\[…\]` /
-`\begin{env}…\end{env}`. Braces in source are written as HTML entities
-(`&#123;` / `&#125;`).
-
-**Rules (these keep both rendering *and* search correct):**
-
-1. **All display math goes inside `<Equation>`.** Never leave a bare `$$…$$`,
-   `\[…\]`, or `\begin{…}…\end{…}` loose in prose.
-   ```astro
-   <Equation>$$ E = mc^2 $$</Equation>
-   <Equation>\begin&#123;align*&#125; … \end&#123;align*&#125;</Equation>
-   ```
-   Why: `<Equation>` renders `<div class="equation">`, which Pagefind is told to
-   **exclude from search** (`--exclude-selectors ".equation, …"`). A bare display
-   block would dump LaTeX like `\frac`, `\sum`, `\begin` into the search index.
-2. **Inline math** (`$x^2$`, `\(\nabla u\)`) can stay in prose. The build's
-   `pagefind-ignore-math.mjs` step automatically wraps it so it's excluded from
-   search — you don't do anything.
-3. **Macro preamble**: put `\newcommand`/`\DeclareMathOperator` definitions in a
-   `<div class="mathjax-definition"> \[ … \] </div>` at the top of the article
-   (the scaffold/existing articles show the pattern). This class is also excluded
-   from search.
-4. Other math components: `<Theorem name="…">`, `<Problem>`, `<Solution
-   summary="…">` wrap **prose + math** — their text stays searchable, but any
-   *display* math inside them still belongs in an `<Equation>`.
-
-**Net effect on search:** readers search article *words*, never LaTeX. If you
-ever see equation gibberish in search results, it's almost always a display block
-that wasn't wrapped in `<Equation>` — wrap it and rebuild.
+- Every entry needs `title`, `link`, `topics[]`, `description`, and `pubDate`
+  (ISO `YYYY-MM-DD`); articles also `id` + `image`, posts also `pid`. `others`
+  entries carry a free-form `date` string instead, since they have no real
+  publish date.
+- A missing or misspelled field **fails the build** with a Zod error. That is
+  intentional: it stops content from silently vanishing from the homepage and
+  the feed.
+- Collection order follows array order in the JSON — newest first, since
+  `new-article.sh` inserts at the top. Nothing re-sorts it.
+- Keep the raw file in `public/`: the search bar fetches it at runtime as its
+  dev/offline fallback (§6).
 
 ---
 
-## 7. Search system (Pagefind)
+## 5. Math
+
+Math is typeset by **self-hosted KaTeX**. `BaseLayout` loads
+`public/assets/js/katex-render.js` on every page, so **a page needs no math
+script of its own** — there is nothing to add to the `scripts` slot.
+
+Delimiters: inline `$…$` / `\(…\)`; display `$$…$$` / `\[…\]` /
+`\begin{env}…\end{env}`.
+
+For the components themselves — `<E>`, `<M>`, `<Theorem>`, `<Problem>`,
+`<Solution>`, and the `tex` raw-template helper — see
+[`COMPONENTS.md` §4](COMPONENTS.md#4-math--equations--environments). Two rules
+belong here, because they're about **search**, not rendering:
+
+1. **All display math goes inside `<E>`.** Never leave a bare `$$…$$`, `\[…\]`
+   or `\begin{…}…\end{…}` loose in prose. `<E>` renders `<div class="equation">`,
+   which Pagefind is told to exclude (`--exclude-selectors ".equation, …"` in
+   the build script). A bare display block dumps `\frac`, `\sum` and `\begin`
+   straight into the search index.
+2. **Inline math can stay in prose.** The build's `pagefind-ignore-math.mjs`
+   step wraps every inline run in `<span data-pagefind-ignore>` automatically —
+   you do nothing. It tokenizes tags rather than pattern-matching text, so it
+   never rewrites markup and skips `<pre>`/`<code>`/`<script>`/`<style>`.
+
+**Net effect:** readers search article *words*, never LaTeX. Equation gibberish
+in a search result almost always means a display block that wasn't wrapped in
+`<E>` — wrap it and rebuild.
+
+Two leftovers from the MathJax era, worth recognising but not worth copying:
+`<Equation>` still works as an alias of `<E>`, and `.mathjax-definition` is
+still in the Pagefind exclude list although no page uses it — shared macros now
+live in the `macros` object at the top of `katex-render.js`.
+
+---
+
+## 6. Search (Pagefind)
+
+Full detail in [`SEARCH.md`](SEARCH.md). The short version:
 
 - **How it works:** `npm run build` builds the site, then Pagefind crawls the
-  rendered HTML in `dist/` and produces a client-side index under
-  `dist/pagefind/`. The search bar (`SearchBar()` in
-  `public/assets/js/scripts.js`) lazy-loads `/pagefind/pagefind.js` on the first
-  keystroke and shows title + a highlighted body excerpt.
-- **What's indexed:** only the `<main data-pagefind-body>` region (set in
-  `BaseLayout`). Nav, sidebar, "More Articles", and the footer are ignored, as
-  are `.equation` / `.mathjax-definition` and inline math (§6).
+  rendered HTML in `dist/` and writes a client-side index to `dist/pagefind/`.
+  The search UI (`src/components/site/topbar/search.ts`, shipped with
+  `TopBar.astro`) lazy-loads `/pagefind/pagefind.js` on the first keystroke and
+  shows the title plus a highlighted body excerpt.
+- **What's indexed:** only the `<main data-pagefind-body>` region, set in
+  `BaseLayout`. Nav, sidebar, "More Articles" and the footer are ignored, as are
+  `.equation` and inline math (§5).
 - **New pages are indexed automatically** — anything using `BaseLayout` gets the
-  `data-pagefind-body` marker. Just rebuild.
-- **Fallback:** if the Pagefind index is missing (e.g. `npm run dev`, or
-  offline), search falls back to a **title-only** match over `articles.json`.
-- **To exclude a whole element from search:** add `data-pagefind-ignore` to it.
-- **To test search:** `npm run build && npm run preview`, then search a word that
-  only appears in an article body.
+  marker. Just rebuild.
+- **Topics become filter facets** through `<TopicTags>`, which is what fills the
+  top bar's tag browser.
+- **Fallback:** with no index (in `dev`, or offline) the bar fetches
+  `articles.json` and does a title-only substring match.
+- **To exclude an element:** add `data-pagefind-ignore` to it.
+- **To test:** `npm run build && npm run preview`, then search a word that
+  appears only in an article body.
 
 ---
 
-## 8. Code blocks
+## 7. Code blocks
 
-Use the components in `src/components/code/` rather than raw `<pre>`:
+Use the components in `src/components/code/` rather than raw `<pre>` — which one
+to reach for, their props, and the whitespace trap that eats indentation are all
+in [`COMPONENTS.md` §3](COMPONENTS.md#3-code--code-blocks).
 
-- `<ShellScript>` — command-line examples (prompt styling).
-- `<CodeBlock>` — generic code / config.
-- Plus `CodeBox`, `TabBox`, `CopyButton`, `Sample` for richer layouts.
+Two things specific to this guide:
 
-To convert existing raw `<div class="code-container">` blocks, use
-`python3 scripts/convert-code-blocks.py <file> --apply` (see AUTOMATION.md).
-Note: `$` inside code (`$USER`, `$(uname -r)`) is safe — the search step skips
-`<pre>`/`<code>`, so shell variables are never mistaken for math.
-
----
-
-## 9. Styling
-
-- All CSS is under `src/assets/css/` and bundled via `src/assets/css/main.css`
-  (imported once in `BaseLayout`). Add page-specific CSS in the page's `head`
-  slot.
-- The site is theme-aware (light/dark via a `dark-mode` class on `<html>`);
-  follow the existing `--var` custom properties rather than hardcoding colors.
+- **Converting legacy markup:** `python3 scripts/convert-code-blocks.py <file>
+  --apply` rewrites old raw `<div class="code-container">` blocks into
+  components. Run it without `--apply` first for a diff. Its matcher is narrow —
+  it only recognises containers carrying the one legacy `style` string, so
+  other hand-rolled shapes (e.g. a `.box`-wrapped block) report "nothing to do"
+  and have to be converted by hand.
+- **`$` inside code is safe** (`$USER`, `$(uname -r)`): the inline-math step
+  skips `<pre>` and `<code>`, so shell variables are never mistaken for math.
 
 ---
 
-## 10. RSS feed & committing
+## 8. Styling
 
-- The feed lives at `src/pages/rss/feed.xml.ts`, a build-time Astro endpoint
-  (using `@astrojs/rss`) that reads straight from the `articles` and `posts`
-  content collections — the same `public/assets/json/articles.json` catalog
-  everything else uses. It regenerates on every `npm run build`; there is no
-  script to run and nothing to keep in sync manually.
-- Each article/post entry's `pubDate` (`YYYY-MM-DD`) is the single source of
-  truth for both the feed's `<pubDate>` and the on-page date, formatted via
-  `formatDate()` in `src/utils/formatDate.ts` — `new-article.sh` sets it for
-  you. If you hand-edit `articles.json`, add `pubDate` yourself or the entry
-  will fail the `content.config.ts` schema check at build time.
-- Commit: `./scripts/commit.sh "message"`. See AUTOMATION.md.
+- All CSS is under `src/assets/css/`, bundled via `main.css` and imported once
+  in `BaseLayout`. Page-specific CSS goes in the page's `head` slot; rules that
+  belong to one component go in that component's own scoped `<style>`.
+- The site is theme-aware — a `dark-mode` class on `<html>`, applied before
+  first paint by an inline script in `BaseLayout` so there's no flash. Follow
+  the existing `--var` custom properties rather than hardcoding colors.
+- Readers can override body font, font size and both Prism code themes from the
+  settings panel; those write inline styles and swap stylesheets at runtime, so
+  don't fight them with `!important`.
+
+---
+
+## 9. RSS feed & committing
+
+- The feed is `src/pages/rss/feed.xml.ts`, a build-time Astro endpoint (using
+  `@astrojs/rss`) reading the same `articles` and `posts` collections as
+  everything else. It regenerates on every build — there is no script to run and
+  nothing to keep in sync.
+- Each entry's `pubDate` is the single source of truth for both the feed's
+  `<pubDate>` and the on-page date (formatted by `src/utils/formatDate.ts`).
+  `new-article.sh` sets it; if you hand-edit `articles.json`, add it yourself or
+  the entry fails the schema check.
+- Commit with `./scripts/commit.sh "message"` — it pulls `main`, stages
+  everything, commits and pushes.
 
 ---
 
 ## Quick checklist for a new article
 
 - [ ] `./scripts/new-article.sh --type article --slug … --title …`
-- [ ] Write content; images in `public/articles/<slug>/`, referenced as `/articles/<slug>/…`
-- [ ] All display math wrapped in `<Equation>`; macros in `.mathjax-definition`
-- [ ] MathJax script present in the `scripts` slot (if the page uses math)
-- [ ] `npm run dev` to write; `npm run build && npm run preview` to verify search + final render
+- [ ] Bring the scaffolded page up to date (§3) — aliases, `getEntryMeta`,
+      header components, drop the MathJax script and the duplicate "More Articles"
+- [ ] Write content; images in `public/articles/<slug>/`, placed with `<Figure>`
+- [ ] Every `<section>` has an `id`; display math wrapped in `<E>`
+- [ ] Every code language listed in `<Scripts use={…}>`
+- [ ] `npm run dev` to write; `npm run build && npm run preview` to verify search
+      and the final render
 - [ ] `./scripts/commit.sh "Add: <title>"`
