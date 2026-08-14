@@ -22,3 +22,115 @@ import bannerSrc from '@assets/images/code-banner.webp';
   import { initBannerCanvas } from "./bannerCanvas";
   initBannerCanvas();
 </script>
+
+<style>
+  /* Homepage hero banner. Every selector below is scoped to this component,
+     so the breakpoint overrides live here too rather than in _responsive.css —
+     scoped rules carry an extra attribute selector and would otherwise
+     outrank the global media queries regardless of load order. */
+  .home-banner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 100%;
+    height: 40vh;
+    border: 0;
+    background-color: black;
+  }
+
+  #bannerCanvas {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .left-section-banner,
+  .right-section-banner {
+    position: relative;
+    width: 100%;
+    height: inherit;
+  }
+
+  .left-section-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .right-section-banner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  /* astro:assets' <Image> spreads extra props onto the <img>, so it does pick
+     up this component's scope attribute and a plain scoped selector reaches it.
+     (Contrast Icon.astro, which drops the prop — see ShareButton.astro.) */
+  .right-section-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .banner-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Jura", sans-serif;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 10px;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .banner-title::after {
+    position: absolute;
+    content: "";
+    background: #ca0000;
+    height: 3px;
+    width: 60%;
+    bottom: 0;
+    left: 20%;
+  }
+
+  @media all and (max-width: 1200px) {
+    .home-banner {
+      min-height: 100px;
+      height: 350px;
+    }
+  }
+
+  @media all and (max-width: 1080px) {
+    .banner-title {
+      font-size: 2.3rem;
+    }
+  }
+
+  @media all and (max-width: 580px) {
+    .banner-title {
+      font-size: 1.2rem;
+    }
+
+    .home-banner {
+      min-height: 100px;
+      height: 200px;
+    }
+
+    .banner-title::after {
+      height: 2px;
+    }
+  }
+</style>
