@@ -67,3 +67,16 @@ function renderItems(items: TocItem[]): string {
     </div>
   )
 }
+
+<!--
+  Note: BaseLayout imports this component on every page, and Astro picks the
+  pages a hoisted <script> lands on from the module graph, not from whether the
+  markup above actually rendered — so this ships site-wide regardless of `toc`.
+  That is fine (initTocHighlight() returns immediately when there are no TOC
+  links) and it is the point: the behaviour travels with the markup instead of
+  with a hand-maintained alias list that a new TOC page could forget.
+-->
+<script>
+  import { initTocHighlight } from "./tocHighlight";
+  initTocHighlight();
+</script>
