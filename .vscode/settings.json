@@ -22,6 +22,41 @@
     "strings": true
   },
   "css.validate": true,
+  // CSS Peek: its default language list has no "astro", so go-to-definition
+  // on class names silently does nothing in .astro files. Setting this key
+  // replaces the defaults wholesale, so the full list is repeated here.
+  "cssPeek.peekFromLanguages": [
+    "astro",
+    "html",
+    "django-html",
+    "laravel-blade",
+    "razor",
+    "vue",
+    "blade",
+    "pug",
+    "jade",
+    "handlebars",
+    "php",
+    "twig",
+    "md",
+    "nunjucks",
+    "javascript",
+    "javascriptreact",
+    "erb",
+    "typescript",
+    "typescriptreact",
+    "HTML (Eex)",
+    "html-eex",
+    "ejs",
+    "hbs",
+    "svelte"
+  ],
+  "cssPeek.peekToExclude": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/dist/**",
+    "**/.astro/**"
+  ],
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode",
     "editor.formatOnSave": false,
