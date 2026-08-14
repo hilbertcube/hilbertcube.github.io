@@ -2,10 +2,43 @@
 /**
  * src/components/code/CopyButton.astro
  * =====================================
- * Reusable copy-to-clipboard button for code containers.
- * Renders a <button class="copy-btn"> element that is wired up
- * by the global script in public/assets/js/scripts.js.
+ * Copy-to-clipboard button for code containers.
  */
 ---
 
 <button class="copy-btn">Copy</button>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".copy-btn").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      // Resolved from the button's own container rather than by document
+      // order, so containers without a button (Sample.astro) don't shift it.
+      const code = button
+        .closest(".code-container")
+        ?.querySelector<HTMLElement>("code");
+
+      if (!code || code.innerText.trim() === "") {
+        button.textContent = "No text to copy";
+        return;
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = code.innerText;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        button.textContent = "Copied!";
+      } catch (e) {
+        button.textContent = "Failed to copy";
+      }
+      document.body.removeChild(textarea);
+
+      setTimeout(() => {
+        button.textContent = "Copy";
+      }, 1000);
+    });
+  });
+</script>

@@ -12,11 +12,7 @@ const sunSvg = getIconSvg('fas', 'sun');
 
 <div class="top-nav">
   <div class="toggle-btn-container">
-    <button
-      aria-label="open-close-button"
-      class="toggle-btn"
-      onclick="toggleNav()"
-    >
+    <button aria-label="open-close-button" class="toggle-btn">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
@@ -230,6 +226,25 @@ const sunSvg = getIconSvg('fas', 'sun');
     <div class="progress-bar" id="myBar"></div>
   </div>
 </div>
+
+<script>
+  import { initNav } from "./topbar/nav";
+  import { initCodeThemeSelect, initDarkMode } from "./topbar/theme";
+  import { initSettings, initProgressBar } from "./topbar/settings";
+  import { initSearch } from "./topbar/search";
+
+  initNav();
+
+  // The selects have to be restored first: they resolve which stylesheet URL
+  // dark mode should install for each mode.
+  const lightTheme = initCodeThemeSelect("light-theme-select", "lightTheme", 0);
+  const darkTheme = initCodeThemeSelect("dark-theme-select", "darkTheme", 0);
+  initDarkMode(lightTheme ?? "", darkTheme ?? "");
+
+  initSettings();
+  initProgressBar();
+  initSearch();
+</script>
 
 <style>
   #toggleIcon {
