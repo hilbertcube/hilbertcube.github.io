@@ -40,9 +40,6 @@ import Scripts from "@components/site/Scripts.astro";
       .image-block {
         width: 65%;
       }
-      #frequency-table {
-        width: 12em;
-      }
     </style>
   </Fragment>
 
@@ -291,26 +288,51 @@ import Scripts from "@components/site/Scripts.astro";
           </div>
           <div>
             <div class="table-wrapper">
-              <table
-                style="margin-left: auto; margin-right: auto; text-align: center;"
-                id="frequency-table"
-              >
-                <tr
-                  style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
-                >
-                  <td>$m$</td>
-                  <td>$4m^2$</td>
-                  <td>$f$ (Hz)</td>
-                </tr>
-                <tr><td>0</td><td>0</td><td>0</td></tr>
-                <tr><td>1</td><td>4</td><td>131</td></tr>
-                <tr><td>2</td><td>16</td><td>429</td></tr>
-                <tr><td>3</td><td>36</td><td>1079</td></tr>
-                <tr><td>4</td><td>64</td><td>1806</td></tr>
-                <tr><td>5</td><td>100</td><td>3320</td></tr>
-                <tr style="border-bottom: 1px solid var(--grid-text-color);"
-                  ><td>6</td><td>144</td><td>4661</td></tr
-                >
+              <table class="p-table" id="frequency-table">
+                <thead>
+                  <tr>
+                    <th>$m$</th>
+                    <th>$4m^2$</th>
+                    <th>$f$ (Hz)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>131</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>16</td>
+                    <td>429</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>36</td>
+                    <td>1079</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>64</td>
+                    <td>1806</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>100</td>
+                    <td>3320</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>144</td>
+                    <td>4661</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>

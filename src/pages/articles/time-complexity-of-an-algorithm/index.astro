@@ -51,44 +51,15 @@ import Scripts from "@components/site/Scripts.astro";
         font-style: italic;
         font-weight: 600;
       }
-      /* Summary table of growth functions */
-      .p-table {
-        width: 100%;
-        margin: 30px auto;
-        border: 1px solid var(--grid-text-color);
-        font-size: 0.95em;
-      }
-      .p-table caption {
-        caption-side: bottom;
-        font-size: 14px;
-        padding-top: 10px;
-        text-align: left;
-      }
-      .p-table thead tr {
-        border-bottom: 1px solid var(--grid-text-color);
-      }
-      .p-table th,
-      .p-table td {
-        padding: 8px 14px;
-        vertical-align: top;
-        text-align: left;
-      }
-      .p-table th {
-        text-align: center;
-      }
+      /* Summary table of growth functions. The table style itself is
+         .p-table in components/_content.css; the growth and name columns
+         are centred here because that is particular to this table's content. */
       .p-table td:first-child {
         text-align: center;
         white-space: nowrap;
       }
       .p-table td:nth-child(2) {
         text-align: center;
-      }
-      .p-table th + th,
-      .p-table td + td {
-        border-left: 1px solid var(--grid-text-color);
-      }
-      .p-table tbody tr + tr {
-        border-top: 1px solid var(--box-border, rgba(128, 128, 128, 0.3));
       }
     </style>
   </Fragment>

@@ -47,11 +47,6 @@ import ContinueButton from "@components/article/ContinueButton.astro"
       .image-block {
         width: 65%;
       }
-
-      #square-wave-table,
-      #circle-wave-table {
-        width: 80%;
-      }
     </style>
     <link
       rel="stylesheet"
@@ -1010,93 +1005,76 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
       </p>
 
       <div class="table-wrapper">
-        <table
-          style="margin-left: auto; margin-right: auto; text-align: center;"
-          id="square-wave-table"
-        >
+        <table class="p-table" id="square-wave-table">
           <caption>Wave Speed of the Square Plate</caption>
-          <tr
-            style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
-          >
-            <th style="min-width: 80px"><strong>Pattern No. $(N)$</strong></th>
-            <th><strong>Sum $(S)$</strong></th>
-            <th><strong>Modes $(n,m)$</strong></th>
-            <th><strong>Sign</strong></th>
-            <th style="border-left: 1px solid var(--grid-text-color)"
-              ><strong>Found at</strong></th
-            >
-            <th><strong>Wave Speed</strong></th>
-          </tr>
-          <tr>
-            <td>$21$</td>
-            <td>$20$</td>
-            <td>$(2, 4)\; (4, 2)\; $</td>
-            <td>$[+, +]$</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >$245\pm 50$ Hz</td
-            >
-            <td>$26.41\pm 5.39$</td>
-          </tr>
-          <tr>
-            <td>$17$</td>
-            <td>$16$</td>
-            <td>$(0, 4)\; (4, 0)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >$453 \pm 50$ Hz</td
-            >
-            <td>$54.59\pm 6.03$</td>
-          </tr>
-          <tr>
-            <td>$33$</td>
-            <td>$26$</td>
-            <td>$(1, 5)\; (5, 1)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >$56 \pm 75$ Hz</td
-            >
-            <td>$53.41\pm 7.11$</td>
-          </tr>
-          <tr>
-            <td>$22$</td>
-            <td>$21$</td>
-            <td>$(2, 4)\; (4, 2)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >$647 \pm 75$ Hz</td
-            >
-            <td>$69.73\pm 8.09$</td>
-          </tr>
-          <tr>
-            <td>$62$</td>
-            <td>$58$</td>
-            <td>$(3, 7)\; (7, 3)\; $</td>
-            <td>$[+, -]$</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >$934 \pm 100$ Hz</td
-            >
-            <td>$59.11\pm 6.33$</td>
-          </tr>
-          <tr>
-            <td>$52$</td>
-            <td>$50$</td>
-            <td>$(1, 7)\; (5, 5)\; (7, 1) $</td>
-            <td>$[+, +, +]$</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >$2160 \pm 500$ Hz</td
-            >
-            <td>$147.24\pm 34.09$</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--grid-text-color)">
-            <td>$223$</td>
-            <td>$200$</td>
-            <td>$(2, 14)\;(10, 10)\; (14, 2)\; $</td>
-            <td>$[+, +, +]$</td>
-            <td style="border-left: 1px solid var(--grid-text-color)"
-              >$3163 \pm 800$ Hz</td
-            >
-            <td>$107.80\pm 27.27$</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Pattern No. $(N)$</th>
+              <th>Sum $(S)$</th>
+              <th>Modes $(n,m)$</th>
+              <th>Sign</th>
+              <th>Found at</th>
+              <th>Wave Speed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>$21$</td>
+              <td>$20$</td>
+              <td>$(2, 4)\; (4, 2)\; $</td>
+              <td>$[+, +]$</td>
+              <td>$245\pm 50$ Hz</td>
+              <td>$26.41\pm 5.39$</td>
+            </tr>
+            <tr>
+              <td>$17$</td>
+              <td>$16$</td>
+              <td>$(0, 4)\; (4, 0)\; $</td>
+              <td>$[+, -]$</td>
+              <td>$453 \pm 50$ Hz</td>
+              <td>$54.59\pm 6.03$</td>
+            </tr>
+            <tr>
+              <td>$33$</td>
+              <td>$26$</td>
+              <td>$(1, 5)\; (5, 1)\; $</td>
+              <td>$[+, -]$</td>
+              <td>$56 \pm 75$ Hz</td>
+              <td>$53.41\pm 7.11$</td>
+            </tr>
+            <tr>
+              <td>$22$</td>
+              <td>$21$</td>
+              <td>$(2, 4)\; (4, 2)\; $</td>
+              <td>$[+, -]$</td>
+              <td>$647 \pm 75$ Hz</td>
+              <td>$69.73\pm 8.09$</td>
+            </tr>
+            <tr>
+              <td>$62$</td>
+              <td>$58$</td>
+              <td>$(3, 7)\; (7, 3)\; $</td>
+              <td>$[+, -]$</td>
+              <td>$934 \pm 100$ Hz</td>
+              <td>$59.11\pm 6.33$</td>
+            </tr>
+            <tr>
+              <td>$52$</td>
+              <td>$50$</td>
+              <td>$(1, 7)\; (5, 5)\; (7, 1) $</td>
+              <td>$[+, +, +]$</td>
+              <td>$2160 \pm 500$ Hz</td>
+              <td>$147.24\pm 34.09$</td>
+            </tr>
+            <tr>
+              <td>$223$</td>
+              <td>$200$</td>
+              <td>$(2, 14)\;(10, 10)\; (14, 2)\; $</td>
+              <td>$[+, +, +]$</td>
+              <td>$3163 \pm 800$ Hz</td>
+              <td>$107.80\pm 27.27$</td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
@@ -1184,69 +1162,68 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
       <E>{tex`\begin{equation} c=\frac{2\pi f r}{z_{nm}} \end{equation}`}</E>
       <p>For our experiment, the plate's radius is $r = 12.1\pm 0.1$ cm.</p>
       <div class="table-wrapper">
-        <table
-          style="margin-left: auto; margin-right: auto; text-align: center;"
-          id="circle-wave-table"
-        >
+        <table class="p-table" id="circle-wave-table">
           <caption>Wave Speed of the Circular Plate</caption>
-          <tr
-            style="border-top: 2px solid var(--grid-text-color); border-bottom: 1px solid var(--grid-text-color);"
-          >
-            <th><strong>Order $(n)$</strong></th>
-            <th><strong>Zero ($m$)</strong></th>
-            <th><strong>Zeroes of $J&#39;_n(r)$</strong></th>
-            <th><strong>Found at</strong></th>
-            <th><strong>Wave Speed ($m/s$)</strong></th>
-          </tr>
-          <tr>
-            <td>$0$</td>
-            <td>0</td>
-            <td>$0.000000$</td>
-            <td>$0.000$ Hz</td>
-            <td>N/A</td>
-          </tr>
-          <tr>
-            <td>$0$</td>
-            <td>$1$</td>
-            <td>$3.831706$</td>
-            <td>$131 \pm 50$ Hz</td>
-            <td>$25.885\pm 9.88$</td>
-          </tr>
-          <tr>
-            <td>$0$</td>
-            <td>$2$</td>
-            <td>$7.0155867$</td>
-            <td>$429 \pm 75$ Hz</td>
-            <td>$46.298\pm 8.10$</td>
-          </tr>
-          <tr>
-            <td>$0$</td>
-            <td>$3$</td>
-            <td>$10.1734681$</td>
-            <td>$1079 \pm 100$ v</td>
-            <td>$80.301\pm 14.05$</td>
-          </tr>
-          <tr>
-            <td>$0$</td>
-            <td>$4$</td>
-            <td>$13.3236919$</td>
-            <td>$1806 \pm 500$ Hz</td>
-            <td>$102.627\pm 7.47$</td>
-          </tr>
-          <tr>
-            <td>$0$</td>
-            <td>$5$</td>
-            <td>$16.4706301$</td>
-            <td>$3320 \pm 750$ Hz</td>
-            <td>$152.614\pm 34.50$</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--grid-text-color);">
-            <td>$0$</td>
-            <td>$6$</td>
-            <td>$19.6158585$</td>
-            <td>$4661 \pm 800$ Hz</td>
-            <td>$172.184\pm 29.59$</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Order $(n)$</th>
+              <th>Zero ($m$)</th>
+              <th>Zeroes of $J&#39;_n(r)$</th>
+              <th>Found at</th>
+              <th>Wave Speed ($m/s$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>$0$</td>
+              <td>0</td>
+              <td>$0.000000$</td>
+              <td>$0.000$ Hz</td>
+              <td>N/A</td>
+            </tr>
+            <tr>
+              <td>$0$</td>
+              <td>$1$</td>
+              <td>$3.831706$</td>
+              <td>$131 \pm 50$ Hz</td>
+              <td>$25.885\pm 9.88$</td>
+            </tr>
+            <tr>
+              <td>$0$</td>
+              <td>$2$</td>
+              <td>$7.0155867$</td>
+              <td>$429 \pm 75$ Hz</td>
+              <td>$46.298\pm 8.10$</td>
+            </tr>
+            <tr>
+              <td>$0$</td>
+              <td>$3$</td>
+              <td>$10.1734681$</td>
+              <td>$1079 \pm 100$ v</td>
+              <td>$80.301\pm 14.05$</td>
+            </tr>
+            <tr>
+              <td>$0$</td>
+              <td>$4$</td>
+              <td>$13.3236919$</td>
+              <td>$1806 \pm 500$ Hz</td>
+              <td>$102.627\pm 7.47$</td>
+            </tr>
+            <tr>
+              <td>$0$</td>
+              <td>$5$</td>
+              <td>$16.4706301$</td>
+              <td>$3320 \pm 750$ Hz</td>
+              <td>$152.614\pm 34.50$</td>
+            </tr>
+            <tr>
+              <td>$0$</td>
+              <td>$6$</td>
+              <td>$19.6158585$</td>
+              <td>$4661 \pm 800$ Hz</td>
+              <td>$172.184\pm 29.59$</td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
