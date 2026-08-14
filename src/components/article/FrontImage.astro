@@ -1,0 +1,59 @@
+---
+/**
+ * FrontImage.astro
+ * ================
+ * The banner image that sits under the title/date at the top of an article.
+ *
+ * - Owns the `figure` wrapper and the `.front-img` rule that every article used
+ *   to repeat in its own `<style>` block, so pages only pass the image itself.
+ * - `width` is the one thing that varied between pages; it is applied through a
+ *   custom property and always collapses to 100% on narrow screens.
+ * - The `front-img` class stays on the `img`: public/assets/js/scripts.js uses
+ *   it to keep banners out of the lightbox.
+ * - Anything passed as children is rendered as the figure's caption.
+ */
+interface Props {
+  src: string;
+  alt?: string;
+  width?: string;
+  fetchpriority?: "high" | "low" | "auto";
+}
+
+const {
+  src,
+  alt = "banner",
+  width = "100%",
+  fetchpriority = "high",
+} = Astro.props;
+---
+
+<figure class="front-img-figure" style={`--front-img-width: ${width};`}>
+  <img class="front-img" src={src} alt={alt} fetchpriority={fetchpriority} />
+  {
+    Astro.slots.has("default") && (
+      <figcaption>
+        <slot />
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .front-img-figure {
+    margin: 0;
+  }
+
+  .front-img {
+    display: block;
+    width: var(--front-img-width, 100%);
+    border-radius: var(--image-radius);
+    height: auto;
+    margin: auto;
+  }
+
+  @media all and (max-width: 580px) {
+    .front-img {
+      width: 100%;
+    }
+  }
+</style>

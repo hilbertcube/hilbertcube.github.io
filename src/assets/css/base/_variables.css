@@ -78,6 +78,9 @@
   --article-shadow-color: rgba(0, 0, 0, 0.2);
   
   /* === LAYOUT & SPACING === */
+  /* Corner rounding shared by every content image — banners (FrontImage) and
+     in-body figures (Figure) alike, so the two can't drift apart. */
+  --image-radius: 10px;
   --general-wrapper-width: 60rem;
   --side-nav-width: 375px;
   --top-bar-height: 60px;

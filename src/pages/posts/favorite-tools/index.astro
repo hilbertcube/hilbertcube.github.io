@@ -8,6 +8,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import Figure from "@components/article/Figure.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("posts", Astro.url.pathname);
@@ -23,36 +24,6 @@ import Scripts from "@components/site/Scripts.astro";
 >
   <Fragment slot="head">
     <style is:inline>
-      .image-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1em;
-      }
-      .responsive-img {
-        max-width: 100%;
-        height: auto;
-        width: 25em;
-      }
-      @media (max-width: 600px) {
-        .image-row {
-          flex-direction: column;
-        }
-      }
-      .vscode-pet-img {
-        display: block;
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
-        width: auto;
-      }
-      @media all and (max-width: 580px) {
-        .vscode-pet-img {
-          width: 100% !important;
-        }
-      }
     </style>
   </Fragment>
 
@@ -189,13 +160,11 @@ import Scripts from "@components/site/Scripts.astro";
                 >
                   VS Code Pets
                 </a>
-                <div style="margin: 25px 0">
-                  <img
-                    class="vscode-pet-img"
-                    src="/posts/favorite-tools/vscode-pet.webp"
-                    alt="vscode-pet-demo"
-                  />
-                </div>
+                <Figure
+                  src="/posts/favorite-tools/vscode-pet.webp"
+                  alt="vscode-pet-demo"
+                  width="auto"
+                />
               </li>
             </ul>
           </li>

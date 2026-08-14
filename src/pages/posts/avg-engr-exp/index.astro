@@ -7,6 +7,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import Figure from "@components/article/Figure.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("posts", Astro.url.pathname);
@@ -28,15 +29,11 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
       <p>
         Conversation from a group project for this class (electrical circuits).
       </p>
-      <div
-        style="display: flex; justify-content: center; align-items: center; margin: 30px 0;"
-      >
-        <img
-          src="/posts/avg-engr-exp/engineering.webp"
-          alt="Average Engineering Experience"
-          style="width: 100%; max-width: 520px; height: auto"
-        />
-      </div>
+      <Figure
+        src="/posts/avg-engr-exp/engineering.webp"
+        alt="Average Engineering Experience"
+        maxWidth="520px"
+      />
       <p>Experience rating: absolute dog water</p>
     </section>
   </div>

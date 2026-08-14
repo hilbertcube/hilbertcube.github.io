@@ -9,6 +9,7 @@ import Banner from "@components/site/Banner.astro";
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import PostList from "@components/listings/PostList.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
+import Figure from "@components/article/Figure.astro";
 ---
 
 <BaseLayout
@@ -20,9 +21,6 @@ import TwoColumns from "@components/ui/TwoColumns.astro";
   <Fragment slot="head">
     <style>
       @media all and (max-width: 580px) {
-        #chladniImage {
-          width: 95% !important;
-        }
         #chladni-outer-div {
           padding-top: 25px;
         }
@@ -82,16 +80,14 @@ import TwoColumns from "@components/ui/TwoColumns.astro";
           </a>
         </div>
         <div id="chladni-outer-div">
-          <img
-            style="width: 75%; border-radius: 10px;"
-            class="image"
-            id="chladniImage"
-            alt="Chladni plate"
+          <Figure
             src="/media/Images/chladni-patterns-sbs.webp"
-          />
-          <figcaption class="caption">
+            alt="Chladni plate"
+            width="75%"
+            flush
+          >
             Chladni Patterns on a Square Plate.
-          </figcaption>
+          </Figure>
         </div>
       </TwoColumns>
     </section>

@@ -9,6 +9,8 @@ import TopicTags from "@components/article/TopicTags.astro";
 import ContinueButton from "@components/article/ContinueButton.astro"
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import FrontImage from "@components/article/FrontImage.astro";
+import Figure from "@components/article/Figure.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -23,49 +25,21 @@ import Scripts from "@components/site/Scripts.astro";
   keywords="Wave equation, python, eigenvalue, boundary conditions"
   toc
 >
-  <Fragment slot="head">
-    <style>
-      .front-img {
-        display: block;
-        width: 100%;
-        border-radius: 10px;
-        height: auto;
-        margin: auto;
-      }
-      @media all and (max-width: 580px) {
-        #circular-plate {
-          width: 100%;
-          margin: 0;
-        }
-      }
-      .image-block {
-        width: 65%;
-      }
-    </style>
-  </Fragment>
-
 
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
       <PageTitle title={meta.title} />
       <PubDate pubDate={meta.pubDate} />
-      <figure style="margin: 0;">
-        <img
-          class="front-img"
-          src="/articles/the-quest-to-finding-chladni-patterns-3/banner.webp"
-          alt="banner"
-          fetchpriority="high"
-        />
-        <figcaption>
-          Chladni Patterns on Different Types of Plates. Image by Matemateca
-          IME-USP, distributed under <a
-            class="url"
-            href="https://creativecommons.org/licenses/by-sa/4.0/"
-            >CC BY-SA 4.0</a
-          >
-        </figcaption>
-      </figure>
+      <FrontImage
+        src="/articles/the-quest-to-finding-chladni-patterns-3/banner.webp"
+      >
+        Chladni Patterns on Different Types of Plates. Image by Matemateca
+        IME-USP, distributed under <a
+          class="url"
+          href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a
+        >
+      </FrontImage>
       <div class="Quote">
         <div class="Quote-content">We cannot escape the fact that in observing nature, we are studying the
           vibrations of waves that we cannot see.</div>
@@ -157,17 +131,13 @@ import Scripts from "@components/site/Scripts.astro";
           in our average college classroom, and wave it. We will see that the
           ruler creates a standing wave. 
         </p>
-        <figure>
-        <img
+        <Figure
           src="/articles/the-quest-to-finding-chladni-patterns-3/wooden-ruler.webp"
           alt="Long wooden ruler"
-          class="image-block"
-          style="width: 40%"
-        />
-        <figcaption class="caption">
+          width="40%"
+        >
           A classic long wooden ruler
-        </figcaption>
-      </figure>
+        </Figure>
       <p>
         However, the equation governing the
         motion of the ruler is not the regular wave equation because of the
@@ -272,18 +242,13 @@ import Scripts from "@components/site/Scripts.astro";
         </p>
         <div class="two-columns-block">
           <div>
-            <figure style="margin: 0; width: 100%;">
-              <img
-                class="image"
-                id="circular-plate"
-                src="/articles/the-quest-to-finding-chladni-patterns-3/circle.webp"
-                alt="Circular Plate Patterns"
-                style="width: 100%;"
-              />
-              <figcaption class="caption">
-                Matching patterns on the Circular Plate.
-              </figcaption>
-            </figure>
+            <Figure
+              src="/articles/the-quest-to-finding-chladni-patterns-3/circle.webp"
+              alt="Circular Plate Patterns"
+              flush
+            >
+              Matching patterns on the Circular Plate.
+            </Figure>
           </div>
           <div>
             <div class="table-wrapper">
@@ -348,17 +313,13 @@ import Scripts from "@components/site/Scripts.astro";
           This implies that $f$ and $(2m)^2$ have a linear relationship.
           Therefore, we plotted our data below to test this theory.
         </p>
-        <figure>
-          <img
-            src="/articles/the-quest-to-finding-chladni-patterns-3/chladni-law.webp"
-            alt="Chladni's Law"
-            class="image-block"
-            style="width: 50%"
-          />
-          <figcaption class="caption">
-            Frequency vs 4 times the number of rings squared
-          </figcaption>
-        </figure>
+        <Figure
+          src="/articles/the-quest-to-finding-chladni-patterns-3/chladni-law.webp"
+          alt="Chladni's Law"
+          width="50%"
+        >
+          Frequency vs 4 times the number of rings squared
+        </Figure>
         <p>
           The plate is made of Aluminum, which has the following properties: $E
           = 68$ GPa, $p = 2710\;kg/m^3$, $\nu = 0.33$, $h=0.8\pm 0.3$ mm, $d =

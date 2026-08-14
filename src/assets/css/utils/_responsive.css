@@ -24,11 +24,6 @@
     width: 60vw;
   }
 
-  .image {
-    width: 100%;
-    max-width: 100%;
-  }
-
   .right {
     padding-left: 0px;
   }
@@ -151,10 +146,6 @@
     width: 20%;
   }
 
-  .image-block {
-    width: 80% !important;
-  }
-
   .banner-title {
     font-size: 2.3rem;
   }
@@ -228,10 +219,6 @@
   /* Layout components */
   .two-columns-block {
     flex-direction: column;
-  }
-
-  .image-block {
-    width: 100% !important;
   }
 
   /* Settings and modals */

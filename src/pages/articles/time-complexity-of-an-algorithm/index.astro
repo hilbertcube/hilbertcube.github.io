@@ -8,6 +8,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
+import FrontImage from "@components/article/FrontImage.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -27,13 +28,6 @@ import Scripts from "@components/site/Scripts.astro";
 >
   <Fragment slot="head">
     <style>
-      .front-img {
-        display: block;
-        width: 100%;
-        border-radius: 10px;
-        height: auto;
-        margin: auto;
-      }
       /* Proof environment: a quiet left rule, opened by an italic "Proof."
          lead-in and closed by a  at the end of the last line. */
       .proof {
@@ -70,14 +64,10 @@ import Scripts from "@components/site/Scripts.astro";
       <TopicTags topics={meta.topics} />
       <PageTitle title={meta.title} />
       <PubDate pubDate={meta.pubDate} />
-      <figure style="margin: 0;">
-        <img
-          class="front-img"
-          src="/articles/time-complexity-of-an-algorithm/time-complexity.webp"
-          alt="image"
-          fetchpriority="high"
-        />
-      </figure>
+      <FrontImage
+        src="/articles/time-complexity-of-an-algorithm/time-complexity.webp"
+        alt="image"
+      />
       <div class="Quote">
         <div class="Quote-content">Science is what we understand well enough to explain to a computer. Art is
           everything else we do.</div>

@@ -1,0 +1,109 @@
+---
+/**
+ * Figure.astro
+ * ============
+ * The single way to place an image inside an article or post — the in-body
+ * counterpart to FrontImage.astro. Every content image goes through this, so
+ * width, centering, rounding and responsive behaviour are decided in one file
+ * instead of per page.
+ *
+ * It replaces the old `.image-block` and `.image` classes, whose sizes had to
+ * be written inline (or hung off per-page ids like `#circular-plate`, which was
+ * duplicated four times on one page). Here `width` sets a custom property, so
+ * the breakpoints below win without `!important`.
+ *
+ * `width` applies on desktop only: at 1080px everything drops to 80% and at
+ * 580px to 100%, which is what the old global rules did.
+ *
+ * Anything passed as children becomes the caption. `figcaption` numbering and
+ * colors come from the global rules in base/_typography.css.
+ */
+interface Props {
+  /** Image source. */
+  src: string;
+  /** Alt text; pass "" for purely decorative figures. */
+  alt?: string;
+  /** Desktop width of the image, e.g. "70%". Use "auto" for intrinsic size. */
+  width?: string;
+  /** Optional hard cap, e.g. "520px". Defaults to the container width. */
+  maxWidth?: string;
+  /** Narrower caption than the figure, e.g. "70%". Defaults to full width. */
+  captionWidth?: string;
+  /** Drop the figure's margins, for tight column layouts. */
+  flush?: boolean;
+  /** Defer loading for images well below the fold. */
+  loading?: "lazy" | "eager";
+}
+
+const {
+  src,
+  alt = "",
+  width = "100%",
+  maxWidth,
+  captionWidth,
+  flush = false,
+  loading,
+} = Astro.props;
+
+const style = [
+  `--figure-img-width: ${width}`,
+  maxWidth && `--figure-img-max-width: ${maxWidth}`,
+  captionWidth && `--figure-caption-width: ${captionWidth}`,
+]
+  .filter(Boolean)
+  .join("; ");
+---
+
+<figure class:list={["article-figure", { flush }]} style={style}>
+  <img class="article-img" src={src} alt={alt} loading={loading} />
+  {
+    Astro.slots.has("default") && (
+      <figcaption class="article-caption">
+        <slot />
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  /* Overrides the browser's default `1em 40px`: the horizontal inset made a
+     figure's percentage widths mean something different in every column. */
+  .article-figure {
+    margin: 1.5rem 0;
+    padding: 0;
+  }
+
+  .article-figure.flush {
+    margin: 0;
+  }
+
+  .article-img {
+    display: block;
+    width: var(--figure-img-width, 100%);
+    max-width: var(--figure-img-max-width, 100%);
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--image-radius);
+  }
+
+  .article-caption {
+    width: var(--figure-caption-width, auto);
+  }
+
+  @media all and (max-width: 1080px) {
+    .article-img {
+      width: 80%;
+    }
+  }
+
+  @media all and (max-width: 580px) {
+    .article-img {
+      width: 100%;
+    }
+
+    .article-caption {
+      width: auto;
+    }
+  }
+</style>
