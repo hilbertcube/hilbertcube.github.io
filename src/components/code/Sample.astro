@@ -9,13 +9,31 @@
  * indentation and `<` survive:
  *
  *   <Sample>{raw`…`}</Sample>      or      <Sample code={raw`…`} />
+ *
+ * A listing that carries markup of its own (e.g. <b> around pseudo-code
+ * keywords) must go through set:html — plain slot children sit outside a <pre>
+ * in the *calling* page, so Astro's HTML compressor eats their indentation:
+ *
+ *   <Sample set:html={raw`  <b>Function</b> Foo(x)
+ *       <b>Input:</b> …
+ *   `} />
+ *
+ * `id` / `class` / `style` land on the container so a Sample can be used as a
+ * TabBox pane (TabBox shows/hides panes by the shared `tabClass`).
  */
 interface Props {
   code?: string;
+  id?: string;
+  class?: string;
+  style?: string;
 }
-const { code } = Astro.props;
+const { code, id, class: className, style } = Astro.props;
 ---
 
-<div class="code-container" style="margin: 25px auto;">
+<div
+  id={id}
+  class:list={["code-container", className]}
+  style={`margin: 25px auto;${style ? ` ${style}` : ""}`}
+>
   <pre class="console"><code>{code !== undefined ? code : <slot />}</code></pre>
 </div>

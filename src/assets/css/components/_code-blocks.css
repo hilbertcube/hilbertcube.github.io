@@ -129,5 +129,10 @@ pre {
   background-color: var(--tab-color);
 }
 
+/* Tab panes butt against the tab strip, so their top-left corner stays square */
+.tab-button-container ~ .code-container > pre {
+  border-radius: 0 7px 7px 7px;
+}
+
 
 
