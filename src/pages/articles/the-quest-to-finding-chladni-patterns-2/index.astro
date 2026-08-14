@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
-import { formatDate } from "@utils/formatDate";
+import PageTitle from "@components/article/PageTitle.astro";
+import PubDate from "@components/article/PubDate.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -58,8 +59,8 @@ import ContinueButton from "@components/article/ContinueButton.astro"
 
     <header>
       <TopicTags topics={meta.topics} />
-      <h1 class="title">{meta.title}</h1>
-      <div class="date">{formatDate(meta.pubDate)}</div>
+      <PageTitle title={meta.title} />
+      <PubDate pubDate={meta.pubDate} />
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -69,12 +70,9 @@ import ContinueButton from "@components/article/ContinueButton.astro"
         />
       </figure>
       <div class="Quote">
-        <div class="Quote-content">
-          &#8220That there are such limits to our knowledge of nature, must be
-          borne with patience by every sound mind whether he be a scientist or a
-          workman.&#8221
-        </div>
-        <div class="Author">- Gustav Robert Kirchhoff</div>
+        <div class="Quote-content">That there are such limits to our knowledge of nature, must be borne with
+          patience by every sound mind whether he be a scientist or a workman.</div>
+        <div class="Quote-author">Gustav Robert Kirchhoff</div>
       </div>
     </header>
 
