@@ -9,7 +9,6 @@ import Banner from "@components/site/Banner.astro";
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import PostList from "@components/listings/PostList.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
-import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -107,9 +106,4 @@ import Scripts from "@components/site/Scripts.astro";
       <ArticleCards showDetails={true} />
     </section>
   </div>
-
-  <!-- Page-specific scripts -->
-  <Fragment slot="scripts">
-    <Scripts use={["banner"]} />
-  </Fragment>
 </BaseLayout>

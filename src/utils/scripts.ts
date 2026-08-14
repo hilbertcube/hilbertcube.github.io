@@ -39,8 +39,9 @@ const language = (name: string): ScriptEntry => ({
 
 const SCRIPTS = {
   // --- Site scripts (public/assets/js) ---
+  // The banner animation ships with Banner.astro's own <script>, so there is
+  // no alias for it — rendering <Banner /> is all a page needs.
   "blog-setting": { js: ["/assets/js/blogpage-setting.js"] },
-  banner: { js: ["/assets/js/canvas-banner.js"] },
 
   // --- Prism core + plugins ---
   prism: { js: [prism("prism.min.js")] },

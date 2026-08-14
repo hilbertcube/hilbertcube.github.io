@@ -3,12 +3,11 @@
  * src/components/code/TabBox.astro
  * =================================
  * Tabbed container with clickable tab buttons.
- * Relies on the global changeTab() function in scripts.js.
  *
  * Props
  * -----
  * - tabs     : array of { label, id } objects — one per tab
- * - tabClass : CSS class shared by all tab panes (used by changeTab)
+ * - tabClass : CSS class shared by all tab panes
  */
 
 interface Props {
@@ -25,7 +24,8 @@ const { tabs, tabClass } = Astro.props;
       tabs.map((tab, i) => (
         <button
           class={`tab-button${i === 0 ? " tab-effect" : ""}`}
-          onclick={`changeTab(event, '${tab.id}', '${tabClass}')`}
+          data-tab-target={tab.id}
+          data-tab-class={tabClass}
         >
           {tab.label}
         </button>
@@ -34,3 +34,27 @@ const { tabs, tabClass } = Astro.props;
   </div>
   <slot />
 </div>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>(".tab-button[data-tab-target]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const { tabTarget, tabClass } = button.dataset;
+        if (!tabTarget || !tabClass) return;
+
+        document
+          .querySelectorAll<HTMLElement>(`.${tabClass}`)
+          .forEach((pane) => (pane.style.display = "none"));
+
+        const target = document.getElementById(tabTarget);
+        if (target) target.style.display = "block";
+
+        button
+          .closest(".tab-button-container")
+          ?.querySelectorAll(".tab-button")
+          .forEach((other) => other.classList.remove("tab-effect"));
+        button.classList.add("tab-effect");
+      });
+    });
+</script>

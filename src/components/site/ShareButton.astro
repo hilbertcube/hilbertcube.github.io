@@ -4,70 +4,93 @@
  * =================
  */
 import Icon from '@components/ui/Icon.astro';
+
+const platforms = [
+  { id: "facebook", title: "Facebook", icon: "facebook" },
+  { id: "twitter", title: "Twitter", icon: "x-twitter" },
+  { id: "whatsapp", title: "Whatsapp", icon: "whatsapp" },
+  { id: "reddit", title: "Reddit", icon: "reddit" },
+  { id: "hackernews", title: "Hacker News", icon: "hacker-news" },
+  { id: "telegram", title: "Telegram", icon: "telegram" },
+];
 ---
 
-<button
-  aria-label="social-media-button"
-  class="share-button"
-  onclick="toggleShareOptions(event)"
->
+<button aria-label="social-media-button" class="share-button">
   <Icon name="share-nodes" id="share-expand" />
   <span class="share-tooltip">Share this page</span>
 </button>
 
 <div class="share-options" id="shareOptions">
-  <abbr title="facebook">
-    <button
-      class="share-option"
-      onclick='sharePage(event,"facebook")'
-      id="share-facebook"
-    >
-      <Icon name="facebook" prefix="fab" />
-    </button>
-  </abbr>
-  <abbr title="Twitter">
-    <button
-      class="share-option"
-      onclick='sharePage(event,"twitter")'
-      id="share-twitter"
-    >
-      <Icon name="x-twitter" prefix="fab" />
-    </button>
-  </abbr>
-  <abbr title="Whatsapp">
-    <button
-      class="share-option"
-      onclick='sharePage(event,"whatsapp")'
-      id="share-whatsapp"
-    >
-      <Icon name="whatsapp" prefix="fab" />
-    </button>
-  </abbr>
-  <abbr title="Reddit">
-    <button
-      class="share-option"
-      onclick='sharePage(event,"reddit")'
-      id="share-reddit"
-    >
-      <Icon name="reddit" prefix="fab" />
-    </button>
-  </abbr>
-  <abbr title="Hacker News">
-    <button
-      class="share-option"
-      onclick='sharePage(event,"hackernews")'
-      id="share-hackernews"
-    >
-      <Icon name="hacker-news" prefix="fab" />
-    </button>
-  </abbr>
-  <abbr title="Telegram">
-    <button
-      class="share-option"
-      onclick='sharePage(event,"telegram")'
-      id="share-telegram"
-    >
-      <Icon name="telegram" prefix="fab" />
-    </button>
-  </abbr>
+  {
+    platforms.map((platform) => (
+      <abbr title={platform.title}>
+        <button
+          class="share-option"
+          data-share={platform.id}
+          id={`share-${platform.id}`}
+        >
+          <Icon name={platform.icon} prefix="fab" />
+        </button>
+      </abbr>
+    ))
+  }
 </div>
+
+<script>
+  const toggle = document.querySelector<HTMLElement>(".share-button");
+  const container = document.getElementById("shareOptions");
+
+  if (toggle && container) {
+    const options = container.querySelectorAll<HTMLElement>(".share-option");
+
+    toggle.addEventListener("click", (event) => {
+      event.preventDefault();
+      const hidden =
+        container.style.display === "none" || container.style.display === "";
+
+      if (hidden) {
+        container.style.display = "block";
+        // Stagger the options in rather than popping the whole row at once.
+        options.forEach((option, index) => {
+          option.style.opacity = "0";
+          option.style.display = "block";
+          setTimeout(() => {
+            option.style.opacity = "1";
+            option.style.transition = "opacity .5s ease";
+          }, index * 100);
+        });
+      } else {
+        options.forEach((option) => (option.style.display = "none"));
+        container.style.display = "none";
+      }
+    });
+
+    const shareUrls: Record<string, (url: string, title: string) => string> = {
+      facebook: (url) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      twitter: (url) =>
+        `https://twitter.com/intent/tweet?url=${url}&text=Check%20this%20out!`,
+      whatsapp: (url) => `https://api.whatsapp.com/send?text=${url}`,
+      reddit: (url) =>
+        `https://www.reddit.com/submit?url=${url}&title=Interesting%20page`,
+      hackernews: (url, title) =>
+        `https://news.ycombinator.com/submitlink?u=${url}&t=${title}`,
+      telegram: (url, title) =>
+        `https://t.me/share/url?url=${url}&text=${title}`,
+    };
+
+    options.forEach((option) => {
+      option.addEventListener("click", (event) => {
+        event.preventDefault();
+        const build = shareUrls[option.dataset.share ?? ""];
+        if (!build) return;
+        window.open(
+          build(
+            encodeURIComponent(window.location.href),
+            encodeURIComponent(document.title),
+          ),
+          "_blank",
+        );
+      });
+    });
+  }
+</script>

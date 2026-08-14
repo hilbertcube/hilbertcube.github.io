@@ -130,3 +130,27 @@ const commitInfo = [
     </div>
   </section>
 </div>
+
+<script>
+  // Each highlight expands to reveal its cover image; the link only becomes
+  // clickable once expanded, so the first tap expands instead of navigating.
+  document.querySelectorAll<HTMLElement>(".home-li").forEach((li) => {
+    const img = li.querySelector("img");
+    const link = li.querySelector<HTMLElement>("a");
+    if (!img || !link) return;
+
+    const isExpanded = () => img.style.maxHeight !== "0px" && !!img.style.maxHeight;
+
+    img.style.maxHeight = img.style.maxHeight || "0";
+    img.style.opacity = img.style.opacity || "0";
+    link.style.pointerEvents = isExpanded() ? "auto" : "none";
+
+    li.addEventListener("click", () => {
+      const expanded = isExpanded();
+      img.style.maxHeight = expanded ? "0" : img.naturalHeight + "px";
+      img.style.opacity = expanded ? "0" : "1";
+      link.style.pointerEvents = expanded ? "none" : "auto";
+      link.classList.toggle("show-read-more", !expanded);
+    });
+  });
+</script>
