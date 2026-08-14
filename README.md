@@ -29,6 +29,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Aug 2026:** [MAJOR] Upgraded TOC highlighting
 - **Aug 2026:** Replaced the hand-run RSS generation script with a build-time Astro endpoint sourced from the article/post collections.
 - **Aug 2026:** Updated logo and favicon
 - **Aug 2026:** [MAJOR] Added smart Table of Contents
