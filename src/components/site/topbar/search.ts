@@ -523,9 +523,27 @@ function initSearchBarChrome() {
     searchBarMobile.focus();
   });
 
+  // The dropdown is anchored to (and sized by) the search container, so it can
+  // only be on screen while that container carries `.expanded`.
+  // Computed, not the inline style: the dropdown starts out hidden by CSS
+  // alone, with no inline display set until the first query renders.
+  const dropdownOpen = () =>
+    !!dropdown && getComputedStyle(dropdown).display !== "none";
+
   [searchBar, searchBarMobile].forEach((bar) => {
     bar.addEventListener("focus", expandSearchBar);
-    bar.addEventListener("blur", () => setTimeout(collapseSearchBar, 100));
+    bar.addEventListener("blur", () =>
+      setTimeout(() => {
+        // iOS's keyboard-accessory "Done" only blurs the field — the results
+        // are still on screen. Collapsing here would shrink the container the
+        // dropdown is anchored to and leave it stranded at a compressed width,
+        // so stay expanded until the results themselves go away (a result is
+        // opened, or a click outside / Escape closes the dropdown, each of
+        // which collapses the bar on its own).
+        if (dropdownOpen()) return;
+        collapseSearchBar();
+      }, 100),
+    );
 
     bar.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
@@ -572,6 +590,10 @@ function setupSearch(searchBars: HTMLInputElement[], dropdown: HTMLElement) {
   let seq = 0;
   const go = makeGo(dropdown, () => {
     searchBars.forEach((bar) => (bar.value = ""));
+    // The field may already be blurred (mobile "Done"), in which case the blur
+    // handler deliberately left the bar expanded for the dropdown's sake. The
+    // dropdown is gone now, so put the bar back.
+    collapseSearchBar();
   });
 
   async function update(searchBar: HTMLInputElement) {
@@ -651,10 +673,14 @@ function setupSearch(searchBars: HTMLInputElement[], dropdown: HTMLElement) {
     });
   });
 
-  // Clear + hide when clicking outside the bars/dropdown.
-  onOutsideClick([...searchBars, dropdown], () => {
+  // Clear + hide when clicking outside the bars/dropdown. The mobile search
+  // icon counts as *inside*: its own click opens the bar, and this handler runs
+  // on that same click — collapsing there would close the bar as it opens.
+  const searchIconBtn = document.getElementById("searchIconBtn");
+  onOutsideClick([...searchBars, dropdown, searchIconBtn], () => {
     searchBars.forEach((bar) => (bar.value = ""));
     hideDropdown(dropdown);
+    collapseSearchBar();
   });
 }
 
