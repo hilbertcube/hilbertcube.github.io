@@ -6,8 +6,9 @@ crawls the rendered HTML and produces a static index + a tiny WASM engine that r
 entirely in the browser.
 
 This document explains the moving parts. For general dev workflow see
-[DEVELOPMENT.md](./DEVELOPMENT.md); for how content/math is authored see
-[../scripts/AUTOMATION.md](../scripts/AUTOMATION.md).
+[DEVELOPMENT.md](./DEVELOPMENT.md); for the components content is authored with
+see [COMPONENTS.md](./COMPONENTS.md); for the helper scripts see
+[AUTOMATION.md](./AUTOMATION.md).
 
 ---
 
@@ -67,10 +68,12 @@ Math would otherwise pollute results with LaTeX tokens (`\frac`, `\sum`, …). D
 math is excluded centrally via the `--exclude-selectors` flag, which treats these
 containers as if they had `data-pagefind-ignore`:
 
-- **`.equation`** — every `<Equation>` component. All display math must be wrapped in
-  `<Equation>` (this is a content rule — see DEVELOPMENT.md §6).
-- **`.mathjax-definition`** — the `\newcommand` macro preamble at the top of math
-  articles.
+- **`.equation`** — every `<E>` component (and its `<Equation>` alias). All display
+  math must be wrapped in `<E>` (this is a content rule — see
+  [DEVELOPMENT.md §5](./DEVELOPMENT.md#5-math)).
+- **`.mathjax-definition`** — vestigial. It held the `\newcommand` preamble under
+  MathJax; no page uses it now that KaTeX macros live in `katex-render.js`. Still
+  excluded so old markup stays safe.
 
 ## 5. Excluding inline math (`scripts/pagefind-ignore-math.mjs`)
 
@@ -84,7 +87,7 @@ post-build step handles it. For each page it:
   for math, and display math is left alone.
 - Wraps each inline-math run in `<span data-pagefind-ignore>…</span>`.
 
-MathJax still renders the math normally; the wrapper only tells Pagefind to skip it.
+KaTeX still typesets the math normally; the wrapper only tells Pagefind to skip it.
 
 **Net effect:** searches match article *words*, never LaTeX. If equation gibberish
 ever appears in results, it's almost always a display block that wasn't wrapped in
