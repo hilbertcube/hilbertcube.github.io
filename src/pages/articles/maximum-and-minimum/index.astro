@@ -32,16 +32,6 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
       .image-block {
         width: 65%;
       }
-      .p-table {
-        width: 90%;
-        margin: 30px auto;
-        text-align: center;
-        border: 1px solid;
-      }
-
-      .p-table td {
-        border-left: 1px solid;
-      }
     </style>
   </Fragment>
 
@@ -522,100 +512,82 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
             We now set up a table:
             <div class="table-wrapper">
               <table class="p-table">
-                <tr style="border-bottom: 1px solid var(--grid-text-color);">
-                  <td><strong>Points</strong></td>
-                  <td>$f_&#123;xx&#125;(x_0,y_0)$</td>
-                  <td>$f_&#123;xy&#125;(x_0,y_0)$</td>
-                  <td>$f_&#123;yy&#125;(x_0,y_0)$</td>
-                  <td
-                    >$\Delta_2=f_&#123;xx&#125;f_&#123;yy&#125;-f_&#123;xy&#125;^2$</td
-                  >
-                  <td><strong>Conclusion</strong></td>
-                </tr>
-                <tr>
-                  <td>$(0,1)$</td>
-                  <td>$0$</td>
-                  <td>$2$</td>
-                  <td>$0$</td>
-                  <td>$-4&lt;0$</td>
-                  <td>Saddle point at $(0,1,0)$</td>
-                </tr>
-                <tr>
-                  <td>$(0,-1)$</td>
-                  <td>$0$</td>
-                  <td>$2$</td>
-                  <td>$0$</td>
-                  <td>$-4&lt;0$</td>
-                  <td>Saddle point at $(0,-1,0)$</td>
-                </tr>
-                <tr>
-                  <td>$(1,0)$</td>
-                  <td>$0$</td>
-                  <td>$2$</td>
-                  <td>$0$</td>
-                  <td>$-4&lt;0$</td>
-                  <td>Saddle point at $(1,0,0)$</td>
-                </tr>
-                <tr>
-                  <td>$(-1,0)$</td>
-                  <td>$0$</td>
-                  <td>$2$</td>
-                  <td>$0$</td>
-                  <td>$-4&lt;0$</td>
-                  <td>Saddle point at $(-1,0,0)$</td>
-                </tr>
-                <tr>
-                  <td
-                    >$\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td
-                  >
-                  <td>$2&gt;0$</td>
-                  <td>$0$</td>
-                  <td>$2$</td>
-                  <td>$4&gt;0$</td>
-                  <td
-                    >Local minimum,
-                    $f_&#123;\min&#125;=-\frac&#123;1&#125;&#123;2e&#125;$</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    >$\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td
-                  >
-                  <td>$-2&lt;0$</td>
-                  <td>$0$</td>
-                  <td>$-2$</td>
-                  <td>$4&gt;0$</td>
-                  <td
-                    >Local maximum,
-                    $f_&#123;\max&#125;=\dfrac&#123;1&#125;&#123;2e&#125;$</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    >$\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td
-                  >
-                  <td>$-2&lt;0$</td>
-                  <td>$0$</td>
-                  <td>$-2$</td>
-                  <td>$4&gt;0$</td>
-                  <td
-                    >Local maximum,
-                    $f_&#123;\max&#125;=\dfrac&#123;1&#125;&#123;2e&#125;$</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    >$\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td
-                  >
-                  <td>$2&gt;0$</td>
-                  <td>$0$</td>
-                  <td>$2$</td>
-                  <td>$4&gt;0$</td>
-                  <td
-                    >Local minimum,
-                    $f_&#123;\min&#125;=-\frac&#123;1&#125;&#123;2e&#125;$</td
-                  >
-                </tr>
+                <thead>
+                  <tr>
+                    <th>Points</th>
+                    <th>$f_&#123;xx&#125;(x_0,y_0)$</th>
+                    <th>$f_&#123;xy&#125;(x_0,y_0)$</th>
+                    <th>$f_&#123;yy&#125;(x_0,y_0)$</th>
+                    <th>$\Delta_2=f_&#123;xx&#125;f_&#123;yy&#125;-f_&#123;xy&#125;^2$</th>
+                    <th>Conclusion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>$(0,1)$</td>
+                    <td>$0$</td>
+                    <td>$2$</td>
+                    <td>$0$</td>
+                    <td>$-4&lt;0$</td>
+                    <td>Saddle point at $(0,1,0)$</td>
+                  </tr>
+                  <tr>
+                    <td>$(0,-1)$</td>
+                    <td>$0$</td>
+                    <td>$2$</td>
+                    <td>$0$</td>
+                    <td>$-4&lt;0$</td>
+                    <td>Saddle point at $(0,-1,0)$</td>
+                  </tr>
+                  <tr>
+                    <td>$(1,0)$</td>
+                    <td>$0$</td>
+                    <td>$2$</td>
+                    <td>$0$</td>
+                    <td>$-4&lt;0$</td>
+                    <td>Saddle point at $(1,0,0)$</td>
+                  </tr>
+                  <tr>
+                    <td>$(-1,0)$</td>
+                    <td>$0$</td>
+                    <td>$2$</td>
+                    <td>$0$</td>
+                    <td>$-4&lt;0$</td>
+                    <td>Saddle point at $(-1,0,0)$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td>
+                    <td>$2&gt;0$</td>
+                    <td>$0$</td>
+                    <td>$2$</td>
+                    <td>$4&gt;0$</td>
+                    <td>Local minimum, $f_&#123;\min&#125;=-\frac&#123;1&#125;&#123;2e&#125;$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td>
+                    <td>$-2&lt;0$</td>
+                    <td>$0$</td>
+                    <td>$-2$</td>
+                    <td>$4&gt;0$</td>
+                    <td>Local maximum, $f_&#123;\max&#125;=\dfrac&#123;1&#125;&#123;2e&#125;$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td>
+                    <td>$-2&lt;0$</td>
+                    <td>$0$</td>
+                    <td>$-2$</td>
+                    <td>$4&gt;0$</td>
+                    <td>Local maximum, $f_&#123;\max&#125;=\dfrac&#123;1&#125;&#123;2e&#125;$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;,-\dfrac&#123;1&#125;&#123;\sqrt&#123;2e&#125;&#125;\right)$</td>
+                    <td>$2&gt;0$</td>
+                    <td>$0$</td>
+                    <td>$2$</td>
+                    <td>$4&gt;0$</td>
+                    <td>Local minimum, $f_&#123;\min&#125;=-\frac&#123;1&#125;&#123;2e&#125;$</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </Solution>
@@ -655,42 +627,46 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
             points.
             <div class="table-wrapper">
               <table class="p-table">
-                <tr style="border-bottom: 1px solid var(--grid-text-color);">
-                  <td><strong>Points</strong></td>
-                  <td>$f_&#123;xx&#125;(x_0,y_0)$</td>
-                  <td>$\Delta_2(x_0,y_0)$</td>
-                  <td><strong>Conclusion</strong></td>
-                </tr>
-                <tr>
-                  <td>$(0,1)$</td>
-                  <td>$2&gt;0$</td>
-                  <td>$4&gt;0$</td>
-                  <td>Relative minimum, $f_&#123;\min&#125;=-1$</td>
-                </tr>
-                <tr>
-                  <td>$(\pi,-1)$</td>
-                  <td>$2&gt;0$</td>
-                  <td>$4&gt;0$</td>
-                  <td>Relative minimum, $f_&#123;\min&#125;=-1$</td>
-                </tr>
-                <tr>
-                  <td>$(2\pi,1)$</td>
-                  <td>$2&gt;0$</td>
-                  <td>$4&gt;0$</td>
-                  <td>Relative minimum, $f_&#123;\min&#125;=-1$</td>
-                </tr>
-                <tr>
-                  <td>$(\frac&#123;\pi&#125;&#123;2&#125;,0)$</td>
-                  <td>$0$</td>
-                  <td>$-4&lt;0$</td>
-                  <td>Saddle point at $(\pi/2,0,0)$</td>
-                </tr>
-                <tr>
-                  <td>$(\frac&#123;3\pi&#125;&#123;2&#125;,0)$</td>
-                  <td>$0$</td>
-                  <td>$-4&lt;0$</td>
-                  <td>Saddle point at $(3\pi/2,0,0)$</td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th>Points</th>
+                    <th>$f_&#123;xx&#125;(x_0,y_0)$</th>
+                    <th>$\Delta_2(x_0,y_0)$</th>
+                    <th>Conclusion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>$(0,1)$</td>
+                    <td>$2&gt;0$</td>
+                    <td>$4&gt;0$</td>
+                    <td>Relative minimum, $f_&#123;\min&#125;=-1$</td>
+                  </tr>
+                  <tr>
+                    <td>$(\pi,-1)$</td>
+                    <td>$2&gt;0$</td>
+                    <td>$4&gt;0$</td>
+                    <td>Relative minimum, $f_&#123;\min&#125;=-1$</td>
+                  </tr>
+                  <tr>
+                    <td>$(2\pi,1)$</td>
+                    <td>$2&gt;0$</td>
+                    <td>$4&gt;0$</td>
+                    <td>Relative minimum, $f_&#123;\min&#125;=-1$</td>
+                  </tr>
+                  <tr>
+                    <td>$(\frac&#123;\pi&#125;&#123;2&#125;,0)$</td>
+                    <td>$0$</td>
+                    <td>$-4&lt;0$</td>
+                    <td>Saddle point at $(\pi/2,0,0)$</td>
+                  </tr>
+                  <tr>
+                    <td>$(\frac&#123;3\pi&#125;&#123;2&#125;,0)$</td>
+                    <td>$0$</td>
+                    <td>$-4&lt;0$</td>
+                    <td>Saddle point at $(3\pi/2,0,0)$</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </Solution>
@@ -713,84 +689,70 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
             Now, we draw a table, of course.
             <div class="table-wrapper">
               <table class="p-table">
-                <tr style="border-bottom: 1px solid var(--grid-text-color);">
-                  <td><strong>Points</strong></td>
-                  <td>$f_&#123;xx&#125;(x_0,y_0)$</td>
-                  <td>$\Delta_2(x_0,y_0)$</td>
-                  <td><strong>Conclusion</strong></td>
-                </tr>
-                <tr>
-                  <td>$(0,0)$</td>
-                  <td>$-2&lt;0$</td>
-                  <td>$8&gt;0$</td>
-                  <td>Local maximum, $f_&#123;\max&#125;=0$</td>
-                </tr>
-                <tr>
-                  <td>$(0,1)$</td>
-                  <td>$-2&lt;0$</td>
-                  <td>$-16&lt;0$</td>
-                  <td>Saddle Point at $(0,1,-1)$</td>
-                </tr>
-                <tr>
-                  <td>$(0,-1)$</td>
-                  <td>$-2&lt;0$</td>
-                  <td>$-16&lt;0$</td>
-                  <td>Saddle Point at $(0,-1,-1)$</td>
-                </tr>
-                <tr>
-                  <td>$\left(\frac&#123;1&#125;&#123;2&#125;,0\right)$</td>
-                  <td>$4&gt;0$</td>
-                  <td>$-16&lt;0$</td>
-                  <td
-                    >Saddle Point at
-                    $(\frac&#123;1&#125;&#123;2&#125;,0,-\frac&#123;1&#125;&#123;8&#125;)$</td
-                  >
-                </tr>
-                <tr>
-                  <td>$\left(\frac&#123;1&#125;&#123;2&#125;,1\right)$</td>
-                  <td>$4&gt;0$</td>
-                  <td>$32&lt;0$</td>
-                  <td
-                    >Local minimum,
-                    $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td
-                  >
-                </tr>
-                <tr>
-                  <td>$\left(\frac&#123;1&#125;&#123;2&#125;,-1\right)$</td>
-                  <td>$4&gt;0$</td>
-                  <td>$32&gt;0$</td>
-                  <td
-                    >Local minimum,
-                    $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td
-                  >
-                </tr>
-                <tr>
-                  <td>$\left(-\frac&#123;1&#125;&#123;2&#125;,0\right)$</td>
-                  <td>$4&gt;0$</td>
-                  <td>$-16&lt;0$</td>
-                  <td
-                    >Saddle Point at
-                    $(-\frac&#123;1&#125;&#123;2&#125;,0,-\frac&#123;1&#125;&#123;8&#125;)$</td
-                  >
-                </tr>
-                <tr>
-                  <td>$\left(-\frac&#123;1&#125;&#123;2&#125;,1\right)$</td>
-                  <td>$4&gt;0$</td>
-                  <td>$32&gt;0$</td>
-                  <td
-                    >Local minimum,
-                    $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td
-                  >
-                </tr>
-                <tr>
-                  <td>$\left(-\frac&#123;1&#125;&#123;2&#125;,-1\right)$</td>
-                  <td>$4&gt;0$</td>
-                  <td>$32&gt;0$</td>
-                  <td
-                    >Local minimum,
-                    $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td
-                  >
-                </tr>
+                <thead>
+                  <tr>
+                    <th>Points</th>
+                    <th>$f_&#123;xx&#125;(x_0,y_0)$</th>
+                    <th>$\Delta_2(x_0,y_0)$</th>
+                    <th>Conclusion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>$(0,0)$</td>
+                    <td>$-2&lt;0$</td>
+                    <td>$8&gt;0$</td>
+                    <td>Local maximum, $f_&#123;\max&#125;=0$</td>
+                  </tr>
+                  <tr>
+                    <td>$(0,1)$</td>
+                    <td>$-2&lt;0$</td>
+                    <td>$-16&lt;0$</td>
+                    <td>Saddle Point at $(0,1,-1)$</td>
+                  </tr>
+                  <tr>
+                    <td>$(0,-1)$</td>
+                    <td>$-2&lt;0$</td>
+                    <td>$-16&lt;0$</td>
+                    <td>Saddle Point at $(0,-1,-1)$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(\frac&#123;1&#125;&#123;2&#125;,0\right)$</td>
+                    <td>$4&gt;0$</td>
+                    <td>$-16&lt;0$</td>
+                    <td>Saddle Point at $(\frac&#123;1&#125;&#123;2&#125;,0,-\frac&#123;1&#125;&#123;8&#125;)$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(\frac&#123;1&#125;&#123;2&#125;,1\right)$</td>
+                    <td>$4&gt;0$</td>
+                    <td>$32&lt;0$</td>
+                    <td>Local minimum, $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(\frac&#123;1&#125;&#123;2&#125;,-1\right)$</td>
+                    <td>$4&gt;0$</td>
+                    <td>$32&gt;0$</td>
+                    <td>Local minimum, $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(-\frac&#123;1&#125;&#123;2&#125;,0\right)$</td>
+                    <td>$4&gt;0$</td>
+                    <td>$-16&lt;0$</td>
+                    <td>Saddle Point at $(-\frac&#123;1&#125;&#123;2&#125;,0,-\frac&#123;1&#125;&#123;8&#125;)$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(-\frac&#123;1&#125;&#123;2&#125;,1\right)$</td>
+                    <td>$4&gt;0$</td>
+                    <td>$32&gt;0$</td>
+                    <td>Local minimum, $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td>
+                  </tr>
+                  <tr>
+                    <td>$\left(-\frac&#123;1&#125;&#123;2&#125;,-1\right)$</td>
+                    <td>$4&gt;0$</td>
+                    <td>$32&gt;0$</td>
+                    <td>Local minimum, $f_&#123;\min&#125;=-\frac&#123;9&#125;&#123;8&#125;$</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </Solution>
@@ -833,55 +795,47 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
             an appropriate table according to their odd and even properties.
             <div class="table-wrapper">
               <table class="p-table">
-                <tr style="border-bottom: 1px solid var(--grid-text-color);">
-                  <td>$m$</td>
-                  <td>$n$</td>
-                  <td>$\Delta_2(x,y)$</td>
-                  <td>$f_&#123;xx&#125;(x_0,y_0)$</td>
-                  <td><strong>Conclusion</strong></td>
-                </tr>
-                <tr>
-                  <td>Even</td>
-                  <td>Even</td>
-                  <td
-                    >$\Delta_2=-16\cos\left(-\dfrac&#123;\pi&#125;&#123;6&#125;\right)=-8\sqrt&#123;3&#125;&lt;0$</td
-                  >
-                  <td>~</td>
-                  <td>Saddle Point</td>
-                </tr>
-                <tr>
-                  <td>Odd</td>
-                  <td>Odd</td>
-                  <td
-                    >$\Delta_2=16\cos\left(\dfrac&#123;7\pi&#125;&#123;6&#125;\right)=-8\sqrt&#123;3&#125;&lt;0$</td
-                  >
-                  <td>~</td>
-                  <td>Saddle Point</td>
-                </tr>
-                <tr>
-                  <td>Even</td>
-                  <td>Odd</td>
-                  <td
-                    >$\Delta_2=16\cos\left(-\dfrac&#123;\pi&#125;&#123;6&#125;\right)=8\sqrt&#123;3&#125;&gt;0$</td
-                  >
-                  <td>$\sqrt&#123;3&#125;+2&gt;0$</td>
-                  <td
-                    >Local Minimum, where
-                    <E>{tex`\begin{equation*}f_{\min}=m\pi-\frac{\pi}{6}-2-\sqrt{3}\end{equation*}`}</E>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Odd</td>
-                  <td>Even</td>
-                  <td
-                    >$\Delta_2=-16\cos\left(\dfrac&#123;7\pi&#125;&#123;6&#125;\right)=8\sqrt&#123;3&#125;&gt;0$</td
-                  >
-                  <td>$-\sqrt&#123;3&#125;-2&lt;0$</td>
-                  <td
-                    >Local maximum, where
-                    <E>{tex`\begin{equation*}f_{\max}=m\pi+\frac{\pi}{6}+2+\sqrt{3}\end{equation*}`}</E>
-                  </td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th>$m$</th>
+                    <th>$n$</th>
+                    <th>$\Delta_2(x,y)$</th>
+                    <th>$f_&#123;xx&#125;(x_0,y_0)$</th>
+                    <th>Conclusion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Even</td>
+                    <td>Even</td>
+                    <td>$\Delta_2=-16\cos\left(-\dfrac&#123;\pi&#125;&#123;6&#125;\right)=-8\sqrt&#123;3&#125;&lt;0$</td>
+                    <td>~</td>
+                    <td>Saddle Point</td>
+                  </tr>
+                  <tr>
+                    <td>Odd</td>
+                    <td>Odd</td>
+                    <td>$\Delta_2=16\cos\left(\dfrac&#123;7\pi&#125;&#123;6&#125;\right)=-8\sqrt&#123;3&#125;&lt;0$</td>
+                    <td>~</td>
+                    <td>Saddle Point</td>
+                  </tr>
+                  <tr>
+                    <td>Even</td>
+                    <td>Odd</td>
+                    <td>$\Delta_2=16\cos\left(-\dfrac&#123;\pi&#125;&#123;6&#125;\right)=8\sqrt&#123;3&#125;&gt;0$</td>
+                    <td>$\sqrt&#123;3&#125;+2&gt;0$</td>
+                    <td>Local Minimum, where
+                    <E>{tex`\begin{equation*}f_{\min}=m\pi-\frac{\pi}{6}-2-\sqrt{3}\end{equation*}`}</E></td>
+                  </tr>
+                  <tr>
+                    <td>Odd</td>
+                    <td>Even</td>
+                    <td>$\Delta_2=-16\cos\left(\dfrac&#123;7\pi&#125;&#123;6&#125;\right)=8\sqrt&#123;3&#125;&gt;0$</td>
+                    <td>$-\sqrt&#123;3&#125;-2&lt;0$</td>
+                    <td>Local maximum, where
+                    <E>{tex`\begin{equation*}f_{\max}=m\pi+\frac{\pi}{6}+2+\sqrt{3}\end{equation*}`}</E></td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </Solution>

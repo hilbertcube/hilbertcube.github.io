@@ -25,28 +25,6 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
         height: auto;
         margin: auto;
       }
-
-      .p-table {
-        width: 90%;
-        margin: 30px auto;
-        text-align: center;
-        border: 1px solid var(--grid-text-color);
-      }
-
-      .p-table thead tr {
-        border-bottom: 1px solid var(--grid-text-color);
-      }
-
-      .p-table th,
-      .p-table td {
-        padding: 5px 20px;
-        vertical-align: middle;
-      }
-
-      .p-table th + th,
-      .p-table td + td {
-        border-left: 1px solid var(--grid-text-color);
-      }
     </style>
   </Fragment>
 
@@ -697,17 +675,53 @@ callgrind_control -i off 12345</ShellScript>
       <div class="table-wrapper">
         <table class="p-table">
           <thead>
-            <tr><th>Property</th><th>Valgrind / Memcheck</th><th>AddressSanitizer</th></tr>
+            <tr>
+              <th>Property</th>
+              <th>Valgrind / Memcheck</th>
+              <th>AddressSanitizer</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td>Requires recompilation</td><td>No</td><td>Yes (<code class="inline-code">-fsanitize=address</code>)</td></tr>
-            <tr><td>Runtime overhead</td><td>~10–50x</td><td>~2–3x</td></tr>
-            <tr><td>Stack buffer overflows</td><td>Limited</td><td>Yes (with <code class="inline-code">-O1</code> or higher)</td></tr>
-            <tr><td>Heap buffer overflows</td><td>Yes</td><td>Yes</td></tr>
-            <tr><td>Use-after-free</td><td>Yes</td><td>Yes</td></tr>
-            <tr><td>Memory leaks</td><td>Yes (detailed)</td><td>Yes (with LeakSanitizer)</td></tr>
-            <tr><td>Uninitialized reads</td><td>Yes</td><td>No (use MemorySanitizer instead)</td></tr>
-            <tr><td>Works on prebuilt binaries</td><td>Yes</td><td>No</td></tr>
+            <tr>
+              <td>Requires recompilation</td>
+              <td>No</td>
+              <td>Yes (<code class="inline-code">-fsanitize=address</code>)</td>
+            </tr>
+            <tr>
+              <td>Runtime overhead</td>
+              <td>~10–50x</td>
+              <td>~2–3x</td>
+            </tr>
+            <tr>
+              <td>Stack buffer overflows</td>
+              <td>Limited</td>
+              <td>Yes (with <code class="inline-code">-O1</code> or higher)</td>
+            </tr>
+            <tr>
+              <td>Heap buffer overflows</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Use-after-free</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Memory leaks</td>
+              <td>Yes (detailed)</td>
+              <td>Yes (with LeakSanitizer)</td>
+            </tr>
+            <tr>
+              <td>Uninitialized reads</td>
+              <td>Yes</td>
+              <td>No (use MemorySanitizer instead)</td>
+            </tr>
+            <tr>
+              <td>Works on prebuilt binaries</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -723,15 +737,43 @@ callgrind_control -i off 12345</ShellScript>
       <div class="table-wrapper">
         <table class="p-table">
           <thead>
-            <tr><th>Tool</th><th>Purpose</th><th>Key flags</th></tr>
+            <tr>
+              <th>Tool</th>
+              <th>Purpose</th>
+              <th>Key flags</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td>Memcheck</td><td>Memory errors and leaks</td><td><code class="inline-code">--leak-check=full --track-origins=yes</code></td></tr>
-            <tr><td>Callgrind</td><td>Call-graph and cache profiling</td><td><code class="inline-code">--cache-sim=yes --branch-sim=yes</code></td></tr>
-            <tr><td>Massif</td><td>Heap memory usage over time</td><td><code class="inline-code">--time-unit=ms --pages-as-heap=no</code></td></tr>
-            <tr><td>Helgrind</td><td>POSIX thread race conditions</td><td>(no special flags needed)</td></tr>
-            <tr><td>DRD</td><td>Thread error detection</td><td><code class="inline-code">--check-stack-var=yes</code></td></tr>
-            <tr><td>Cachegrind</td><td>Cache and branch-prediction simulation</td><td><code class="inline-code">--branch-sim=yes</code></td></tr>
+            <tr>
+              <td>Memcheck</td>
+              <td>Memory errors and leaks</td>
+              <td><code class="inline-code">--leak-check=full --track-origins=yes</code></td>
+            </tr>
+            <tr>
+              <td>Callgrind</td>
+              <td>Call-graph and cache profiling</td>
+              <td><code class="inline-code">--cache-sim=yes --branch-sim=yes</code></td>
+            </tr>
+            <tr>
+              <td>Massif</td>
+              <td>Heap memory usage over time</td>
+              <td><code class="inline-code">--time-unit=ms --pages-as-heap=no</code></td>
+            </tr>
+            <tr>
+              <td>Helgrind</td>
+              <td>POSIX thread race conditions</td>
+              <td>(no special flags needed)</td>
+            </tr>
+            <tr>
+              <td>DRD</td>
+              <td>Thread error detection</td>
+              <td><code class="inline-code">--check-stack-var=yes</code></td>
+            </tr>
+            <tr>
+              <td>Cachegrind</td>
+              <td>Cache and branch-prediction simulation</td>
+              <td><code class="inline-code">--branch-sim=yes</code></td>
+            </tr>
           </tbody>
         </table>
       </div>
