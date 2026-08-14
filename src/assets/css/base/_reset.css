@@ -5,6 +5,12 @@
 
 html {
   font-size: 100%;
+  /* Opt out of mobile text auto-inflation. Without this, Chrome on Android
+     scales up text in any block wider than the viewport, which mainly hit
+     table <caption>s: the caption spans the whole (horizontally scrolling)
+     table, so it got the full boost while the narrow cells got none. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   overflow-x: hidden;
   background-color: rgb(26, 26, 26);
   scroll-padding-top: 120px;
