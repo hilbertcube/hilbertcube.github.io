@@ -523,9 +523,26 @@ function initSearchBarChrome() {
     searchBarMobile.focus();
   });
 
+  // The dropdown is anchored to (and sized by) the search container, so it may
+  // only be on screen while that container is expanded.
+  // (Computed, not the inline style: the dropdown starts out hidden by CSS
+  // alone, with no inline display set until the first query.)
+  const dropdownOpen = () =>
+    !!dropdown && getComputedStyle(dropdown).display !== "none";
+
   [searchBar, searchBarMobile].forEach((bar) => {
     bar.addEventListener("focus", expandSearchBar);
-    bar.addEventListener("blur", () => setTimeout(collapseSearchBar, 100));
+    bar.addEventListener("blur", () =>
+      setTimeout(() => {
+        // Dismissing the mobile keyboard ("Done") blurs the field while the
+        // results are still showing. Collapsing here would shrink the container
+        // the dropdown is anchored to, leaving it stranded at a compressed
+        // width — so stay expanded until the search is actually dismissed
+        // (overlay tap, Escape, outside click, or opening a result).
+        if (dropdownOpen()) return;
+        collapseSearchBar();
+      }, 100),
+    );
 
     bar.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
@@ -537,7 +554,10 @@ function initSearchBarChrome() {
     });
   });
 
-  overlay.addEventListener("click", collapseSearchBar);
+  overlay.addEventListener("click", () => {
+    if (dropdown) hideDropdown(dropdown);
+    collapseSearchBar();
+  });
 
   // Placeholder hint while focused.
   searchBar.addEventListener("focus", () => {
@@ -572,6 +592,9 @@ function setupSearch(searchBars: HTMLInputElement[], dropdown: HTMLElement) {
   let seq = 0;
   const go = makeGo(dropdown, () => {
     searchBars.forEach((bar) => (bar.value = ""));
+    // The blur that dismissed the keyboard left the bar expanded (see
+    // initSearchBarChrome); now that the dropdown is gone, put it back.
+    collapseSearchBar();
   });
 
   async function update(searchBar: HTMLInputElement) {
@@ -655,6 +678,7 @@ function setupSearch(searchBars: HTMLInputElement[], dropdown: HTMLElement) {
   onOutsideClick([...searchBars, dropdown], () => {
     searchBars.forEach((bar) => (bar.value = ""));
     hideDropdown(dropdown);
+    collapseSearchBar();
   });
 }
 
