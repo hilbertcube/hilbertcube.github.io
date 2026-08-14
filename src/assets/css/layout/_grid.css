@@ -45,15 +45,27 @@
   gap: 1em;
 }
 
+/* Each column is a normal block container, not a flex one: as flex items the
+   children shrank to fit their own text, so a one-line paragraph ended up
+   floating in the middle of the column. Block layout lets paragraphs run the
+   full width and inherit the page's justification, while images still centre
+   themselves — Figure gives its <img> `margin-inline: auto`. Anything else
+   that should be centred opts in with `.column-center`.
+   `overflow: hidden` keeps wide content (equations, code boxes) from pushing
+   the column past its share and also suppresses the flex automatic minimum
+   size, so the column can shrink below its content's intrinsic width. */
 .two-columns-block > div {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
   overflow: hidden;
-  align-items: center;
   flex: 1;
   padding: 0px;
 }
+
+.two-columns-block > div > .column-center {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
 
 /* Divider lines */
 .line-6, .line-7 {
