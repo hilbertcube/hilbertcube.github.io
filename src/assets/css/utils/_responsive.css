@@ -72,11 +72,6 @@
     text-decoration: underline;
   }
 
-  .home-banner {
-    min-height: 100px;
-    height: 350px;
-  }
-
   .search-bar {
     display: none;
   }
@@ -144,10 +139,6 @@
 
   .footer-title {
     width: 20%;
-  }
-
-  .banner-title {
-    font-size: 2.3rem;
   }
 
   .right {
@@ -232,15 +223,6 @@
     font-size: 12px;
   }
 
-  /* Content grids */
-  #rec-article-container {
-    grid-template-columns: 1fr;
-    margin: 0;
-    gap: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-
   .dropdown-item {
     font-size: 0.8em;
   }
@@ -261,20 +243,6 @@
 
   .Quote-author {
     font-size: 1em;
-  }
-
-  /* Banner */
-  .banner-title {
-    font-size: 1.2rem;
-  }
-
-  .home-banner {
-    min-height: 100px;
-    height: 200px;
-  }
-
-  .banner-title::after {
-    height: 2px;
   }
 
   /* Posts */
