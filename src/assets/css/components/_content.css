@@ -128,6 +128,53 @@ td {
   vertical-align: middle;
 }
 
+/* The table style, used by every table on the site: a full grid of hairlines,
+   headers centred, body cells top-aligned and left-aligned so wrapped
+   sentences in one column stay level with short entries in the next. Width is
+   shrink-to-fit and centred, so a three-column table of numbers stays compact
+   while a table of prose grows to the text column. Pages add only rules that
+   follow their own table's content (which columns centre, which may not wrap);
+   the look itself is not redefined per page. Tables want <thead> and <tbody>:
+   the header rule is drawn on thead, the row rules inside tbody. */
+.p-table {
+  width: auto;
+  max-width: 100%;
+  margin: 30px auto;
+  border: 1px solid var(--grid-text-color);
+  font-size: 0.95em;
+}
+
+.p-table caption {
+  caption-side: bottom;
+  font-size: 14px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.p-table thead tr {
+  border-bottom: 1px solid var(--grid-text-color);
+}
+
+.p-table th,
+.p-table td {
+  padding: 8px 14px;
+  vertical-align: top;
+  text-align: left;
+}
+
+.p-table th {
+  text-align: center;
+}
+
+.p-table th + th,
+.p-table td + td {
+  border-left: 1px solid var(--grid-text-color);
+}
+
+.p-table tbody tr + tr {
+  border-top: 1px solid var(--box-border, rgba(128, 128, 128, 0.3));
+}
+
 /* Footer */
 footer {
   left: 0;
