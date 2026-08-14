@@ -6,7 +6,8 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
-import { formatDate } from "@utils/formatDate";
+import PageTitle from "@components/article/PageTitle.astro";
+import PubDate from "@components/article/PubDate.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -41,23 +42,17 @@ import Scripts from "@components/site/Scripts.astro";
           width: 100%;
         }
       }
-      #nlogn .katex {
-        font-size: inherit !important;
-      }
     </style>
   </Fragment>
 
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
-      <h1 class="title">{meta.title}</h1>
-      <div class="date">{formatDate(meta.pubDate)}</div>
+      <PageTitle title={meta.title} />
+      <PubDate pubDate={meta.pubDate} />
       <div class="Quote">
-        <div class="Quote-content">
-          &#8220;Real mathematics must be justified as art if it can be
-          justified at all.&#8221;
-        </div>
-        <div class="Author">- G.H. Hardy</div>
+        <div class="Quote-content">Real mathematics must be justified as art if it can be justified at all.</div>
+        <div class="Quote-author">G.H. Hardy</div>
       </div>
     </header>
 

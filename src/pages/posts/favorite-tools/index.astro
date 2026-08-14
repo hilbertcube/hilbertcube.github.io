@@ -6,7 +6,8 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
-import { formatDate } from "@utils/formatDate";
+import PageTitle from "@components/article/PageTitle.astro";
+import PubDate from "@components/article/PubDate.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("posts", Astro.url.pathname);
@@ -62,8 +63,8 @@ import Scripts from "@components/site/Scripts.astro";
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
-      <h1 class="post-title">{meta.title}</h1>
-      <div class="date">{formatDate(meta.pubDate)}</div>
+      <PageTitle title={meta.title} variant="post" />
+      <PubDate pubDate={meta.pubDate} />
     </header>
 
     <section>

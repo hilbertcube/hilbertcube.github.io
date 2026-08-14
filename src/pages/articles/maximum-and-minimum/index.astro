@@ -6,7 +6,8 @@ import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
-import { formatDate } from "@utils/formatDate";
+import PageTitle from "@components/article/PageTitle.astro";
+import PubDate from "@components/article/PubDate.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 import Scripts from "@components/site/Scripts.astro";
 
@@ -39,8 +40,8 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 
     <header>
       <TopicTags topics={meta.topics} />
-      <h1 class="title">{meta.title}</h1>
-      <div class="date">{formatDate(meta.pubDate)}</div>
+      <PageTitle title={meta.title} />
+      <PubDate pubDate={meta.pubDate} />
       <figure style="margin: 0;">
         <img
           class="front-img"
@@ -50,11 +51,9 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
         />
       </figure>
       <div class="Quote">
-        <div class="Quote-content">
-          &#8220As you will find in multivariable calculus, there is often a
-          number of solutions for any given problem.&#8221
-        </div>
-        <div class="Author">- John Nash</div>
+        <div class="Quote-content">As you will find in multivariable calculus, there is often a number of solutions
+          for any given problem.</div>
+        <div class="Quote-author">John Nash</div>
       </div>
     </header>
 

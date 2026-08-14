@@ -96,12 +96,7 @@
   height: 100%;
 }
 
-.author {
-  font-size: 0.8em;
-  font-style: italic;
-  width: 100%;
-  text-align: right;
-}
+
 @media all and (max-width: 1080px) {
   .materials {
     grid-template-columns: 1fr 200px;

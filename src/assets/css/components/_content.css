@@ -83,10 +83,28 @@ ol.steps .step::before {
   padding-right: 25px;
 }
 
-.Author {
+/* Curly quotes are supplied here, so the markup only carries the quote text.
+   Keep the text flush against the div's tags — any leading/trailing whitespace
+   inside .Quote-content collapses into a visible gap next to these marks. */
+.Quote-content::before {
+  content: "\201C";
+}
+
+.Quote-content::after {
+  content: "\201D";
+}
+
+.Quote-author {
   font-size: 1.1em;
   text-align: right;
   position: relative;
+}
+
+/* The attribution dash is supplied here, so the markup carries only the name.
+   Scoped to authors inside a .Quote, since MaterialCard borrows .Quote-author
+   for its "by <author>" byline, which takes no dash. */
+.Quote .Quote-author::before {
+  content: "--\00a0";
 }
 
 .Quote::after {
@@ -166,12 +184,12 @@ td {
   text-align: center;
 }
 
-.p-table th + th,
-.p-table td + td {
+.p-table th+th,
+.p-table td+td {
   border-left: 1px solid var(--grid-text-color);
 }
 
-.p-table tbody tr + tr {
+.p-table tbody tr+tr {
   border-top: 1px solid var(--box-border, rgba(128, 128, 128, 0.3));
 }
 

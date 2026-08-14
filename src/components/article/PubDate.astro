@@ -1,0 +1,22 @@
+---
+/**
+ * PubDate.astro
+ * =============
+ * Renders an article/post's publication date under the title.
+ *
+ * - Takes the raw collection `pubDate` (ISO "YYYY-MM-DD") and runs it through
+ *   `formatDate` internally, so pages just hand over `meta.pubDate` and never
+ *   import the formatter themselves.
+ * - Keeps the `.date` class, whose styling lives with the other base type
+ *   rules in src/assets/css/base/_typography.css.
+ */
+import { formatDate } from "@utils/formatDate";
+
+interface Props {
+  pubDate: string;
+}
+
+const { pubDate } = Astro.props;
+---
+
+<div class="date">{formatDate(pubDate)}</div>

@@ -3,7 +3,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
-import { formatDate } from "@utils/formatDate";
+import PageTitle from "@components/article/PageTitle.astro";
+import PubDate from "@components/article/PubDate.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 import Scripts from "@components/site/Scripts.astro";
 
@@ -31,16 +32,18 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
   <div class="content-grid">
     <header>
       <TopicTags topics={meta.topics} />
-      <h1 class="title">{meta.title}</h1>
-      <div class="date">{formatDate(meta.pubDate)}</div>
+      <PageTitle title={meta.title} />
+      <PubDate pubDate={meta.pubDate} />
       <figure style="margin: 0;">
         <img class="front-img" src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
       </figure>
     </header>
 
     <div class="Quote">
-      <div class="Quote-content">&#8220;Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.&#8221;</div>
-      <div class="Author">- Brian W. Kernighan</div>
+      <div class="Quote-content">Debugging is twice as hard as writing the code in the first place. Therefore, if
+        you write the code as cleverly as possible, you are, by definition, not
+        smart enough to debug it.</div>
+      <div class="Quote-author">Brian W. Kernighan</div>
     </div>
 
   <section id="introduction">
