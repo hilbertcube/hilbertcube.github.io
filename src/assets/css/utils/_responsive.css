@@ -129,12 +129,14 @@
     max-width: 100%;
   }
 
-  .side-nav {
-    display: block;
-  }
-
+  /* home/about stay in the top bar at every width, so the sidebar's duplicate
+     Navigation section stays hidden. The fixed basis (sized off the sidebar
+     width) is dropped here — from this width down the links only take the room
+     their text needs, leaving the rest for the search and icon buttons. */
   .left {
-    display: none;
+    flex: 0 0 auto;
+    gap: 20px;
+    padding-left: 4px;
   }
 
   .footer-title {
@@ -162,6 +164,25 @@
 
   :root {
     --side-nav-width: 330px;
+    --burger-width: 44px;
+  }
+
+  /* Tighten the nav links so home/about, the burger and the icon buttons all
+     fit on one row down to ~360px viewports. */
+  .left {
+    gap: 14px;
+  }
+
+  .top-buttons {
+    font-size: 1em;
+  }
+
+  /* Collapsed, the search field is zero-width — drop its reserved gutter too
+     so the space goes to the nav links instead. */
+  .search-bar-container:not(.expanded) {
+    min-width: 0;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .switch {
