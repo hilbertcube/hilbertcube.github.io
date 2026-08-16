@@ -28,8 +28,7 @@
     padding-left: 0px;
   }
 
-  .top-buttons,
-  .dropbtn {
+  .top-buttons {
     font-size: 1.35em;
   }
 }
@@ -67,8 +66,7 @@
     background-color: white;
   }
 
-  .top-buttons:hover,
-  .dropbtn:hover {
+  .top-buttons:hover {
     text-decoration: underline;
   }
 
@@ -173,8 +171,11 @@
     gap: 14px;
   }
 
+  /* Inherited, so it applies to the hover underline and to the active-page one
+     BaseLayout injects alike — at this size the default sits on the descenders. */
   .top-buttons {
     font-size: 1em;
+    text-underline-offset: 4px;
   }
 
   /* Collapsed, the search field is zero-width — drop its reserved gutter too
