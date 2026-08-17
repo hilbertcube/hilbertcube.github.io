@@ -5,7 +5,7 @@
  * `scripts` slot, keyed by short alias. Pages ask for aliases:
  *
  *   <Fragment slot="scripts">
- *     <Scripts use={["blog-setting", "python", "line-numbers"]} />
+ *     <Scripts use={["python", "line-numbers"]} />
  *   </Fragment>
  *
  * Every URL lives here and nowhere else, so bumping `PRISM_VERSION` (or moving
@@ -38,11 +38,6 @@ const language = (name: string): ScriptEntry => ({
 });
 
 const SCRIPTS = {
-  // --- Site scripts (public/assets/js) ---
-  // The banner animation ships with Banner.astro's own <script>, so there is
-  // no alias for it — rendering <Banner /> is all a page needs.
-  "blog-setting": { js: ["/assets/js/blogpage-setting.js"] },
-
   // --- Prism core + plugins ---
   prism: { js: [prism("prism.min.js")] },
   // The line-numbers stylesheet is already global (see BaseLayout's <head>).

@@ -1,12 +1,22 @@
 ---
+/**
+ * Solution.astro
+ * ==============
+ * A collapsible solution block. It renders expanded by default — pass
+ * `open={false}` to have a page start it collapsed.
+ *
+ * The `open` attribute is part of the markup rather than something a script
+ * sets after load, so the block never renders closed and then pops open.
+ */
 interface Props {
   summary?: string;
+  open?: boolean;
 }
 
-const { summary = "Solution" } = Astro.props;
+const { summary = "Solution", open = true } = Astro.props;
 ---
 
-<details class="solution">
+<details class="solution" open={open}>
   <summary>{summary}</summary>
   <div>
     <slot />

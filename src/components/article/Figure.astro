@@ -31,7 +31,10 @@ interface Props {
   captionWidth?: string;
   /** Drop the figure's margins, for tight column layouts. */
   flush?: boolean;
-  /** Defer loading for images well below the fold. */
+  /**
+   * Figures sit in the article body, below the fold, so they default to
+   * `lazy`. Pass `eager` for one that has to be up straight away.
+   */
   loading?: "lazy" | "eager";
 }
 
@@ -42,7 +45,7 @@ const {
   maxWidth,
   captionWidth,
   flush = false,
-  loading,
+  loading = "lazy",
 } = Astro.props;
 
 const style = [
