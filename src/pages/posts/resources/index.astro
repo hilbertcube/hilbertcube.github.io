@@ -7,7 +7,6 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import MaterialCard from "@components/listings/MaterialCard.astro";
-import Scripts from "@components/site/Scripts.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
@@ -343,7 +342,4 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
     </section>
   </div>
 
-  <Fragment slot="scripts">
-    <Scripts use={["blog-setting"]} />
-  </Fragment>
 </BaseLayout>

@@ -7,7 +7,6 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TopicTags from "@components/article/TopicTags.astro";
 import Icon from "@components/ui/Icon.astro";
-import Scripts from "@components/site/Scripts.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
@@ -68,10 +67,6 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
         }
       }
     </style>
-  </Fragment>
-
-  <Fragment slot="scripts">
-    <Scripts use={["blog-setting"]} />
   </Fragment>
 
   <div class="content-grid">
@@ -406,76 +401,91 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
       <div class="image-container" style="margin: 25px 0">
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/coco.webp"
           alt="Japanese Curry"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/boba.webp"
           alt="Boba"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/ramen.webp"
           alt="Ramen"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/takoyaki.webp"
           alt="Takoyaki"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/thai.webp"
           alt="Euporium Thai"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/bar1.webp"
           alt="Grayson Bar"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/taco.webp"
           alt="LA Taco"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/burger.webp"
           alt="Hawaiian Burger"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/los_amigos.webp"
           alt="Los Amigos Taco"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/white_whine.webp"
           alt="Sky Bar"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/tokyo_ramen.webp"
           alt="Tokyo Ramen & Sushi"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/piyaiyuan.webp"
           alt="piyaiyuan hotpot"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/raku_udon.webp"
           alt="Raku Udon"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/gladiator_burger.webp"
           alt="Gladiator Burger"
         />
         <img
           class="food-img"
+          loading="lazy"
           src="/posts/tested-food-places/the_coffee.webp"
           alt="The Coffee"
         />
