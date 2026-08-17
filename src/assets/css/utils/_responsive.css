@@ -175,7 +175,7 @@
      BaseLayout injects alike — at this size the default sits on the descenders. */
   .top-buttons {
     font-size: 1em;
-    text-underline-offset: 4px;
+    
   }
 
   /* Collapsed, the search field is zero-width — drop its reserved gutter too
