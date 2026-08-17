@@ -8,8 +8,10 @@
  *   to repeat in its own `<style>` block, so pages only pass the image itself.
  * - `width` is the one thing that varied between pages; it is applied through a
  *   custom property and always collapses to 100% on narrow screens.
- * - The `front-img` class stays on the `img`: public/assets/js/scripts.js uses
- *   it to keep banners out of the lightbox.
+ * - The `front-img` class stays on the `img`, but only as a styling hook now.
+ *   It used to double as the lightbox's opt-out; the viewer moved to
+ *   components/site/Lightbox.astro and banners open like any other image, so
+ *   keeping a banner out means giving it `no-lightbox` instead.
  * - Anything passed as children is rendered as the figure's caption.
  */
 interface Props {
