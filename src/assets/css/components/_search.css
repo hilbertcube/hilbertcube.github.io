@@ -342,6 +342,13 @@ input.search-bar:focus {
   background-color: var(--search-chip-active-bg);
   border-color: var(--search-chip-active-bg);
 }
+/* While a chip's filtered results are being fetched, pulse it with the same
+   rhythm as the dropdown's "Loading…" row so the click reads as "working". */
+.search-tag-chip.loading {
+  animation: search-loading-pulse 1s ease-in-out infinite;
+  cursor: progress;
+}
+
 /* The shared --autocomplete-dropdown-text-color is dimmed (#aaa) for excerpts;
    on the small chips over the #3b3b3b fill that's too low-contrast to read, so
    brighten the chip label in dark mode. Exclude .active — it keeps its white
