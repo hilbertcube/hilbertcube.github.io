@@ -1,0 +1,354 @@
+---
+/**
+ * Lightbox.astro
+ * ==============
+ * Click any content image to open it fullscreen, with prev/next across every
+ * image on the page. Rendered once by BaseLayout; there is nothing to pass.
+ *
+ * This replaces the version that lived in public/assets/js/scripts.js and built
+ * the whole overlay with `document.createElement` + ~90 lines of `el.style.x =`.
+ * The chrome is markup and scoped CSS now, so it can have hover states,
+ * transitions, mobile sizing and real `<button>` semantics; the script is left
+ * with just the behaviour (which image, open, close, scroll lock).
+ *
+ * Which images are clickable is decided at runtime by the selector in the
+ * script, since it has to sweep the finished page. It is a blacklist: the logo,
+ * the home banner, card thumbnails and anything carrying `.no-lightbox` opt out,
+ * and everything else — article front images included — opens.
+ */
+---
+
+<div
+  class="lightbox"
+  id="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image viewer"
+  hidden
+>
+  <!-- `no-lightbox` keeps this image out of the selector in the script: it is
+       the viewer's own canvas, not a page image, and without the opt-out it
+       collects itself as an extra (blank) entry. -->
+  <img class="lightbox-img no-lightbox" id="lightboxImg" alt="" />
+
+  <button class="lightbox-button lightbox-close" id="lightboxClose" aria-label="Close image viewer">✕</button>
+  <button class="lightbox-button lightbox-prev" id="lightboxPrev" aria-label="Previous image">❮</button>
+  <button class="lightbox-button lightbox-next" id="lightboxNext" aria-label="Next image">❯</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<script>
+  // Every image except the ones that own their own click behaviour or are
+  // chrome rather than content.
+  const IMAGE_SELECTOR =
+    "img:not(#logoImage):not(#home-banner img):not(.no-lightbox):not(.recommend-img img)";
+
+  /**
+   * The viewer's own elements, already checked for existence.
+   *
+   * They are handed in as one typed argument rather than looked up inside: a
+   * `document.getElementById` result is `HTMLElement | null`, and narrowing it
+   * with a guard does not survive into a nested function, so every handler below
+   * would need a `!`. Arriving as parameters, they are simply non-null.
+   */
+  interface Parts {
+    root: HTMLElement;
+    fullImage: HTMLImageElement;
+    counter: HTMLElement;
+    closeButton: HTMLElement;
+    prevButton: HTMLElement;
+    nextButton: HTMLElement;
+  }
+
+  function setupLightbox(images: HTMLImageElement[], parts: Parts) {
+    const { root, fullImage, counter, closeButton, prevButton, nextButton } = parts;
+
+    let current = 0;
+    // Where the page was when the viewer opened, and what had focus before it
+    // took over. Both are restored on close.
+    let lockedScrollY = 0;
+    let previouslyFocused: HTMLElement | null = null;
+
+    // With one image there is nowhere to go, so the arrows would be no-ops.
+    const hasMultiple = images.length > 1;
+    prevButton.hidden = !hasMultiple;
+    nextButton.hidden = !hasMultiple;
+
+    function show(index: number) {
+      // Wrap around at both ends.
+      current = (index + images.length) % images.length;
+
+      fullImage.src = images[current].src;
+      // Carry the thumbnail's alt across, so the fullscreen view is not an
+      // unlabelled image to a screen reader.
+      fullImage.alt = images[current].alt;
+      counter.textContent = `${current + 1} / ${images.length}`;
+    }
+
+    function open(index: number) {
+      previouslyFocused =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+      show(index);
+      root.hidden = false;
+
+      // Lock the page behind the overlay at its current position. `position:
+      // fixed` alone would jump to the top, so the offset is parked in `top`
+      // and put back on close.
+      //
+      // Read the offset BEFORE going fixed: once the body is fixed the page has
+      // no scrollable height left, so `window.scrollY` clamps to 0 and the
+      // position to restore is lost.
+      lockedScrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${lockedScrollY}px`;
+      document.body.style.width = "100%";
+
+      // preventScroll: the page is locked, but focusing must not ask the
+      // browser to scroll anything into view either.
+      closeButton.focus({ preventScroll: true });
+    }
+
+    function close() {
+      root.hidden = true;
+
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, lockedScrollY);
+
+      // Focus is sitting on a now-hidden button; hand it back to whatever had
+      // it before, rather than letting it fall to the top of the document.
+      previouslyFocused?.focus({ preventScroll: true });
+      previouslyFocused = null;
+    }
+
+    /**
+     * Keeps Tab inside the dialog. `aria-modal="true"` tells assistive tech the
+     * rest of the page is inert, so focus has to actually behave that way.
+     */
+    function trapFocus(event: KeyboardEvent) {
+      const stops = [closeButton, prevButton, nextButton].filter((button) => !button.hidden);
+      const first = stops[0];
+      const last = stops[stops.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && (active === first || !root.contains(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !root.contains(active))) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    images.forEach((image, index) => {
+      image.classList.add("lightbox-source");
+      image.addEventListener("click", () => open(index));
+    });
+
+    closeButton.addEventListener("click", close);
+    prevButton.addEventListener("click", () => show(current - 1));
+    nextButton.addEventListener("click", () => show(current + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (root.hidden) return;
+
+      if (event.key === "Escape") close();
+      else if (event.key === "ArrowLeft") show(current - 1);
+      else if (event.key === "ArrowRight") show(current + 1);
+      else if (event.key === "Tab") trapFocus(event);
+    });
+  }
+
+  // The guard lives here, in the same scope as the lookups, so the narrowing
+  // holds across the single call that consumes it.
+  const images = Array.from(document.querySelectorAll<HTMLImageElement>(IMAGE_SELECTOR));
+
+  const root = document.getElementById("lightbox");
+  const fullImage = document.querySelector<HTMLImageElement>("#lightboxImg");
+  const counter = document.getElementById("lightboxCounter");
+  const closeButton = document.getElementById("lightboxClose");
+  const prevButton = document.getElementById("lightboxPrev");
+  const nextButton = document.getElementById("lightboxNext");
+
+  if (images.length && root && fullImage && counter && closeButton && prevButton && nextButton) {
+    setupLightbox(images, { root, fullImage, counter, closeButton, prevButton, nextButton });
+  }
+</script>
+
+<style>
+  /* Theme tokens for the viewer, declared the way #settings_window declares its
+     own in components/_forms.css.
+
+     The scrim is opaque black in both themes: the page behind it is meant to be
+     gone, not dimmed, so an image is judged against a neutral ground rather than
+     whatever colour the theme happens to be. The controls on top of it are the
+     ones that follow the theme. */
+  .lightbox {
+    --lightbox-scrim: #000;
+    --lightbox-surface: var(--body-background-color);
+    --lightbox-border: var(--contrast-line-color);
+    --lightbox-text: var(--grid-text-color);
+    /* Hover accent, matching .share-button:hover */
+    --lightbox-accent: var(--nav-bar-text-color);
+    --lightbox-muted: var(--article-date-color);
+
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--lightbox-scrim);
+    z-index: 9999;
+    /* No pull-to-refresh or rubber-banding while the overlay is up. */
+    overscroll-behavior: none;
+    /* Same entrance as the search dropdown (_search.css). */
+    animation: lightbox-in 0.15s ease-out;
+  }
+
+  @keyframes lightbox-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* `hidden` is what opens and closes the overlay (and hides the arrows on a
+     single-image page), so it has to beat the `display` set above. The extra
+     class in each selector is what wins on specificity. */
+  .lightbox[hidden],
+  .lightbox-button[hidden] {
+    display: none;
+  }
+
+  /* Applied by the script to every image it wired up, so the pointer only
+     appears on images that actually open. */
+  :global(.lightbox-source) {
+    cursor: pointer;
+  }
+
+  .lightbox-img {
+    display: block;
+    /* Short of the viewport on both axes, to leave the arrows a gutter. */
+    max-width: 90vw;
+    max-height: 90vh;
+    /* The same rounding every content image gets, so an image does not change
+       shape between the page and the viewer. */
+    border-radius: var(--image-radius);
+    /* The settings modal's elevation, deepened to carry against the scrim. */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Floating controls over content: the site already has one of these in
+     ShareButton, so these take its treatment wholesale — circular, page-surface
+     fill, hairline border, and the same two-step shadow. That keeps them
+     recognisably the site's buttons instead of the generic translucent-black
+     pills a viewer usually ships with. */
+  .lightbox-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--lightbox-border);
+    border-radius: 50%;
+    color: var(--lightbox-text);
+    background: var(--lightbox-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.25s ease, color 0.25s ease,
+      box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .lightbox-button:hover {
+    color: var(--lightbox-accent);
+    border-color: var(--lightbox-accent);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  }
+
+  /* The site's focus ring (see input.search-bar:focus). */
+  .lightbox-button:focus-visible {
+    outline: none;
+    border-color: var(--search-bar-focus);
+    box-shadow: 0 0 0 3px rgba(0, 145, 255, 0.2);
+  }
+
+  .lightbox-button:active {
+    transform: scale(0.95);
+  }
+
+  .lightbox-close {
+    top: 20px;
+    right: 20px;
+    font-size: 16px;
+  }
+
+  .lightbox-prev,
+  .lightbox-next {
+    top: 50%;
+    font-size: 18px;
+    transform: translateY(-50%);
+  }
+
+  /* Re-apply the centering offset the shared :active rule would drop. */
+  .lightbox-prev:active,
+  .lightbox-next:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .lightbox-prev {
+    left: 20px;
+  }
+
+  .lightbox-next {
+    right: 20px;
+  }
+
+  /* A meta label, so it follows the badge idiom from _search.css
+     (.search-type-badge / .search-count) rather than the button idiom: angular
+     corners, hairline border, Jura, letter-spaced. */
+  .lightbox-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 12px;
+    border: 1px solid var(--lightbox-border);
+    border-radius: 4px;
+    color: var(--lightbox-muted);
+    background-color: var(--lightbox-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-family: "Jura", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  /* Thumb-reachable controls on phones, where 20px insets put the arrows under
+     the edge of the screen. 580px is the site's mobile breakpoint. */
+  @media all and (max-width: 580px) {
+    .lightbox-prev {
+      left: 10px;
+    }
+
+    .lightbox-next {
+      right: 10px;
+    }
+
+    .lightbox-close {
+      top: 12px;
+      right: 12px;
+    }
+
+    .lightbox-counter {
+      bottom: 14px;
+      font-size: 13px;
+    }
+  }
+</style>

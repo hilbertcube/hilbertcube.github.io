@@ -6,6 +6,7 @@
  */
 import TopBar from "@components/site/TopBar.astro";
 import ShareButton from "@components/site/ShareButton.astro";
+import Lightbox from "@components/site/Lightbox.astro";
 import Logo from "@components/site/Logo.astro";
 import Footer from "@components/site/Footer.astro";
 import HighlightsAndAttribute from "@components/site/HighlightsAndAttribute.astro";
@@ -122,6 +123,7 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
   <body class="light-mode">
     <TopBar />
     <ShareButton />
+    <Lightbox />
 
     <nav class="navbar" id="navbar">
       <div class="logo-and-side-nav">
