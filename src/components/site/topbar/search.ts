@@ -748,8 +748,27 @@ function setupTagsMenu(tagsBtn: HTMLElement, tagsDropdown: HTMLElement) {
 
     if (!activeTags.length) return;
 
-    // Phase 2: the filtered results below the chips.
+    // Phase 2: the filtered results below the chips. Pagefind fetches an index
+    // chunk per tag, so this is slow enough to need feedback: pulse the chips
+    // being filtered on and show the search bar's "Loading…" row underneath.
+    // Both are delayed slightly so a fast (warm-index) filter doesn't flicker.
+    const activeChips = [
+      ...tagsDropdown.querySelectorAll<HTMLElement>(".search-tag-chip.active"),
+    ];
+    const loadingRow = document.createElement("div");
+    loadingRow.className = "search-loading";
+    loadingRow.textContent = "Loading…";
+    const loadingTimer = setTimeout(() => {
+      if (mySeq !== seq) return;
+      activeChips.forEach((chip) => chip.classList.add("loading"));
+      tagsDropdown.appendChild(loadingRow);
+    }, 150);
+
     const result = await searchWithTags(activeTags);
+    clearTimeout(loadingTimer);
+    // Safe even when superseded: a newer render has already detached these.
+    activeChips.forEach((chip) => chip.classList.remove("loading"));
+    loadingRow.remove();
     // Superseded (e.g. the tag was unselected) => bail so this stale result
     // can't overwrite the current render.
     if (mySeq !== seq) return;
