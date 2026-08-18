@@ -29,7 +29,7 @@ the data model, and how content reaches search and RSS. Its companions:
 - Testing search, math exclusion, or anything that depends on the built
   output → `npm run build && npm run preview`.
 - In `dev`, the search bar falls back to a **title-only** match over
-  `articles.json` (see §6) because Pagefind's index only exists after a build.
+  `pages.json` (see §6) because Pagefind's index only exists after a build.
 
 Deployment is automatic: `.github/workflows/static-pages.yml` runs `npm ci &&
 npm run build` on every push to `main` and publishes `dist/` (including
@@ -50,12 +50,12 @@ src/
   components/                  Grouped by role — see COMPONENTS.md
     site/  article/  listings/  math/  code/  ui/
   utils/                       Build-time helpers shared by components and pages
-  content.config.ts            Typed, validated data collections over articles.json
+  content.config.ts            Typed, validated data collections over pages.json
+  data/pages.json           Catalog of all articles/posts (source of truth)
   assets/
     css/                       Styles (bundled once via main.css)
     images/                    Images imported through astro:assets (logo, banner)
 public/
-  assets/json/articles.json    Catalog of all articles/posts (source of truth)
   assets/js/katex-render.js    KaTeX driver: macros, display math, numbering
   assets/js/scripts.js         Image lightbox + smooth in-page scrolling
   assets/js/blogpage-setting.js  Opens <Solution> blocks, lazy-loads images
@@ -72,6 +72,7 @@ scripts/                       Automation (see AUTOMATION.md)
 | `@layouts/*` | `src/layouts/*` |
 | `@components/*` | `src/components/*` |
 | `@utils/*` | `src/utils/*` |
+| `@data/*` | `src/data/*` |
 | `@assets/*` | `src/assets/*` |
 
 **Where client JS lives.** Behaviour tied to a component ships in that
@@ -92,7 +93,7 @@ Use the scaffolder — don't hand-create folders:
 ```
 
 It creates `src/pages/<type>/<slug>/index.astro` **and** inserts an entry at the
-top of `public/assets/json/articles.json`. Both are required — the page renders
+top of `src/data/pages.json`. Both are required — the page renders
 the prose; the JSON entry drives homepage cards, RSS, search and "More
 Articles". A page without a JSON entry won't appear in those lists, and a
 malformed entry fails the build (see §4).
@@ -156,11 +157,12 @@ extractor lives in `src/utils/toc.ts`.
 
 ---
 
-## 4. Data model — `articles.json` + typed collections
+## 4. Data model — `pages.json` + typed collections
 
-`public/assets/json/articles.json` is the single catalog. It has three arrays:
-`articles` (carry `id`, `image`), `posts` (carry `pid`), and `others`
-(resources such as About and the license).
+`src/data/pages.json` is the single catalog. It has three arrays:
+`articles` (carry `image`), `posts`, and `others` (resources such as About and
+the license). `link` is the primary key throughout — it is what pages, the
+highlights panel and the collection loader all key on. There is no separate id.
 
 It is wrapped by typed, **Zod-validated** collections in `src/content.config.ts`.
 Read it through the content API — **never** `fs.readFileSync`.
@@ -177,22 +179,27 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 <PageTitle title={meta.title} />
 ```
 
+`TopicTags`, `PageTitle` and `PubDate` do this for themselves — on an
+`/articles/*` or `/posts/*` page they resolve their own entry from the URL, so
+the page just writes `<PageTitle />` with no lookup at all.
+
 For everything else (listings, feeds, panels) use `getCollection("articles" |
 "posts" | "others")` directly.
 
 **Rules**
 
 - Every entry needs `title`, `link`, `topics[]`, `description`, and `pubDate`
-  (ISO `YYYY-MM-DD`); articles also `id` + `image`, posts also `pid`. `others`
-  entries carry a free-form `date` string instead, since they have no real
-  publish date.
+  (ISO `YYYY-MM-DD`); articles also carry `image`. All three arrays share that
+  shape — for `others`, `pubDate` is when the standing page was last revised.
+- `link` must be unique within its array: `content.config.ts` derives each
+  collection entry's loader id from it.
 - A missing or misspelled field **fails the build** with a Zod error. That is
   intentional: it stops content from silently vanishing from the homepage and
   the feed.
 - Collection order follows array order in the JSON — newest first, since
   `new-article.sh` inserts at the top. Nothing re-sorts it.
-- Keep the raw file in `public/`: the search bar fetches it at runtime as its
-  dev/offline fallback (§6).
+- The search bar imports the same file as its dev/offline fallback (§6); Vite
+  code-splits it, so it is only downloaded when Pagefind is unavailable.
 
 ---
 
@@ -248,7 +255,7 @@ Full detail in [`SEARCH.md`](SEARCH.md). The short version:
 - **Topics become filter facets** through `<TopicTags>`, which is what fills the
   top bar's tag browser.
 - **Fallback:** with no index (in `dev`, or offline) the bar fetches
-  `articles.json` and does a title-only substring match.
+  `pages.json` and does a title-only substring match.
 - **To exclude an element:** add `data-pagefind-ignore` to it.
 - **To test:** `npm run build && npm run preview`, then search a word that
   appears only in an article body.
@@ -296,7 +303,7 @@ Two things specific to this guide:
   nothing to keep in sync.
 - Each entry's `pubDate` is the single source of truth for both the feed's
   `<pubDate>` and the on-page date (formatted by `src/utils/formatDate.ts`).
-  `new-article.sh` sets it; if you hand-edit `articles.json`, add it yourself or
+  `new-article.sh` sets it; if you hand-edit `pages.json`, add it yourself or
   the entry fails the schema check.
 - Commit with `./scripts/commit.sh "message"` — it pulls `main`, stages
   everything, commits and pushes.

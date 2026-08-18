@@ -3,7 +3,7 @@
  * =========
  * The top bar's search field and tag browser. Full-text search runs on the
  * Pagefind index built into the site; `astro dev` (where no index exists)
- * falls back to the articles.json metadata list.
+ * falls back to the pages.json metadata list.
  */
 
 const PAGEFIND_URL = "/pagefind/pagefind.js";
@@ -39,7 +39,7 @@ function typeFromUrl(url: string) {
 // --- Engine selection ------------------------------------------------------
 
 // Lazily pick a search engine: Pagefind (full-text) when its index is present
-// in the built site, otherwise fall back to the articles.json metadata list so
+// in the built site, otherwise fall back to the pages.json metadata list so
 // `astro dev` and offline still search titles/topics/descriptions.
 let enginePromise: Promise<any> | null = null;
 function getEngine() {
@@ -56,11 +56,12 @@ async function loadEngine(): Promise<any> {
     await pagefind.init();
     return { kind: "pagefind", pagefind };
   } catch (err) {
-    console.warn("Pagefind unavailable, falling back to articles.json:", err);
+    console.warn("Pagefind unavailable, falling back to pages.json:", err);
     try {
-      const res = await fetch("/assets/json/articles.json");
-      if (!res.ok) throw new Error("Network response error: " + res.statusText);
-      const data = await res.json();
+      // Dynamic import so Vite code-splits the catalog into its own chunk:
+      // it is only fetched when Pagefind is missing, exactly like the old
+      // fetch() of the file when it lived under public/.
+      const data = (await import("@data/pages.json")).default;
       const suggestions = [
         ...(data.articles || []),
         ...(data.others || []),
@@ -211,17 +212,13 @@ function buildPageItem(d: any, query: string) {
   return { title, url: d.url, type: typeFromUrl(d.url), hits };
 }
 
-// Build the renderer item shape for one articles.json entry (dev/offline
+// Build the renderer item shape for one pages.json entry (dev/offline
 // fallback path). Shared by full-text search() and tag-filtered searchWithTags().
 function buildFallbackItem(item: any, query: string) {
   return {
     title: item.title,
     url: item.link,
-    type: item.hasOwnProperty("id")
-      ? "Article"
-      : item.hasOwnProperty("pid")
-        ? "Post"
-        : "Resource",
+    type: typeFromUrl(item.link),
     topicsHtml:
       item.topics && item.topics.length
         ? highlight(item.topics.join(", "), query)
