@@ -33,7 +33,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 - **Aug 2026:** Replaced the hand-run RSS generation script with a build-time Astro endpoint sourced from the article/post collections.
 - **Aug 2026:** Updated logo and favicon
 - **Aug 2026:** [MAJOR] Added smart Table of Contents
-- **Aug 2026:** [MAJOR] Replaced MathJax with self-hosted KaTeX for faster math rendering, added escape-free `<E>` (display) and `<M>` (inline) math components backed by a `tex` template helper.
+- **Aug 2026:** [MAJOR] Replaced MathJax with self-hosted KaTeX for faster math rendering, added escape-free display and inline math components backed by a `tex` template helper.
 - **Jul 2026:** Added a new tag button and edited the About page.
 - **Jul 2026:** Consolidated archive tags into the search bar.
 - **Jul 2026:** [MAJOR] Site redesign.
