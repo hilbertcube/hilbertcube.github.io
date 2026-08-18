@@ -9,9 +9,17 @@ import { getRepoStats } from "@utils/repoStats";
 const articles = (await getCollection("articles")).map((entry) => entry.data);
 const posts = await getCollection("posts");
 
-const highlightIds = ["orb-cuda-1", "chladni-1", "chladni-2", "hessian-1"];
-const highlights = highlightIds
-  .map((id) => articles.find((a) => a.id === id))
+// Hand-picked sidebar highlights, in display order. Keyed on `link` — the
+// catalog's primary key — so a typo here fails loudly (the entry drops out)
+// rather than silently pointing at a stale id.
+const highlightLinks = [
+  "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
+  "/articles/the-quest-to-finding-chladni-patterns-1",
+  "/articles/the-quest-to-finding-chladni-patterns-2",
+  "/articles/maximum-and-minimum",
+];
+const highlights = highlightLinks
+  .map((link) => articles.find((a) => a.link === link))
   .filter((a) => a !== undefined);
 
 // Read from git during the build instead of from the GitHub API in the browser.
@@ -93,7 +101,7 @@ const commitInfo = [
       <ul id="suggestion-container">
         {
           highlights.map((article) => (
-            <li class="home-li" data-id={article.id}>
+            <li class="home-li">
               <span>{article.title}</span>
               <a href={article.link} target="_blank" class="recommend-img">
                 <img

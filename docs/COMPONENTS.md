@@ -131,7 +131,7 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 
 `getEntryMeta` (in `src/utils/`) finds the page's own entry in the `articles` /
 `posts` collection by matching `Astro.url.pathname` against `data.link`, and
-throws if there is no match — so a page and its `articles.json` entry can't
+throws if there is no match — so a page and its `pages.json` entry can't
 drift apart silently.
 
 ### TopicTags
@@ -488,7 +488,7 @@ inside them still belongs in an `<E>`.
 ## 5. `listings/` — catalog views
 
 These read the typed content collections (`src/content.config.ts` over
-`public/assets/json/articles.json`) at build time. Nothing here fetches at
+`src/data/pages.json`) at build time. Nothing here fetches at
 runtime.
 
 ### ArticleCards
@@ -503,13 +503,12 @@ The article card grid, rendered at build time (it replaced a client-side
 | `shuffle` | `boolean` | `false` | Fisher-Yates; note this makes the build non-deterministic. |
 | `excludePath` | `string` | `""` | URL path to drop, normally the current page. |
 
-Entries without both `id` and `link` are skipped. Images resolve against
-`/media/Images/`. `BaseLayout` already renders this on article pages — see
+Images resolve against `/media/Images/`. `BaseLayout` already renders this on article pages — see
 [§1](#1-layouts--baselayout).
 
 ### PostList
 
-The full list of posts, in `articles.json` order — the collection does no
+The full list of posts, in `pages.json` order — the collection does no
 sorting of its own. No props; renders "No posts available" when the collection
 is empty.
 
@@ -544,7 +543,7 @@ markup lives in `TopBar.astro`; behaviour is split into `site/topbar/`:
 | `nav.ts` | Sidebar open/closed, from the hamburger and from viewport width (opens at ≥1200px). Enables transitions only after first paint so the sidebar doesn't slide in on load. |
 | `theme.ts` | Dark mode and the two Prism code-theme `<select>`s. One `mode` key in localStorage drives the root class, the toggle icon and which stylesheet is installed; changes broadcast to other tabs. Re-syncs on `pageshow` so bfcache restores don't come back light. |
 | `settings.ts` | Body font, font size and scroll-indicator selects, each persisted and mirrored across tabs; plus the progress bar. |
-| `search.ts` | Search field and tag browser. Pagefind when its index exists, `articles.json` metadata when it doesn't (i.e. `astro dev`). Documented in depth in [`SEARCH.md`](SEARCH.md). |
+| `search.ts` | Search field and tag browser. Pagefind when its index exists, `pages.json` metadata when it doesn't (i.e. `astro dev`). Documented in depth in [`SEARCH.md`](SEARCH.md). |
 
 Init order matters and is fixed in `TopBar.astro`: the theme selects must be
 restored *before* `initDarkMode`, because they resolve which stylesheet URL each
@@ -610,8 +609,8 @@ from the GitHub API in the browser. The panel renders with
 `white-space: pre-line`, so the lines are built without indentation — leading
 spaces would collapse.
 
-The highlights are a hard-coded id list (`highlightIds`) resolved against the
-`articles` collection. **To change what's featured, edit that array.** Each entry
+The highlights are a hard-coded list of article links (`highlightLinks`)
+resolved against the `articles` collection. **To change what's featured, edit that array.** Each entry
 expands on click to reveal its cover image, and its link only becomes clickable
 once expanded, so the first tap expands instead of navigating.
 
@@ -712,4 +711,4 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 | All TabBox panes visible at once | Panes after the first need `display: none` |
 | LaTeX shows up in search results | Display math not wrapped in `<E>` |
 | Backslashes vanish from an equation | LaTeX passed as a quoted attribute instead of `{tex`…`}` |
-| Build fails: "Entry metadata not found" | Page's path doesn't match any `link` in `articles.json` |
+| Build fails: "Entry metadata not found" | Page's path doesn't match any `link` in `pages.json` |

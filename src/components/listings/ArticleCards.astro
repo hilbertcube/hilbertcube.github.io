@@ -29,14 +29,11 @@ const {
 
 const IMAGE_ROOT = "/media/Images/";
 
-// Filter articles that have an id and link, excluding the current page
+// Every entry is Zod-validated, so only the current page needs excluding.
 let articles = (await getCollection("articles"))
   .map((entry) => entry.data)
   .filter(
-    (a: any) =>
-      a.id &&
-      a.link &&
-      a.link.replace(/\/$/, "") !== excludePath.replace(/\/$/, ""),
+    (a) => a.link.replace(/\/$/, "") !== excludePath.replace(/\/$/, ""),
   );
 
 // Shuffle using Fisher-Yates if requested

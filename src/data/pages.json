@@ -2,7 +2,6 @@
   "articles": [
     {
       "title": "Debugging and Profiling C and C++ with Valgrind",
-      "id": "valgrind-1",
       "image": "valgrind.webp",
       "link": "/articles/valgrind-debug-and-profile",
       "topics": [
@@ -17,7 +16,6 @@
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
-      "id": "chladni-1",
       "image": "dark_chladni.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-1",
       "topics": [
@@ -31,7 +29,6 @@
     },
     {
       "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
-      "id": "orb-cuda-1",
       "image": "CUDA_process_0_serial_30_imgs.webp",
       "link": "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
       "topics": [
@@ -49,7 +46,6 @@
     },
     {
       "title": "Maxima and Minima of an n-th Dimensional Function - The Hessian Matrix",
-      "id": "hessian-1",
       "image": "plot2.webp",
       "link": "/articles/maximum-and-minimum",
       "topics": [
@@ -62,7 +58,6 @@
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
-      "id": "chladni-2",
       "image": "dark_polar.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-2",
       "topics": [
@@ -76,7 +71,6 @@
     },
     {
       "title": "My Favorite Problems of All Time",
-      "id": "problems-1",
       "image": "favorite-problems.webp",
       "link": "/articles/favorite-problem-of-all-time",
       "topics": [
@@ -89,7 +83,6 @@
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
-      "id": "chladni-3",
       "image": "chladni-patterns.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-3",
       "topics": [
@@ -104,7 +97,6 @@
     },
     {
       "title": "Runtime Analysis of an Algorithm",
-      "id": "dsa-1",
       "image": "time-complexity.webp",
       "link": "/articles/time-complexity-of-an-algorithm",
       "topics": [
@@ -119,7 +111,6 @@
   "posts": [
     {
       "title": "Linux development environment setup",
-      "pid": "linux-setup",
       "link": "/posts/linux-setup/",
       "topics": [
         "Ubuntu",
@@ -133,7 +124,6 @@
     },
     {
       "title": "A list of places to munch",
-      "pid": "munch-places",
       "link": "/posts/tested-food-places/",
       "topics": [
         "Life",
@@ -148,7 +138,6 @@
     },
     {
       "title": "A list of tools that I use",
-      "pid": "tool-list",
       "link": "/posts/favorite-tools/",
       "topics": [
         "VS Code",
@@ -163,7 +152,6 @@
     },
     {
       "title": "Recommended materials",
-      "pid": "resources",
       "link": "/posts/resources/",
       "topics": [
         "Books",
@@ -182,7 +170,6 @@
     },
     {
       "title": "Average engineering experience",
-      "pid": "avg-engr-exp",
       "link": "/posts/avg-engr-exp",
       "topics": [
         "Electrical Engineering"
@@ -199,7 +186,7 @@
         "About the privacy policy of this website"
       ],
       "description": "This website does not collect or store any personally identifiable information, such as IP addresses. However, it does use Google Analytics to analyze website usage and user behavior. The data collected by Google Analytics includes...",
-      "date": "Last updated Oct. 2024"
+      "pubDate": "2024-10-01"
     },
     {
       "title": "License",
@@ -209,7 +196,7 @@
         "CC-BY-4.0"
       ],
       "description": "View license of this website",
-      "date": "Last updated April 2025"
+      "pubDate": "2025-04-01"
     },
     {
       "title": "Source code",
@@ -218,7 +205,7 @@
         "View the source code of this website"
       ],
       "description": "View the source code of this website on github.",
-      "date": "Updated recently"
+      "pubDate": "2024-08-16"
     },
     {
       "title": "About",
@@ -227,7 +214,7 @@
         "About this website"
       ],
       "description": "About this website I coded this website from scratch using HTML, CSS, vanilla Javascript, and jQuery (ancient tools, I know, but they works). To view the source code, click on the logo on the side navigation bar...",
-      "date": "Updated recently"
+      "pubDate": "2025-08-16"
     }
   ]
 }

@@ -4,7 +4,7 @@
 # new-article.sh — Create a new article or post for the Astro site
 # =============================================================================
 # Creates an .astro page under src/pages/articles/ or src/pages/posts/,
-# adds an entry to public/assets/json/articles.json.
+# adds an entry to src/data/pages.json.
 #
 # Usage:
 #   ./scripts/new-article.sh                              # Interactive mode
@@ -111,11 +111,9 @@ fi
 # ---------------------------------------------------------------------------
 if [ "$TYPE" = "article" ]; then
     BASE_DIR="src/pages/articles"
-    JSON_ID_KEY="id"
     LINK_PREFIX="/articles"
 else
     BASE_DIR="src/pages/posts"
-    JSON_ID_KEY="pid"
     LINK_PREFIX="/posts"
 fi
 
@@ -269,10 +267,10 @@ fi
 echo -e "${GREEN}✓ Created Astro page: $ASTRO_FILE${NC}"
 
 # ---------------------------------------------------------------------------
-# Update public/assets/json/articles.json
+# Update src/data/pages.json
 # ---------------------------------------------------------------------------
 CURRENT_ISO_DATE=$(date "+%Y-%m-%d")
-JSON_FILE="public/assets/json/articles.json"
+JSON_FILE="src/data/pages.json"
 
 echo ""
 echo -e "${YELLOW}Adding entry to $JSON_FILE...${NC}"
@@ -304,7 +302,6 @@ try:
 
     entry = {
         "title": "$TITLE",
-        "$JSON_ID_KEY": "$SLUG",
         "link": "$LINK_VALUE",
         "topics": $TOPICS_JSON,
         "description": "$DESCRIPTION",

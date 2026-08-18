@@ -21,7 +21,7 @@ see [COMPONENTS.md](./COMPONENTS.md); for the helper scripts see
 | Search UI + logic | `public/assets/js/scripts.js` → `SearchBar()` |
 | On-page highlight & scroll | `src/layouts/BaseLayout.astro` (inline module) |
 | Styling | `src/assets/css/components/_search.css` |
-| Offline/dev fallback | `public/assets/json/articles.json` (title-only) |
+| Offline/dev fallback | `src/data/pages.json` (title-only) |
 
 ---
 
@@ -101,8 +101,8 @@ ever appears in results, it's almost always a display block that wasn't wrapped 
 On the first keystroke, `getEngine()` lazily loads the engine:
 
 - **Pagefind** — dynamically imports `/pagefind/pagefind.js` and calls `init()`.
-- **Fallback** — if that import fails (dev / offline / missing index), it fetches
-  `articles.json` for a title-only match (§7).
+- **Fallback** — if that import fails (dev / offline / missing index), it imports
+  `pages.json` for a title-only match (§7).
 
 ### Query flow (input handler)
 1. Read the trimmed query; empty → hide dropdown.
@@ -143,8 +143,9 @@ Tunables live at the top of `SearchBar()`: `CONTEXT` (16), `CLUSTER_GAP` (30),
 
 ## 7. Fallback (dev / offline)
 
-When the Pagefind index isn't available, `loadEngine()` fetches
-`public/assets/json/articles.json` and does a **title-only** substring match, rendered
+When the Pagefind index isn't available, `loadEngine()` dynamically imports
+`src/data/pages.json` — Vite code-splits it into its own chunk, so it is only
+downloaded on this path — and does a **title-only** substring match, rendered
 with the same card layout (topics shown instead of body excerpts). Pagefind does the
 real full-text work in production; this just keeps the bar functional in `dev`.
 

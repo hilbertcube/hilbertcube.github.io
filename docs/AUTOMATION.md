@@ -15,7 +15,7 @@
 
 `new-article.sh` creates:
 - An `.astro` page under `src/pages/articles/<slug>/` or `src/pages/posts/<slug>/`
-- An entry in `public/assets/json/articles.json`
+- An entry in `src/data/pages.json`
 
 #### Table of Contents
 
