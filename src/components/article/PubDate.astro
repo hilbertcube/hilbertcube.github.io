@@ -4,19 +4,24 @@
  * =============
  * Renders an article/post's publication date under the title.
  *
- * - Takes the raw collection `pubDate` (ISO "YYYY-MM-DD") and runs it through
- *   `formatDate` internally, so pages just hand over `meta.pubDate` and never
- *   import the formatter themselves.
+ * - `pubDate` is optional: with no prop, the component resolves the page's own
+ *   collection entry from its URL (see @utils/getEntryMeta). Pass `pubDate`
+ *   explicitly to override, or to use this outside /articles/ and /posts/.
+ * - The raw collection value is an ISO "YYYY-MM-DD" string, run through
+ *   `formatDate` internally so pages never import the formatter themselves.
  * - Keeps the `.date` class, whose styling lives with the other base type
  *   rules in src/assets/css/base/_typography.css.
  */
 import { formatDate } from "@utils/formatDate";
+import { resolveEntryMeta } from "@utils/getEntryMeta";
 
 interface Props {
-  pubDate: string;
+  pubDate?: string;
 }
 
-const { pubDate } = Astro.props;
+const { pubDate: pubDateProp } = Astro.props;
+const pubDate =
+  pubDateProp ?? (await resolveEntryMeta(Astro.url.pathname)).data.pubDate;
 ---
 
 <div class="date">Posted {formatDate(pubDate)}</div>

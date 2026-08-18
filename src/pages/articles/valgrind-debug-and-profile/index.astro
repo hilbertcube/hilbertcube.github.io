@@ -6,10 +6,8 @@ import CodeBlock from "@components/code/CodeBlock.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
-import { getEntryMeta } from "@utils/getEntryMeta";
 import Scripts from "@components/site/Scripts.astro";
 
-const meta = await getEntryMeta("articles", Astro.url.pathname);
 ---
 
 <BaseLayout
@@ -20,9 +18,9 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 >
   <div class="content-grid">
     <header>
-      <TopicTags topics={meta.topics} />
-      <PageTitle title={meta.title} />
-      <PubDate pubDate={meta.pubDate} />
+      <TopicTags />
+      <PageTitle />
+      <PubDate />
       <FrontImage src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
     </header>
 

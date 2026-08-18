@@ -4,17 +4,32 @@
  * ===============
  * Renders an article/post's `<h1>` heading under the topic tags.
  *
+ * - Both props are optional: with none, the component resolves the page's own
+ *   collection entry from its URL (see @utils/getEntryMeta), and `variant`
+ *   follows from which collection that is. Pass either prop to override, or to
+ *   use this outside /articles/ and /posts/.
  * - Articles and posts style their heading differently, so the class is picked
- *   from `variant`: `.title` for articles (the default), `.post-title` for
- *   posts. Both rules live in src/assets/css/pages/_home.css, with the
- *   small-screen override on `h1.title` in src/assets/css/utils/_responsive.css.
+ *   from `variant`: `.title` for articles, `.post-title` for posts. Both rules
+ *   live in src/assets/css/pages/_home.css, with the small-screen override on
+ *   `h1.title` in src/assets/css/utils/_responsive.css.
  */
+import { resolveEntryMeta } from "@utils/getEntryMeta";
+
 interface Props {
-  title: string;
+  title?: string;
   variant?: "article" | "post";
 }
 
-const { title, variant = "article" } = Astro.props;
+const { title: titleProp, variant: variantProp } = Astro.props;
+
+const entry =
+  titleProp === undefined || variantProp === undefined
+    ? await resolveEntryMeta(Astro.url.pathname)
+    : null;
+
+const title = titleProp ?? entry!.data.title;
+const variant =
+  variantProp ?? (entry!.kind === "posts" ? "post" : "article");
 ---
 
 <h1 class={variant === "post" ? "post-title" : "title"}>{title}</h1>

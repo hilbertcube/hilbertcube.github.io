@@ -9,9 +9,7 @@ import TopicTags from "@components/article/TopicTags.astro";
 import Icon from "@components/ui/Icon.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
-import { getEntryMeta } from "@utils/getEntryMeta";
 
-const meta = await getEntryMeta("posts", Astro.url.pathname);
 ---
 
 <BaseLayout
@@ -71,9 +69,9 @@ const meta = await getEntryMeta("posts", Astro.url.pathname);
 
   <div class="content-grid">
     <header>
-      <TopicTags topics={meta.topics} />
-      <PageTitle title={meta.title} variant="post" />
-      <PubDate pubDate={meta.pubDate} />
+      <TopicTags />
+      <PageTitle />
+      <PubDate />
     </header>
 
     <section id="list">
