@@ -10,9 +10,7 @@ import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 import Figure from "@components/article/Figure.astro";
-import { getEntryMeta } from "@utils/getEntryMeta";
 
-const meta = await getEntryMeta("articles", Astro.url.pathname);
 import E from "@components/math/E.astro";
 import M from "@components/math/M.astro";
 import { tex } from "@components/math/tex.astro";
@@ -30,9 +28,9 @@ import Scripts from "@components/site/Scripts.astro";
 >
   <div class="content-grid">
     <header>
-      <TopicTags topics={meta.topics} />
-      <PageTitle title={meta.title} />
-      <PubDate pubDate={meta.pubDate} />
+      <TopicTags />
+      <PageTitle />
+      <PubDate />
       <FrontImage
         src="/articles/the-quest-to-finding-chladni-patterns-1/chladni-patterns-sbs.webp"
         alt="blog-banner"

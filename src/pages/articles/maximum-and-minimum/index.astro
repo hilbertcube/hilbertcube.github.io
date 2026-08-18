@@ -9,10 +9,8 @@ import { tex } from "@components/math/tex.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
-import { getEntryMeta } from "@utils/getEntryMeta";
 import Scripts from "@components/site/Scripts.astro";
 
-const meta = await getEntryMeta("articles", Astro.url.pathname);
 ---
 
 <BaseLayout
@@ -25,9 +23,9 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
   <div class="content-grid">
 
     <header>
-      <TopicTags topics={meta.topics} />
-      <PageTitle title={meta.title} />
-      <PubDate pubDate={meta.pubDate} />
+      <TopicTags />
+      <PageTitle />
+      <PubDate />
       <FrontImage src="/articles/maximum-and-minimum/banner.webp" alt="image" />
       <div class="Quote">
         <div class="Quote-content">As you will find in multivariable calculus, there is often a number of solutions

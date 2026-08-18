@@ -5,17 +5,24 @@
  * Renders an article/post's topics as a plain, comma-separated list under the
  * banner.
  *
+ * - `topics` is optional: with no prop, the component resolves the page's own
+ *   collection entry from its URL (see @utils/getEntryMeta). Pass `topics`
+ *   explicitly to override, or to use this outside /articles/ and /posts/.
  * - Each topic is wrapped in a span carrying `data-pagefind-filter="topic"`, so
  *   Pagefind still indexes the topic as a real filter facet (used by the top
  *   bar's tags dropdown chip cloud). The commas sit OUTSIDE those spans so they
  *   aren't part of the filter value.
  * - Non-interactive: browsing by tag happens through the tags icon in the top bar.
  */
+import { resolveEntryMeta } from "@utils/getEntryMeta";
+
 interface Props {
   topics?: string[];
 }
 
-const { topics = [] } = Astro.props;
+const { topics: topicsProp } = Astro.props;
+const topics =
+  topicsProp ?? (await resolveEntryMeta(Astro.url.pathname)).data.topics;
 ---
 
 {

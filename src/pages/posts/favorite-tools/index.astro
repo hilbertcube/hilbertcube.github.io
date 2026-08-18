@@ -9,9 +9,7 @@ import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import Figure from "@components/article/Figure.astro";
-import { getEntryMeta } from "@utils/getEntryMeta";
 
-const meta = await getEntryMeta("posts", Astro.url.pathname);
 import CodeBlock from "@components/code/CodeBlock.astro";
 import Scripts from "@components/site/Scripts.astro";
 ---
@@ -33,9 +31,9 @@ import Scripts from "@components/site/Scripts.astro";
 
   <div class="content-grid">
     <header>
-      <TopicTags topics={meta.topics} />
-      <PageTitle title={meta.title} variant="post" />
-      <PubDate pubDate={meta.pubDate} />
+      <TopicTags />
+      <PageTitle />
+      <PubDate />
     </header>
 
     <section>
