@@ -9,6 +9,7 @@ import Banner from "@components/site/Banner.astro";
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import PostList from "@components/listings/PostList.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
+import FeatureSlider from "@components/ui/FeatureSlider.astro";
 import Figure from "@components/article/Figure.astro";
 ---
 
@@ -25,48 +26,104 @@ import Figure from "@components/article/Figure.astro";
     </header>
 
     <section>
-      <h1 class="home-title">Chladni Patterns - The Wave Equation Model</h1>
-      <TwoColumns>
-        <div>
-          <p>
-            Take a solid metal plate (or any other rigid material) and sprinkle
-            some particles on it. It can either be sand, salt, or even baking
-            soda. Then, generate some vibration on the plate by using either a
-            violin bow to excite the plate, or place it on a wave generator and
-            set it to specific frequencies. What you will observe are the
-            beautiful patterns generated as shown in the figure. This experiment
-            sounds relatively simple, but as simple as it sounds, this
-            experiment reveals some extremely complex and intensive underlying
-            mathematical principles.
-          </p>
-          <p>
-            Ok, so how does this work? Well, it turns out these are examples of
-            standing waves in the two-dimensional space. In one dimension, a
-            &ldquo;node&rdquo; in a
-            <a class="url" href="https://en.wikipedia.org/wiki/Standing_wave"
-              >standing wave</a
-            >
-            is a point along the wave where the amplitude is at minimum. Similarly,
-            in two dimensions, there are &ldquo;nodal lines,&rdquo; which are static
-            points or lines on the plate where the particles settle.
-          </p>
-          <a
-            href="articles/the-quest-to-finding-chladni-patterns-1/"
-            class="redirect-button column-center"
-          >
-            Read More
-          </a>
-        </div>
-        <div>
-          <Figure
-            src="/media/Images/chladni-patterns-sbs.webp"
-            alt="Chladni plate"
-            width="75%"
-          >
-            Chladni Patterns on a Square Plate.
-          </Figure>
-        </div>
-      </TwoColumns>
+      <FeatureSlider
+        slides={[
+          {
+            id: "chladni",
+            title: "Chladni Patterns - The Wave Equation Model",
+          },
+          {
+            id: "big-o",
+            title: "Theoretical Runtime Analysis of an Algorithm ",
+          },
+        ]}
+      >
+        <Fragment slot="chladni">
+          <TwoColumns>
+            <div>
+              <p>
+                Take a solid metal plate (or any other rigid material) and
+                sprinkle some particles on it. It can either be sand, salt, or
+                even baking soda. Then, generate some vibration on the plate by
+                using either a violin bow to excite the plate, or place it on a
+                wave generator and set it to specific frequencies. What you will
+                observe are the beautiful patterns generated as shown in the
+                figure. This experiment sounds relatively simple, but as simple
+                as it sounds, this experiment reveals some extremely complex and
+                intensive underlying mathematical principles.
+              </p>
+              <p>
+                Ok, so how does this work? Well, it turns out these are examples
+                of standing waves in the two-dimensional space. In one
+                dimension, a &ldquo;node&rdquo; in a
+                <a
+                  class="url"
+                  href="https://en.wikipedia.org/wiki/Standing_wave"
+                  >standing wave</a
+                >
+                is a point along the wave where the amplitude is at minimum. Similarly,
+                in two dimensions, there are &ldquo;nodal lines,&rdquo; which are
+                static points or lines on the plate where the particles settle.
+              </p>
+              <a
+                href="articles/the-quest-to-finding-chladni-patterns-1/"
+                class="redirect-button column-center"
+              >
+                Read More
+              </a>
+            </div>
+            <div>
+              <Figure
+                src="/media/Images/chladni-patterns-sbs.webp"
+                alt="Chladni plate"
+                width="75%"
+              >
+                Chladni Patterns on a Square Plate.
+              </Figure>
+            </div>
+          </TwoColumns>
+        </Fragment>
+
+        <Fragment slot="big-o">
+          <TwoColumns>
+            <div>
+              <p>
+                Given two algorithms that perform the same task, what is the
+                best way to compare their performance? Timing them is the
+                obvious answer and also the wrong one: a runtime depends far
+                more on the hardware it was measured on than on the algorithm
+                itself, and it varies from run to run even on the same machine.
+                What is wanted is a measure of how an algorithm scales as its
+                input grows, independent of the machine underneath it.
+              </p>
+              <p>
+                That measure is time complexity. Write f(n) for the worst-case
+                cost of an algorithm on an input of size n, and the hardware
+                becomes constant factors that the big-O notation then discards,
+                leaving only the trend: constant, logarithmic, linear,
+                quadratic, exponential, etc. From that definition come the
+                properties of big O, big Omega, and big Theta, the Master
+                Theorem, and the theoretical analysis of real algorithms.
+              </p>
+              <a
+                href="articles/time-complexity-of-an-algorithm/"
+                class="redirect-button column-center"
+              >
+                Read More
+              </a>
+            </div>
+            <div>
+              <Figure
+                src="/articles/time-complexity-of-an-algorithm/p1_filter.webp"
+                alt="Plot comparing the growth of common runtime functions"
+                width="85%"
+              >
+                Two different implementations of maximum subarray.
+              </Figure>
+            </div>
+          </TwoColumns>
+        </Fragment>
+      </FeatureSlider>
     </section>
 
     <section>

@@ -96,7 +96,7 @@
       "pubDate": "2024-06-16"
     },
     {
-      "title": "Runtime Analysis of an Algorithm",
+      "title": "Theoretical Runtime Analysis of an Algorithm",
       "image": "time-complexity.webp",
       "link": "/articles/time-complexity-of-an-algorithm",
       "topics": [
@@ -104,7 +104,7 @@
         "C++",
         "Python"
       ],
-      "description": "Theoretical basics about time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
+      "description": "Theoretically prove the time-complexity of an algorithm, how to measure the time-complexity of a function, examples of algorithms.",
       "pubDate": "2024-12-02"
     }
   ],
