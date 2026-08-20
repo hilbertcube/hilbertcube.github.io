@@ -7,6 +7,8 @@
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
 import {
   faCheck,
+  faChevronLeft,
+  faChevronRight,
   faEnvelope,
   faGear,
   faGlobe,
@@ -33,6 +35,8 @@ import {
 library.add(
   // Solid
   faCheck,
+  faChevronLeft,
+  faChevronRight,
   faEnvelope,
   faGear,
   faGlobe,

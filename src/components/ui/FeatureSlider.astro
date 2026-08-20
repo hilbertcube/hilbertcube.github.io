@@ -1,0 +1,265 @@
+---
+/**
+ * FeatureSlider.astro
+ * ===================
+ * The homepage's "feature" spot: one highlighted article at a time, with the
+ * rest a click away instead of stacked down the page. Adding a feature is a
+ * matter of adding one entry to `slides` and one `<Fragment slot="...">` —
+ * the page keeps its length no matter how many features accumulate.
+ *
+ * Each slide owns its `<h1 class="home-title">`, rendered here so every
+ * feature gets the same heading treatment — from the site's own `.home-title`
+ * rule — as the sections around it.
+ *
+ * Usage
+ * -----
+ *   <FeatureSlider slides={[{ id: "chladni", title: "Chladni Patterns" }]}>
+ *     <Fragment slot="chladni">…</Fragment>
+ *   </FeatureSlider>
+ *
+ * Without JavaScript the first slide still renders in full; the others sit
+ * off-screen in the DOM (so they stay crawlable) and the controls do nothing.
+ */
+import Icon from "@components/ui/Icon.astro";
+
+interface Props {
+  /** One entry per slide. `id` is the slot name; `title` becomes the <h1>. */
+  slides: { id: string; title: string }[];
+  /** Accessible name for the carousel region. */
+  label?: string;
+}
+
+const { slides, label = "Featured articles" } = Astro.props;
+
+// Dynamic slot names can't be written as `<slot name={id} />`, so each slide's
+// body is rendered here and injected below.
+const bodies = await Promise.all(
+  slides.map((slide) =>
+    Astro.slots.has(slide.id) ? Astro.slots.render(slide.id) : "",
+  ),
+);
+---
+
+<div
+  class="feature-slider"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label={label}
+>
+  <div class="feature-viewport">
+    <div class="feature-track">
+      {
+        slides.map((slide, i) => (
+          <div
+            class="feature-slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${i + 1} of ${slides.length}: ${slide.title}`}
+            aria-hidden={i === 0 ? undefined : "true"}
+            inert={i === 0 ? undefined : true}
+          >
+            <h1 class="home-title">{slide.title}</h1>
+            <Fragment set:html={bodies[i]} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  {
+    slides.length > 1 && (
+      <div class="feature-controls">
+        <button
+          class="feature-arrow"
+          type="button"
+          data-step="-1"
+          aria-label="Previous feature"
+        >
+          <Icon name="chevron-left" />
+        </button>
+
+        <div class="feature-dots">
+          {slides.map((slide, i) => (
+            <button
+              class:list={["feature-dot", { active: i === 0 }]}
+              type="button"
+              data-index={i}
+              aria-label={slide.title}
+              aria-current={i === 0 ? "true" : undefined}
+            />
+          ))}
+        </div>
+
+        <button
+          class="feature-arrow"
+          type="button"
+          data-step="1"
+          aria-label="Next feature"
+        >
+          <Icon name="chevron-right" />
+        </button>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .feature-viewport {
+    overflow: hidden;
+  }
+
+  /* Every slide sits in this one flex row, so the row — and with it the
+     viewport — is always as tall as the tallest slide. The spot therefore
+     keeps one height whichever slide is showing: nothing below it moves when
+     the reader steps through the features. The height still answers to the
+     column width, so nothing is clipped at a narrower breakpoint. */
+  .feature-track {
+    display: flex;
+    align-items: stretch;
+    transition: transform var(--slide-time, 0.5s) ease;
+  }
+
+  /* `min-width` as well as the basis: the two-column content inside would
+     otherwise push a slide past its share of the track. */
+  .feature-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
+
+  .feature-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .feature-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    /* No border to round, but the focus ring below follows this radius. */
+    border-radius: 50%;
+    background: none;
+    /* The body's text colour rather than --next-text: that one is pure white
+       in dark mode, which made the chevrons brighter than anything they sit
+       next to. */
+    color: var(--grid-text-color);
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .feature-arrow:hover {
+    color: #2a7ae2;
+  }
+
+  .feature-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .feature-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 1px solid var(--next-border);
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .feature-dot:hover {
+    border-color: #2a7ae2;
+  }
+
+  .feature-dot.active {
+    background-color: var(--grid-text-color);
+    border-color: var(--grid-text-color);
+  }
+
+  /* Keep focus visible on the controls, which are otherwise plain shapes. */
+  .feature-arrow:focus-visible,
+  .feature-dot:focus-visible {
+    outline: 2px solid var(--toc-focus-color);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature-track {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".feature-slider").forEach((slider) => {
+    const viewport = slider.querySelector<HTMLElement>(".feature-viewport");
+    const track = slider.querySelector<HTMLElement>(".feature-track");
+    const slides = [...slider.querySelectorAll<HTMLElement>(".feature-slide")];
+    const dots = [...slider.querySelectorAll<HTMLElement>(".feature-dot")];
+    if (!viewport || !track || slides.length < 2) return;
+
+    let index = 0;
+
+    const go = (next: number) => {
+      index = (next + slides.length) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      slides.forEach((slide, i) => {
+        const hidden = i !== index;
+        // `inert` also takes the off-screen slide's links out of the tab order,
+        // which is the part a screen reader and a keyboard user both notice.
+        slide.toggleAttribute("inert", hidden);
+        if (hidden) slide.setAttribute("aria-hidden", "true");
+        else slide.removeAttribute("aria-hidden");
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+        if (i === index) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    };
+
+    slider
+      .querySelectorAll<HTMLElement>(".feature-arrow[data-step]")
+      .forEach((arrow) => {
+        arrow.addEventListener("click", () =>
+          go(index + Number(arrow.dataset.step)),
+        );
+      });
+
+    dots.forEach((dot) =>
+      dot.addEventListener("click", () => go(Number(dot.dataset.index))),
+    );
+
+    // Arrow keys are bound to the controls rather than the whole carousel, so
+    // they still scroll the page while the reader is in the slide's text.
+    slider
+      .querySelector(".feature-controls")
+      ?.addEventListener("keydown", (event) => {
+        const key = (event as KeyboardEvent).key;
+        if (key !== "ArrowLeft" && key !== "ArrowRight") return;
+        event.preventDefault();
+        go(index + (key === "ArrowLeft" ? -1 : 1));
+      });
+
+    // Swipe, touch only: on a mouse the same gesture is a text selection.
+    let startX: number | null = null;
+    viewport.addEventListener("pointerdown", (event) => {
+      startX = event.pointerType === "mouse" ? null : event.clientX;
+    });
+    viewport.addEventListener("pointerup", (event) => {
+      if (startX === null) return;
+      const dx = event.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 50) go(index + (dx < 0 ? 1 : -1));
+    });
+  });
+</script>
