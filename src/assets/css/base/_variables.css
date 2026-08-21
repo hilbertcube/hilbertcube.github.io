@@ -9,8 +9,6 @@
   --body-font: "Computer-Modern", sans-serif;
   --top-bar-font: "Computer-Modern", serif;
   
-  /* Font weights */
-  --top-buttons-font-weight: 550;
   
   /* === COLORS === */
   /* Base colors */
@@ -29,16 +27,12 @@
   --toc-focus-color: #007BFF;
   
   /* Button colors */
-  --next-button: rgb(26, 26, 26);
   --next-text: black;
   --next-border: #a9a9b3;
   --toggle-bar: #dddddd;
   --top-buttons-hover-color: rgb(0, 185, 226);
   
   /* Dropdown colors */
-  --dropdown-color: white;
-  --dropdown-text-color: black;
-  --dropdown-hover-color: #ddd;
   --highlight-dropdown-color: rgb(0, 0, 130);
   
   /* Search bar colors */
@@ -68,14 +62,8 @@
   --tab-color: #ededed;
   
   /* Article colors */
-  --material-background: white;
-  --article-color-default: #fafafa;
-  --article-color: #eaeaea;
   --article-name-color: #333;
-  --article-description-color: black;
   --article-date-color: rgb(0, 0, 130);
-  --material-link-color: #595959;
-  --article-shadow-color: rgba(0, 0, 0, 0.2);
   
   /* === LAYOUT & SPACING === */
   /* Corner rounding shared by every content image — banners (FrontImage) and
@@ -90,20 +78,26 @@
   
   /* Progress bar — flat red accent to match the site's Wikipedia-like theme */
   --progressive-bar-height: 2px;
-  --progressive-bar-color: #ca0000;
   --progress-bar-color: #ca0000;
   
   /* Share button positioning */
   --share-button-position: 80px;
 
-  /* GitHub */
-  --github-scroller: gray;
+  
+  /* Settings panel — theme-aware surface matching the site's other content
+     panels (search dropdown / nav dropdowns), with a blue interactive accent. */
+  --settings-bg: #ffffff;
+  --settings-text: #1c1c1c;
+  --settings-muted: #595959;
+  --settings-border: #d4d4d4;
+  --settings-accent: #0954b6;
+  --settings-select-bg: #f7f7f7;
+  --settings-select-hover: #ededed;
   
   /* === ANIMATIONS & TRANSITIONS === */
   --fade-in-out-time: 0.5s;
   --slide-time: 0.5s;
   --highlight-drop-time: 0.8s;
-  --highlight-opacity-time: 0.5s;
 }
 
 /* === DARK MODE OVERRIDES === */
@@ -121,9 +115,6 @@ html.dark-mode {
   --toc-focus-color: rgb(0, 194, 0);
   
   /* Dropdowns */
-  --dropdown-color: #121212;
-  --dropdown-text-color: white;
-  --dropdown-hover-color: #222222;
   --highlight-dropdown-color: rgb(0, 155, 190);
   
   /* Search */
@@ -146,22 +137,24 @@ html.dark-mode {
   --tab-color: black;
   
   /* Articles */
-  --material-background: rgb(38, 38, 38);
-  --article-color: #1f1f1f;
   --article-name-color: #dddddd;
-  --article-description-color: #dddddd;
   --article-date-color: #aaa;
-  --material-link-color: #aaa;
-  --article-shadow-color: rgba(255, 255, 255, 0.1);
   
   /* Progress bar — slightly brighter red for contrast on dark backgrounds */
   --progressive-bar-height: 2px;
   --progress-bar-color: #e53935;
   
-  /* GitHub */
-  --github-scroller: #ddd;
 
   --url-color: #18e9e9;
+
+  /* Settings panel */
+  --settings-bg: #1c1c1c;
+  --settings-text: #dddddd;
+  --settings-muted: #a9a9b3;
+  --settings-border: #3a3a3a;
+  --settings-accent: #0091ff;
+  --settings-select-bg: #262626;
+  --settings-select-hover: #303030;
 }
 
 /* === RESPONSIVE VARIABLE OVERRIDES === */

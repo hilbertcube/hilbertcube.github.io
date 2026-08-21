@@ -24,21 +24,10 @@
     width: 60vw;
   }
 
-  .right {
-    padding-left: 0px;
-  }
-
-  .top-buttons {
-    font-size: 1.35em;
-  }
 }
 
 /* === TABLET LANDSCAPE (1200px - 1384px) === */
 @media all and (max-width: 1200px) {
-  .buttons-container {
-    width: 80px;
-  }
-
   .content-grid {
     width: 80%;
   }
@@ -47,27 +36,14 @@
     --side-nav-width: 350px;
   }
 
-  .top-nav {
-    justify-content: start;
-    height: var(--top-bar-height);
-  }
-
   body,
   body.nav-open {
     padding-left: 0;
     padding-right: 0;
   }
 
-  .right {
-    width: 100%;
-  }
-
   .toggle-btn:hover .bar {
     background-color: white;
-  }
-
-  .top-buttons:hover {
-    text-decoration: underline;
   }
 
   .search-bar {
@@ -89,9 +65,6 @@
     display: inline-flex;
   }
 
-  .buttons-container {
-    width: auto;
-  }
 
   /* Search bar starts collapsed and slides open when the icon is tapped */
   .search-bar-mobile {
@@ -127,35 +100,12 @@
     max-width: 100%;
   }
 
-  /* home/about stay in the top bar at every width, so the sidebar's duplicate
-     Navigation section stays hidden. The fixed basis (sized off the sidebar
-     width) is dropped here — from this width down the links only take the room
-     their text needs, leaving the rest for the search and icon buttons. */
-  .left {
-    flex: 0 0 auto;
-    gap: 20px;
-    padding-left: 4px;
-  }
-
-  .footer-title {
-    width: 20%;
-  }
-
-  .right {
-    max-width: none;
-  }
 }
 
 /* === MOBILE (580px - 1079px) === */
 @media all and (max-width: 580px) {
 
   /* Layout adjustments */
-  .buttons-container {
-    gap: 6px;
-    width: auto;
-    padding-left: 7px;
-  }
-
   .rss {
     display: none;
   }
@@ -165,31 +115,12 @@
     --burger-width: 44px;
   }
 
-  /* Tighten the nav links so home/about, the burger and the icon buttons all
-     fit on one row down to ~360px viewports. */
-  .left {
-    gap: 14px;
-  }
-
-  /* Inherited, so it applies to the hover underline and to the active-page one
-     BaseLayout injects alike — at this size the default sits on the descenders. */
-  .top-buttons {
-    font-size: 1em;
-    
-  }
-
   /* Collapsed, the search field is zero-width — drop its reserved gutter too
      so the space goes to the nav links instead. */
   .search-bar-container:not(.expanded) {
     min-width: 0;
     margin-left: 0;
     margin-right: 0;
-  }
-
-  .switch {
-    display: block;
-    margin: 0;
-    padding: 0;
   }
 
   /* Typography adjustments */
@@ -234,21 +165,6 @@
     flex-direction: column;
   }
 
-  /* Settings and modals */
-  #settings_window {
-    width: 92%;
-    max-width: 92%;
-  }
-
-  .settings_window-container {
-    grid-template-columns: 130px 1fr;
-    font-size: 12px;
-  }
-
-  .dropdown-item {
-    font-size: 0.8em;
-  }
-
   figure {
     padding: 0;
     margin: 0;
@@ -265,16 +181,6 @@
 
   .Quote-author {
     font-size: 1em;
-  }
-
-  /* Posts */
-  #post-container ul {
-    padding-left: 10px;
-  }
-
-  .post-header-row {
-    flex-direction: column;
-    align-items: start;
   }
 
   /* Search dropdown */

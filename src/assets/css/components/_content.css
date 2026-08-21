@@ -141,11 +141,6 @@ td {
   padding-bottom: 5px;
 }
 
-.th {
-  text-align: center;
-  vertical-align: middle;
-}
-
 /* The table style, used by every table on the site: a full grid of hairlines,
    headers centred, body cells top-aligned and left-aligned so wrapped
    sentences in one column stay level with short entries in the next. Width is
@@ -191,52 +186,4 @@ td {
 
 .p-table tbody tr+tr {
   border-top: 1px solid var(--box-border, rgba(128, 128, 128, 0.3));
-}
-
-/* Footer */
-footer {
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #111111;
-  color: white;
-  text-align: center;
-  padding-top: 25px;
-  padding-bottom: 20px;
-}
-
-.footer-container {
-  font-family: "Computer-Modern", Arial;
-  font-style: normal;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.social-media-footer {
-  margin: 10px 0px;
-}
-
-.social-media-footer a {
-  color: white;
-  margin: 0px 8px;
-  text-decoration: none;
-}
-
-.footer-block {
-  flex: 1;
-  padding: 10px;
-  display: flex;
-  font-size: 15px;
-  flex-direction: column;
-  align-items: center;
-}
-
-.footer-items {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
 }

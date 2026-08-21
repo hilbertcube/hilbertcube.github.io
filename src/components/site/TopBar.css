@@ -1,0 +1,396 @@
+/*
+ * TopBar.astro component styles
+ * =============================
+ * Imported from TopBar.astro's <style> block, so every rule here is scoped to
+ * TopBar's own markup — an @import inside a scoped <style> is scoped just like
+ * inline CSS. Anything that must reach outside this component's template
+ * (the <body>, or nodes search.ts builds at runtime) needs :global().
+ *
+ * Media queries live beside the rules they override rather than in
+ * utils/_responsive.css: a scoped selector carries an extra
+ * [data-astro-cid-*] of specificity, so a global media query can no longer
+ * override a rule that lives here.
+ */
+
+/* === SETTINGS WINDOW === */
+
+.custom-select {
+  position: relative;
+  width: auto;
+}
+
+.custom-select select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.4em 2em 0.4em 0.7em;
+  font-family: var(--top-bar-font);
+  font-size: inherit;
+  font-weight: 550;
+  color: var(--settings-text);
+  background-color: var(--settings-select-bg);
+  border: 1px solid var(--settings-border);
+  border-radius: 4px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23888888" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+}
+
+.custom-select select:hover {
+  background-color: var(--settings-select-hover);
+}
+
+.custom-select select:focus {
+  outline: none;
+  border-color: var(--settings-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--settings-accent) 25%, transparent);
+}
+
+#settings_window {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 460px;
+  max-width: calc(100vw - 32px);
+  height: auto;
+  padding: 0;
+  color: var(--settings-text);
+  font-family: var(--top-bar-font);
+  background-color: var(--settings-bg);
+  border: 1px solid var(--settings-border);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  z-index: 5000;
+}
+
+/* Header — title with a subtle neutral divider */
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--settings-border);
+}
+
+.settings-title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.settings-close {
+  font-size: 22px;
+  line-height: 1;
+  color: var(--settings-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.settings-close:hover {
+  color: var(--settings-accent);
+  background-color: var(--settings-select-hover);
+}
+
+.settings_window-container {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  grid-template-rows: repeat(5, auto);
+  column-gap: 16px;
+  padding: 6px 20px 16px;
+  font-size: 14px;
+}
+
+/* Both columns share the parent's rows via subgrid so the row
+   dividers line up exactly across labels and controls. */
+.setting-window-right {
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+}
+
+.setting-window-right:first-child {
+  grid-column: 1;
+}
+
+.setting-window-right:last-child {
+  grid-column: 2;
+  overflow: hidden;
+}
+
+.sw_1st_column_items {
+  display: flex;
+  align-items: center;
+  font-size: inherit;
+  color: var(--settings-muted);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--settings-border);
+}
+
+.setting-window-right:last-child .custom-select {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--settings-border);
+}
+
+/* Trim the last row's divider on both columns */
+.sw_1st_column_items:last-child,
+.setting-window-right:last-child .custom-select:last-child {
+  border-bottom: none;
+}
+
+@media all and (max-width: 580px) {
+  #settings_window {
+    width: 92%;
+    max-width: 92%;
+  }
+
+  .settings_window-container {
+    grid-template-columns: 130px 1fr;
+    font-size: 12px;
+  }
+}
+
+/* === TOP NAVIGATION BAR === */
+
+.top-nav {
+  position: fixed;
+  background-color: var(--nav-bar-color);
+  background: rgba(26, 26, 26, 1);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  font-family: var(--top-bar-font);
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  height: var(--top-bar-height);
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  /* Separation from the page comes from this shadow. (There was also a
+     `border-bottom: 1px solid var(--border-line-color)` here, but that token is
+     defined nowhere, so the declaration was invalid and drew nothing.) */
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Centered on the side nav's midpoint: the box starts one burger-width in, so
+   trimming that same amount off both ends of the side-nav width leaves it
+   symmetric about var(--side-nav-width) / 2. */
+.left {
+  flex: 0 0 calc(var(--side-nav-width) - 2 * var(--burger-width));
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  padding: 0;
+  align-items: center;
+  margin: 0;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: end;
+  padding-left: 200px;
+}
+
+.top-buttons {
+  margin: 0;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  outline: none;
+  overflow: hidden;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-underline-offset: 4px;
+  font-size: 1.3em;
+}
+
+.top-buttons:hover {
+  text-decoration: underline;
+  transition-duration: 50ms;
+  cursor: pointer;
+}
+
+/* Hide elements when search is focused */
+.left.hidden,
+.buttons-container.hidden,
+.toggle-btn-container.hidden {
+  display: none !important;
+}
+
+/* === SCROLL PROGRESS BAR === */
+
+.progress-container {
+  /* Hidden by default; the settings toggle (Switcher) sets display inline when shown */
+  display: none;
+  top: calc(var(--top-bar-height) - var(--progressive-bar-height) + 1px);
+  position: fixed;
+  width: 100%;
+  height: var(--progressive-bar-height);
+  background: rgb(26, 26, 26);
+  z-index: 1000;
+}
+
+.progress-bar {
+  top: calc(var(--top-bar-height) - var(--progressive-bar-height) + 1px);
+  position: fixed;
+  height: var(--progressive-bar-height);
+  background: var(--progress-bar-color);
+  width: 0%;
+  z-index: 1000;
+  transition: width 0.1s linear;
+}
+
+@media all and (max-width: 1385px) {
+  .right {
+    padding-left: 0px;
+  }
+
+  .top-buttons {
+    font-size: 1.35em;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .top-nav {
+    justify-content: start;
+    height: var(--top-bar-height);
+  }
+
+  .right {
+    width: 100%;
+  }
+
+  .top-buttons:hover {
+    text-decoration: underline;
+  }
+}
+
+@media all and (max-width: 1080px) {
+  /* home/about stay in the top bar at every width, so the sidebar's duplicate
+     Navigation section stays hidden. The fixed basis (sized off the sidebar
+     width) is dropped here — from this width down the links only take the room
+     their text needs, leaving the rest for the search and icon buttons. */
+  .left {
+    flex: 0 0 auto;
+    gap: 20px;
+    padding-left: 4px;
+  }
+
+  .right {
+    max-width: none;
+  }
+}
+
+@media all and (max-width: 580px) {
+  /* Tighten the nav links so home/about, the burger and the icon buttons all
+     fit on one row down to ~360px viewports. */
+  .left {
+    gap: 14px;
+  }
+
+  /* Inherited, so it applies to the hover underline and to the active-page one
+     BaseLayout injects alike — at this size the default sits on the descenders. */
+  .top-buttons {
+    font-size: 1em;
+  }
+}
+
+/* === ICON BUTTONS === */
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 12px;
+  padding-left: 12px;
+  gap: 8px;
+}
+
+/* Shared style for every icon button on the top bar
+   (search, RSS, dark mode, settings) — keeps size, spacing,
+   and colour consistent. */
+.topbar-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #dddddd;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  outline: none;
+  transition: width 0.3s ease, opacity 0.2s ease, color 0.15s ease;
+}
+
+.topbar-icon-btn:hover,
+.tags-icon-btn.active {
+  color: #ffffff;
+}
+
+/* Dark mode button: shows a sun in dark mode. The class sits on <html>,
+   outside this component, so it has to opt out of scoping. */
+:global(html.dark-mode) .dark-mode-button {
+  color: #fdd835;
+}
+
+/* === SETTINGS GEAR === */
+
+/* The gear's checkbox is the open/closed state for #settings_window; the
+   <label> is the visible control, so the input itself never shows. */
+input[type="checkbox"] {
+  display: none;
+}
+
+/* Spin the gear a quarter turn while the settings panel is open */
+#toggleButton {
+  transition: transform 0.4s ease, color 0.15s ease;
+}
+
+input#toggle:checked + #toggleButton {
+  transform: rotate(90deg);
+}
+
+input#toggle:checked ~ div#settings_window {
+  display: block;
+}
+
+.setting-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media all and (max-width: 1200px) {
+  .buttons-container {
+    width: auto;
+  }
+}
+
+@media all and (max-width: 580px) {
+  .buttons-container {
+    gap: 6px;
+    width: auto;
+    padding-left: 7px;
+  }
+}

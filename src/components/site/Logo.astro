@@ -107,7 +107,69 @@ import Icon from '@components/ui/Icon.astro';
     word-break: break-word;
   }
 
-  .logo-repo :global(.logo-external-icon) {
-    font-size: 0.6rem;
+  /* === SIDEBAR NAVIGATION (the "Navigation" details panel) === */
+
+  /* Hidden at every width: home/about live in the top bar instead. Kept so the
+     sidebar still has the links if the top bar ever drops them. */
+  .side-nav {
+    border-top: 1px solid #b4b4b4;
+    padding: 20px 0;
+    margin: 0 15px;
+    display: none;
+  }
+
+  .side-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .side-nav ul li {
+    padding: 5px;
+    text-align: left;
+    background: var(--nav-bar-color);
+    cursor: pointer;
+  }
+
+  .side-nav ul li:hover {
+    border-left: 2px solid red;
+  }
+
+  .side-nav ul li a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .side-summary {
+    font-weight: 700;
+    border-bottom: 2px solid #ea0000;
+    padding-bottom: 5px;
+    display: inline-block;
+    text-align: left;
+    font-size: 1.3em;
+    margin-bottom: 18px;
+  }
+
+  .side-nav-summary {
+    margin: 0;
+    padding: 0;
+  }
+
+  .side-buttons {
+    display: block;
+    align-items: center;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .side-buttons:hover,
+  .side-nav:hover {
+    cursor: pointer;
+    transition-duration: 50ms;
+  }
+
+  /* The <details> arrow is replaced by the .side-summary underline. */
+  details summary::-webkit-details-marker {
+    display: none;
   }
 </style>

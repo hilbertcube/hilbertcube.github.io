@@ -162,3 +162,131 @@ const commitInfo = [
     });
   });
 </script>
+
+<style>
+  .side-nav-content-container {
+    padding: 0 15px;
+  }
+
+  .side-nav-content-container > section {
+    padding-top: 10px;
+    padding-bottom: 25px;
+    margin: 0;
+    border-bottom: 1px solid #b4b4b4;
+  }
+
+  /* === HIGHLIGHTS === */
+
+  .highlights li,
+  .highlights ul {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .highlights ul {
+    gap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .highlights li {
+    padding: 0;
+    font-size: 16px;
+    font-weight: 550;
+    transition: height var(--highlight-drop-time) ease;
+  }
+
+  .highlights ul li {
+    padding: 5px;
+    text-align: left;
+    background: var(--nav-bar-color);
+    cursor: pointer;
+  }
+
+  .highlights ul li:hover {
+    border-left: 2px solid red;
+  }
+
+  .highlights span {
+    margin: 0;
+  }
+
+  .highlights a {
+    margin: 0;
+    padding: 0;
+    transition: height var(--highlight-drop-time) ease, opacity 0.2s ease 0.1s;
+    color: inherit;
+    font-size: 0;
+  }
+
+  /* Cover image is collapsed until the entry is clicked; the inline
+     max-height/opacity the script sets drive the reveal. */
+  .highlights li img {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+    margin: 7px 0;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height var(--highlight-drop-time) ease, opacity 0.2s ease 0.1s;
+  }
+
+  .highlights li:hover img {
+    opacity: 1;
+    position: relative;
+  }
+
+  .recommend-img {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+
+  .recommend-img::after {
+    content: "Read More";
+    font-family: "Jura", sans-serif;
+    font-weight: 400;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+    display: none;
+    z-index: 1;
+  }
+
+  .recommend-img.show-read-more::after {
+    display: block;
+  }
+
+  /* === ATTRIBUTION === */
+
+  .attribute {
+    padding-top: 18px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #9c9c9c;
+    text-align: center;
+    opacity: 1;
+    transition: opacity var(--fade-in-out-time) ease;
+  }
+
+  /* .navbar is the sidebar element in BaseLayout, outside this component. */
+  :global(.navbar.closed) .attribute {
+    opacity: 0;
+  }
+</style>

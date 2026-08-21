@@ -80,3 +80,62 @@ function renderItems(items: TocItem[]): string {
   import { initTocHighlight } from "./tocHighlight";
   initTocHighlight();
 </script>
+
+<style>
+  /* The <ul>'s contents are injected with set:html (see renderItems above), so
+     the generated <li>/<a>/nested <ul> carry no scope attribute — every rule
+     that reaches into them has to opt out of scoping with :global(). Only
+     .toc and its <header> are real template elements. */
+  .toc {
+    padding: 0 15px;
+    padding-top: 10px;
+    padding-bottom: 25px;
+    margin: 0;
+  }
+
+  .toc > header {
+    border-top: 1px solid #b4b4b4;
+    padding-top: 5px;
+  }
+
+  .toc ul :global(ul) {
+    padding-left: 10px;
+    margin: 0;
+  }
+
+  .toc :global(li) {
+    line-height: 1.4;
+  }
+
+  .toc ul :global(li) {
+    padding: 5px;
+    text-align: left;
+    background: var(--nav-bar-color);
+    cursor: pointer;
+    border-left: 1.5px solid var(--li-border-color);
+  }
+
+  /* Hover colour deepens with nesting, so the depth of the entry you are
+     pointing at is readable at a glance. */
+  .toc ul :global(li:hover) {
+    border-left: 2px solid red;
+  }
+
+  .toc ul :global(li li:hover) {
+    border-left: 2px solid blueviolet;
+  }
+
+  .toc ul :global(li li li:hover) {
+    border-left: 2px solid green;
+  }
+
+  .toc :global(a) {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Set by tocHighlight.ts on the entry for the section now in view. */
+  .toc :global(a.active) {
+    color: var(--toc-focus-color);
+  }
+</style>
