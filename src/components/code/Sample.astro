@@ -37,3 +37,17 @@ const { code, id, class: className, style } = Astro.props;
 >
   <pre class="console"><code>{code !== undefined ? code : <slot />}</code></pre>
 </div>
+
+<style>
+  .console {
+    line-height: 2;
+    background-color: var(--pre-color);
+    font-size: 12px;
+    text-align: left;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 25px;
+  }
+</style>

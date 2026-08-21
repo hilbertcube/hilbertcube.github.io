@@ -68,41 +68,6 @@ pre {
   position: relative;
 }
 
-.console {
-  line-height: 2;
-  background-color: var(--pre-color);
-  font-size: 12px;
-  text-align: left;
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
-  overflow-x: auto;
-  padding: 10px 25px;
-}
-
-/* Copy button */
-.copy-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: var(--body-background-color);
-  color: #4c83ee;
-  border: 1px solid #4c83ee;
-  width: 58px;
-  height: 26px;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 1px;
-  cursor: pointer;
-  z-index: 500;
-}
-
-.copy-btn:hover {
-  background-color: #4c83ee;
-  color: white;
-}
-
 /* Tab buttons */
 .tab-button-container {
   overflow-x: auto;

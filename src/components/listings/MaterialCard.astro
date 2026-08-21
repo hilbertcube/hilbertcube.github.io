@@ -54,3 +54,19 @@ const { title, author, description, links, image, imageId } = Astro.props;
     />
   </div>
 </div>
+
+<style>
+  /* Divider between the card's text block and its cover image. Currently
+     `display: none` — the rule kept that from the global stylesheet, where a
+     later `.line-6` block overrode the shared `.line-6, .line-7` one. */
+  .line-6 {
+    margin-left: auto;
+    margin-right: auto;
+    background: #b4b4b4;
+    display: none;
+    width: 100%;
+    height: 1px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+</style>

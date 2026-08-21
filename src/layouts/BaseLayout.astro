@@ -256,3 +256,19 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
     <slot name="scripts" />
   </body>
 </html>
+
+<style>
+  /* The <footer> element itself lives in this layout; its contents are styled
+     in components/site/Footer.astro. */
+  footer {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #111111;
+    color: white;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 20px;
+  }
+</style>

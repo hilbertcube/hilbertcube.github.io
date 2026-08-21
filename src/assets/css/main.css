@@ -12,10 +12,6 @@
  * - vendors/: Third-party CSS imports
  */
 
-/* === VENDORS === */
-/* Import external libraries and fonts first */
-/* @import url("vendors/_external.css"); */
-
 /* === BASE === */
 /* Core foundation styles */
 @import url("base/_variables.css");
@@ -29,11 +25,8 @@
 
 /* === COMPONENTS === */
 /* Reusable UI components */
-@import url("components/_topbar.css");
 @import url("components/_search.css");
 @import url("components/_sidebar.css");
-@import url("components/_buttons.css");
-@import url("components/_forms.css");
 @import url("components/_math.css");
 @import url("components/_code-blocks.css");
 @import url("components/_content.css");
