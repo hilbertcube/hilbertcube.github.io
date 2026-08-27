@@ -9,18 +9,50 @@ import { getRepoStats } from "@utils/repoStats";
 const articles = (await getCollection("articles")).map((entry) => entry.data);
 const posts = await getCollection("posts");
 
-// Hand-picked sidebar highlights, in display order. Keyed on `link` — the
-// catalog's primary key — so a typo here fails loudly (the entry drops out)
-// rather than silently pointing at a stale id.
-const highlightLinks = [
-  "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
-  "/articles/the-quest-to-finding-chladni-patterns-1",
-  "/articles/the-quest-to-finding-chladni-patterns-2",
-  "/articles/maximum-and-minimum",
-];
-const highlights = highlightLinks
-  .map((link) => articles.find((a) => a.link === link))
-  .filter((a) => a !== undefined);
+// Sidebar highlights: a hand-picked baseline order, reordered by how much each
+// article overlaps with the one currently being read. On a non-article page
+// there is no "current", every overlap is 0, and the curated order stands.
+//
+// Series articles (the Chladni parts) are deliberately left out of the curated
+// pool: they share an identical topic set, so listing them here would let one
+// series eat the panel on every page. Overlap surfaces them anyway — and only —
+// while you are reading that series.
+const SLOTS = 4;
+const normalize = (link: string) => link.replace(/\/$/, "");
+
+// Keyed on `link`, the catalog's primary key. Unlike the previous hard-coded
+// list, a typo no longer drops the entry — it just sorts last — so keep this in
+// sync with src/data/pages.json by hand.
+const curatedRank = new Map(
+  [
+    "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
+    "/articles/the-quest-to-finding-chladni-patterns-1",
+    "/articles/valgrind-debug-and-profile",
+    "/articles/maximum-and-minimum",
+    "/articles/time-complexity-of-an-algorithm",
+    "/articles/favorite-problem-of-all-time",
+  ].map((link, i) => [normalize(link), i] as const),
+);
+const UNCURATED = curatedRank.size; // sorts after every curated entry
+
+const here = normalize(Astro.url.pathname);
+const current = articles.find((a) => normalize(a.link) === here);
+const sharedTopics = (a: (typeof articles)[number]) =>
+  current ? a.topics.filter((t) => current.topics.includes(t)).length : 0;
+
+const highlights = articles
+  .filter((a) => normalize(a.link) !== here)
+  .sort(
+    (x, y) =>
+      // Most topics in common with what you are reading...
+      sharedTopics(y) - sharedTopics(x) ||
+      // ...then the hand-picked order...
+      (curatedRank.get(normalize(x.link)) ?? UNCURATED) -
+        (curatedRank.get(normalize(y.link)) ?? UNCURATED) ||
+      // ...then newest first.
+      y.pubDate.localeCompare(x.pubDate),
+  )
+  .slice(0, SLOTS);
 
 // Read from git during the build instead of from the GitHub API in the browser.
 const stats = getRepoStats();
