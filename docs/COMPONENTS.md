@@ -609,6 +609,19 @@ from the GitHub API in the browser. The panel renders with
 `white-space: pre-line`, so the lines are built without indentation — leading
 spaces would collapse.
 
+"Total Updates" counts every human commit, then splits it in two: "Content
+Updates" are the commits that touched a page a reader reads (articles, posts,
+home, About, privacy policy, their images and their catalog entries), and "Code
+Updates" is the remainder — components, styling, build config, tooling, docs. A
+commit that revises a page *and* the code behind it counts as content, so the
+two never overlap and always add back up to the total.
+
+What counts as content is the `CONTENT_PATHS` / `CONTENT_EXCLUDES` pathspec in
+`src/utils/repoStats.ts`, which lists the pre-Astro top-level `blogs/`,
+`articles/`, `about/` … layout as well as the current one so the count spans the
+whole history. Moving a path between the two buckets means editing that
+pathspec — "Code Updates" is derived by subtraction, never listed directly.
+
 The highlights are a hard-coded list of article links (`highlightLinks`)
 resolved against the `articles` collection. **To change what's featured, edit that array.** Each entry
 expands on click to reveal its cover image, and its link only becomes clickable

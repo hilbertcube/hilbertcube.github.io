@@ -32,6 +32,41 @@ const BINARY_EXTENSIONS = [
 /** Machine-generated, and big enough to dominate the total. */
 const GENERATED_FILES = ["package-lock.json"];
 
+/** Paths that hold what a reader actually reads: the article and post bodies,
+ *  the standing pages (home, About, privacy policy), the catalog entry that
+ *  describes each of them, and their images. The site predates Astro — it was
+ *  hand-written HTML in top-level `blogs/`, `articles/`, `about/` and friends
+ *  until the migration — so the historical layout is listed too, otherwise the
+ *  count would start at the rewrite instead of at the first article. */
+const CONTENT_PATHS = [
+  // Current layout.
+  "src/pages",
+  "src/data/pages.json",
+  "public/articles",
+  "public/posts",
+  "public/about",
+  "public/media/Images",
+  // Pre-Astro layout, still in history.
+  "index.html",
+  "articles",
+  "posts",
+  "blogs",
+  "about",
+  "notes",
+  "privacy-policy",
+  "recommended-materials",
+];
+
+/** Under `src/pages`, these are scaffolding rather than something you read:
+ *  the article/post layout templates, the scratch pages, the RSS route and the
+ *  404. Git exclude pathspecs, so they subtract from CONTENT_PATHS above. */
+const CONTENT_EXCLUDES = [
+  ":!src/pages/template",
+  ":!src/pages/test",
+  ":!src/pages/rss",
+  ":!src/pages/404.astro",
+];
+
 const UNAVAILABLE = "unavailable";
 
 /** Run a git command, returning null instead of throwing when git is missing,
@@ -48,13 +83,19 @@ function git(...args: string[]): string | null {
   }
 }
 
-/** Commits authored by a human, i.e. total history minus the bot's commits. */
-function totalUpdates(): string {
-  const total = git("rev-list", "--count", "HEAD");
-  const bot = git("rev-list", "--count", "HEAD", `--author=${BOT_AUTHOR}`);
-  if (total === null) return UNAVAILABLE;
-  const count = Number(total) - Number(bot ?? 0);
-  return count.toLocaleString("en-US");
+/** Commits authored by a human, i.e. total history minus the bot's commits,
+ *  optionally narrowed to a git pathspec. Null when git could not answer. */
+function humanCommits(...pathspec: string[]): number | null {
+  const scope = pathspec.length > 0 ? ["--", ...pathspec] : [];
+  const total = git("rev-list", "--count", "HEAD", ...scope);
+  if (total === null) return null;
+  const bot = git("rev-list", "--count", "HEAD", `--author=${BOT_AUTHOR}`, ...scope);
+  return Number(total) - Number(bot ?? 0);
+}
+
+/** A count as "1,234", or the placeholder when it could not be read. */
+function formatCount(count: number | null): string {
+  return count === null ? UNAVAILABLE : count.toLocaleString("en-US");
 }
 
 /** Newline count across tracked text files. */
@@ -137,6 +178,8 @@ function formatPacific(iso: string): string {
 
 export interface RepoStats {
   totalUpdates: string;
+  contentUpdates: string;
+  codeUpdates: string;
   linesOfCode: string;
   repositoryAge: string;
   lastUpdated: string;
@@ -152,8 +195,18 @@ export function getRepoStats(): RepoStats {
   }
 
   const commit = latestCommit();
+  const total = humanCommits();
+  const content = humanCommits(...CONTENT_PATHS, ...CONTENT_EXCLUDES);
+  // Everything the other two counts leave over: the commits that touched no
+  // content path at all — components, styling, build config, tooling, docs. A
+  // commit that revises a page *and* the code behind it is content, so the two
+  // buckets never overlap and always add back up to the total.
+  const code = total !== null && content !== null ? total - content : null;
+
   return {
-    totalUpdates: totalUpdates(),
+    totalUpdates: formatCount(total),
+    contentUpdates: formatCount(content),
+    codeUpdates: formatCount(code),
     linesOfCode: linesOfCode(),
     repositoryAge: repositoryAge(),
     lastUpdated: commit.date,

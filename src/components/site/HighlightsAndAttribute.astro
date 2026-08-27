@@ -29,6 +29,8 @@ const stats = getRepoStats();
 // which keeps the newlines but would collapse any leading spaces into one.
 const repoStats = [
   "",
+  `Content Updates: ${stats.contentUpdates}`,
+  `Code Updates: ${stats.codeUpdates}`,
   `Total Updates: ${stats.totalUpdates}`,
   `Lines of Code: ${stats.linesOfCode}`,
   `Total Articles: ${articles.length}`,
@@ -39,7 +41,7 @@ const repoStats = [
 const commitInfo = [
   "",
   `Last Updated: ${stats.lastUpdated}`,
-  `Commit: ${stats.lastCommitMessage}`,
+  `Commit Msg: ${stats.lastCommitMessage}`,
 ].join("\n");
 ---
 
