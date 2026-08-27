@@ -1,3 +1,0 @@
-    This website was created on June 20, 2024, but most information 
-    here have been available since December 2022 via LaTeX documents
-    made by me.
