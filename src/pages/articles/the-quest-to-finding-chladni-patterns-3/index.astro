@@ -15,6 +15,7 @@ import Figure from "@components/article/Figure.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 ---
 
 <BaseLayout
@@ -38,11 +39,10 @@ import Scripts from "@components/site/Scripts.astro";
           href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a
         >
       </FrontImage>
-      <div class="Quote">
-        <div class="Quote-content">We cannot escape the fact that in observing nature, we are studying the
-          vibrations of waves that we cannot see.</div>
-        <div class="Quote-author">Heinrich Hertz</div>
-      </div>
+      <Quote
+        content="We cannot escape the fact that in observing nature, we are studying the vibrations of waves that we cannot see."
+        author="Heinrich Hertz"
+      />
     </header>
 
     <section id="biharmonic-equation">

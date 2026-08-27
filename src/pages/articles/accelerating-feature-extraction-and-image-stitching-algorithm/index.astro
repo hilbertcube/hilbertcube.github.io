@@ -17,6 +17,7 @@ import TwoColumns from "@components/ui/TwoColumns.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 ---
 
 <BaseLayout
@@ -41,10 +42,10 @@ import Scripts from "@components/site/Scripts.astro";
         src="/articles/accelerating-feature-extraction-and-image-stitching-algorithm/banner.webp"
         alt="image"
       />
-      <div class="Quote">
-        <div class="Quote-content">The images attempt to capture scientific thought. They represent the physical manifestation of the thought process. Everything in the laboratory is a product of a stream of conscious or unconscious thought.</div>
-        <div class="Quote-author">Peter Fraser</div>
-      </div>
+      <Quote
+        content="The images attempt to capture scientific thought. They represent the physical manifestation of the thought process. Everything in the laboratory is a product of a stream of conscious or unconscious thought."
+        author="Peter Fraser"
+      />
     </header>
 
     <section id="feature-extraction">

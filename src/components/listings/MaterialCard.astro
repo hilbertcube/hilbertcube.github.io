@@ -32,7 +32,7 @@ const { title, author, description, links, image, imageId } = Astro.props;
 <div class="materials">
   <div class="materials-left">
     <div class="material-title">{title}</div>
-    <div class="Quote-author">by {author}</div>
+    <div class="material-author">by {author}</div>
     <div class="material-description">{description}</div>
     <div class="material-link">
       You can buy this on:
@@ -56,6 +56,21 @@ const { title, author, description, links, image, imageId } = Astro.props;
 </div>
 
 <style>
+  /* Was styled by the global `.Quote-author` rule, which now lives in
+     Quote.astro; the byline keeps that look here, minus the attribution dash
+     the quote block adds. */
+  .material-author {
+    font-size: 1.1em;
+    text-align: right;
+    position: relative;
+  }
+
+  @media all and (max-width: 580px) {
+    .material-author {
+      font-size: 1em;
+    }
+  }
+
   /* Divider between the card's text block and its cover image. Currently
      `display: none` — the rule kept that from the global stylesheet, where a
      later `.line-6` block overrode the shared `.line-6, .line-7` one. */

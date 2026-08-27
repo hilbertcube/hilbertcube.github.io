@@ -18,6 +18,7 @@ import ContinueButton from "@components/article/ContinueButton.astro"
 import TwoColumns from "@components/ui/TwoColumns.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 ---
 
 <BaseLayout
@@ -36,11 +37,10 @@ import Scripts from "@components/site/Scripts.astro";
         alt="blog-banner"
         width="80%"
       />
-      <div class="Quote">
-        <div class="Quote-content">If you want to find the secrets of the universe, think in terms of energy,
-          frequency and vibration.</div>
-        <div class="Quote-author">Nikola Tesla</div>
-      </div>
+      <Quote
+        content="If you want to find the secrets of the universe, think in terms of energy, frequency and vibration."
+        author="Nikola Tesla"
+      />
     </header>
 
     <section id="Introduction">

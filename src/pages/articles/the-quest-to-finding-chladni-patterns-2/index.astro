@@ -15,6 +15,7 @@ import Sample from "@components/code/Sample.astro";
 import { raw } from "@components/code/raw.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 import ContinueButton from "@components/article/ContinueButton.astro"
 ---
 
@@ -41,11 +42,10 @@ import ContinueButton from "@components/article/ContinueButton.astro"
       <FrontImage
         src="/articles/the-quest-to-finding-chladni-patterns-2/Chladni_patterns_2.webp"
       />
-      <div class="Quote">
-        <div class="Quote-content">That there are such limits to our knowledge of nature, must be borne with
-          patience by every sound mind whether he be a scientist or a workman.</div>
-        <div class="Quote-author">Gustav Robert Kirchhoff</div>
-      </div>
+      <Quote
+        content="That there are such limits to our knowledge of nature, must be borne with patience by every sound mind whether he be a scientist or a workman."
+        author="Gustav Robert Kirchhoff"
+      />
     </header>
 
     <section id="review-of-part-1">
