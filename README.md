@@ -87,3 +87,9 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 - **Oct 2024:** Added README, fixed the favicon, and adjusted fonts and link flexibility.
 - **Oct 2024:** Added the first articles, including Snell's law, plus an animated canvas banner.
 - **Oct 2024:** [MAJOR] Initial launch. Blog built from scratch with HTML5, CSS3, and vanilla JS.
+
+## Creation
+
+This website was created on June 20, 2024, but most information
+here have been available since December 2022 via LaTeX documents
+made by me.
