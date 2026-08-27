@@ -2,8 +2,8 @@
  * bannerCanvas.ts
  * ===============
  * The drifting-equation animation on the home / about banner. SVGs bounce
- * around inside #bannerCanvas, respawn when they leave the frame, and a click
- * drops a temporary extra one at the pointer.
+ * around inside #bannerCanvas and a click drops a temporary extra one at the
+ * pointer.
  *
  * Performance notes
  * -----------------
@@ -26,7 +26,6 @@ const SVG_FILES = [
   "laplace.svg",
   "discrete-fourier.svg",
   "cauchy.svg",
-  "black-body.svg",
   "navier.svg",
   "information.svg",
   "moore.svg",
@@ -43,7 +42,6 @@ const DESIRED_FPS = 40; // Default is 60
 const FRAME_MS = 1000 / DESIRED_FPS;
 const MAX_STEP = FRAME_MS * 3; // Cap the catch-up after a stall/tab switch
 const ADDED_LIFETIME_MS = 5000; // How long a click-added SVG sticks around
-const RESPAWN_DELAY_MS = 100; // Pause before an escaped SVG comes back
 const MAX_DPR = 2; // Beyond 2x the extra sharpness isn't worth the fill cost
 
 /** An SVG rasterised once at its on-screen size. `w`/`h` are CSS pixels. */
@@ -61,9 +59,6 @@ interface Sprite {
   angle: number;
   dAngle: number;
   bitmap: Bitmap;
-  permanent: boolean;
-  /** Timestamp before which the sprite is off-frame and skipped entirely. */
-  respawnAt: number;
   /** Timestamp after which a click-added sprite is dropped. `0` = never. */
   expiresAt: number;
 }
@@ -170,7 +165,11 @@ export function initBannerCanvas() {
 
   /* --------------------------------------------------------------- sprites */
 
-  function spawn(bitmap: Bitmap, x: number, y: number, speed: number, permanent: boolean): Sprite {
+  function clamp(value: number, min: number, max: number) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function spawn(bitmap: Bitmap, x: number, y: number, speed: number): Sprite {
     return {
       x,
       y,
@@ -179,20 +178,22 @@ export function initBannerCanvas() {
       angle: Math.random() * Math.PI * 2,
       dAngle: (Math.random() - 0.5) * ROTATION_SPEED,
       bitmap,
-      permanent,
-      respawnAt: 0,
       expiresAt: 0,
     };
+  }
+
+  /** Largest in-frame offset for a sprite of `size` along an axis of `extent`. */
+  function limit(extent: number, size: number) {
+    return Math.max(0, extent - size);
   }
 
   function createSprites() {
     sprites = bitmaps.filter(Boolean).map((bitmap) =>
       spawn(
         bitmap,
-        Math.random() * Math.max(0, cssWidth - bitmap.w),
-        Math.random() * Math.max(0, cssHeight - bitmap.h),
+        Math.random() * limit(cssWidth, bitmap.w),
+        Math.random() * limit(cssHeight, bitmap.h),
         SPEED,
-        true,
       ),
     );
   }
@@ -203,7 +204,12 @@ export function initBannerCanvas() {
     // Sparse until every image has loaded, so an early click can miss.
     if (!bitmap) return null;
 
-    const sprite = spawn(bitmap, x - bitmap.w / 2, y - bitmap.h / 2, 0.7 * SPEED, false);
+    const sprite = spawn(
+      bitmap,
+      clamp(x - bitmap.w / 2, 0, limit(cssWidth, bitmap.w)),
+      clamp(y - bitmap.h / 2, 0, limit(cssHeight, bitmap.h)),
+      0.7 * SPEED,
+    );
     sprite.expiresAt = now + ADDED_LIFETIME_MS;
     sprites.push(sprite);
     return sprite;
@@ -219,41 +225,50 @@ export function initBannerCanvas() {
         sprites.splice(i, 1);
         continue;
       }
-      if (sprite.respawnAt) {
-        if (now < sprite.respawnAt) continue;
-        // Back in frame at a fresh random spot.
-        sprite.respawnAt = 0;
-        sprite.x = Math.random() * Math.max(0, cssWidth - sprite.bitmap.w);
-        sprite.y = Math.random() * Math.max(0, cssHeight - sprite.bitmap.h);
-      }
 
       sprite.x += sprite.dx * timeRatio;
       sprite.y += sprite.dy * timeRatio;
 
-      // Bounce off the borders
-      if (sprite.x < 0 || sprite.x > cssWidth - sprite.bitmap.w) sprite.dx *= -1;
-      if (sprite.y < 0 || sprite.y > cssHeight - sprite.bitmap.h) sprite.dy *= -1;
+      sprite.dx = bounce(sprite, "x", "w", cssWidth);
+      sprite.dy = bounce(sprite, "y", "h", cssHeight);
 
       if (ROTATE) sprite.angle += sprite.dAngle * timeRatio;
-
-      // A resize can strand a sprite outside the frame; park it and bring it
-      // back shortly rather than letting it drift forever off-screen.
-      const escaped =
-        sprite.x + sprite.bitmap.w < 0 ||
-        sprite.x > cssWidth ||
-        sprite.y + sprite.bitmap.h < 0 ||
-        sprite.y > cssHeight;
-      if (escaped) {
-        if (sprite.permanent) sprite.respawnAt = now + RESPAWN_DELAY_MS;
-        else sprites.splice(i, 1);
-      }
     }
+  }
+
+  /**
+   * Reflect one axis off the frame edges, snapping the sprite back to the edge
+   * it crossed.
+   *
+   * Both halves matter. Reflecting by direction (rather than flipping the sign
+   * every frame the sprite is out of range) is what stops it from vibrating in
+   * place: a sprite that lands more than one step outside — a click near the
+   * edge spawns one there, and so does shrinking the window — used to flip back
+   * and forth forever without ever walking its way back in. Snapping to the
+   * edge then guarantees it is never outside for more than a single frame.
+   */
+  function bounce(sprite: Sprite, axis: "x" | "y", side: "w" | "h", extent: number) {
+    const velocity = axis === "x" ? sprite.dx : sprite.dy;
+    const slack = extent - sprite.bitmap[side];
+    // A sprite wider than the frame has no fully-inside position, so let it
+    // slide between the two overhangs instead of pinning it to one of them.
+    const min = Math.min(0, slack);
+    const max = Math.max(0, slack);
+
+    if (sprite[axis] <= min) {
+      sprite[axis] = min;
+      return Math.abs(velocity);
+    }
+    if (sprite[axis] >= max) {
+      sprite[axis] = max;
+      return -Math.abs(velocity);
+    }
+    return velocity;
   }
 
   function draw() {
     ctx!.clearRect(0, 0, cssWidth, cssHeight);
     for (const sprite of sprites) {
-      if (sprite.respawnAt) continue;
       if (ROTATE) {
         ctx!.save();
         ctx!.translate(sprite.x + sprite.bitmap.w / 2, sprite.y + sprite.bitmap.h / 2);
