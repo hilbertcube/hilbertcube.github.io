@@ -16,6 +16,7 @@ import Theorem from "@components/math/Theorem.astro";
 import { tex } from "@components/math/tex.astro";
 import Sample from "@components/code/Sample.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 ---
 
 <BaseLayout
@@ -66,11 +67,10 @@ import Scripts from "@components/site/Scripts.astro";
         src="/articles/time-complexity-of-an-algorithm/time-complexity.webp"
         alt="image"
       />
-      <div class="Quote">
-        <div class="Quote-content">Science is what we understand well enough to explain to a computer. Art is
-          everything else we do.</div>
-        <div class="Quote-author">Donald Knuth</div>
-      </div>
+      <Quote
+        content="Science is what we understand well enough to explain to a computer. Art is everything else we do."
+        author="Donald Knuth"
+      />
     </header>
 
     <section id="introduction">

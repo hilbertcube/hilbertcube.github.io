@@ -10,6 +10,7 @@ import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 
 ---
 
@@ -27,11 +28,10 @@ import Scripts from "@components/site/Scripts.astro";
       <PageTitle />
       <PubDate />
       <FrontImage src="/articles/maximum-and-minimum/banner.webp" alt="image" />
-      <div class="Quote">
-        <div class="Quote-content">As you will find in multivariable calculus, there is often a number of solutions
-          for any given problem.</div>
-        <div class="Quote-author">John Nash</div>
-      </div>
+      <Quote
+        content="As you will find in multivariable calculus, there is often a number of solutions for any given problem."
+        author="John Nash"
+      />
     </header>
 
     <section id="Introduction">

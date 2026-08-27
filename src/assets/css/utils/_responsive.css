@@ -170,19 +170,6 @@
     margin: 0;
   }
 
-  /* Text elements */
-  .Quote {
-    width: 100%;
-  }
-
-  .Quote-content {
-    font-size: 1.1em;
-  }
-
-  .Quote-author {
-    font-size: 1em;
-  }
-
   /* Search dropdown */
   .autocomplete-dropdown {
     max-height: 50vh;

@@ -15,6 +15,7 @@ import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 ---
 
 <BaseLayout
@@ -28,10 +29,10 @@ import Scripts from "@components/site/Scripts.astro";
       <TopicTags />
       <PageTitle />
       <PubDate />
-      <div class="Quote">
-        <div class="Quote-content">Real mathematics must be justified as art if it can be justified at all.</div>
-        <div class="Quote-author">G.H. Hardy</div>
-      </div>
+      <Quote
+        content="Real mathematics must be justified as art if it can be justified at all."
+        author="G.H. Hardy"
+      />
     </header>
 
     <section id="series-problem">

@@ -7,6 +7,7 @@ import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 import Scripts from "@components/site/Scripts.astro";
+import Quote from "@components/article/Quote.astro";
 
 ---
 
@@ -24,12 +25,10 @@ import Scripts from "@components/site/Scripts.astro";
       <FrontImage src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
     </header>
 
-    <div class="Quote">
-      <div class="Quote-content">Debugging is twice as hard as writing the code in the first place. Therefore, if
-        you write the code as cleverly as possible, you are, by definition, not
-        smart enough to debug it.</div>
-      <div class="Quote-author">Brian W. Kernighan</div>
-    </div>
+    <Quote
+      content="Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
+      author="Brian W. Kernighan"
+    />
 
   <section id="introduction">
 

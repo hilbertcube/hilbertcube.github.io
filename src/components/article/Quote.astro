@@ -1,0 +1,91 @@
+---
+/**
+ * Quote.astro
+ * ===========
+ * The pull quote that opens most articles — the italic serif block with a rule
+ * down its left edge and an attribution beneath it.
+ *
+ * The markup carries only the words: the curly quotes around the content and
+ * the em-dash before the author are supplied by CSS, so callers never type
+ * them. That also removes the old whitespace trap — the text used to have to
+ * sit flush against the `<div class="Quote-content">` tags or the collapsed
+ * newline showed up as a gap next to the opening quote mark. Here the
+ * expression is rendered tight against the tags once, for every page.
+ */
+interface Props {
+  /** The quote itself, without surrounding quotation marks. */
+  content: string;
+  /** Who said it, without a leading dash. */
+  author: string;
+}
+
+const { content, author } = Astro.props;
+---
+
+<div class="Quote">
+  <div class="Quote-content">{content}</div>
+  <div class="Quote-author">{author}</div>
+</div>
+
+<style>
+  .Quote {
+    margin-top: 3em;
+    margin-bottom: 3em;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 4px;
+    font-style: italic;
+    font-family: serif;
+    position: relative;
+  }
+
+  .Quote-content {
+    font-size: 1.1em;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .Quote-content::before {
+    content: "\201C";
+  }
+
+  .Quote-content::after {
+    content: "\201D";
+  }
+
+  .Quote-author {
+    font-size: 1.1em;
+    text-align: right;
+    position: relative;
+  }
+
+  .Quote-author::before {
+    content: "--\00a0";
+  }
+
+  /* The rule running down the left edge of the block. */
+  .Quote::after {
+    position: absolute;
+    content: "";
+    background: var(--underline-color);
+    height: 100%;
+    width: 2px;
+    bottom: 0;
+    left: 0;
+  }
+
+  @media all and (max-width: 580px) {
+    .Quote {
+      width: 100%;
+    }
+
+    .Quote-author {
+      font-size: 1em;
+    }
+  }
+</style>
