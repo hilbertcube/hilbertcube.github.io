@@ -31,6 +31,17 @@
        collects itself as an extra (blank) entry. -->
   <img class="lightbox-img no-lightbox" id="lightboxImg" alt="" />
 
+  <!-- Shown between setting a new src and the image arriving, so paging with
+       the arrows onto an image that is not in the cache yet is a spinner on the
+       scrim rather than an empty black screen. -->
+  <div
+    class="lightbox-spinner"
+    id="lightboxSpinner"
+    role="status"
+    aria-label="Loading image"
+    hidden
+  ></div>
+
   <button class="lightbox-button lightbox-close" id="lightboxClose" aria-label="Close image viewer">✕</button>
   <button class="lightbox-button lightbox-prev" id="lightboxPrev" aria-label="Previous image">❮</button>
   <button class="lightbox-button lightbox-next" id="lightboxNext" aria-label="Next image">❯</button>
@@ -54,6 +65,7 @@
   interface Parts {
     root: HTMLElement;
     fullImage: HTMLImageElement;
+    spinner: HTMLElement;
     counter: HTMLElement;
     closeButton: HTMLElement;
     prevButton: HTMLElement;
@@ -61,7 +73,7 @@
   }
 
   function setupLightbox(images: HTMLImageElement[], parts: Parts) {
-    const { root, fullImage, counter, closeButton, prevButton, nextButton } = parts;
+    const { root, fullImage, spinner, counter, closeButton, prevButton, nextButton } = parts;
 
     let current = 0;
     // Where the page was when the viewer opened, and what had focus before it
@@ -74,6 +86,15 @@
     prevButton.hidden = !hasMultiple;
     nextButton.hidden = !hasMultiple;
 
+    /**
+     * Whether an image is currently in flight. Drives the spinner and blanks
+     * the canvas, so a half-arrived image is never shown mid-decode.
+     */
+    function setLoading(isLoading: boolean) {
+      root.classList.toggle("is-loading", isLoading);
+      spinner.hidden = !isLoading;
+    }
+
     function show(index: number) {
       // Wrap around at both ends.
       current = (index + images.length) % images.length;
@@ -83,6 +104,11 @@
       // unlabelled image to a screen reader.
       fullImage.alt = images[current].alt;
       counter.textContent = `${current + 1} / ${images.length}`;
+
+      // An image already in the cache is `complete` the moment its src is set,
+      // so the common case — every thumbnail on the page has been decoded
+      // once — never enters the loading state at all.
+      setLoading(!fullImage.complete);
     }
 
     function open(index: number) {
@@ -111,6 +137,9 @@
 
     function close() {
       root.hidden = true;
+      // Closing mid-load leaves the request running; clear the state now so a
+      // reopen starts from a clean canvas.
+      setLoading(false);
 
       document.body.style.position = "";
       document.body.style.top = "";
@@ -147,6 +176,13 @@
       image.addEventListener("click", () => open(index));
     });
 
+    // Setting a new src aborts the previous request, so only the image on
+    // screen can fire these: no stale load can clear a newer one's spinner.
+    fullImage.addEventListener("load", () => setLoading(false));
+    // A broken image is not still arriving. Drop the spinner and let the alt
+    // text stand in, rather than spinning forever.
+    fullImage.addEventListener("error", () => setLoading(false));
+
     closeButton.addEventListener("click", close);
     prevButton.addEventListener("click", () => show(current - 1));
     nextButton.addEventListener("click", () => show(current + 1));
@@ -167,13 +203,31 @@
 
   const root = document.getElementById("lightbox");
   const fullImage = document.querySelector<HTMLImageElement>("#lightboxImg");
+  const spinner = document.getElementById("lightboxSpinner");
   const counter = document.getElementById("lightboxCounter");
   const closeButton = document.getElementById("lightboxClose");
   const prevButton = document.getElementById("lightboxPrev");
   const nextButton = document.getElementById("lightboxNext");
 
-  if (images.length && root && fullImage && counter && closeButton && prevButton && nextButton) {
-    setupLightbox(images, { root, fullImage, counter, closeButton, prevButton, nextButton });
+  if (
+    images.length &&
+    root &&
+    fullImage &&
+    spinner &&
+    counter &&
+    closeButton &&
+    prevButton &&
+    nextButton
+  ) {
+    setupLightbox(images, {
+      root,
+      fullImage,
+      spinner,
+      counter,
+      closeButton,
+      prevButton,
+      nextButton,
+    });
   }
 </script>
 
@@ -220,7 +274,8 @@
      single-image page), so it has to beat the `display` set above. The extra
      class in each selector is what wins on specificity. */
   .lightbox[hidden],
-  .lightbox-button[hidden] {
+  .lightbox-button[hidden],
+  .lightbox-spinner[hidden] {
     display: none;
   }
 
@@ -240,6 +295,53 @@
     border-radius: var(--image-radius);
     /* The settings modal's elevation, deepened to carry against the scrim. */
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  /* While the next image is in flight the canvas is blanked rather than
+     removed: the element keeps its old box, so the arrows and counter do not
+     shift under the pointer between one image and the next. */
+  .lightbox.is-loading .lightbox-img {
+    opacity: 0;
+  }
+
+  /* The spinner sits directly on the scrim, which is opaque black in both
+     themes, so it is white here instead of theme-coloured like the buttons. */
+  .lightbox-spinner {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    /* Two animations, one property each: the ring turns for as long as the
+       image is in flight, while the fade-in sits out the first 0.25s. An image
+       that arrives quickly is therefore gone before the spinner is ever
+       visible, so paging through cached images does not flicker. */
+    animation: lightbox-spin 0.7s linear infinite,
+      lightbox-spinner-in 0.2s ease-out 0.25s both;
+  }
+
+  @keyframes lightbox-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes lightbox-spinner-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Motion is the whole point of a spinner, so it stays — but reduced to the
+     ring holding still, matching how the rest of the site drops animation. */
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox-spinner {
+      animation: lightbox-spinner-in 0.2s ease-out 0.25s both;
+    }
   }
 
   /* Floating controls over content: the site already has one of these in
