@@ -57,8 +57,7 @@ src/
     images/                    Images imported through astro:assets (logo, banner)
 public/
   assets/js/katex-render.js    KaTeX driver: macros, display math, numbering
-  assets/js/scripts.js         Image lightbox + smooth in-page scrolling
-  assets/js/blogpage-setting.js  Opens <Solution> blocks, lazy-loads images
+  assets/js/scripts.js         Smooth in-page anchor scrolling; `.url` new-window links
   katex/                       Self-hosted KaTeX library and fonts
   articles/<slug>/             Article body images
   media/Images/                Card thumbnail images
@@ -77,9 +76,10 @@ scripts/                       Automation (see AUTOMATION.md)
 
 **Where client JS lives.** Behaviour tied to a component ships in that
 component's own `<script>` (nav, dark mode, settings, search, share, copy
-buttons, TOC highlighting, the banner canvas). `public/assets/js/scripts.js`
-holds only the two site-wide behaviours that have no owning component — the
-image lightbox and smooth anchor scrolling.
+buttons, TOC highlighting, the banner canvas — and the image lightbox, which is
+`Lightbox.astro`). `public/assets/js/scripts.js` holds only the two site-wide
+behaviours that have no owning component: smooth anchor scrolling, and opening
+`.url` links in a new window.
 
 ---
 
@@ -109,7 +109,7 @@ malformed entry fails the build (see §4).
 > | `import … from "../../../layouts/…"` | the `@layouts` / `@components` aliases |
 > | `<div class="topic">`, `<h1 class="title">`, `<div class="date">` | `<TopicTags>`, `<PageTitle>`, `<PubDate>` fed from `getEntryMeta()` |
 > | a hand-written "More Articles" `<section>` | nothing — `BaseLayout` adds it to every article automatically |
-> | `<script is:inline src="/assets/js/blogpage-setting.js">` | `<Scripts use={["blog-setting", …]} />` |
+> | `<script is:inline src="/assets/js/blogpage-setting.js">` | nothing — that file no longer exists; use `<Scripts use={…}>` only for the Prism languages the page highlights |
 > | a MathJax CDN `<script>` | nothing — KaTeX loads on every page (§5) |
 
 Then: fill in the content, drop images in `public/articles/<slug>/`, and
