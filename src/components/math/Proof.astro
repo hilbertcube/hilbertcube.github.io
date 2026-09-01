@@ -1,0 +1,27 @@
+---
+/**
+ * Proof.astro
+ * ===========
+ * A proof environment: a quiet left rule with an italic "Proof." lead-in
+ * opening the first paragraph.
+ *
+ * As with Quote.astro, the markup carries only the words — the lead-in is
+ * supplied by CSS (`.proof > p:first-child::before` in components/_math.css),
+ * so callers never type the label span, and the first paragraph starts with
+ * the argument itself. Pass `label` for a different opening ("Proof sketch",
+ * "Proof of Lemma 2"); the trailing period is added for you.
+ *
+ * The block takes ordinary flow content, so the body must open with a `<p>`
+ * for the label to have a line to sit on.
+ */
+interface Props {
+  /** The lead-in word, without its trailing period. Defaults to "Proof". */
+  label?: string;
+}
+
+const { label = "Proof" } = Astro.props;
+---
+
+<div class="proof" style={`--proof-label: "${label}."`}>
+  <slot />
+</div>

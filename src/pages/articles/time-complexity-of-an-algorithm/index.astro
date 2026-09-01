@@ -13,6 +13,7 @@ import FrontImage from "@components/article/FrontImage.astro";
 import E from "@components/math/E.astro";
 import M from "@components/math/M.astro";
 import Theorem from "@components/math/Theorem.astro";
+import Proof from "@components/math/Proof.astro";
 import { tex } from "@components/math/tex.astro";
 import Sample from "@components/code/Sample.astro";
 import Scripts from "@components/site/Scripts.astro";
@@ -27,24 +28,6 @@ import Quote from "@components/article/Quote.astro";
 >
   <Fragment slot="head">
     <style>
-      /* Proof environment: a quiet left rule, opened by an italic "Proof."
-         lead-in and closed by a  at the end of the last line. */
-      .proof {
-        margin: 1.75rem 0 1.75rem 0;
-        padding-left: 1rem;
-        border-left: 2px solid var(--box-border, rgba(128, 128, 128, 0.4));
-        line-height: 1.7;
-      }
-      .proof > p:first-child {
-        margin-top: 0;
-      }
-      .proof > p:last-child {
-        margin-bottom: 0;
-      }
-      .proof-label {
-        font-style: italic;
-        font-weight: 600;
-      }
       /* Summary table of growth functions. The table style itself is
          .p-table in components/_content.css; the growth and name columns
          are centred here because that is particular to this table's content. */
@@ -365,9 +348,9 @@ import Quote from "@components/article/Quote.astro";
           >
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> Count the set of pairs
+            Count the set of pairs
             <M>{tex`P = \{(v,e) \in V \times E : v \text{ is the tail of } e\}`}</M>
             in two ways. Grouping by the first coordinate gives
             <M>{tex`|P| = \sum_{v} \deg^+(v)`}</M>, since the pairs with first
@@ -378,7 +361,7 @@ import Quote from "@components/article/Quote.astro";
             argument with "tail" replaced by "head" gives the second equality.
             
           </p>
-        </div>
+        </Proof>
 
         <div class="lemma">
           <strong>Lemma 2 (Nested floors and ceilings).</strong> For every real
@@ -388,9 +371,9 @@ import Quote from "@components/article/Quote.astro";
           >
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> For the first identity, let
+            For the first identity, let
             <M>{tex`m = \lfloor \lfloor x/a \rfloor / b \rfloor`}</M>. Then $m$
             is the largest integer with <M
               >{tex`mb \le \lfloor x/a \rfloor`}</M
@@ -404,7 +387,7 @@ import Quote from "@components/article/Quote.astro";
             that an integer is <M>{tex`\ge \lceil y \rceil`}</M> if and only if
             it is $\ge y$. 
           </p>
-        </div>
+        </Proof>
       </section>
 
       <!-- <section id="example-merge-sort">
@@ -451,9 +434,8 @@ Merge(A, p, q, r)
           >
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span>
             <em>Writes.</em> Each iteration of each of the three loops executes
             exactly one assignment to $A[k]$ and then increments $k$ by one;
             conversely $k$ is incremented only in those loops. Each iteration
@@ -491,7 +473,7 @@ Merge(A, p, q, r)
               >{tex`a_2 = 4 + c + c'`}</M
             >. 
           </p>
-        </div>
+        </Proof>
 
         <p>
           The recursion tree of a call on $n$ elements is the rooted binary
@@ -517,9 +499,9 @@ Merge(A, p, q, r)
           >.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> Induction on $k$. For $k=0$
+            Induction on $k$. For $k=0$
             the single node has size <M>{tex`n = \lfloor n/2^0 \rfloor`}</M>.
             Assume the claim at depth $k$ and let a node there have size $s$
             with <M>{tex`\lfloor n/2^k \rfloor \le s \le \lceil n/2^k \rceil`}</M>.
@@ -551,7 +533,7 @@ Merge(A, p, q, r)
             bound <M>{tex`\lceil n/2^k \rceil \ge 2`}</M> shows some node still
             splits. 
           </p>
-        </div>
+        </Proof>
 
         <Theorem name="Running time of merge sort">
           Let $T(n)$ be the worst-case running time of <code>Merge-Sort</code>
@@ -563,9 +545,8 @@ Merge(A, p, q, r)
           >
         </Theorem>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span>
             <em>Upper bound.</em> The total running time is the sum, over all
             nodes of the recursion tree, of the work done at that node: at most
             <M>{tex`a_2 s + b`}</M> for a node of size $s$, by Lemma 3, where
@@ -605,7 +586,7 @@ Merge(A, p, q, r)
               >{tex`T(n) \in \Theta(n\log n)`}</M
             >. 
           </p>
-        </div>
+        </Proof>
 
         <p>
           It is instructive to see the same answer come out of the recurrence
@@ -625,9 +606,9 @@ Merge(A, p, q, r)
           $m \ge 0$.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> Induction on $m$. For $m=0$
+            Induction on $m$. For $m=0$
             the formula reads <M>{tex`T(1) = 0 + d`}</M>, which is the base
             case. Assuming it for $m$,
             <E
@@ -635,7 +616,7 @@ Merge(A, p, q, r)
             >
             which is the formula for $m+1$. 
           </p>
-        </div>
+        </Proof>
 
         <p>
           With $n = 2^m$, i.e. <M>{tex`m = \log_2 n`}</M>, this says
@@ -719,9 +700,9 @@ return not-found</Sample>
           >
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> Put $s = s_k$ and write
+            Put $s = s_k$ and write
             <M>{tex`\mathit{mid} = \lfloor (\mathit{lo}+\mathit{hi})/2 \rfloor`}</M>. If the algorithm
             takes the branch <M>{tex`\mathit{lo} \leftarrow \mathit{mid}+1`}</M>, the new count is
             <E
@@ -738,7 +719,7 @@ return not-found</Sample>
               >{tex`\lfloor (s-1)/2 \rfloor \ge (s-2)/2`}</M
             > because <M>{tex`\lfloor y \rfloor > y-1`}</M>. 
           </p>
-        </div>
+        </Proof>
 
         <Theorem name="Running time of binary search">
           The worst-case running time of <code>Binary-Search</code> satisfies
@@ -750,9 +731,8 @@ return not-found</Sample>
           $A$.
         </Theorem>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span>
             <em>Upper bound.</em> We claim <M>{tex`s_k \le n/2^k`}</M> for every
             $k$ at which the loop is still running. This is an induction: <M
               >{tex`s_0 = n`}</M
@@ -796,7 +776,7 @@ return not-found</Sample>
               >{tex`T(n) \in \Theta(\log n)`}</M
             >. 
           </p>
-        </div>
+        </Proof>
 
         <p>
           Solving the recurrence gives the same answer with less information:
@@ -822,9 +802,9 @@ return not-found</Sample>
           height $h$ has at most <M>{tex`2^h`}</M> leaves.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> Induction on $h$. A tree of
+            Induction on $h$. A tree of
             height $0$ is a single node, which is one leaf, and <M
               >{tex`2^0 = 1`}</M
             >. A tree of height $h \ge 1$ has a root with at most two subtrees,
@@ -833,7 +813,7 @@ return not-found</Sample>
               >{tex`2 \cdot 2^{h-1} = 2^h`}</M
             >. 
           </p>
-        </div>
+        </Proof>
 
         <Theorem name="Lower bound for comparison-based search">
           Let <M>{tex`\mathcal{A}`}</M> be any deterministic algorithm that,
@@ -845,9 +825,9 @@ return not-found</Sample>
           > comparisons on some input.
         </Theorem>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> Because $x$ is absent, every
+            Because $x$ is absent, every
             comparison $x$ versus $A[i]$ has exactly two possible outcomes, so
             the execution of <M>{tex`\mathcal{A}`}</M> on the family of such
             inputs is described by a binary tree: each internal node is the
@@ -865,7 +845,7 @@ return not-found</Sample>
               >{tex`\mathcal{A}`}</M
             > makes that many comparisons. 
           </p>
-        </div>
+        </Proof>
 
         <p>
           Binary search performs at most <M
@@ -919,9 +899,9 @@ return not-found</Sample>
           once for each vertex $v$.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> After pass 2 the counter
+            After pass 2 the counter
             <code>indeg[v]</code> holds <M>{tex`\deg^-(v)`}</M>, and from that
             moment on it is only ever decremented; it is therefore a strictly
             decreasing function of time on the (finite) set of instants at which
@@ -934,7 +914,7 @@ return not-found</Sample>
             at $t_v$, and the tests in question occur at most once each at that
             instant. 
           </p>
-        </div>
+        </Proof>
 
         <div class="lemma">
           <strong>Lemma 9 (Each adjacency list is scanned at most once).</strong
@@ -943,9 +923,9 @@ return not-found</Sample>
           <M>{tex`\sum_{u \in V} \deg^+(u) = E`}</M> decrements in total.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> The scan of <M
+            The scan of <M
               >{tex`\mathit{Adj}[u]`}</M
             > is executed only in the iteration of the main loop that dequeues
             $u$. Since the queue is a set of enqueued items and each dequeue
@@ -954,7 +934,7 @@ return not-found</Sample>
             count of decrements follows from the handshake identity of Lemma 1.
             
           </p>
-        </div>
+        </Proof>
 
         <div class="lemma">
           <strong>Lemma 10 (Termination with all vertices, on a DAG).</strong>
@@ -964,9 +944,9 @@ return not-found</Sample>
           >, so the final test is a correct acyclicity test.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> Suppose $G$ is acyclic but
+            Suppose $G$ is acyclic but
             some vertices are never enqueued; let $W$ be the (non-empty) set of
             those vertices. The main loop runs until $S$ is empty, so every
             enqueued vertex is eventually dequeued; hence the dequeued vertices
@@ -996,16 +976,15 @@ return not-found</Sample>
             the counter never dips below the number of undecremented in-edges.
             Therefore <M>{tex`\mathit{count} \le |V| - |C| < |V|`}</M>. 
           </p>
-        </div>
+        </Proof>
 
         <Theorem name="Running time of Kahn's algorithm">
           <code>Kahn</code> runs in time $\Theta(V+E)$ on every input, in the
           adjacency-list representation.
         </Theorem>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span>
             <em>Upper bound.</em> Pass 1 and pass 3 execute $O(1)$ work per
             vertex, so $O(V)$ each. Pass 2 executes $O(1)$ work per adjacency
             entry, so by Lemma 1 it costs <M
@@ -1033,7 +1012,7 @@ return not-found</Sample>
             > on every input. Hence <M>{tex`T \in \Theta(V+E)`}</M>.
             
           </p>
-        </div>
+        </Proof>
 
         <p>
           <strong>Remark (why no algorithm can do better).</strong> The
@@ -1125,9 +1104,9 @@ return not-found</Sample>
           the queue.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> No element is ever inserted
+            No element is ever inserted
             after the queue is built, and each iteration of the main loop
             removes exactly one element, so the loop runs exactly $V$ times and
             performs exactly $V$ extractions; in particular every vertex is
@@ -1141,7 +1120,7 @@ return not-found</Sample>
             and the adjacency scans cost $\Theta(1)$ per entry, $\Theta(E)$ in
             total; the sum is $\Theta(V+E)$. 
           </p>
-        </div>
+        </Proof>
 
         <p>
           Note what this proof did <em>not</em> use: non-negativity of the
@@ -1164,9 +1143,9 @@ return not-found</Sample>
           $\Theta(h)$.
         </div>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> A complete binary tree of
+            A complete binary tree of
             height $\eta$ has all levels <M>{tex`0, \ldots, \eta-1`}</M> full
             and level $\eta$ non-empty, so its size $h$ satisfies <M
               >{tex`2^{\eta} \le h \le 2^{\eta+1} - 1`}</M
@@ -1193,7 +1172,7 @@ return not-found</Sample>
             levels, and that <M>{tex`\sum_{i \ge 0} i/2^i = 2`}</M>. It is also
             $\Omega(h)$ since every element is touched. 
           </p>
-        </div>
+        </Proof>
 
         <Theorem name="Running time of Dijkstra's algorithm">
           With adjacency lists, <code>Dijkstra</code> runs in time
@@ -1216,9 +1195,9 @@ return not-found</Sample>
           </ul>
         </Theorem>
 
-        <div class="proof">
+        <Proof>
           <p>
-            <span class="proof-label">Proof.</span> The displayed identity is
+            The displayed identity is
             Lemma 11 together with the observation that the algorithm's work
             splits into queue operations and everything else, and that the costs
             are additive. The three cases are then substitutions.
@@ -1262,7 +1241,7 @@ return not-found</Sample>
               >{tex`O(E + V\log V)`}</M
             >. 
           </p>
-        </div>
+        </Proof>
 
         <p>
           <strong>Why $O$ and not $\Theta$ for the heap variant.</strong> The

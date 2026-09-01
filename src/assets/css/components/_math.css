@@ -81,6 +81,31 @@
   border-radius: 4px;
 }
 
+/* Proof environment (components/math/Proof.astro): a quiet left rule, opened
+   by an italic lead-in on the first paragraph. The label comes from the
+   --proof-label custom property the component sets, so the markup inside the
+   block is nothing but the argument. */
+.proof {
+  margin: 1.75rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--box-border, rgba(128, 128, 128, 0.4));
+  line-height: 1.7;
+}
+
+.proof > p:first-child::before {
+  content: var(--proof-label, "Proof.") " ";
+  font-style: italic;
+  font-weight: 600;
+}
+
+.proof > p:first-child {
+  margin-top: 0;
+}
+
+.proof > p:last-child {
+  margin-bottom: 0;
+}
+
 .problem {
   border: 1px solid rgba(113, 0, 212);
 }
