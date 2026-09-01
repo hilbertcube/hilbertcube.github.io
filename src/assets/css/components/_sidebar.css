@@ -112,8 +112,8 @@ nav ul {
 /* Flat, borderless burger to match the other top-bar icons
    (.topbar-icon-btn) while keeping the animated bars. */
 .toggle-btn {
-  width: 34px;
-  height: 34px;
+  width: var(--topbar-icon-size);
+  height: var(--topbar-icon-size);
   background: none;
   border: none;
   padding: 0;
@@ -125,12 +125,14 @@ nav ul {
   z-index: 1000;
 }
 
+/* Height, gap and rounding are all fractions of the bar width, so the burger
+   keeps its proportions when --burger-bar-width changes at a breakpoint. */
 .toggle-btn .bar {
-  width: 20px;
-  height: 2.5px;
-  margin: 2.5px;
+  width: var(--burger-bar-width);
+  height: calc(var(--burger-bar-width) / 8);
+  margin: calc(var(--burger-bar-width) / 8);
   background-color: var(--toggle-bar);
-  border-radius: 1.25px;
+  border-radius: calc(var(--burger-bar-width) / 16);
   transition: all .3s;
   transform-origin: left;
 }
@@ -140,7 +142,8 @@ nav ul {
 }
 
 body.nav-open .toggle-btn .bar:nth-child(1) {
-  transform: rotate(45deg) translate(0,-2px) scaleX(1.251);
+  transform: rotate(45deg) translate(0, calc(var(--burger-bar-width) / -10))
+    scaleX(1.251);
 }
 
 /* Middle bar only fades, so give it a snappier opacity transition
@@ -154,5 +157,6 @@ body.nav-open .toggle-btn .bar:nth-child(2) {
 }
 
 body.nav-open .toggle-btn .bar:nth-child(3) {
-  transform: rotate(-45deg) translate(0,2px) scaleX(1.251);
+  transform: rotate(-45deg) translate(0, calc(var(--burger-bar-width) / 10))
+    scaleX(1.251);
 }

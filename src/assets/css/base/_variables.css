@@ -72,6 +72,16 @@
   --general-wrapper-width: 60rem;
   --side-nav-width: 375px;
   --top-bar-height: 60px;
+  /* Hit area of every top-bar icon button, and the glyph inside it. The share
+     dropdown derives its drop from the first, so shrinking these keeps the
+     panel aligned with the bottom of the bar. */
+  --topbar-icon-size: 34px;
+  --topbar-icon-font-size: 20px;
+  /* The burger's bars are the glyph inside its --topbar-icon-size box, so this
+     is its counterpart to --topbar-icon-font-size. Bar height, spacing and
+     rounding are all derived from it, keeping the burger in proportion at
+     every size. */
+  --burger-bar-width: 20px;
   /* Width of the burger button's container — the top bar's first slot */
   --burger-width: 60px;
   --in-page-li-spacing: 15px;
@@ -79,10 +89,6 @@
   /* Progress bar — flat red accent to match the site's Wikipedia-like theme */
   --progressive-bar-height: 2px;
   --progress-bar-color: #ca0000;
-  
-  /* Share button positioning */
-  --share-button-position: 80px;
-
   
   /* Settings panel — theme-aware surface matching the site's other content
      panels (search dropdown / nav dropdowns), with a blue interactive accent. */
@@ -173,5 +179,10 @@ html.dark-mode {
 @media all and (max-width: 580px) {
   :root {
     --side-nav-width: 330px;
+    /* The icon row shares the bar with the burger and the home/about links at
+       this width, so the buttons come down a size to keep it off the edges. */
+    --topbar-icon-size: 28px;
+    --topbar-icon-font-size: 17px;
+    --burger-bar-width: 17px;
   }
 }

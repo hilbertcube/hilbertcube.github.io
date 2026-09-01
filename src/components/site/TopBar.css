@@ -324,19 +324,19 @@
 }
 
 /* Shared style for every icon button on the top bar
-   (search, RSS, dark mode, settings) — keeps size, spacing,
+   (search, tags, share, RSS, dark mode, settings) — keeps size, spacing,
    and colour consistent. */
 .topbar-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: var(--topbar-icon-size);
+  height: var(--topbar-icon-size);
   padding: 0;
   border: none;
   background: none;
   color: #dddddd;
-  font-size: 20px;
+  font-size: var(--topbar-icon-font-size);
   line-height: 1;
   cursor: pointer;
   outline: none;
@@ -344,7 +344,8 @@
 }
 
 .topbar-icon-btn:hover,
-.tags-icon-btn.active {
+.tags-icon-btn.active,
+.share-icon-btn.active {
   color: #ffffff;
 }
 
@@ -353,6 +354,82 @@
 :global(html.dark-mode) .dark-mode-button {
   color: #fdd835;
 }
+
+/* === SHARE MENU === */
+
+/* Anchors the dropdown to the share icon rather than to the bar, so the panel
+   drops directly under the button wherever the icon row ends up. */
+.share-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Same surface as the search/tags dropdowns. The offset lines the panel up
+   with the bottom of the bar: the button is centred in it, so half the
+   leftover height sits below the button. */
+.share-dropdown {
+  position: absolute;
+  top: calc(100% + (var(--top-bar-height) - var(--topbar-icon-size)) / 2);
+  right: 0;
+  left: auto;
+  display: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2px;
+  width: max-content;
+  max-width: min(calc(6 * var(--topbar-icon-size) + 24px), calc(100vw - 24px));
+  padding: 6px;
+  border: 1px solid var(--autocomplete-dropdown-border);
+  border-radius: 4px;
+  background-color: var(--autocomplete-dropdown-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  animation: share-dropdown-in 0.15s ease-out;
+}
+
+.share-dropdown.open {
+  display: flex;
+}
+
+@keyframes share-dropdown-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.share-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--topbar-icon-size) - 2px);
+  height: calc(var(--topbar-icon-size) - 2px);
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  color: var(--autocomplete-dropdown-text-color);
+  font-size: calc(var(--topbar-icon-font-size) - 3px);
+  line-height: 1;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.share-option:hover {
+  background-color: var(--settings-select-hover);
+}
+
+/* Each platform lights up in its own brand colour on hover. */
+#share-facebook:hover { color: #1877f2; }
+#share-twitter:hover { color: #1da1f2; }
+#share-whatsapp:hover { color: #25d366; }
+#share-reddit:hover { color: #ff4500; }
+#share-hackernews:hover { color: #ff6600; }
+#share-telegram:hover { color: #26a5e4; }
 
 /* === SETTINGS GEAR === */
 
