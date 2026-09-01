@@ -120,19 +120,34 @@ function linesOfCode(): string {
   return lines.toLocaleString("en-US");
 }
 
-/** Time between the root commit and now, as "N years, M months". */
+/** "3 days", "1 day", etc. — a count with its unit pluralised. */
+function plural(count: number, unit: string): string {
+  return `${count} ${unit}${count === 1 ? "" : "s"}`;
+}
+
+/** Time between the root commit and now, as "N years, M months, K days".
+ *  Units that are zero are dropped, except when every one of them is: a
+ *  same-day repository reads "0 days" rather than an empty string. */
 function repositoryAge(): string {
   // --reverse prints oldest first, so the first line is the root commit.
   const dates = git("log", "--format=%aI", "--reverse");
   if (!dates) return UNAVAILABLE;
 
   const created = new Date(dates.split("\n")[0]);
-  const days = Math.floor((Date.now() - created.getTime()) / 86_400_000);
-  const years = Math.floor(days / 365);
-  const months = Math.floor((days % 365) / 30);
-  return years > 0
-    ? `${years} year${years > 1 ? "s" : ""}, ${months} month${months !== 1 ? "s" : ""}`
-    : `${months} month${months !== 1 ? "s" : ""}`;
+  const total = Math.floor((Date.now() - created.getTime()) / 86_400_000);
+  const years = Math.floor(total / 365);
+  const months = Math.floor((total % 365) / 30);
+  const days = (total % 365) % 30;
+
+  const parts = [
+    [years, "year"],
+    [months, "month"],
+    [days, "day"],
+  ] as const;
+  const shown = parts.filter(([count]) => count > 0);
+  return shown.length > 0
+    ? shown.map(([count, unit]) => plural(count, unit)).join(", ")
+    : plural(0, "day");
 }
 
 /** Date + subject of the most recent commit that the bot did not author. */
