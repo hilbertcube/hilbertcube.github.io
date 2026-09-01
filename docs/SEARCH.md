@@ -18,7 +18,7 @@ see [COMPONENTS.md](./COMPONENTS.md); for the helper scripts see
 |---|---|
 | Build the index | `package.json` `build` script + `scripts/pagefind-ignore-math.mjs` |
 | What gets indexed | `src/layouts/BaseLayout.astro` (`data-pagefind-body` / `data-pagefind-ignore`) |
-| Search UI + logic | `public/assets/js/scripts.js` → `SearchBar()` |
+| Search UI + logic | `src/components/site/topbar/search.ts` → `initSearch()`, shipped by `TopBar.astro` |
 | On-page highlight & scroll | `src/layouts/BaseLayout.astro` (inline module) |
 | Styling | `src/assets/css/components/_search.css` |
 | Offline/dev fallback | `src/data/pages.json` (title-only) |
@@ -95,7 +95,7 @@ ever appears in results, it's almost always a display block that wasn't wrapped 
 
 ---
 
-## 6. Client-side search (`SearchBar()` in `scripts.js`)
+## 6. Client-side search (`initSearch()` in `topbar/search.ts`)
 
 ### Engine loading
 On the first keystroke, `getEngine()` lazily loads the engine:
@@ -131,7 +131,7 @@ badge, then one **snippet row** (`.search-hit`) per matching region:
   text comes from Pagefind's `sub_results` titles, falling back to a prettified
   section `id`; it's hidden when it would just repeat the page title.
 
-Tunables live at the top of `SearchBar()`: `CONTEXT` (16), `CLUSTER_GAP` (30),
+Tunables live at the top of `search.ts`: `CONTEXT` (16), `CLUSTER_GAP` (30),
 `MAX_SNIPPETS` (4).
 
 ### Keyboard & mouse
@@ -187,7 +187,7 @@ scroll. So the inline module:
 - **Add a page** → it's indexed automatically on the next build (uses `BaseLayout`).
 - **Equation noise in results** → wrap the offending display math in `<Equation>`.
 - **Change snippet size / count** → `CONTEXT`, `CLUSTER_GAP`, `MAX_SNIPPETS` in
-  `SearchBar()`.
+  `search.ts`.
 - **Change the search-slow threshold** → the `250` in the input handler's loading
   timer; the `180` in `debouncedSearch` is the input debounce.
 - **Exclude something else from search** → add `data-pagefind-ignore` to the element,

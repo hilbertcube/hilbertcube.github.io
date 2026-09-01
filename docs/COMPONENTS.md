@@ -50,7 +50,7 @@ rules live in `src/assets/css/`, not in components.
 
 **Two kinds of `<script>`.** A bare `<script>` in a component is bundled and
 hoisted by Astro — it ships once, module-scoped, and is how `TabBox`,
-`CopyButton`, `ShareButton`, `TableOfContents`, `TopBar`, `Banner` and
+`CopyButton`, `TableOfContents`, `TopBar`, `Lightbox`, `Banner` and
 `HighlightsAndAttribute` get their behaviour. `<script is:inline>` opts out of
 bundling and is reserved for third-party assets loaded by URL, which is what
 [`Scripts`](#scripts) emits for Prism.
@@ -95,7 +95,7 @@ The shell every page renders into: `<head>`, top bar, sidebar, main region,
 <BaseLayout title="Chladni Patterns, Part 2" description="…" activeButton="articles" toc>
   <div class="content-grid"> … </div>
   <Fragment slot="scripts">
-    <Scripts use={["blog-setting", "python", "line-numbers"]} />
+    <Scripts use={["python", "line-numbers"]} />
   </Fragment>
 </BaseLayout>
 ```
@@ -176,8 +176,9 @@ rule that articles used to repeat in their own `<style>` blocks.
 | `width` | `string` | `"100%"` | Desktop width; always collapses to 100% under 580px. |
 | `fetchpriority` | `"high" \| "low" \| "auto"` | `"high"` | It's the LCP image on most articles. |
 
-Children become the caption. The `front-img` class must stay on the `<img>`:
-`public/assets/js/scripts.js` keys off it to keep banners out of the lightbox.
+Children become the caption. Article front images **do** open in the lightbox —
+`Lightbox.astro` uses a blacklist (`#logoImage`, `#home-banner img`,
+`.recommend-img img`, `.no-lightbox`), so add `no-lightbox` to opt an image out.
 
 ### Figure
 
@@ -474,11 +475,15 @@ math automatically so it stays out of the index.
 
 ### Solution
 
-A collapsible `<details class="solution">`.
+A collapsible `<details class="solution">`, **expanded by default**.
 
-| Prop | Type | Default |
-|---|---|---|
-| `summary` | `string` | `"Solution"` |
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `summary` | `string` | `"Solution"` | |
+| `open` | `boolean` | `true` | `open={false}` to start collapsed. |
+
+The `open` attribute is rendered into the markup rather than set by a script after
+load, so the block never renders closed and then pops open.
 
 Prose inside `Theorem` / `Problem` / `Solution` stays searchable; display math
 inside them still belongs in an `<E>`.
@@ -535,8 +540,8 @@ A recommended book/material, with cover art and purchase links.
 ### TopBar
 
 The fixed top bar: home/about links, hamburger, search field, tag browser, RSS
-link, dark-mode toggle, the settings panel, and the reading-progress bar. The
-markup lives in `TopBar.astro`; behaviour is split into `site/topbar/`:
+link, share menu, dark-mode toggle, the settings panel, and the reading-progress
+bar. The markup lives in `TopBar.astro`; behaviour is split into `site/topbar/`:
 
 | Module | Responsibility |
 |---|---|
@@ -544,6 +549,7 @@ markup lives in `TopBar.astro`; behaviour is split into `site/topbar/`:
 | `theme.ts` | Dark mode and the two Prism code-theme `<select>`s. One `mode` key in localStorage drives the root class, the toggle icon and which stylesheet is installed; changes broadcast to other tabs. Re-syncs on `pageshow` so bfcache restores don't come back light. |
 | `settings.ts` | Body font, font size and scroll-indicator selects, each persisted and mirrored across tabs; plus the progress bar. |
 | `search.ts` | Search field and tag browser. Pagefind when its index exists, `pages.json` metadata when it doesn't (i.e. `astro dev`). Documented in depth in [`SEARCH.md`](SEARCH.md). |
+| `share.ts` | The share dropdown: opens each platform's share URL for the current page in a new tab, and closes on Escape or an outside click. |
 
 Init order matters and is fixed in `TopBar.astro`: the theme selects must be
 restored *before* `initDarkMode`, because they resolve which stylesheet URL each
@@ -563,7 +569,7 @@ slot.
 
 ```astro
 <Fragment slot="scripts">
-  <Scripts use={["blog-setting", "python", "bash", "line-numbers", "command-line"]} />
+  <Scripts use={["python", "bash", "line-numbers", "command-line"]} />
 </Fragment>
 ```
 
@@ -627,12 +633,18 @@ resolved against the `articles` collection. **To change what's featured, edit th
 expands on click to reveal its cover image, and its link only becomes clickable
 once expanded, so the first tap expands instead of navigating.
 
-### ShareButton
+### The share menu
 
-The floating share button and its platform row (Facebook, X, WhatsApp, Reddit,
-Hacker News, Telegram). Options stagger in 100ms apart rather than popping as a
-row; each opens a share URL built from `location.href` and `document.title`.
-To add a platform, add it to both `platforms` and `shareUrls`.
+**Not a component** — the share button lives in the top bar, not in a floating
+widget of its own. Its markup is the `share-container` block in `TopBar.astro`,
+driven by the `sharePlatforms` array in that file's frontmatter; its behaviour is
+`topbar/share.ts`. Each option opens that platform's share URL, built from
+`location.href` and `document.title`.
+
+To add a platform you must edit **both** halves: an entry in `sharePlatforms`
+(`{ id, title, icon }`, where `icon` is a Font Awesome brand name) and a matching
+`id` key in `SHARE_URLS` in `share.ts`. An option whose `id` has no `SHARE_URLS`
+entry renders but does nothing.
 
 ---
 
@@ -709,7 +721,7 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
   </div>
 
   <Fragment slot="scripts">
-    <Scripts use={["blog-setting", "python", "line-numbers"]} />
+    <Scripts use={["python", "line-numbers"]} />
   </Fragment>
 </BaseLayout>
 ```
