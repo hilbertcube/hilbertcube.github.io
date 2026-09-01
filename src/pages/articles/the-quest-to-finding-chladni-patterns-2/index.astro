@@ -14,6 +14,7 @@ import TabBox from "@components/code/TabBox.astro";
 import Sample from "@components/code/Sample.astro";
 import { raw } from "@components/code/raw.astro";
 import CodeBox from "@components/code/CodeBox.astro";
+import CodeBlock from "@components/code/CodeBlock.astro";
 import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import ContinueButton from "@components/article/ContinueButton.astro"
@@ -222,10 +223,10 @@ pip install scipy</ShellScript>
           remarks about some of the functions used in this code snippet.
         </p>
   
-<CodeBox language="python">def generate_sign_combinations(pairs):
+<CodeBlock language="python">def generate_sign_combinations(pairs):
     sign_combinations = list(itertools.product([1, -1], repeat=(len(pairs) - 1)))
     return [[1] + list(comb) for comb in sign_combinations]  # Keep the first sign positive
-</CodeBox>
+</CodeBlock>
         <p>
           The function <code class="inline-code">.product()</code> works similar to
           a cartesian product, or equivalent to a nested for-loop in the context of
@@ -273,12 +274,12 @@ pip install scipy</ShellScript>
         >
   
         <p>The next function, $u(x, y, t)$, defined by</p>
-<CodeBox language="python">def u(x, y, pairs, signs):
+<CodeBlock language="python">def u(x, y, pairs, signs):
     equation = np.zeros_like(x)  # Return an array of 0's with the same type
     for (n, m), sign in zip(pairs, signs):
         equation += sign * X(x, n) * X(y, m)
     return equation
-</CodeBox>
+</CodeBlock>
   
         <p>
           takes in $x$, $y$, the pairs which we need to plots, and the signs list
@@ -300,11 +301,11 @@ pip install scipy</ShellScript>
           > find all such pairs, and then return all of them in a list.
         </p>
   
-<CodeBox language="python">def find_pairs(number):
+<CodeBlock language="python">def find_pairs(number):
     return [(n, m) for n in range(0, int(np.sqrt(number)) + 1)
             for m in range(0, int(np.sqrt(number)) + 1) if n**2 + m**2 == number]
     return equation
-</CodeBox>
+</CodeBlock>
   
         <p>
           For example, if <code class="inline-code">number == 145</code>, then the
@@ -334,13 +335,13 @@ pip install scipy</ShellScript>
             class="inline-code">description</code
           >, and <code class="inline-code">sum_of_squares</code>.
         </p>
-<CodeBox language="python">def plot_sum_of_squares(start_index, end_index):
+<CodeBlock language="python">def plot_sum_of_squares(start_index, end_index):
     # ... something up here        
     
     equations = []
     descriptions = []
     sums_of_squares = []
-</CodeBox>
+</CodeBlock>
         <p>
           The list <code class="inline-code">equations</code> stores all equations to
           plot, while the other two list are simply for documentation purposes. The
@@ -358,7 +359,7 @@ pip install scipy</ShellScript>
             >len(equations) &lt; total_plots</code
           > is the breaking condition.
         </p>
-<CodeBox language="python" set:html={raw`    # ...something up here
+<CodeBlock language="python" set:html={raw`    # ...something up here
     k = 0
     found_plots = 0
     while len(equations) &lt; total_plots:
@@ -415,7 +416,7 @@ pip install scipy</ShellScript>
           >) to a color.
         </p>
   
-<CodeBox language="python" set:html={raw`    colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod',
+<CodeBlock language="python" set:html={raw`    colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod',
               'teal', 'darkred', 'darkcyan']
     pair_color_mapping = &#123;&#125;
     color_index = 0
@@ -582,7 +583,7 @@ plot_sum_of_squares(start, end)
           > from <code class="inline-code">scipy.special</code>
         </p>
   
-  <CodeBox language="python"># Function to get the m-th zero of the derivative of the Bessel function of order n
+  <CodeBlock language="python"># Function to get the m-th zero of the derivative of the Bessel function of order n
   def bessel_derivative_zero(n, m):
       if n == 0: #Redefine the first zero of J_0 prime to be 0
           zeros = list(jnp_zeros(n, m + 1))
@@ -590,7 +591,7 @@ plot_sum_of_squares(start, end)
           return zeros[m]
       else:
           return jnp_zeros(n, m + 1)[-1]  # Get the m-th zero, treating first zero as the 0th zero
-  </CodeBox>
+  </CodeBlock>
   
         <p>
           One of the weird things about the <code class="inline-code"
@@ -618,7 +619,7 @@ plot_sum_of_squares(start, end)
           >, <code class="inline-code">dblquad</code>:
         </p>
   
-<CodeBox language="python"># Define the double integrals for coefficients a_nm and b_nm
+<CodeBlock language="python"># Define the double integrals for coefficients a_nm and b_nm
 def a_nm(n, m, a):
     z_nm = bessel_derivative_zero(n, m)
     numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.cos(n * theta) * 
@@ -632,7 +633,7 @@ def b_nm(n, m, a):
                         f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
     denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
     return numerator / (2 * np.pi * denominator)
-</CodeBox>
+</CodeBlock>
   
         <p>
           After calculating the coefficients, the final step is straight forward.
@@ -640,7 +641,7 @@ def b_nm(n, m, a):
           the figure.
         </p>
   
-<CodeBox language="python"># Plotting function in polar coordinates
+<CodeBlock language="python"># Plotting function in polar coordinates
 def plot_polar_contour(n_max, m_max, a, resolution=100):
     r = np.linspace(0, a, resolution)
     theta = np.linspace(0, 2 * np.pi, resolution)
@@ -672,7 +673,7 @@ def plot_polar_contour(n_max, m_max, a, resolution=100):
     plt.show()
 
 plot_polar_contour(columns, rows, a)
-</CodeBox>
+</CodeBlock>
         <p>
           Put together all the pieces, and we may arrive at the final code for the
           circular plate, using the 2d wave equation to be:
