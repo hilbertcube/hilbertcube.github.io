@@ -244,7 +244,7 @@
     --lightbox-surface: var(--body-background-color);
     --lightbox-border: var(--contrast-line-color);
     --lightbox-text: var(--grid-text-color);
-    /* Hover accent, matching .share-button:hover */
+    /* Hover accent, matching the top bar's icon buttons on hover */
     --lightbox-accent: var(--nav-bar-text-color);
     --lightbox-muted: var(--article-date-color);
 
@@ -344,11 +344,10 @@
     }
   }
 
-  /* Floating controls over content: the site already has one of these in
-     ShareButton, so these take its treatment wholesale — circular, page-surface
-     fill, hairline border, and the same two-step shadow. That keeps them
-     recognisably the site's buttons instead of the generic translucent-black
-     pills a viewer usually ships with. */
+  /* Floating controls over content: circular, page-surface fill, hairline
+     border and a two-step shadow, so they read as the site's own buttons
+     instead of the generic translucent-black pills a viewer usually ships
+     with. */
   .lightbox-button {
     position: absolute;
     display: flex;

@@ -8,6 +8,15 @@ import { getIconSvg } from '@utils/fontawesome';
 
 const moonSvg = getIconSvg('fas', 'moon');
 const sunSvg = getIconSvg('fas', 'sun');
+
+const sharePlatforms = [
+  { id: 'facebook', title: 'Facebook', icon: 'facebook' },
+  { id: 'twitter', title: 'Twitter', icon: 'x-twitter' },
+  { id: 'whatsapp', title: 'Whatsapp', icon: 'whatsapp' },
+  { id: 'reddit', title: 'Reddit', icon: 'reddit' },
+  { id: 'hackernews', title: 'Hacker News', icon: 'hacker-news' },
+  { id: 'telegram', title: 'Telegram', icon: 'telegram' },
+];
 ---
 
 <div class="top-nav">
@@ -60,6 +69,32 @@ const sunSvg = getIconSvg('fas', 'sun');
         >
           <Icon name="tags" />
         </button>
+      </abbr>
+      <abbr title="share this page" class="share-container">
+        <button
+          type="button"
+          id="shareBtn"
+          class="topbar-icon-btn share-icon-btn"
+          aria-label="share-page"
+        >
+          <Icon name="share-nodes" />
+        </button>
+        <div class="share-dropdown" id="shareDropdown">
+          {
+            sharePlatforms.map((platform) => (
+              <button
+                type="button"
+                class="share-option"
+                data-share={platform.id}
+                id={`share-${platform.id}`}
+                title={platform.title}
+                aria-label={`share-on-${platform.id}`}
+              >
+                <Icon name={platform.icon} prefix="fab" />
+              </button>
+            ))
+          }
+        </div>
       </abbr>
       <abbr title="RSS" class="rss">
         <a aria-label="rss" href="/rss/feed.xml" class="topbar-icon-btn">
@@ -232,6 +267,7 @@ const sunSvg = getIconSvg('fas', 'sun');
   import { initCodeThemeSelect, initDarkMode } from "./topbar/theme";
   import { initSettings, initProgressBar } from "./topbar/settings";
   import { initSearch } from "./topbar/search";
+  import { initShare } from "./topbar/share";
 
   initNav();
 
@@ -244,6 +280,7 @@ const sunSvg = getIconSvg('fas', 'sun');
   initSettings();
   initProgressBar();
   initSearch();
+  initShare();
 </script>
 
 <style>
