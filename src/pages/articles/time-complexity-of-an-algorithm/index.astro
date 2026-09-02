@@ -18,6 +18,7 @@ import { tex } from "@components/math/tex.astro";
 import Sample from "@components/code/Sample.astro";
 import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
+import Table from "@components/article/Table.astro";
 ---
 
 <BaseLayout
@@ -28,14 +29,17 @@ import Quote from "@components/article/Quote.astro";
 >
   <Fragment slot="head">
     <style>
-      /* Summary table of growth functions. The table style itself is
-         .p-table in components/_content.css; the growth and name columns
-         are centred here because that is particular to this table's content. */
-      .p-table td:first-child {
+      /* Summary table of growth functions. The table style itself lives in
+         components/article/Table.astro; the growth and name columns are
+         centred here because that is particular to this table's content.
+         .p-table needs :global() — the <table> is Table.astro's element and
+         carries its scope id, not this page's. The cells are slot content and
+         stay page-scoped, so `td` still pins these rules to this page. */
+      :global(.p-table) td:first-child {
         text-align: center;
         white-space: nowrap;
       }
-      .p-table td:nth-child(2) {
+      :global(.p-table) td:nth-child(2) {
         text-align: center;
       }
     </style>
@@ -1311,205 +1315,203 @@ return not-found</Sample>
         factor of tuning can ever recover.
       </p>
 
-      <div class="table-wrapper">
-        <table class="p-table">
-          <!-- <caption
-            >Growth functions of algorithmic analysis, ordered by growth
-            rate.</caption
-          > -->
-          <thead>
-            <tr>
-              <th>Growth</th>
-              <th>Name</th>
-              <th>Where it comes from</th>
-              <th>Typical examples</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>$\Theta(1)$</td>
-              <td>Constant</td>
-              <td>
-                A fixed number of primitive operations, independent of the
-                input size
-              </td>
-              <td>
-                Array indexing; fixed-width arithmetic and bitwise operations;
-                assigning a primitive; stack push/pop and queue
-                enqueue/dequeue; linked-list insertion at a known node;
-                hash-map insert and lookup <em>on average</em> (worst case
-                $\Theta(n)$ when all keys collide)
-              </td>
-            </tr>
-            <tr>
-              <td><M>{tex`\Theta(\alpha(n))`}</M></td>
-              <td>Inverse Ackermann</td>
-              <td>
-                Amortized cost of near-flat tree structures; a constant for
-                every $n$ that fits in the universe
-              </td>
-              <td>
-                Union-find with path compression and union by rank:
-                <M>{tex`\Theta(m\,\alpha(n))`}</M> for $m$ operations on $n$
-                elements
-              </td>
-            </tr>
-            <tr>
-              <td><M>{tex`\Theta(\log^{*} n)`}</M>, $\Theta(\log\log n)$</td>
-              <td>Iterated / doubly logarithmic</td>
-              <td>
-                Recursions that reduce the input to its logarithm at each step
-              </td>
-              <td>
-                Interpolation search on uniform data; van Emde Boas trees;
-                some specialized parallel and geometric structures
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(\log n)$</td>
-              <td>Logarithmic</td>
-              <td>
-                Each step discards a constant fraction of the remaining input
-              </td>
-              <td>
-                Binary search; search, insertion and deletion in a balanced
-                BST (AVL, red-black, B-tree); binary-heap insert and
-                extract-min; exponentiation by squaring; Euclid's GCD;
-                <a
-                  href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/"
-                  class="url">fast-doubling</a
-                > Fibonacci
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(\log^k n)$</td>
-              <td>Polylogarithmic</td>
-              <td>A constant number of nested logarithmic searches</td>
-              <td>
-                Multi-level indexing; range trees; many dynamic-connectivity
-                structures
-              </td>
-            </tr>
-            <tr>
-              <td><M>{tex`\Theta(\sqrt{n})`}</M></td>
-              <td>Square root</td>
-              <td>
-                Block decompositions that balance <M>{tex`\sqrt{n}`}</M>
-                blocks of <M>{tex`\sqrt{n}`}</M> elements
-              </td>
-              <td>
-                Trial-division primality testing; sqrt decomposition and Mo's
-                algorithm; number-theoretic sieving steps
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(n)$</td>
-              <td>Linear</td>
-              <td>A constant amount of work for each element, once</td>
-              <td>
-                Minimum/maximum of an array; linear search; traversing a
-                linked list; insertion or deletion at an arbitrary position;
-                comparing two arrays or strings; counting sort over a fixed
-                alphabet
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(n\log n)$</td>
-              <td>Linearithmic</td>
-              <td>
-                $\Theta(\log n)$ divide-and-conquer levels, each doing
-                $\Theta(n)$ work, and the optimum for comparison sorting
-              </td>
-              <td>
-                Merge sort, heap sort, quicksort (average case); the Fast
-                Fourier Transform; sorting-based sweeps and convex hulls
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(n^2)$</td>
-              <td>Quadratic</td>
-              <td>
-                Two nested loops over the input:
-                <M>{tex`\sum_{i=1}^{n}\sum_{j=1}^{n} 1 = n^2`}</M>
-              </td>
-              <td>
-                Selection and bubble sort; insertion sort in the worst case
-                ($\Theta(n)$ when already sorted); naive substring search; all
-                pairwise distances; Dijkstra with an array queue
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(n^3)$</td>
-              <td>Cubic</td>
-              <td>Three nested loops over the input</td>
-              <td>
-                Naive matrix multiplication (Strassen's algorithm improves it
-                to <M>{tex`\Theta(n^{\log_2 7})`}</M> at the cost of a large
-                constant); Floyd–Warshall all-pairs shortest paths
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(2^n)$</td>
-              <td>Exponential</td>
-              <td>
-                One branch per binary choice: a set of $n$ elements has
-                <M>{tex`\sum_{k=0}^{n}\binom{n}{k} = 2^n`}</M> subsets
-              </td>
-              <td>
-                Brute-force subset sum; naive recursive Fibonacci; enumerating
-                all subarrays, which is <M>{tex`\Theta(n\,2^n)`}</M>
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(n!)$</td>
-              <td>Factorial</td>
-              <td>
-                One branch per ordering of the input. By Stirling's
-                approximation <M>{tex`n! = 2^{\Theta(n\log n)}`}</M>, so the
-                factorial sits strictly between $\Theta(2^n)$ and
-                $\Theta(n^n)$
-              </td>
-              <td>
-                Brute-force traveling salesman; generating all permutations
-                of a set
-              </td>
-            </tr>
-            <tr>
-              <td>$\Theta(n^n)$</td>
-              <td>Exponential with a growing base</td>
-              <td>
-                Each of $n$ positions chooses independently among $n$ values,
-                rather than consuming one of them as a permutation does,
-                hence <M>{tex`n^n/n! \approx e^n`}</M>
-              </td>
-              <td>
-                Enumerating all functions from an $n$-element set to itself,
-                or all $n$-colorings of $n$ items; brute force over all
-                labelled trees, of which there are <M>{tex`n^{n-2}`}</M>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <M>{tex`\Theta\!\left(2^{2^{n}}\right)`}</M> and beyond
-              </td>
-              <td>Doubly exponential, non-elementary, Ackermannian</td>
-              <td>
-                Decision procedures whose search space is itself exponential
-                in an exponential, or past that, bounded by no fixed tower
-                of exponentials at all. These are the mirror image of the
-                <M>{tex`\alpha(n)`}</M> row at the top of the table
-              </td>
-              <td>
-                Buchberger's algorithm for Gröbner bases and quantifier
-                elimination over the reals (both doubly exponential); deciding
-                Presburger arithmetic (triply exponential); deciding monadic
-                second-order logic on strings (non-elementary); Petri-net
-                reachability (Ackermann-complete)
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <Table>
+        <!-- <caption
+          >Growth functions of algorithmic analysis, ordered by growth
+          rate.</caption
+        > -->
+        <thead>
+          <tr>
+            <th>Growth</th>
+            <th>Name</th>
+            <th>Where it comes from</th>
+            <th>Typical examples</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>$\Theta(1)$</td>
+            <td>Constant</td>
+            <td>
+              A fixed number of primitive operations, independent of the
+              input size
+            </td>
+            <td>
+              Array indexing; fixed-width arithmetic and bitwise operations;
+              assigning a primitive; stack push/pop and queue
+              enqueue/dequeue; linked-list insertion at a known node;
+              hash-map insert and lookup <em>on average</em> (worst case
+              $\Theta(n)$ when all keys collide)
+            </td>
+          </tr>
+          <tr>
+            <td><M>{tex`\Theta(\alpha(n))`}</M></td>
+            <td>Inverse Ackermann</td>
+            <td>
+              Amortized cost of near-flat tree structures; a constant for
+              every $n$ that fits in the universe
+            </td>
+            <td>
+              Union-find with path compression and union by rank:
+              <M>{tex`\Theta(m\,\alpha(n))`}</M> for $m$ operations on $n$
+              elements
+            </td>
+          </tr>
+          <tr>
+            <td><M>{tex`\Theta(\log^{*} n)`}</M>, $\Theta(\log\log n)$</td>
+            <td>Iterated / doubly logarithmic</td>
+            <td>
+              Recursions that reduce the input to its logarithm at each step
+            </td>
+            <td>
+              Interpolation search on uniform data; van Emde Boas trees;
+              some specialized parallel and geometric structures
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(\log n)$</td>
+            <td>Logarithmic</td>
+            <td>
+              Each step discards a constant fraction of the remaining input
+            </td>
+            <td>
+              Binary search; search, insertion and deletion in a balanced
+              BST (AVL, red-black, B-tree); binary-heap insert and
+              extract-min; exponentiation by squaring; Euclid's GCD;
+              <a
+                href="https://www.geeksforgeeks.org/fast-doubling-method-to-find-the-nth-fibonacci-number/"
+                class="url">fast-doubling</a
+              > Fibonacci
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(\log^k n)$</td>
+            <td>Polylogarithmic</td>
+            <td>A constant number of nested logarithmic searches</td>
+            <td>
+              Multi-level indexing; range trees; many dynamic-connectivity
+              structures
+            </td>
+          </tr>
+          <tr>
+            <td><M>{tex`\Theta(\sqrt{n})`}</M></td>
+            <td>Square root</td>
+            <td>
+              Block decompositions that balance <M>{tex`\sqrt{n}`}</M>
+              blocks of <M>{tex`\sqrt{n}`}</M> elements
+            </td>
+            <td>
+              Trial-division primality testing; sqrt decomposition and Mo's
+              algorithm; number-theoretic sieving steps
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(n)$</td>
+            <td>Linear</td>
+            <td>A constant amount of work for each element, once</td>
+            <td>
+              Minimum/maximum of an array; linear search; traversing a
+              linked list; insertion or deletion at an arbitrary position;
+              comparing two arrays or strings; counting sort over a fixed
+              alphabet
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(n\log n)$</td>
+            <td>Linearithmic</td>
+            <td>
+              $\Theta(\log n)$ divide-and-conquer levels, each doing
+              $\Theta(n)$ work, and the optimum for comparison sorting
+            </td>
+            <td>
+              Merge sort, heap sort, quicksort (average case); the Fast
+              Fourier Transform; sorting-based sweeps and convex hulls
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(n^2)$</td>
+            <td>Quadratic</td>
+            <td>
+              Two nested loops over the input:
+              <M>{tex`\sum_{i=1}^{n}\sum_{j=1}^{n} 1 = n^2`}</M>
+            </td>
+            <td>
+              Selection and bubble sort; insertion sort in the worst case
+              ($\Theta(n)$ when already sorted); naive substring search; all
+              pairwise distances; Dijkstra with an array queue
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(n^3)$</td>
+            <td>Cubic</td>
+            <td>Three nested loops over the input</td>
+            <td>
+              Naive matrix multiplication (Strassen's algorithm improves it
+              to <M>{tex`\Theta(n^{\log_2 7})`}</M> at the cost of a large
+              constant); Floyd–Warshall all-pairs shortest paths
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(2^n)$</td>
+            <td>Exponential</td>
+            <td>
+              One branch per binary choice: a set of $n$ elements has
+              <M>{tex`\sum_{k=0}^{n}\binom{n}{k} = 2^n`}</M> subsets
+            </td>
+            <td>
+              Brute-force subset sum; naive recursive Fibonacci; enumerating
+              all subarrays, which is <M>{tex`\Theta(n\,2^n)`}</M>
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(n!)$</td>
+            <td>Factorial</td>
+            <td>
+              One branch per ordering of the input. By Stirling's
+              approximation <M>{tex`n! = 2^{\Theta(n\log n)}`}</M>, so the
+              factorial sits strictly between $\Theta(2^n)$ and
+              $\Theta(n^n)$
+            </td>
+            <td>
+              Brute-force traveling salesman; generating all permutations
+              of a set
+            </td>
+          </tr>
+          <tr>
+            <td>$\Theta(n^n)$</td>
+            <td>Exponential with a growing base</td>
+            <td>
+              Each of $n$ positions chooses independently among $n$ values,
+              rather than consuming one of them as a permutation does,
+              hence <M>{tex`n^n/n! \approx e^n`}</M>
+            </td>
+            <td>
+              Enumerating all functions from an $n$-element set to itself,
+              or all $n$-colorings of $n$ items; brute force over all
+              labelled trees, of which there are <M>{tex`n^{n-2}`}</M>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <M>{tex`\Theta\!\left(2^{2^{n}}\right)`}</M> and beyond
+            </td>
+            <td>Doubly exponential, non-elementary, Ackermannian</td>
+            <td>
+              Decision procedures whose search space is itself exponential
+              in an exponential, or past that, bounded by no fixed tower
+              of exponentials at all. These are the mirror image of the
+              <M>{tex`\alpha(n)`}</M> row at the top of the table
+            </td>
+            <td>
+              Buchberger's algorithm for Gröbner bases and quantifier
+              elimination over the reals (both doubly exponential); deciding
+              Presburger arithmetic (triply exponential); deciding monadic
+              second-order logic on strings (non-elementary); Petri-net
+              reachability (Ackermann-complete)
+            </td>
+          </tr>
+        </tbody>
+      </Table>
     </section>
 
     <section id="references">
