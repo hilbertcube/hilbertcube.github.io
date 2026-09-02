@@ -72,7 +72,57 @@
   // withastro/astro#14642. Applied on restart.
   "astro.auto-import-cache.enabled": false,
   "astro.content-intellisense": true,
+  // Every `\x` inside a template literal is painted as an escape sequence.
+  // The TypeScript grammar's rule is `\\(x[0-9A-Fa-f]{2}|...|.|$)` — that
+  // trailing `.` matches *any* character after a backslash — and it applies to
+  // tagged templates with no exception for String.raw. So in
+  // `<E>{tex`\begin{equation}\left(\dfrac...`}</E>` the \b \l \d \s \e all
+  // light up as escapes they are not: `tex` is String.raw, so those backslashes
+  // are literal LaTeX.
+  //
+  // The grammar can't be told about String.raw, so the fix is to repaint the
+  // scope: give escapes inside template literals the theme's own string colour,
+  // which makes them disappear back into the string. Per theme, because a
+  // textMateRule has to name a colour and can't inherit one.
+  //
+  // Cost: a *real* escape in a template literal also loses its highlight. One
+  // site in this repo — the `\n` in TableOfContents.astro's renderItems.
+  // Using another theme? Add its name and its `string` colour here.
+  "editor.tokenColorCustomizations": {
+    "[Dark Modern][Dark+][Dark (Visual Studio)]": {
+      "textMateRules": [
+        {
+          "scope": "string.template constant.character.escape",
+          "settings": { "foreground": "#ce9178" }
+        }
+      ]
+    },
+    "[Dark 2026]": {
+      "textMateRules": [
+        {
+          "scope": "string.template constant.character.escape",
+          "settings": { "foreground": "#a5d6ff" }
+        }
+      ]
+    },
+    "[Light Modern][Light+][Light (Visual Studio)]": {
+      "textMateRules": [
+        {
+          "scope": "string.template constant.character.escape",
+          "settings": { "foreground": "#a31515" }
+        }
+      ]
+    },
+    "[Light 2026]": {
+      "textMateRules": [
+        {
+          "scope": "string.template constant.character.escape",
+          "settings": { "foreground": "#0a3069" }
+        }
+      ]
+    }
+  },
   "github.copilot.enable": {
     "*": false
-}
+  }
 }
