@@ -16,6 +16,7 @@ import { tex } from "@components/math/tex.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import ShellScript from "@components/code/ShellScript.astro";
+import C from "@components/code/C.astro";
 import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 ---
@@ -188,11 +189,9 @@ import Quote from "@components/article/Quote.astro";
           OpenMP is an Application Program Interface (API) that may be used to
           direct multi-threaded, shared memory parallelism in C/C++, or Fortran
           programs. Both g++ (available since GCC 4.9) and MSVC compiler have
-          OpenMP available through the header <code class="inline-code"
-            >#include&lt;omp.h&gt;</code
-          >. To enable OpenMP in Microsoft Visual Studio, go to Project &gt;
+          OpenMP available through the header <C>#include&lt;omp.h&gt;</C>. To enable OpenMP in Microsoft Visual Studio, go to Project &gt;
           Properties &gt; C/C++ &gt; Language &gt; OpenMP support, select yes.
-          For g++, you must add <code class="inline-code">-fopenmp</code> to the compilation
+          For g++, you must add <C>-fopenmp</C> to the compilation
           of any module that uses OpenMP:
         </p>
 <ShellScript>g++ -c test.cpp -o test.o -fopenmp 
@@ -393,9 +392,7 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
           The main change from the original paper is to convert the method of
           image feature extraction using CPU to GPU. We will add a function
           based on the code of the original paper that can detect image features
-          using the GPU. We changed the finder of feature detection to use <code
-            class="inline-code">cuda::ORB</code
-          >, and based on the open source code of OpenCV CUDA, we used the
+          using the GPU. We changed the finder of feature detection to use <C>cuda::ORB</C>, and based on the open source code of OpenCV CUDA, we used the
           corresponding CUDA ORB image feature detection algorithm to achieve
           the same purpose as its regular version. We call this new function
         </p>
@@ -406,9 +403,7 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
         </CodeBox>
 
         <p>
-          to compute GPU images. This is an analogous version of the <code
-            class="inline-code">detectAndCompute</code
-          >
+          to compute GPU images. This is an analogous version of the <C>detectAndCompute</C>
           function when using regular feature detector ORB. The key feature in this
           function is the computation of descriptors on the GPU. To do this, we must
           upload the descriptors from the CPU to the GPU, and then download it back

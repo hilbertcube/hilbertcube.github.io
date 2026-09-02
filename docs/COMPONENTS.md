@@ -276,6 +276,9 @@ Five containers with different chrome. Pick by what the block *is*:
 All of them need Prism to actually highlight: name the language in
 [`<Scripts use={[…]}>`](#scripts) at the bottom of the page.
 
+For a run of code *inside a sentence* — a flag, an identifier, a filename —
+use [`C`](#c), which is not a container and needs no Prism entry.
+
 > To convert legacy raw `<div class="code-container">` markup, run
 > `python3 scripts/convert-code-blocks.py <file> --apply`
 > (see [`AUTOMATION.md`](AUTOMATION.md)).
@@ -359,6 +362,27 @@ hidden** (`display: none`) — that is not automatic:
 A pane meeting the tab strip gets a square top-left corner from
 `.tab-button-container ~ .code-container > pre` in
 `css/components/_code-blocks.css` — no per-pane inline `border-radius` needed.
+
+### C
+
+Inline code — `<code class="inline-code">`, styled but not highlighted. The
+code-side twin of [`M`](#m), and the only member of `code/` that isn't a block.
+
+| Prop | Type | Default |
+|---|---|---|
+| `code` | `string` | — (falls back to the slot) |
+
+```astro
+<p>Compile with <C>-g</C> to embed DWARF debug information.</p>
+<C code={raw`std::vector<T>{}`} />
+```
+
+Plain slot text is fine when the content has no braces or backslashes; braces
+open an Astro expression and quoted attributes eat backslashes, so anything
+carrying either goes through [`raw`](#rawastro), exactly as with `M`/`tex`.
+
+The `.inline-code` rule is **scoped to this component** — a hand-written
+`<code class="inline-code">` in a page renders unstyled. Use `<C>`.
 
 ### CopyButton
 
@@ -694,6 +718,7 @@ import { tex } from "@components/math/tex.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import Sample from "@components/code/Sample.astro";
+import C from "@components/code/C.astro";
 import { raw } from "@components/code/raw.astro";
 import Scripts from "@components/site/Scripts.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
@@ -712,7 +737,7 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 
     <section id="intro">
       <h2>Introduction</h2>
-      <p>Inline math like $x^2$ is fine in prose.</p>
+      <p>Inline math like $x^2$ is fine in prose, and <C>--flag</C> is inline code.</p>
       <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>
       <Figure src="/articles/<slug>/plot.webp" width="70%">A caption.</Figure>
       <CodeBox language="python" lineNumbers>print("hi")

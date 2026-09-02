@@ -12,6 +12,7 @@ import Figure from "@components/article/Figure.astro";
 
 import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
+import C from "@components/code/C.astro";
 import Scripts from "@components/site/Scripts.astro";
 ---
 
@@ -173,14 +174,12 @@ sudo apt install bash-completion -y</ShellScript>
           After installation, verify, and then source it:
           <ShellScript>echo $BASH_VERSION
 source /etc/bash_completion</ShellScript>
-          Next, add the following line to your <code class="inline-code"
-            >~/.bashrc</code
-          > file to enable bash-completion automatically on terminal startup:
+          Next, add the following line to your <C>~/.bashrc</C> file to enable bash-completion automatically on terminal startup:
           <CodeBlock>if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi</CodeBlock>
           The next thing I did is to enable a menu-style tab completion by adding
-          the following lines to <code class="inline-code">~/.inputrc</code>:
+          the following lines to <C>~/.inputrc</C>:
           <CodeBlock># Show all matches immediately
 set show-all-if-ambiguous on
 
@@ -217,9 +216,7 @@ systemctl status keyd</ShellScript>
 
           Next, monitor which keycode corresponds to the copilot key by running:
           <ShellScript>sudo keyd monitor # or sudo keyd.rvaiya monitor</ShellScript>
-          Add the following to <code class="inline-code"
-            >/etc/keyd/default.conf</code
-          >:
+          Add the following to <C>/etc/keyd/default.conf</C>:
           <ShellScript>[ids]
 *
 
@@ -535,9 +532,7 @@ cargo --version</ShellScript>
               >: Numerical computing environment. Download from MathWorks and
               follow their installation instructions. To add MATLAB to your
               application menu, create
-              <code class="inline-code"
-                >~/.local/share/applications/matlab.desktop</code
-              >
+              <C>~/.local/share/applications/matlab.desktop</C>
               with this content:
               <CodeBlock>[Desktop Entry]
 Version=1.0
@@ -613,9 +608,7 @@ Categories=Education;Electronics;Engineering;</CodeBlock>
 sudo apt install ./master-pdf-editor*.deb</ShellScript>
                 </li>
                 <li class="bullet">
-                  Then, run the installer with: <code class="inline-code"
-                    >./master-pdf-editor-*.run</code
-                  >
+                  Then, run the installer with: <C>./master-pdf-editor-*.run</C>
                 </li>
                 <li class="bullet">
                   Follow the on-screen instructions to complete the
