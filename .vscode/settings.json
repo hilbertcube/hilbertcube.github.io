@@ -82,14 +82,40 @@
   //
   // The grammar can't be told about String.raw, so the fix is to repaint the
   // scope: give escapes inside template literals the theme's own string colour,
-  // which makes them disappear back into the string. Per theme, because a
-  // textMateRule has to name a colour and can't inherit one.
+  // so they disappear back into the string. It has to be per theme — a
+  // textMateRule must name a colour and cannot inherit one.
+  //
+  // A theme key matches on the theme's *settingsId* (the value in
+  // workbench.colorTheme — "Visual Studio Dark", not the picker's label
+  // "Dark (Visual Studio)"). "*" is a wildcard: [*Dark*] contains, [Dark*]
+  // starts-with, [*Dark] ends-with. Every matching key's rules are
+  // concatenated in the order written, and the last one wins — so the broad
+  // globs come first and the exact ids override them below.
+  //
+  // On a theme none of these catch, the highlighting comes back. To add it:
+  // run "Developer: Generate Color Theme From Current Settings", find the
+  // "string" entry in tokenColors, and paste that hex under a new key.
   //
   // Cost: a *real* escape in a template literal also loses its highlight. One
   // site in this repo — the `\n` in TableOfContents.astro's renderItems.
-  // Using another theme? Add its name and its `string` colour here.
   "editor.tokenColorCustomizations": {
-    "[Dark Modern][Dark+][Dark (Visual Studio)]": {
+    "[*Dark*][*dark*]": {
+      "textMateRules": [
+        {
+          "scope": "string.template constant.character.escape",
+          "settings": { "foreground": "#ce9178" }
+        }
+      ]
+    },
+    "[*Light*][*light*]": {
+      "textMateRules": [
+        {
+          "scope": "string.template constant.character.escape",
+          "settings": { "foreground": "#a31515" }
+        }
+      ]
+    },
+    "[Dark Modern][Dark+][Visual Studio Dark]": {
       "textMateRules": [
         {
           "scope": "string.template constant.character.escape",
@@ -105,7 +131,7 @@
         }
       ]
     },
-    "[Light Modern][Light+][Light (Visual Studio)]": {
+    "[Light Modern][Light+][Visual Studio Light]": {
       "textMateRules": [
         {
           "scope": "string.template constant.character.escape",
