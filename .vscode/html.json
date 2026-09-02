@@ -1,7 +1,0 @@
-{
-  "MathJax inline math": {
-    "prefix": "\\(",
-    "body": ["\\($1\\)"],
-    "description": "Insert inline math \\( ... \\)"
-  }
-}

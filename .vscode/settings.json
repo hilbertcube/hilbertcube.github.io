@@ -64,6 +64,13 @@
     "editor.formatOnType": false,
     "editor.suggest.showWords": false
   },
+  // The auto-import cache is what feeds component completions (typing `<Ta`
+  // offering `Table` and writing the import for you). Its own docs note it
+  // "can cause issues with new files not being detected" — a component added
+  // this session never shows up until the cache is rebuilt. Off means the
+  // language server resolves imports live: slightly slower, always current.
+  // withastro/astro#14642. Applied on restart.
+  "astro.auto-import-cache.enabled": false,
   "astro.content-intellisense": true,
   "github.copilot.enable": {
     "*": false
