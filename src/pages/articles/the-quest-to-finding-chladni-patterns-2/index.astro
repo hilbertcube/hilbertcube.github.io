@@ -15,6 +15,7 @@ import Sample from "@components/code/Sample.astro";
 import { raw } from "@components/code/raw.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
+import C from "@components/code/C.astro";
 import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import ContinueButton from "@components/article/ContinueButton.astro"
@@ -228,44 +229,26 @@ pip install scipy</ShellScript>
     return [[1] + list(comb) for comb in sign_combinations]  # Keep the first sign positive
 </CodeBlock>
         <p>
-          The function <code class="inline-code">.product()</code> works similar to
+          The function <C>.product()</C> works similar to
           a cartesian product, or equivalent to a nested for-loop in the context of
-          computer science. For example, <code class="inline-code"
-            >product('ABCD', repeat=2)</code
-          > will output
+          computer science. For example, <C>product('ABCD', repeat=2)</C> will output
         </p>
   
         <ShellScript>AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD</ShellScript>
   
         <p>
-          For our case, <code class="inline-code"
-            >.product([1, -1], repeat = (len(pairs) - 1))</code
-          > will generate all possible combinations of 1 and -1 for a length of <code
-            class="inline-code">len(pairs) - 1</code
-          >. We need to use <code class="inline-code">len(pairs) - 1</code> because
-          we want to keep the first sign positive, as seen in the return statement <code
-            class="inline-code">[[1] + list(comb)]</code
-          >. If <code class="inline-code"
-            >pairs = [(0, 5), (3, 4), (4, 3), (5, 0)]</code
-          >, then <code class="inline-code">len(pairs) = 4</code>. We want to keep
-          the first term to be positive, always, so <code class="inline-code"
-            >.product([1, -1], repeat = (len(pairs) - 1))</code
-          > will generate
+          For our case, <C>.product([1, -1], repeat = (len(pairs) - 1))</C> will generate all possible combinations of 1 and -1 for a length of <C>len(pairs) - 1</C>. We need to use <C>len(pairs) - 1</C> because
+          we want to keep the first sign positive, as seen in the return statement <C>[[1] + list(comb)]</C>. If <C>pairs = [(0, 5), (3, 4), (4, 3), (5, 0)]</C>, then <C>len(pairs) = 4</C>. We want to keep
+          the first term to be positive, always, so <C>.product([1, -1], repeat = (len(pairs) - 1))</C> will generate
         </p>
         <ShellScript> [1, 1, 1] [1, 1, -1] [1, -1, 1] [1, -1, -1] </ShellScript>
   
         <p>
-          The statement <code class="inline-code"
-            >sign_combinations = list(itertools.product([1, -1],
-            repeat=(len(pairs) - 1)))</code
-          > assigns a list of <code class="inline-code">[1, -1]</code> into <code
-            class="inline-code">sign_combinations</code
-          > up to <code class="inline-code">len(pairs) - 1</code>. The return
-          statement <code class="inline-code"
-            >return [[1] + list(comb) for comb in sign_combinations]</code
-          >
+          The statement <C>sign_combinations = list(itertools.product([1, -1],
+            repeat=(len(pairs) - 1)))</C> assigns a list of <C>[1, -1]</C> into <C>sign_combinations</C> up to <C>len(pairs) - 1</C>. The return
+          statement <C>return [[1] + list(comb) for comb in sign_combinations]</C>
           returns a list of list, consisting of all combinations of 1 and -1. For the
-          example above, if <code class="inline-code">len(pairs)</code> is 4, then the
+          example above, if <C>len(pairs)</C> is 4, then the
           function will return
         </p>
   
@@ -283,22 +266,16 @@ pip install scipy</ShellScript>
   
         <p>
           takes in $x$, $y$, the pairs which we need to plots, and the signs list
-          from the <code class="inline-code">generate_sign_combinations</code> function.
+          from the <C>generate_sign_combinations</C> function.
           The output is obviously the z-value of the function $u$. For example, if the
-          pairs of $n$ and $m$ is given as <code class="inline-code"
-            >(n, m) = [[0, 5], [3, 4], [4, 3], [5, 0]]</code
-          >, and the sign combinations is <code class="inline-code"
-            >[1, -1, -1]</code
-          >, then the contour equation $u(x, y, t)$ must be
+          pairs of $n$ and $m$ is given as <C>(n, m) = [[0, 5], [3, 4], [4, 3], [5, 0]]</C>, and the sign combinations is <C>[1, -1, -1]</C>, then the contour equation $u(x, y, t)$ must be
           <E>{tex`\begin{equation} u(x, y, t_0) = X(x, 0)X(y, 5) - X(x, 3)X(y, 4) - X(x, 4)X(y, 3) - X(x, 5)X(y, 0) = 0 \end{equation}`}</E>
         </p>
   
         <p>
-          The next function, <code class="inline-code">exist_sos(number)</code> is very
+          The next function, <C>exist_sos(number)</C> is very
           straight-forward. It simply return true if a number can be represented as
-          a sum of squares. Similarly, if a number is found, then the function <code
-            class="inline-code">find_pairs(number)</code
-          > find all such pairs, and then return all of them in a list.
+          a sum of squares. Similarly, if a number is found, then the function <C>find_pairs(number)</C> find all such pairs, and then return all of them in a list.
         </p>
   
 <CodeBlock language="python">def find_pairs(number):
@@ -308,32 +285,22 @@ pip install scipy</ShellScript>
 </CodeBlock>
   
         <p>
-          For example, if <code class="inline-code">number == 145</code>, then the
-          pairs are <code class="inline-code"
-            >[(1, 12), (8, 9), (9, 8), (12, 1)]</code
-          >. Most sum of squares numbers will have two or three pairs. Some have
+          For example, if <C>number == 145</C>, then the
+          pairs are <C>[(1, 12), (8, 9), (9, 8), (12, 1)]</C>. Most sum of squares numbers will have two or three pairs. Some have
           four like 145 or 25, but some number can have a quite large number of
-          pairs. For example, if <code class="inline-code">number == 725</code>,
-          then the pairs are <code class="inline-code"
-            >[(7, 26), (10, 25), (14, 23), (23, 14), (25, 10), (26, 7)]</code
-          >, or if <code class="inline-code">number == 9425</code>, then there are
-          up to 12 pairs, <code class="inline-code"
-            >[(4, 97), (20, 95), (31, 92), (41, 88), (55, 80), (64, 73), (73, 64),
-            (80, 55), (88, 41), (92, 31), (95, 20), (97, 4)]</code
-          >. This function is $O(n)$, which is pretty efficient. I think there is
+          pairs. For example, if <C>number == 725</C>,
+          then the pairs are <C>[(7, 26), (10, 25), (14, 23), (23, 14), (25, 10), (26, 7)]</C>, or if <C>number == 9425</C>, then there are
+          up to 12 pairs, <C>[(4, 97), (20, 95), (31, 92), (41, 88), (55, 80), (64, 73), (73, 64),
+            (80, 55), (88, 41), (92, 31), (95, 20), (97, 4)]</C>. This function is $O(n)$, which is pretty efficient. I think there is
           a way to make it even more efficient, but it lies beyond the scope of
           this article.
         </p>
   
         <p>
-          The final, and longest function is the <code class="inline-code"
-            >plot_sum_of_squares(start_index, end_index)</code
-          >. This function input the starting and ending pattern number, iterate
+          The final, and longest function is the <C>plot_sum_of_squares(start_index, end_index)</C>. This function input the starting and ending pattern number, iterate
           through all patterns in between, and output them to the plots. We first
           focus on the first half of the function's code block and start by
-          creating three lists: <code class="inline-code">equations</code>, <code
-            class="inline-code">description</code
-          >, and <code class="inline-code">sum_of_squares</code>.
+          creating three lists: <C>equations</C>, <C>description</C>, and <C>sum_of_squares</C>.
         </p>
 <CodeBlock language="python">def plot_sum_of_squares(start_index, end_index):
     # ... something up here        
@@ -343,10 +310,10 @@ pip install scipy</ShellScript>
     sums_of_squares = []
 </CodeBlock>
         <p>
-          The list <code class="inline-code">equations</code> stores all equations to
+          The list <C>equations</C> stores all equations to
           plot, while the other two list are simply for documentation purposes. The
           list
-          <code class="inline-code">sum_of_squares</code> is to store the sum-of-squares
+          <C>sum_of_squares</C> is to store the sum-of-squares
           numbers, call it k, to output to the plot, while description store all pairs
           that made up that number and the signs combination to output to the terminal.
         </p>
@@ -355,9 +322,7 @@ pip install scipy</ShellScript>
           The next part of the code is the while loop to iterate over all k to
           search for sum of squares. I want the user to be able to determine which
           index they want to start and end with to avoid overcrowding the screen
-          with too much plot. Therefore, the <code class="inline-code"
-            >len(equations) &lt; total_plots</code
-          > is the breaking condition.
+          with too much plot. Therefore, the <C>len(equations) &lt; total_plots</C> is the breaking condition.
         </p>
 <CodeBlock language="python" set:html={raw`    # ...something up here
     k = 0
@@ -408,12 +373,9 @@ pip install scipy</ShellScript>
         <p>
           The later half of the function is only to plot all graphs in the list.
           One technique for visibility of the plot is to assign colors to plots of
-          the same modes, but different signs (different sign combinations of <code
-            class="inline-code">[(1, 12), (8, 9), (9, 8), (12, 1)]</code
-          > will have the same color, for example). Here,
-          <code class="inline-code">pair_color_mapping</code> is a dictionary that maps
-          each unique pair of values (<code class="inline-code">pairs_tuple</code
-          >) to a color.
+          the same modes, but different signs (different sign combinations of <C>[(1, 12), (8, 9), (9, 8), (12, 1)]</C> will have the same color, for example). Here,
+          <C>pair_color_mapping</C> is a dictionary that maps
+          each unique pair of values (<C>pairs_tuple</C>) to a color.
         </p>
   
 <CodeBlock language="python" set:html={raw`    colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod',
@@ -578,9 +540,7 @@ plot_sum_of_squares(start, end)
           we only need to make a double for loop to iterate over every single of
           of them. The first thing to do is to of course set up a function to find
           the m-th zero of the n-th derivative of the bessel function of the first
-          kind, $J_n(x)$. For this, we must import <code class="inline-code"
-            >jn, jnp_zeros</code
-          > from <code class="inline-code">scipy.special</code>
+          kind, $J_n(x)$. For this, we must import <C>jn, jnp_zeros</C> from <C>scipy.special</C>
         </p>
   
   <CodeBlock language="python"># Function to get the m-th zero of the derivative of the Bessel function of order n
@@ -594,9 +554,7 @@ plot_sum_of_squares(start, end)
   </CodeBlock>
   
         <p>
-          One of the weird things about the <code class="inline-code"
-            >jnp_zeroes</code
-          > is that it only output zeroes that are greater than zero, but zero itself
+          One of the weird things about the <C>jnp_zeroes</C> is that it only output zeroes that are greater than zero, but zero itself
           is one of the zeroes of the derivative of the zeroth-order Bessel function,
           $J_0'(x)$. You can see this right in the figure below:
         </p>
@@ -614,9 +572,7 @@ plot_sum_of_squares(start, end)
         </p>
         <E>{tex`\begin{align} a_{nm} &= \frac{\langle J_0\cos(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ b_{nm} &= \frac{\langle J_0\sin(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots \end{align}`}</E>
         <p>
-          We can do this using the built-in methods for double integration: <code
-            class="inline-code">scipy.integrate</code
-          >, <code class="inline-code">dblquad</code>:
+          We can do this using the built-in methods for double integration: <C>scipy.integrate</C>, <C>dblquad</C>:
         </p>
   
 <CodeBlock language="python"># Define the double integrals for coefficients a_nm and b_nm
@@ -789,9 +745,7 @@ plot_polar_contour(columns, rows, a)
           which is simply the number of the pattern, and $S$, which is the sum of
           squares which that pattern is generated from (if $S=50$, then the modes
           are $(1, 7)$, $(5, 5)$ and $(7, 1)$, since $1^2+7^2=5^2 + 5^2=50$). By
-          setting <code class="inline-code">start = 1</code> and <code
-            class="inline-code">end = 72</code
-          >, we shall obtain the patterns right below:
+          setting <C>start = 1</C> and <C>end = 72</C>, we shall obtain the patterns right below:
         </p>
   
         <Figure
@@ -826,9 +780,7 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
         >
   
         <p>
-          If we continue to set <code class="inline-code">start = 73</code> and <code
-            class="inline-code">end = 144</code
-          >, we will obtain even more mesmerizing patterns like these:
+          If we continue to set <C>start = 73</C> and <C>end = 144</C>, we will obtain even more mesmerizing patterns like these:
         </p>
         <Figure
           src="/articles/the-quest-to-finding-chladni-patterns-2/CSquare_73-144_1.webp"
@@ -1006,9 +958,7 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
           I did not set any start and end for the circular plate, simply because
           they all follow the same set of rules: the number of diameter lines
           increases as we further move to the right, and the number of rings
-          increases as we move downward. Set <code class="inline-code"
-            >columns = 7</code
-          > and <code class="inline-code">rows = 5</code> and our output will be generated
+          increases as we move downward. Set <C>columns = 7</C> and <C>rows = 5</C> and our output will be generated
           as below. The computer-generated patterns for the circular plate a bit less
           interesting, and is not as versatile and mesmerizing as the square patterns.
         </p>
