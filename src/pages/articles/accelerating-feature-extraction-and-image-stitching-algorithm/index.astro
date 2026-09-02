@@ -19,6 +19,7 @@ import ShellScript from "@components/code/ShellScript.astro";
 import C from "@components/code/C.astro";
 import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
+import Table from "@components/article/Table.astro";
 ---
 
 <BaseLayout
@@ -462,56 +463,54 @@ features.img_size = grayImg.size();
       <section id="system-specs">
 
         <h3>System Specs</h3>
-        <div class="table-wrapper">
-          <table class="p-table" id="setup-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>First Setup</th>
-                <th>Second Setup</th>
-                <th>Third Setup</th>
-                <th>Fourth Setup</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>CPU</td>
-                <td>Intel Core i7-8750H</td>
-                <td>Intel Core i9-13900KF</td>
-                <td>Intel Core i7-7700k</td>
-                <td>Intel Xeon Gold</td>
-              </tr>
-              <tr>
-                <td>GPU</td>
-                <td>NVIDIA GTX 1070 Max-Q</td>
-                <td>NVIDIA RTX 4060Ti</td>
-                <td>NVIDIA GTX 1070</td>
-                <td>NVIDIA Tesla-v100</td>
-              </tr>
-              <tr>
-                <td>OpenCV Version</td>
-                <td>OpenCV 4.10.0</td>
-                <td>OpenCV 4.10.0</td>
-                <td>OpenCV 4.5.5</td>
-                <td>OpenCV 4.5.5</td>
-              </tr>
-              <tr>
-                <td>RAM</td>
-                <td>16GB</td>
-                <td>32GB</td>
-                <td>64GB</td>
-                <td>192GB</td>
-              </tr>
-              <tr>
-                <td>GPU Memory</td>
-                <td>8GB</td>
-                <td>16GB</td>
-                <td>8GB</td>
-                <td>16GB</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <Table id="setup-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>First Setup</th>
+              <th>Second Setup</th>
+              <th>Third Setup</th>
+              <th>Fourth Setup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CPU</td>
+              <td>Intel Core i7-8750H</td>
+              <td>Intel Core i9-13900KF</td>
+              <td>Intel Core i7-7700k</td>
+              <td>Intel Xeon Gold</td>
+            </tr>
+            <tr>
+              <td>GPU</td>
+              <td>NVIDIA GTX 1070 Max-Q</td>
+              <td>NVIDIA RTX 4060Ti</td>
+              <td>NVIDIA GTX 1070</td>
+              <td>NVIDIA Tesla-v100</td>
+            </tr>
+            <tr>
+              <td>OpenCV Version</td>
+              <td>OpenCV 4.10.0</td>
+              <td>OpenCV 4.10.0</td>
+              <td>OpenCV 4.5.5</td>
+              <td>OpenCV 4.5.5</td>
+            </tr>
+            <tr>
+              <td>RAM</td>
+              <td>16GB</td>
+              <td>32GB</td>
+              <td>64GB</td>
+              <td>192GB</td>
+            </tr>
+            <tr>
+              <td>GPU Memory</td>
+              <td>8GB</td>
+              <td>16GB</td>
+              <td>8GB</td>
+              <td>16GB</td>
+            </tr>
+          </tbody>
+        </Table>
       </section>
 
       <section id="cuda-accelerated-setup">

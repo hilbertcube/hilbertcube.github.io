@@ -9,6 +9,7 @@ import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
+import Table from "@components/article/Table.astro";
 
 ---
 
@@ -660,59 +661,57 @@ callgrind_control -i off 12345</ShellScript>
         Valgrind and AddressSanitizer (ASan) both detect many of the same bugs but with different trade-offs:
       </p>
   
-      <div class="table-wrapper">
-        <table class="p-table">
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Valgrind / Memcheck</th>
-              <th>AddressSanitizer</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Requires recompilation</td>
-              <td>No</td>
-              <td>Yes (<C>-fsanitize=address</C>)</td>
-            </tr>
-            <tr>
-              <td>Runtime overhead</td>
-              <td>~10–50x</td>
-              <td>~2–3x</td>
-            </tr>
-            <tr>
-              <td>Stack buffer overflows</td>
-              <td>Limited</td>
-              <td>Yes (with <C>-O1</C> or higher)</td>
-            </tr>
-            <tr>
-              <td>Heap buffer overflows</td>
-              <td>Yes</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>Use-after-free</td>
-              <td>Yes</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>Memory leaks</td>
-              <td>Yes (detailed)</td>
-              <td>Yes (with LeakSanitizer)</td>
-            </tr>
-            <tr>
-              <td>Uninitialized reads</td>
-              <td>Yes</td>
-              <td>No (use MemorySanitizer instead)</td>
-            </tr>
-            <tr>
-              <td>Works on prebuilt binaries</td>
-              <td>Yes</td>
-              <td>No</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <Table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Valgrind / Memcheck</th>
+            <th>AddressSanitizer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Requires recompilation</td>
+            <td>No</td>
+            <td>Yes (<C>-fsanitize=address</C>)</td>
+          </tr>
+          <tr>
+            <td>Runtime overhead</td>
+            <td>~10–50x</td>
+            <td>~2–3x</td>
+          </tr>
+          <tr>
+            <td>Stack buffer overflows</td>
+            <td>Limited</td>
+            <td>Yes (with <C>-O1</C> or higher)</td>
+          </tr>
+          <tr>
+            <td>Heap buffer overflows</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Use-after-free</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Memory leaks</td>
+            <td>Yes (detailed)</td>
+            <td>Yes (with LeakSanitizer)</td>
+          </tr>
+          <tr>
+            <td>Uninitialized reads</td>
+            <td>Yes</td>
+            <td>No (use MemorySanitizer instead)</td>
+          </tr>
+          <tr>
+            <td>Works on prebuilt binaries</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </Table>
   
       <p>
         In practice, use ASan for your development build (it is fast enough to leave on by default) and Valgrind for auditing third-party libraries or when you need to find uninitialized-read bugs without access to source.
@@ -722,49 +721,47 @@ callgrind_control -i off 12345</ShellScript>
     <section id="quick-reference">
       <h3>Quick Reference</h3>
   
-      <div class="table-wrapper">
-        <table class="p-table">
-          <thead>
-            <tr>
-              <th>Tool</th>
-              <th>Purpose</th>
-              <th>Key flags</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Memcheck</td>
-              <td>Memory errors and leaks</td>
-              <td><C>--leak-check=full --track-origins=yes</C></td>
-            </tr>
-            <tr>
-              <td>Callgrind</td>
-              <td>Call-graph and cache profiling</td>
-              <td><C>--cache-sim=yes --branch-sim=yes</C></td>
-            </tr>
-            <tr>
-              <td>Massif</td>
-              <td>Heap memory usage over time</td>
-              <td><C>--time-unit=ms --pages-as-heap=no</C></td>
-            </tr>
-            <tr>
-              <td>Helgrind</td>
-              <td>POSIX thread race conditions</td>
-              <td>(no special flags needed)</td>
-            </tr>
-            <tr>
-              <td>DRD</td>
-              <td>Thread error detection</td>
-              <td><C>--check-stack-var=yes</C></td>
-            </tr>
-            <tr>
-              <td>Cachegrind</td>
-              <td>Cache and branch-prediction simulation</td>
-              <td><C>--branch-sim=yes</C></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <Table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+            <th>Key flags</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Memcheck</td>
+            <td>Memory errors and leaks</td>
+            <td><C>--leak-check=full --track-origins=yes</C></td>
+          </tr>
+          <tr>
+            <td>Callgrind</td>
+            <td>Call-graph and cache profiling</td>
+            <td><C>--cache-sim=yes --branch-sim=yes</C></td>
+          </tr>
+          <tr>
+            <td>Massif</td>
+            <td>Heap memory usage over time</td>
+            <td><C>--time-unit=ms --pages-as-heap=no</C></td>
+          </tr>
+          <tr>
+            <td>Helgrind</td>
+            <td>POSIX thread race conditions</td>
+            <td>(no special flags needed)</td>
+          </tr>
+          <tr>
+            <td>DRD</td>
+            <td>Thread error detection</td>
+            <td><C>--check-stack-var=yes</C></td>
+          </tr>
+          <tr>
+            <td>Cachegrind</td>
+            <td>Cache and branch-prediction simulation</td>
+            <td><C>--branch-sim=yes</C></td>
+          </tr>
+        </tbody>
+      </Table>
     </section>
   </section>
 

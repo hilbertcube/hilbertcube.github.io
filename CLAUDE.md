@@ -122,6 +122,10 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   (the TOC anchors to it and search results deep-link into it).
 - Body images go through `<Figure>` (files in `public/articles/<slug>/`), banners through
   `<FrontImage>`. Don't hand-roll `<img>` sizing.
+- Tables go through `<Table>`, which emits the `.table-wrapper` / `.p-table` pair — a
+  hand-written table without the wrapper overflows on mobile and nothing catches it.
+  Inline code goes through `<C>`; both styles are scoped to their component, so the bare
+  classes no longer work in page markup.
 - Code blocks use the `code/` components, not raw `<pre>`. **Indentation gotcha:** the `<pre>`
   is inside the component, so a listing whose first line is indented, or that contains markup,
   loses its indentation to the HTML compressor — pass those via ``set:html={raw`…`}``.

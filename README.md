@@ -29,6 +29,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Sep 2026:** Added a `<Table>` component that renders the scrollable wrapper and the table together, and moved the table styling out of the global CSS into it.
 - **Sep 2026:** Added a `<C>` inline-code component and moved the `.inline-code` styling out of the global CSS into it.
 - **Aug 2026:** [MAJOR] Upgraded TOC highlighting
 - **Aug 2026:** Replaced the hand-run RSS generation script with a build-time Astro endpoint sourced from the article/post collections.

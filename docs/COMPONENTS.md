@@ -206,6 +206,47 @@ be written inline or hung off per-page ids.
 Children become the `<figcaption>`; figure numbering and caption colors come
 from the global rules in `base/_typography.css`.
 
+### Table
+
+**The single way to put a table in body copy.** It renders the
+`.table-wrapper` / `.p-table` pair together — the wrapper is what gives the
+table horizontal scroll on a phone, and a hand-written table that omits it
+looks fine on a desktop and overflows the page on mobile with nothing in the
+build to catch it.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `id` | `string` | Lands on the `<table>`. |
+| `class` | `string` | Added alongside `.p-table`. |
+
+Anything else is spread onto the `<table>`.
+
+```astro
+<Table id="growth-table">
+  <thead><tr><th>n</th><th>T(n)</th></tr></thead>
+  <tbody><tr><td>1</td><td>O(1)</td></tr></tbody>
+  <caption>Growth of the running time.</caption>
+</Table>
+```
+
+Use `<thead>` and `<tbody>`: the header rule is drawn on `thead`, the row rules
+inside `tbody`. A `<caption>` sits below the table and is numbered
+("Table. 1: …") by the global rule in `base/_typography.css`.
+
+**Per-table rules.** A page styles its own table's *content* — which columns
+centre, which may not wrap — never the look itself. Two gotchas when writing
+them, both from the style now being scoped to this component:
+
+- The `<table>` is `Table.astro`'s element, so it carries *its* scope id, not
+  the page's. A page's scoped `<style>` reaches it with
+  `:global(.p-table) td:first-child { … }` — the cells are slot content and
+  stay page-scoped, so the `td` half still pins the rule to that page
+  (see `articles/time-complexity-of-an-algorithm`).
+- Scoping buys the component's cell rules an extra attribute of specificity,
+  so a *global* page rule aimed at a cell class has to be qualified to outrank
+  them: `.table-wrapper .p-table .rating`, not `.p-table .rating`
+  (see `posts/tested-food-places`).
+
 ### ContinueButton
 
 Previous/next navigation at the foot of a multi-part article.
@@ -711,6 +752,7 @@ import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 import Figure from "@components/article/Figure.astro";
+import Table from "@components/article/Table.astro";
 import ContinueButton from "@components/article/ContinueButton.astro";
 import E from "@components/math/E.astro";
 import M from "@components/math/M.astro";
@@ -740,6 +782,10 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
       <p>Inline math like $x^2$ is fine in prose, and <C>--flag</C> is inline code.</p>
       <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>
       <Figure src="/articles/<slug>/plot.webp" width="70%">A caption.</Figure>
+      <Table>
+        <thead><tr><th>n</th><th>T(n)</th></tr></thead>
+        <tbody><tr><td>1</td><td>O(1)</td></tr></tbody>
+      </Table>
       <CodeBox language="python" lineNumbers>print("hi")
 </CodeBox>
     </section>
