@@ -26,9 +26,10 @@ ol.reference {
 
 ol.reference li {
   display: block;
+  position: relative;
   text-align: left;
   margin-bottom: 0.5em;
-  margin-left: 2em;
+  padding-left: 2em;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -37,13 +38,17 @@ ol.reference li {
   hyphens: auto;
 }
 
+/* The marker is taken out of flow rather than sitting inline at the start of
+   the line. An in-flow inline-block leaves the newline between `<li>` and the
+   citation text as a rendered space, which pushes the first line ~4px right of
+   every wrapped line; out of flow, that whitespace is at the start of the line
+   and collapses away, so the hanging indent lines up exactly on the 2em
+   padding. */
 ol.reference li::before {
-  display: inline-block;
-  text-align: left;
-  content: "[" counter(item) "]\00a0";
+  content: "[" counter(item) "]";
   counter-increment: item;
-  width: 2em;
-  margin-left: -2em;
+  position: absolute;
+  left: 0;
 }
 
 /* Step lists */

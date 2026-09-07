@@ -76,9 +76,9 @@ import Table from "@components/article/Table.astro";
               widely-used feature detection algorithm was the Harris Corner
               Detector, introduced in 1988 by Chris Harris and Mike Stephens.
               Later on, in 1999, the Scale-invariant feature transform (SIFT)
-              algorithm by David G. and Lowe revolutionized the field of
-              computer vision by providing a reliable method for feature
-              detection and description. It builds upon the Harris Corner
+              algorithm by David G. Lowe revolutionized the field of computer
+              vision by providing a reliable method for feature detection and
+              description. It builds upon the Harris Corner
               Detector but adds many key innovations to improve robustness and
               functionality. The SIFT algorithm is still widely used today, and
               most papers regarding new methods in feature detection, either
@@ -89,7 +89,8 @@ import Table from "@components/article/Table.astro";
               Although SIFT is a reliable method for such tasks, it is also very
               computationally expensive. Therefore, many more methods throughout
               the years have been developed to address that issue, and in 2011,
-              Oriented FAST and Rotated BRIEF (ORB) was introduced. After
+              Oriented FAST and Rotated BRIEF (ORB) was introduced by Rublee,
+              Rabaud, Konolige, and Bradski. After
               multiple benchmark tests, ORB has been proven to have better
               overall performance with quick computing and is demonstrated to be
               robust to light and rotational shifts.
@@ -209,7 +210,16 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
         <p>
           <strong>Scale-Invariant Feature Transform.</strong> SIFT is (probably) one
           of the most well-known and reliable feature detectors in the field of computer
-          vision to extract invariant features from an image. SIFT primarily works
+          vision to extract invariant features from an image. Lowe first presented the
+          detector in <a
+            class="url"
+            href="https://www.cs.ubc.ca/~lowe/papers/iccv99.pdf"
+            >&#8220;Object Recognition from Local Scale-Invariant Features&#8221;</a
+          > (ICCV 1999) and gave it its definitive treatment in <a
+            class="url"
+            href="https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf"
+            >&#8220;Distinctive Image Features from Scale-Invariant Keypoints&#8221;</a
+          > (IJCV 2004); the formulation below follows the latter. SIFT primarily works
           based on the Difference of Gaussian (D.o.G), defined as
         </p>
         <E>{tex`\begin{equation} D(\mathbf{x},\sigma) = \frac{1}{2\pi\sigma}\left[\frac{1}{k}\exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2(k\sigma)^2}\rbrac - \exp\lbrac-\frac{\lVert\mathbf{x}\rVert^2}{2\sigma^2}\rbrac \right]. \end{equation}`}</E>
@@ -240,24 +250,29 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
         <p>
           The final output is an $n$-dimensional feature vector whose elements
           are invariant feature descriptors. In 2018, authors Griwodz, Calvet,
-          and Halvorsen proposed a Python library called PopSIFT, which serves
-          as a CUDA implementation of the SIFT algorithm.
+          and Halvorsen proposed an open-source C++ library called PopSift, which
+          serves as a CUDA implementation of the SIFT algorithm.
         </p>
 
         <p style="margin-top: 30px">
           <strong>Oriented FAST and Rotated BRIEF.</strong>
           FAST, short for &#8220;Features from Accelerated Segment Test,&#8221; is
           a widely recognized corner detection algorithm introduced by Edward Rosten
-          and Tom Drumm in their paper &#8220;Machine Learning for High-speed Corner
-          Detection.&#8221; FAST identifies corners by examining a circular region
+          and Tom Drummond in their paper &#8220;Machine Learning for High-speed Corner
+          Detection&#8221; (ECCV 2006). FAST identifies corners by examining a circular region
           around a pixel to determine if the pixel qualifies as a corner. The ORB
-          (Oriented FAST and Rotated BRIEF) algorithm uses FAST-9, which uses a circle
+          (Oriented FAST and Rotated BRIEF) algorithm, proposed by Rublee, Rabaud,
+          Konolige, and Bradski in <a
+            class="url"
+            href="https://doi.org/10.1109/ICCV.2011.6126544"
+            >&#8220;ORB: An Efficient Alternative to SIFT or SURF&#8221;</a
+          > (ICCV 2011), uses FAST-9, which uses a circle
           with a radius of 9 pixels to optimize performance. However, because the
           original FAST algorithm does not account for orientation, ORB enhances it
           by assigning an orientation to each detected keypoint (similar to SIFT),
           thereby making the algorithm rotation-invariant. This orientation is calculated
-          using the intensity centroid method, which leverages the moments of the
-          patch around the keypoint, defined as:
+          using the intensity centroid method of Rosin, which leverages the moments
+          of the patch around the keypoint, defined as:
         </p>
         <E>{tex`\begin{equation} m_{pq} = \sum_{x,y}x^py^qI(x,y) \end{equation}`}</E>
         <p>
@@ -789,6 +804,75 @@ features.img_size = grayImg.size();
         that the program does not crash when the input is too large and to
         generate more consistent and reliable results.
       </p>
+    </section>
+
+    <section id="references">
+      <h2>References</h2>
+      <ol class="reference">
+        <li>
+          Chris Harris and Mike Stephens. A combined corner and edge detector.
+          In <em>Proceedings of the 4th Alvey Vision Conference</em>, pages
+          147-151, Manchester, UK, 1988.
+        </li>
+        <li>
+          David G. Lowe. Object recognition from local scale-invariant features.
+          In <em>Proceedings of the 7th IEEE International Conference on
+          Computer Vision (ICCV)</em>, pages 1150-1157, Corfu, Greece, 1999. <a
+            class="url"
+            href="https://www.cs.ubc.ca/~lowe/papers/iccv99.pdf"
+            >https://www.cs.ubc.ca/~lowe/papers/iccv99.pdf</a
+          >
+        </li>
+        <li>
+          David G. Lowe. Distinctive image features from scale-invariant
+          keypoints. <em>International Journal of Computer Vision</em>,
+          60(2):91-110, 2004. <a
+            class="url"
+            href="https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf"
+            >https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf</a
+          >
+        </li>
+        <li>
+          Paul L. Rosin. Measuring corner properties. <em>Computer Vision and
+          Image Understanding</em>, 73(2):291-307, 1999.
+        </li>
+        <li>
+          Edward Rosten and Tom Drummond. Machine learning for high-speed corner
+          detection. In <em>European Conference on Computer Vision (ECCV)</em>,
+          pages 430-443. Springer, Berlin, Heidelberg, 2006.
+        </li>
+        <li>
+          Michael Calonder, Vincent Lepetit, Christoph Strecha, and Pascal Fua.
+          BRIEF: Binary robust independent elementary features. In <em
+            >European Conference on Computer Vision (ECCV)</em
+          >, pages 778-792. Springer, Berlin, Heidelberg, 2010.
+        </li>
+        <li>
+          Ethan Rublee, Vincent Rabaud, Kurt Konolige, and Gary Bradski. ORB: An
+          efficient alternative to SIFT or SURF. In <em>Proceedings of the 2011
+          IEEE International Conference on Computer Vision (ICCV)</em>, pages
+          2564-2571, Barcelona, Spain, 2011. <a
+            class="url"
+            href="https://doi.org/10.1109/ICCV.2011.6126544"
+            >https://doi.org/10.1109/ICCV.2011.6126544</a
+          >
+        </li>
+        <li>
+          Carsten Griwodz, Lilian Calvet, and P&#229;l Halvorsen. Popsift: A
+          faithful SIFT implementation for real-time applications. In <em
+            >Proceedings of the 9th ACM Multimedia Systems Conference
+            (MMSys)</em
+          >, pages 415-420, Amsterdam, Netherlands, 2018.
+        </li>
+        <li>
+          Gary Bradski. The OpenCV library. <em>Dr. Dobb's Journal of Software
+          Tools</em>, 2000. CUDA module documentation: <a
+            class="url"
+            href="https://docs.opencv.org/4.x/d6/d1d/group__cudafeatures2d.html"
+            >https://docs.opencv.org/4.x/d6/d1d/group__cudafeatures2d.html</a
+          >
+        </li>
+      </ol>
     </section>
   </div>
 
