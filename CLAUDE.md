@@ -76,7 +76,7 @@ marks `<main data-pagefind-body>`, which is what makes new pages searchable auto
 
 Behaviour lives in the owning component's bare `<script>` (Astro bundles and hoists it).
 `public/assets/js/` holds only what has no owning component: `katex-render.js` (loaded on
-every page by `BaseLayout`) and `scripts.js` (smooth anchor scroll, `.url` new-window links).
+every page by `BaseLayout`) and `scripts.js` (smooth anchor scroll, new-window body links).
 
 **Astro decides which pages a hoisted script lands on from the module graph, not from
 whether the markup rendered.** Anything imported by `BaseLayout` therefore ships site-wide,
@@ -125,6 +125,10 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   hand-written table without the wrapper overflows on mobile and nothing catches it.
   Inline code goes through `<C>`; both styles are scoped to their component, so the bare
   classes no longer work in page markup.
+- Body links are plain `<a href="…">` — no class. Inside `.content-grid`, an unclassed `<a>`
+  gets the link colour, stays on one line and opens in a new window (`_typography.css` +
+  `scripts.js`); add `class="wrap"` for a long label that should break. Any other class opts
+  the link out, so buttons and cards keep their own styling.
 - Code blocks use the `code/` components, not raw `<pre>`. Write new listings with **`is:raw`**
   (`<CodeBlock language="cpp" is:raw>`), indented to match the page and with `<`/`{` written
   literally: a listing starting on the line after the tag is dedented (`dedent()` in

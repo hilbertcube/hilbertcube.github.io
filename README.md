@@ -30,6 +30,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Sep 2026:** Body links no longer need `class="url"`: a plain `<a>` in an article or post is styled and opens in a new window by default.
 - **Sep 2026:** Added a sitemap (`/sitemap-index.xml`) and a `robots.txt` pointing to it.
 - **Sep 2026:** The copy button now uses the modern Clipboard API.
 - **Sep 2026:** Tabbed code boxes are now keyboard- and screen-reader-accessible (arrow keys, Home/End, ARIA tab roles), and panes no longer need ids or hand-set `display: none`.

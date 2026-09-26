@@ -57,7 +57,7 @@ src/
     images/                    Images imported through astro:assets (logo, banner)
 public/
   assets/js/katex-render.js    KaTeX driver: macros, display math, numbering
-  assets/js/scripts.js         Smooth in-page anchor scrolling; `.url` new-window links
+  assets/js/scripts.js         Smooth in-page anchor scrolling; new-window body links
   katex/                       Self-hosted KaTeX library and fonts
   articles/<slug>/             Article body images
   media/Images/                Card thumbnail images
@@ -80,7 +80,8 @@ buttons, TOC highlighting, the banner canvas — and the image lightbox, which i
 `Lightbox.astro`, which lazy-loads yet-another-react-lightbox from
 `lightbox/viewer.ts` on the first image click). `public/assets/js/scripts.js` holds only the two site-wide
 behaviours that have no owning component: smooth anchor scrolling, and opening
-`.url` links in a new window.
+body links in a new window — an unclassed `<a>` inside `.content-grid` (or one
+with `class="wrap"`), the same set `css/base/_typography.css` styles as a link.
 
 ---
 

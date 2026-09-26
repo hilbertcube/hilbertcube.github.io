@@ -4,8 +4,9 @@
 // nav, dark mode, settings and search; Lightbox, ShareButton,
 // HighlightsAndAttribute, CopyButton and TabBox for the rest.
 
-// OPEN URL IN NEW WINDOWS
-document.querySelectorAll(".url").forEach(function (element) {
+// OPEN BODY LINKS IN NEW WINDOWS
+// Same set of links that _typography.css styles as plain body links.
+document.querySelectorAll(".content-grid a:not([class]), .content-grid a.wrap").forEach(function (element) {
   element.onclick = function () {
     window.open(this.href);
     return false;
