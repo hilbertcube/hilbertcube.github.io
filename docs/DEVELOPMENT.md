@@ -131,14 +131,14 @@ Pass `toc` to `BaseLayout` and the sidebar TOC is built from the page's own
 markup at build time, so adding a section is all it takes to add an entry —
 there is no list to keep in sync.
 
-Every `<h2>`/`<h3>` becomes an entry, anchored to its own `id` or to the `id` of
+Every `<h2>`–`<h4>` becomes an entry, anchored to its own `id` or to the `id` of
 the innermost enclosing `<section>` that no earlier heading has claimed. **A
 heading with no anchor is skipped** — a TOC row that can't be linked is dead
 weight. Nesting follows heading level (`<h3>` under the preceding `<h2>`), not
 `<section>` nesting.
 
 ```astro
-<BaseLayout title="…" toc>            <!-- or toc={{ maxLevel: 4 }} for <h4> too -->
+<BaseLayout title="…" toc>            <!-- h2–h4; toc={{ maxLevel: 3 }} to stop at h3 -->
   <section id="analysis">
     <h2>Data Analysis</h2>            <!-- → "Data Analysis" → #analysis -->
     <h3 id="graph">Linearity</h3>     <!-- → nested "Linearity" → #graph -->

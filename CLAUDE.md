@@ -63,7 +63,7 @@ the feed cannot drift from the site. There is no RSS script to run.
 `src/layouts/BaseLayout.astro` calls `Astro.slots.render("default")` in its frontmatter,
 runs `extractToc()` (`src/utils/toc.ts`) over the resulting HTML string, then injects it
 with `<Fragment set:html={body} />`. That is what makes the sidebar TOC derive from the
-page's real markup (`<section>` / `<h2>` / `<h3>`, with `data-toc="…"` / `data-toc="skip"`
+page's real markup (`<section>` / `<h2>`–`<h4>`, with `data-toc="…"` / `data-toc="skip"`
 overrides) with no list to maintain.
 
 **The cost: a hydrated island (`client:*`) inside a page body would not survive the string

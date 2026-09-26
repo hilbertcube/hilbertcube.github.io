@@ -6,7 +6,7 @@
  *
  * How a heading gets into the TOC
  * ------------------------------
- * Every `<h2>`–`<h3>` (configurable) in the page body becomes an entry, as long
+ * Every `<h2>`–`<h4>` (configurable) in the page body becomes an entry, as long
  * as an anchor can be found for it:
  *
  *   1. an `id` on the heading itself   -> `<h2 id="books">Books</h2>`
@@ -38,7 +38,7 @@ export interface TocItem {
 export interface TocOptions {
   /** Shallowest heading level to include (default 2, i.e. `<h2>`). */
   minLevel?: number;
-  /** Deepest heading level to include (default 3, i.e. `<h3>`). */
+  /** Deepest heading level to include (default 4, i.e. `<h4>`). */
   maxLevel?: number;
 }
 
@@ -87,7 +87,7 @@ export function headingText(html: string): string {
  * Safe on malformed markup: unmatched `</section>` tags are ignored.
  */
 export function extractToc(html: string, options: TocOptions = {}): TocItem[] {
-  const { minLevel = 2, maxLevel = 3 } = options;
+  const { minLevel = 2, maxLevel = 4 } = options;
 
   const stack: OpenSection[] = [];
   const roots: TocItem[] = [];

@@ -26,9 +26,9 @@ interface Props {
   activeButton?: string;
   /**
    * Sidebar Table of Contents, built from this page's own markup: every
-   * `<h2>`/`<h3>` that sits in (or carries) an `id` becomes an entry, so adding
+   * `<h2>`–`<h4>` that sits in (or carries) an `id` becomes an entry, so adding
    * a section to the page is all it takes to add it to the TOC. Pass `true` for
-   * the defaults, or an options object (e.g. `toc={{ maxLevel: 4 }}`).
+   * the defaults, or an options object (e.g. `toc={{ maxLevel: 3 }}`).
    * See src/utils/toc.ts for label overrides and skipping.
    */
   toc?: boolean | TocOptions;
