@@ -177,7 +177,6 @@ import ArticleCards from "../../../components/listings/ArticleCards.astro";
     </style>
   </Fragment>
 
-  <div class="content-grid">
     <header>
       <div class="topic">
         Topics: $TOPIC_LINE
@@ -195,7 +194,6 @@ import ArticleCards from "../../../components/listings/ArticleCards.astro";
       <h2>More Articles</h2>
       <ArticleCards count={4} showDetails={true} shuffle={true} excludePath="/articles/$SLUG" />
     </section>
-  </div>
 
   <Fragment slot="scripts">
     <script is:inline src="/assets/js/blogpage-setting.js"><\/script>
@@ -243,7 +241,6 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <script is:inline src="/assets/js/blogpage-setting.js"><\/script>
   </Fragment>
 
-  <div class="content-grid" >
     <header>
       <div class="topic">$TOPIC_LINE</div>
       <h1 class="post-title">$TITLE</h1>
@@ -254,7 +251,6 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       <h2>Section 1</h2>
       <p>Write your content here.</p>
     </section>
-  </div>
 </BaseLayout>
 ASTRO_EOF
 

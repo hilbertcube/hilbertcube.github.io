@@ -22,316 +22,314 @@ import PubDate from "@components/article/PubDate.astro";
     <link rel="stylesheet" href="/posts/resources/resources-page.css" />
   </Fragment>
 
-  <div class="content-grid">
-    <header>
-      <TopicTags />
-      <PageTitle />
-      <PubDate />
-    </header>
+  <header>
+    <TopicTags />
+    <PageTitle />
+    <PubDate />
+  </header>
+
+  <p>
+    These are some resources that I think would serve as good learning
+    materials.
+  </p>
+
+  <section>
+    <h2>Books</h2>
+
+    <div class="material-container">
+      <MaterialCard
+        title="C++ Templates: The Complete Guide"
+        author="David Vandevoorde and Nicolai M. Josuttis"
+        description="C++ is huge, and Templates is one of the crucial parts of it. Subjects covered: function and class templates, variadic templates, and much more."
+        links={[
+          { label: "Amazon", href: "https://www.amazon.com/C-Templates-Complete-Guide-2nd/dp/0321714121" },
+        ]}
+        image="/posts/resources/materials-images/templates.webp"
+      />
+
+      <MaterialCard
+        title="C++ Concurrency in Action"
+        author="Anthony Williams"
+        description="There isn't much text-book resources out there relating to C++ multithreading. I'm currently reading this one, and I think it's pretty solid."
+        links={[
+          { label: "Amazon", href: "https://www.amazon.com/C-Concurrency-Action-Practical-Multithreading/dp/1933988770" },
+          { label: "Manning", href: "https://www.manning.com/books/c-plus-plus-concurrency-in-action" },
+        ]}
+        image="/posts/resources/materials-images/concurrency.webp"
+      />
+
+      <MaterialCard
+        title="Digital Image Processing"
+        author="Rafael Gonzalez and Richard Woods"
+        description="A good introduction to theoretical computer vision. I like the detail description of point, line, edge detection and the SIFT algorithm of this book."
+        links={[
+          { label: "Amazon", href: "https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/0133356728" },
+        ]}
+        image="/posts/resources/materials-images/digital_processing.webp"
+      />
+
+      <MaterialCard
+        title="Introduction to Applied Partial Differential Equations"
+        author="John M. Davis"
+        description="The first book I used to learn PDEs. Very good treatment of eigenvalue and boundary-value problems."
+        links={[
+          { label: "Amazon", href: "https://www.amazon.com/Introduction-Applied-Partial-Differential-Equations/dp/1429275928" },
+          { label: "Abebooks", href: "https://www.abebooks.com/9781429275927/Introduction-Applied-Partial-Differential-Equations-1429275928/plp" },
+        ]}
+        image="/posts/resources/materials-images/pde2.webp"
+      />
+
+      <MaterialCard
+        title="Applied Partial Differential Equations with Fourier Series and Boundary Value Problems"
+        author="Richard Haberman"
+        description="A more detailed treatment of PDEs for the undergraduate level, covering higher-dimensional PDE's, nonhomogeneous problems, green functions, and method of finite difference."
+        links={[
+          { label: "Amazon", href: "https://www.amazon.com/Differential-Equations-Boundary-Problems-Featured/dp/0321797051" },
+        ]}
+        image="/posts/resources/materials-images/pde1.webp"
+      />
+
+      <!-- <MaterialCard
+        title="Introduction to Electrodynamics"
+        author="David J. Griffiths"
+        description="If you truly want to learn Electrodynamics, this book is the one, written by none other than David J. Griffiths himself. Problems are very hard, but interesting."
+        links={[
+          { label: "Amazon", href: "https://www.amazon.com/Introduction-Electrodynamics-David-J-Griffiths/dp/1108420419" },
+          { label: "Ebay", href: "https://www.ebay.com/itm/332769940414" },
+          { label: "Abebooks", href: "https://www.abebooks.com/9781108420419/Introduction-Electrodynamics-Griffiths-David-J-1108420419/plp" },
+        ]}
+        image="/posts/resources/materials-images/griffith_electrodymaics.webp"
+      /> -->
+    </div>
+  </section>
+
+  <section>
+    <h2>Read More</h2>
+    <p>
+      <b>What Every Programmer Should Know About Memory</b>:
+      <a
+        href="https://people.freebsd.org/~lstewart/articles/cpumemory.pdf"
+        >link</a
+      >
+    </p>
+    <p>
+      <b>Ray Tracing in One Weekend</b>:
+      <a
+        href="https://raytracing.github.io/books/RayTracingInOneWeekend.html"
+        >link</a
+      >
+    </p>
+    <p>
+      <b>Sunil Golwala's lecture note on classical mechanics - Caltech: </b>
+      <a
+        href="https://sites.astro.caltech.edu/~golwala/ph106ab/ph106ab_notes.pdf">link</a
+      >
+    </p>
+    <p>
+      <b>Riccardo Cristoferi's calculus of variations: </b>
+      <a
+        href="https://www.math.cmu.edu/cna/Publications/publications2016/papers/16-CNA-007.pdf">link</a
+      >
+    </p>
+    <p>
+      <b
+        >Gabriel Nagy's Ordinary Differential Equations - University of
+        Michigan:
+      </b>
+      <a
+        href="https://users.math.msu.edu/users/gnagy/teaching/ode.pdf">link</a
+      >
+    </p>
+  </section>
+
+  <section>
+    <h2>Websites</h2>
+    <p>
+      <b>beltoforion: </b>
+      <a href="https://beltoforion.de/de/">beltoforion.de</a>. One
+      of my inspirations. Developed by Ingo Berg, the website focuses on a
+      wide range of topics, ranging from programming, earth and space science,
+      mathematics, and physics.
+    </p>
 
     <p>
-      These are some resources that I think would serve as good learning
-      materials.
+      <b>Ten Minute Physics: </b>
+      <a
+        href="https://matthias-research.github.io/pages/tenMinutePhysics/index.html">link</a
+      >. Cool, complex physics simulation using only HTML and Javascript. This
+      is a website created to accompany the youtube channel <a
+        href="https://www.youtube.com/@tenminutephysics">Ten Minute Physics.</a
+      >
+    </p>
+
+    <p>
+      <b>scipython: </b>
+      <a href="https://scipython.com/">scipython.com</a>. Created
+      by the author of <a
+        href="https://www.cambridge.org/sj/universitypress/subjects/physics/mathematical-methods/learning-scientific-programming-python-2nd-edition?format=PB">Learning Scientific Programming with Python</a
+      >, Christian Hill. Resources for learning Python simulation and
+      scientific programming.
+    </p>
+
+    <p>
+      <b>Romanian Mathematical Magazine: </b>
+      <a href="https://www.ssmrmh.ro/">ssmrmh.ro</a>. Very cool
+      math problems.
+    </p>
+
+    <p>
+      <b>learncpp: </b>
+      <a href="https://learncpp.com/">learncpp.com</a>. A good
+      website for learning C++ from start to end.
+    </p>
+  </section>
+
+  <section>
+    <h2>Youtube Channels</h2>
+
+    <p>
+      <b>Mathematics: </b>
+      <a href="https://www.youtube.com/@3blue1brown"
+        >3Blue1Brown</a
+      >,
+      <a href="https://www.youtube.com/@Mathologer">Mathologer</a
+      >,
+      <a href="https://www.youtube.com/@MichaelPennMath"
+        >Michael Penn</a
+      >,
+      <a href="https://www.youtube.com/@morphocular"
+        >Morphocular</a
+      >,
+      <a href="https://www.youtube.com/@maths_505">Maths 505</a>,
+      <a href="https://www.youtube.com/@Aleph0">Aleph 0</a>,
+      <a href="https://www.youtube.com/@CreativeMathProblems"
+        >Creative Math Problems</a
+      >,
+      <a href="https://www.youtube.com/@DrBarker">Dr Barker</a>,
+      <a href="https://www.youtube.com/@DrTrefor"
+        >Dr. Trefor Bazett</a
+      >,
+      <a href="https://www.youtube.com/@EpsilonDeltaMain"
+        >EpsilonDelta</a
+      >,
+      <a href="https://www.youtube.com/@richarde.borcherds7998"
+        >Richard E Borcherds</a
+      >,
+      <a href="https://www.youtube.com/@mathemaniac"
+        >Mathemaniac</a
+      >
+    </p>
+    <p>
+      <b>Computer Science: </b>
+      <a href="https://www.youtube.com/@Computerphile"
+        >Computerphile</a
+      >,
+      <a href="https://www.youtube.com/@Errichto"
+        >Errichto Algorithms</a
+      >,
+      <a href="https://www.youtube.com/@SheafificationOfG"
+        >Sheafification of G</a
+      >
+    </p>
+    <p>
+      <b>Low-level Programming:</b>
+      <a href="https://www.youtube.com/@TheCherno">The Cherno</a>,
+      <a href="https://www.youtube.com/@LowLevelTV">Low Level</a>,
+      <a href="https://www.youtube.com/@TsodingDaily"
+        >Tscoding Daily</a
+      >,
+      <a href="https://www.youtube.com/@CoreDumpped"
+        >Core Dumped</a
+      >,
+      <a href="https://www.youtube.com/@AngeTheGreat"
+        >Ange The Great</a
+      >,
+      <a href="https://www.youtube.com/@lauriewired"
+        >Laurie Wired</a
+      >,
+      <a href="https://www.youtube.com/@artfulbytes"
+        >Artful Bytes</a
+      >
+    </p>
+    <p>
+      <b>Computer Simulations and Numerical Computation: </b>
+      <a href="https://www.youtube.com/@PezzzasWork"
+        >Pezzza's Work</a
+      >,
+      <a href="https://www.youtube.com/@Eigensteve"
+        >Steve Brunton</a
+      >,
+      <a href="https://www.youtube.com/@MrPSolver">Mr. P Solver</a
+      >,
+      <a href="https://www.youtube.com/@AngeTheGreat"
+        >AngeTheGreat</a
+      >,
+      <a href="https://www.youtube.com/@ArtemKirsanov"
+        >Artem Kirsanov</a
+      >
+    </p>
+    <p>
+      <b>Fun Programming: </b>
+      <a href="https://www.youtube.com/@SebastianLague"
+        >Sebastian Lague</a
+      >,
+      <a href="https://www.youtube.com/@CodeBullet">Code Bullet</a
+      >,
+      <a href="https://www.youtube.com/@CodeParade">Code Parade</a
+      >
+    </p>
+    <p>
+      <b>Web Development: </b>
+      <a href="https://www.youtube.com/@TheCoderCoder"
+        >Coder Coder</a
+      >,
+      <a href="https://www.youtube.com/@coding2go">Coding2GO</a>
+    </p>
+    <p>
+      <b>Physics: </b>
+      <a href="https://www.youtube.com/@DrBenYelverton"
+        >Dr Ben Yelverton</a
+      >,
+      <a href="https://www.youtube.com/@jkzero"
+        >Dr. Jorge S. Diaz</a
+      >
     </p>
 
     <section>
-      <h2>Books</h2>
-
-      <div class="material-container">
-        <MaterialCard
-          title="C++ Templates: The Complete Guide"
-          author="David Vandevoorde and Nicolai M. Josuttis"
-          description="C++ is huge, and Templates is one of the crucial parts of it. Subjects covered: function and class templates, variadic templates, and much more."
-          links={[
-            { label: "Amazon", href: "https://www.amazon.com/C-Templates-Complete-Guide-2nd/dp/0321714121" },
-          ]}
-          image="/posts/resources/materials-images/templates.webp"
-        />
-
-        <MaterialCard
-          title="C++ Concurrency in Action"
-          author="Anthony Williams"
-          description="There isn't much text-book resources out there relating to C++ multithreading. I'm currently reading this one, and I think it's pretty solid."
-          links={[
-            { label: "Amazon", href: "https://www.amazon.com/C-Concurrency-Action-Practical-Multithreading/dp/1933988770" },
-            { label: "Manning", href: "https://www.manning.com/books/c-plus-plus-concurrency-in-action" },
-          ]}
-          image="/posts/resources/materials-images/concurrency.webp"
-        />
-
-        <MaterialCard
-          title="Digital Image Processing"
-          author="Rafael Gonzalez and Richard Woods"
-          description="A good introduction to theoretical computer vision. I like the detail description of point, line, edge detection and the SIFT algorithm of this book."
-          links={[
-            { label: "Amazon", href: "https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/0133356728" },
-          ]}
-          image="/posts/resources/materials-images/digital_processing.webp"
-        />
-
-        <MaterialCard
-          title="Introduction to Applied Partial Differential Equations"
-          author="John M. Davis"
-          description="The first book I used to learn PDEs. Very good treatment of eigenvalue and boundary-value problems."
-          links={[
-            { label: "Amazon", href: "https://www.amazon.com/Introduction-Applied-Partial-Differential-Equations/dp/1429275928" },
-            { label: "Abebooks", href: "https://www.abebooks.com/9781429275927/Introduction-Applied-Partial-Differential-Equations-1429275928/plp" },
-          ]}
-          image="/posts/resources/materials-images/pde2.webp"
-        />
-
-        <MaterialCard
-          title="Applied Partial Differential Equations with Fourier Series and Boundary Value Problems"
-          author="Richard Haberman"
-          description="A more detailed treatment of PDEs for the undergraduate level, covering higher-dimensional PDE's, nonhomogeneous problems, green functions, and method of finite difference."
-          links={[
-            { label: "Amazon", href: "https://www.amazon.com/Differential-Equations-Boundary-Problems-Featured/dp/0321797051" },
-          ]}
-          image="/posts/resources/materials-images/pde1.webp"
-        />
-
-        <!-- <MaterialCard
-          title="Introduction to Electrodynamics"
-          author="David J. Griffiths"
-          description="If you truly want to learn Electrodynamics, this book is the one, written by none other than David J. Griffiths himself. Problems are very hard, but interesting."
-          links={[
-            { label: "Amazon", href: "https://www.amazon.com/Introduction-Electrodynamics-David-J-Griffiths/dp/1108420419" },
-            { label: "Ebay", href: "https://www.ebay.com/itm/332769940414" },
-            { label: "Abebooks", href: "https://www.abebooks.com/9781108420419/Introduction-Electrodynamics-Griffiths-David-J-1108420419/plp" },
-          ]}
-          image="/posts/resources/materials-images/griffith_electrodymaics.webp"
-        /> -->
+      <h3>Some of my favorite videos:</h3>
+      <div class="fav-vids">
+        <div style="display: flex; justify-content: center; margin-top: 30px;">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/C8YtdC8mxTU?si=3NnFrhjh5LWPf7O_"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 30px;">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/th5A6ZQ28pE?si=ZwiUikHlGoBaJm5b"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 30px;">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/KzT9I1d-LlQ?si=0QMxlKCaT55RBPx3"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
       </div>
     </section>
-
-    <section>
-      <h2>Read More</h2>
-      <p>
-        <b>What Every Programmer Should Know About Memory</b>:
-        <a
-          href="https://people.freebsd.org/~lstewart/articles/cpumemory.pdf"
-          >link</a
-        >
-      </p>
-      <p>
-        <b>Ray Tracing in One Weekend</b>:
-        <a
-          href="https://raytracing.github.io/books/RayTracingInOneWeekend.html"
-          >link</a
-        >
-      </p>
-      <p>
-        <b>Sunil Golwala's lecture note on classical mechanics - Caltech: </b>
-        <a
-          href="https://sites.astro.caltech.edu/~golwala/ph106ab/ph106ab_notes.pdf">link</a
-        >
-      </p>
-      <p>
-        <b>Riccardo Cristoferi's calculus of variations: </b>
-        <a
-          href="https://www.math.cmu.edu/cna/Publications/publications2016/papers/16-CNA-007.pdf">link</a
-        >
-      </p>
-      <p>
-        <b
-          >Gabriel Nagy's Ordinary Differential Equations - University of
-          Michigan:
-        </b>
-        <a
-          href="https://users.math.msu.edu/users/gnagy/teaching/ode.pdf">link</a
-        >
-      </p>
-    </section>
-
-    <section>
-      <h2>Websites</h2>
-      <p>
-        <b>beltoforion: </b>
-        <a href="https://beltoforion.de/de/">beltoforion.de</a>. One
-        of my inspirations. Developed by Ingo Berg, the website focuses on a
-        wide range of topics, ranging from programming, earth and space science,
-        mathematics, and physics.
-      </p>
-
-      <p>
-        <b>Ten Minute Physics: </b>
-        <a
-          href="https://matthias-research.github.io/pages/tenMinutePhysics/index.html">link</a
-        >. Cool, complex physics simulation using only HTML and Javascript. This
-        is a website created to accompany the youtube channel <a
-          href="https://www.youtube.com/@tenminutephysics">Ten Minute Physics.</a
-        >
-      </p>
-
-      <p>
-        <b>scipython: </b>
-        <a href="https://scipython.com/">scipython.com</a>. Created
-        by the author of <a
-          href="https://www.cambridge.org/sj/universitypress/subjects/physics/mathematical-methods/learning-scientific-programming-python-2nd-edition?format=PB">Learning Scientific Programming with Python</a
-        >, Christian Hill. Resources for learning Python simulation and
-        scientific programming.
-      </p>
-
-      <p>
-        <b>Romanian Mathematical Magazine: </b>
-        <a href="https://www.ssmrmh.ro/">ssmrmh.ro</a>. Very cool
-        math problems.
-      </p>
-
-      <p>
-        <b>learncpp: </b>
-        <a href="https://learncpp.com/">learncpp.com</a>. A good
-        website for learning C++ from start to end.
-      </p>
-    </section>
-
-    <section>
-      <h2>Youtube Channels</h2>
-
-      <p>
-        <b>Mathematics: </b>
-        <a href="https://www.youtube.com/@3blue1brown"
-          >3Blue1Brown</a
-        >,
-        <a href="https://www.youtube.com/@Mathologer">Mathologer</a
-        >,
-        <a href="https://www.youtube.com/@MichaelPennMath"
-          >Michael Penn</a
-        >,
-        <a href="https://www.youtube.com/@morphocular"
-          >Morphocular</a
-        >,
-        <a href="https://www.youtube.com/@maths_505">Maths 505</a>,
-        <a href="https://www.youtube.com/@Aleph0">Aleph 0</a>,
-        <a href="https://www.youtube.com/@CreativeMathProblems"
-          >Creative Math Problems</a
-        >,
-        <a href="https://www.youtube.com/@DrBarker">Dr Barker</a>,
-        <a href="https://www.youtube.com/@DrTrefor"
-          >Dr. Trefor Bazett</a
-        >,
-        <a href="https://www.youtube.com/@EpsilonDeltaMain"
-          >EpsilonDelta</a
-        >,
-        <a href="https://www.youtube.com/@richarde.borcherds7998"
-          >Richard E Borcherds</a
-        >,
-        <a href="https://www.youtube.com/@mathemaniac"
-          >Mathemaniac</a
-        >
-      </p>
-      <p>
-        <b>Computer Science: </b>
-        <a href="https://www.youtube.com/@Computerphile"
-          >Computerphile</a
-        >,
-        <a href="https://www.youtube.com/@Errichto"
-          >Errichto Algorithms</a
-        >,
-        <a href="https://www.youtube.com/@SheafificationOfG"
-          >Sheafification of G</a
-        >
-      </p>
-      <p>
-        <b>Low-level Programming:</b>
-        <a href="https://www.youtube.com/@TheCherno">The Cherno</a>,
-        <a href="https://www.youtube.com/@LowLevelTV">Low Level</a>,
-        <a href="https://www.youtube.com/@TsodingDaily"
-          >Tscoding Daily</a
-        >,
-        <a href="https://www.youtube.com/@CoreDumpped"
-          >Core Dumped</a
-        >,
-        <a href="https://www.youtube.com/@AngeTheGreat"
-          >Ange The Great</a
-        >,
-        <a href="https://www.youtube.com/@lauriewired"
-          >Laurie Wired</a
-        >,
-        <a href="https://www.youtube.com/@artfulbytes"
-          >Artful Bytes</a
-        >
-      </p>
-      <p>
-        <b>Computer Simulations and Numerical Computation: </b>
-        <a href="https://www.youtube.com/@PezzzasWork"
-          >Pezzza's Work</a
-        >,
-        <a href="https://www.youtube.com/@Eigensteve"
-          >Steve Brunton</a
-        >,
-        <a href="https://www.youtube.com/@MrPSolver">Mr. P Solver</a
-        >,
-        <a href="https://www.youtube.com/@AngeTheGreat"
-          >AngeTheGreat</a
-        >,
-        <a href="https://www.youtube.com/@ArtemKirsanov"
-          >Artem Kirsanov</a
-        >
-      </p>
-      <p>
-        <b>Fun Programming: </b>
-        <a href="https://www.youtube.com/@SebastianLague"
-          >Sebastian Lague</a
-        >,
-        <a href="https://www.youtube.com/@CodeBullet">Code Bullet</a
-        >,
-        <a href="https://www.youtube.com/@CodeParade">Code Parade</a
-        >
-      </p>
-      <p>
-        <b>Web Development: </b>
-        <a href="https://www.youtube.com/@TheCoderCoder"
-          >Coder Coder</a
-        >,
-        <a href="https://www.youtube.com/@coding2go">Coding2GO</a>
-      </p>
-      <p>
-        <b>Physics: </b>
-        <a href="https://www.youtube.com/@DrBenYelverton"
-          >Dr Ben Yelverton</a
-        >,
-        <a href="https://www.youtube.com/@jkzero"
-          >Dr. Jorge S. Diaz</a
-        >
-      </p>
-
-      <section>
-        <h3>Some of my favorite videos:</h3>
-        <div class="fav-vids">
-          <div style="display: flex; justify-content: center; margin-top: 30px;">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/C8YtdC8mxTU?si=3NnFrhjh5LWPf7O_"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen></iframe>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 30px;">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/th5A6ZQ28pE?si=ZwiUikHlGoBaJm5b"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen></iframe>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 30px;">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/KzT9I1d-LlQ?si=0QMxlKCaT55RBPx3"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen></iframe>
-          </div>
-        </div>
-      </section>
-    </section>
-  </div>
+  </section>
 
 </BaseLayout>

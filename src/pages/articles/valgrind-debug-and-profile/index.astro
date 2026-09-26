@@ -18,18 +18,17 @@ import Table from "@components/article/Table.astro";
   keywords="Valgrind, C, C++, memory leak, debugging, profiling, memcheck, callgrind, massif, dynamic binary instrumentation"
   toc
 >
-  <div class="content-grid">
-    <header>
-      <TopicTags />
-      <PageTitle />
-      <PubDate />
-      <FrontImage src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
-    </header>
+  <header>
+    <TopicTags />
+    <PageTitle />
+    <PubDate />
+    <FrontImage src="/articles/valgrind-debug-and-profile/valgrind.webp" alt="image" />
+  </header>
 
-    <Quote
-      content="Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
-      author="Brian W. Kernighan"
-    />
+  <Quote
+    content="Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
+    author="Brian W. Kernighan"
+  />
 
   <section>
     <h2 >Introduction</h2>
@@ -50,15 +49,15 @@ import Table from "@components/article/Table.astro";
   <section>
 
     <h2>How Valgrind Works: Dynamic Binary Instrumentation</h2>
-  
+
     <p>
       When you run <C>valgrind ./my_program</C>, your program is never executed directly by the CPU. Instead, Valgrind's core engine reads the binary, disassembles it into an intermediate representation called <strong>VEX IR</strong>, hands it to the active tool (e.g., Memcheck) for instrumentation - the tool injects its own analysis code - and then JIT-compiles the instrumented IR back into native machine code, which is what the CPU actually runs. Every basic block goes through this pipeline the first time it executes; subsequent executions use the cached translated block.
     </p>
-  
+
     <p>
       This technique is called <strong>Dynamic Binary Instrumentation (DBI)</strong>. The key consequence is that Valgrind operates entirely at the binary level. It does not need your source code, does not require recompilation with special flags (though debug symbols help enormously for readable output), and does not need to be told in advance what to instrument - it sees everything. The downside is cost: the JIT overhead plus the analysis code added by each tool makes programs run roughly 10–50× slower under Valgrind, depending on the tool.
     </p>
-  
+
     <p>
       For comparison, compile-time sanitizers like AddressSanitizer (ASan) and MemorySanitizer (MSan) work differently: they instrument the code at compile time and run with only around 2–3x overhead. Valgrind's advantage over them is that it works on any binary, including prebuilt third-party libraries, and does not require source access. Its disadvantage is the much larger overhead and the fact that it cannot instrument stack accesses as precisely as ASan.
     </p>
@@ -81,17 +80,17 @@ import Table from "@components/article/Table.astro";
     <section>
 
       <h3>Compiling for Valgrind</h3>
-  
+
       <p>
         Valgrind works on any binary, but the quality of its output depends heavily on what debugging information the binary contains. Always compile with <C>-g</C> to embed DWARF debug information. This is what lets Valgrind translate a raw instruction address like <C>0x401156</C> into a human-readable <C>main (main.cpp:6)</C>.
       </p>
-  
+
       <p>
         You should also disable or reduce optimizations. With <C>-O2</C> or <C>-O3</C>, the compiler aggressively reorders, inlines, and eliminates code. The resulting binary may not have a meaningful correspondence to source lines, and some bugs may be hidden because the optimizer happened to compile around them (or made them worse by reordering). Use <C>-O0</C> for the clearest output:
       </p>
-  
+
       <ShellScript is:raw>g++ -g -O0 -o my_program my_program.cpp</ShellScript>
-  
+
       <p>
         If you need to test with optimizations enabled (for example, because a bug only manifests at <C>-O2</C>), use <C>-O1</C> as a compromise - it enables some optimizations but keeps the binary reasonably debuggable.
       </p>
@@ -238,53 +237,53 @@ import Table from "@components/article/Table.astro";
     </p>
 
     <section>
-    <h3>Indirect Leaks: An Example</h3>
+      <h3>Indirect Leaks: An Example</h3>
 
-    <p>
-      To see indirect leaks, consider a simple singly-linked list where we forget to free the head:
-    </p>
+      <p>
+        To see indirect leaks, consider a simple singly-linked list where we forget to free the head:
+      </p>
 
-    <CodeBlock language="cpp" is:raw>
-      #include <cstdlib>
+      <CodeBlock language="cpp" is:raw>
+        #include <cstdlib>
 
-      struct Node {
-          int val;
-          Node* next;
-      };
+        struct Node {
+            int val;
+            Node* next;
+        };
 
-      int main() {
-          // Build a list: 1 -> 2 -> 3 -> nullptr
-          Node* head = (Node*)malloc(sizeof(Node));
-          head->val  = 1;
-          head->next = (Node*)malloc(sizeof(Node));
-          head->next->val  = 2;
-          head->next->next = (Node*)malloc(sizeof(Node));
-          head->next->next->val  = 3;
-          head->next->next->next = nullptr;
+        int main() {
+            // Build a list: 1 -> 2 -> 3 -> nullptr
+            Node* head = (Node*)malloc(sizeof(Node));
+            head->val  = 1;
+            head->next = (Node*)malloc(sizeof(Node));
+            head->next->val  = 2;
+            head->next->next = (Node*)malloc(sizeof(Node));
+            head->next->next->val  = 3;
+            head->next->next->next = nullptr;
 
-          // We never free any of the nodes.
-          // 'head' goes out of scope on return.
-          return 0;
-      }
-    </CodeBlock>
+            // We never free any of the nodes.
+            // 'head' goes out of scope on return.
+            return 0;
+        }
+      </CodeBlock>
 
-    <p>Valgrind reports:</p>
+      <p>Valgrind reports:</p>
 
-    <CodeBlock language="bash" is:raw>
-      ==18424== 16 bytes in 1 blocks are definitely lost in loss record 1 of 3
-      ==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-      ==18424==    at 0x401188: main (list.cpp:10)    <-- the head node
-      ==18424==
-      ==18424== 32 bytes in 2 blocks are indirectly lost in loss record 2 of 3
-      ==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-      ==18424==    at 0x4011B4: main (list.cpp:12)    <-- node 2
-      ==18424==    ...
-      ==18424==    at 0x4011D8: main (list.cpp:15)    <-- node 3
-    </CodeBlock>
+      <CodeBlock language="bash" is:raw>
+        ==18424== 16 bytes in 1 blocks are definitely lost in loss record 1 of 3
+        ==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+        ==18424==    at 0x401188: main (list.cpp:10)    <-- the head node
+        ==18424==
+        ==18424== 32 bytes in 2 blocks are indirectly lost in loss record 2 of 3
+        ==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+        ==18424==    at 0x4011B4: main (list.cpp:12)    <-- node 2
+        ==18424==    ...
+        ==18424==    at 0x4011D8: main (list.cpp:15)    <-- node 3
+      </CodeBlock>
 
-    <p>
-      Only the head is "definitely lost"; the other two nodes are "indirectly lost" because they are only reachable through the leaked head. This classification is useful: you should focus on fixing the "definitely lost" allocations first. The indirect ones typically disappear automatically.
-    </p>
+      <p>
+        Only the head is "definitely lost"; the other two nodes are "indirectly lost" because they are only reachable through the leaked head. This classification is useful: you should focus on fixing the "definitely lost" allocations first. The indirect ones typically disappear automatically.
+      </p>
     </section>
   </section>
 
@@ -299,11 +298,11 @@ import Table from "@components/article/Table.astro";
     <section>
 
       <h3>Heap Buffer Overflow</h3>
-  
+
       <p>
         A heap buffer overflow occurs when you access memory beyond the end of an allocated block. The adjacent memory might belong to another allocation's header, another live object, or be unallocated. Writing to it silently corrupts state; reading from it produces garbage.
       </p>
-  
+
       <CodeBlock language="cpp" is:raw>
         #include <cstdlib>
         #include <cstdio>
@@ -320,9 +319,9 @@ import Table from "@components/article/Table.astro";
             return 0;
         }
       </CodeBlock>
-  
+
       <p>Valgrind catches the out-of-bounds write at <C>i == 5</C>:</p>
-  
+
       <CodeBlock language="bash" is:raw>
         ==19001== Invalid write of size 4
         ==19001==    at 0x401185: main (overflow.cpp:7)
@@ -330,11 +329,11 @@ import Table from "@components/article/Table.astro";
         ==19001==    at 0x484A840: malloc (vg_replace_malloc.c:442)
         ==19001==    at 0x401166: main (overflow.cpp:4)
       </CodeBlock>
-  
+
       <p>
         Valgrind tells us: the invalid write is at <C>overflow.cpp:7</C> (the <C>buf[i] = i * 10</C> line when <C>i == 5</C>), the address is <em>0 bytes after</em> the end of the block (so exactly one element off the end), and the block was allocated at <C>overflow.cpp:4</C>.
       </p>
-  
+
       <p>
         Note that Valgrind detects this <em>on the loop iteration that causes the violation</em>, not when the program crashes or produces wrong output. Without Valgrind, this bug might silently corrupt the allocator's internal bookkeeping, causing a crash inside <C>free(buf)</C> far from the actual cause.
       </p>
@@ -343,11 +342,11 @@ import Table from "@components/article/Table.astro";
     <section>
 
       <h3 >Use-After-Free</h3>
-  
+
       <p>
         Use-after-free (UAF) occurs when a pointer is used after the memory it points to has been freed. This is a particularly dangerous class of bug in long-running programs and a well-known attack vector: if an attacker can control what gets allocated in the freed region before it is used, they can potentially inject data into the program's execution.
       </p>
-  
+
       <CodeBlock language="cpp" is:raw>
         #include <cstdlib>
         #include <cstdio>
@@ -364,7 +363,7 @@ import Table from "@components/article/Table.astro";
             return 0;
         }
       </CodeBlock>
-  
+
       <CodeBlock language="bash" is:raw>
         ==19002== Invalid write of size 4
         ==19002==    at 0x401185: main (uaf.cpp:9)
@@ -380,11 +379,11 @@ import Table from "@components/article/Table.astro";
         ==19002==  Address 0x5204040 is 0 bytes inside a block of size 4 free'd
           ...
       </CodeBlock>
-  
+
       <p>
         The report includes three stack traces: where the invalid access happened (line 9), where the memory was freed (line 7), and where it was originally allocated (line 4). This three-way linkage is essential for diagnosing UAF bugs in large codebases where allocation, free, and use can span multiple files and hundreds of lines.
       </p>
-  
+
       <p>
         Importantly, Valgrind catches this error even though the OS has not yet reclaimed the page. In practice, a UAF bug might "work" under the normal allocator because the freed block has been put back into the allocator's free list but the page is still mapped and writable. Valgrind's A-bit mechanism fires regardless of OS state.
       </p>
@@ -394,11 +393,11 @@ import Table from "@components/article/Table.astro";
   <section>
 
     <h2>Use of Uninitialized Memory</h2>
-  
+
     <p>
       An uninitialized read is a subtler class of bug. The C standard does not define what value an uninitialized variable holds; in practice it is whatever happened to be in that register or stack slot at the time. Reading it doesn't immediately crash anything - the danger is that the garbage value propagates through computations and eventually drives a branch or system call, producing wrong results that are hard to trace back.
     </p>
-  
+
     <CodeBlock language="cpp" is:raw>
       #include <cstdlib>
       #include <cstdio>
@@ -422,7 +421,7 @@ import Table from "@components/article/Table.astro";
         return 0;
       }
     </CodeBlock>
-  
+
     <CodeBlock language="bash" is:raw>
       ==19003== Conditional jump or move depends on uninitialised value(s)
       ==19003==    at 0x4011B2: main (uninit.cpp:15)
@@ -430,15 +429,15 @@ import Table from "@components/article/Table.astro";
       ==19003==    at 0x484A840: malloc (vg_replace_malloc.c:442)
       ==19003==    at 0x401166: main (uninit.cpp:4)
     </CodeBlock>
-  
+
     <p>
       Several things are worth noting here. First, Memcheck does not fire when we <em>read</em> <C>arr[3]</C> into <C>sum</C>. It fires when we use <C>sum</C> in a <em>branch</em> on line 15. This is intentional: Memcheck propagates "taint" (undefined V-bits) lazily through arithmetic. Only when undefined bits reach a decision point that affects control flow or a syscall argument does Valgrind report the error. This means the reported line may not be the root cause - you need to trace the data flow back to the malloc on line 4.
     </p>
-  
+
     <p>
       Second, with <C>--track-origins=yes</C>, Valgrind tells us the uninitialized value "was created by a heap allocation at <C>uninit.cpp:4</C>." Without this flag, Valgrind can only tell us that a conditional depends on an uninitialized value; with it, we get the origin of the uninitialized memory.
     </p>
-  
+
     <p>
       Note: <C>calloc()</C> zero-initializes its memory, so V-bits start out "defined." <C>malloc()</C> does not. Stack variables in C are similarly uninitialized; Memcheck tracks those too, though it cannot always pinpoint stack allocations with the same precision as heap ones.
     </p>
@@ -446,11 +445,11 @@ import Table from "@components/article/Table.astro";
 
   <section>
     <h2>Double Free and Mismatched Deallocation</h2>
-  
+
     <p>
       A double free occurs when <C>free()</C> is called on the same pointer twice. After the first free, the block is returned to the allocator's free list. The second free corrupts the allocator's internal state. In glibc, this often results in an abort with "double free or corruption," but that detection is not guaranteed and can be bypassed.
     </p>
-  
+
     <CodeBlock language="cpp" is:raw>
       #include <cstdlib>
 
@@ -462,7 +461,7 @@ import Table from "@components/article/Table.astro";
         return 0;
       }
     </CodeBlock>
-  
+
     <CodeBlock language="bash" is:raw>
       ==19004== Invalid free() / delete / delete[] / realloc()
       ==19004==    at 0x484BB6F: free (vg_replace_malloc.c:872)
@@ -474,16 +473,16 @@ import Table from "@components/article/Table.astro";
       ==19004==    at 0x484A840: malloc (vg_replace_malloc.c:442)
       ==19004==    at 0x401166: main (dfree.cpp:4)    <-- original malloc
     </CodeBlock>
-  
+
     <p>
       Memcheck also catches mismatched allocator/deallocator pairs - for example, allocating with <C>new</C> and freeing with <C>free()</C>, or allocating an array with <C>new[]</C> and deleting it with a scalar <C>delete</C>. These are undefined behavior in C++ even if they "work" on a given implementation.
     </p>
-  
+
     <CodeBlock language="cpp" is:raw>
       int* p = new int[10];
       delete p;   // BUG: should be delete[]
     </CodeBlock>
-  
+
     <CodeBlock language="bash" is:raw>
       ==19005== Mismatched free() / delete / delete []
       ==19005==    at 0x484C5C4: operator delete(void*, unsigned long) ...
@@ -531,27 +530,27 @@ import Table from "@components/article/Table.astro";
 
     <section>
       <h3>Visualizing with KCacheGrind</h3>
-  
+
       <p>
         The raw output file is not human-readable. The standard tool for visualizing Callgrind output is <strong>KCacheGrind</strong> (Linux, part of KDE) or <strong>QCacheGrind</strong> (cross-platform). Install it with:
       </p>
-  
+
       <ShellScript is:raw>
         sudo apt install kcachegrind   # Debian/Ubuntu
         sudo pacman -S kcachegrind     # Arch
       </ShellScript>
-  
+
       <ShellScript is:raw>kcachegrind callgrind.out.12345</ShellScript>
-  
+
       <p>
         KCacheGrind shows a flat list of functions sorted by cost. Each function has two cost columns:
       </p>
-  
+
       <ul>
         <li><strong>Self cost:</strong> instructions (or cache misses) spent in the function itself, excluding time spent in callees.</li>
         <li><strong>Inclusive cost:</strong> total instructions in the function and all of its callees. A function with high inclusive cost but low self cost is a hotspot's caller, not the hotspot itself.</li>
       </ul>
-  
+
       <p>
         KCacheGrind also shows the call graph: which functions call which, and how many instructions were executed on each call edge. This is invaluable for understanding whether a function is expensive because it is called millions of times with cheap bodies, or because individual calls are expensive.
       </p>
@@ -559,13 +558,13 @@ import Table from "@components/article/Table.astro";
 
     <section>
       <h3>Command-Line Annotation</h3>
-  
+
       <p>
         If you prefer staying in the terminal, <C>callgrind_annotate</C> produces a source-annotated listing:
       </p>
-  
+
       <ShellScript is:raw>callgrind_annotate --auto=yes callgrind.out.12345</ShellScript>
-  
+
       <p>
         Each source line is annotated with the instruction count it contributes. This makes it easy to identify the exact loop body or expression that is consuming most of the instructions.
       </p>
@@ -573,11 +572,11 @@ import Table from "@components/article/Table.astro";
 
     <section>
       <h3>Profiling a Specific Region</h3>
-  
+
       <p>
         Sometimes you only want to profile a specific function or section of code, not the entire program. Callgrind supports starting and stopping collection under program control via the <C>CALLGRIND_START_INSTRUMENTATION</C> and <C>CALLGRIND_STOP_INSTRUMENTATION</C> macros (from <C>&lt;valgrind/callgrind.h&gt;</C>), or interactively via <C>callgrind_control</C>:
       </p>
-  
+
       <ShellScript is:raw>
         # Start Valgrind with instrumentation off
         valgrind --tool=callgrind --instr-atstart=no ./my_program
@@ -593,11 +592,11 @@ import Table from "@components/article/Table.astro";
 
   <section>
     <h2>Massif: Heap Memory Profiling</h2>
-  
+
     <p>
       Memcheck tells you where memory is leaked; Massif tells you where memory is <em>used</em>. It answers the question: at the moment my program's heap peaked, what allocations were responsible, and what call chains produced them?
     </p>
-  
+
     <ShellScript is:raw>
       valgrind --tool=massif \
         --pages-as-heap=no \
@@ -605,26 +604,26 @@ import Table from "@components/article/Table.astro";
         ./my_program
         # Produces: massif.out.<pid>
     </ShellScript>
-  
+
     <p>
       Key options:
     </p>
-  
+
     <ul>
       <li><C>--time-unit=ms</C> - use wall-clock milliseconds as the x-axis in the profile. Alternatives are <C>i</C> (instructions, the default) and <C>B</C> (bytes allocated). Wall-clock time is the most intuitive for understanding heap growth over real time.</li>
       <li><C>--pages-as-heap=yes</C> - profile <em>all</em> memory the program touches, not just malloc/new. This includes the text segment, stack, and mmapped files. Useful when hunting for total-process RSS growth rather than just heap growth.</li>
       <li><C>--detailed-freq=N</C> - take a "detailed" snapshot (with full allocation trees) every N snapshots. The default is 10.</li>
     </ul>
-  
+
     <section>
       <h3>Reading ms_print Output</h3>
-  
+
       <ShellScript is:raw>ms_print massif.out.12345 | less</ShellScript>
-  
+
       <p>
         The output has two parts. The first is an ASCII graph of heap usage over time, with a <C>@</C> marker at each detailed snapshot and a <C>:</C> at normal snapshots. The peak usage is marked with a <C>#</C>. For example:
       </p>
-  
+
       <CodeBlock language="bash" is:raw> MB
   4.00 ^                                              #
        |                                           @@#@
@@ -633,11 +632,11 @@ import Table from "@components/article/Table.astro";
        |                              @@@@@@@@@@@@#@@@
   0.00 +--------------------------------------------->ms
        0                                            500</CodeBlock>
-  
+
       <p>
         The second part lists each detailed snapshot. For each one, it shows the call tree of all live allocations - which call path allocated how many bytes:
       </p>
-  
+
       <CodeBlock language="bash" is:raw>
         --------------------------------------------------------------------------------
           n        time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
@@ -649,11 +648,11 @@ import Table from "@components/article/Table.astro";
         ->19.51% (409,600B)  0x4013AB: load_data (loader.cpp:88)
         ->19.51% (409,600B)  0x401155: main (main.cpp:8)
       </CodeBlock>
-  
+
       <p>
         This tells us that at the peak snapshot, 79% of heap memory was allocated by <C>build_matrix()</C> (called from <C>main</C> on line 12) and 19% by <C>load_data()</C>. If we need to reduce peak memory usage, <C>build_matrix</C> is the place to start.
       </p>
-  
+
       <p>
         Massif is particularly useful when investigating reports of a program consuming "too much memory." RSS (resident set size, as reported by <C>top</C>) is an unreliable proxy - it includes shared libraries, the stack, and can be inflated by fragmentation. Massif gives you the exact heap bytes your code is responsible for, attributed to specific call sites.
       </p>
@@ -665,46 +664,46 @@ import Table from "@components/article/Table.astro";
     <h2 >Appendix</h2>
 
     <section>
-<h3>Suppression Files</h3>
+      <h3>Suppression Files</h3>
 
-    <p>
-      Real programs link against third-party libraries - OpenSSL, glibc, Qt, whatever - whose internals Valgrind will also instrument. Many of these libraries have intentional behaviors that look like errors to Memcheck: they allocate global state they never free, use memory in non-standard ways, or have race conditions Helgrind flags as harmless. These produce false positives that drown out real errors.
-    </p>
+      <p>
+        Real programs link against third-party libraries - OpenSSL, glibc, Qt, whatever - whose internals Valgrind will also instrument. Many of these libraries have intentional behaviors that look like errors to Memcheck: they allocate global state they never free, use memory in non-standard ways, or have race conditions Helgrind flags as harmless. These produce false positives that drown out real errors.
+      </p>
 
-    <p>
-      A <strong>suppression file</strong> lists patterns of error reports to ignore. Valgrind ships with suppression files for common system libraries; you can specify additional ones:
-    </p>
+      <p>
+        A <strong>suppression file</strong> lists patterns of error reports to ignore. Valgrind ships with suppression files for common system libraries; you can specify additional ones:
+      </p>
 
-    <ShellScript is:raw>
-      valgrind --suppressions=/usr/lib/valgrind/debian.supp \
-               --suppressions=./my_project.supp \
-               ./my_program
-    </ShellScript>
+      <ShellScript is:raw>
+        valgrind --suppressions=/usr/lib/valgrind/debian.supp \
+                 --suppressions=./my_project.supp \
+                 ./my_program
+      </ShellScript>
 
-    <p>
-      To generate a suppression entry for an error you want to silence, run Valgrind with <C>--gen-suppressions=all</C>. It will print a suppression block after each error that you can copy into your <C>.supp</C> file. A suppression entry looks like:
-    </p>
+      <p>
+        To generate a suppression entry for an error you want to silence, run Valgrind with <C>--gen-suppressions=all</C>. It will print a suppression block after each error that you can copy into your <C>.supp</C> file. A suppression entry looks like:
+      </p>
 
-    <CodeBlock language="bash" is:raw>
-      {
-         ignore_openssl_init_leak
-         Memcheck:Leak
-         match-leak-kinds: reachable
-         fun:malloc
-         ...
-         fun:OPENSSL_init_ssl
-      }
-    </CodeBlock>
+      <CodeBlock language="bash" is:raw>
+        {
+           ignore_openssl_init_leak
+           Memcheck:Leak
+           match-leak-kinds: reachable
+           fun:malloc
+           ...
+           fun:OPENSSL_init_ssl
+        }
+      </CodeBlock>
     </section>
 
     <section>
 
       <h3>Valgrind vs. AddressSanitizer</h3>
-  
+
       <p>
         Valgrind and AddressSanitizer (ASan) both detect many of the same bugs but with different trade-offs:
       </p>
-  
+
       <Table>
         <thead>
           <tr>
@@ -756,7 +755,7 @@ import Table from "@components/article/Table.astro";
           </tr>
         </tbody>
       </Table>
-  
+
       <p>
         In practice, use ASan for your development build (it is fast enough to leave on by default) and Valgrind for auditing third-party libraries or when you need to find uninitialized-read bugs without access to source.
       </p>
@@ -764,7 +763,7 @@ import Table from "@components/article/Table.astro";
 
     <section>
       <h3>Quick Reference</h3>
-  
+
       <Table>
         <thead>
           <tr>
@@ -816,16 +815,16 @@ import Table from "@components/article/Table.astro";
       <li>
         Nicholas Nethercote and Julian Seward. Valgrind: A framework for
         heavyweight dynamic binary instrumentation. In <em>Proceedings of the
-        2007 ACM SIGPLAN Conference on Programming Language Design and
-        Implementation (PLDI)</em>, pages 89-100, San Diego, CA, 2007. <a
-          href="https://valgrind.org/docs/valgrind2007.pdf"
-          >https://valgrind.org/docs/valgrind2007.pdf</a
-        >
+          2007 ACM SIGPLAN Conference on Programming Language Design and
+          Implementation (PLDI)</em>, pages 89-100, San Diego, CA, 2007. <a
+            href="https://valgrind.org/docs/valgrind2007.pdf"
+            >https://valgrind.org/docs/valgrind2007.pdf</a
+          >
       </li>
       <li>
         Julian Seward and Nicholas Nethercote. Using Valgrind to detect
         undefined value errors with bit-precision. In <em>Proceedings of the
-        2005 USENIX Annual Technical Conference</em>, pages 17-30, Anaheim, CA,
+          2005 USENIX Annual Technical Conference</em>, pages 17-30, Anaheim, CA,
         2005. <a
           href="https://valgrind.org/docs/memcheck2005.pdf"
           >https://valgrind.org/docs/memcheck2005.pdf</a
@@ -834,7 +833,7 @@ import Table from "@components/article/Table.astro";
       <li>
         Nicholas Nethercote and Julian Seward. How to shadow every byte of
         memory used by a program. In <em>Proceedings of the 3rd International
-        Conference on Virtual Execution Environments (VEE)</em>, pages 65-74,
+          Conference on Virtual Execution Environments (VEE)</em>, pages 65-74,
         San Diego, CA, 2007. <a
           href="https://valgrind.org/docs/shadow-memory2007.pdf"
           >https://valgrind.org/docs/shadow-memory2007.pdf</a
@@ -884,6 +883,5 @@ import Table from "@components/article/Table.astro";
       </li>
     </ol>
   </section>
-  </div>
 
 </BaseLayout>

@@ -87,14 +87,16 @@ The shell every page renders into: `<head>`, top bar, sidebar, main region,
 
 | Slot | Lands in |
 |---|---|
-| default | `<main class="general-wrapper" data-pagefind-body>` — the page body |
+| default | `<div class="content-grid">` inside `<main data-pagefind-body>` — the page body, in the centred column. Pages don't write this wrapper. |
+| `hero` | `<main>`, above the column, full width (the homepage banner) |
 | `head` | end of `<head>`, for page-specific stylesheets or meta |
 | `sidebar` | the left nav, between the TOC and the highlights panel |
 | `scripts` | end of `<body>`, for page-specific scripts (currently unused) |
 
 ```astro
 <BaseLayout title="Chladni Patterns, Part 2" description="…" activeButton="articles" toc>
-  <div class="content-grid"> … </div>
+  <header> … </header>
+  <section> … </section>
 </BaseLayout>
 ```
 
@@ -754,27 +756,25 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 ---
 
 <BaseLayout title={meta.title} description={meta.description} activeButton="articles" toc>
-  <div class="content-grid">
-    <header>
-      <TopicTags topics={meta.topics} />
-      <PageTitle title={meta.title} />
-      <PubDate pubDate={meta.pubDate} />
-      <FrontImage src="/articles/<slug>/banner.webp" />
-    </header>
+  <header>
+    <TopicTags topics={meta.topics} />
+    <PageTitle title={meta.title} />
+    <PubDate pubDate={meta.pubDate} />
+    <FrontImage src="/articles/<slug>/banner.webp" />
+  </header>
 
-    <section>
-      <h2>Introduction</h2>
-      <p>Inline math like $x^2$ is fine in prose, and <C>--flag</C> is inline code.</p>
-      <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>
-      <Figure src="/articles/<slug>/plot.webp" width="70%">A caption.</Figure>
-      <Table>
-        <thead><tr><th>n</th><th>T(n)</th></tr></thead>
-        <tbody><tr><td>1</td><td>O(1)</td></tr></tbody>
-      </Table>
-      <CodeBox language="python" lineNumbers>print("hi")
+  <section>
+    <h2>Introduction</h2>
+    <p>Inline math like $x^2$ is fine in prose, and <C>--flag</C> is inline code.</p>
+    <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>
+    <Figure src="/articles/<slug>/plot.webp" width="70%">A caption.</Figure>
+    <Table>
+      <thead><tr><th>n</th><th>T(n)</th></tr></thead>
+      <tbody><tr><td>1</td><td>O(1)</td></tr></tbody>
+    </Table>
+    <CodeBox language="python" lineNumbers>print("hi")
 </CodeBox>
-    </section>
-  </div>
+  </section>
 </BaseLayout>
 ```
 

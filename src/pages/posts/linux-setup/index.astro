@@ -26,685 +26,683 @@ import C from "@components/code/C.astro";
     </style>
   </Fragment>
 
-  <div class="content-grid">
-    <header>
-      <TopicTags />
-      <PageTitle />
-      <PubDate />
-    </header>
+  <header>
+    <TopicTags />
+    <PageTitle />
+    <PubDate />
+  </header>
 
-    <section>
-      <h2>Preparation (after OS installation)</h2>
-      <ul>
-        <li>
-          Install recommended NVIDIA drivers: Open the "Software & Updates"
-          application, navigate to the "Additional Drivers" tab, and select the
-          recommended NVIDIA driver for your GPU. Apply the changes and reboot
-          when prompted. Alternatively, install via terminal:
-          <ShellScript is:raw>
-            sudo ubuntu-drivers devices
-            sudo ubuntu-drivers autoinstall
-            sudo reboot
-          </ShellScript>
-        </li>
-        <li>
-          Power Management (Powertop): Linux's battery management on laptops
-          tends to be less optimized than other operating systems. Powertop
-          helps optimize power consumption and extend battery life. Install
-          with:
-          <ShellScript is:raw>
-            sudo apt update && sudo apt upgrade -y
-            sudo apt install powertop -y
-            sudo systemctl enable tlp
-          </ShellScript>
-        </li>
-
-        <li>
-          GNOME: I use GNOME desktop environment for simplicity. To further
-          customize and optimize it, install GNOME Tweaks by running:
-          <ShellScript is:raw>
-            sudo apt update && sudo apt upgrade -y
-            sudo apt install gnome-tweaks -y
-          </ShellScript>
-          You can use GNOME Tweaks to adjust various settings such as themes, fonts,
-          and extensions to enhance your desktop experience. Here are some of my favorite
-          GNOME extensions:
-          <ul>
-            <li>
-              <a
-                href="https://extensions.gnome.org/extension/307/dash-to-dock/">Dash to Dock</a
-              >: Turn the GNOME dash into a nice-looking dock for easier access
-              to applications.
-            </li>
-            <li>
-              <a
-                href="https://extensions.gnome.org/extension/1460/caffeine-ng/">Caffeine-NG</a
-              >: Prevents your computer from going to sleep or activating the
-              screensaver when certain applications are running.
-            </li>
-            <li>
-              <a
-                href="https://extensions.gnome.org/extension/3193/blur-my-shell/">Blur my Shell</a
-              >: Adds a blur effect to the GNOME shell elements for a sleek
-              look.
-            </li>
-            <li>
-              <a
-                href="https://extensions.gnome.org/extension/3195/vitals/">Vitals</a
-              >: Monitors system resources like CPU, RAM, and network usage
-              directly from the top bar.
-            </li>
-          </ul>
-        </li>
-        <li>
-          If you want even more customization, consider <a
-            href="https://kde.org/plasma-desktop">KDE Plasma</a
-          > desktop environment. Personally, I prefer GNOME for its simplicity. I've
-          used KDE before when I was still on Debian, but one thing I noticed is that
-          it takes up more power and resources, and since I use a laptop, I prefer
-          to save battery life with GNOME.
-        </li>
-        <li>
-          <a href="https://gdm-settings.github.io/">GDM settings</a
-          >: lock screen customization, auto login, etc. Install GDM settings
-          with:
-          <ShellScript is:raw>sudo apt install gdm3setup -y</ShellScript>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2 >Basic Rice</h2>
-      <p>
-        Simple GNOME desktop rice using <a
-          href="https://github.com/fastfetch-cli/fastfetch">fastfetch</a
-        >. Link to my config: <a
-          href="https://github.com/hilbertcube/fastfetch-config">github</a
-        >
-      </p>
-      <Figure src="/posts/linux-setup/rice.webp" alt="GNOME desktop rice" width="70%" />
-      Display any image on the terminal using <a
-        href="https://github.com/hpjansson/chafa">chafa</a
-      >:
-      <CodeBlock is:raw>
-        ucla-logo() {
-            # Generate the logo on the fly
-            local LOGO=$(chafa --size 50 --symbols block /home/img/ucla.png)
-
-            # Print it
-            echo -e "$LOGO"
-        }
-      </CodeBlock>
-    </section>
-
-    <section>
-      <h2 >Change Some Default Behaviors</h2>
-      <ul>
-        <li>
-          Change keybinding: on Linux, copy and paste in the terminal is
-          defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and
-          Ctrl+V, open the terminal, then go to the burger menu, then
-          Preferences > Shortcuts, and change the Copy and Paste shortcuts.
-          After changing, restart the terminal. Now, Ctrl+Shift+C will be
-          automatically mapped to cancel command (SIGINT), and Ctrl+C and Ctrl+V
-          will work as expected for copy and paste
-
-          <section>
-            <h3 class="h4-visual">A quick word about Emacs</h3>
-
-            Please note that if you change this keybinding, and you're using
-            Emacs, it will interfere with Emacs keybindings in the terminal. For
-            example, Ctrl+C is used for various commands in Emacs. If you want
-            to use Emacs keybindings, you can either keep the default
-            Ctrl+Shift+C and Ctrl+Shift+V for copy and paste, or you can remap
-            the copy and paste shortcuts to something else that doesn't conflict
-            with Emacs.
-          </section>
-        </li>
-        <li>
-          Better Bash autocompletion: Install bash-completion for improved
-          command-line experience:
-          <ShellScript is:raw>
-            sudo apt update && sudo apt upgrade -y
-            sudo apt install bash-completion -y
-          </ShellScript>
-          After installation, verify, and then source it:
-          <ShellScript is:raw>
-            echo $BASH_VERSION
-            source /etc/bash_completion
-          </ShellScript>
-          Next, add the following line to your <C>~/.bashrc</C> file to enable bash-completion automatically on terminal startup:
-          <CodeBlock is:raw>
-            if [ -f /etc/bash_completion ]; then
-                . /etc/bash_completion
-            fi
-          </CodeBlock>
-          The next thing I did is to enable a menu-style tab completion by adding
-          the following lines to <C>~/.inputrc</C>:
-          <CodeBlock is:raw>
-            # Show all matches immediately
-            set show-all-if-ambiguous on
-
-            # Enable menu-style completion
-            TAB: menu-complete
-
-            # Case-insensitive completion
-            set completion-ignore-case on
-            set completion-map-case on
-
-            # Mark symlinked directories
-            set mark-symlinked-directories on
-          </CodeBlock>
-          Finally, reload it with:
-          <ShellScript is:raw>bind -f ~/.inputrc</ShellScript>
-          How this works: let's say you're in a folder called UCLA, with the following
-          folders inside:
-          <ShellScript is:raw>
-            ls UCLA
-            CS-111  CS-180  CS-35L  CS-M51A  ECE-102 ECE-115C
-          </ShellScript>
-          now, when you press CS + Tab, it will rotate through different options of
-          the CS folders. Then simply press enter to select the desired folder.
-        </li>
-        <li>
-          Remap certain keys (optional). One of the annoying things about
-          Laptops made in recent years is that they come with the copilot key,
-          which is located where the right Ctrl key should be. To remap it back
-          to Ctrl, first install keyd to tell which keycode corresponds to the
-          copilot key:
-          <ShellScript is:raw>
-            sudo apt install keyd -y
-            sudo systemctl enable keyd
-            sudo systemctl start keyd
-          </ShellScript>
-          After installation, remember to verify with
-          <ShellScript is:raw>
-            whereis keyd
-            systemctl status keyd
-          </ShellScript>
-
-          Next, monitor which keycode corresponds to the copilot key by running:
-          <ShellScript is:raw>sudo keyd monitor # or sudo keyd.rvaiya monitor</ShellScript>
-          Add the following to <C>/etc/keyd/default.conf</C>:
-          <ShellScript is:raw>
-            [ids]
-            *
-
-            [main]
-            leftshift+leftmeta+f23 = rightcontrol # this varies, adjust accordingly to your system
-          </ShellScript>
-          Then, reload with
-          <ShellScript is:raw>sudo keyd reload # or sudo keyd.rvaiya reload</ShellScript>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2 >DevOps and Text Editors</h2>
-      <ul>
-        <li>
-          <a href="https://code.visualstudio.com/">VSCode</a>: My
-          primary code editor. Simply use the Software Center to install it via
-          snap. If you dislike snap, install with:
-          <ShellScript continuationStr={"\\"} is:raw>
-            sudo apt update && sudo apt upgrade -y
-            sudo apt install wget gpg -y
-            wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-            sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-            sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] \
-            https://packages.microsoft.com/repos/code stable main" \
-            > /etc/apt/sources.list.d/vscode.list'
-            sudo apt install apt-transport-https -y
-            sudo apt update && sudo apt install code -y
-          </ShellScript>
-
-          <strong>Settings:</strong> on Linux, again, copy and paste is defaulted
-          as Ctrl+Shift+C and Ctrl+Shift+V. To change it back to Ctrl+C and Ctrl+V,
-          go to Settings > Keyboard Shortcuts, and paste the following JSON:
-          <CodeBlock language="json" is:raw>
-            [
-              {
-                  "key": "ctrl+c",
-                  "command": "workbench.action.terminal.copySelection",
-                  "when": "terminalFocus && terminalProcessSupported && terminalTextSelected"
-              },
-              {
-                  "key": "ctrl+v",
-                  "command": "workbench.action.terminal.paste",
-                  "when": "terminalFocus && terminalProcessSupported"
-              },
-              {
-                  "key": "ctrl+shift+c",
-                  "command": "workbench.action.terminal.sendSequence",
-                  "args": { "text": "\u0003" },
-                  "when": "terminalFocus"
-              }
-            ]
-          </CodeBlock>
-
-          <section>
-            <h3 class="h4-visual">A quick note about Snap</h3>
-
-            Snap is one of the most common criticisms of Ubuntu, mostly because
-            of perceived performance issues. I am not a big fan of it either.
-            That said, it is worth remembering that you don't have to use Snap
-            at all if it does not fit your needs. Like many things in Linux, it
-            comes down to preference and the flexibility to choose what works
-            best for you.
-          </section>
-        </li>
-        <li>
-          <a href="https://neovim.io/">Neovim</a>: Terminal-based
-          text editor. Install with:
-          <ShellScript is:raw>
-            sudo apt update && sudo apt upgrade -y
-            sudo apt install neovim -y
-          </ShellScript>
-        </li>
-        <li>
-          <a href="https://git-scm.com/">Git</a>: Version control
-          system. Install with:
-          <ShellScript is:raw>
-            sudo apt update && sudo apt upgrade -y
-            sudo apt install git -y
-          </ShellScript>
-        </li>
-        <li>
-          <a href="https://www.docker.com/">Docker</a>:
-          Containerization platform. Follow the <a
-            href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a
-          >:
-          <ShellScript output="1, 4-5, 7-8, 12-13, 18-19, 22-23" continuationStr={"\\"} is:raw>
-            # update and remove old versions
-            sudo apt update
-            sudo apt remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
-
-            # install dependencies
-            sudo apt install ca-certificates curl gnupg
-
-            # add Docker's official GPG key
-            sudo install -m 0755 -d /etc/apt/keyrings
-            sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-            sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-            # add Docker apt repository
-            echo \
-              "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-              $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-              sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-            # install Docker Engine
-            sudo apt update
-            sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-            # verify installation
-            sudo systemctl status docker
-            sudo docker run hello-world
-          </ShellScript>
-        </li>
-      </ul>
-    </section>
-    <section>
-      <h2 >C and C++ Development Environment</h2>
-      <ul>
-        <li>
-          Essentials: Core development tools including build-essential, gdb,
-          g++-multilib, and related packages. Install with:
-          <ShellScript is:raw>sudo apt install build-essential lldb ninja-build clang gdb g++-multilib -y</ShellScript>
-        </li>
-        <li>
-          <a href="https://cmake.org/">CMake</a> and CMake GUI: Build
-          system generator with GUI support for easier project configuration. Install
-          with:
-          <ShellScript is:raw>sudo apt install cmake cmake-qt-gui -y</ShellScript>
-        </li>
-        <li>
-          Package Managers:
-          <ul>
-            <li>
-              <a href="https://github.com/microsoft/vcpkg">Vcpkg</a
-              >: Microsoft's C++ package manager. Install with:
-              <ShellScript is:raw>
-                cd ~
-                git clone https://github.com/microsoft/vcpkg
-                ./vcpkg/bootstrap-vcpkg.sh
-                export VCPKG_ROOT=~/vcpkg
-                export PATH=$VCPKG_ROOT:$PATH
-              </ShellScript>
-              Add the export lines to your .bashrc file to make them permanent.
-            </li>
-            <li>
-              <a href="https://conan.io/">Conan</a>: Alternative C++
-              package manager. Install with:
-              <ShellScript is:raw>pip install conan</ShellScript>
-            </li>
-          </ul>
-        </li>
-        <li>
-          GPU Programming:
-          <ul>
-            <li>
-              <a href="https://developer.nvidia.com/cuda-toolkit"
-                >CUDA Toolkit</a
-              >: GPU programming framework. Follow the installation instructions
-              on the
-              <a href="https://developer.nvidia.com/cuda-downloads"
-                >NVIDIA website</a
-              >. After installation, add these lines to your .bashrc:
-              <CodeBlock is:raw>
-                # CUDA Toolkit paths
-                export PATH=/usr/local/cuda-13.1/bin:$PATH
-                export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH
-              </CodeBlock>
-              Replace "13.1" with your installed version. Update the environment:
-              <ShellScript is:raw>source ~/.bashrc</ShellScript>
-              to update the environment variables. Verify the installation by running:
-              <ShellScript is:raw>nvcc --version</ShellScript>
-              <li>
-                <a href="https://developer.nvidia.com/cudnn"
-                  >cuDNN</a
-                >: Deep learning library. Follow the instructions on the <a
-                  href="https://developer.nvidia.com/cudnn">NVIDIA cuDNN website</a
-                >.
-              </li>
-            </li>
-          </ul>
-          <li>
-            Profiling:
-            <ul>
-              <li>
-                <a href="https://valgrind.org/">Valgrind</a>: Memory
-                debugging, leak detection, and profiling tool. Install with:
-                <ShellScript is:raw>sudo apt install valgrind -y</ShellScript>
-              </li>
-              <li>
-                Perf: Performance analysis tool. Install with:
-                <ShellScript is:raw>sudo apt install linux-tools-common linux-tools-$(uname -r) -y</ShellScript>
-              </li>
-            </ul>
-          </li>
-          <li>
-            Common Libraries:
-            <ul>
-              <li>
-                <a href="https://www.boost.org/">Boost</a>:
-                Comprehensive C++ library collection. Install with:
-                <ShellScript is:raw>sudo apt install libboost-all-dev -y</ShellScript>
-              </li>
-              <li>
-                <a href="https://eigen.tuxfamily.org/">Eigen</a>:
-                C++ template library for linear algebra. Install with:
-                <ShellScript is:raw>sudo apt install libeigen3-dev -y</ShellScript>
-              </li>
-              <li>
-                <a href="https://www.open-mpi.org/">OpenMPI</a>:
-                Parallel programming framework. Install with:
-                <ShellScript is:raw>sudo apt install libopenmpi-dev openmpi-bin -y</ShellScript>
-              </li>
-              <li>
-                <a href="https://www.fftw.org/">FFTW</a>: Discrete
-                Fourier transform library. Install with:
-                <ShellScript is:raw>sudo apt install libfftw3-dev -y</ShellScript>
-              </li>
-            </ul>
-          </li>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2 >Python and Anaconda</h2>
-      <ul>
-        <li>
-          <a href="https://www.python.org/">Python</a>: Most
-          Linux distributions include Python by default. Check your version:
-          <ShellScript is:raw>python3 --version</ShellScript>
-          To prevent pip from installing packages globally (which helps keep your
-          system clean), create a pip configuration file:
-          <ShellScript is:raw>
-            mkdir -p ~/.config/pip
-            echo "[global]" > ~/.config/pip/pip.conf
-            echo "user = true" >> ~/.config/pip/pip.conf
-          </ShellScript>
-        </li>
-        <li>
-          <a href="https://www.anaconda.com/">Anaconda</a>:
-          Python development and package management platform. Download the
-          installer from the
-          <a
-            href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity">Anaconda website</a
-          > and follow the installation instructions. Verify installation:
-          <ShellScript is:raw>
-            source ~/.bashrc
-            conda --version
-          </ShellScript>
-          Managing your Anaconda environments:
-          <ul>
-            <li>
-              Prevent Auto-Activation: If you don't want the (base)
-              environment to start every time you open a terminal, run:
-              <ShellScript is:raw>conda config --set auto_activate_base false</ShellScript>
-            </li>
-            <li>
-              Create a New Environment: To create a new environment with a
-              specific Python version, run:
-              <ShellScript is:raw>conda create -n myenv python=3.10</ShellScript>
-            </li>
-            <li>
-              Activate an Environment: To activate an environment, run:
-              <ShellScript is:raw>conda activate myenv</ShellScript>
-            </li>
-            <li>
-              Deactivate an Environment: To deactivate the current
-              environment, run:
-              <ShellScript is:raw>conda deactivate</ShellScript>
-            </li>
-          </ul>
-          <strong>Note:</strong> The global pip restriction mentioned earlier
-          can interfere with pip usage inside Anaconda environments. To temporarily
-          override it, prefix your pip commands with:
-          <ShellScript is:raw>PIP_REQUIRE_VIRTUALENV=false</ShellScript>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2 >JavaScript and Web</h2>
-      <ul>
-        <li>
-          <a href="https://nodejs.org/">Node.js</a> and npm: JavaScript
-          runtime and package manager. Install with:
-          <ShellScript is:raw>sudo apt install nodejs npm -y</ShellScript>
-        </li>
-        <li>
-          Yarn: Alternative JavaScript package manager. Install with:
-          <ShellScript is:raw>npm install -g yarn</ShellScript>
-        </li>
-        <li>
-          Cwebp: WebP image conversion tool. Install with:
-          <ShellScript is:raw>sudo apt install webp -y</ShellScript>
-          Now, you can convert images to WebP format using the cwebp command.
-          For example:
-          <CodeBlock is:raw>
-            # Convert PNG to WebP
-            cwebp input.png -o output.webp
-
-            # Batch convert all PNGs
-            for file in *.png; do cwebp "$file" -o "${file%.png}.webp"; done
-          </CodeBlock>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2 >Rust and Cargo</h2>
-      <ul>
-        <li>
-          <a href="https://www.rust-lang.org/">Rust</a> and Cargo:
-          Systems programming language with built-in package manager. Install
-          with:
-          <ShellScript is:raw>
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-            source $HOME/.cargo/env
-          </ShellScript>
-        </li>
-        Verify the installation by running:
+  <section>
+    <h2>Preparation (after OS installation)</h2>
+    <ul>
+      <li>
+        Install recommended NVIDIA drivers: Open the "Software & Updates"
+        application, navigate to the "Additional Drivers" tab, and select the
+        recommended NVIDIA driver for your GPU. Apply the changes and reboot
+        when prompted. Alternatively, install via terminal:
         <ShellScript is:raw>
-          rustc --version
-          cargo --version
+          sudo ubuntu-drivers devices
+          sudo ubuntu-drivers autoinstall
+          sudo reboot
         </ShellScript>
-      </ul>
-    </section>
+      </li>
+      <li>
+        Power Management (Powertop): Linux's battery management on laptops
+        tends to be less optimized than other operating systems. Powertop
+        helps optimize power consumption and extend battery life. Install
+        with:
+        <ShellScript is:raw>
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install powertop -y
+          sudo systemctl enable tlp
+        </ShellScript>
+      </li>
 
-    <section>
-      <h2 >Engineering Softwares</h2>
-      <ul>
-        <li>
-          <a
-            href="https://www.mathworks.com/products/matlab.html">MATLAB</a
-          >: Numerical computing environment. Download from MathWorks and
-          follow their installation instructions. To add MATLAB to your
-          application menu, create
-          <C>~/.local/share/applications/matlab.desktop</C>
-          with this content:
-          <CodeBlock is:raw>
-            [Desktop Entry]
-            Version=1.0
-            Type=Application
-            Name=MATLAB
-            Comment=MATLAB Numerical Computing Environment
-            Exec=/usr/local/MATLAB/R2024a/bin/matlab -desktop
-            Icon=/usr/local/MATLAB/R2024a/bin/glnxa64/cef_resources/matlab_icon.png
-            Terminal=false
-            Categories=Development;Science;Engineering;
-          </CodeBlock>
+      <li>
+        GNOME: I use GNOME desktop environment for simplicity. To further
+        customize and optimize it, install GNOME Tweaks by running:
+        <ShellScript is:raw>
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install gnome-tweaks -y
+        </ShellScript>
+        You can use GNOME Tweaks to adjust various settings such as themes, fonts,
+        and extensions to enhance your desktop experience. Here are some of my favorite
+        GNOME extensions:
+        <ul>
+          <li>
+            <a
+              href="https://extensions.gnome.org/extension/307/dash-to-dock/">Dash to Dock</a
+            >: Turn the GNOME dash into a nice-looking dock for easier access
+            to applications.
+          </li>
+          <li>
+            <a
+              href="https://extensions.gnome.org/extension/1460/caffeine-ng/">Caffeine-NG</a
+            >: Prevents your computer from going to sleep or activating the
+            screensaver when certain applications are running.
+          </li>
+          <li>
+            <a
+              href="https://extensions.gnome.org/extension/3193/blur-my-shell/">Blur my Shell</a
+            >: Adds a blur effect to the GNOME shell elements for a sleek
+            look.
+          </li>
+          <li>
+            <a
+              href="https://extensions.gnome.org/extension/3195/vitals/">Vitals</a
+            >: Monitors system resources like CPU, RAM, and network usage
+            directly from the top bar.
+          </li>
+        </ul>
+      </li>
+      <li>
+        If you want even more customization, consider <a
+          href="https://kde.org/plasma-desktop">KDE Plasma</a
+        > desktop environment. Personally, I prefer GNOME for its simplicity. I've
+        used KDE before when I was still on Debian, but one thing I noticed is that
+        it takes up more power and resources, and since I use a laptop, I prefer
+        to save battery life with GNOME.
+      </li>
+      <li>
+        <a href="https://gdm-settings.github.io/">GDM settings</a
+        >: lock screen customization, auto login, etc. Install GDM settings
+        with:
+        <ShellScript is:raw>sudo apt install gdm3setup -y</ShellScript>
+      </li>
+    </ul>
+  </section>
 
-          Then, refresh the application menu by running:
-          <ShellScript is:raw>update-desktop-database ~/.local/share/applications/</ShellScript>
+  <section>
+    <h2 >Basic Rice</h2>
+    <p>
+      Simple GNOME desktop rice using <a
+        href="https://github.com/fastfetch-cli/fastfetch">fastfetch</a
+      >. Link to my config: <a
+        href="https://github.com/hilbertcube/fastfetch-config">github</a
+      >
+    </p>
+    <Figure src="/posts/linux-setup/rice.webp" alt="GNOME desktop rice" width="70%" />
+    Display any image on the terminal using <a
+      href="https://github.com/hpjansson/chafa">chafa</a
+    >:
+    <CodeBlock is:raw>
+      ucla-logo() {
+          # Generate the logo on the fly
+          local LOGO=$(chafa --size 50 --symbols block /home/img/ucla.png)
 
-          Note that in some cases, Linux might not let you update or install new packages due to MATLAB installation not having access to root. If that's the case, then you need to give yourself ownership of the MATLAB install:
-          <ShellScript is:raw>sudo chown -R $USER:$USER /usr/local/MATLAB/R2025b</ShellScript>
-          then ensure write permission
-          <ShellScript is:raw>chmod -R u+rw /usr/local/MATLAB/R2025b</ShellScript>
-        </li>
+          # Print it
+          echo -e "$LOGO"
+      }
+    </CodeBlock>
+  </section>
+
+  <section>
+    <h2 >Change Some Default Behaviors</h2>
+    <ul>
+      <li>
+        Change keybinding: on Linux, copy and paste in the terminal is
+        defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and
+        Ctrl+V, open the terminal, then go to the burger menu, then
+        Preferences > Shortcuts, and change the Copy and Paste shortcuts.
+        After changing, restart the terminal. Now, Ctrl+Shift+C will be
+        automatically mapped to cancel command (SIGINT), and Ctrl+C and Ctrl+V
+        will work as expected for copy and paste
+
+        <section>
+          <h3 class="h4-visual">A quick word about Emacs</h3>
+
+          Please note that if you change this keybinding, and you're using
+          Emacs, it will interfere with Emacs keybindings in the terminal. For
+          example, Ctrl+C is used for various commands in Emacs. If you want
+          to use Emacs keybindings, you can either keep the default
+          Ctrl+Shift+C and Ctrl+Shift+V for copy and paste, or you can remap
+          the copy and paste shortcuts to something else that doesn't conflict
+          with Emacs.
+        </section>
+      </li>
+      <li>
+        Better Bash autocompletion: Install bash-completion for improved
+        command-line experience:
+        <ShellScript is:raw>
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install bash-completion -y
+        </ShellScript>
+        After installation, verify, and then source it:
+        <ShellScript is:raw>
+          echo $BASH_VERSION
+          source /etc/bash_completion
+        </ShellScript>
+        Next, add the following line to your <C>~/.bashrc</C> file to enable bash-completion automatically on terminal startup:
+        <CodeBlock is:raw>
+          if [ -f /etc/bash_completion ]; then
+              . /etc/bash_completion
+          fi
+        </CodeBlock>
+        The next thing I did is to enable a menu-style tab completion by adding
+        the following lines to <C>~/.inputrc</C>:
+        <CodeBlock is:raw>
+          # Show all matches immediately
+          set show-all-if-ambiguous on
+
+          # Enable menu-style completion
+          TAB: menu-complete
+
+          # Case-insensitive completion
+          set completion-ignore-case on
+          set completion-map-case on
+
+          # Mark symlinked directories
+          set mark-symlinked-directories on
+        </CodeBlock>
+        Finally, reload it with:
+        <ShellScript is:raw>bind -f ~/.inputrc</ShellScript>
+        How this works: let's say you're in a folder called UCLA, with the following
+        folders inside:
+        <ShellScript is:raw>
+          ls UCLA
+          CS-111  CS-180  CS-35L  CS-M51A  ECE-102 ECE-115C
+        </ShellScript>
+        now, when you press CS + Tab, it will rotate through different options of
+        the CS folders. Then simply press enter to select the desired folder.
+      </li>
+      <li>
+        Remap certain keys (optional). One of the annoying things about
+        Laptops made in recent years is that they come with the copilot key,
+        which is located where the right Ctrl key should be. To remap it back
+        to Ctrl, first install keyd to tell which keycode corresponds to the
+        copilot key:
+        <ShellScript is:raw>
+          sudo apt install keyd -y
+          sudo systemctl enable keyd
+          sudo systemctl start keyd
+        </ShellScript>
+        After installation, remember to verify with
+        <ShellScript is:raw>
+          whereis keyd
+          systemctl status keyd
+        </ShellScript>
+
+        Next, monitor which keycode corresponds to the copilot key by running:
+        <ShellScript is:raw>sudo keyd monitor # or sudo keyd.rvaiya monitor</ShellScript>
+        Add the following to <C>/etc/keyd/default.conf</C>:
+        <ShellScript is:raw>
+          [ids]
+          *
+
+          [main]
+          leftshift+leftmeta+f23 = rightcontrol # this varies, adjust accordingly to your system
+        </ShellScript>
+        Then, reload with
+        <ShellScript is:raw>sudo keyd reload # or sudo keyd.rvaiya reload</ShellScript>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 >DevOps and Text Editors</h2>
+    <ul>
+      <li>
+        <a href="https://code.visualstudio.com/">VSCode</a>: My
+        primary code editor. Simply use the Software Center to install it via
+        snap. If you dislike snap, install with:
+        <ShellScript continuationStr={"\\"} is:raw>
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install wget gpg -y
+          wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+          sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+          sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] \
+          https://packages.microsoft.com/repos/code stable main" \
+          > /etc/apt/sources.list.d/vscode.list'
+          sudo apt install apt-transport-https -y
+          sudo apt update && sudo apt install code -y
+        </ShellScript>
+
+        <strong>Settings:</strong> on Linux, again, copy and paste is defaulted
+        as Ctrl+Shift+C and Ctrl+Shift+V. To change it back to Ctrl+C and Ctrl+V,
+        go to Settings > Keyboard Shortcuts, and paste the following JSON:
+        <CodeBlock language="json" is:raw>
+          [
+            {
+                "key": "ctrl+c",
+                "command": "workbench.action.terminal.copySelection",
+                "when": "terminalFocus && terminalProcessSupported && terminalTextSelected"
+            },
+            {
+                "key": "ctrl+v",
+                "command": "workbench.action.terminal.paste",
+                "when": "terminalFocus && terminalProcessSupported"
+            },
+            {
+                "key": "ctrl+shift+c",
+                "command": "workbench.action.terminal.sendSequence",
+                "args": { "text": "\u0003" },
+                "when": "terminalFocus"
+            }
+          ]
+        </CodeBlock>
+
+        <section>
+          <h3 class="h4-visual">A quick note about Snap</h3>
+
+          Snap is one of the most common criticisms of Ubuntu, mostly because
+          of perceived performance issues. I am not a big fan of it either.
+          That said, it is worth remembering that you don't have to use Snap
+          at all if it does not fit your needs. Like many things in Linux, it
+          comes down to preference and the flexibility to choose what works
+          best for you.
+        </section>
+      </li>
+      <li>
+        <a href="https://neovim.io/">Neovim</a>: Terminal-based
+        text editor. Install with:
+        <ShellScript is:raw>
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install neovim -y
+        </ShellScript>
+      </li>
+      <li>
+        <a href="https://git-scm.com/">Git</a>: Version control
+        system. Install with:
+        <ShellScript is:raw>
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install git -y
+        </ShellScript>
+      </li>
+      <li>
+        <a href="https://www.docker.com/">Docker</a>:
+        Containerization platform. Follow the <a
+          href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a
+        >:
+        <ShellScript output="1, 4-5, 7-8, 12-13, 18-19, 22-23" continuationStr={"\\"} is:raw>
+          # update and remove old versions
+          sudo apt update
+          sudo apt remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
+
+          # install dependencies
+          sudo apt install ca-certificates curl gnupg
+
+          # add Docker's official GPG key
+          sudo install -m 0755 -d /etc/apt/keyrings
+          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+          # add Docker apt repository
+          echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+          # install Docker Engine
+          sudo apt update
+          sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+          # verify installation
+          sudo systemctl status docker
+          sudo docker run hello-world
+        </ShellScript>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h2 >C and C++ Development Environment</h2>
+    <ul>
+      <li>
+        Essentials: Core development tools including build-essential, gdb,
+        g++-multilib, and related packages. Install with:
+        <ShellScript is:raw>sudo apt install build-essential lldb ninja-build clang gdb g++-multilib -y</ShellScript>
+      </li>
+      <li>
+        <a href="https://cmake.org/">CMake</a> and CMake GUI: Build
+        system generator with GUI support for easier project configuration. Install
+        with:
+        <ShellScript is:raw>sudo apt install cmake cmake-qt-gui -y</ShellScript>
+      </li>
+      <li>
+        Package Managers:
+        <ul>
+          <li>
+            <a href="https://github.com/microsoft/vcpkg">Vcpkg</a
+            >: Microsoft's C++ package manager. Install with:
+            <ShellScript is:raw>
+              cd ~
+              git clone https://github.com/microsoft/vcpkg
+              ./vcpkg/bootstrap-vcpkg.sh
+              export VCPKG_ROOT=~/vcpkg
+              export PATH=$VCPKG_ROOT:$PATH
+            </ShellScript>
+            Add the export lines to your .bashrc file to make them permanent.
+          </li>
+          <li>
+            <a href="https://conan.io/">Conan</a>: Alternative C++
+            package manager. Install with:
+            <ShellScript is:raw>pip install conan</ShellScript>
+          </li>
+        </ul>
+      </li>
+      <li>
+        GPU Programming:
+        <ul>
+          <li>
+            <a href="https://developer.nvidia.com/cuda-toolkit"
+              >CUDA Toolkit</a
+            >: GPU programming framework. Follow the installation instructions
+            on the
+            <a href="https://developer.nvidia.com/cuda-downloads"
+              >NVIDIA website</a
+            >. After installation, add these lines to your .bashrc:
+            <CodeBlock is:raw>
+              # CUDA Toolkit paths
+              export PATH=/usr/local/cuda-13.1/bin:$PATH
+              export LD_LIBRARY_PATH=/usr/local/cuda-13.1/lib64:$LD_LIBRARY_PATH
+            </CodeBlock>
+            Replace "13.1" with your installed version. Update the environment:
+            <ShellScript is:raw>source ~/.bashrc</ShellScript>
+            to update the environment variables. Verify the installation by running:
+            <ShellScript is:raw>nvcc --version</ShellScript>
+            <li>
+              <a href="https://developer.nvidia.com/cudnn"
+                >cuDNN</a
+              >: Deep learning library. Follow the instructions on the <a
+                href="https://developer.nvidia.com/cudnn">NVIDIA cuDNN website</a
+              >.
+            </li>
+          </li>
+        </ul>
         <li>
-          <a href="https://www.kicad.org/">KiCAD</a>: PCB design
-          software. Install with:
-          <ShellScript is:raw>sudo apt install kicad -y</ShellScript>
-        </li>
-        <li>
-          <a
-            href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html">LTspice</a
-          >: Circuit simulation tool. LTSpice is mainly a Windows
-          application, but it can be run on Linux using Wine. Follow
-          instruction on how to install wine on Ubuntu on their <a
-            href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu">official website</a
-          >. Next, download and install LTspice (64 bit) using Wine:
-          <ShellScript is:raw>
-            cd ~/Downloads
-            wget https://LTspice.analog.com/download/latest/LTspice64.msi
-            wine msiexec /i LTspice64.msi
-          </ShellScript>
-          Next, simply start and run the application with
-          <ShellScript is:raw>wine ~/.wine/drive_c/users/$USER/AppData/Local/Programs/ADI/LTspice/LTspice.exe</ShellScript>
-          You can also create a desktop shortcut for easier access. First, create
-          the launcher file. Run this command to create a new .desktop file:
-          <ShellScript is:raw>nano ~/.local/share/applications/ltspice.desktop</ShellScript>
-          Then, add the following content to the file:
-          <CodeBlock is:raw>
-            [Desktop Entry]
-            Name=LTspice
-            Comment=Analog Devices LTspice Circuit Simulator
-            Exec=wine /home/don-le/.wine/drive_c/users/don-le/AppData/Local/Programs/ADI/LTspice/LTspice.exe
-            Icon=application-x-ms-dos-executable
-            Terminal=false
-            Type=Application
-            Categories=Education;Electronics;Engineering;
-          </CodeBlock>
-          Finally, make it executable
-          <ShellScript is:raw>chmod +x ~/.local/share/applications/ltspice.desktop</ShellScript>
-        </li>
-        <li>
-          <a href="https://www.audacityteam.org/">Audacity</a>:
-          Audio editing software. Install with:
-          <ShellScript is:raw>sudo apt install audacity -y</ShellScript>
-        </li>
-        <li>
-          <a href="https://code-industry.net/masterpdfeditor/"
-            >Master PDF Editor</a
-          >: PDF editing software. Installation steps:
+          Profiling:
           <ul>
             <li>
-              First, download the installer from the Master PDF Editor
-              website.
+              <a href="https://valgrind.org/">Valgrind</a>: Memory
+              debugging, leak detection, and profiling tool. Install with:
+              <ShellScript is:raw>sudo apt install valgrind -y</ShellScript>
             </li>
             <li>
-              Next, open the terminal and navigate to the directory where
-              the installer was downloaded, then install it via apt.
-              <ShellScript is:raw>
-                cd ~/Downloads
-                sudo apt install ./master-pdf-editor*.deb
-              </ShellScript>
-            </li>
-            <li>
-              Then, run the installer with: <C>./master-pdf-editor-*.run</C>
-            </li>
-            <li>
-              Follow the on-screen instructions to complete the
-              installation.
+              Perf: Performance analysis tool. Install with:
+              <ShellScript is:raw>sudo apt install linux-tools-common linux-tools-$(uname -r) -y</ShellScript>
             </li>
           </ul>
         </li>
-      </ul>
-    </section>
+        <li>
+          Common Libraries:
+          <ul>
+            <li>
+              <a href="https://www.boost.org/">Boost</a>:
+              Comprehensive C++ library collection. Install with:
+              <ShellScript is:raw>sudo apt install libboost-all-dev -y</ShellScript>
+            </li>
+            <li>
+              <a href="https://eigen.tuxfamily.org/">Eigen</a>:
+              C++ template library for linear algebra. Install with:
+              <ShellScript is:raw>sudo apt install libeigen3-dev -y</ShellScript>
+            </li>
+            <li>
+              <a href="https://www.open-mpi.org/">OpenMPI</a>:
+              Parallel programming framework. Install with:
+              <ShellScript is:raw>sudo apt install libopenmpi-dev openmpi-bin -y</ShellScript>
+            </li>
+            <li>
+              <a href="https://www.fftw.org/">FFTW</a>: Discrete
+              Fourier transform library. Install with:
+              <ShellScript is:raw>sudo apt install libfftw3-dev -y</ShellScript>
+            </li>
+          </ul>
+        </li>
+      </li>
+    </ul>
+  </section>
 
-    <section class="">
-      <h2 >Other Useful Softwares</h2>
-      <ul>
-        <li>
-          <a href="https://www.mozilla.org/firefox/">Firefox</a>
-        </li>
-        <li>
-          <a href="https://www.spotify.com/">Spotify</a>:
-          <ShellScript is:raw>
-            sudo apt update && sudo apt upgrade -y
-            curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
-            echo "deb [signed-by=/usr/share/keyrings/spotify-archive.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-            sudo apt update && sudo apt install spotify-client -y
-          </ShellScript>
-        </li>
-        <li>
-          <a href="https://www.videolan.org/vlc/"
-            >VLC Media Player</a
-          >: Versatile media player. Install with:
-          <ShellScript is:raw>sudo apt install vlc</ShellScript>
-        </li>
-        <li>
-          <a href="https://github.com/ksnip/ksnip">ksnip</a>:
-          Equivalent of Window's snipping tool, a screenshot tool with
-          annotation features. Install with:
-          <ShellScript is:raw>sudo apt install ksnip -y</ShellScript>
-        </li>
-        <li>
-          <a href="https://telegram.org/">Telegram</a>:
-          Messaging app. Install with:
-          <ShellScript is:raw>sudo apt install telegram-desktop -y</ShellScript>
-        </li>
-      </ul>
-    </section>
+  <section>
+    <h2 >Python and Anaconda</h2>
+    <ul>
+      <li>
+        <a href="https://www.python.org/">Python</a>: Most
+        Linux distributions include Python by default. Check your version:
+        <ShellScript is:raw>python3 --version</ShellScript>
+        To prevent pip from installing packages globally (which helps keep your
+        system clean), create a pip configuration file:
+        <ShellScript is:raw>
+          mkdir -p ~/.config/pip
+          echo "[global]" > ~/.config/pip/pip.conf
+          echo "user = true" >> ~/.config/pip/pip.conf
+        </ShellScript>
+      </li>
+      <li>
+        <a href="https://www.anaconda.com/">Anaconda</a>:
+        Python development and package management platform. Download the
+        installer from the
+        <a
+          href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity">Anaconda website</a
+        > and follow the installation instructions. Verify installation:
+        <ShellScript is:raw>
+          source ~/.bashrc
+          conda --version
+        </ShellScript>
+        Managing your Anaconda environments:
+        <ul>
+          <li>
+            Prevent Auto-Activation: If you don't want the (base)
+            environment to start every time you open a terminal, run:
+            <ShellScript is:raw>conda config --set auto_activate_base false</ShellScript>
+          </li>
+          <li>
+            Create a New Environment: To create a new environment with a
+            specific Python version, run:
+            <ShellScript is:raw>conda create -n myenv python=3.10</ShellScript>
+          </li>
+          <li>
+            Activate an Environment: To activate an environment, run:
+            <ShellScript is:raw>conda activate myenv</ShellScript>
+          </li>
+          <li>
+            Deactivate an Environment: To deactivate the current
+            environment, run:
+            <ShellScript is:raw>conda deactivate</ShellScript>
+          </li>
+        </ul>
+        <strong>Note:</strong> The global pip restriction mentioned earlier
+        can interfere with pip usage inside Anaconda environments. To temporarily
+        override it, prefix your pip commands with:
+        <ShellScript is:raw>PIP_REQUIRE_VIRTUALENV=false</ShellScript>
+      </li>
+    </ul>
+  </section>
 
-    <section>
-      <h2 >Final Words</h2>
-      <p>
-        Try not to worry too much about what other people say. Choose what
-        works best for you, but take some time to research before settling
-        on a distro. Some people prefer Arch's rolling release, while I
-        value the stability and long-term support that Ubuntu provides.
-        The best way to learn is by exploring different options and
-        discovering what fits your workflow and preferences. Linux is
-        built around choice and customization, so experiment freely and
-        shape it into something that feels right for you.
-      </p>
-    </section>
-  </div>
+  <section>
+    <h2 >JavaScript and Web</h2>
+    <ul>
+      <li>
+        <a href="https://nodejs.org/">Node.js</a> and npm: JavaScript
+        runtime and package manager. Install with:
+        <ShellScript is:raw>sudo apt install nodejs npm -y</ShellScript>
+      </li>
+      <li>
+        Yarn: Alternative JavaScript package manager. Install with:
+        <ShellScript is:raw>npm install -g yarn</ShellScript>
+      </li>
+      <li>
+        Cwebp: WebP image conversion tool. Install with:
+        <ShellScript is:raw>sudo apt install webp -y</ShellScript>
+        Now, you can convert images to WebP format using the cwebp command.
+        For example:
+        <CodeBlock is:raw>
+          # Convert PNG to WebP
+          cwebp input.png -o output.webp
+
+          # Batch convert all PNGs
+          for file in *.png; do cwebp "$file" -o "${file%.png}.webp"; done
+        </CodeBlock>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 >Rust and Cargo</h2>
+    <ul>
+      <li>
+        <a href="https://www.rust-lang.org/">Rust</a> and Cargo:
+        Systems programming language with built-in package manager. Install
+        with:
+        <ShellScript is:raw>
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+          source $HOME/.cargo/env
+        </ShellScript>
+      </li>
+      Verify the installation by running:
+      <ShellScript is:raw>
+        rustc --version
+        cargo --version
+      </ShellScript>
+    </ul>
+  </section>
+
+  <section>
+    <h2 >Engineering Softwares</h2>
+    <ul>
+      <li>
+        <a
+          href="https://www.mathworks.com/products/matlab.html">MATLAB</a
+        >: Numerical computing environment. Download from MathWorks and
+        follow their installation instructions. To add MATLAB to your
+        application menu, create
+        <C>~/.local/share/applications/matlab.desktop</C>
+        with this content:
+        <CodeBlock is:raw>
+          [Desktop Entry]
+          Version=1.0
+          Type=Application
+          Name=MATLAB
+          Comment=MATLAB Numerical Computing Environment
+          Exec=/usr/local/MATLAB/R2024a/bin/matlab -desktop
+          Icon=/usr/local/MATLAB/R2024a/bin/glnxa64/cef_resources/matlab_icon.png
+          Terminal=false
+          Categories=Development;Science;Engineering;
+        </CodeBlock>
+
+        Then, refresh the application menu by running:
+        <ShellScript is:raw>update-desktop-database ~/.local/share/applications/</ShellScript>
+
+        Note that in some cases, Linux might not let you update or install new packages due to MATLAB installation not having access to root. If that's the case, then you need to give yourself ownership of the MATLAB install:
+        <ShellScript is:raw>sudo chown -R $USER:$USER /usr/local/MATLAB/R2025b</ShellScript>
+        then ensure write permission
+        <ShellScript is:raw>chmod -R u+rw /usr/local/MATLAB/R2025b</ShellScript>
+      </li>
+      <li>
+        <a href="https://www.kicad.org/">KiCAD</a>: PCB design
+        software. Install with:
+        <ShellScript is:raw>sudo apt install kicad -y</ShellScript>
+      </li>
+      <li>
+        <a
+          href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html">LTspice</a
+        >: Circuit simulation tool. LTSpice is mainly a Windows
+        application, but it can be run on Linux using Wine. Follow
+        instruction on how to install wine on Ubuntu on their <a
+          href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu">official website</a
+        >. Next, download and install LTspice (64 bit) using Wine:
+        <ShellScript is:raw>
+          cd ~/Downloads
+          wget https://LTspice.analog.com/download/latest/LTspice64.msi
+          wine msiexec /i LTspice64.msi
+        </ShellScript>
+        Next, simply start and run the application with
+        <ShellScript is:raw>wine ~/.wine/drive_c/users/$USER/AppData/Local/Programs/ADI/LTspice/LTspice.exe</ShellScript>
+        You can also create a desktop shortcut for easier access. First, create
+        the launcher file. Run this command to create a new .desktop file:
+        <ShellScript is:raw>nano ~/.local/share/applications/ltspice.desktop</ShellScript>
+        Then, add the following content to the file:
+        <CodeBlock is:raw>
+          [Desktop Entry]
+          Name=LTspice
+          Comment=Analog Devices LTspice Circuit Simulator
+          Exec=wine /home/don-le/.wine/drive_c/users/don-le/AppData/Local/Programs/ADI/LTspice/LTspice.exe
+          Icon=application-x-ms-dos-executable
+          Terminal=false
+          Type=Application
+          Categories=Education;Electronics;Engineering;
+        </CodeBlock>
+        Finally, make it executable
+        <ShellScript is:raw>chmod +x ~/.local/share/applications/ltspice.desktop</ShellScript>
+      </li>
+      <li>
+        <a href="https://www.audacityteam.org/">Audacity</a>:
+        Audio editing software. Install with:
+        <ShellScript is:raw>sudo apt install audacity -y</ShellScript>
+      </li>
+      <li>
+        <a href="https://code-industry.net/masterpdfeditor/"
+          >Master PDF Editor</a
+        >: PDF editing software. Installation steps:
+        <ul>
+          <li>
+            First, download the installer from the Master PDF Editor
+            website.
+          </li>
+          <li>
+            Next, open the terminal and navigate to the directory where
+            the installer was downloaded, then install it via apt.
+            <ShellScript is:raw>
+              cd ~/Downloads
+              sudo apt install ./master-pdf-editor*.deb
+            </ShellScript>
+          </li>
+          <li>
+            Then, run the installer with: <C>./master-pdf-editor-*.run</C>
+          </li>
+          <li>
+            Follow the on-screen instructions to complete the
+            installation.
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section class="">
+    <h2 >Other Useful Softwares</h2>
+    <ul>
+      <li>
+        <a href="https://www.mozilla.org/firefox/">Firefox</a>
+      </li>
+      <li>
+        <a href="https://www.spotify.com/">Spotify</a>:
+        <ShellScript is:raw>
+          sudo apt update && sudo apt upgrade -y
+          curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
+          echo "deb [signed-by=/usr/share/keyrings/spotify-archive.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+          sudo apt update && sudo apt install spotify-client -y
+        </ShellScript>
+      </li>
+      <li>
+        <a href="https://www.videolan.org/vlc/"
+          >VLC Media Player</a
+        >: Versatile media player. Install with:
+        <ShellScript is:raw>sudo apt install vlc</ShellScript>
+      </li>
+      <li>
+        <a href="https://github.com/ksnip/ksnip">ksnip</a>:
+        Equivalent of Window's snipping tool, a screenshot tool with
+        annotation features. Install with:
+        <ShellScript is:raw>sudo apt install ksnip -y</ShellScript>
+      </li>
+      <li>
+        <a href="https://telegram.org/">Telegram</a>:
+        Messaging app. Install with:
+        <ShellScript is:raw>sudo apt install telegram-desktop -y</ShellScript>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 >Final Words</h2>
+    <p>
+      Try not to worry too much about what other people say. Choose what
+      works best for you, but take some time to research before settling
+      on a distro. Some people prefer Arch's rolling release, while I
+      value the stability and long-term support that Ubuntu provides.
+      The best way to learn is by exploring different options and
+      discovering what fits your workflow and preferences. Linux is
+      built around choice and customization, so experiment freely and
+      shape it into something that feels right for you.
+    </p>
+  </section>
 </BaseLayout>

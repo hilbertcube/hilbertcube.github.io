@@ -30,6 +30,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Sep 2026:** Pages no longer wrap their body in `<div class="content-grid">` — the layout provides the content column, with a `hero` slot for full-width content above it.
 - **Sep 2026:** Added a sitemap (`/sitemap-index.xml`) and a `robots.txt` pointing to it.
 - **Sep 2026:** Tabbed code boxes are now keyboard- and screen-reader-accessible (arrow keys, Home/End, ARIA tab roles), and panes no longer need ids or hand-set `display: none`.
 - **Sep 2026:** Code blocks can now be indented to match the page (`is:raw`), with `<` and `{` written as-is instead of escaped.
