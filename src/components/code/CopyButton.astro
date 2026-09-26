@@ -10,7 +10,7 @@
 
 <script>
   document.querySelectorAll<HTMLElement>(".copy-btn").forEach((button) => {
-    button.addEventListener("click", (event) => {
+    button.addEventListener("click", async (event) => {
       event.preventDefault();
 
       // Resolved from the button's own container rather than by document
@@ -24,17 +24,12 @@
         return;
       }
 
-      const textarea = document.createElement("textarea");
-      textarea.value = code.innerText;
-      document.body.appendChild(textarea);
-      textarea.select();
       try {
-        document.execCommand("copy");
+        await navigator.clipboard.writeText(code.innerText);
         button.textContent = "Copied!";
       } catch (e) {
         button.textContent = "Failed to copy";
       }
-      document.body.removeChild(textarea);
 
       setTimeout(() => {
         button.textContent = "Copy";

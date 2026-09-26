@@ -5,6 +5,7 @@ public/assets/js/mathjax/
 node_modules/
 public/assets/css/CSS-ORGANIZATION.md
 *.txt
+!public/robots.txt
 powershell/
 
 # Dependencies
