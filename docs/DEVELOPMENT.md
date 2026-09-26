@@ -77,7 +77,8 @@ scripts/                       Automation (see AUTOMATION.md)
 **Where client JS lives.** Behaviour tied to a component ships in that
 component's own `<script>` (nav, dark mode, settings, search, share, copy
 buttons, TOC highlighting, the banner canvas — and the image lightbox, which is
-`Lightbox.astro`). `public/assets/js/scripts.js` holds only the two site-wide
+`Lightbox.astro`, which lazy-loads yet-another-react-lightbox from
+`lightbox/viewer.ts` on the first image click). `public/assets/js/scripts.js` holds only the two site-wide
 behaviours that have no owning component: smooth anchor scrolling, and opening
 `.url` links in a new window.
 
