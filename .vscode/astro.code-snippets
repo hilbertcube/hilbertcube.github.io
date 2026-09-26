@@ -47,7 +47,13 @@
   "Display equation": {
     "scope": "astro",
     "prefix": "E",
-    "body": ["<E>{tex`\\\\begin{equation} $1 \\\\end{equation}`}</E>"],
+    "body": [
+      "<E>{tex`",
+      "  \\\\begin{${1:equation}}",
+      "    $0",
+      "  \\\\end{${1:equation}}",
+      "`}</E>"
+    ],
     "description": "Numbered display equation"
   },
 
