@@ -10,21 +10,19 @@ code {
 
 /* Inline code lives in components/code/C.astro, scoped to that component. */
 
-/* Code blocks */
-code[class*="language-"],
-pre[class*="language-"] {
-  font-size: 12px;
-  line-height: 1.5;
+/* Code blocks — highlighted at build time by Shiki (src/utils/highlight.ts).
+   Colours and background come from the reader's code theme
+   (src/utils/codeThemes.ts); the box itself is styled here. */
+.shiki {
+  padding: 1em;
+  overflow-x: auto;
+  text-align: left;
+  tab-size: 4;
 }
 
-body.light-mode code[class*="language-"],
-body.light-mode pre[class*="language-"] {
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-html.dark-mode code[class*="language-"],
-html.dark-mode pre[class*="language-"] {
+.shiki,
+.shiki code {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   font-size: 12px;
   line-height: 1.5;
 }

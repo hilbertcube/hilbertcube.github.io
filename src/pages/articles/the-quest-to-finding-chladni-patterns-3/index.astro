@@ -14,7 +14,6 @@ import Figure from "@components/article/Figure.astro";
 
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 ---
@@ -442,7 +441,4 @@ import Table from "@components/article/Table.astro";
     </section>
   </div>
 
-  <Fragment slot="scripts">
-    <Scripts use={["python", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>

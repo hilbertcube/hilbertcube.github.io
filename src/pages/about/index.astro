@@ -12,7 +12,6 @@ import E from "@components/math/E.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
 import Figure from "@components/article/Figure.astro";
 import { tex } from "@components/math/tex.astro";
-import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -170,7 +169,4 @@ import Scripts from "@components/site/Scripts.astro";
   </div>
 
   <!-- Page-specific scripts -->
-  <Fragment slot="scripts">
-    <Scripts use={["cpp", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>

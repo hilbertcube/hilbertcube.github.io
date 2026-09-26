@@ -1,34 +1,107 @@
 ---
 /**
- * src/components/ShellScript.astro
- * =================================
- * Reusable code container for interactive shell snippets with Prism.js
- * syntax highlighting and a command-line prompt.
+ * src/components/code/ShellScript.astro
+ * =====================================
+ * Code container for interactive shell snippets: bash highlighting (Shiki, at
+ * build time) with a command-line prompt in front of every command.
  *
  * Props
  * -----
- * - host            : hostname shown in prompt     (default: "pc")
- * - output          : data-output line numbers     (optional)
- * - continuationStr : data-continuation-str value  (optional)
+ * - host            : hostname shown in the prompt, `[user@host] $` (default: "pc")
+ * - output          : 1-based lines that are program output, e.g. "1, 4-5".
+ *                     They get no prompt and no highlighting.
+ * - continuationStr : a line ending in this continues onto the next, which
+ *                     gets a `>` prompt instead (e.g. "\\")
+ * - code            : the listing, instead of slot children (see CodeBlock)
  */
 
+import type { ShikiTransformer } from "shiki";
 import CopyButton from "@components/code/CopyButton.astro";
+import { highlight, listing } from "@utils/highlight";
 
 interface Props {
   host?: string;
   output?: string;
   continuationStr?: string;
+  code?: string;
 }
 
-const { host = "pc", output, continuationStr } = Astro.props;
+const { host = "pc", output, continuationStr, code } = Astro.props;
+
+const text = await listing(code, () => Astro.slots.render("default"));
+const lines = text.split("\n");
+
+// "1, 4-5, 7" → {0, 3, 4, 6}, clamped to the listing.
+const outputLines = new Set<number>();
+for (const section of output?.split(",") ?? []) {
+  const [start, end = start] = section.split("-").map((n) => parseInt(n, 10));
+  if (Number.isNaN(start) || Number.isNaN(end)) continue;
+  for (let i = Math.max(start, 1); i <= Math.min(end, lines.length); i++) {
+    outputLines.add(i - 1);
+  }
+}
+
+const continuationLines = new Set<number>();
+if (continuationStr) {
+  lines.forEach((line, i) => {
+    if (!outputLines.has(i) && line.endsWith(continuationStr)) continuationLines.add(i + 1);
+  });
+}
+
+const COMMAND_PROMPT = `[user@${host}] $`;
+const CONTINUATION_PROMPT = ">";
+
+const prompts: ShikiTransformer = {
+  pre(node) {
+    this.addClassToHast(node, "command-line");
+    // The prompt column is as wide as the widest prompt; the font is monospace.
+    node.properties.style += `;--prompt-width:${COMMAND_PROMPT.length}ch`;
+  },
+  line(node, line) {
+    const i = line - 1;
+    if (outputLines.has(i)) {
+      this.addClassToHast(node, "output");
+      node.properties["data-prompt"] = "";
+      // Output is not bash: show it as the plain text it is.
+      node.children = [{ type: "text", value: lines[i] }];
+    } else {
+      node.properties["data-prompt"] = continuationLines.has(i)
+        ? CONTINUATION_PROMPT
+        : COMMAND_PROMPT;
+    }
+  },
+};
+
+const html = await highlight(text, "bash", [prompts]);
 ---
 
 <div class="code-container" style="margin: 25px auto;">
   <CopyButton />
-  <pre
-    class="command-line"
-    data-host={host}
-    data-output={output ?? undefined}
-    data-continuation-str={continuationStr ??
-      undefined}><code class="language-bash"><slot /></code></pre>
+  <Fragment set:html={html} />
 </div>
+
+<style>
+  /* The prompts are generated content, so they are neither selectable nor part
+     of what the Copy button copies. */
+  .code-container :global(.command-line .line::before) {
+    content: attr(data-prompt);
+    display: inline-block;
+    width: var(--prompt-width);
+    padding-right: 0.8em;
+    margin-right: 1em;
+    border-right: 1px solid #999;
+    letter-spacing: -1px;
+    text-align: right;
+    opacity: 0.7;
+    user-select: none;
+  }
+
+  .code-container :global(.command-line .line.output) {
+    opacity: 0.7;
+  }
+
+  /* The prompt already carries the line's opacity; don't compound it. */
+  .code-container :global(.command-line .line.output::before) {
+    opacity: 1;
+  }
+</style>
