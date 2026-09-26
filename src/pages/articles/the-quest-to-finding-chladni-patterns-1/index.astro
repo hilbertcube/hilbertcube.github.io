@@ -375,7 +375,7 @@ import Table from "@components/article/Table.astro";
         <p>
           Before we design our algorithm, there are a few things to note:
           <ul style="line-height: 1.6;">
-            <li class="bullet">
+            <li>
               In realistic experimentation, there is no way to tell what the
               initial conditions $f(x,y)$ and $g(x,y)$ are. However, we can
               assume that the initial velocity, $u(\mathbf&#123;x&#125;,0) =
@@ -386,7 +386,7 @@ import Table from "@components/article/Table.astro";
               the plate. The solution is now simplified to
               <E>{tex`\begin{equation} u(\mathbf{x}, t) = \sum_{n\geq 0}\sum_{m\geq 0}X_n(x)Y_m(y)A_{nm}\cos(\omega t). \end{equation}`}</E>
             </li>
-            <li class="bullet">
+            <li>
               For the initial condition $f(x,y)$, we can pick a function
               $f(x,y)$ such that $|A_&#123;ij&#125;|\neq |A_&#123;nm&#125;|$,
               for any $(i, j)\neq (n,m)$. The reason why we can do this is that
@@ -395,7 +395,7 @@ import Table from "@components/article/Table.astro";
               choose the function $f$ that satisfies $|A_&#123;ij&#125;|\neq
               |A_&#123;nm&#125;|$ for the clearest patterns.
             </li>
-            <li class="bullet">
+            <li>
               What we are really interested in is the shape of the nodal lines.
               Therefore, for the sake of simplicity, we can choose certain time
               points such that $\cos(\omega t) = 1$, that is, $t = 0,\;
@@ -416,7 +416,7 @@ import Table from "@components/article/Table.astro";
           Occasionally, we must reinterpret abstract mathematics to make it
           meaningful in the context of the physical world..
           <ul style="line-height: 1.6;">
-            <li class="bullet">
+            <li>
               Recall that we derived our angular frequency to be
               <E>{tex`\begin{equation} \omega = \frac{\pi c}{L}\sqrt{n^2 + m^2}. \end{equation}`}</E>
               What we are really interested in is not the general super-position solution,
@@ -425,7 +425,7 @@ import Table from "@components/article/Table.astro";
               that each $\omega$ must correspond so some combination of integer pairs
               $n$ and $m$.
             </li>
-            <li class="bullet">
+            <li>
               For example, if $\omega = \frac&#123;\pi
               c&#125;&#123;L&#125;\sqrt&#123;5&#125;$, then all possible
               combinations of $n$ and $m$ must be $(1, 2)$ and $(2, 1)$ (since
@@ -443,7 +443,7 @@ import Table from "@components/article/Table.astro";
               there are $N$ terms in the equation, there will be a total of $2^&#123;N-1&#125;$
               possible plots.
             </li>
-            <li class="bullet">
+            <li>
               <b>Special Case: </b>
               If $n^2 + m^2$ is a perfect square ($1, 4, 9, 16, 25,\ldots$), then
               we also need to consider the pairs with 0. For example, if $n^2 + m^2

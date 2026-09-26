@@ -43,7 +43,7 @@ import Table from "@components/article/Table.astro";
         $\mathbf&#123;a&#125; = (a_1, a_2, \ldots, a_n)$ defined in the domain
         $D\subseteq\R^n$.
         <ol type="a" style="line-height: 1.6;">
-          <li class="bullet">
+          <li>
             <strong>Local Maximum.</strong> The function $z=f(\mathbf&#123;x&#125;)$
             attains its local maximum at $\mathbf&#123;a&#125;$ if there exists a
             neighborhood $N_\varepsilon(\mathbf&#123;a&#125;)\in D$ of $\mathbf&#123;a&#125;$
@@ -51,7 +51,7 @@ import Table from "@components/article/Table.astro";
             \mathbf&#123;x&#125;\in N_\varepsilon(\mathbf&#123;a&#125;) \backslash
             \&#123;\mathbf&#123;a&#125;\&#125;$.
           </li>
-          <li class="bullet">
+          <li>
             <strong>Local Minimum.</strong>
             The function $z=f(\mathbf&#123;x&#125;)$ attains its local minimum at
             $\mathbf&#123;a&#125;$ if there exists a neighborhood $N_\varepsilon(\mathbf&#123;a&#125;)\in
@@ -59,7 +59,7 @@ import Table from "@components/article/Table.astro";
             $\forall \mathbf&#123;x&#125;\in N_\varepsilon(\mathbf&#123;a&#125;) \backslash
             \&#123;\mathbf&#123;a&#125;\&#125;$.
           </li>
-          <li class="bullet">
+          <li>
             <strong>Extremum.</strong>
             The function $z=f(\mathbf&#123;x&#125;)$ attains its maximum, or minimum
             at point $\mathbf&#123;a&#125;$ is generally called an extremum at point
@@ -96,19 +96,19 @@ import Table from "@components/article/Table.astro";
       </p>
 
       <ol type="a" style="line-height: 1.6;">
-        <li class="bullet">
+        <li>
           <strong>Stationary Point.</strong>
           The points where all of the partial derivatives of $f$ equals 0 is called
           the stationary points of $f$. That is,
           <E>{tex`\begin{equation*}\pd{f}{x_i}(a_1,a_2,...,a_n)=\pd{f(\mathbf{a})}{x_i}=0\quad\forall\; i=1,2,...,n\end{equation*}`}</E>
         </li>
-        <li class="bullet">
+        <li>
           <strong>Critical Point.</strong>
           The point $\mathbf&#123;a&#125;=(a_1, a_2, \ldots ,a_n)\in D$ is called
           a critical point if at least one of the partial derivatives of $f$ at that
           point equals 0 or undefined.
         </li>
-        <li class="bullet">
+        <li>
           <strong>Saddle Point.</strong>
           The point $\mathbf&#123;a&#125;=(a_1,a_2,\ldots,a_n)\in D$ is called a saddle
           point if it is a stationary point and for all $V_\varepsilon(\mathbf&#123;a&#125;)$,
@@ -164,24 +164,24 @@ import Table from "@components/article/Table.astro";
         is said to be indefinite. There are also other cases such as positive semi-definite
         or negative semi-definite matrices. In general,
         <ol type="i" style="line-height: 1.6;">
-          <li class="bullet">
+          <li>
             $\mathbf&#123;A&#125;$ is positive-definite if and only if
             $\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;>0,\;\forall
             \mathbf&#123;x&#125;\in\R^n
             \backslash\&#123;\mathbf&#123;0&#125;\&#125;$.
           </li>
-          <li class="bullet">
+          <li>
             $\mathbf&#123;A&#125;$ is negative-definite if and only if
             $\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;&lt;
             0,\;\forall \mathbf&#123;x&#125;\in\R^n
             \backslash\&#123;\mathbf&#123;0&#125;\&#125;$.
           </li>
-          <li class="bullet">
+          <li>
             $\mathbf&#123;A&#125;$ is semi-positive-definite if and only if
             $\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;\geq
             0,\;\forall \mathbf&#123;x&#125;\in\R^n$.
           </li>
-          <li class="bullet">
+          <li>
             $\mathbf&#123;A&#125;$ is semi-negative-definite if and only if
             $\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;\leq
             0,\;\forall \mathbf&#123;x&#125;\in\R^n$.
@@ -208,23 +208,23 @@ import Table from "@components/article/Table.astro";
         <Theorem name="Silvester's Criterion">
           Let $\mathbf&#123;A&#125;$ be an $n\times n$ symmetric matrix. Then,
           <ol type="i" style="line-height: 1.6;">
-            <li class="bullet">
+            <li>
               $\mathbf&#123;A&#125;$ is positive definite, denote
               $\mathbf&#123;A&#125;\succ 0$ if and only if
               $\Delta_1>0,\Delta_2>0,...,\Delta_n>0$.
             </li>
-            <li class="bullet">
+            <li>
               $\mathbf&#123;A&#125;$ is negative definite, denote
               $\mathbf&#123;A&#125;\prec 0$ if and only if the signs of
               $\Delta_i$ alternates, with $\Delta_1 &lt; 0$; that is,
               <E>{tex`\begin{equation*}(-1)^1\Delta_1>0, \;(-1)^2\Delta_2>0,\ldots,\;(-1)^n\Delta_n>0.\end{equation*}`}</E>
             </li>
-            <li class="bullet">
+            <li>
               $\mathbf&#123;A&#125;$ is indefinite if there exists a $\Delta_k$
               that breaks both patterns above such that $\Delta_k$ is in the
               wrong sign.
             </li>
-            <li class="bullet">
+            <li>
               The Sylvester criterion is inconclusive ($\mathbf&#123;A&#125;$
               can be either positive or negative definite, or indefinite) if
               there exists a $\Delta_k$ that breaks the first two patterns such
@@ -273,17 +273,17 @@ import Table from "@components/article/Table.astro";
               values of $\Delta_1,\Delta_2,...,\Delta_n$ at
               $\mathbf&#123;a_0&#125;$.
               <ol type="i" style="line-height: 1.6;">
-                <li class="bullet">
+                <li>
                   If $\mathrm&#123;H&#125;_f(\mathbf&#123;a_0&#125;)\succ 0$,
                   then $\mathbf&#123;a_0&#125;$ is a minimum of the function
                   $f(\mathbf&#123;x&#125;)$.
                 </li>
-                <li class="bullet">
+                <li>
                   If $\mathrm&#123;H&#125;_f(\mathbf&#123;a_0&#125;)\prec 0$,
                   then $\mathbf&#123;a_0&#125;$ is a maximum of the function
                   $f(\mathbf&#123;x&#125;)$.
                 </li>
-                <li class="bullet">
+                <li>
                   If $\det (\Delta_k)\neq 0,\;1\leq k\leq n,$ but
                   $\mathrm&#123;H&#125;_f(\mathbf&#123;a_0&#125;)$ itself is
                   neither positive nor negative definite, then
@@ -297,7 +297,7 @@ import Table from "@components/article/Table.astro";
                   0$, then $\mathbf&#123;a_0&#125;$ is not an extremum of
                   $f(\mathbf&#123;x&#125;)$.
                 </li>
-                <li class="bullet">
+                <li>
                   If there exists a point
                   $\mathbf&#123;y&#125;=(y_1,y_2,...,y_n)$ such that
                   $\mathbf&#123;y&#125;^&#123;\mathrm&#123;T&#125;&#125;\mathrm&#123;H&#125;_f(\mathbf&#123;a_0&#125;)\mathbf&#123;y&#125;=0$;
@@ -333,19 +333,19 @@ import Table from "@components/article/Table.astro";
               Calculate
               $\Delta_2(x_0,y_0)=f_&#123;xx&#125;(x_0,y_0)f_&#123;yy&#125;(x_0,y_0)-[f_&#123;xy&#125;(x_0,y_0)]^2$.
               <ol type="i" style="line-height: 1.6;">
-                <li class="bullet">
+                <li>
                   If $\Delta_2(x_0,y_0)>0$ and $f_&#123;xx&#125;(x_0,y_0)>0$,
                   then $(x_0,y_0)$ is a minimum of $f(x,y)$.
                 </li>
-                <li class="bullet">
+                <li>
                   If $\Delta_2(x_0,y_0)>0$ and $f_&#123;xx&#125;(x_0,y_0)&lt; 0
                   $, then $(x_0,y_0)$ is a maximum of $f(x,y)$.
                 </li>
-                <li class="bullet">
+                <li>
                   If $\Delta_2(x_0,y_0)&lt; 0$, then $(x_0,y_0)$ is not an
                   extremum of $f(x,y)$.
                 </li>
-                <li class="bullet">
+                <li>
                   If $\Delta_2(x_0,y_0)=0$, then the test is inconclusive.
                 </li>
               </ol>
@@ -448,19 +448,19 @@ import Table from "@components/article/Table.astro";
             <E>{tex`\begin{equation*} \begin{cases} f_x(x,y)=y\left(\ln(x^2+y^2)+\dfrac{2x^2}{x^2+y^2}\right)=0\quad (1)\\[1em] f_y(x,y)=x\left(\ln(x^2+y^2)+\dfrac{2y^2}{x^2+y^2}\right)=0\quad (2) \end{cases} \end{equation*}`}</E>
             This system branches out to several solutions:
             <ol type="i" style="line-height: 1.6;">
-              <li class="bullet">
+              <li>
                 If $y=0$, substitute into equation (2), we obtain $x\ln(x^2)=0$,
                 and thus $x=0$ (We reject this solution since $(0,0)\notin D$)
                 or $\ln(x^2)=0$, which gives two stationary points $(1,0)$ and
                 $(-1,0)$.
               </li>
-              <li class="bullet">
+              <li>
                 If $x=0$, substitute into equation (1), we obtain $y\ln(y^2)=0$,
                 and thus $y=0$ (We reject this solution since $(0,0)\notin D$)
                 or $\ln(y^2)=0,$ which gives two more stationary points $(0,1)$
                 and $(0,-1)$.
               </li>
-              <li class="bullet">
+              <li>
                 If $x\neq 0$ and $y\neq 0$, the system of equations above is
                 equivalent to
                 <E>{tex`\begin{equation*} \begin{cases} \ln(x^2+y^2)+\dfrac{2x^2}{x^2+y^2}=0\quad (3)\\[1em] \ln(x^2+y^2)+\dfrac{2y^2}{x^2+y^2}=0\quad (4) \end{cases} \end{equation*}`}</E>
@@ -580,13 +580,13 @@ import Table from "@components/article/Table.astro";
             For $x=k\pi$, since $-1\leq x\leq 7$, we have $x\in \&#123;0,\;\pi,\;2\pi\&#125;$.
             This gives us three stationary points.
             <ol type="i" style="line-height: 1.6;">
-              <li class="bullet">
+              <li>
                 If $x=0$, then $y=\cos (0)=1\;\Rightarrow\;(0,1)$.
               </li>
-              <li class="bullet">
+              <li>
                 If $x=\pi$, then $y=\cos (\pi)=-1\;\Rightarrow\;(\pi,-1)$.
               </li>
-              <li class="bullet">
+              <li>
                 If $x=2\pi$, then $y=\cos (2\pi)=1\;\Rightarrow\;(2\pi,1)$.
               </li>
             </ol>
