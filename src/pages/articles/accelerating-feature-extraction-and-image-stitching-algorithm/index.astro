@@ -555,27 +555,27 @@ import Table from "@components/article/Table.astro";
               ></span
             >
             <ul style="line-height: 1.6;">
-              <li class="bullet">
+              <li>
                 <strong>Benchmark Test:</strong> Record the processing speed of 64 images
                 without any optimization, which will serve as the initial benchmark
                 for the experiment.
               </li>
-              <li class="bullet">
+              <li>
                 <strong>Single-Core Execution (Serial Processing):</strong> Test the
                 processing speed of 64 images using a single CPU core.
               </li>
-              <li class="bullet">
+              <li>
                 <strong>Distributed Memory Design (Parallel Processing):</strong> Test
                 the processing speed for 1, 2, 4, 8, 16, and 32 CPU cores.
               </li>
-              <li class="bullet">
+              <li>
                 <strong
                   >Single-Core Execution and Shared Memory Design (Serial
                   Threading):</strong
                 > Test the processing speed for 1, 2, 4, 8, 16, 24, and 32 threads with
                 1 core.
               </li>
-              <li class="bullet">
+              <li>
                 <strong
                   >Distributed Memory and Shared Memory Design (Parallel
                   Processing and Multi-threading):</strong
@@ -590,17 +590,17 @@ import Table from "@components/article/Table.astro";
               ><strong>Performance Testing with CUDA Acceleration</strong></span
             >
             <ul style="line-height: 1.6;">
-              <li class="bullet">
+              <li>
                 <strong>Benchmark Test:</strong> Record the processing speed of 64 images
                 under the optimized design of 1 core and 1 threads with CUDA was recorded
                 as the second part experimental initial benchmark.
               </li>
-              <li class="bullet">
+              <li>
                 <strong>Single-Core Execution (Serial Processing):</strong> Test the
                 processing speed of 64 images using a single CPU core and GPU acceleration
                 with 1 core.
               </li>
-              <li class="bullet">
+              <li>
                 <strong
                   >Distributed Memory Design (Parallel Processing and
                   Serial-threading):</strong
@@ -625,12 +625,12 @@ import Table from "@components/article/Table.astro";
         >
           The serial and parallel runtime of a program are defined as follows:
           <ol type="i" style="line-height: 1.6;">
-            <li class="bullet">
+            <li>
               The Serial runtime of a program is the time between the beginning
               and the end of its execution on a sequential processor. We denote
               this by $T_S$.
             </li>
-            <li class="bullet">
+            <li>
               Parallel runtime is the time from the moment the first processor
               begins its execution to the moment the last processor ends its
               execution. We denote this by $T_P$.

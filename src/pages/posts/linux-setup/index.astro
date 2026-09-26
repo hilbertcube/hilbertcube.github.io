@@ -36,7 +36,7 @@ import C from "@components/code/C.astro";
     <section id="system">
       <h2>Preparation (after OS installation)</h2>
       <ul>
-        <li class="bullet">
+        <li>
           Install recommended NVIDIA drivers: Open the "Software & Updates"
           application, navigate to the "Additional Drivers" tab, and select the
           recommended NVIDIA driver for your GPU. Apply the changes and reboot
@@ -47,7 +47,7 @@ import C from "@components/code/C.astro";
             sudo reboot
           </ShellScript>
         </li>
-        <li class="bullet">
+        <li>
           Power Management (Powertop): Linux's battery management on laptops
           tends to be less optimized than other operating systems. Powertop
           helps optimize power consumption and extend battery life. Install
@@ -70,25 +70,25 @@ import C from "@components/code/C.astro";
           and extensions to enhance your desktop experience. Here are some of my favorite
           GNOME extensions:
           <ul>
-            <li class="bullet">
+            <li>
               <a
                 href="https://extensions.gnome.org/extension/307/dash-to-dock/">Dash to Dock</a
               >: Turn the GNOME dash into a nice-looking dock for easier access
               to applications.
             </li>
-            <li class="bullet">
+            <li>
               <a
                 href="https://extensions.gnome.org/extension/1460/caffeine-ng/">Caffeine-NG</a
               >: Prevents your computer from going to sleep or activating the
               screensaver when certain applications are running.
             </li>
-            <li class="bullet">
+            <li>
               <a
                 href="https://extensions.gnome.org/extension/3193/blur-my-shell/">Blur my Shell</a
               >: Adds a blur effect to the GNOME shell elements for a sleek
               look.
             </li>
-            <li class="bullet">
+            <li>
               <a
                 href="https://extensions.gnome.org/extension/3195/vitals/">Vitals</a
               >: Monitors system resources like CPU, RAM, and network usage
@@ -96,7 +96,7 @@ import C from "@components/code/C.astro";
             </li>
           </ul>
         </li>
-        <li class="bullet">
+        <li>
           If you want even more customization, consider <a
             href="https://kde.org/plasma-desktop">KDE Plasma</a
           > desktop environment. Personally, I prefer GNOME for its simplicity. I've
@@ -104,7 +104,7 @@ import C from "@components/code/C.astro";
           it takes up more power and resources, and since I use a laptop, I prefer
           to save battery life with GNOME.
         </li>
-        <li class="bullet">
+        <li>
           <a href="https://gdm-settings.github.io/">GDM settings</a
           >: lock screen customization, auto login, etc. Install GDM settings
           with:
@@ -140,7 +140,7 @@ import C from "@components/code/C.astro";
     <section id="change-default-behavior">
       <h2 >Change Some Default Behaviors</h2>
       <ul>
-        <li class="bullet">
+        <li>
           Change keybinding: on Linux, copy and paste in the terminal is
           defaulted as Ctrl+Shift+C and Ctrl+Shift+V. To change it to Ctrl+C and
           Ctrl+V, open the terminal, then go to the burger menu, then
@@ -161,7 +161,7 @@ import C from "@components/code/C.astro";
             with Emacs.
           </section>
         </li>
-        <li class="bullet">
+        <li>
           Better Bash autocompletion: Install bash-completion for improved
           command-line experience:
           <ShellScript is:raw>
@@ -242,7 +242,7 @@ import C from "@components/code/C.astro";
     <section id="devops">
       <h2 >DevOps and Text Editors</h2>
       <ul>
-        <li class="bullet">
+        <li>
           <a href="https://code.visualstudio.com/">VSCode</a>: My
           primary code editor. Simply use the Software Center to install it via
           snap. If you dislike snap, install with:
@@ -293,7 +293,7 @@ import C from "@components/code/C.astro";
             best for you.
           </section>
         </li>
-        <li class="bullet">
+        <li>
           <a href="https://neovim.io/">Neovim</a>: Terminal-based
           text editor. Install with:
           <ShellScript is:raw>
@@ -301,7 +301,7 @@ import C from "@components/code/C.astro";
             sudo apt install neovim -y
           </ShellScript>
         </li>
-        <li class="bullet">
+        <li>
           <a href="https://git-scm.com/">Git</a>: Version control
           system. Install with:
           <ShellScript is:raw>
@@ -309,7 +309,7 @@ import C from "@components/code/C.astro";
             sudo apt install git -y
           </ShellScript>
         </li>
-        <li class="bullet">
+        <li>
           <a href="https://www.docker.com/">Docker</a>:
           Containerization platform. Follow the <a
             href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a
@@ -347,21 +347,21 @@ import C from "@components/code/C.astro";
     <section id="cpp">
       <h2 >C and C++ Development Environment</h2>
       <ul>
-        <li class="bullet">
+        <li>
           Essentials: Core development tools including build-essential, gdb,
           g++-multilib, and related packages. Install with:
           <ShellScript is:raw>sudo apt install build-essential lldb ninja-build clang gdb g++-multilib -y</ShellScript>
         </li>
-        <li class="bullet">
+        <li>
           <a href="https://cmake.org/">CMake</a> and CMake GUI: Build
           system generator with GUI support for easier project configuration. Install
           with:
           <ShellScript is:raw>sudo apt install cmake cmake-qt-gui -y</ShellScript>
         </li>
-        <li class="bullet">
+        <li>
           Package Managers:
           <ul>
-            <li class="bullet">
+            <li>
               <a href="https://github.com/microsoft/vcpkg">Vcpkg</a
               >: Microsoft's C++ package manager. Install with:
               <ShellScript is:raw>
@@ -373,7 +373,7 @@ import C from "@components/code/C.astro";
               </ShellScript>
               Add the export lines to your .bashrc file to make them permanent.
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://conan.io/">Conan</a>: Alternative C++
               package manager. Install with:
               <ShellScript is:raw>pip install conan</ShellScript>
@@ -383,7 +383,7 @@ import C from "@components/code/C.astro";
         <li>
           GPU Programming:
           <ul>
-            <li class="bullet">
+            <li>
               <a href="https://developer.nvidia.com/cuda-toolkit"
                 >CUDA Toolkit</a
               >: GPU programming framework. Follow the installation instructions
@@ -412,12 +412,12 @@ import C from "@components/code/C.astro";
           <li>
             Profiling:
             <ul>
-              <li class="bullet">
+              <li>
                 <a href="https://valgrind.org/">Valgrind</a>: Memory
                 debugging, leak detection, and profiling tool. Install with:
                 <ShellScript is:raw>sudo apt install valgrind -y</ShellScript>
               </li>
-              <li class="bullet">
+              <li>
                 Perf: Performance analysis tool. Install with:
                 <ShellScript is:raw>sudo apt install linux-tools-common linux-tools-$(uname -r) -y</ShellScript>
               </li>
@@ -426,22 +426,22 @@ import C from "@components/code/C.astro";
           <li>
             Common Libraries:
             <ul>
-              <li class="bullet">
+              <li>
                 <a href="https://www.boost.org/">Boost</a>:
                 Comprehensive C++ library collection. Install with:
                 <ShellScript is:raw>sudo apt install libboost-all-dev -y</ShellScript>
               </li>
-              <li class="bullet">
+              <li>
                 <a href="https://eigen.tuxfamily.org/">Eigen</a>:
                 C++ template library for linear algebra. Install with:
                 <ShellScript is:raw>sudo apt install libeigen3-dev -y</ShellScript>
               </li>
-              <li class="bullet">
+              <li>
                 <a href="https://www.open-mpi.org/">OpenMPI</a>:
                 Parallel programming framework. Install with:
                 <ShellScript is:raw>sudo apt install libopenmpi-dev openmpi-bin -y</ShellScript>
               </li>
-              <li class="bullet">
+              <li>
                 <a href="https://www.fftw.org/">FFTW</a>: Discrete
                 Fourier transform library. Install with:
                 <ShellScript is:raw>sudo apt install libfftw3-dev -y</ShellScript>
@@ -453,7 +453,7 @@ import C from "@components/code/C.astro";
         <section id="python">
           <h2 >Python and Anaconda</h2>
           <ul>
-            <li class="bullet">
+            <li>
               <a href="https://www.python.org/">Python</a>: Most
               Linux distributions include Python by default. Check your version:
               <ShellScript is:raw>python3 --version</ShellScript>
@@ -465,7 +465,7 @@ import C from "@components/code/C.astro";
                 echo "user = true" >> ~/.config/pip/pip.conf
               </ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://www.anaconda.com/">Anaconda</a>:
               Python development and package management platform. Download the
               installer from the
@@ -478,21 +478,21 @@ import C from "@components/code/C.astro";
               </ShellScript>
               Managing your Anaconda environments:
               <ul>
-                <li class="bullet">
+                <li>
                   Prevent Auto-Activation: If you don't want the (base)
                   environment to start every time you open a terminal, run:
                   <ShellScript is:raw>conda config --set auto_activate_base false</ShellScript>
                 </li>
-                <li class="bullet">
+                <li>
                   Create a New Environment: To create a new environment with a
                   specific Python version, run:
                   <ShellScript is:raw>conda create -n myenv python=3.10</ShellScript>
                 </li>
-                <li class="bullet">
+                <li>
                   Activate an Environment: To activate an environment, run:
                   <ShellScript is:raw>conda activate myenv</ShellScript>
                 </li>
-                <li class="bullet">
+                <li>
                   Deactivate an Environment: To deactivate the current
                   environment, run:
                   <ShellScript is:raw>conda deactivate</ShellScript>
@@ -509,12 +509,12 @@ import C from "@components/code/C.astro";
         <section id="javascript">
           <h2 >JavaScript and Web</h2>
           <ul>
-            <li class="bullet">
+            <li>
               <a href="https://nodejs.org/">Node.js</a> and npm: JavaScript
               runtime and package manager. Install with:
               <ShellScript is:raw>sudo apt install nodejs npm -y</ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               Yarn: Alternative JavaScript package manager. Install with:
               <ShellScript is:raw>npm install -g yarn</ShellScript>
             </li>
@@ -537,7 +537,7 @@ import C from "@components/code/C.astro";
         <section id="rust">
           <h2 >Rust and Cargo</h2>
           <ul>
-            <li class="bullet">
+            <li>
               <a href="https://www.rust-lang.org/">Rust</a> and Cargo:
               Systems programming language with built-in package manager. Install
               with:
@@ -557,7 +557,7 @@ import C from "@components/code/C.astro";
         <section id="engineering">
           <h2 >Engineering Softwares</h2>
           <ul>
-            <li class="bullet">
+            <li>
               <a
                 href="https://www.mathworks.com/products/matlab.html">MATLAB</a
               >: Numerical computing environment. Download from MathWorks and
@@ -585,12 +585,12 @@ import C from "@components/code/C.astro";
               then ensure write permission
               <ShellScript is:raw>chmod -R u+rw /usr/local/MATLAB/R2025b</ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://www.kicad.org/">KiCAD</a>: PCB design
               software. Install with:
               <ShellScript is:raw>sudo apt install kicad -y</ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a
                 href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html">LTspice</a
               >: Circuit simulation tool. LTSpice is mainly a Windows
@@ -622,21 +622,21 @@ import C from "@components/code/C.astro";
               Finally, make it executable
               <ShellScript is:raw>chmod +x ~/.local/share/applications/ltspice.desktop</ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://www.audacityteam.org/">Audacity</a>:
               Audio editing software. Install with:
               <ShellScript is:raw>sudo apt install audacity -y</ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://code-industry.net/masterpdfeditor/"
                 >Master PDF Editor</a
               >: PDF editing software. Installation steps:
               <ul>
-                <li class="bullet">
+                <li>
                   First, download the installer from the Master PDF Editor
                   website.
                 </li>
-                <li class="bullet">
+                <li>
                   Next, open the terminal and navigate to the directory where
                   the installer was downloaded, then install it via apt.
                   <ShellScript is:raw>
@@ -644,10 +644,10 @@ import C from "@components/code/C.astro";
                     sudo apt install ./master-pdf-editor*.deb
                   </ShellScript>
                 </li>
-                <li class="bullet">
+                <li>
                   Then, run the installer with: <C>./master-pdf-editor-*.run</C>
                 </li>
-                <li class="bullet">
+                <li>
                   Follow the on-screen instructions to complete the
                   installation.
                 </li>
@@ -659,10 +659,10 @@ import C from "@components/code/C.astro";
         <section class="" id="other-softwares">
           <h2 >Other Useful Softwares</h2>
           <ul>
-            <li class="bullet">
+            <li>
               <a href="https://www.mozilla.org/firefox/">Firefox</a>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://www.spotify.com/">Spotify</a>:
               <ShellScript is:raw>
                 sudo apt update && sudo apt upgrade -y
@@ -671,19 +671,19 @@ import C from "@components/code/C.astro";
                 sudo apt update && sudo apt install spotify-client -y
               </ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://www.videolan.org/vlc/"
                 >VLC Media Player</a
               >: Versatile media player. Install with:
               <ShellScript is:raw>sudo apt install vlc</ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://github.com/ksnip/ksnip">ksnip</a>:
               Equivalent of Window's snipping tool, a screenshot tool with
               annotation features. Install with:
               <ShellScript is:raw>sudo apt install ksnip -y</ShellScript>
             </li>
-            <li class="bullet">
+            <li>
               <a href="https://telegram.org/">Telegram</a>:
               Messaging app. Install with:
               <ShellScript is:raw>sudo apt install telegram-desktop -y</ShellScript>

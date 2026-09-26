@@ -195,14 +195,14 @@ import Table from "@components/article/Table.astro";
 
         <p>With adjacency lists and a binary heap priority queue:</p>
         <ul style="line-height: 1.6;">
-          <li class="bullet">
+          <li>
             Extract-min occurs $V$ times at $\Theta(\log V)$ each.
           </li>
-          <li class="bullet">
+          <li>
             Decrease-key (relaxation) occurs up to $E$ times at $\Theta(\log V)$
             each.
           </li>
-          <li class="bullet">
+          <li>
             Scanning adjacency lists costs $\Theta(E)$ overall.
           </li>
         </ul>
@@ -215,26 +215,26 @@ import Table from "@components/article/Table.astro";
         <section id="useful-properties">
           <h4>Useful Properties</h4>
           <ul style="line-height: 1.6;">
-            <li class="bullet">
+            <li>
               <b>Ignore constants:</b> $c\,f(n) \in \Theta(f(n))$ for any constant
               $c>0$.
             </li>
-            <li class="bullet">
+            <li>
               <b>Base of logs:</b> $\log_a n \in \Theta(\log_b n)$ for any fixed bases
               $a,b>1$.
             </li>
-            <li class="bullet">
+            <li>
               <b>Sum dominated by max:</b> $f(n)+g(n) \in \Theta(\max\&#123;f(n),g(n)\&#125;)$
               if one eventually dominates.
             </li>
-            <li class="bullet">
+            <li>
               <b>Products:</b> If $f\in O(g)$ and $h\in O(k)$, then $fh \in O(gk)$.
             </li>
-            <li class="bullet">
+            <li>
               <b>Polynomial vs. exponential:</b> For any constant $d>0$ and any $a>1$,
               $n^d \in o(a^n)$.
             </li>
-            <li class="bullet">
+            <li>
               <b>Transitivity:</b> If $f\in O(g)$ and $g\in O(h)$ then $f\in O(h)$
               (similarly for $\Omega$).
             </li>
@@ -253,16 +253,16 @@ import Table from "@components/article/Table.astro";
             solutions:
           </p>
           <ul style="line-height: 1.6;">
-            <li class="bullet">
+            <li>
               <b>Case 1:</b> If $f(n) \in O\big(n^&#123;\log_b a - \varepsilon&#125;\big)$
               for some $\varepsilon>0$, then $T(n) \in \Theta\big(n^&#123;\log_b a&#125;\big)$.
             </li>
-            <li class="bullet">
+            <li>
               <b>Case 2:</b> If $f(n) = \Theta\big(n^&#123;\log_b a&#125;\,\log^k
               n\big)$ for some $k \ge 0$, then $T(n) \in \Theta\big(n^&#123;\log_b
               a&#125;\,\log^&#123;k+1&#125; n\big)$.
             </li>
-            <li class="bullet">
+            <li>
               <b>Case 3:</b> If $f(n) \in \Omega\big(n^&#123;\log_b a + \varepsilon&#125;\big)$
               for some $\varepsilon>0$ and $a\,f(n/b) \le c\,f(n)$ for some constant
               $c&lt;1$ and all sufficiently large $n$, then $T(n) \in \Theta\big(f(n)\big)$.
@@ -280,19 +280,19 @@ import Table from "@components/article/Table.astro";
         analysis has four parts:
       </p>
       <ol>
-        <li class="bullet">
+        <li>
           a <em>machine model</em> that says what a single step costs
         </li>
-        <li class="bullet">
+        <li>
           a precise statement of the <em>algorithm</em>,
         so that "the number of steps" is a well-defined quantity
         </li>
-        <li class="bullet">
+        <li>
           an
         <em>upper bound</em>, exhibiting explicit constants $M$ and $n_0$ as
         demanded by the definition of $O$
         </li>
-        <li class="bullet">
+        <li>
           a matching
         <em>lower bound</em>, exhibiting an infinite family of inputs on which
         the algorithm really is that slow; without it, one has only proved
@@ -1192,13 +1192,13 @@ Merge(A, p, q, r)
           are the costs of an extract-min, a decrease-key and building the queue.
           In particular:
           <ul style="line-height: 1.6; margin-top: 0.75rem;">
-            <li class="bullet">
+            <li>
               binary heap: <M>{tex`T \in O\big((V+E)\log V\big)`}</M>;
             </li>
-            <li class="bullet">
+            <li>
               unsorted array: <M>{tex`T \in \Theta(V^2 + E) = \Theta(V^2)`}</M>;
             </li>
-            <li class="bullet">
+            <li>
               Fibonacci heap: <M>{tex`T \in O\big(E + V \log V\big)`}</M>.
             </li>
           </ul>

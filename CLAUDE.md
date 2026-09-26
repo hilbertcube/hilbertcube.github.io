@@ -129,6 +129,8 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   gets the link colour, stays on one line and opens in a new window (`_typography.css` +
   `scripts.js`); add `class="wrap"` for a long label that should break. Any other class opts
   the link out, so buttons and cards keep their own styling.
+- Lists work the same way: a plain `<ul>`/`<ol>` of plain `<li>` in the body gets the list
+  spacing (`_content.css`) — no `class="bullet"` (removed).
 - Code blocks use the `code/` components, not raw `<pre>`. Write new listings with **`is:raw`**
   (`<CodeBlock language="cpp" is:raw>`), indented to match the page and with `<`/`{` written
   literally: a listing starting on the line after the tag is dedented (`dedent()` in

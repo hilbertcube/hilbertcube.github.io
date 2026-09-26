@@ -3,13 +3,16 @@
  * Common content components used across pages
  */
 
-/* Lists */
-.bullet {
+/* Lists: the defaults for a plain <ul>/<ol> in the page body. A list or item
+   that carries a class (`ol.reference`, `.post-list`, `li.step`) is styled by
+   that class instead. `:where()` keeps these as light as the old `.bullet` /
+   `.bullet ul` rules, so context rules like `.solution li` still win. */
+:where(.content-grid :is(ul, ol):not([class]) > li):not([class]) {
   margin: var(--in-page-li-spacing) 0;
   padding-left: 0;
 }
 
-.bullet ul {
+:where(.content-grid :is(ul, ol):not([class]) > li:not([class])) ul:not([class]) {
   padding-left: 15px;
   margin-left: 0;
 }
