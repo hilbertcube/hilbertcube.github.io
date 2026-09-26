@@ -9,7 +9,6 @@ import { tex } from "@components/math/tex.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 
@@ -874,7 +873,4 @@ import Table from "@components/article/Table.astro";
     </section>
   </div><!-- .content-grid -->
 
-  <Fragment slot="scripts">
-    <Scripts use={["python", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>

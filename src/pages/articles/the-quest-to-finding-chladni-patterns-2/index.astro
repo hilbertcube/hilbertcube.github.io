@@ -16,7 +16,6 @@ import { raw } from "@components/code/raw.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import C from "@components/code/C.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import ContinueButton from "@components/article/ContinueButton.astro"
 import Table from "@components/article/Table.astro";
@@ -29,13 +28,6 @@ import Table from "@components/article/Table.astro";
   activeButton="articles"
   toc
 >
-  <Fragment slot="head">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.css"
-    />
-  </Fragment>
-
   <div class="content-grid">
 
     <header>
@@ -1138,9 +1130,4 @@ N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1]
     </section>
   </div><!-- .content-grid -->
 
-  <Fragment slot="scripts">
-    <Scripts
-      use={["python", "bash", "line-numbers", "command-line"]}
-    />
-  </Fragment>
 </BaseLayout>

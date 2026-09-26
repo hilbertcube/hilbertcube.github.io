@@ -17,7 +17,6 @@ import TwoColumns from "@components/ui/TwoColumns.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import C from "@components/code/C.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 ---
@@ -28,13 +27,6 @@ import Table from "@components/article/Table.astro";
   keywords="image stitching, CUDA, MPI, openmp, image processing, parallel processing, multi-core, multi-threads"
   toc
 >
-  <Fragment slot="head">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/prismjs/plugins/command-line/prism-command-line.css"
-    />
-  </Fragment>
-
   <div class="content-grid">
     <header>
       <TopicTags />
@@ -876,9 +868,4 @@ features.img_size = grayImg.size();
     </section>
   </div>
 
-  <Fragment slot="scripts">
-    <Scripts
-      use={["cpp", "bash", "line-numbers", "command-line"]}
-    />
-  </Fragment>
 </BaseLayout>

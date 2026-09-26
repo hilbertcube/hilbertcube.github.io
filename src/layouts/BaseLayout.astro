@@ -12,7 +12,7 @@ import HighlightsAndAttribute from "@components/site/HighlightsAndAttribute.astr
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import TableOfContents from "@components/article/TableOfContents.astro";
 import { extractToc, type TocOptions } from "@utils/toc";
-import { prism } from "@utils/scripts";
+import { codeThemeCss } from "@utils/codeThemes";
 
 
 // Vite bundles all @import statements into one minified CSS file
@@ -85,12 +85,8 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
     <meta name="author" content="Don Le, ledongduu@gmail.com" />
     <meta name="format-detection" content="telephone=no" />
 
-    <!-- Preconnect to third-party origins -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-
-    <!-- Every code block is line-numbered, so this one is global; the rest of
-         the Prism assets are per-page (see src/utils/scripts.ts). -->
-    <link rel="stylesheet" href={prism("plugins/line-numbers/prism-line-numbers.min.css")} />
+    <!-- Picks which of the pre-rendered code themes shows (src/utils/codeThemes.ts). -->
+    <style set:html={codeThemeCss()} />
 
     <!-- KaTeX (self-hosted) for math rendering -->
     <link rel="stylesheet" href="/katex/katex.min.css" />
@@ -116,6 +112,12 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
       if (localStorage.getItem("mode") === "dark") {
         document.documentElement.classList.add("dark-mode");
       }
+      // Code-theme choices (see topbar/theme.ts); an unknown value is harmless,
+      // the CSS falls back to the default theme.
+      var codeLight = localStorage.getItem("lightTheme");
+      var codeDark = localStorage.getItem("darkTheme");
+      if (codeLight) document.documentElement.dataset.codeLight = codeLight;
+      if (codeDark) document.documentElement.dataset.codeDark = codeDark;
     </script>
   </head>
 

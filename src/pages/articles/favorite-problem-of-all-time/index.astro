@@ -14,7 +14,6 @@ import Problem from "@components/math/Problem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 ---
 
@@ -187,7 +186,4 @@ import Quote from "@components/article/Quote.astro";
   </div>
   
 
-  <Fragment slot="scripts">
-    <Scripts use={["cpp", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>

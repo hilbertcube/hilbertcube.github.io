@@ -1,80 +1,63 @@
 /**
  * theme.ts
  * ========
- * Dark/light mode and the two Prism code-theme stylesheets.
+ * Dark/light mode and the light/dark code-theme choices.
  */
 
 /**
- * Wire up a code-theme <select>: restore the saved choice, persist changes and
- * reload so the new stylesheet applies. Returns the theme URL in effect now.
+ * Wire up a code-theme <select>. Every block already carries every theme's
+ * colours (see src/utils/codeThemes.ts), so a choice is just an attribute on
+ * <html> — applied instantly, persisted, and mirrored into other open tabs.
+ * BaseLayout's pre-paint script sets the same attribute before first paint.
  */
 export function initCodeThemeSelect(
   id: string,
   storageKey: string,
-  defaultIndex: number,
-): string | null {
+  attribute: "codeLight" | "codeDark",
+) {
   const select = document.getElementById(id) as HTMLSelectElement | null;
-  if (!select) {
-    console.error(`Element with ID ${id} not found`);
-    return null;
-  }
+  if (!select) return;
 
-  const savedValue =
-    localStorage.getItem(storageKey) || select.options[defaultIndex].value;
-  select.value = savedValue;
+  const root = document.documentElement;
+
+  const apply = (value: string | null) => {
+    // A saved value from the Prism era (a stylesheet URL) matches no option:
+    // drop it, and let the CSS default (the first option) stand.
+    const valid = [...select.options].some((option) => option.value === value);
+    select.value = valid ? value! : select.options[0].value;
+    if (valid) {
+      root.dataset[attribute] = value!;
+    } else {
+      delete root.dataset[attribute];
+      localStorage.removeItem(storageKey);
+    }
+  };
+
+  apply(localStorage.getItem(storageKey));
 
   select.addEventListener("change", () => {
     localStorage.setItem(storageKey, select.value);
-    // Broadcast to other tabs, which reload via the storage listener below.
-    localStorage.setItem(`${storageKey}Changed`, String(Date.now()));
-    window.location.reload();
+    root.dataset[attribute] = select.value;
   });
 
   window.addEventListener("storage", (event) => {
-    if (event.key === `${storageKey}Changed`) window.location.reload();
+    if (event.key === storageKey) apply(event.newValue);
   });
-
-  return savedValue;
 }
 
 /**
- * Dark mode: the root class, the toggle icon and the active code-theme
- * stylesheet all follow the single `mode` key in localStorage.
+ * Dark mode: the root class and the toggle icon follow the single `mode` key
+ * in localStorage. Code blocks follow the root class through CSS.
  */
-export function initDarkMode(lightThemeHref: string, darkThemeHref: string) {
+export function initDarkMode() {
   const modeToggle = document.getElementById("modeToggle");
   const toggleIcon = document.getElementById("toggleIcon");
   const root = document.documentElement;
 
-  const themeLink = (id: string) => {
-    let link = document.getElementById(id) as HTMLLinkElement | null;
-    if (!link) {
-      link = document.createElement("link");
-      link.id = id;
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-    }
-    return link;
-  };
-
-  const lightThemeLink = themeLink("light-theme-link");
-  const darkThemeLink = themeLink("dark-theme-link");
-
   let darkMode = localStorage.getItem("mode") === "dark";
 
   function apply() {
-    if (darkMode) {
-      darkThemeLink.href = darkThemeHref;
-      lightThemeLink.disabled = true;
-      document.head.appendChild(darkThemeLink);
-      root.classList.add("dark-mode");
-    } else {
-      lightThemeLink.href =
-        localStorage.getItem("lightTheme") || lightThemeHref;
-      lightThemeLink.disabled = false;
-      darkThemeLink.remove();
-      root.classList.remove("dark-mode");
-    }
+    root.classList.toggle("dark-mode", darkMode);
     if (toggleIcon && window.__iconSvg) {
       toggleIcon.innerHTML = darkMode
         ? window.__iconSvg.sun

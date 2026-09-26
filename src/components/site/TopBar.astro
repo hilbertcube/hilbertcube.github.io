@@ -5,6 +5,7 @@
  */
 import Icon from '@components/ui/Icon.astro';
 import { getIconSvg } from '@utils/fontawesome';
+import { LIGHT_THEMES, DARK_THEMES } from '@utils/codeThemes';
 
 const moonSvg = getIconSvg('fas', 'moon');
 const sunSvg = getIconSvg('fas', 'sun');
@@ -169,82 +170,12 @@ const sharePlatforms = [
               </div>
               <div class="custom-select">
                 <select id="light-theme-select">
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vs.min.css"
-                    >VS Min: Default</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-one-light.min.css"
-                    >One Light</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css"
-                    >Min</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-solarizedlight.min.css"
-                    >Solarized Light</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-coldark-cold.min.css"
-                    >Cold</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-duotone-light.min.css"
-                    >Duotone Light</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-ghcolors.min.css"
-                    >GH</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-material-light.min.css"
-                    >Material Light</option
-                  >
+                  {LIGHT_THEMES.map((t) => <option value={t.id}>{t.label}</option>)}
                 </select>
               </div>
               <div class="custom-select">
                 <select id="dark-theme-select">
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css"
-                    >Dark Plus: Default</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-atom-dark.min.css"
-                    >Atom Dark</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css"
-                    >Okaidia</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css"
-                    >Tomorrow</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-twilight.min.css"
-                    >Twilight</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-darcula.min.css"
-                    >Dracula</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-coldark-dark.min.css"
-                    >Dark Cold</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-night-owl.min.css"
-                    >Night Owl</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-gruvbox-dark.min.css"
-                    >Gruvbox Dark</option
-                  >
-                  <option
-                    value="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-one-dark.min.css"
-                    >One Dark</option
-                  >
+                  {DARK_THEMES.map((t) => <option value={t.id}>{t.label}</option>)}
                 </select>
               </div>
             </div>
@@ -271,11 +202,9 @@ const sharePlatforms = [
 
   initNav();
 
-  // The selects have to be restored first: they resolve which stylesheet URL
-  // dark mode should install for each mode.
-  const lightTheme = initCodeThemeSelect("light-theme-select", "lightTheme", 0);
-  const darkTheme = initCodeThemeSelect("dark-theme-select", "darkTheme", 0);
-  initDarkMode(lightTheme ?? "", darkTheme ?? "");
+  initCodeThemeSelect("light-theme-select", "lightTheme", "codeLight");
+  initCodeThemeSelect("dark-theme-select", "darkTheme", "codeDark");
+  initDarkMode();
 
   initSettings();
   initProgressBar();

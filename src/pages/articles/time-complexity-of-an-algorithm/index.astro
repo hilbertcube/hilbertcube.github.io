@@ -16,7 +16,6 @@ import Theorem from "@components/math/Theorem.astro";
 import Proof from "@components/math/Proof.astro";
 import { tex } from "@components/math/tex.astro";
 import Sample from "@components/code/Sample.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 ---
@@ -1545,7 +1544,4 @@ return not-found</Sample>
     </section>
   </div>
 
-  <Fragment slot="scripts">
-    <Scripts use={["cpp", "python", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>

@@ -1,31 +1,60 @@
 ---
 /**
- * src/components/CodeBlock.astro
- * ==============================
- * Generic code container for displaying source code, config files,
- * or any non-interactive snippet with Prism.js syntax highlighting.
+ * src/components/code/CodeBox.astro
+ * =================================
+ * A CodeBlock inside a `.box` frame, optionally line-numbered. Highlighted at
+ * build time by Shiki.
  *
  * Props
  * -----
- * - language : Prism language class (default: "bash")
+ * - language    : Shiki language id (default: "bash"); an unknown one fails the build
+ * - lineNumbers : number the lines (default: false)
+ * - code        : the listing, instead of slot children (see CodeBlock)
  */
 
 import CopyButton from "@components/code/CopyButton.astro";
+import { highlight, listing } from "@utils/highlight";
 
 interface Props {
   language?: string;
   lineNumbers?: boolean;
+  code?: string;
 }
 
-const { language = "bash", lineNumbers = false } = Astro.props;
+const { language = "bash", lineNumbers = false, code } = Astro.props;
+const html = await highlight(
+  await listing(code, () => Astro.slots.render("default")),
+  language,
+  lineNumbers
+    ? [{ pre(node) { this.addClassToHast(node, "line-numbers"); } }]
+    : [],
+);
 ---
 
 <div class="box" style="width: auto; max-width: none; margin: 25px auto;">
   <div class="code-container">
     <CopyButton />
-    <pre
-      class:list={[
-        { "line-numbers": lineNumbers },
-      ]}><code class={`language-${language}`}><slot /></code></pre>
+    <Fragment set:html={html} />
   </div>
 </div>
+
+<style>
+  /* The gutter is generated content, so it is neither selectable nor part of
+     the Copy button's `innerText`. */
+  .code-container :global(.line-numbers code) {
+    counter-reset: line;
+  }
+
+  .code-container :global(.line-numbers .line::before) {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 2.5em;
+    padding-right: 0.8em;
+    margin-right: 1em;
+    border-right: 1px solid #999;
+    color: #999;
+    text-align: right;
+    user-select: none;
+  }
+</style>

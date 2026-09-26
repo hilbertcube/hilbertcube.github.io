@@ -17,7 +17,6 @@ import { tex } from "@components/math/tex.astro";
 import ContinueButton from "@components/article/ContinueButton.astro"
 import TwoColumns from "@components/ui/TwoColumns.astro";
 import CodeBox from "@components/code/CodeBox.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 ---
@@ -762,7 +761,4 @@ print(f"Animation saved to: &#123;output_path&#125;")
     </section>
   </div>
 
-  <Fragment slot="scripts">
-    <Scripts use={["python", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>

@@ -13,7 +13,6 @@ import Figure from "@components/article/Figure.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import C from "@components/code/C.astro";
-import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -25,10 +24,6 @@ import Scripts from "@components/site/Scripts.astro";
   <Fragment slot="head">
     <style is:inline>
     </style>
-  </Fragment>
-
-  <Fragment slot="scripts">
-    <Scripts use={["command-line", "bash", "json", "cmake"]} />
   </Fragment>
 
   <div class="content-grid">

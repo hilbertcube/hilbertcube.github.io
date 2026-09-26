@@ -145,14 +145,9 @@
   }
 
   /* Code blocks */
-  pre[class*="language-"] {
+  .shiki,
+  .shiki code {
     font-size: 10px;
-    line-height: 1.5;
-  }
-
-  .dark-mode pre[class*="language-"] {
-    font-size: 10px;
-    line-height: 1.5;
   }
 
   .box {

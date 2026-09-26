@@ -110,7 +110,7 @@ malformed entry fails the build (see §4).
 > | `import … from "../../../layouts/…"` | the `@layouts` / `@components` aliases |
 > | `<div class="topic">`, `<h1 class="title">`, `<div class="date">` | `<TopicTags>`, `<PageTitle>`, `<PubDate>` fed from `getEntryMeta()` |
 > | a hand-written "More Articles" `<section>` | nothing — `BaseLayout` adds it to every article automatically |
-> | `<script is:inline src="/assets/js/blogpage-setting.js">` | nothing — that file no longer exists; use `<Scripts use={…}>` only for the Prism languages the page highlights |
+> | `<script is:inline src="/assets/js/blogpage-setting.js">` | nothing — that file no longer exists, and code highlighting needs no script |
 > | a MathJax CDN `<script>` | nothing — KaTeX loads on every page (§5) |
 
 Then: fill in the content, drop images in `public/articles/<slug>/`, and
@@ -121,8 +121,8 @@ reference them as `/articles/<slug>/<file>.webp` through `<Figure>`.
 - Wrap the body in a single `<div class="content-grid">`.
 - Give each `<section>` an `id` — that is what the Table of Contents anchors to
   (§3.1) and what search results deep-link into.
-- Page-specific CSS goes in the `head` slot; page-specific scripts go through
-  `<Scripts>` in the `scripts` slot.
+- Page-specific CSS goes in the `head` slot; page-specific scripts (rare) in the
+  `scripts` slot.
 
 ### 3.1 Table of Contents
 
@@ -208,7 +208,7 @@ For everything else (listings, feeds, panels) use `getCollection("articles" |
 
 Math is typeset by **self-hosted KaTeX**. `BaseLayout` loads
 `public/assets/js/katex-render.js` on every page, so **a page needs no math
-script of its own** — there is nothing to add to the `scripts` slot.
+script of its own.
 
 Delimiters: inline `$…$` / `\(…\)`; display `$$…$$` / `\[…\]` /
 `\begin{env}…\end{env}`.
@@ -290,9 +290,9 @@ Two things specific to this guide:
 - The site is theme-aware — a `dark-mode` class on `<html>`, applied before
   first paint by an inline script in `BaseLayout` so there's no flash. Follow
   the existing `--var` custom properties rather than hardcoding colors.
-- Readers can override body font, font size and both Prism code themes from the
-  settings panel; those write inline styles and swap stylesheets at runtime, so
-  don't fight them with `!important`.
+- Readers can override body font, font size and both code themes from the
+  settings panel; those write inline styles and attributes at runtime, so don't
+  fight them with `!important`.
 
 ---
 
@@ -318,7 +318,6 @@ Two things specific to this guide:
       header components, drop the MathJax script and the duplicate "More Articles"
 - [ ] Write content; images in `public/articles/<slug>/`, placed with `<Figure>`
 - [ ] Every `<section>` has an `id`; display math wrapped in `<E>`
-- [ ] Every code language listed in `<Scripts use={…}>`
 - [ ] `npm run dev` to write; `npm run build && npm run preview` to verify search
       and the final render
 - [ ] `./scripts/commit.sh "Add: <title>"`

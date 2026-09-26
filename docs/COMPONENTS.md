@@ -52,8 +52,9 @@ rules live in `src/assets/css/`, not in components.
 hoisted by Astro — it ships once, module-scoped, and is how `TabBox`,
 `CopyButton`, `TableOfContents`, `TopBar`, `Lightbox`, `Banner` and
 `HighlightsAndAttribute` get their behaviour. `<script is:inline>` opts out of
-bundling and is reserved for third-party assets loaded by URL, which is what
-[`Scripts`](#scripts) emits for Prism.
+bundling and is reserved for what must run before first paint (`BaseLayout`'s
+dark-mode / code-theme snippet) and third-party assets loaded by URL (Google
+Analytics).
 
 Because Astro decides which pages a hoisted script lands on from the *module
 graph* — not from whether the markup actually rendered — a component imported by
@@ -89,14 +90,11 @@ The shell every page renders into: `<head>`, top bar, sidebar, main region,
 | default | `<main class="general-wrapper" data-pagefind-body>` — the page body |
 | `head` | end of `<head>`, for page-specific stylesheets or meta |
 | `sidebar` | the left nav, between the TOC and the highlights panel |
-| `scripts` | end of `<body>`, normally holding a [`<Scripts>`](#scripts) tag |
+| `scripts` | end of `<body>`, for page-specific scripts (currently unused) |
 
 ```astro
 <BaseLayout title="Chladni Patterns, Part 2" description="…" activeButton="articles" toc>
   <div class="content-grid"> … </div>
-  <Fragment slot="scripts">
-    <Scripts use={["python", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>
 ```
 
@@ -316,11 +314,15 @@ Five containers with different chrome. Pick by what the block *is*:
 | [`Sample`](#sample) | console output, pseudo-code — not a runnable listing | no | no |
 | [`TabBox`](#tabbox) | tabbed container holding any of the above | — | yes |
 
-All of them need Prism to actually highlight: name the language in
-[`<Scripts use={[…]}>`](#scripts) at the bottom of the page.
+`CodeBlock`, `CodeBox` and `ShellScript` are highlighted **at build time** by
+Shiki (`src/utils/highlight.ts`): pages ship finished, coloured HTML and need no
+script or language list. `language` is a [Shiki language id](https://shiki.style/languages)
+(`cpp`, `python`, `bash`, `json`, `cmake`, …); an unknown one fails the build.
+Each block is rendered in every code theme at once, and the reader's choice in
+Settings picks one with CSS — see `src/utils/codeThemes.ts` to change the list.
 
 For a run of code *inside a sentence* — a flag, an identifier, a filename —
-use [`C`](#c), which is not a container and needs no Prism entry.
+use [`C`](#c), which is not a container and is not highlighted.
 
 > To convert legacy raw `<div class="code-container">` markup, run
 > `python3 scripts/convert-code-blocks.py <file> --apply`
@@ -328,20 +330,27 @@ use [`C`](#c), which is not a container and needs no Prism entry.
 
 ### CodeBlock
 
-`<div class="code-container"><CopyButton /><pre><code class="language-…">`.
+`<div class="code-container"><CopyButton /><pre class="shiki">…`.
 
 | Prop | Type | Default |
 |---|---|---|
 | `language` | `string` | `"bash"` |
+| `code` | `string` | — |
+
+`code` replaces the children; use `code={raw`…`}` for the listings in
+[the indentation gotcha](#the-indentation-gotcha). Children must be plain text:
+markup inside a listing fails the build.
 
 ### CodeBox
 
-`CodeBlock` inside a `.box` frame, plus optional Prism line numbers.
+`CodeBlock` inside a `.box` frame, plus optional line numbers (a CSS-counter
+gutter, so they are never selected or copied).
 
 | Prop | Type | Default |
 |---|---|---|
 | `language` | `string` | `"bash"` |
 | `lineNumbers` | `boolean` | `false` |
+| `code` | `string` | — |
 
 ```astro
 <CodeBox language="python" lineNumbers>import numpy as np
@@ -349,20 +358,18 @@ use [`C`](#c), which is not a container and needs no Prism entry.
 </CodeBox>
 ```
 
-`lineNumbers` also needs `"line-numbers"` in the page's `Scripts` list. (The
-line-numbers *stylesheet* is already global, from `BaseLayout`'s head.)
 
 ### ShellScript
 
-A command-line block with a shell prompt, via Prism's command-line plugin.
+A bash block with a `[user@host] $` prompt in front of every command. The
+prompts are generated content, so they are never selected or copied.
 
-| Prop | Type | Default | Maps to |
+| Prop | Type | Default | Meaning |
 |---|---|---|---|
-| `host` | `string` | `"pc"` | `data-host` — the hostname in the prompt |
-| `output` | `string` | — | `data-output`, e.g. `"2-5"` — lines that are output, not input |
-| `continuationStr` | `string` | — | `data-continuation-str` |
-
-Requires `"command-line"` (and usually `"bash"`) in the page's `Scripts` list.
+| `host` | `string` | `"pc"` | the hostname in the prompt |
+| `output` | `string` | — | e.g. `"2-5, 8"` — lines that are output, not input: no prompt, no highlighting, dimmed |
+| `continuationStr` | `string` | — | a line ending in this continues onto the next, which gets a `>` prompt (e.g. `{"\\"}`) |
+| `code` | `string` | — | replaces the children, as on `CodeBlock` |
 
 ### Sample
 
@@ -456,13 +463,18 @@ children:
 - a listing **containing markup** — `<b>` around pseudo-code keywords, say —
   where every line's indentation touches a tag.
 
-Pass those through `set:html` with `raw`:
+For `CodeBlock`, `CodeBox` and `ShellScript`, pass the listing through the
+`code` prop with `raw` — it never passes through the compressor, and `<`, `{`
+need no escaping:
 
 ```astro
-<CodeBox language="python" set:html={raw`    k = 0
-    while len(equations) &lt; total:
+<CodeBox language="python" code={raw`    k = 0
+    while len(equations) < total:
 `} />
 ```
+
+(They reject markup outright — there is nothing to highlight in a `<b>`.)
+`Sample`, which does carry markup, takes it through `set:html={raw`…`}`.
 
 Listings that start at column 0 and contain no tags are fine as plain children.
 
@@ -601,8 +613,7 @@ A recommended book/material, with cover art and purchase links.
 
 ## 6. `site/` — chrome on every page
 
-`BaseLayout` renders all of these; pages rarely touch them. The exception is
-[`Scripts`](#scripts), which every article uses.
+`BaseLayout` renders all of these; pages never touch them.
 
 ### TopBar
 
@@ -613,42 +624,13 @@ bar. The markup lives in `TopBar.astro`; behaviour is split into `site/topbar/`:
 | Module | Responsibility |
 |---|---|
 | `nav.ts` | Sidebar open/closed, from the hamburger and from viewport width (opens at ≥1200px). Enables transitions only after first paint so the sidebar doesn't slide in on load. |
-| `theme.ts` | Dark mode and the two Prism code-theme `<select>`s. One `mode` key in localStorage drives the root class, the toggle icon and which stylesheet is installed; changes broadcast to other tabs. Re-syncs on `pageshow` so bfcache restores don't come back light. |
+| `theme.ts` | Dark mode and the two code-theme `<select>`s. One `mode` key in localStorage drives the root class and the toggle icon; re-syncs on `pageshow` so bfcache restores don't come back light. The code themes are `data-code-light` / `data-code-dark` on `<html>` — every block already carries every theme's colours, so a change applies instantly and is mirrored to other tabs. |
 | `settings.ts` | Body font, font size and scroll-indicator selects, each persisted and mirrored across tabs; plus the progress bar. |
 | `search.ts` | Search field and tag browser. Pagefind when its index exists, `pages.json` metadata when it doesn't (i.e. `astro dev`). Documented in depth in [`SEARCH.md`](SEARCH.md). |
 | `share.ts` | The share dropdown: opens each platform's share URL for the current page in a new tab, and closes on Escape or an outside click. |
 
-Init order matters and is fixed in `TopBar.astro`: the theme selects must be
-restored *before* `initDarkMode`, because they resolve which stylesheet URL each
-mode installs.
-
 A flash-preventing inline script in `BaseLayout`'s `<head>` adds `.dark-mode`
-before first paint; `theme.ts` takes over after.
-
-### Scripts
-
-Shorthand for the third-party assets a page needs, in `BaseLayout`'s `scripts`
-slot.
-
-| Prop | Type |
-|---|---|
-| `use` | `ScriptAlias[]` |
-
-```astro
-<Fragment slot="scripts">
-  <Scripts use={["python", "bash", "line-numbers", "command-line"]} />
-</Fragment>
-```
-
-Aliases and their URLs live in `src/utils/scripts.ts`, which pins the Prism
-version in one place. **Dependencies come along automatically** — Prism core, a
-language's base grammar (`cpp` pulls `c`, `tsx` pulls `jsx` + `typescript`), a
-plugin's stylesheet — so the list only names what the page actually uses, in any
-order. A language alias is also the class to put on the element:
-`use={["rust"]}` highlights `<code class="language-rust">`. `ScriptAlias` is a
-union of the real keys, so an unknown alias fails the build.
-
-The banner animation ships with `Banner.astro`'s own script and has no alias.
+and the code-theme attributes before first paint; `theme.ts` takes over after.
 
 ### Logo
 
@@ -764,7 +746,6 @@ import ShellScript from "@components/code/ShellScript.astro";
 import Sample from "@components/code/Sample.astro";
 import C from "@components/code/C.astro";
 import { raw } from "@components/code/raw.astro";
-import Scripts from "@components/site/Scripts.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
@@ -792,10 +773,6 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 </CodeBox>
     </section>
   </div>
-
-  <Fragment slot="scripts">
-    <Scripts use={["python", "line-numbers"]} />
-  </Fragment>
 </BaseLayout>
 ```
 
@@ -803,9 +780,9 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 
 | Symptom | Cause |
 |---|---|
-| Code loses its indentation | Indented first line, or markup inside the listing — use `set:html={raw`…`}` ([§3](#the-indentation-gotcha)) |
-| Code isn't highlighted | Language missing from `<Scripts use={…}>` |
-| Line numbers don't show | `"line-numbers"` missing from `<Scripts use={…}>` |
+| Code loses its indentation | Indented first line — use `code={raw`…`}` ([§3](#the-indentation-gotcha)) |
+| Build fails: "Language … not found" | `language` isn't a Shiki language id |
+| Build fails: "Code listing contains HTML markup" | Tags inside a `CodeBlock`/`CodeBox`/`ShellScript` — pass plain text via `code={raw`…`}` |
 | All TabBox panes visible at once | Panes after the first need `display: none` |
 | LaTeX shows up in search results | Display math not wrapped in `<E>` |
 | Backslashes vanish from an equation | LaTeX passed as a quoted attribute instead of `{tex`…`}` |

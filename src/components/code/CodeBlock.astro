@@ -1,25 +1,33 @@
 ---
 /**
- * src/components/CodeBlock.astro
- * ==============================
+ * src/components/code/CodeBlock.astro
+ * ===================================
  * Generic code container for displaying source code, config files,
- * or any non-interactive snippet with Prism.js syntax highlighting.
+ * or any non-interactive snippet, highlighted at build time by Shiki.
  *
  * Props
  * -----
- * - language : Prism language class (default: "bash")
+ * - language : Shiki language id (default: "bash"); an unknown one fails the build
+ * - code     : the listing, instead of slot children. Use `code={raw`…`}`
+ *              when the first line is indented or the listing contains `<`/`{`.
  */
 
 import CopyButton from "@components/code/CopyButton.astro";
+import { highlight, listing } from "@utils/highlight";
 
 interface Props {
   language?: string;
+  code?: string;
 }
 
-const { language = "bash" } = Astro.props;
+const { language = "bash", code } = Astro.props;
+const html = await highlight(
+  await listing(code, () => Astro.slots.render("default")),
+  language,
+);
 ---
 
 <div class="code-container" style="margin: 25px auto;">
   <CopyButton />
-  <pre><code class={`language-${language}`}><slot /></code></pre>
+  <Fragment set:html={html} />
 </div>

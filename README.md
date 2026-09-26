@@ -18,7 +18,7 @@ Visit website at [neumanncondition.com](https://neumanncondition.com/) or [hilbe
 1. [Astro](https://astro.build/): static site generator
 2. [Astro RSS](https://www.npmjs.com/package/@astrojs/rss): RSS generation
 3. [KaTeX](https://katex.org/): display LaTeX math equations
-4. [Prism.js](https://prismjs.com/): code syntax-highlighting
+4. [Shiki](https://shiki.style/): build-time code syntax-highlighting
 5. [Pagefind](https://pagefind.app/): search system
 6. [Yet Another React Lightbox](https://yet-another-react-lightbox.com/): smooth image lightbox
 7. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
@@ -30,6 +30,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Sep 2026:** Replaced Prism.js with build-time Shiki highlighting: no highlighting scripts or CDN requests, and code themes now switch instantly without a reload.
 - **Sep 2026:** Moved the image lightbox to yet-another-react-lightbox, loaded only on the first image click
 - **Sep 2026:** Added a `<Table>` component that renders the scrollable wrapper and the table together, and moved the table styling out of the global CSS into it.
 - **Sep 2026:** Added a `<C>` inline-code component and moved the `.inline-code` styling out of the global CSS into it.

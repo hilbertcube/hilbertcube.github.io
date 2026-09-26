@@ -11,7 +11,6 @@ import PubDate from "@components/article/PubDate.astro";
 import Figure from "@components/article/Figure.astro";
 
 import CodeBlock from "@components/code/CodeBlock.astro";
-import Scripts from "@components/site/Scripts.astro";
 ---
 
 <BaseLayout
@@ -25,9 +24,6 @@ import Scripts from "@components/site/Scripts.astro";
     </style>
   </Fragment>
 
-  <Fragment slot="scripts">
-    <Scripts use={["json", "cmake"]} />
-  </Fragment>
 
   <div class="content-grid">
     <header>

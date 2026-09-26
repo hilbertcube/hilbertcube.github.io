@@ -7,7 +7,6 @@ import C from "@components/code/C.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
-import Scripts from "@components/site/Scripts.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 
@@ -851,9 +850,4 @@ callgrind_control -i off 12345</ShellScript>
   </section>
   </div>
 
-  <Fragment slot="scripts">
-    <Scripts
-      use={["command-line", "cpp", "bash", "line-numbers"]}
-    />
-  </Fragment>
 </BaseLayout>

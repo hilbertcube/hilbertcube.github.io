@@ -83,16 +83,16 @@ whether the markup rendered.** Anything imported by `BaseLayout` therefore ships
 so every such script must return early when its markup is absent. Follow that pattern.
 
 Top-bar behaviour is split across `src/components/site/topbar/{nav,theme,settings,search,share}.ts`.
-Init order in `TopBar.astro` is load-bearing: the theme `<select>`s must be restored **before**
-`initDarkMode`, since they resolve which Prism stylesheet each mode installs.
 
-### Third-party scripts go through the typed registry
+### Code is highlighted at build time (Shiki)
 
-`src/utils/scripts.ts` is the only place Prism URLs and the pinned `PRISM_VERSION` appear.
-Pages request short aliases — `<Scripts use={["python", "line-numbers"]} />` in `BaseLayout`'s
-`scripts` slot — and dependencies (`cpp` → `c`, `tsx` → `jsx` + `typescript`, plugin CSS) are
-expanded automatically, so order doesn't matter. `ScriptAlias` is a union of the real keys:
-an unknown alias fails the build. A language alias is also the `language-*` class to use.
+`CodeBlock`, `CodeBox` and `ShellScript` run their listing through Shiki (`src/utils/highlight.ts`)
+at build time — pages ship coloured HTML and carry no highlighting script or language list.
+`language` is a Shiki language id; an unknown one fails the build, as does markup inside a
+listing. Every block is rendered in **all** the themes in `src/utils/codeThemes.ts` at once
+(one `--shiki-<id>` custom property per theme per token), and CSS generated from that same list
+picks one via `data-code-light` / `data-code-dark` on `<html>` — so switching is instant. Each
+theme adds to every page's HTML size: keep the list short.
 
 ### Math and search are coupled
 
@@ -127,8 +127,9 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   Inline code goes through `<C>`; both styles are scoped to their component, so the bare
   classes no longer work in page markup.
 - Code blocks use the `code/` components, not raw `<pre>`. **Indentation gotcha:** the `<pre>`
-  is inside the component, so a listing whose first line is indented, or that contains markup,
-  loses its indentation to the HTML compressor — pass those via ``set:html={raw`…`}``.
+  is inside the component, so a listing whose first line is indented loses its indentation to
+  the HTML compressor — pass it as ``code={raw`…`}`` (`CodeBlock`/`CodeBox`/`ShellScript`), or
+  ``set:html={raw`…`}`` for a `Sample` that carries markup.
 - CSS lives in `src/assets/css/`, bundled through `main.css` and imported once by `BaseLayout`.
   Page-specific CSS goes in the `head` slot; component-specific rules in that component's
   scoped `<style>`. Use the existing `--var` custom properties — the site is theme-aware via a
