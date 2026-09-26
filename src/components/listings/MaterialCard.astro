@@ -39,7 +39,7 @@ const { title, author, description, links, image, imageId } = Astro.props;
       {links.map((link, i) => (
         <>
           {i > 0 && ", "}
-          <a href={link.href} class="url">{link.label}</a>
+          <a href={link.href}>{link.label}</a>
         </>
       ))}
     </div>

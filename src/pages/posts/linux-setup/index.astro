@@ -72,29 +72,25 @@ import C from "@components/code/C.astro";
           <ul>
             <li class="bullet">
               <a
-                href="https://extensions.gnome.org/extension/307/dash-to-dock/"
-                class="url">Dash to Dock</a
+                href="https://extensions.gnome.org/extension/307/dash-to-dock/">Dash to Dock</a
               >: Turn the GNOME dash into a nice-looking dock for easier access
               to applications.
             </li>
             <li class="bullet">
               <a
-                href="https://extensions.gnome.org/extension/1460/caffeine-ng/"
-                class="url">Caffeine-NG</a
+                href="https://extensions.gnome.org/extension/1460/caffeine-ng/">Caffeine-NG</a
               >: Prevents your computer from going to sleep or activating the
               screensaver when certain applications are running.
             </li>
             <li class="bullet">
               <a
-                href="https://extensions.gnome.org/extension/3193/blur-my-shell/"
-                class="url">Blur my Shell</a
+                href="https://extensions.gnome.org/extension/3193/blur-my-shell/">Blur my Shell</a
               >: Adds a blur effect to the GNOME shell elements for a sleek
               look.
             </li>
             <li class="bullet">
               <a
-                href="https://extensions.gnome.org/extension/3195/vitals/"
-                class="url">Vitals</a
+                href="https://extensions.gnome.org/extension/3195/vitals/">Vitals</a
               >: Monitors system resources like CPU, RAM, and network usage
               directly from the top bar.
             </li>
@@ -102,15 +98,14 @@ import C from "@components/code/C.astro";
         </li>
         <li class="bullet">
           If you want even more customization, consider <a
-            href="https://kde.org/plasma-desktop"
-            class="url">KDE Plasma</a
+            href="https://kde.org/plasma-desktop">KDE Plasma</a
           > desktop environment. Personally, I prefer GNOME for its simplicity. I've
           used KDE before when I was still on Debian, but one thing I noticed is that
           it takes up more power and resources, and since I use a laptop, I prefer
           to save battery life with GNOME.
         </li>
         <li class="bullet">
-          <a href="https://gdm-settings.github.io/" class="url">GDM settings</a
+          <a href="https://gdm-settings.github.io/">GDM settings</a
           >: lock screen customization, auto login, etc. Install GDM settings
           with:
           <ShellScript is:raw>sudo apt install gdm3setup -y</ShellScript>
@@ -122,17 +117,14 @@ import C from "@components/code/C.astro";
       <h2 >Basic Rice</h2>
       <p>
         Simple GNOME desktop rice using <a
-          href="https://github.com/fastfetch-cli/fastfetch"
-          class="url">fastfetch</a
+          href="https://github.com/fastfetch-cli/fastfetch">fastfetch</a
         >. Link to my config: <a
-          href="https://github.com/hilbertcube/fastfetch-config"
-          class="url">github</a
+          href="https://github.com/hilbertcube/fastfetch-config">github</a
         >
       </p>
       <Figure src="/posts/linux-setup/rice.webp" alt="GNOME desktop rice" width="70%" />
       Display any image on the terminal using <a
-        href="https://github.com/hpjansson/chafa"
-        class="url">chafa</a
+        href="https://github.com/hpjansson/chafa">chafa</a
       >:
       <CodeBlock is:raw>
         ucla-logo() {
@@ -251,7 +243,7 @@ import C from "@components/code/C.astro";
       <h2 >DevOps and Text Editors</h2>
       <ul>
         <li class="bullet">
-          <a href="https://code.visualstudio.com/" class="url">VSCode</a>: My
+          <a href="https://code.visualstudio.com/">VSCode</a>: My
           primary code editor. Simply use the Software Center to install it via
           snap. If you dislike snap, install with:
           <ShellScript continuationStr={"\\"} is:raw>
@@ -302,7 +294,7 @@ import C from "@components/code/C.astro";
           </section>
         </li>
         <li class="bullet">
-          <a href="https://neovim.io/" class="url">Neovim</a>: Terminal-based
+          <a href="https://neovim.io/">Neovim</a>: Terminal-based
           text editor. Install with:
           <ShellScript is:raw>
             sudo apt update && sudo apt upgrade -y
@@ -310,7 +302,7 @@ import C from "@components/code/C.astro";
           </ShellScript>
         </li>
         <li class="bullet">
-          <a href="https://git-scm.com/" class="url">Git</a>: Version control
+          <a href="https://git-scm.com/">Git</a>: Version control
           system. Install with:
           <ShellScript is:raw>
             sudo apt update && sudo apt upgrade -y
@@ -318,10 +310,9 @@ import C from "@components/code/C.astro";
           </ShellScript>
         </li>
         <li class="bullet">
-          <a href="https://www.docker.com/" class="url">Docker</a>:
+          <a href="https://www.docker.com/">Docker</a>:
           Containerization platform. Follow the <a
-            href="https://docs.docker.com/engine/install/ubuntu/"
-            class="url">official installation guide</a
+            href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a
           >:
           <ShellScript output="1, 4-5, 7-8, 12-13, 18-19, 22-23" continuationStr={"\\"} is:raw>
             # update and remove old versions
@@ -362,7 +353,7 @@ import C from "@components/code/C.astro";
           <ShellScript is:raw>sudo apt install build-essential lldb ninja-build clang gdb g++-multilib -y</ShellScript>
         </li>
         <li class="bullet">
-          <a href="https://cmake.org/" class="url">CMake</a> and CMake GUI: Build
+          <a href="https://cmake.org/">CMake</a> and CMake GUI: Build
           system generator with GUI support for easier project configuration. Install
           with:
           <ShellScript is:raw>sudo apt install cmake cmake-qt-gui -y</ShellScript>
@@ -371,7 +362,7 @@ import C from "@components/code/C.astro";
           Package Managers:
           <ul>
             <li class="bullet">
-              <a href="https://github.com/microsoft/vcpkg" class="url">Vcpkg</a
+              <a href="https://github.com/microsoft/vcpkg">Vcpkg</a
               >: Microsoft's C++ package manager. Install with:
               <ShellScript is:raw>
                 cd ~
@@ -383,7 +374,7 @@ import C from "@components/code/C.astro";
               Add the export lines to your .bashrc file to make them permanent.
             </li>
             <li class="bullet">
-              <a href="https://conan.io/" class="url">Conan</a>: Alternative C++
+              <a href="https://conan.io/">Conan</a>: Alternative C++
               package manager. Install with:
               <ShellScript is:raw>pip install conan</ShellScript>
             </li>
@@ -393,11 +384,11 @@ import C from "@components/code/C.astro";
           GPU Programming:
           <ul>
             <li class="bullet">
-              <a href="https://developer.nvidia.com/cuda-toolkit" class="url"
+              <a href="https://developer.nvidia.com/cuda-toolkit"
                 >CUDA Toolkit</a
               >: GPU programming framework. Follow the installation instructions
               on the
-              <a href="https://developer.nvidia.com/cuda-downloads" class="url"
+              <a href="https://developer.nvidia.com/cuda-downloads"
                 >NVIDIA website</a
               >. After installation, add these lines to your .bashrc:
               <CodeBlock is:raw>
@@ -410,11 +401,10 @@ import C from "@components/code/C.astro";
               to update the environment variables. Verify the installation by running:
               <ShellScript is:raw>nvcc --version</ShellScript>
               <li>
-                <a href="https://developer.nvidia.com/cudnn" class="url"
+                <a href="https://developer.nvidia.com/cudnn"
                   >cuDNN</a
                 >: Deep learning library. Follow the instructions on the <a
-                  href="https://developer.nvidia.com/cudnn"
-                  class="url">NVIDIA cuDNN website</a
+                  href="https://developer.nvidia.com/cudnn">NVIDIA cuDNN website</a
                 >.
               </li>
             </li>
@@ -423,7 +413,7 @@ import C from "@components/code/C.astro";
             Profiling:
             <ul>
               <li class="bullet">
-                <a href="https://valgrind.org/" class="url">Valgrind</a>: Memory
+                <a href="https://valgrind.org/">Valgrind</a>: Memory
                 debugging, leak detection, and profiling tool. Install with:
                 <ShellScript is:raw>sudo apt install valgrind -y</ShellScript>
               </li>
@@ -437,22 +427,22 @@ import C from "@components/code/C.astro";
             Common Libraries:
             <ul>
               <li class="bullet">
-                <a href="https://www.boost.org/" class="url">Boost</a>:
+                <a href="https://www.boost.org/">Boost</a>:
                 Comprehensive C++ library collection. Install with:
                 <ShellScript is:raw>sudo apt install libboost-all-dev -y</ShellScript>
               </li>
               <li class="bullet">
-                <a href="https://eigen.tuxfamily.org/" class="url">Eigen</a>:
+                <a href="https://eigen.tuxfamily.org/">Eigen</a>:
                 C++ template library for linear algebra. Install with:
                 <ShellScript is:raw>sudo apt install libeigen3-dev -y</ShellScript>
               </li>
               <li class="bullet">
-                <a href="https://www.open-mpi.org/" class="url">OpenMPI</a>:
+                <a href="https://www.open-mpi.org/">OpenMPI</a>:
                 Parallel programming framework. Install with:
                 <ShellScript is:raw>sudo apt install libopenmpi-dev openmpi-bin -y</ShellScript>
               </li>
               <li class="bullet">
-                <a href="https://www.fftw.org/" class="url">FFTW</a>: Discrete
+                <a href="https://www.fftw.org/">FFTW</a>: Discrete
                 Fourier transform library. Install with:
                 <ShellScript is:raw>sudo apt install libfftw3-dev -y</ShellScript>
               </li>
@@ -464,7 +454,7 @@ import C from "@components/code/C.astro";
           <h2 >Python and Anaconda</h2>
           <ul>
             <li class="bullet">
-              <a href="https://www.python.org/" class="url">Python</a>: Most
+              <a href="https://www.python.org/">Python</a>: Most
               Linux distributions include Python by default. Check your version:
               <ShellScript is:raw>python3 --version</ShellScript>
               To prevent pip from installing packages globally (which helps keep your
@@ -476,12 +466,11 @@ import C from "@components/code/C.astro";
               </ShellScript>
             </li>
             <li class="bullet">
-              <a href="https://www.anaconda.com/" class="url">Anaconda</a>:
+              <a href="https://www.anaconda.com/">Anaconda</a>:
               Python development and package management platform. Download the
               installer from the
               <a
-                href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity"
-                class="url">Anaconda website</a
+                href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity">Anaconda website</a
               > and follow the installation instructions. Verify installation:
               <ShellScript is:raw>
                 source ~/.bashrc
@@ -521,7 +510,7 @@ import C from "@components/code/C.astro";
           <h2 >JavaScript and Web</h2>
           <ul>
             <li class="bullet">
-              <a href="https://nodejs.org/" class="url">Node.js</a> and npm: JavaScript
+              <a href="https://nodejs.org/">Node.js</a> and npm: JavaScript
               runtime and package manager. Install with:
               <ShellScript is:raw>sudo apt install nodejs npm -y</ShellScript>
             </li>
@@ -549,7 +538,7 @@ import C from "@components/code/C.astro";
           <h2 >Rust and Cargo</h2>
           <ul>
             <li class="bullet">
-              <a href="https://www.rust-lang.org/" class="url">Rust</a> and Cargo:
+              <a href="https://www.rust-lang.org/">Rust</a> and Cargo:
               Systems programming language with built-in package manager. Install
               with:
               <ShellScript is:raw>
@@ -570,8 +559,7 @@ import C from "@components/code/C.astro";
           <ul>
             <li class="bullet">
               <a
-                href="https://www.mathworks.com/products/matlab.html"
-                class="url">MATLAB</a
+                href="https://www.mathworks.com/products/matlab.html">MATLAB</a
               >: Numerical computing environment. Download from MathWorks and
               follow their installation instructions. To add MATLAB to your
               application menu, create
@@ -598,19 +586,17 @@ import C from "@components/code/C.astro";
               <ShellScript is:raw>chmod -R u+rw /usr/local/MATLAB/R2025b</ShellScript>
             </li>
             <li class="bullet">
-              <a href="https://www.kicad.org/" class="url">KiCAD</a>: PCB design
+              <a href="https://www.kicad.org/">KiCAD</a>: PCB design
               software. Install with:
               <ShellScript is:raw>sudo apt install kicad -y</ShellScript>
             </li>
             <li class="bullet">
               <a
-                href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html"
-                class="url">LTspice</a
+                href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html">LTspice</a
               >: Circuit simulation tool. LTSpice is mainly a Windows
               application, but it can be run on Linux using Wine. Follow
               instruction on how to install wine on Ubuntu on their <a
-                href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu"
-                class="url">official website</a
+                href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu">official website</a
               >. Next, download and install LTspice (64 bit) using Wine:
               <ShellScript is:raw>
                 cd ~/Downloads
@@ -637,12 +623,12 @@ import C from "@components/code/C.astro";
               <ShellScript is:raw>chmod +x ~/.local/share/applications/ltspice.desktop</ShellScript>
             </li>
             <li class="bullet">
-              <a href="https://www.audacityteam.org/" class="url">Audacity</a>:
+              <a href="https://www.audacityteam.org/">Audacity</a>:
               Audio editing software. Install with:
               <ShellScript is:raw>sudo apt install audacity -y</ShellScript>
             </li>
             <li class="bullet">
-              <a href="https://code-industry.net/masterpdfeditor/" class="url"
+              <a href="https://code-industry.net/masterpdfeditor/"
                 >Master PDF Editor</a
               >: PDF editing software. Installation steps:
               <ul>
@@ -674,10 +660,10 @@ import C from "@components/code/C.astro";
           <h2 >Other Useful Softwares</h2>
           <ul>
             <li class="bullet">
-              <a href="https://www.mozilla.org/firefox/" class="url">Firefox</a>
+              <a href="https://www.mozilla.org/firefox/">Firefox</a>
             </li>
             <li class="bullet">
-              <a href="https://www.spotify.com/" class="url">Spotify</a>:
+              <a href="https://www.spotify.com/">Spotify</a>:
               <ShellScript is:raw>
                 sudo apt update && sudo apt upgrade -y
                 curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
@@ -686,19 +672,19 @@ import C from "@components/code/C.astro";
               </ShellScript>
             </li>
             <li class="bullet">
-              <a href="https://www.videolan.org/vlc/" class="url"
+              <a href="https://www.videolan.org/vlc/"
                 >VLC Media Player</a
               >: Versatile media player. Install with:
               <ShellScript is:raw>sudo apt install vlc</ShellScript>
             </li>
             <li class="bullet">
-              <a href="https://github.com/ksnip/ksnip" class="url">ksnip</a>:
+              <a href="https://github.com/ksnip/ksnip">ksnip</a>:
               Equivalent of Window's snipping tool, a screenshot tool with
               annotation features. Install with:
               <ShellScript is:raw>sudo apt install ksnip -y</ShellScript>
             </li>
             <li class="bullet">
-              <a href="https://telegram.org/" class="url">Telegram</a>:
+              <a href="https://telegram.org/">Telegram</a>:
               Messaging app. Install with:
               <ShellScript is:raw>sudo apt install telegram-desktop -y</ShellScript>
             </li>
