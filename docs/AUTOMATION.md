@@ -20,7 +20,7 @@
 #### Table of Contents
 
 Nothing to run: pass `toc` to `BaseLayout` and the sidebar TOC is built at build
-time from the page's own `<section>` / `<h2>` / `<h3>` markup. See
+time from the page's own `<section>` / `<h2>`–`<h4>` markup. See
 "Table of Contents" in [DEVELOPMENT.md](DEVELOPMENT.md). (This replaces
 `scripts/generate-toc.py`, which pasted a hand-maintained list into the sidebar
 slot.)

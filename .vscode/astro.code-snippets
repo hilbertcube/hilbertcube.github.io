@@ -18,6 +18,10 @@
 // `astro.auto-import-cache.enabled: false` in settings.json restores for
 // newly created components.
 //
+// The code snippets write `is:raw` for you and put the cursor on the line
+// below the tag: a listing that starts there, indented like the page, is
+// dedented by the component (see "the indentation gotcha" in COMPONENTS.md).
+//
 // Props here mirror docs/COMPONENTS.md — if a component's props change, this
 // file does not follow on its own.
 {
@@ -90,25 +94,25 @@
   "Code box": {
     "scope": "astro",
     "prefix": "CodeBox",
-    "body": ["<CodeBox language=\"${1:python}\"${2: lineNumbers}>$0", "</CodeBox>"],
+    "body": ["<CodeBox language=\"${1:python}\"${2: lineNumbers} is:raw>", "\t$0", "</CodeBox>"],
     "description": "Framed code block with a copy button"
   },
   "Code block": {
     "scope": "astro",
     "prefix": "CodeBlock",
-    "body": ["<CodeBlock language=\"${1:bash}\">$0", "</CodeBlock>"],
+    "body": ["<CodeBlock language=\"${1:bash}\" is:raw>", "\t$0", "</CodeBlock>"],
     "description": "Unframed code block with a copy button"
   },
   "Shell script": {
     "scope": "astro",
     "prefix": "ShellScript",
-    "body": ["<ShellScript>$0", "</ShellScript>"],
+    "body": ["<ShellScript is:raw>", "\t$0", "</ShellScript>"],
     "description": "Terminal session with a prompt"
   },
   "Sample output": {
     "scope": "astro",
     "prefix": "Sample",
-    "body": ["<Sample>{raw`$0`}</Sample>"],
+    "body": ["<Sample is:raw>", "\t$0", "</Sample>"],
     "description": "Console output or pseudo-code — not a runnable listing"
   },
 
@@ -142,11 +146,5 @@
     "prefix": "section",
     "body": ["<section id=\"$1\">", "  <h2>$2</h2>", "  $0", "</section>"],
     "description": "Page section — the id is what the TOC and search anchor to"
-  },
-  "Scripts": {
-    "scope": "astro",
-    "prefix": "Scripts",
-    "body": ["<Fragment slot=\"scripts\">", "  <Scripts use={[\"$1\"]} />", "</Fragment>"],
-    "description": "Prism language/plugin registry"
   }
 }

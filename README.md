@@ -30,15 +30,11 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
-- **Sep 2026:** Body links and list items no longer need `class="url"` / `class="bullet"`: a plain `<a>` or `<li>` in an article or post gets the site's styling by default. The few lists that had been missing the class now get the same item spacing as the rest.
 - **Sep 2026:** Added a sitemap (`/sitemap-index.xml`) and a `robots.txt` pointing to it.
-- **Sep 2026:** The copy button now uses the modern Clipboard API.
 - **Sep 2026:** Tabbed code boxes are now keyboard- and screen-reader-accessible (arrow keys, Home/End, ARIA tab roles), and panes no longer need ids or hand-set `display: none`.
 - **Sep 2026:** Code blocks can now be indented to match the page (`is:raw`), with `<` and `{` written as-is instead of escaped.
-- **Sep 2026:** Replaced Prism.js with build-time Shiki highlighting: no highlighting scripts or CDN requests, and code themes now switch instantly without a reload.
+- **Sep 2026:** [MAJOR] Replaced Prism.js with build-time Shiki highlighting: no highlighting scripts or CDN requests, and code themes now switch instantly without a reload.
 - **Sep 2026:** Moved the image lightbox to yet-another-react-lightbox, loaded only on the first image click
-- **Sep 2026:** Added a `<Table>` component that renders the scrollable wrapper and the table together, and moved the table styling out of the global CSS into it.
-- **Sep 2026:** Added a `<C>` inline-code component and moved the `.inline-code` styling out of the global CSS into it.
 - **Aug 2026:** [MAJOR] Upgraded TOC highlighting
 - **Aug 2026:** Replaced the hand-run RSS generation script with a build-time Astro endpoint sourced from the article/post collections.
 - **Aug 2026:** Updated logo and favicon

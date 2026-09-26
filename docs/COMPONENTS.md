@@ -81,7 +81,7 @@ The shell every page renders into: `<head>`, top bar, sidebar, main region,
 | `description` | `string` | `""` | `<meta name="description">`. |
 | `keywords` | `string` | site default | `<meta name="keywords">`. |
 | `activeButton` | `string` | `""` | ID of the nav element to underline. Injects `#<id> { text-decoration: underline }` into the head, so it must be a real id — the nav ids are `Home-button` and `About-button`. |
-| `toc` | `boolean \| TocOptions` | `false` | Build the sidebar Table of Contents from this page's own headings. `{ maxLevel: 4 }` to go deeper. |
+| `toc` | `boolean \| TocOptions` | `false` | Build the sidebar Table of Contents from this page's own headings. Covers `<h2>`–`<h4>`; `{ maxLevel: 3 }` to stop at `<h3>`. |
 
 **Slots**
 
@@ -269,7 +269,7 @@ it, so a lone "Next" stays on the right where readers expect it.
 ### TableOfContents
 
 **You normally don't render this.** Pass `toc` to `BaseLayout` and it builds the
-list from the page's own `<section>` / `<h2>` / `<h3>` markup — adding a section
+list from the page's own `<section>` / `<h2>`–`<h4>` markup — adding a section
 to the page is all it takes to add it to the TOC.
 
 | Prop | Type | Default |

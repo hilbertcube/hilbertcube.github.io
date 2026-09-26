@@ -449,262 +449,262 @@ import C from "@components/code/C.astro";
             </ul>
           </li>
         </li>
+      </ul>
+    </section>
 
-        <section id="python">
-          <h2 >Python and Anaconda</h2>
+    <section id="python">
+      <h2 >Python and Anaconda</h2>
+      <ul>
+        <li>
+          <a href="https://www.python.org/">Python</a>: Most
+          Linux distributions include Python by default. Check your version:
+          <ShellScript is:raw>python3 --version</ShellScript>
+          To prevent pip from installing packages globally (which helps keep your
+          system clean), create a pip configuration file:
+          <ShellScript is:raw>
+            mkdir -p ~/.config/pip
+            echo "[global]" > ~/.config/pip/pip.conf
+            echo "user = true" >> ~/.config/pip/pip.conf
+          </ShellScript>
+        </li>
+        <li>
+          <a href="https://www.anaconda.com/">Anaconda</a>:
+          Python development and package management platform. Download the
+          installer from the
+          <a
+            href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity">Anaconda website</a
+          > and follow the installation instructions. Verify installation:
+          <ShellScript is:raw>
+            source ~/.bashrc
+            conda --version
+          </ShellScript>
+          Managing your Anaconda environments:
           <ul>
             <li>
-              <a href="https://www.python.org/">Python</a>: Most
-              Linux distributions include Python by default. Check your version:
-              <ShellScript is:raw>python3 --version</ShellScript>
-              To prevent pip from installing packages globally (which helps keep your
-              system clean), create a pip configuration file:
-              <ShellScript is:raw>
-                mkdir -p ~/.config/pip
-                echo "[global]" > ~/.config/pip/pip.conf
-                echo "user = true" >> ~/.config/pip/pip.conf
-              </ShellScript>
+              Prevent Auto-Activation: If you don't want the (base)
+              environment to start every time you open a terminal, run:
+              <ShellScript is:raw>conda config --set auto_activate_base false</ShellScript>
             </li>
             <li>
-              <a href="https://www.anaconda.com/">Anaconda</a>:
-              Python development and package management platform. Download the
-              installer from the
-              <a
-                href="https://www.anaconda.com/docs/getting-started/anaconda/install#macos-linux-installation:how-do-i-verify-my-installers-integrity">Anaconda website</a
-              > and follow the installation instructions. Verify installation:
-              <ShellScript is:raw>
-                source ~/.bashrc
-                conda --version
-              </ShellScript>
-              Managing your Anaconda environments:
-              <ul>
-                <li>
-                  Prevent Auto-Activation: If you don't want the (base)
-                  environment to start every time you open a terminal, run:
-                  <ShellScript is:raw>conda config --set auto_activate_base false</ShellScript>
-                </li>
-                <li>
-                  Create a New Environment: To create a new environment with a
-                  specific Python version, run:
-                  <ShellScript is:raw>conda create -n myenv python=3.10</ShellScript>
-                </li>
-                <li>
-                  Activate an Environment: To activate an environment, run:
-                  <ShellScript is:raw>conda activate myenv</ShellScript>
-                </li>
-                <li>
-                  Deactivate an Environment: To deactivate the current
-                  environment, run:
-                  <ShellScript is:raw>conda deactivate</ShellScript>
-                </li>
-              </ul>
-              <strong>Note:</strong> The global pip restriction mentioned earlier
-              can interfere with pip usage inside Anaconda environments. To temporarily
-              override it, prefix your pip commands with:
-              <ShellScript is:raw>PIP_REQUIRE_VIRTUALENV=false</ShellScript>
+              Create a New Environment: To create a new environment with a
+              specific Python version, run:
+              <ShellScript is:raw>conda create -n myenv python=3.10</ShellScript>
+            </li>
+            <li>
+              Activate an Environment: To activate an environment, run:
+              <ShellScript is:raw>conda activate myenv</ShellScript>
+            </li>
+            <li>
+              Deactivate an Environment: To deactivate the current
+              environment, run:
+              <ShellScript is:raw>conda deactivate</ShellScript>
             </li>
           </ul>
-        </section>
+          <strong>Note:</strong> The global pip restriction mentioned earlier
+          can interfere with pip usage inside Anaconda environments. To temporarily
+          override it, prefix your pip commands with:
+          <ShellScript is:raw>PIP_REQUIRE_VIRTUALENV=false</ShellScript>
+        </li>
+      </ul>
+    </section>
 
-        <section id="javascript">
-          <h2 >JavaScript and Web</h2>
+    <section id="javascript">
+      <h2 >JavaScript and Web</h2>
+      <ul>
+        <li>
+          <a href="https://nodejs.org/">Node.js</a> and npm: JavaScript
+          runtime and package manager. Install with:
+          <ShellScript is:raw>sudo apt install nodejs npm -y</ShellScript>
+        </li>
+        <li>
+          Yarn: Alternative JavaScript package manager. Install with:
+          <ShellScript is:raw>npm install -g yarn</ShellScript>
+        </li>
+        <li>
+          Cwebp: WebP image conversion tool. Install with:
+          <ShellScript is:raw>sudo apt install webp -y</ShellScript>
+          Now, you can convert images to WebP format using the cwebp command.
+          For example:
+          <CodeBlock is:raw>
+            # Convert PNG to WebP
+            cwebp input.png -o output.webp
+
+            # Batch convert all PNGs
+            for file in *.png; do cwebp "$file" -o "${file%.png}.webp"; done
+          </CodeBlock>
+        </li>
+      </ul>
+    </section>
+
+    <section id="rust">
+      <h2 >Rust and Cargo</h2>
+      <ul>
+        <li>
+          <a href="https://www.rust-lang.org/">Rust</a> and Cargo:
+          Systems programming language with built-in package manager. Install
+          with:
+          <ShellScript is:raw>
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+            source $HOME/.cargo/env
+          </ShellScript>
+        </li>
+        Verify the installation by running:
+        <ShellScript is:raw>
+          rustc --version
+          cargo --version
+        </ShellScript>
+      </ul>
+    </section>
+
+    <section id="engineering">
+      <h2 >Engineering Softwares</h2>
+      <ul>
+        <li>
+          <a
+            href="https://www.mathworks.com/products/matlab.html">MATLAB</a
+          >: Numerical computing environment. Download from MathWorks and
+          follow their installation instructions. To add MATLAB to your
+          application menu, create
+          <C>~/.local/share/applications/matlab.desktop</C>
+          with this content:
+          <CodeBlock is:raw>
+            [Desktop Entry]
+            Version=1.0
+            Type=Application
+            Name=MATLAB
+            Comment=MATLAB Numerical Computing Environment
+            Exec=/usr/local/MATLAB/R2024a/bin/matlab -desktop
+            Icon=/usr/local/MATLAB/R2024a/bin/glnxa64/cef_resources/matlab_icon.png
+            Terminal=false
+            Categories=Development;Science;Engineering;
+          </CodeBlock>
+
+          Then, refresh the application menu by running:
+          <ShellScript is:raw>update-desktop-database ~/.local/share/applications/</ShellScript>
+
+          Note that in some cases, Linux might not let you update or install new packages due to MATLAB installation not having access to root. If that's the case, then you need to give yourself ownership of the MATLAB install:
+          <ShellScript is:raw>sudo chown -R $USER:$USER /usr/local/MATLAB/R2025b</ShellScript>
+          then ensure write permission
+          <ShellScript is:raw>chmod -R u+rw /usr/local/MATLAB/R2025b</ShellScript>
+        </li>
+        <li>
+          <a href="https://www.kicad.org/">KiCAD</a>: PCB design
+          software. Install with:
+          <ShellScript is:raw>sudo apt install kicad -y</ShellScript>
+        </li>
+        <li>
+          <a
+            href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html">LTspice</a
+          >: Circuit simulation tool. LTSpice is mainly a Windows
+          application, but it can be run on Linux using Wine. Follow
+          instruction on how to install wine on Ubuntu on their <a
+            href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu">official website</a
+          >. Next, download and install LTspice (64 bit) using Wine:
+          <ShellScript is:raw>
+            cd ~/Downloads
+            wget https://LTspice.analog.com/download/latest/LTspice64.msi
+            wine msiexec /i LTspice64.msi
+          </ShellScript>
+          Next, simply start and run the application with
+          <ShellScript is:raw>wine ~/.wine/drive_c/users/$USER/AppData/Local/Programs/ADI/LTspice/LTspice.exe</ShellScript>
+          You can also create a desktop shortcut for easier access. First, create
+          the launcher file. Run this command to create a new .desktop file:
+          <ShellScript is:raw>nano ~/.local/share/applications/ltspice.desktop</ShellScript>
+          Then, add the following content to the file:
+          <CodeBlock is:raw>
+            [Desktop Entry]
+            Name=LTspice
+            Comment=Analog Devices LTspice Circuit Simulator
+            Exec=wine /home/don-le/.wine/drive_c/users/don-le/AppData/Local/Programs/ADI/LTspice/LTspice.exe
+            Icon=application-x-ms-dos-executable
+            Terminal=false
+            Type=Application
+            Categories=Education;Electronics;Engineering;
+          </CodeBlock>
+          Finally, make it executable
+          <ShellScript is:raw>chmod +x ~/.local/share/applications/ltspice.desktop</ShellScript>
+        </li>
+        <li>
+          <a href="https://www.audacityteam.org/">Audacity</a>:
+          Audio editing software. Install with:
+          <ShellScript is:raw>sudo apt install audacity -y</ShellScript>
+        </li>
+        <li>
+          <a href="https://code-industry.net/masterpdfeditor/"
+            >Master PDF Editor</a
+          >: PDF editing software. Installation steps:
           <ul>
             <li>
-              <a href="https://nodejs.org/">Node.js</a> and npm: JavaScript
-              runtime and package manager. Install with:
-              <ShellScript is:raw>sudo apt install nodejs npm -y</ShellScript>
+              First, download the installer from the Master PDF Editor
+              website.
             </li>
             <li>
-              Yarn: Alternative JavaScript package manager. Install with:
-              <ShellScript is:raw>npm install -g yarn</ShellScript>
-            </li>
-            <li>
-              Cwebp: WebP image conversion tool. Install with:
-              <ShellScript is:raw>sudo apt install webp -y</ShellScript>
-              Now, you can convert images to WebP format using the cwebp command.
-              For example:
-              <CodeBlock is:raw>
-                # Convert PNG to WebP
-                cwebp input.png -o output.webp
-
-                # Batch convert all PNGs
-                for file in *.png; do cwebp "$file" -o "${file%.png}.webp"; done
-              </CodeBlock>
-            </li>
-          </ul>
-        </section>
-
-        <section id="rust">
-          <h2 >Rust and Cargo</h2>
-          <ul>
-            <li>
-              <a href="https://www.rust-lang.org/">Rust</a> and Cargo:
-              Systems programming language with built-in package manager. Install
-              with:
-              <ShellScript is:raw>
-                curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-                source $HOME/.cargo/env
-              </ShellScript>
-            </li>
-            Verify the installation by running:
-            <ShellScript is:raw>
-              rustc --version
-              cargo --version
-            </ShellScript>
-          </ul>
-        </section>
-
-        <section id="engineering">
-          <h2 >Engineering Softwares</h2>
-          <ul>
-            <li>
-              <a
-                href="https://www.mathworks.com/products/matlab.html">MATLAB</a
-              >: Numerical computing environment. Download from MathWorks and
-              follow their installation instructions. To add MATLAB to your
-              application menu, create
-              <C>~/.local/share/applications/matlab.desktop</C>
-              with this content:
-              <CodeBlock is:raw>
-                [Desktop Entry]
-                Version=1.0
-                Type=Application
-                Name=MATLAB
-                Comment=MATLAB Numerical Computing Environment
-                Exec=/usr/local/MATLAB/R2024a/bin/matlab -desktop
-                Icon=/usr/local/MATLAB/R2024a/bin/glnxa64/cef_resources/matlab_icon.png
-                Terminal=false
-                Categories=Development;Science;Engineering;
-              </CodeBlock>
-
-              Then, refresh the application menu by running:
-              <ShellScript is:raw>update-desktop-database ~/.local/share/applications/</ShellScript>
-
-              Note that in some cases, Linux might not let you update or install new packages due to MATLAB installation not having access to root. If that's the case, then you need to give yourself ownership of the MATLAB install:
-              <ShellScript is:raw>sudo chown -R $USER:$USER /usr/local/MATLAB/R2025b</ShellScript>
-              then ensure write permission
-              <ShellScript is:raw>chmod -R u+rw /usr/local/MATLAB/R2025b</ShellScript>
-            </li>
-            <li>
-              <a href="https://www.kicad.org/">KiCAD</a>: PCB design
-              software. Install with:
-              <ShellScript is:raw>sudo apt install kicad -y</ShellScript>
-            </li>
-            <li>
-              <a
-                href="https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html">LTspice</a
-              >: Circuit simulation tool. LTSpice is mainly a Windows
-              application, but it can be run on Linux using Wine. Follow
-              instruction on how to install wine on Ubuntu on their <a
-                href="https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu">official website</a
-              >. Next, download and install LTspice (64 bit) using Wine:
+              Next, open the terminal and navigate to the directory where
+              the installer was downloaded, then install it via apt.
               <ShellScript is:raw>
                 cd ~/Downloads
-                wget https://LTspice.analog.com/download/latest/LTspice64.msi
-                wine msiexec /i LTspice64.msi
-              </ShellScript>
-              Next, simply start and run the application with
-              <ShellScript is:raw>wine ~/.wine/drive_c/users/$USER/AppData/Local/Programs/ADI/LTspice/LTspice.exe</ShellScript>
-              You can also create a desktop shortcut for easier access. First, create
-              the launcher file. Run this command to create a new .desktop file:
-              <ShellScript is:raw>nano ~/.local/share/applications/ltspice.desktop</ShellScript>
-              Then, add the following content to the file:
-              <CodeBlock is:raw>
-                [Desktop Entry]
-                Name=LTspice
-                Comment=Analog Devices LTspice Circuit Simulator
-                Exec=wine /home/don-le/.wine/drive_c/users/don-le/AppData/Local/Programs/ADI/LTspice/LTspice.exe
-                Icon=application-x-ms-dos-executable
-                Terminal=false
-                Type=Application
-                Categories=Education;Electronics;Engineering;
-              </CodeBlock>
-              Finally, make it executable
-              <ShellScript is:raw>chmod +x ~/.local/share/applications/ltspice.desktop</ShellScript>
-            </li>
-            <li>
-              <a href="https://www.audacityteam.org/">Audacity</a>:
-              Audio editing software. Install with:
-              <ShellScript is:raw>sudo apt install audacity -y</ShellScript>
-            </li>
-            <li>
-              <a href="https://code-industry.net/masterpdfeditor/"
-                >Master PDF Editor</a
-              >: PDF editing software. Installation steps:
-              <ul>
-                <li>
-                  First, download the installer from the Master PDF Editor
-                  website.
-                </li>
-                <li>
-                  Next, open the terminal and navigate to the directory where
-                  the installer was downloaded, then install it via apt.
-                  <ShellScript is:raw>
-                    cd ~/Downloads
-                    sudo apt install ./master-pdf-editor*.deb
-                  </ShellScript>
-                </li>
-                <li>
-                  Then, run the installer with: <C>./master-pdf-editor-*.run</C>
-                </li>
-                <li>
-                  Follow the on-screen instructions to complete the
-                  installation.
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </section>
-
-        <section class="" id="other-softwares">
-          <h2 >Other Useful Softwares</h2>
-          <ul>
-            <li>
-              <a href="https://www.mozilla.org/firefox/">Firefox</a>
-            </li>
-            <li>
-              <a href="https://www.spotify.com/">Spotify</a>:
-              <ShellScript is:raw>
-                sudo apt update && sudo apt upgrade -y
-                curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
-                echo "deb [signed-by=/usr/share/keyrings/spotify-archive.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-                sudo apt update && sudo apt install spotify-client -y
+                sudo apt install ./master-pdf-editor*.deb
               </ShellScript>
             </li>
             <li>
-              <a href="https://www.videolan.org/vlc/"
-                >VLC Media Player</a
-              >: Versatile media player. Install with:
-              <ShellScript is:raw>sudo apt install vlc</ShellScript>
+              Then, run the installer with: <C>./master-pdf-editor-*.run</C>
             </li>
             <li>
-              <a href="https://github.com/ksnip/ksnip">ksnip</a>:
-              Equivalent of Window's snipping tool, a screenshot tool with
-              annotation features. Install with:
-              <ShellScript is:raw>sudo apt install ksnip -y</ShellScript>
-            </li>
-            <li>
-              <a href="https://telegram.org/">Telegram</a>:
-              Messaging app. Install with:
-              <ShellScript is:raw>sudo apt install telegram-desktop -y</ShellScript>
+              Follow the on-screen instructions to complete the
+              installation.
             </li>
           </ul>
-
-          <section id="final-words">
-            <h2 >Final Words</h2>
-            <p>
-              Try not to worry too much about what other people say. Choose what
-              works best for you, but take some time to research before settling
-              on a distro. Some people prefer Arch's rolling release, while I
-              value the stability and long-term support that Ubuntu provides.
-              The best way to learn is by exploring different options and
-              discovering what fits your workflow and preferences. Linux is
-              built around choice and customization, so experiment freely and
-              shape it into something that feels right for you.
-            </p>
-          </section>
-        </section>
+        </li>
       </ul>
+    </section>
+
+    <section class="" id="other-softwares">
+      <h2 >Other Useful Softwares</h2>
+      <ul>
+        <li>
+          <a href="https://www.mozilla.org/firefox/">Firefox</a>
+        </li>
+        <li>
+          <a href="https://www.spotify.com/">Spotify</a>:
+          <ShellScript is:raw>
+            sudo apt update && sudo apt upgrade -y
+            curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
+            echo "deb [signed-by=/usr/share/keyrings/spotify-archive.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+            sudo apt update && sudo apt install spotify-client -y
+          </ShellScript>
+        </li>
+        <li>
+          <a href="https://www.videolan.org/vlc/"
+            >VLC Media Player</a
+          >: Versatile media player. Install with:
+          <ShellScript is:raw>sudo apt install vlc</ShellScript>
+        </li>
+        <li>
+          <a href="https://github.com/ksnip/ksnip">ksnip</a>:
+          Equivalent of Window's snipping tool, a screenshot tool with
+          annotation features. Install with:
+          <ShellScript is:raw>sudo apt install ksnip -y</ShellScript>
+        </li>
+        <li>
+          <a href="https://telegram.org/">Telegram</a>:
+          Messaging app. Install with:
+          <ShellScript is:raw>sudo apt install telegram-desktop -y</ShellScript>
+        </li>
+      </ul>
+    </section>
+
+    <section id="final-words">
+      <h2 >Final Words</h2>
+      <p>
+        Try not to worry too much about what other people say. Choose what
+        works best for you, but take some time to research before settling
+        on a distro. Some people prefer Arch's rolling release, while I
+        value the stability and long-term support that Ubuntu provides.
+        The best way to learn is by exploring different options and
+        discovering what fits your workflow and preferences. Linux is
+        built around choice and customization, so experiment freely and
+        shape it into something that feels right for you.
+      </p>
     </section>
   </div>
 </BaseLayout>
