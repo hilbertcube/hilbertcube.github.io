@@ -14,8 +14,8 @@
  *         while lo <= hi do …
  *   </Sample>
  *
- * `id` / `class` / `style` land on the container so a Sample can be used as a
- * TabBox pane (TabBox shows/hides panes by the shared `tabClass`).
+ * `id` / `class` / `style` land on the container. Inside a TabBox, the box
+ * removes the margin itself.
  */
 import { listing } from "@utils/highlight";
 
@@ -32,12 +32,16 @@ const text = await listing(code, () => Astro.slots.render("default"));
 <div
   id={id}
   class:list={["code-container", className]}
-  style={`margin: 25px auto;${style ? ` ${style}` : ""}`}
+  style={style}
 >
   <pre class="console"><code>{text}</code></pre>
 </div>
 
 <style>
+  .code-container {
+    margin: 25px auto;
+  }
+
   .console {
     line-height: 2;
     background-color: var(--pre-color);

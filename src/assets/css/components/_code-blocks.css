@@ -54,36 +54,7 @@ pre {
   position: relative;
 }
 
-/* Tab buttons */
-.tab-button-container {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
-
-.tab-button {
-  -webkit-border-radius: 4px 4px 0px 0px;
-  border-radius: 4px 4px 0px 0px;
-  background-color: var(--pre-color);
-  border: 0px;
-  border-bottom: 1px solid var(--pre-color);
-  margin: 0 !important;
-  min-width: 80px;
-  font-size: 16px;
-  padding: 0.3rem;
-  color: inherit;
-  font-family: inherit;
-}
-
-.tab-effect {
-  border-bottom: 2px solid #4c83ee;
-  background-color: var(--tab-color);
-}
-
-/* Tab panes butt against the tab strip, so their top-left corner stays square */
-.tab-button-container ~ .code-container > pre {
-  border-radius: 0 7px 7px 7px;
-}
+/* Tab buttons live in components/code/TabBox.astro, scoped to that component. */
 
 
 

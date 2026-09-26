@@ -62,14 +62,8 @@ import Table from "@components/article/Table.astro";
         previously.
       </p>
 
-      <TabBox
-        tabs={[
-          { label: "Square", id: "Square-Pseudo-Code" },
-          { label: "Circular", id: "Circular-Pseudo-Code" },
-        ]}
-        tabClass="pseudo-tab"
-      >
-        <Sample id="Square-Pseudo-Code" class="pseudo-tab" style="margin: 0;" is:raw>
+      <TabBox tabs={["Square", "Circular"]}>
+        <Sample is:raw>
           Function GenerateSignCombinations(pairs)
               Input:  List of integer pairs (n, m)
               Output: Array of sign combinations [+/-1, +/-1, ...] with first element fixed at +1
@@ -125,7 +119,7 @@ import Table from "@components/article/Table.astro";
                   PlotContour(equations[i], level=0)    // Plot nodal lines at z = 0
         </Sample>
 
-      <Sample id="Circular-Pseudo-Code" class="pseudo-tab" style="margin: 0; display: none;" is:raw>
+        <Sample is:raw>
         Function BesselDerivativeZero(n, m)
           Input:  Order n, zero index m
           Output: m-th zero z_nm of J'_n(x)

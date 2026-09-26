@@ -108,8 +108,8 @@
   font-size: 14px;
 }
 
-/* Both columns share the parent's rows via subgrid so the row
-   dividers line up exactly across labels and controls. */
+/* Both columns share the parent's rows via subgrid so each label
+   lines up exactly with its control. */
 .setting-window-right {
   display: grid;
   grid-row: 1 / -1;
@@ -130,21 +130,13 @@
   align-items: center;
   font-size: inherit;
   color: var(--settings-muted);
-  padding: 12px 0;
-  border-bottom: 1px solid var(--settings-border);
+  padding: 4px 0;
 }
 
 .setting-window-right:last-child .custom-select {
   display: flex;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--settings-border);
-}
-
-/* Trim the last row's divider on both columns */
-.sw_1st_column_items:last-child,
-.setting-window-right:last-child .custom-select:last-child {
-  border-bottom: none;
+  padding: 3px 0;
 }
 
 @media all and (max-width: 580px) {
