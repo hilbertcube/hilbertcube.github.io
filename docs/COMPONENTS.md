@@ -178,7 +178,9 @@ rule that articles used to repeat in their own `<style>` blocks.
 
 Children become the caption. Article front images **do** open in the lightbox —
 `Lightbox.astro` uses a blacklist (`#logoImage`, `#home-banner img`,
-`.recommend-img img`, `.no-lightbox`), so add `no-lightbox` to opt an image out.
+`.recommend-img img`, `.no-lightbox`), so add `no-lightbox` to opt an image out. The viewer itself is
+yet-another-react-lightbox, mounted with plain React from
+`components/site/lightbox/viewer.ts` — no React integration, no island.
 
 ### Figure
 

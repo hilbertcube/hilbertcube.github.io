@@ -30,11 +30,16 @@
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
-    "astro": "^5.18.0"
+    "astro": "^5.18.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "yet-another-react-lightbox": "^3.32.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@types/node": "^25.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "katex": "^0.18.1",
     "pagefind": "^1.4.0",
     "typescript": "^5.9.3"

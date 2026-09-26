@@ -20,8 +20,9 @@ Visit website at [neumanncondition.com](https://neumanncondition.com/) or [hilbe
 3. [KaTeX](https://katex.org/): display LaTeX math equations
 4. [Prism.js](https://prismjs.com/): code syntax-highlighting
 5. [Pagefind](https://pagefind.app/): search system
-6. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
-7. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
+6. [Yet Another React Lightbox](https://yet-another-react-lightbox.com/): smooth image lightbox
+7. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
+8. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
 
 ## Change Log
 
@@ -29,6 +30,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Sep 2026:** Moved the image lightbox to yet-another-react-lightbox, loaded only on the first image click
 - **Sep 2026:** Added a `<Table>` component that renders the scrollable wrapper and the table together, and moved the table styling out of the global CSS into it.
 - **Sep 2026:** Added a `<C>` inline-code component and moved the `.inline-code` styling out of the global CSS into it.
 - **Aug 2026:** [MAJOR] Upgraded TOC highlighting
