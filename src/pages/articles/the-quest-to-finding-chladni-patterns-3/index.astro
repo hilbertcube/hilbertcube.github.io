@@ -69,28 +69,57 @@ import Table from "@components/article/Table.astro";
       of the plate is called the Biharmonic wave equation, a fourth-order,
       time-dependent partial differential equation, described by
     </p>
-    <E>{tex`\begin{equation} \secondpd{u}{t} + \kappa^2\left(\fourthpd{u}{x} + 2\frac{\partial^4 u}{\partial x^2y^2} +\fourthpd{u}{y}\right)=Q(x,y,t), \end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        \secondpd{u}{t} + \kappa^2\left(\fourthpd{u}{x} + 2\frac{\partial^4 u}{\partial x^2y^2} +\fourthpd{u}{y}\right)=Q(x,y,t),
+      \end{equation}
+    `}</E>
     <p>or, written in a more compact form:</p>
-    <E>{tex`\begin{equation} u_{tt} + \kappa^2\nabla^4 u = Q,\quad -a\leq x, y\leq a, \end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        u_{tt} + \kappa^2\nabla^4 u = Q,\quad -a\leq x, y\leq a,
+      \end{equation}
+    `}</E>
     <p>here, $\nabla^4 = \nabla^2 (\nabla^2)$, and</p>
-    <E>{tex`\begin{equation} \kappa^2 = \frac{Eh^2}{12\rho(1-\nu^2)}, \end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        \kappa^2 = \frac{Eh^2}{12\rho(1-\nu^2)},
+      \end{equation}
+    `}</E>
     <p>
       where $p$ is the density, $\nu$ is Poisson's ratio, $E$ is Young's
       modulus, and $h$ is the thickness of the plate. For a free-edge plate,
       the conditions that apply to this equation are the boundary conditions
     </p>
-    <E>{tex`\begin{alignat*}{2} &u_{xx}+\nu u_{yy} = 0,\quad && u_{xxx} +(2-\nu)u_{yyx} = 0\;\text{along } x=\pm a\\ &u_{yy}+\nu u_{xx} = 0,\quad && u_{yyy} +(2-\nu)u_{yxx} = 0\;\text{along } y=\pm a \end{alignat*}`}</E>
+    <E>{tex`
+      \begin{alignat*}{2}
+        &u_{xx}+\nu u_{yy} = 0,\quad && u_{xxx} +(2-\nu)u_{yyx} = 0\;\text{along } x=\pm a\\
+        &u_{yy}+\nu u_{xx} = 0,\quad && u_{yyy} +(2-\nu)u_{yxx} = 0\;\text{along } y=\pm a
+      \end{alignat*}
+    `}</E>
     <p>and initial conditions:</p>
-    <E>{tex`\begin{equation} u(x, y, 0) = f(x,y)\quad \text{ and }\quad u_t(x, y, 0) = g(x, y)\end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        u(x, y, 0) = f(x,y)\quad \text{ and }\quad u_t(x, y, 0) = g(x, y)
+      \end{equation}
+    `}</E>
     <p>
       Any attempts to solve this Boundary-Initial Condition using separation
       of variables is apparently not possible. While we were on our journey to
       find the eigenvalues with the first two boundary conditions, we ran into
       an very difficult problem: having to solve the equation
     </p>
-    <E>{tex`\begin{equation}(p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,\end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        (p^2+\zeta)\sin(pa)\cosh(pa)-(p^2-\zeta)\cos(pa)\sinh(pa)=0,
+      \end{equation}
+    `}</E>
     where
-    <E>{tex`\begin{equation}\zeta = (2-\nu)Y''(y)\end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        \zeta = (2-\nu)Y''(y)
+      \end{equation}
+    `}</E>
     <p>
       This is a very difficult task since $\zeta$ is not a numeric value, but
       a function of $y$, so attempting to solve the eigenvalue numerically is
@@ -120,7 +149,11 @@ import Table from "@components/article/Table.astro";
         other hand, is... also difficult to solve. However, due to the symmetric
         nature of the circular plate, Rayleigh was able to show that
       </p>
-      <E>{tex`\begin{equation} f = C(n+2m)^2. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          f = C(n+2m)^2.
+        \end{equation}
+      `}</E>
       <p>
         To understand the work of Rayleigh, we need to go back to the
         one-dimensional space. Take a long wooden ruler that we usually see
@@ -141,18 +174,30 @@ import Table from "@components/article/Table.astro";
         wave equation
       </p>
 
-      <E>{tex`\begin{equation} \secondpd{u}{t} + c^2_L K^2\secondpd{u}{x} = 0. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \secondpd{u}{t} + c^2_L K^2\secondpd{u}{x} = 0.
+        \end{equation}
+      `}</E>
       <p>
         Here, $c_L$ is the longitudinal wave speed, defined by the square root
         of the Young's modulus, $E$ divided by the density $\rho$
       </p>
-      <E>{tex`\begin{equation} c_L = \sqrt{\frac{E}{\rho}}, \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          c_L = \sqrt{\frac{E}{\rho}},
+        \end{equation}
+      `}</E>
       <p>
         This is a bit different in two dimensions since there are lateral
         expansions in 2D. Authors Rossing and Fletcher mentioned in their work,
         that the correct equation for $c_L$ for a plate is
       </p>
-      <E>{tex`\begin{equation} c_L = \sqrt{\frac{E}{\rho(1-\nu^2)}}, \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          c_L = \sqrt{\frac{E}{\rho(1-\nu^2)}},
+        \end{equation}
+      `}</E>
       <p>
         where $\nu$ is the ratio of lateral contraction to longitudinal
         elongation (also known as Poisson's ratio).
@@ -166,35 +211,76 @@ import Table from "@components/article/Table.astro";
         forcing function should not affect the general shape of the patterns,
         we can assume that $Q=0$ and rewrite it as
       </p>
-      <E>{tex`\begin{equation} \nabla^4 u - \frac{12\rho(1 - \nu^2)}{Eh^2}u_{tt} = 0. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \nabla^4 u - \frac{12\rho(1 - \nu^2)}{Eh^2}u_{tt} = 0.
+        \end{equation}
+      `}</E>
       <p>
         Apply separation of variables once again, but this time, only separate
         the time variable, $u(x, y, t) = U(x, y)e^&#123;i\omega t&#125;$.
         Thus, $u_&#123;tt&#125; = \omega^2 U(x, y)e^&#123;i\omega t&#125;$.
         Substitute in, and simplify, we obtain
       </p>
-      <E>{tex`\begin{equation} \nabla^4 U - \frac{12\rho(1 - \nu^2)\omega^2}{Eh^2}U= \nabla^4 U - k^4U=0. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \nabla^4 U - \frac{12\rho(1 - \nu^2)\omega^2}{Eh^2}U= \nabla^4 U - k^4U=0.
+        \end{equation}
+      `}</E>
       Notice that here, we define $k$ as
-      <E>{tex`\begin{equation} k^2 = \frac{\sqrt{12}\omega}{h}\sqrt{\frac{\rho(1-\nu^2)}{E}} = \frac{\sqrt{12}\omega}{hc_L}. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          k^2 = \frac{\sqrt{12}\omega}{h}\sqrt{\frac{\rho(1-\nu^2)}{E}} = \frac{\sqrt{12}\omega}{hc_L}.
+        \end{equation}
+      `}</E>
       <p>
         By dimensional analysis, it is not too hard to see that this $k$ is
         the familiar "wave number" that we like and love. Therefore,
       </p>
-      <E>{tex`\begin{equation} f = \frac{\omega}{2\pi} = \frac{1}{2\pi\sqrt{12}}c_Lhk^2. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          f = \frac{\omega}{2\pi} = \frac{1}{2\pi\sqrt{12}}c_Lhk^2.
+        \end{equation}
+      `}</E>
       <p>Stated within Rayleigh's work, the famous Kirchhoff previously proved that</p>
-      <E>{tex`\begin{equation} \tan\lbrac ka - \frac{1}{2}n\pi\rbrac = \frac{\frac{A_2}{8ka} + \frac{A_3}{(8ka)^2} - \frac{A_4}{(8ka)^3} + \ldots}{A_1 + \frac{A_2}{8ka} + \frac{A_4}{(8ka)^3} + \ldots}, \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \tan\lbrac ka - \frac{1}{2}n\pi\rbrac = \frac{\frac{A_2}{8ka} + \frac{A_3}{(8ka)^2} - \frac{A_4}{(8ka)^3} + \ldots}{A_1 + \frac{A_2}{8ka} + \frac{A_4}{(8ka)^3} + \ldots},
+        \end{equation}
+      `}</E>
       where
-      <E>{tex`\begin{equation} \begin{split} A_1 &= \gamma = (1-\nu)^{-1}\\ A_2 &= \gamma(1-4n^2)-8\\ A_3 &= \gamma(1-4n^2)(9-4n^2) + 48(1+4n^2)\\ A_4 &= - \frac{\gamma}{3}[(1-4n^2)(9-4n^2)(13 - 4n^2)] + 8(9 + 136n^2 + 80n^4) \end{split} \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \begin{split}
+            A_1 &= \gamma = (1-\nu)^{-1}\\
+            A_2 &= \gamma(1-4n^2)-8\\
+            A_3 &= \gamma(1-4n^2)(9-4n^2) + 48(1+4n^2)\\
+            A_4 &= - \frac{\gamma}{3}[(1-4n^2)(9-4n^2)(13 - 4n^2)] + 8(9 + 136n^2 + 80n^4)
+          \end{split}
+        \end{equation}
+      `}</E>
       <p>
         Notice that the numerator approaches zero faster than the denominator
         as $k\to\infty$. Since $f$ and $k^2$ are proportional, as
         $f\to\infty$, $k\to\infty$, and hence
       </p>
-      <E>{tex`\begin{equation} \tan\lbrac ka - \frac{1}{2}n\pi\rbrac = 0 \quad\text{as}\quad k\to\infty. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \tan\lbrac ka - \frac{1}{2}n\pi\rbrac = 0 \quad\text{as}\quad k\to\infty.
+        \end{equation}
+      `}</E>
       <p>Solving for $k$, we obtain</p>
-      <E>{tex`\begin{equation} k = \frac{\pi}{2a}(n + 2m) = \frac{\pi}{d}(n + 2m). \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          k = \frac{\pi}{2a}(n + 2m) = \frac{\pi}{d}(n + 2m).
+        \end{equation}
+      `}</E>
       <p>Substitute this back into the frequency equation above, we obtain</p>
-      <E>{tex`\begin{equation} f = \frac{1}{\pi 4\sqrt{3}}hc_Lk^2 = \frac{h\pi}{4\sqrt{3}d^2}\sqrt{\frac{E}{\rho(1-\nu^2)}}\cdot(n + 2m)^2, \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          f = \frac{1}{\pi 4\sqrt{3}}hc_Lk^2 = \frac{h\pi}{4\sqrt{3}d^2}\sqrt{\frac{E}{\rho(1-\nu^2)}}\cdot(n + 2m)^2,
+        \end{equation}
+      `}</E>
       <p>
         where $E$ is Young's modulus, $\rho$ is density, $\nu$ is the ratio of
         lateral contraction to longitudinal elongation (also known as
@@ -213,12 +299,20 @@ import Table from "@components/article/Table.astro";
         depends on the frequency, and therefore, based on the equation that relates
         wave speed to angular frequency,
       </p>
-      <E>{tex`\begin{equation} c(f) = \frac{\omega}{k} = \sqrt{\frac{2\pi hc_L}{4\sqrt{3}} f} = \sqrt{2\pi h\sqrt{\frac{E}{12\rho(1-\nu^2)}}}\cdot f^{1/2}. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          c(f) = \frac{\omega}{k} = \sqrt{\frac{2\pi hc_L}{4\sqrt{3}} f} = \sqrt{2\pi h\sqrt{\frac{E}{12\rho(1-\nu^2)}}}\cdot f^{1/2}.
+        \end{equation}
+      `}</E>
       <p>
         Thus, the wave speed is an increasing function, it increases as $f$
         increases, and
       </p>
-      <E>{tex`\begin{equation} c \sim \sqrt{f} \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          c \sim \sqrt{f}
+        \end{equation}
+      `}</E>
       <p>
         This might explain why our wave speed has an increasing trend in the
         last section.
@@ -302,7 +396,11 @@ import Table from "@components/article/Table.astro";
       <p>
         Since there are no diameter lines, $n=0$. The equation for $f$ becomes
       </p>
-      <E>{tex`\begin{equation} f = \frac{1}{\pi 4\sqrt{3}}hc_Lk^2 = \frac{h\pi}{4\sqrt{3}d^2}\sqrt{\frac{E}{\rho(1-\nu^2)}}\cdot(2m)^2, \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          f = \frac{1}{\pi 4\sqrt{3}}hc_Lk^2 = \frac{h\pi}{4\sqrt{3}d^2}\sqrt{\frac{E}{\rho(1-\nu^2)}}\cdot(2m)^2,
+        \end{equation}
+      `}</E>
       <p>
         This implies that $f$ and $(2m)^2$ have a linear relationship.
         Therefore, we plotted our data below to test this theory.
@@ -319,12 +417,20 @@ import Table from "@components/article/Table.astro";
         = 68$ GPa, $p = 2710\;kg/m^3$, $\nu = 0.33$, $h=0.8\pm 0.3$ mm, $d =
         0.241\pm 0.001$ m. Therefore, the coefficient $C$ is determined by
       </p>
-      <E>{tex`\begin{equation} C=\frac{1}{\pi 4\sqrt{3}}hc_L = \frac{h\pi}{d^2}\sqrt{\frac{E}{12\rho(1-\nu^2)}}= \kappa\pi\frac{h}{d^2} = 33.1430, \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          C=\frac{1}{\pi 4\sqrt{3}}hc_L = \frac{h\pi}{d^2}\sqrt{\frac{E}{12\rho(1-\nu^2)}}= \kappa\pi\frac{h}{d^2} = 33.1430,
+        \end{equation}
+      `}</E>
       <p>
         which is very close to our linear fit. The uncertainty of $C$ can be
         calculated by
       </p>
-      <E>{tex`\begin{equation} \sigma_{C} = \sqrt{\lbrac\pd{C}{h}\sigma_h\rbrac^2 + \lbrac\pd{C}{d}\sigma_d\rbrac^2} = C\sqrt{\lbrac\frac{\sigma_h}{h}\rbrac^2 + \lbrac\frac{2h\sigma_d}{d}\rbrac^2} = 12.43. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \sigma_{C} = \sqrt{\lbrac\pd{C}{h}\sigma_h\rbrac^2 + \lbrac\pd{C}{d}\sigma_d\rbrac^2} = C\sqrt{\lbrac\frac{\sigma_h}{h}\rbrac^2 + \lbrac\frac{2h\sigma_d}{d}\rbrac^2} = 12.43.
+        \end{equation}
+      `}</E>
       <p>
         The coefficient $C$ lies within our uncertainty range, which once
         again verifies the validity of Chladni's law.
@@ -339,7 +445,11 @@ import Table from "@components/article/Table.astro";
       equation. The actual equation that describes the plate is the Biharmonic
       wave equation:
     </p>
-    <E>{tex`\begin{equation}\frac{\partial^2 u}{\partial t^2} + k^2\left(\frac{\partial^4 u}{\partial x^4} + 2\frac{\partial^4 u}{\partial x^2 y^2} + \frac{\partial^4 u}{\partial y^4}\right) = Q, \quad \text{or} \quad u_{tt} + k^2\nabla^4 u = Q, \quad -a \leq x, y \leq a\end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        \frac{\partial^2 u}{\partial t^2} + k^2\left(\frac{\partial^4 u}{\partial x^4} + 2\frac{\partial^4 u}{\partial x^2 y^2} + \frac{\partial^4 u}{\partial y^4}\right) = Q, \quad \text{or} \quad u_{tt} + k^2\nabla^4 u = Q, \quad -a \leq x, y \leq a
+      \end{equation}
+    `}</E>
     <p>
       This equation is a fourth-order partial differential equation and,
       therefore, quite difficult to solve even with simple boundary
@@ -378,7 +488,11 @@ import Table from "@components/article/Table.astro";
       plates are also identical, appearing at frequencies very close to those
       in this experiment. The paper used the full Biharmonic Equation.
     </p>
-    <E>{tex`\begin{equation} \rho h\secondpd{w}{t} = - D\nabla^4 w + T\nabla^2 w -K_0w -K_1\pd{w}{t} + T_1\nabla^2\pd{w}{t} + F(\textbf{x}, t), \end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        \rho h\secondpd{w}{t} = - D\nabla^4 w + T\nabla^2 w -K_0w -K_1\pd{w}{t} + T_1\nabla^2\pd{w}{t} + F(\textbf{x}, t),
+      \end{equation}
+    `}</E>
     <p>
       Here, $p$ is the density, $K_0$ is the linear stiffness coefficient,
       representing the linear storing force, $T$ is the tension coefficient,
@@ -386,7 +500,11 @@ import Table from "@components/article/Table.astro";
       coefficient, $F(\mathbf&#123;x&#125;, t)$ is the forcing function, and
       $D$ is defined as
     </p>
-    <E>{tex`\begin{equation} D = \frac{Eh^3}{12(1-\nu^2)}, \end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        D = \frac{Eh^3}{12(1-\nu^2)},
+      \end{equation}
+    `}</E>
     <p>
       which includes the flexural rigidity constant $\nu$, $E$ is young's
       modulus, and $h$ is the thickness of the plate.

@@ -31,6 +31,9 @@ build/
 npm-debug.log*
 *.log
 
+# Python bytecode (scripts/*.py)
+__pycache__/
+
 # Image backups
 public/media/Images/originals/
 

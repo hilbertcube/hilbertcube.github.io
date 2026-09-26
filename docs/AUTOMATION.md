@@ -75,6 +75,13 @@ move as a block. Listings without `is:raw` (and `<pre>`) stay byte-for-byte,
 since their whitespace is content. A page whose tags don't balance is reported
 as `SKIP` and left alone.
 
+It also lays out display equations (`<E>{tex`…`}</E>`): `\begin`/`\end` on their
+own lines, one row per line (breaking after each `\\` that ends a row), and nested
+`cases`/matrix environments one level deeper. Only whitespace moves, where math
+mode ignores it. A `\\` inside a brace group (e.g. `\substack{…}`) stays put,
+and an equation containing a `%` comment is left as is. Inline `<M>` math stays
+on one line.
+
 `convert-code-blocks.py` converts raw `<div class="code-container">` blocks
 into `<ShellScript>` (command-line prompts) or `<CodeBlock>` (generic code /
 config) Astro components. Imports are added automatically.

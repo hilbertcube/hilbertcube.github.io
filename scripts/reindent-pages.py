@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+r"""
 reindent-pages.py
 =================
 Re-indent the template part of .astro pages by tag nesting (2 spaces).
@@ -9,6 +9,12 @@ comments, <style>/<script> and is:raw code listings move as a block by the same
 amount as the line that opened them. Code listings without is:raw (whitespace-
 significant, written at column 0) are left byte-for-byte alone, as is the
 frontmatter.
+
+Display equations (`<E>{tex`…`}</E>`) are then laid out one row per line:
+`\begin{…}` / `\end{…}` on their own lines, a break after each row-ending
+`\\`, and nested environments (cases, matrices) indented a level further.
+Only whitespace moves, and only where math mode ignores it, so KaTeX renders
+the same thing. Inline `<M>` math is left on one line.
 
 Usage
 -----
@@ -187,6 +193,94 @@ def reindent(src):
     return "\n".join(out)
 
 
+# --- Display equations -------------------------------------------------------
+
+# Environments whose \begin takes a mandatory argument (column spec, count).
+ENV_ARGS = {"array", "darray", "subarray", "alignat", "alignat*", "alignedat"}
+TEX_TOKEN = re.compile(
+    r"\\begin\s*\{(?P<begin>[^}]*)\}"
+    r"|\\end\s*\{(?P<end>[^}]*)\}"
+    r"|(?P<row>\\\\(?:\[[^\]]*\])?)"   # row break, with an attached [skip]
+    r"|\\[A-Za-z]+|\\.|(?P<ws>\s+)|(?P<pct>%)|."
+    , re.S)
+E_TEX = re.compile(r"(<E>\{tex`|<E\s+code=\{tex`)(?P<body>[^`]*)`\}")
+
+
+def format_tex(body, indent):
+    """Lay out a display equation one row per line, nested by environment.
+
+    Only whitespace moves, and only where math mode ignores it: line breaks go
+    after `\\begin{…}` and row-ending `\\\\`, and before `\\end{…}`; runs of
+    whitespace become one space (KaTeX lexes a run as one token either way).
+    Returns None for LaTeX it won't touch (a `%` comment, unbalanced envs).
+    """
+    lines = []
+    cur = ""
+    level = 0          # environments open
+    line_level = 0     # level at the start of the current line
+    brace = 0
+    envs = []          # brace depth at each open environment
+
+    def emit():
+        nonlocal cur, line_level
+        if cur.strip():
+            lines.append(indent + IND * line_level + cur.strip())
+        cur, line_level = "", level
+
+    pos = 0
+    while pos < len(body):
+        m = TEX_TOKEN.match(body, pos)
+        tok, pos = m.group(0), m.end()
+        if m.group("pct"):
+            return None
+        if m.group("ws"):
+            cur += " "
+        elif m.group("begin") is not None:
+            name = m.group("begin").strip()
+            cur += f"\\begin{{{name}}}"
+            if name in ENV_ARGS:
+                arg = re.match(r"\s*(\{[^{}]*\})", body[pos:])
+                if arg:
+                    cur += arg.group(1)
+                    pos += arg.end()
+            envs.append(brace)
+            level += 1
+            emit()
+        elif m.group("end") is not None:
+            if not envs:
+                return None
+            emit()
+            envs.pop()
+            level -= 1
+            line_level = level
+            cur = f"\\end{{{m.group('end').strip()}}}"
+        elif m.group("row") and envs and brace == envs[-1]:
+            cur += tok
+            emit()
+        else:
+            brace += tok == "{"
+            brace -= tok == "}"
+            cur += tok
+    emit()
+    if envs or brace:
+        return None
+    return lines
+
+
+def format_equations(src, path="?"):
+    """Expand every `<E>{tex`…`}` equation onto its own indented lines."""
+    def repl(m):
+        line_start = src.rfind("\n", 0, m.start()) + 1
+        indent = re.match(r"[ \t]*", src[line_start:]).group(0)
+        lines = format_tex(m.group("body"), indent + IND)
+        if lines is None:
+            print(f"  left as is (comment or unbalanced) in {path}: "
+                  f"{m.group('body').strip()[:60]}")
+            return m.group(0)
+        return m.group(1) + "\n" + "\n".join(lines) + "\n" + indent + "`}"
+    return E_TEX.sub(repl, src)
+
+
 apply = "--apply" in sys.argv
 paths = [a for a in sys.argv[1:] if a != "--apply"] or sorted(
     p for p in glob.glob("src/pages/**/*.astro", recursive=True)
@@ -197,7 +291,7 @@ changed = 0
 for path in paths:
     src = open(path).read()
     try:
-        res = reindent(src)
+        res = format_equations(reindent(src), path)
     except SystemExit as e:
         print(f"SKIP {path}: {e}")
         continue
