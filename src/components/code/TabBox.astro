@@ -2,59 +2,148 @@
 /**
  * src/components/code/TabBox.astro
  * =================================
- * Tabbed container with clickable tab buttons.
+ * Tabbed container. Each child is one pane, paired with a label by position.
+ *
+ *   <TabBox tabs={["Square", "Circular"]}>
+ *     <Sample is:raw>…</Sample>
+ *     <Sample is:raw>…</Sample>
+ *   </TabBox>
+ *
+ * The first pane is shown on load; the rest are hidden by CSS until the script
+ * takes over. The script adds the ARIA tab roles and keyboard support (arrow
+ * keys, Home/End) and only ever touches panes inside its own box, so several
+ * TabBoxes can share a page.
  *
  * Props
  * -----
- * - tabs     : array of { label, id } objects — one per tab
- * - tabClass : CSS class shared by all tab panes
+ * - tabs : one label per pane, in pane order
  */
 
 interface Props {
-  tabs: { label: string; id: string }[];
-  tabClass: string;
+  tabs: string[];
 }
 
-const { tabs, tabClass } = Astro.props;
+const { tabs } = Astro.props;
 ---
 
-<div class="box" style="width: auto; max-width: none; margin: 50px auto;">
-  <div class="tab-button-container">
+<div class="box tabbox" data-tabbox>
+  <div class="tab-button-container" role="tablist">
     {
-      tabs.map((tab, i) => (
+      tabs.map((label, i) => (
         <button
-          class={`tab-button${i === 0 ? " tab-effect" : ""}`}
-          data-tab-target={tab.id}
-          data-tab-class={tabClass}
+          type="button"
+          class="tab-button"
+          role="tab"
+          aria-selected={i === 0 ? "true" : "false"}
+          tabindex={i === 0 ? 0 : -1}
         >
-          {tab.label}
+          {label}
         </button>
       ))
     }
   </div>
-  <slot />
+  <div class="tab-panels">
+    <slot />
+  </div>
 </div>
 
+<style>
+  .tabbox {
+    width: auto;
+    max-width: none;
+    margin: 50px auto;
+  }
+
+  .tab-button-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  .tab-button {
+    border-radius: 4px 4px 0 0;
+    background-color: var(--pre-color);
+    border: 0;
+    border-bottom: 1px solid var(--pre-color);
+    margin: 0;
+    min-width: 80px;
+    font-size: 16px;
+    padding: 0.3rem;
+    color: inherit;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .tab-button[aria-selected="true"] {
+    border-bottom: 2px solid #4c83ee;
+    background-color: var(--tab-color);
+  }
+
+  /* Panes sit flush against the tab strip, so their top-left corner stays square */
+  .tabbox .tab-panels > :global(*) {
+    margin: 0;
+  }
+
+  .tab-panels > :global(.code-container > pre) {
+    border-radius: 0 7px 7px 7px;
+  }
+
+  .tab-panels > :global([hidden]) {
+    display: none;
+  }
+
+  /* Before the script runs, show only the first pane */
+  .tabbox:not([data-ready]) .tab-panels > :global(:not(:first-child)) {
+    display: none;
+  }
+</style>
+
 <script>
-  document
-    .querySelectorAll<HTMLElement>(".tab-button[data-tab-target]")
-    .forEach((button) => {
-      button.addEventListener("click", () => {
-        const { tabTarget, tabClass } = button.dataset;
-        if (!tabTarget || !tabClass) return;
+  let boxCount = 0;
 
-        document
-          .querySelectorAll<HTMLElement>(`.${tabClass}`)
-          .forEach((pane) => (pane.style.display = "none"));
+  document.querySelectorAll<HTMLElement>("[data-tabbox]").forEach((box) => {
+    const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...box.querySelector(".tab-panels")!.children] as HTMLElement[];
+    const prefix = `tabbox-${boxCount++}`;
 
-        const target = document.getElementById(tabTarget);
-        if (target) target.style.display = "block";
+    panels.forEach((panel, i) => {
+      const tab = tabs[i];
+      if (!tab) return;
+      tab.id = `${prefix}-tab-${i}`;
+      panel.id ||= `${prefix}-panel-${i}`;
+      tab.setAttribute("aria-controls", panel.id);
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tab.id);
+      panel.tabIndex = 0;
+      panel.hidden = i !== 0;
+    });
 
-        button
-          .closest(".tab-button-container")
-          ?.querySelectorAll(".tab-button")
-          .forEach((other) => other.classList.remove("tab-effect"));
-        button.classList.add("tab-effect");
+    const select = (index: number) => {
+      tabs.forEach((tab, i) => {
+        const selected = i === index;
+        tab.setAttribute("aria-selected", String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        if (panels[i]) panels[i].hidden = !selected;
+      });
+      tabs[index].focus();
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i));
+      tab.addEventListener("keydown", (event) => {
+        const last = tabs.length - 1;
+        const target = {
+          ArrowRight: i === last ? 0 : i + 1,
+          ArrowLeft: i === 0 ? last : i - 1,
+          Home: 0,
+          End: last,
+        }[event.key];
+        if (target === undefined) return;
+        event.preventDefault();
+        select(target);
       });
     });
+
+    box.dataset.ready = "";
+  });
 </script>

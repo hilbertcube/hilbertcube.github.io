@@ -381,43 +381,35 @@ highlighted. The content is plain text, not HTML: tags show as typed.
 | Prop | Type | Notes |
 |---|---|---|
 | `code` | `string` | Alternative to children. |
-| `id` | `string` | For use as a [`TabBox`](#tabbox) pane. |
-| `class` | `string` | Merged onto the container; a TabBox pane needs the shared `tabClass`. |
-| `style` | `string` | Appended after the default `margin: 25px auto`, so it wins. |
+| `id` | `string` | Set on the container. |
+| `class` | `string` | Merged onto the container. |
+| `style` | `string` | Inline style on the container; overrides the default `margin: 25px auto`. |
 
 ### TabBox
 
-A tabbed container. Panes are the children; the buttons show and hide them by a
-shared class.
+A tabbed container. Each child is one pane, paired with a label by position.
 
 | Prop | Type | Notes |
 |---|---|---|
-| `tabs` | `{ label, id }[]` | One per tab. `id` must match a pane's `id`. |
-| `tabClass` | `string` | Class every pane carries; the script toggles `display` on all of them. |
-
-The first tab is active on load, so **every pane after the first must start
-hidden** (`display: none`) — that is not automatic:
+| `tabs` | `string[]` | One label per pane, in pane order. |
 
 ```astro
-<TabBox
-  tabs={[
-    { label: "Square", id: "Square-Pseudo-Code" },
-    { label: "Circular", id: "Circular-Pseudo-Code" },
-  ]}
-  tabClass="pseudo-tab"
->
-  <Sample id="Square-Pseudo-Code" class="pseudo-tab" style="margin: 0;" is:raw>
+<TabBox tabs={["Square", "Circular"]}>
+  <Sample is:raw>
     …
   </Sample>
-  <Sample id="Circular-Pseudo-Code" class="pseudo-tab" style="margin: 0; display: none;" is:raw>
+  <Sample is:raw>
     …
   </Sample>
 </TabBox>
 ```
 
-A pane meeting the tab strip gets a square top-left corner from
-`.tab-button-container ~ .code-container > pre` in
-`css/components/_code-blocks.css` — no per-pane inline `border-radius` needed.
+The first pane shows on load; CSS hides the rest until the script runs, so
+panes need no `id`, shared class or inline `display: none`. The script adds the
+`tablist` / `tab` / `tabpanel` roles and `aria-selected`, supports arrow keys and
+Home/End, and only touches panes inside its own box — several TabBoxes can share
+a page. Panes lose their own margin and get a square top-left corner where they
+meet the tab strip; the tab styling is scoped to `TabBox.astro`.
 
 ### C
 
@@ -792,7 +784,7 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 |---|---|
 | Code loses its indentation, or `{x}` / `<T>` vanish | Plain children — add `is:raw` ([§3](#the-indentation-gotcha)) |
 | Build fails: "Language … not found" | `language` isn't a Shiki language id |
-| All TabBox panes visible at once | Panes after the first need `display: none` |
+| A TabBox tab shows the wrong pane, or none | `tabs` labels and child panes are out of step: one child per label, in order |
 | LaTeX shows up in search results | Display math not wrapped in `<E>` |
 | Backslashes vanish from an equation | LaTeX passed as a quoted attribute instead of `{tex`…`}` |
 | Build fails: "Entry metadata not found" | Page's path doesn't match any `link` in `pages.json` |
