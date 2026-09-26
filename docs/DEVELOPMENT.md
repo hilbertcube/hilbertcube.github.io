@@ -306,6 +306,11 @@ Two things specific to this guide:
   `<pubDate>` and the on-page date (formatted by `src/utils/formatDate.ts`).
   `new-article.sh` sets it; if you hand-edit `pages.json`, add it yourself or
   the entry fails the schema check.
+- The sitemap (`dist/sitemap-index.xml` → `sitemap-0.xml`) is built by
+  `@astrojs/sitemap` in `astro.config.mjs` from every generated page, so new
+  pages join it automatically. `/template/` and `/test/` are filtered out there;
+  add a pattern to that filter for any other page that shouldn't be indexed.
+  `public/robots.txt` points crawlers at it.
 - Commit with `./scripts/commit.sh "message"` — it pulls `main`, stages
   everything, commits and pushes.
 
