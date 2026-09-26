@@ -11,7 +11,7 @@ import Footer from "@components/site/Footer.astro";
 import HighlightsAndAttribute from "@components/site/HighlightsAndAttribute.astro";
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import TableOfContents from "@components/article/TableOfContents.astro";
-import { extractToc, type TocOptions } from "@utils/toc";
+import { assignSectionIds, extractToc, type TocOptions } from "@utils/toc";
 import { codeThemeCss } from "@utils/codeThemes";
 
 
@@ -26,7 +26,7 @@ interface Props {
   activeButton?: string;
   /**
    * Sidebar Table of Contents, built from this page's own markup: every
-   * `<h2>`–`<h4>` that sits in (or carries) an `id` becomes an entry, so adding
+   * `<h2>`–`<h4>` in a `<section>` becomes an entry (ids are generated), so adding
    * a section to the page is all it takes to add it to the TOC. Pass `true` for
    * the defaults, or an options object (e.g. `toc={{ maxLevel: 3 }}`).
    * See src/utils/toc.ts for label overrides and skipping.
@@ -49,9 +49,11 @@ const tex = String.raw;
 // TOC can be derived from the finished HTML before the sidebar is emitted. The
 // body is then injected as markup, which is fine for this site because every
 // page is static HTML — a hydrated island (`client:*`) would not survive it.
-const body = Astro.slots.has("default")
-  ? await Astro.slots.render("default")
-  : "";
+// Sections get their ids here too, from their headings, so pages never write
+// them; search deep links need them even on pages without a TOC.
+const body = assignSectionIds(
+  Astro.slots.has("default") ? await Astro.slots.render("default") : "",
+);
 const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
 ---
 

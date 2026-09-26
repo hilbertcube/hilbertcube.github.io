@@ -11,8 +11,9 @@
  *
  *   1. an `id` on the heading itself   -> `<h2 id="books">Books</h2>`
  *   2. otherwise, the `id` of the innermost enclosing `<section>` that no
- *      earlier heading has already claimed:
- *          <section id="analysis"><h2>Data Analysis</h2> ...
+ *      earlier heading has already claimed. Pages don't write these:
+ *      assignSectionIds() below generates them from the headings first.
+ *          <section><h2>Data Analysis</h2> ...  -> #data-analysis
  *
  * A heading with no anchor is skipped: a TOC row that can't be linked is dead
  * weight. Nesting follows heading level (h3 nests under the preceding h2), not
@@ -80,6 +81,82 @@ export function headingText(html: string): string {
     .replace(/&([a-z]+);/gi, (m, name) => ENTITIES[name.toLowerCase()] ?? m)
     .replace(/\s+/g, " ")
     .trim();
+}
+
+/** Heading text -> URL fragment: "Chladni's Law" -> "chladnis-law". */
+export function slugify(text: string): string {
+  return text
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Gives every `<section>` without an `id` one derived from its label, so pages
+ * never write section ids by hand. The label is the section's `data-toc` text
+ * (unless "skip"), otherwise its first heading. A section with neither is left
+ * alone. Ids already in the page (or handed out earlier) are never reused:
+ * a clash gets `-2`, `-3`, … An `id` written in the markup still wins.
+ *
+ * Runs before `extractToc()`, so the TOC, the highlighter and Pagefind's
+ * section anchors all see the generated ids.
+ */
+export function assignSectionIds(html: string): string {
+  const comments: [number, number][] = [];
+  for (const m of html.matchAll(/<!--[\s\S]*?-->/g)) {
+    comments.push([m.index!, m.index! + m[0].length]);
+  }
+  const inComment = (i: number) => comments.some(([a, b]) => i >= a && i < b);
+
+  const taken = new Set<string>();
+  for (const m of html.matchAll(/\sid\s*=\s*["']([^"']+)["']/gi)) {
+    taken.add(m[1]);
+  }
+  const unique = (base: string) => {
+    let id = base;
+    for (let n = 2; taken.has(id); n++) id = `${base}-${n}`;
+    taken.add(id);
+    return id;
+  };
+
+  /** Open sections still waiting for an id: where to write it. */
+  const stack: { insertAt: number; pending: boolean }[] = [];
+  const inserts: [number, string][] = [];
+  const give = (insertAt: number, label: string) => {
+    const base = slugify(label);
+    if (!base) return false;
+    inserts.push([insertAt, ` id="${unique(base)}"`]);
+    return true;
+  };
+
+  TOKEN.lastIndex = 0;
+  let token: RegExpExecArray | null;
+  while ((token = TOKEN.exec(html)) !== null) {
+    if (inComment(token.index)) continue;
+    const [, sectionAttrs, tag, , inner] = token;
+
+    if (sectionAttrs !== undefined) {
+      const insertAt = token.index + "<section".length;
+      let pending = attr(sectionAttrs, "id") === null;
+      const toc = attr(sectionAttrs, "data-toc");
+      if (pending && toc && toc !== "skip") pending = !give(insertAt, toc);
+      stack.push({ insertAt, pending });
+    } else if (!tag) {
+      stack.pop(); // `</section>`
+    } else {
+      const open = stack[stack.length - 1];
+      if (open?.pending) open.pending = !give(open.insertAt, headingText(inner));
+    }
+  }
+
+  let out = html;
+  for (const [at, text] of inserts.sort((a, b) => b[0] - a[0])) {
+    out = out.slice(0, at) + text + out.slice(at);
+  }
+  return out;
 }
 
 /**

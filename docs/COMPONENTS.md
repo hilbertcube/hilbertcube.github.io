@@ -762,7 +762,7 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
       <FrontImage src="/articles/<slug>/banner.webp" />
     </header>
 
-    <section id="intro">
+    <section>
       <h2>Introduction</h2>
       <p>Inline math like $x^2$ is fine in prose, and <C>--flag</C> is inline code.</p>
       <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>

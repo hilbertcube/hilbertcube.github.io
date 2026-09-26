@@ -120,8 +120,9 @@ reference them as `/articles/<slug>/<file>.webp` through `<Figure>`.
 **Page conventions** beyond the components themselves:
 
 - Wrap the body in a single `<div class="content-grid">`.
-- Give each `<section>` an `id` — that is what the Table of Contents anchors to
-  (§3.1) and what search results deep-link into.
+- Don't give `<section>`s an `id`: the build generates one from each section's
+  heading (§3.1), and that is what the Table of Contents and search deep links
+  anchor to.
 - Page-specific CSS goes in the `head` slot; page-specific scripts (rare) in the
   `scripts` slot.
 
@@ -131,17 +132,26 @@ Pass `toc` to `BaseLayout` and the sidebar TOC is built from the page's own
 markup at build time, so adding a section is all it takes to add an entry —
 there is no list to keep in sync.
 
-Every `<h2>`–`<h4>` becomes an entry, anchored to its own `id` or to the `id` of
-the innermost enclosing `<section>` that no earlier heading has claimed. **A
-heading with no anchor is skipped** — a TOC row that can't be linked is dead
-weight. Nesting follows heading level (`<h3>` under the preceding `<h2>`), not
-`<section>` nesting.
+Section ids are generated, not written. Before the TOC is built, `BaseLayout`
+runs `assignSectionIds()` over the page body: every `<section>` without an `id`
+gets one from its `data-toc` label, or else its first heading — lowercased, with
+runs of other characters turned into `-` ("Chladni's Law" → `chladnis-law`). A
+clash within the page gets `-2`, `-3`, …, and an `id` written in the markup still
+wins. The consequence: **rewording a heading changes its `#fragment`**, and any
+`href="#…"` pointing at it must follow.
+
+Every `<h2>`–`<h4>` then becomes an entry, anchored to its own `id` or to the
+`id` of the innermost enclosing `<section>` that no earlier heading has claimed.
+A heading with no anchor (one outside any section) is skipped. Nesting follows
+heading level (`<h3>` under the preceding `<h2>`), not `<section>` nesting.
 
 ```astro
 <BaseLayout title="…" toc>            <!-- h2–h4; toc={{ maxLevel: 3 }} to stop at h3 -->
-  <section id="analysis">
-    <h2>Data Analysis</h2>            <!-- → "Data Analysis" → #analysis -->
-    <h3 id="graph">Linearity</h3>     <!-- → nested "Linearity" → #graph -->
+  <section>
+    <h2>Data Analysis</h2>            <!-- → "Data Analysis" → #data-analysis -->
+    <section>
+      <h3>Linearity</h3>              <!-- → nested "Linearity" → #linearity -->
+    </section>
   </section>
 </BaseLayout>
 ```
@@ -323,7 +333,7 @@ Two things specific to this guide:
 - [ ] Bring the scaffolded page up to date (§3) — aliases, `getEntryMeta`,
       header components, drop the MathJax script and the duplicate "More Articles"
 - [ ] Write content; images in `public/articles/<slug>/`, placed with `<Figure>`
-- [ ] Every `<section>` has an `id`; display math wrapped in `<E>`
+- [ ] Every section has a heading (or `data-toc`); display math wrapped in `<E>`
 - [ ] `npm run dev` to write; `npm run build && npm run preview` to verify search
       and the final render
 - [ ] `./scripts/commit.sh "Add: <title>"`

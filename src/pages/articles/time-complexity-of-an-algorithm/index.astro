@@ -59,10 +59,10 @@ import Table from "@components/article/Table.astro";
       />
     </header>
 
-    <section id="introduction">
+    <section>
       <h2>Introduction</h2>
 
-      <section id="compare-efficiency">
+      <section>
         <h3>What is the Best Way to Compare Algorithms' Efficiency?</h3>
         <p>
           Given two algorithms that perform the same task, what is the best way
@@ -103,7 +103,7 @@ import Table from "@components/article/Table.astro";
         </p>
       </section>
 
-      <section id="big-o-omega-theta">
+      <section>
         <h3>The Big O, Big Omega, Big Theta, and Their Properties</h3>
         <p>
           Merge sort splits the input array into halves, recursively sorts both
@@ -118,7 +118,7 @@ import Table from "@components/article/Table.astro";
           $\Theta(n)$.
         </p>
 
-        <section id="big-o">
+        <section>
           <h4>The Big O Notation</h4>
           <div class="definition" data-definition-name=". The Big O">
             Let $f$ and $g$ be real-valued and not necessarily continuous
@@ -149,7 +149,7 @@ import Table from "@components/article/Table.astro";
           n)$ stack space.
         </p>
 
-        <section id="big-omega">
+        <section>
           <h4>The Big Omega Notation</h4>
           <div class="definition" data-definition-name=". The Big Omega">
             Big Omega provides a lower bound on the growth of a function. We say
@@ -175,7 +175,7 @@ import Table from "@components/article/Table.astro";
           $\Theta(V+E)$ for adjacency lists.
         </p>
 
-        <section id="big-theta">
+        <section>
           <h4>The Big Theta Notation</h4>
           <div class="definition" data-definition-name=". The Big Theta">
             Big Theta describes a tight bound on the growth of a function. We
@@ -212,7 +212,7 @@ import Table from "@components/article/Table.astro";
           $\Theta(E+V\log V)$.
         </p>
 
-        <section id="useful-properties">
+        <section>
           <h4>Useful Properties</h4>
           <ul style="line-height: 1.6;">
             <li>
@@ -241,7 +241,7 @@ import Table from "@components/article/Table.astro";
           </ul>
         </section>
 
-        <section id="master-theorem">
+        <section>
           <h4>The Master Theorem</h4>
           <p>
             Many divide-and-conquer algorithms lead to recurrences of the form
@@ -273,7 +273,7 @@ import Table from "@components/article/Table.astro";
 
     </section>
     
-    <section id="runtime-analysis">
+    <section>
       <h2>Runtime Analysis of an Algorithm</h2>
       <p>
         Quoting a running time is not the same as proving one. A complete
@@ -305,7 +305,7 @@ import Table from "@components/article/Table.astro";
         constant is hidden that could not be written down.
       </p>
 
-      <section id="cost-model">
+      <section>
         <h3>Preliminaries: The Cost Model</h3>
         <div class="definition" data-definition-name=" (The RAM model)">
           The <em>random-access machine</em> (RAM) has an unbounded sequence
@@ -393,7 +393,7 @@ import Table from "@components/article/Table.astro";
         </Proof>
       </section>
 
-      <!-- <section id="example-merge-sort">
+      <!-- <section>
         <h3>Example 1: Merge Sort</h3>
         <p>
           We analyze the following standard formulation, which sorts the
@@ -667,7 +667,7 @@ Merge(A, p, q, r)
         </p>
       </section> -->
 
-      <section id="example-binary-search">
+      <section>
         <h3>Example 1: Binary Search</h3>
         <p>
           Binary search looks for a key $x$ in a sorted array
@@ -871,7 +871,7 @@ Merge(A, p, q, r)
         </p>
       </section>
 
-      <section id="example-topological-sort">
+      <section>
         <h3>Example 2: Topological Sort</h3>
         <p>
           Let $G = (V,E)$ be a directed graph given by adjacency lists, and
@@ -1076,7 +1076,7 @@ Merge(A, p, q, r)
         </p>
       </section>
 
-      <section id="example-dijkstra">
+      <section>
         <h3>Example 3: Dijkstra's Algorithm</h3>
         <p>
           Dijkstra's algorithm computes single-source shortest paths in a
@@ -1308,7 +1308,7 @@ Merge(A, p, q, r)
       </section>
     </section>
 
-    <section id="fundamental-functions">
+    <section>
       <h2>The Fundamental Functions of Algorithmic Analysis</h2>
       <p>
         Almost every running time met in practice is one of a dozen or so
@@ -1518,7 +1518,7 @@ Merge(A, p, q, r)
       </Table>
     </section>
 
-    <section id="references">
+    <section>
       <h2>References</h2>
       <ol class="reference">
         <li>
