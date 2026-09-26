@@ -31,8 +31,7 @@ import Table from "@components/article/Table.astro";
       author="Brian W. Kernighan"
     />
 
-  <section id="introduction">
-
+  <section>
     <h2 >Introduction</h2>
 
     <p>
@@ -48,7 +47,7 @@ import Table from "@components/article/Table.astro";
     </p>
   </section>
 
-  <section id="how-valgrind-works">
+  <section>
 
     <h2>How Valgrind Works: Dynamic Binary Instrumentation</h2>
   
@@ -65,7 +64,7 @@ import Table from "@components/article/Table.astro";
     </p>
   </section>
 
-  <section id="installation">
+  <section>
 
     <h2>Installation and Compilation</h2>
 
@@ -79,7 +78,7 @@ import Table from "@components/article/Table.astro";
 
     <p>On Windows: Valgrind is not available on Windows.</p>
 
-    <section id="compiling-for-valgrind">
+    <section>
 
       <h3>Compiling for Valgrind</h3>
   
@@ -99,7 +98,7 @@ import Table from "@components/article/Table.astro";
     </section>
   </section>
 
-  <section id="memcheck">
+  <section>
     <h2 >Memcheck: Finding Memory Errors</h2>
 
     <p>
@@ -139,7 +138,7 @@ import Table from "@components/article/Table.astro";
     </ul>
   </section>
 
-  <section id="shadow-memory">
+  <section>
 
     <h2>How Memcheck Knows: Shadow Memory</h2>
 
@@ -165,7 +164,7 @@ import Table from "@components/article/Table.astro";
     </p>
   </section>
 
-  <section id="memory-leaks">
+  <section>
 
     <h2 >Memory Leaks</h2>
 
@@ -238,7 +237,7 @@ import Table from "@components/article/Table.astro";
       The number in <C>==18423==</C> is the process ID. Valgrind tells us exactly where the leaked allocation originated: line 6 of <C>leak.cpp</C>, the <C>malloc</C> call. With larger programs and deeper call stacks, this stack trace is what makes finding leaks tractable.
     </p>
 
-    <section id="indirect-leaks">
+    <section>
     <h3>Indirect Leaks: An Example</h3>
 
     <p>
@@ -289,7 +288,7 @@ import Table from "@components/article/Table.astro";
     </section>
   </section>
 
-  <section id="invalid-access">
+  <section>
 
     <h2>Invalid Heap Reads, Invalid Writes, and Use-After-Free</h2>
 
@@ -297,7 +296,7 @@ import Table from "@components/article/Table.astro";
       These three error types are arguably more dangerous than leaks because they cause undefined behavior with immediate consequences: silent data corruption, incorrect program output, or crashes that appear in completely unrelated code far from the actual bug site.
     </p>
 
-    <section id="heap-buffer-overflow">
+    <section>
 
       <h3>Heap Buffer Overflow</h3>
   
@@ -341,7 +340,7 @@ import Table from "@components/article/Table.astro";
       </p>
     </section>
 
-    <section id="use-after-free">
+    <section>
 
       <h3 >Use-After-Free</h3>
   
@@ -392,7 +391,7 @@ import Table from "@components/article/Table.astro";
     </section>
   </section>
 
-  <section id="uninitialized-reads">
+  <section>
 
     <h2>Use of Uninitialized Memory</h2>
   
@@ -445,7 +444,7 @@ import Table from "@components/article/Table.astro";
     </p>
   </section>
 
-  <section id="double-free">
+  <section>
     <h2>Double Free and Mismatched Deallocation</h2>
   
     <p>
@@ -495,7 +494,7 @@ import Table from "@components/article/Table.astro";
     </CodeBlock>
   </section>
 
-  <section id="callgrind">
+  <section>
     <h2>Callgrind: Call-Graph and Cache Profiling</h2>
 
     <p>
@@ -530,7 +529,7 @@ import Table from "@components/article/Table.astro";
       Callgrind does not measure wall-clock time. It measures instruction counts, which are a proxy for CPU time for compute-bound code. For I/O-bound or synchronization-heavy code, instruction counts are less meaningful - use <C>perf</C> or <C>gprof</C> with real-time sampling instead.
     </p>
 
-    <section id="kcachegrind">
+    <section>
       <h3>Visualizing with KCacheGrind</h3>
   
       <p>
@@ -558,7 +557,7 @@ import Table from "@components/article/Table.astro";
       </p>
     </section>
 
-    <section id="command-line-annotation">
+    <section>
       <h3>Command-Line Annotation</h3>
   
       <p>
@@ -572,7 +571,7 @@ import Table from "@components/article/Table.astro";
       </p>
     </section>
 
-    <section id="profiling-a-region">
+    <section>
       <h3>Profiling a Specific Region</h3>
   
       <p>
@@ -592,7 +591,7 @@ import Table from "@components/article/Table.astro";
     </section>
   </section>
 
-  <section id="massif">
+  <section>
     <h2>Massif: Heap Memory Profiling</h2>
   
     <p>
@@ -617,7 +616,7 @@ import Table from "@components/article/Table.astro";
       <li><C>--detailed-freq=N</C> - take a "detailed" snapshot (with full allocation trees) every N snapshots. The default is 10.</li>
     </ul>
   
-    <section id="reading-ms-print">
+    <section>
       <h3>Reading ms_print Output</h3>
   
       <ShellScript is:raw>ms_print massif.out.12345 | less</ShellScript>
@@ -661,11 +660,11 @@ import Table from "@components/article/Table.astro";
     </section>
   </section>
 
-  <section id="appendix">
+  <section>
 
     <h2 >Appendix</h2>
 
-    <section id="suppression-files">
+    <section>
 <h3>Suppression Files</h3>
 
     <p>
@@ -698,7 +697,7 @@ import Table from "@components/article/Table.astro";
     </CodeBlock>
     </section>
 
-    <section id="valgrind-vs-asan">
+    <section>
 
       <h3>Valgrind vs. AddressSanitizer</h3>
   
@@ -763,7 +762,7 @@ import Table from "@components/article/Table.astro";
       </p>
     </section>
 
-    <section id="quick-reference">
+    <section>
       <h3>Quick Reference</h3>
   
       <Table>
@@ -810,7 +809,7 @@ import Table from "@components/article/Table.astro";
     </section>
   </section>
 
-  <section id="references">
+  <section>
     <h2>References</h2>
 
     <ol class="reference">

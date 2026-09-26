@@ -43,9 +43,9 @@ import Table from "@components/article/Table.astro";
       />
     </header>
 
-    <section id="Introduction">
+    <section>
       <h2>Introduction</h2>
-      <section id="Background">
+      <section>
         <h3>Background and Mathematical Formulation</h3>
         <p>
           Take a solid metal plate (or any other rigid material) and sprinkle
@@ -99,7 +99,7 @@ import Table from "@components/article/Table.astro";
               loading="lazy"
             >
               Motion of a vibrating metal plate (greatly exagerated). <a
-                href="#Appendix"
+                href="#appendix"
                 class="in-page-link">Source code</a
               >
             </Figure>
@@ -118,7 +118,7 @@ import Table from "@components/article/Table.astro";
         </p>
         <E>{tex`\begin{equation} \nabla^2 := \secondpd{}{r}+\frac{1}{r}\pd{}{r}+\frac{1}{r^2}\secondpd{}{\theta}. \end{equation}`}</E>
         <p>
-          In the next <a href="#The-Wave-Equation-Model" class="in-page-link"
+          In the next <a href="#the-wave-equation-model" class="in-page-link"
             >grand section</a
           >, we will discuss the simulation process of this model on the square
           and circular domain, and to discuss the flaws of this model (lots of
@@ -126,7 +126,7 @@ import Table from "@components/article/Table.astro";
           this project is to simulate Chladni patterns, prove that the wave
           speed is constant, and validate Chladni's law (see the section <a
             class="in-page-link"
-            href="#Chladni-law">Chladni's Law</a
+            href="#chladnis-law">Chladni's Law</a
           > below). For a much more detailed explanation, please refer to my <a
             href="https://www.overleaf.com/read/tgchjdcmwwwp#98e984"
             >project report</a
@@ -136,7 +136,7 @@ import Table from "@components/article/Table.astro";
         </p>
       </section>
 
-      <section id="Historical-notes">
+      <section>
         <h3>Read more: Historical Notes</h3>
         <TwoColumns>
           <div>
@@ -163,7 +163,7 @@ import Table from "@components/article/Table.astro";
               the circular plate. This formula is later proven true by Kirchoff
               and Rayleigh.
             </p>
-            <section id="Chladni-law">
+            <section>
               <h4>Chladni's Law</h4>
               <p>
                 Part of the formula states that the vibrating frequency is
@@ -204,9 +204,9 @@ import Table from "@components/article/Table.astro";
       </section>
     </section>
 
-    <section id="The-Wave-Equation-Model">
+    <section>
       <h2>The Wave Equation Model</h2>
-      <section id="general-model">
+      <section>
         <h3>The general model and the boundary condition</h3>
         <p>
           Depends on whether you clamp your edge or not, clamp the edge
@@ -253,7 +253,7 @@ import Table from "@components/article/Table.astro";
         <E>{tex`\begin{equation} u(x,y,0) = f(x,y) \quad\text{and}\quad u_t(x,y,0) = g(x,y) \end{equation}`}</E>
       </section>
 
-      <section id="wave-square-plate">
+      <section>
         <h3>The Square Plate</h3>
         <p>
           Consider the wave equation on a rectangle $\Omega =
@@ -328,7 +328,7 @@ import Table from "@components/article/Table.astro";
         <E>{tex`\begin{equation} q_{nm}(\tau)=\frac{4\alpha}{L^2} \cos(\omega_0 \tau) \iint_{U(r)}X_n(x)Y_m(y)\;dx dy,\quad U(r)=\{(x,y)\in\R^2\;|\; x^2+y^2\leq r^2\} \end{equation}`}</E>
       </section>
 
-      <section id="wave-circular-plate">
+      <section>
         <h3>The Circular Plate</h3>
         <p>
           Consider the polar wave equation on a disk $\Omega =
@@ -358,10 +358,10 @@ import Table from "@components/article/Table.astro";
       </section>
     </section>
 
-    <section id="algorithm-design">
+    <section>
       <h2>Designing the Plotting Algorithms</h2>
 
-      <section id="square-algorithm">
+      <section>
         <h3>Algorithm for the Square Plate</h3>
 
         <p>
@@ -533,7 +533,7 @@ import Table from "@components/article/Table.astro";
         </div>
       </section>
 
-      <section id="circular-algorithm">
+      <section>
         <h3>Algorithm for the Circular Plate</h3>
         <p>
           The circular plate is a bit easier, since we don't need to design an
@@ -637,9 +637,9 @@ import Table from "@components/article/Table.astro";
       </section>
     </section>
 
-    <section id="Appendix">
+    <section>
       <h2>Appendix</h2>
-      <section id="animation-code">
+      <section>
         <h3>Animation Code</h3>
 
         <CodeBox language="python" lineNumbers is:raw>
@@ -715,7 +715,7 @@ import Table from "@components/article/Table.astro";
       </section>
     </section>
 
-    <section id="References">
+    <section>
       <h2>References</h2>
       <ol class="reference">
         <li>

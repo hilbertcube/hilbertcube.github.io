@@ -144,7 +144,7 @@
   "Section": {
     "scope": "astro",
     "prefix": "section",
-    "body": ["<section id=\"$1\">", "  <h2>$2</h2>", "  $0", "</section>"],
-    "description": "Page section — the id is what the TOC and search anchor to"
+    "body": ["<section>", "  <h2>$1</h2>", "  $0", "</section>"],
+    "description": "Page section — its id is generated from the heading at build time"
   }
 }

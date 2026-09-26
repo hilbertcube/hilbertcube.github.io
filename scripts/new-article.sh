@@ -186,8 +186,8 @@ import ArticleCards from "../../../components/listings/ArticleCards.astro";
       <div class="date"></div>
     </header>
 
-    <section id="section-1">
-      <h2 >Section 1</h2>
+    <section>
+      <h2>Section 1</h2>
       <p>Write your content here.</p>
     </section>
 
@@ -251,10 +251,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     </header>
 
     <section>
-      <section id="section-1">
-        <h2 >Section 1</h2>
-        <p>Write your content here.</p>
-      </section>
+      <h2>Section 1</h2>
+      <p>Write your content here.</p>
     </section>
   </div>
 </BaseLayout>

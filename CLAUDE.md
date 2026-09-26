@@ -117,8 +117,10 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
 
 - **Always import through the path aliases** (`@layouts`, `@components`, `@utils`, `@data`,
   `@assets` — see `tsconfig.json`), never relative paths.
-- Wrap a page body in a single `<div class="content-grid">`; give every `<section>` an `id`
-  (the TOC anchors to it and search results deep-link into it).
+- Wrap a page body in a single `<div class="content-grid">`. Don't write `id`s on `<section>`s:
+  `BaseLayout` generates one at build time from each section's heading (or `data-toc` label)
+  via `assignSectionIds()` in `src/utils/toc.ts` — "Data Analysis" → `#data-analysis`. The TOC
+  and search deep links anchor to those, so rewording a heading changes its URL fragment.
 - Body images go through `<Figure>` (files in `public/articles/<slug>/`), banners through
   `<FrontImage>`. Don't hand-roll `<img>` sizing.
 - Tables go through `<Table>`, which emits the `.table-wrapper` / `.p-table` pair — a
