@@ -30,6 +30,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Sep 2026:** Code blocks can now be indented to match the page (`is:raw`), with `<` and `{` written as-is instead of escaped.
 - **Sep 2026:** Replaced Prism.js with build-time Shiki highlighting: no highlighting scripts or CDN requests, and code themes now switch instantly without a reload.
 - **Sep 2026:** Moved the image lightbox to yet-another-react-lightbox, loaded only on the first image click
 - **Sep 2026:** Added a `<Table>` component that renders the scrollable wrapper and the table together, and moved the table styling out of the global CSS into it.

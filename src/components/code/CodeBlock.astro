@@ -8,8 +8,14 @@
  * Props
  * -----
  * - language : Shiki language id (default: "bash"); an unknown one fails the build
- * - code     : the listing, instead of slot children. Use `code={raw`…`}`
- *              when the first line is indented or the listing contains `<`/`{`.
+ * - code     : the listing as a string, instead of slot children
+ *
+ * Write the listing with `is:raw`, indented to match the page; `<` and `{` are
+ * literal inside it, and the shared indentation is stripped:
+ *
+ *   <CodeBlock language="cpp" is:raw>
+ *     #include <cstdlib>
+ *   </CodeBlock>
  */
 
 import CopyButton from "@components/code/CopyButton.astro";

@@ -80,14 +80,15 @@ import CodeBlock from "@components/code/CodeBlock.astro";
                 <span style="text-decoration: underline">settings.json</span>. I
                 also use an indentation of 2 spaces instead of 4 when writing
                 web projects.
-<CodeBlock language="json">&#123;
-  "emmet.includeLanguages": &#123;
-      "javascript": "javascriptreact"
-  &#125;,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": false
-&#125;
+                <CodeBlock language="json" is:raw>
+                  {
+                    "emmet.includeLanguages": {
+                        "javascript": "javascriptreact"
+                    },
+                    "editor.tabSize": 2,
+                    "editor.insertSpaces": true,
+                    "editor.detectIndentation": false
+                  }
                 </CodeBlock>
               </li>
             </ul>
@@ -107,20 +108,22 @@ import CodeBlock from "@components/code/CodeBlock.astro";
                 <span style="text-decoration: underline">settings.json</span>.
                 This is my ideal setting:
 
-<CodeBlock language="json">"indentRainbow.colors": [
-    "rgba(255,255,64,0.3)",
-    "rgba(127,255,127,0.3)",
-    "rgba(255,127,255,0.3)",
-    "rgba(79,236,236,0.3)"
-  ],
-  "indentRainbow.indicatorStyle": "light",
-  "editor.guides.bracketPairs": "active",
-  "indentRainbow.excludedLanguages": [
-      "plaintext"
-  ],
-  "indentRainbow.lightIndicatorStyleLineWidth": 1,
-  "editor.renderWhitespace": "boundary",
-  "indentRainbow.errorColor": "rgba(128,32,32,0)",</CodeBlock>
+                <CodeBlock language="json" is:raw>
+                  "indentRainbow.colors": [
+                      "rgba(255,255,64,0.3)",
+                      "rgba(127,255,127,0.3)",
+                      "rgba(255,127,255,0.3)",
+                      "rgba(79,236,236,0.3)"
+                    ],
+                    "indentRainbow.indicatorStyle": "light",
+                    "editor.guides.bracketPairs": "active",
+                    "indentRainbow.excludedLanguages": [
+                        "plaintext"
+                    ],
+                    "indentRainbow.lightIndicatorStyleLineWidth": 1,
+                    "editor.renderWhitespace": "boundary",
+                    "indentRainbow.errorColor": "rgba(128,32,32,0)",
+                </CodeBlock>
               </li>
               <li class="bullet">
                 <a
@@ -175,13 +178,14 @@ import CodeBlock from "@components/code/CodeBlock.astro";
                 it's the most popular (and best?) tool we have. These extensions
                 help me write CMake more efficiently, since they rebuild
                 everything every time I made changes to my CMake script.
-<CodeBlock language="cmake">cmake_minimum_required(VERSION 3.18) 
-project(FMT_test CXX)
-set(CMAKE_CXX_STANDARD 17) 
-find_package(fmt CONFIG REQUIRED)
-add_executable(main main.cpp) 
-target_link_libraries(main PRIVATE fmt::fmt)
-</CodeBlock>
+                <CodeBlock language="cmake" is:raw>
+                  cmake_minimum_required(VERSION 3.18) 
+                  project(FMT_test CXX)
+                  set(CMAKE_CXX_STANDARD 17) 
+                  find_package(fmt CONFIG REQUIRED)
+                  add_executable(main main.cpp) 
+                  target_link_libraries(main PRIVATE fmt::fmt)
+                </CodeBlock>
                 Test the extension with the script above for the
                 <a href="https://github.com/fmtlib/fmt" class="url">FMT</a>
                 library.

@@ -71,11 +71,11 @@ import Table from "@components/article/Table.astro";
 
     <p>On Debian/Ubuntu:</p>
 
-    <ShellScript>sudo apt install valgrind</ShellScript>
+    <ShellScript is:raw>sudo apt install valgrind</ShellScript>
 
     <p>On Arch/Manjaro:</p>
 
-    <ShellScript>sudo pacman -S valgrind</ShellScript>
+    <ShellScript is:raw>sudo pacman -S valgrind</ShellScript>
 
     <p>On Windows: Valgrind is not available on Windows.</p>
 
@@ -91,7 +91,7 @@ import Table from "@components/article/Table.astro";
         You should also disable or reduce optimizations. With <C>-O2</C> or <C>-O3</C>, the compiler aggressively reorders, inlines, and eliminates code. The resulting binary may not have a meaningful correspondence to source lines, and some bugs may be hidden because the optimizer happened to compile around them (or made them worse by reordering). Use <C>-O0</C> for the clearest output:
       </p>
   
-      <ShellScript>g++ -g -O0 -o my_program my_program.cpp</ShellScript>
+      <ShellScript is:raw>g++ -g -O0 -o my_program my_program.cpp</ShellScript>
   
       <p>
         If you need to test with optimizations enabled (for example, because a bug only manifests at <C>-O2</C>), use <C>-O1</C> as a compromise - it enables some optimizations but keeps the binary reasonably debuggable.
@@ -116,14 +116,16 @@ import Table from "@components/article/Table.astro";
 
     <p>Run Memcheck like this:</p>
 
-    <ShellScript>valgrind \
-  --tool=memcheck \
-  --leak-check=full \
-  --show-leak-kinds=all \
-  --track-origins=yes \
-  --verbose \
-  --error-exitcode=1 \
-  ./my_program</ShellScript>
+    <ShellScript is:raw>
+      valgrind \
+        --tool=memcheck \
+        --leak-check=full \
+        --show-leak-kinds=all \
+        --track-origins=yes \
+        --verbose \
+        --error-exitcode=1 \
+        ./my_program
+    </ShellScript>
 
     <p>Flag-by-flag breakdown:</p>
 
@@ -192,39 +194,45 @@ import Table from "@components/article/Table.astro";
 
     <p>Here is a minimal program with a definite leak:</p>
 
-    <CodeBlock language="cpp">#include &lt;cstdlib&gt;
-#include &lt;cstdio&gt;
+    <CodeBlock language="cpp" is:raw>
+      #include <cstdlib>
+      #include <cstdio>
 
-int main() &#123;
-    // Allocate an array of 10 ints on the heap.
-    int* arr = (int*)malloc(10 * sizeof(int));
-    arr[0] = 42;
+      int main() {
+          // Allocate an array of 10 ints on the heap.
+          int* arr = (int*)malloc(10 * sizeof(int));
+          arr[0] = 42;
 
-    // We return without calling free(arr).
-    // Once main() returns, the pointer 'arr' goes out of scope.
-    // The 40 bytes are now unreachable.
-    return 0;
-&#125;</CodeBlock>
+          // We return without calling free(arr).
+          // Once main() returns, the pointer 'arr' goes out of scope.
+          // The 40 bytes are now unreachable.
+          return 0;
+      }
+    </CodeBlock>
 
     <p>
       Compile and run under Valgrind:
     </p>
 
-    <ShellScript>g++ -g -O0 -o leak leak.cpp
-valgrind --leak-check=full --show-leak-kinds=all ./leak</ShellScript>
+    <ShellScript is:raw>
+      g++ -g -O0 -o leak leak.cpp
+      valgrind --leak-check=full --show-leak-kinds=all ./leak
+    </ShellScript>
 
     <p>Output (abbreviated):</p>
 
-    <CodeBlock language="bash">==18423== 40 bytes in 1 blocks are definitely lost in loss record 1 of 1
-==18423==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-==18423==    at 0x401176: main (leak.cpp:6)
-==18423==
-==18423== LEAK SUMMARY:
-==18423==    definitely lost: 40 bytes in 1 blocks
-==18423==    indirectly lost: 0 bytes in 0 blocks
-==18423==      possibly lost: 0 bytes in 0 blocks
-==18423==    still reachable: 0 bytes in 0 blocks
-==18423==         suppressed: 0 bytes in 0 blocks</CodeBlock>
+    <CodeBlock language="bash" is:raw>
+      ==18423== 40 bytes in 1 blocks are definitely lost in loss record 1 of 1
+      ==18423==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+      ==18423==    at 0x401176: main (leak.cpp:6)
+      ==18423==
+      ==18423== LEAK SUMMARY:
+      ==18423==    definitely lost: 40 bytes in 1 blocks
+      ==18423==    indirectly lost: 0 bytes in 0 blocks
+      ==18423==      possibly lost: 0 bytes in 0 blocks
+      ==18423==    still reachable: 0 bytes in 0 blocks
+      ==18423==         suppressed: 0 bytes in 0 blocks
+    </CodeBlock>
 
     <p>
       The number in <C>==18423==</C> is the process ID. Valgrind tells us exactly where the leaked allocation originated: line 6 of <C>leak.cpp</C>, the <C>malloc</C> call. With larger programs and deeper call stacks, this stack trace is what makes finding leaks tractable.
@@ -237,39 +245,43 @@ valgrind --leak-check=full --show-leak-kinds=all ./leak</ShellScript>
       To see indirect leaks, consider a simple singly-linked list where we forget to free the head:
     </p>
 
-    <CodeBlock language="cpp">#include &lt;cstdlib&gt;
+    <CodeBlock language="cpp" is:raw>
+      #include <cstdlib>
 
-struct Node &#123;
-    int val;
-    Node* next;
-&#125;;
+      struct Node {
+          int val;
+          Node* next;
+      };
 
-int main() &#123;
-    // Build a list: 1 -> 2 -> 3 -> nullptr
-    Node* head = (Node*)malloc(sizeof(Node));
-    head->val  = 1;
-    head->next = (Node*)malloc(sizeof(Node));
-    head->next->val  = 2;
-    head->next->next = (Node*)malloc(sizeof(Node));
-    head->next->next->val  = 3;
-    head->next->next->next = nullptr;
+      int main() {
+          // Build a list: 1 -> 2 -> 3 -> nullptr
+          Node* head = (Node*)malloc(sizeof(Node));
+          head->val  = 1;
+          head->next = (Node*)malloc(sizeof(Node));
+          head->next->val  = 2;
+          head->next->next = (Node*)malloc(sizeof(Node));
+          head->next->next->val  = 3;
+          head->next->next->next = nullptr;
 
-    // We never free any of the nodes.
-    // 'head' goes out of scope on return.
-    return 0;
-&#125;</CodeBlock>
+          // We never free any of the nodes.
+          // 'head' goes out of scope on return.
+          return 0;
+      }
+    </CodeBlock>
 
     <p>Valgrind reports:</p>
 
-    <CodeBlock language="bash">==18424== 16 bytes in 1 blocks are definitely lost in loss record 1 of 3
-==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-==18424==    at 0x401188: main (list.cpp:10)    &lt;-- the head node
-==18424==
-==18424== 32 bytes in 2 blocks are indirectly lost in loss record 2 of 3
-==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-==18424==    at 0x4011B4: main (list.cpp:12)    &lt;-- node 2
-==18424==    ...
-==18424==    at 0x4011D8: main (list.cpp:15)    &lt;-- node 3</CodeBlock>
+    <CodeBlock language="bash" is:raw>
+      ==18424== 16 bytes in 1 blocks are definitely lost in loss record 1 of 3
+      ==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+      ==18424==    at 0x401188: main (list.cpp:10)    <-- the head node
+      ==18424==
+      ==18424== 32 bytes in 2 blocks are indirectly lost in loss record 2 of 3
+      ==18424==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+      ==18424==    at 0x4011B4: main (list.cpp:12)    <-- node 2
+      ==18424==    ...
+      ==18424==    at 0x4011D8: main (list.cpp:15)    <-- node 3
+    </CodeBlock>
 
     <p>
       Only the head is "definitely lost"; the other two nodes are "indirectly lost" because they are only reachable through the leaked head. This classification is useful: you should focus on fixing the "definitely lost" allocations first. The indirect ones typically disappear automatically.
@@ -293,28 +305,32 @@ int main() &#123;
         A heap buffer overflow occurs when you access memory beyond the end of an allocated block. The adjacent memory might belong to another allocation's header, another live object, or be unallocated. Writing to it silently corrupts state; reading from it produces garbage.
       </p>
   
-      <CodeBlock language="cpp">#include &lt;cstdlib&gt;
-#include &lt;cstdio&gt;
+      <CodeBlock language="cpp" is:raw>
+        #include <cstdlib>
+        #include <cstdio>
 
-int main() &#123;
-    int* buf = (int*)malloc(5 * sizeof(int));  // valid indices: 0..4
+        int main() {
+            int* buf = (int*)malloc(5 * sizeof(int));  // valid indices: 0..4
 
-    for (int i = 0; i &lt;= 5; i++) &#123;  // BUG: i == 5 is one past the end
-        buf[i] = i * 10;
-    &#125;
+            for (int i = 0; i <= 5; i++) {  // BUG: i == 5 is one past the end
+                buf[i] = i * 10;
+            }
 
-    printf("%d\n", buf[0]);
-    free(buf);
-    return 0;
-&#125;</CodeBlock>
+            printf("%d\n", buf[0]);
+            free(buf);
+            return 0;
+        }
+      </CodeBlock>
   
       <p>Valgrind catches the out-of-bounds write at <C>i == 5</C>:</p>
   
-      <CodeBlock language="bash">==19001== Invalid write of size 4
-==19001==    at 0x401185: main (overflow.cpp:7)
-==19001==  Address 0x5204054 is 0 bytes after a block of size 20 alloc'd
-==19001==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-==19001==    at 0x401166: main (overflow.cpp:4)</CodeBlock>
+      <CodeBlock language="bash" is:raw>
+        ==19001== Invalid write of size 4
+        ==19001==    at 0x401185: main (overflow.cpp:7)
+        ==19001==  Address 0x5204054 is 0 bytes after a block of size 20 alloc'd
+        ==19001==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+        ==19001==    at 0x401166: main (overflow.cpp:4)
+      </CodeBlock>
   
       <p>
         Valgrind tells us: the invalid write is at <C>overflow.cpp:7</C> (the <C>buf[i] = i * 10</C> line when <C>i == 5</C>), the address is <em>0 bytes after</em> the end of the block (so exactly one element off the end), and the block was allocated at <C>overflow.cpp:4</C>.
@@ -333,34 +349,38 @@ int main() &#123;
         Use-after-free (UAF) occurs when a pointer is used after the memory it points to has been freed. This is a particularly dangerous class of bug in long-running programs and a well-known attack vector: if an attacker can control what gets allocated in the freed region before it is used, they can potentially inject data into the program's execution.
       </p>
   
-      <CodeBlock language="cpp">#include &lt;cstdlib&gt;
-#include &lt;cstdio&gt;
+      <CodeBlock language="cpp" is:raw>
+        #include <cstdlib>
+        #include <cstdio>
 
-int main() &#123;
-    int* p = (int*)malloc(sizeof(int));
-    *p = 42;
+        int main() {
+            int* p = (int*)malloc(sizeof(int));
+            *p = 42;
 
-    free(p);       // p is now dangling
+            free(p);       // p is now dangling
 
-    *p = 99;       // BUG: write to freed memory
-    printf("%d\n", *p);  // BUG: read from freed memory
+            *p = 99;       // BUG: write to freed memory
+            printf("%d\n", *p);  // BUG: read from freed memory
 
-    return 0;
-&#125;</CodeBlock>
+            return 0;
+        }
+      </CodeBlock>
   
-      <CodeBlock language="bash">==19002== Invalid write of size 4
-==19002==    at 0x401185: main (uaf.cpp:9)
-==19002==  Address 0x5204040 is 0 bytes inside a block of size 4 free'd
-==19002==    at 0x484BB6F: free (vg_replace_malloc.c:872)
-==19002==    at 0x401180: main (uaf.cpp:7)
-==19002==  Block was alloc'd at
-==19002==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-==19002==    at 0x401166: main (uaf.cpp:4)
-==19002==
-==19002== Invalid read of size 4
-==19002==    at 0x40119A: main (uaf.cpp:10)
-==19002==  Address 0x5204040 is 0 bytes inside a block of size 4 free'd
-  ...</CodeBlock>
+      <CodeBlock language="bash" is:raw>
+        ==19002== Invalid write of size 4
+        ==19002==    at 0x401185: main (uaf.cpp:9)
+        ==19002==  Address 0x5204040 is 0 bytes inside a block of size 4 free'd
+        ==19002==    at 0x484BB6F: free (vg_replace_malloc.c:872)
+        ==19002==    at 0x401180: main (uaf.cpp:7)
+        ==19002==  Block was alloc'd at
+        ==19002==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+        ==19002==    at 0x401166: main (uaf.cpp:4)
+        ==19002==
+        ==19002== Invalid read of size 4
+        ==19002==    at 0x40119A: main (uaf.cpp:10)
+        ==19002==  Address 0x5204040 is 0 bytes inside a block of size 4 free'd
+          ...
+      </CodeBlock>
   
       <p>
         The report includes three stack traces: where the invalid access happened (line 9), where the memory was freed (line 7), and where it was originally allocated (line 4). This three-way linkage is essential for diagnosing UAF bugs in large codebases where allocation, free, and use can span multiple files and hundreds of lines.
@@ -380,33 +400,37 @@ int main() &#123;
       An uninitialized read is a subtler class of bug. The C standard does not define what value an uninitialized variable holds; in practice it is whatever happened to be in that register or stack slot at the time. Reading it doesn't immediately crash anything - the danger is that the garbage value propagates through computations and eventually drives a branch or system call, producing wrong results that are hard to trace back.
     </p>
   
-    <CodeBlock language="cpp">#include &lt;cstdlib&gt;
-#include &lt;cstdio&gt;
+    <CodeBlock language="cpp" is:raw>
+      #include <cstdlib>
+      #include <cstdio>
 
-int main() &#123;
-  int* arr = (int*)malloc(5 * sizeof(int));
-  // We initialize arr[0..2] but forget arr[3] and arr[4].
-  arr[0] = 10; arr[1] = 20; arr[2] = 30;
+      int main() {
+        int* arr = (int*)malloc(5 * sizeof(int));
+        // We initialize arr[0..2] but forget arr[3] and arr[4].
+        arr[0] = 10; arr[1] = 20; arr[2] = 30;
 
-  int sum = 0;
-  for (int i = 0; i &lt; 5; i++) &#123;
-      sum += arr[i];  // arr[3] and arr[4] are uninitialized
-  &#125;
+        int sum = 0;
+        for (int i = 0; i < 5; i++) {
+            sum += arr[i];  // arr[3] and arr[4] are uninitialized
+        }
 
-  // 'sum' is now tainted by undefined values.
-  if (sum &gt; 100) &#123;  // BUG: branch depends on uninitialized data
-      printf("large\n");
-  &#125;
+        // 'sum' is now tainted by undefined values.
+        if (sum > 100) {  // BUG: branch depends on uninitialized data
+            printf("large\n");
+        }
 
-  free(arr);
-  return 0;
-&#125;</CodeBlock>
+        free(arr);
+        return 0;
+      }
+    </CodeBlock>
   
-    <CodeBlock language="bash">==19003== Conditional jump or move depends on uninitialised value(s)
-==19003==    at 0x4011B2: main (uninit.cpp:15)
-==19003==  Uninitialised value was created by a heap allocation
-==19003==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-==19003==    at 0x401166: main (uninit.cpp:4)</CodeBlock>
+    <CodeBlock language="bash" is:raw>
+      ==19003== Conditional jump or move depends on uninitialised value(s)
+      ==19003==    at 0x4011B2: main (uninit.cpp:15)
+      ==19003==  Uninitialised value was created by a heap allocation
+      ==19003==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+      ==19003==    at 0x401166: main (uninit.cpp:4)
+    </CodeBlock>
   
     <p>
       Several things are worth noting here. First, Memcheck does not fire when we <em>read</em> <C>arr[3]</C> into <C>sum</C>. It fires when we use <C>sum</C> in a <em>branch</em> on line 15. This is intentional: Memcheck propagates "taint" (undefined V-bits) lazily through arithmetic. Only when undefined bits reach a decision point that affects control flow or a syscall argument does Valgrind report the error. This means the reported line may not be the root cause - you need to trace the data flow back to the malloc on line 4.
@@ -428,39 +452,47 @@ int main() &#123;
       A double free occurs when <C>free()</C> is called on the same pointer twice. After the first free, the block is returned to the allocator's free list. The second free corrupts the allocator's internal state. In glibc, this often results in an abort with "double free or corruption," but that detection is not guaranteed and can be bypassed.
     </p>
   
-    <CodeBlock language="cpp">#include &lt;cstdlib&gt;
+    <CodeBlock language="cpp" is:raw>
+      #include <cstdlib>
+
+      int main() {
+        int* p = (int*)malloc(sizeof(int));
+        *p = 1;
+        free(p);
+        free(p);  // BUG: double free
+        return 0;
+      }
+    </CodeBlock>
   
-int main() &#123;
-  int* p = (int*)malloc(sizeof(int));
-  *p = 1;
-  free(p);
-  free(p);  // BUG: double free
-  return 0;
-&#125;</CodeBlock>
-  
-    <CodeBlock language="bash">==19004== Invalid free() / delete / delete[] / realloc()
-==19004==    at 0x484BB6F: free (vg_replace_malloc.c:872)
-==19004==    at 0x401180: main (dfree.cpp:7)    &lt;-- second free
-==19004==  Address 0x5204040 is 0 bytes inside a block of size 4 free'd
-==19004==    at 0x484BB6F: free (vg_replace_malloc.c:872)
-==19004==    at 0x40117A: main (dfree.cpp:6)    &lt;-- first free
-==19004==  Block was alloc'd at
-==19004==    at 0x484A840: malloc (vg_replace_malloc.c:442)
-==19004==    at 0x401166: main (dfree.cpp:4)    &lt;-- original malloc</CodeBlock>
+    <CodeBlock language="bash" is:raw>
+      ==19004== Invalid free() / delete / delete[] / realloc()
+      ==19004==    at 0x484BB6F: free (vg_replace_malloc.c:872)
+      ==19004==    at 0x401180: main (dfree.cpp:7)    <-- second free
+      ==19004==  Address 0x5204040 is 0 bytes inside a block of size 4 free'd
+      ==19004==    at 0x484BB6F: free (vg_replace_malloc.c:872)
+      ==19004==    at 0x40117A: main (dfree.cpp:6)    <-- first free
+      ==19004==  Block was alloc'd at
+      ==19004==    at 0x484A840: malloc (vg_replace_malloc.c:442)
+      ==19004==    at 0x401166: main (dfree.cpp:4)    <-- original malloc
+    </CodeBlock>
   
     <p>
       Memcheck also catches mismatched allocator/deallocator pairs - for example, allocating with <C>new</C> and freeing with <C>free()</C>, or allocating an array with <C>new[]</C> and deleting it with a scalar <C>delete</C>. These are undefined behavior in C++ even if they "work" on a given implementation.
     </p>
   
-    <CodeBlock language="cpp">int* p = new int[10];
-delete p;   // BUG: should be delete[]</CodeBlock>
+    <CodeBlock language="cpp" is:raw>
+      int* p = new int[10];
+      delete p;   // BUG: should be delete[]
+    </CodeBlock>
   
-    <CodeBlock language="bash">==19005== Mismatched free() / delete / delete []
-==19005==    at 0x484C5C4: operator delete(void*, unsigned long) ...
-==19005==    at 0x401181: main (mismatch.cpp:3)
-==19005==  Address 0x5204040 is 0 bytes inside a block of size 40 alloc'd
-==19005==    at 0x484D1F2: operator new[](unsigned long) ...
-==19005==    at 0x401170: main (mismatch.cpp:2)</CodeBlock>
+    <CodeBlock language="bash" is:raw>
+      ==19005== Mismatched free() / delete / delete []
+      ==19005==    at 0x484C5C4: operator delete(void*, unsigned long) ...
+      ==19005==    at 0x401181: main (mismatch.cpp:3)
+      ==19005==  Address 0x5204040 is 0 bytes inside a block of size 40 alloc'd
+      ==19005==    at 0x484D1F2: operator new[](unsigned long) ...
+      ==19005==    at 0x401170: main (mismatch.cpp:2)
+    </CodeBlock>
   </section>
 
   <section id="callgrind">
@@ -474,11 +506,13 @@ delete p;   // BUG: should be delete[]</CodeBlock>
       Run Callgrind like this:
     </p>
 
-    <ShellScript>valgrind --tool=callgrind \
-  --cache-sim=yes \
-  --branch-sim=yes \
-  ./my_program
-# Produces: callgrind.out.&lt;pid&gt;</ShellScript>
+    <ShellScript is:raw>
+      valgrind --tool=callgrind \
+        --cache-sim=yes \
+        --branch-sim=yes \
+        ./my_program
+      # Produces: callgrind.out.<pid>
+    </ShellScript>
 
     <p>
       The output file contains raw event counts for every function and every call edge in the program. The events Callgrind reports include:
@@ -503,10 +537,12 @@ delete p;   // BUG: should be delete[]</CodeBlock>
         The raw output file is not human-readable. The standard tool for visualizing Callgrind output is <strong>KCacheGrind</strong> (Linux, part of KDE) or <strong>QCacheGrind</strong> (cross-platform). Install it with:
       </p>
   
-      <ShellScript>sudo apt install kcachegrind   # Debian/Ubuntu
-sudo pacman -S kcachegrind     # Arch</ShellScript>
+      <ShellScript is:raw>
+        sudo apt install kcachegrind   # Debian/Ubuntu
+        sudo pacman -S kcachegrind     # Arch
+      </ShellScript>
   
-      <ShellScript>kcachegrind callgrind.out.12345</ShellScript>
+      <ShellScript is:raw>kcachegrind callgrind.out.12345</ShellScript>
   
       <p>
         KCacheGrind shows a flat list of functions sorted by cost. Each function has two cost columns:
@@ -529,7 +565,7 @@ sudo pacman -S kcachegrind     # Arch</ShellScript>
         If you prefer staying in the terminal, <C>callgrind_annotate</C> produces a source-annotated listing:
       </p>
   
-      <ShellScript>callgrind_annotate --auto=yes callgrind.out.12345</ShellScript>
+      <ShellScript is:raw>callgrind_annotate --auto=yes callgrind.out.12345</ShellScript>
   
       <p>
         Each source line is annotated with the instruction count it contributes. This makes it easy to identify the exact loop body or expression that is consuming most of the instructions.
@@ -543,14 +579,16 @@ sudo pacman -S kcachegrind     # Arch</ShellScript>
         Sometimes you only want to profile a specific function or section of code, not the entire program. Callgrind supports starting and stopping collection under program control via the <C>CALLGRIND_START_INSTRUMENTATION</C> and <C>CALLGRIND_STOP_INSTRUMENTATION</C> macros (from <C>&lt;valgrind/callgrind.h&gt;</C>), or interactively via <C>callgrind_control</C>:
       </p>
   
-      <ShellScript># Start Valgrind with instrumentation off
-valgrind --tool=callgrind --instr-atstart=no ./my_program
+      <ShellScript is:raw>
+        # Start Valgrind with instrumentation off
+        valgrind --tool=callgrind --instr-atstart=no ./my_program
 
-# In another terminal, turn on instrumentation for PID 12345
-callgrind_control -i on 12345
+        # In another terminal, turn on instrumentation for PID 12345
+        callgrind_control -i on 12345
 
-# Later, turn it off
-callgrind_control -i off 12345</ShellScript>
+        # Later, turn it off
+        callgrind_control -i off 12345
+      </ShellScript>
     </section>
   </section>
 
@@ -561,11 +599,13 @@ callgrind_control -i off 12345</ShellScript>
       Memcheck tells you where memory is leaked; Massif tells you where memory is <em>used</em>. It answers the question: at the moment my program's heap peaked, what allocations were responsible, and what call chains produced them?
     </p>
   
-    <ShellScript>valgrind --tool=massif \
-  --pages-as-heap=no \
-  --time-unit=ms \
-  ./my_program
-  # Produces: massif.out.&lt;pid&gt;</ShellScript>
+    <ShellScript is:raw>
+      valgrind --tool=massif \
+        --pages-as-heap=no \
+        --time-unit=ms \
+        ./my_program
+        # Produces: massif.out.<pid>
+    </ShellScript>
   
     <p>
       Key options:
@@ -580,13 +620,13 @@ callgrind_control -i off 12345</ShellScript>
     <section id="reading-ms-print">
       <h3>Reading ms_print Output</h3>
   
-      <ShellScript>ms_print massif.out.12345 | less</ShellScript>
+      <ShellScript is:raw>ms_print massif.out.12345 | less</ShellScript>
   
       <p>
         The output has two parts. The first is an ASCII graph of heap usage over time, with a <C>@</C> marker at each detailed snapshot and a <C>:</C> at normal snapshots. The peak usage is marked with a <C>#</C>. For example:
       </p>
   
-      <CodeBlock language="bash">    MB
+      <CodeBlock language="bash" is:raw> MB
   4.00 ^                                              #
        |                                           @@#@
        |                                        @@@@@#@
@@ -599,15 +639,17 @@ callgrind_control -i off 12345</ShellScript>
         The second part lists each detailed snapshot. For each one, it shows the call tree of all live allocations - which call path allocated how many bytes:
       </p>
   
-      <CodeBlock language="bash">--------------------------------------------------------------------------------
-  n        time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
---------------------------------------------------------------------------------
-  10         120.0          2,097,152      2,097,152             0              0
-98.97% (2,097,152B) (heap allocation functions) malloc/new/new[]
-->79.46% (1,666,048B) 0x401223: build_matrix (matrix.cpp:45)
-->79.46% (1,666,048B) 0x401155: main (main.cpp:12)
-->19.51% (409,600B)  0x4013AB: load_data (loader.cpp:88)
-->19.51% (409,600B)  0x401155: main (main.cpp:8)</CodeBlock>
+      <CodeBlock language="bash" is:raw>
+        --------------------------------------------------------------------------------
+          n        time(ms)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+        --------------------------------------------------------------------------------
+          10         120.0          2,097,152      2,097,152             0              0
+        98.97% (2,097,152B) (heap allocation functions) malloc/new/new[]
+        ->79.46% (1,666,048B) 0x401223: build_matrix (matrix.cpp:45)
+        ->79.46% (1,666,048B) 0x401155: main (main.cpp:12)
+        ->19.51% (409,600B)  0x4013AB: load_data (loader.cpp:88)
+        ->19.51% (409,600B)  0x401155: main (main.cpp:8)
+      </CodeBlock>
   
       <p>
         This tells us that at the peak snapshot, 79% of heap memory was allocated by <C>build_matrix()</C> (called from <C>main</C> on line 12) and 19% by <C>load_data()</C>. If we need to reduce peak memory usage, <C>build_matrix</C> is the place to start.
@@ -634,22 +676,26 @@ callgrind_control -i off 12345</ShellScript>
       A <strong>suppression file</strong> lists patterns of error reports to ignore. Valgrind ships with suppression files for common system libraries; you can specify additional ones:
     </p>
 
-    <ShellScript>valgrind --suppressions=/usr/lib/valgrind/debian.supp \
-         --suppressions=./my_project.supp \
-         ./my_program</ShellScript>
+    <ShellScript is:raw>
+      valgrind --suppressions=/usr/lib/valgrind/debian.supp \
+               --suppressions=./my_project.supp \
+               ./my_program
+    </ShellScript>
 
     <p>
       To generate a suppression entry for an error you want to silence, run Valgrind with <C>--gen-suppressions=all</C>. It will print a suppression block after each error that you can copy into your <C>.supp</C> file. A suppression entry looks like:
     </p>
 
-    <CodeBlock language="bash">&#123;
-   ignore_openssl_init_leak
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   fun:malloc
-   ...
-   fun:OPENSSL_init_ssl
-&#125;</CodeBlock>
+    <CodeBlock language="bash" is:raw>
+      {
+         ignore_openssl_init_leak
+         Memcheck:Leak
+         match-leak-kinds: reachable
+         fun:malloc
+         ...
+         fun:OPENSSL_init_ssl
+      }
+    </CodeBlock>
     </section>
 
     <section id="valgrind-vs-asan">

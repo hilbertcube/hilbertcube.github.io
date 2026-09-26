@@ -188,8 +188,10 @@ import Table from "@components/article/Table.astro";
           For g++, you must add <C>-fopenmp</C> to the compilation
           of any module that uses OpenMP:
         </p>
-<ShellScript>g++ -c test.cpp -o test.o -fopenmp 
-g++ test.o -o test -fopenmp -lpthread</ShellScript>
+        <ShellScript is:raw>
+          g++ -c test.cpp -o test.o -fopenmp 
+          g++ test.o -o test -fopenmp -lpthread
+        </ShellScript>
         <p>
           What's the difference between this and the stl threads, or unix
           pthreads? Not that much differences, but OpenMP are usually used in
@@ -405,9 +407,9 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
           the same purpose as its regular version. We call this new function
         </p>
 
-        <CodeBox language="cpp"
-          >void computeImageFeatures(Ptr&lt;cuda::ORB&gt; orb, const
-          cuda::GpuMat&amp; img,ImageFeatures&amp; features);
+        <CodeBox language="cpp" is:raw>
+          void computeImageFeatures(Ptr<cuda::ORB> orb, const
+                    cuda::GpuMat& img,ImageFeatures& features);
         </CodeBox>
 
         <p>
@@ -418,49 +420,50 @@ g++ test.o -o test -fopenmp -lpthread</ShellScript>
           to the CPU.
         </p>
 
-<CodeBox language="cpp" lineNumbers>// A peak inside computeImageFeatures()
+        <CodeBox language="cpp" lineNumbers is:raw>
+          // A peak inside computeImageFeatures()
 
-cuda::GpuMat keypointsGPU;
-orb-&gt;detectAndComputeAsync(grayImg, cuda::GpuMat(), keypointsGPU, descriptorsGPU);
-cuda::Stream::Null().waitForCompletion(); 
+          cuda::GpuMat keypointsGPU;
+          orb->detectAndComputeAsync(grayImg, cuda::GpuMat(), keypointsGPU, descriptorsGPU);
+          cuda::Stream::Null().waitForCompletion(); 
 
-// Convert GPU keys to CPU keys
-vector&lt;KeyPoint&gt; keypointsCPU;
-orb-&gt;convert(keypointsGPU, keypointsCPU);
+          // Convert GPU keys to CPU keys
+          vector<KeyPoint> keypointsCPU;
+          orb->convert(keypointsGPU, keypointsCPU);
 
-if (keypointsCPU.empty()) &#123;
-    LOGLN("No keypoints detected on GPU");
-    throw std::runtime_error("No keypoints detected on GPU");
-&#125;
-cerr "Keypoints detected on GPU: " &lt;&lt; keypointsCPU.size() &lt;&lt; endl;
+          if (keypointsCPU.empty()) {
+              LOGLN("No keypoints detected on GPU");
+              throw std::runtime_error("No keypoints detected on GPU");
+          }
+          cerr "Keypoints detected on GPU: " << keypointsCPU.size() << endl;
 
-if (descriptorsGPU.empty()) &#123;
-    LOGLN("Descriptor computation failed on GPU");
-    throw std::runtime_error("Descriptor computation failed on GPU");
-&#125;
-LOGLN("Descriptors computed on GPU: " &lt;&lt; descriptorsGPU.size());
+          if (descriptorsGPU.empty()) {
+              LOGLN("Descriptor computation failed on GPU");
+              throw std::runtime_error("Descriptor computation failed on GPU");
+          }
+          LOGLN("Descriptors computed on GPU: " << descriptorsGPU.size());
 
-// Download descriptors from GPU to CPU
-descriptorsGPU.download(descriptors);
+          // Download descriptors from GPU to CPU
+          descriptorsGPU.download(descriptors);
 
-if (descriptors.empty()) &#123;
-    LOGLN("Failed to download descriptors from GPU to CPU");
-    throw std::runtime_error("Failed to download descriptors from GPU to CPU");
-&#125;
-LOGLN("Descriptors downloaded to CPU: " &lt;&lt; descriptors.size());
+          if (descriptors.empty()) {
+              LOGLN("Failed to download descriptors from GPU to CPU");
+              throw std::runtime_error("Failed to download descriptors from GPU to CPU");
+          }
+          LOGLN("Descriptors downloaded to CPU: " << descriptors.size());
 
-// Ensure the number of keypoints and descriptors is consistent
-if (keypointsCPU.size() != descriptors.rows) &#123;
-    cerr &lt;&lt; "Mismatch in keypoints and descriptors count: Keypoints = " &lt;&lt; keypointsCPU.size()
-        &lt;&lt; ", Descriptors = " &lt;&lt; descriptors.rows &lt;&lt; endl;
-    throw std::runtime_error("Mismatch in keypoints and descriptors count");
-&#125;
+          // Ensure the number of keypoints and descriptors is consistent
+          if (keypointsCPU.size() != descriptors.rows) {
+              cerr << "Mismatch in keypoints and descriptors count: Keypoints = " << keypointsCPU.size()
+                  << ", Descriptors = " << descriptors.rows << endl;
+              throw std::runtime_error("Mismatch in keypoints and descriptors count");
+          }
 
-// Store detected features and descriptors
-features.keypoints = keypointsCPU;
-features.descriptors = descriptors;
-features.img_size = grayImg.size();
-</CodeBox>
+          // Store detected features and descriptors
+          features.keypoints = keypointsCPU;
+          features.descriptors = descriptors;
+          features.img_size = grayImg.size();
+        </CodeBox>
       </section>
     </section>
 

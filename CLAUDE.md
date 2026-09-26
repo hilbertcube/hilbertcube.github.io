@@ -88,8 +88,7 @@ Top-bar behaviour is split across `src/components/site/topbar/{nav,theme,setting
 
 `CodeBlock`, `CodeBox` and `ShellScript` run their listing through Shiki (`src/utils/highlight.ts`)
 at build time — pages ship coloured HTML and carry no highlighting script or language list.
-`language` is a Shiki language id; an unknown one fails the build, as does markup inside a
-listing. Every block is rendered in **all** the themes in `src/utils/codeThemes.ts` at once
+`language` is a Shiki language id; an unknown one fails the build. Every block is rendered in **all** the themes in `src/utils/codeThemes.ts` at once
 (one `--shiki-<id>` custom property per theme per token), and CSS generated from that same list
 picks one via `data-code-light` / `data-code-dark` on `<html>` — so switching is instant. Each
 theme adds to every page's HTML size: keep the list short.
@@ -126,10 +125,11 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   hand-written table without the wrapper overflows on mobile and nothing catches it.
   Inline code goes through `<C>`; both styles are scoped to their component, so the bare
   classes no longer work in page markup.
-- Code blocks use the `code/` components, not raw `<pre>`. **Indentation gotcha:** the `<pre>`
-  is inside the component, so a listing whose first line is indented loses its indentation to
-  the HTML compressor — pass it as ``code={raw`…`}`` (`CodeBlock`/`CodeBox`/`ShellScript`), or
-  ``set:html={raw`…`}`` for a `Sample` that carries markup.
+- Code blocks use the `code/` components, not raw `<pre>`. Write new listings with **`is:raw`**
+  (`<CodeBlock language="cpp" is:raw>`), indented to match the page and with `<`/`{` written
+  literally: a listing starting on the line after the tag is dedented (`dedent()` in
+  `src/utils/highlight.ts`). Without `is:raw`, the HTML compressor eats indentation touching
+  the tag, so plain children must start at column 0 with `<`/`{` escaped.
 - CSS lives in `src/assets/css/`, bundled through `main.css` and imported once by `BaseLayout`.
   Page-specific CSS goes in the `head` slot; component-specific rules in that component's
   scoped `<style>`. Use the existing `--var` custom properties — the site is theme-aware via a

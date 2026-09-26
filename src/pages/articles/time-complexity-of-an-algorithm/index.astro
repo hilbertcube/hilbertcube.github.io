@@ -677,14 +677,16 @@ Merge(A, p, q, r)
           <M>{tex`\lceil (s-1)/2 \rceil`}</M>, and one has to check that this
           still forces $\Theta(\log n)$ from both sides.
         </p>
-  <Sample>Binary-Search(A, n, x) // A[1..n] sorted nondecreasingly
-lo &lt;- 1;  hi &lt;- n
-while lo &lt;= hi do
-  mid &lt;- floor((lo + hi) / 2)
-  if   A[mid] = x then return mid
-  elif A[mid] &lt; x then lo &lt;- mid + 1
-  else                 hi &lt;- mid - 1
-return not-found</Sample>
+        <Sample is:raw>
+          Binary-Search(A, n, x) // A[1..n] sorted nondecreasingly
+          lo <- 1;  hi <- n
+          while lo <= hi do
+            mid <- floor((lo + hi) / 2)
+            if   A[mid] = x then return mid
+            elif A[mid] < x then lo <- mid + 1
+            else                 hi <- mid - 1
+          return not-found
+        </Sample>
 
         <p>
           Write <M>{tex`s_k = \mathit{hi} - \mathit{lo} + 1`}</M> for the number of candidate
@@ -881,20 +883,22 @@ return not-found</Sample>
           to be proved, and it is not obvious, because a vertex could in
           principle be pushed onto the queue once per incoming edge.
         </p>
-        <Sample>Kahn(G)
-  for each v in V do indeg[v] &lt;- 0                      // pass 1
-  for each u in V do                                    // pass 2
-      for each v in Adj[u] do indeg[v] &lt;- indeg[v] + 1
-  S &lt;- empty queue                                      // pass 3
-  for each v in V do
-      if indeg[v] = 0 then Enqueue(S, v)
-  L &lt;- empty list;  count &lt;- 0
-  while S is not empty do                               // main loop
-      u &lt;- Dequeue(S);  append u to L;  count &lt;- count + 1
-      for each v in Adj[u] do
-          indeg[v] &lt;- indeg[v] - 1
-          if indeg[v] = 0 then Enqueue(S, v)
-  if count &lt; |V| then report "G has a cycle" else return L</Sample>
+        <Sample is:raw>
+          Kahn(G)
+            for each v in V do indeg[v] <- 0                      // pass 1
+            for each u in V do                                    // pass 2
+                for each v in Adj[u] do indeg[v] <- indeg[v] + 1
+            S <- empty queue                                      // pass 3
+            for each v in V do
+                if indeg[v] = 0 then Enqueue(S, v)
+            L <- empty list;  count <- 0
+            while S is not empty do                               // main loop
+                u <- Dequeue(S);  append u to L;  count <- count + 1
+                for each v in Adj[u] do
+                    indeg[v] <- indeg[v] - 1
+                    if indeg[v] = 0 then Enqueue(S, v)
+            if count < |V| then report "G has a cycle" else return L
+        </Sample>
 
         <div class="lemma">
           <strong>Lemma 8 (Each vertex is enqueued at most once).</strong> Over
@@ -1085,18 +1089,20 @@ return not-found</Sample>
           makes the array, binary-heap and Fibonacci-heap variants three
           corollaries of one theorem instead of three separate arguments.
         </p>
-        <Sample>Dijkstra(G, w, s)
-  for each v in V do d[v] &lt;- infinity;  parent[v] &lt;- nil;  done[v] &lt;- false
-  d[s] &lt;- 0
-  Q &lt;- priority queue containing every v in V, keyed by d[v]
-  while Q is not empty do
-      u &lt;- Extract-Min(Q)
-      done[u] &lt;- true
-      for each v in Adj[u] do                          // relax edge (u,v)
-          if not done[v] and d[u] + w(u,v) &lt; d[v] then
-              d[v] &lt;- d[u] + w(u,v)
-              parent[v] &lt;- u
-              Decrease-Key(Q, v, d[v])</Sample>
+        <Sample is:raw>
+          Dijkstra(G, w, s)
+            for each v in V do d[v] <- infinity;  parent[v] <- nil;  done[v] <- false
+            d[s] <- 0
+            Q <- priority queue containing every v in V, keyed by d[v]
+            while Q is not empty do
+                u <- Extract-Min(Q)
+                done[u] <- true
+                for each v in Adj[u] do                          // relax edge (u,v)
+                    if not done[v] and d[u] + w(u,v) < d[v] then
+                        d[v] <- d[u] + w(u,v)
+                        parent[v] <- u
+                        Decrease-Key(Q, v, d[v])
+        </Sample>
 
         <div class="lemma">
           <strong>Lemma 11 (Operation counts).</strong> On a graph with $V$

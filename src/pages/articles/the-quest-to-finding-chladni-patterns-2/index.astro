@@ -12,7 +12,6 @@ import { tex } from "@components/math/tex.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import TabBox from "@components/code/TabBox.astro";
 import Sample from "@components/code/Sample.astro";
-import { raw } from "@components/code/raw.astro";
 import CodeBox from "@components/code/CodeBox.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import C from "@components/code/C.astro";
@@ -70,117 +69,119 @@ import Table from "@components/article/Table.astro";
         ]}
         tabClass="pseudo-tab"
       >
-<Sample id="Square-Pseudo-Code" class="pseudo-tab" style="margin: 0;" set:html={raw`  <b>Function</b> GenerateSignCombinations(pairs)
-      <b>Input:</b>  List of integer pairs (n, m)
-      <b>Output:</b> Array of sign combinations [+/-1, +/-1, ...] with first element fixed at +1
-      
-  <b>Function</b> BasisFunction(x, n)
-      <b>Input:</b>  Spatial coordinate x, mode number n
-      <b>Output:</b> X_n(x) = a_n cos(n*pi*x/L) + a_bar_n sin(n*pi*x/L)
-      <b>Return</b> ((n+1) mod 2) * cos(n*pi*x/2) + (n mod 2) * sin(n*pi*x/2)
+        <Sample id="Square-Pseudo-Code" class="pseudo-tab" style="margin: 0;" is:raw>
+          Function GenerateSignCombinations(pairs)
+              Input:  List of integer pairs (n, m)
+              Output: Array of sign combinations [+/-1, +/-1, ...] with first element fixed at +1
 
-  <b>Function</b> WaveFunction(x, y, pairs, signs)
-      <b>Input:</b>  Coordinates (x, y), mode pairs [(n_1,m_1), (n_2,m_2), ...], sign array
-      <b>Output:</b> u(x,y) = sum over i of signs_i * X_n_i(x) * Y_m_i(y)
-      <b>Return</b> sum from i=1 to n of signs_i * BasisFunction(x, n_i) * BasisFunction(y, m_i)
-      <b>Input:</b>  Integer S
-      <b>Output:</b> Set of pairs &#123;(n, m) : n^2 + m^2 = S&#125;
-      pairs = empty_set
-      <b>for</b> n = 0 <b>to</b> floor(sqrt(S)) <b>do</b>
-          m = sqrt(S - n^2)
-          <b>if</b> m is an integer <b>then</b>
-              pairs = pairs union &#123;(n, m), (m, n)&#125;
-      <b>return</b> pairs
+          Function BasisFunction(x, n)
+              Input:  Spatial coordinate x, mode number n
+              Output: X_n(x) = a_n cos(n*pi*x/L) + a_bar_n sin(n*pi*x/L)
+              Return ((n+1) mod 2) * cos(n*pi*x/2) + (n mod 2) * sin(n*pi*x/2)
 
-  <b>Function</b> IsSumOfSquares(S)
-      <b>Input:</b>  Integer S
-      <b>Output:</b> Boolean indicating if S = n^2 + m^2 for some integers n, m
-      <b>Return</b> size(FindSumOfSquaresPairs(S)) > 0
+          Function WaveFunction(x, y, pairs, signs)
+              Input:  Coordinates (x, y), mode pairs [(n_1,m_1), (n_2,m_2), ...], sign array
+              Output: u(x,y) = sum over i of signs_i * X_n_i(x) * Y_m_i(y)
+              Return sum from i=1 to n of signs_i * BasisFunction(x, n_i) * BasisFunction(y, m_i)
+              Input:  Integer S
+              Output: Set of pairs {(n, m) : n^2 + m^2 = S}
+              pairs = empty_set
+              for n = 0 to floor(sqrt(S)) do
+                  m = sqrt(S - n^2)
+                  if m is an integer then
+                      pairs = pairs union {(n, m), (m, n)}
+              return pairs
 
-  <b>Algorithm</b> PlotSquareChladniPatterns(startIndex, endIndex)
-      <b>Input:</b>  Range [startIndex, endIndex] for pattern indices
-      <b>Output:</b> Contour plots of nodal lines at u(x,y) = 0
-      
-      totalPlots = endIndex - startIndex
-      equations = [ ]    // Store wave functions
-      sumValues = [ ]    // Store corresponding S values
-      plotCount = 0
-      k = 1
-      
-      <b>while</b> plotCount &lt; totalPlots <b>do</b>
-          <b>if</b> IsSumOfSquares(k) <b>then</b>
-              pairs = FindSumOfSquaresPairs(k)
-              signCombos = GenerateSignCombinations(pairs)
-              
-              <b>for each</b> combo in signCombos <b>do</b>
-                  <b>if</b> plotCount >= startIndex <b>and</b> plotCount &lt; endIndex <b>then</b>
-                      u_xy = WaveFunction(x, y, pairs, combo)
-                      equations.append(u_xy)
-                      sumValues.append(k)
-                  plotCount = plotCount + 1
-          k = k + 1
-      
-      <b>for</b> i = 0 <b>to</b> totalPlots - 1 <b>do</b>
-          AssignColorsByModePairs(pairs[i])
-          PlotContour(equations[i], level=0)    // Plot nodal lines at z = 0
-`} />
+          Function IsSumOfSquares(S)
+              Input:  Integer S
+              Output: Boolean indicating if S = n^2 + m^2 for some integers n, m
+              Return size(FindSumOfSquaresPairs(S)) > 0
 
-<Sample id="Circular-Pseudo-Code" class="pseudo-tab" style="margin: 0; display: none;" set:html={raw`  <b>Function</b> BesselDerivativeZero(n, m)
-    <b>Input:</b>  Order n, zero index m
-    <b>Output:</b> m-th zero z_nm of J'_n(x)
-    
-    <b>if</b> n = 0 <b>then</b>
-        zeros = ComputeBesselPrimeZeros(0, m + 1)
-        zeros[0] = 0    // Redefine first zero as origin
-        <b>return</b> zeros[m]
-    <b>else</b>
-        zeros = ComputeBesselPrimeZeros(n, m + 1)
-        <b>return</b> zeros[m]
+          Algorithm PlotSquareChladniPatterns(startIndex, endIndex)
+              Input:  Range [startIndex, endIndex] for pattern indices
+              Output: Contour plots of nodal lines at u(x,y) = 0
 
-  <b>Function</b> InitialDisplacement(r, theta)
-      <b>Input:</b>  Polar coordinates (r, theta)
-      <b>Output:</b> Initial condition f(r, theta)
-      <b>Return</b> r * cos(theta)
+              totalPlots = endIndex - startIndex
+              equations = [ ]    // Store wave functions
+              sumValues = [ ]    // Store corresponding S values
+              plotCount = 0
+              k = 1
 
-  <b>Function</b> FourierCoefficient_A(n, m, a)
-      <b>Input:</b>  Mode numbers (n, m), plate radius a
-      <b>Output:</b> Coefficient a_nm from initial conditions
-      
-      k = z_nm / a
-      numerator = integral from 0 to a, integral from 0 to 2*pi of
-                  J_n(kr) * cos(n*theta) * f(r,theta) * r d(theta) dr
-      denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
-      <b>Return</b> numerator / denominator
+              while plotCount < totalPlots do
+                  if IsSumOfSquares(k) then
+                      pairs = FindSumOfSquaresPairs(k)
+                      signCombos = GenerateSignCombinations(pairs)
 
-  <b>Function</b> FourierCoefficient_B(n, m, a)
-      <b>Input:</b>  Mode numbers (n, m), plate radius a
-      <b>Output:</b> Coefficient b_nm from initial conditions
-      
-      k = z_nm / a
-      numerator = integral from 0 to a, integral from 0 to 2*pi of
-                  J_n(kr) * sin(n*theta) * f(r,theta) * r d(theta) dr
-      denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
-      <b>Return</b> numerator / denominator
+                      for each combo in signCombos do
+                          if plotCount >= startIndex and plotCount < endIndex then
+                              u_xy = WaveFunction(x, y, pairs, combo)
+                              equations.append(u_xy)
+                              sumValues.append(k)
+                          plotCount = plotCount + 1
+                  k = k + 1
 
-  <b>Function</b> CircularWaveFunction(n, m, r, theta, a)
-      <b>Input:</b>  Mode numbers (n, m), polar coordinates (r, theta), radius a
-      <b>Output:</b> u_nm(r, theta) = J_n(kr)[a_nm cos(n*theta) + b_nm sin(n*theta)]
-      
-      z_nm = BesselDerivativeZero(n, m)
-      k = z_nm / a
-      a_nm = FourierCoefficient_A(n, m, a)
-      b_nm = FourierCoefficient_B(n, m, a)
-      <b>Return</b> J_n(kr) * [a_nm * cos(n*theta) + b_nm * sin(n*theta)]
+              for i = 0 to totalPlots - 1 do
+                  AssignColorsByModePairs(pairs[i])
+                  PlotContour(equations[i], level=0)    // Plot nodal lines at z = 0
+        </Sample>
 
-  <b>Algorithm</b> PlotCircularChladniPattern(n, m, a)
-      <b>Input:</b>  Mode numbers (n, m), plate radius a
-      <b>Output:</b> Contour plot of nodal lines at u(r,theta) = 0
-      
-      <b>for each</b> point (r, theta) in [0, a] x [0, 2*pi] <b>do</b>
-          u[r, theta] = CircularWaveFunction(n, m, r, theta, a)
-      
-      PlotContour(u, level=0)    // Plot nodal lines where u = 0
-`} />
+      <Sample id="Circular-Pseudo-Code" class="pseudo-tab" style="margin: 0; display: none;" is:raw>
+        Function BesselDerivativeZero(n, m)
+          Input:  Order n, zero index m
+          Output: m-th zero z_nm of J'_n(x)
+
+          if n = 0 then
+              zeros = ComputeBesselPrimeZeros(0, m + 1)
+              zeros[0] = 0    // Redefine first zero as origin
+              return zeros[m]
+          else
+              zeros = ComputeBesselPrimeZeros(n, m + 1)
+              return zeros[m]
+
+        Function InitialDisplacement(r, theta)
+            Input:  Polar coordinates (r, theta)
+            Output: Initial condition f(r, theta)
+            Return r * cos(theta)
+
+        Function FourierCoefficient_A(n, m, a)
+            Input:  Mode numbers (n, m), plate radius a
+            Output: Coefficient a_nm from initial conditions
+
+            k = z_nm / a
+            numerator = integral from 0 to a, integral from 0 to 2*pi of
+                        J_n(kr) * cos(n*theta) * f(r,theta) * r d(theta) dr
+            denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
+            Return numerator / denominator
+
+        Function FourierCoefficient_B(n, m, a)
+            Input:  Mode numbers (n, m), plate radius a
+            Output: Coefficient b_nm from initial conditions
+
+            k = z_nm / a
+            numerator = integral from 0 to a, integral from 0 to 2*pi of
+                        J_n(kr) * sin(n*theta) * f(r,theta) * r d(theta) dr
+            denominator = 2*pi * integral from 0 to a of J_n^2(kr) * r dr
+            Return numerator / denominator
+
+        Function CircularWaveFunction(n, m, r, theta, a)
+            Input:  Mode numbers (n, m), polar coordinates (r, theta), radius a
+            Output: u_nm(r, theta) = J_n(kr)[a_nm cos(n*theta) + b_nm sin(n*theta)]
+
+            z_nm = BesselDerivativeZero(n, m)
+            k = z_nm / a
+            a_nm = FourierCoefficient_A(n, m, a)
+            b_nm = FourierCoefficient_B(n, m, a)
+            Return J_n(kr) * [a_nm * cos(n*theta) + b_nm * sin(n*theta)]
+
+        Algorithm PlotCircularChladniPattern(n, m, a)
+            Input:  Mode numbers (n, m), plate radius a
+            Output: Contour plot of nodal lines at u(r,theta) = 0
+
+            for each point (r, theta) in [0, a] x [0, 2*pi] do
+                u[r, theta] = CircularWaveFunction(n, m, r, theta, a)
+
+            PlotContour(u, level=0)    // Plot nodal lines where u = 0
+      </Sample>
       </TabBox>
 
       <p>
@@ -189,13 +190,13 @@ import Table from "@components/article/Table.astro";
         and download related dependencies by using the pip package manager:
       </p>
 
-<ShellScript
->python3 -m venv 
-venv source venv/bin/activate # On Windows, use venv\Scripts\activate` 
-pip install matplotlib 
-pip install numpy pip
-install itertools 
-pip install scipy</ShellScript>
+      <ShellScript is:raw>
+        python3 -m venv venv
+        source venv/bin/activate  # On Windows, use venv\Scripts\activate
+        pip install matplotlib
+        pip install numpy
+        pip install scipy  # itertools ships with Python; nothing to install
+      </ShellScript>
 
       <p>
         In this article, we will use matplotlib to plot our coordinate systems,
@@ -217,24 +218,25 @@ pip install scipy</ShellScript>
           remarks about some of the functions used in this code snippet.
         </p>
   
-<CodeBlock language="python">def generate_sign_combinations(pairs):
-    sign_combinations = list(itertools.product([1, -1], repeat=(len(pairs) - 1)))
-    return [[1] + list(comb) for comb in sign_combinations]  # Keep the first sign positive
-</CodeBlock>
+        <CodeBlock language="python" is:raw>
+          def generate_sign_combinations(pairs):
+              sign_combinations = list(itertools.product([1, -1], repeat=(len(pairs) - 1)))
+              return [[1] + list(comb) for comb in sign_combinations]  # Keep the first sign positive
+        </CodeBlock>
         <p>
           The function <C>.product()</C> works similar to
           a cartesian product, or equivalent to a nested for-loop in the context of
           computer science. For example, <C>product('ABCD', repeat=2)</C> will output
         </p>
   
-        <ShellScript>AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD</ShellScript>
+        <ShellScript is:raw>AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD</ShellScript>
   
         <p>
           For our case, <C>.product([1, -1], repeat = (len(pairs) - 1))</C> will generate all possible combinations of 1 and -1 for a length of <C>len(pairs) - 1</C>. We need to use <C>len(pairs) - 1</C> because
           we want to keep the first sign positive, as seen in the return statement <C>[[1] + list(comb)]</C>. If <C>pairs = [(0, 5), (3, 4), (4, 3), (5, 0)]</C>, then <C>len(pairs) = 4</C>. We want to keep
           the first term to be positive, always, so <C>.product([1, -1], repeat = (len(pairs) - 1))</C> will generate
         </p>
-        <ShellScript> [1, 1, 1] [1, 1, -1] [1, -1, 1] [1, -1, -1] </ShellScript>
+        <ShellScript is:raw> [1, 1, 1] [1, 1, -1] [1, -1, 1] [1, -1, -1]</ShellScript>
   
         <p>
           The statement <C>sign_combinations = list(itertools.product([1, -1],
@@ -246,17 +248,16 @@ pip install scipy</ShellScript>
         </p>
 
   
-        <ShellScript
-          >[ [1, 1, 1], [1, 1, -1], [1, 1, -1], [1, -1, -1] ]</ShellScript
-        >
+        <ShellScript is:raw>[ [1, 1, 1], [1, 1, -1], [1, 1, -1], [1, -1, -1] ]</ShellScript>
   
         <p>The next function, $u(x, y, t)$, defined by</p>
-<CodeBlock language="python">def u(x, y, pairs, signs):
-    equation = np.zeros_like(x)  # Return an array of 0's with the same type
-    for (n, m), sign in zip(pairs, signs):
-        equation += sign * X(x, n) * X(y, m)
-    return equation
-</CodeBlock>
+        <CodeBlock language="python" is:raw>
+          def u(x, y, pairs, signs):
+              equation = np.zeros_like(x)  # Return an array of 0's with the same type
+              for (n, m), sign in zip(pairs, signs):
+                  equation += sign * X(x, n) * X(y, m)
+              return equation
+        </CodeBlock>
   
         <p>
           takes in $x$, $y$, the pairs which we need to plots, and the signs list
@@ -272,11 +273,12 @@ pip install scipy</ShellScript>
           a sum of squares. Similarly, if a number is found, then the function <C>find_pairs(number)</C> find all such pairs, and then return all of them in a list.
         </p>
   
-<CodeBlock language="python">def find_pairs(number):
-    return [(n, m) for n in range(0, int(np.sqrt(number)) + 1)
-            for m in range(0, int(np.sqrt(number)) + 1) if n**2 + m**2 == number]
-    return equation
-</CodeBlock>
+        <CodeBlock language="python" is:raw>
+          def find_pairs(number):
+              return [(n, m) for n in range(0, int(np.sqrt(number)) + 1)
+                      for m in range(0, int(np.sqrt(number)) + 1) if n**2 + m**2 == number]
+              return equation
+        </CodeBlock>
   
         <p>
           For example, if <C>number == 145</C>, then the
@@ -296,13 +298,14 @@ pip install scipy</ShellScript>
           focus on the first half of the function's code block and start by
           creating three lists: <C>equations</C>, <C>description</C>, and <C>sum_of_squares</C>.
         </p>
-<CodeBlock language="python">def plot_sum_of_squares(start_index, end_index):
-    # ... something up here        
-    
-    equations = []
-    descriptions = []
-    sums_of_squares = []
-</CodeBlock>
+        <CodeBlock language="python" is:raw>
+          def plot_sum_of_squares(start_index, end_index):
+              # ... something up here        
+
+              equations = []
+              descriptions = []
+              sums_of_squares = []
+        </CodeBlock>
         <p>
           The list <C>equations</C> stores all equations to
           plot, while the other two list are simply for documentation purposes. The
@@ -318,51 +321,52 @@ pip install scipy</ShellScript>
           index they want to start and end with to avoid overcrowding the screen
           with too much plot. Therefore, the <C>len(equations) &lt; total_plots</C> is the breaking condition.
         </p>
-<CodeBlock language="python" set:html={raw`    # ...something up here
-    k = 0
-    found_plots = 0
-    while len(equations) &lt; total_plots:
-        if exist_sos(k):
-            # find all pairs from k
-            pairs = find_pairs(k)                                   
+        <CodeBlock language="python" is:raw>
+          # ...something up here
+          k = 0
+          found_plots = 0
+          while len(equations) < total_plots:
+              if exist_sos(k):
+                  # find all pairs from k
+                  pairs = find_pairs(k)                                   
 
-            # find non zero pairs using slicing operator, copying element from second index of list, [1] 
-            # to second to last element index of list, [-1]
-            non_zero_pairs = pairs[1:-1]                            
+                  # find non zero pairs using slicing operator, copying element from second index of list, [1] 
+                  # to second to last element index of list, [-1]
+                  non_zero_pairs = pairs[1:-1]                            
 
-            # generate a list of different sign combinations from pairs
-            sign_combinations = generate_sign_combinations(pairs)  
-            
-            # iterates over each combination of signs produced in the previous step. 
-            # for each combination, it will attempt to create an equation.
-            for signs in sign_combinations:
-                found_plots += 1
+                  # generate a list of different sign combinations from pairs
+                  sign_combinations = generate_sign_combinations(pairs)  
+                  
+                  # iterates over each combination of signs produced in the previous step. 
+                  # for each combination, it will attempt to create an equation.
+                  for signs in sign_combinations:
+                      found_plots += 1
 
-                # if the current found_plots is between start_index and end_index,
-                # then append elements to lists
-                # not all generated plots will be kept—only those within this specific range.
-                if start_index &lt;= found_plots &lt;= end_index:
-                    equations.append((pairs, signs, u(x, y, pairs, signs)))
-                    descriptions.append(f"&#123;pairs&#125; &#123;signs&#125;")
-                    sums_of_squares.append(k)
-                if found_plots >= end_index:
-                    break
+                      # if the current found_plots is between start_index and end_index,
+                      # then append elements to lists
+                      # not all generated plots will be kept—only those within this specific range.
+                      if start_index <= found_plots <= end_index:
+                          equations.append((pairs, signs, u(x, y, pairs, signs)))
+                          descriptions.append(f"{pairs} {signs}")
+                          sums_of_squares.append(k)
+                      if found_plots >= end_index:
+                          break
 
-            # check if non_zero_pairs is not empty
-            if non_zero_pairs:
-                sign_combinations_0 = generate_sign_combinations(non_zero_pairs)
-                for signs in sign_combinations_0:
-                    found_plots += 1
-                    if start_index &lt;= found_plots &lt;= end_index:
-                        equations.append((non_zero_pairs, signs, u(x, y, non_zero_pairs, signs)))
-                        descriptions.append(f"&#123;non_zero_pairs&#125; &#123;signs&#125;")
-                        sums_of_squares.append(k)
-                    if found_plots >= end_index:
-                        break
-            if found_plots >= end_index:
-                break
-        k += 1
-`} />
+                  # check if non_zero_pairs is not empty
+                  if non_zero_pairs:
+                      sign_combinations_0 = generate_sign_combinations(non_zero_pairs)
+                      for signs in sign_combinations_0:
+                          found_plots += 1
+                          if start_index <= found_plots <= end_index:
+                              equations.append((non_zero_pairs, signs, u(x, y, non_zero_pairs, signs)))
+                              descriptions.append(f"{non_zero_pairs} {signs}")
+                              sums_of_squares.append(k)
+                          if found_plots >= end_index:
+                              break
+                  if found_plots >= end_index:
+                      break
+              k += 1
+          </CodeBlock>
   
         <p>
           The later half of the function is only to plot all graphs in the list.
@@ -372,11 +376,12 @@ pip install scipy</ShellScript>
           each unique pair of values (<C>pairs_tuple</C>) to a color.
         </p>
   
-<CodeBlock language="python" set:html={raw`    colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod',
-              'teal', 'darkred', 'darkcyan']
-    pair_color_mapping = &#123;&#125;
-    color_index = 0
-`} />
+        <CodeBlock language="python" is:raw>
+          colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod',
+                    'teal', 'darkred', 'darkcyan']
+          pair_color_mapping = {}
+          color_index = 0
+        </CodeBlock>
   
         <p>
           And, there it is, our code for generating Chladni patterns on the square
@@ -385,143 +390,144 @@ pip install scipy</ShellScript>
           adjust based on your own preference.
         </p>
   
-<CodeBox language="python" lineNumbers>import matplotlib.pyplot as plt
-import numpy as np
-import itertools
+        <CodeBox language="python" lineNumbers is:raw>
+          import matplotlib.pyplot as plt
+          import numpy as np
+          import itertools
 
-# Settings here
-title = True
-font_title = 9.2        # Title font size
-color_plots = True      # All black or color plots
-thickness = 1.2         # Plot line thickness
-start = 1               # Start at pattern #
-end = 72                # End at pattern #
+          # Settings here
+          title = True
+          font_title = 9.2        # Title font size
+          color_plots = True      # All black or color plots
+          thickness = 1.2         # Plot line thickness
+          start = 1               # Start at pattern #
+          end = 72                # End at pattern #
 
-# Range and step size
-delta = 0.005
-xrange = np.arange(-1.0, 1.0, delta)
-yrange = np.arange(-1.0, 1.0, delta)
-x, y = np.meshgrid(xrange, yrange)
+          # Range and step size
+          delta = 0.005
+          xrange = np.arange(-1.0, 1.0, delta)
+          yrange = np.arange(-1.0, 1.0, delta)
+          x, y = np.meshgrid(xrange, yrange)
 
-# Define the basis function
-def X(x, n):
-    return np.mod(n + 1, 2) * np.cos(n * np.pi * x / 2.0) + np.mod(n, 2) * np.sin(n * np.pi * x / 2.0)
+          # Define the basis function
+          def X(x, n):
+              return np.mod(n + 1, 2) * np.cos(n * np.pi * x / 2.0) + np.mod(n, 2) * np.sin(n * np.pi * x / 2.0)
 
-# Sign combination generator
-def generate_sign_combinations(pairs):
-    sign_combinations = list(itertools.product([1, -1], repeat=(len(pairs) - 1)))
-    return [[1] + list(comb) for comb in sign_combinations]  # Keep the first sign positive
+          # Sign combination generator
+          def generate_sign_combinations(pairs):
+              sign_combinations = list(itertools.product([1, -1], repeat=(len(pairs) - 1)))
+              return [[1] + list(comb) for comb in sign_combinations]  # Keep the first sign positive
 
-# The wave function with contour cut z = 0
-def u(x, y, pairs, signs):
-    equation = np.zeros_like(x)  # Return an array of 0's with the same type
-    for (n, m), sign in zip(pairs, signs):
-        equation += sign * X(x, n) * X(y, m)
-    return equation
+          # The wave function with contour cut z = 0
+          def u(x, y, pairs, signs):
+              equation = np.zeros_like(x)  # Return an array of 0's with the same type
+              for (n, m), sign in zip(pairs, signs):
+                  equation += sign * X(x, n) * X(y, m)
+              return equation
 
-# Check if a given number has sums of squares pairs
-def exist_sos(number):
-    return any(n**2 + m**2 == number for n in range(0, int(np.sqrt(number)) + 1)
-                for m in range(0, int(np.sqrt(number)) + 1))
+          # Check if a given number has sums of squares pairs
+          def exist_sos(number):
+              return any(n**2 + m**2 == number for n in range(0, int(np.sqrt(number)) + 1)
+                          for m in range(0, int(np.sqrt(number)) + 1))
 
-# Searching combinations of sum of squares
-def find_pairs(number):
-    return [(n, m) for n in range(0, int(np.sqrt(number)) + 1)
-            for m in range(0, int(np.sqrt(number)) + 1) if n**2 + m**2 == number]
-    
-plt.rcParams['mathtext.fontset'] = 'stix'
-plt.rcParams['font.family'] = 'serif'
+          # Searching combinations of sum of squares
+          def find_pairs(number):
+              return [(n, m) for n in range(0, int(np.sqrt(number)) + 1)
+                      for m in range(0, int(np.sqrt(number)) + 1) if n**2 + m**2 == number]
 
-# Plot the sum of squares patterns from start_index to end_index (1-based indexing)
-def plot_sum_of_squares(start_index, end_index):
-    total_plots = end_index - start_index + 1
-    
-    # Error messages
-    if end_index &lt;= start_index:
-        print("Error: End_index must be greater than start_index.\n")
-        return
-    if total_plots > 100:
-        print("Error: Cannot plot more than 100 plots at a time.\n")
-        return
+          plt.rcParams['mathtext.fontset'] = 'stix'
+          plt.rcParams['font.family'] = 'serif'
 
-    equations = []
-    descriptions = []
-    sums_of_squares = []
-    
-    # Iterating over all possible combinations
-    k = 0
-    found_plots = 0
-    while len(equations) &lt; total_plots:
-        if exist_sos(k):
-            pairs = find_pairs(k)
-            non_zero_pairs = pairs[1:-1]
-            sign_combinations = generate_sign_combinations(pairs)
-            for signs in sign_combinations:
-                found_plots += 1
-                if start_index &lt;= found_plots &lt;= end_index:
-                    equations.append((pairs, signs, u(x, y, pairs, signs)))
-                    descriptions.append(f"&#123;pairs&#125; &#123;signs&#125;")
-                    sums_of_squares.append(k)
-                if found_plots >= end_index:
-                    break
-            if non_zero_pairs:
-                sign_combinations_0 = generate_sign_combinations(non_zero_pairs)
-                for signs in sign_combinations_0:
-                    found_plots += 1
-                    if start_index &lt;= found_plots &lt;= end_index:
-                        equations.append((non_zero_pairs, signs, u(x, y, non_zero_pairs, signs)))
-                        descriptions.append(f"&#123;non_zero_pairs&#125; &#123;signs&#125;")
-                        sums_of_squares.append(k)
-                    if found_plots >= end_index:
-                        break
-            if found_plots >= end_index:
-                break
-        k += 1
+          # Plot the sum of squares patterns from start_index to end_index (1-based indexing)
+          def plot_sum_of_squares(start_index, end_index):
+              total_plots = end_index - start_index + 1
 
-    ncols = 9  # Fixed number of columns
-    nrows = (total_plots + ncols - 1) // ncols  # Calculate the number of rows (// = Floor division)
-    
-    # Define fig and axis
-    fig, axs = plt.subplots(nrows, ncols, figsize=(1.2 * ncols, 4 * nrows))
-    
-    # Colors
-    colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod', 'teal', 'darkred', 'darkcyan']
-    pair_color_mapping = &#123;&#125;
-    color_index = 0
-    
-    # Plotting
-    for i in range(total_plots):
-        # Print all pairs and signs to the console
-        print(f"N = &#123;start + i&#125; | S = &#123;sums_of_squares[i]&#125;: &#123;descriptions[i]&#125;")
-        
-        # pairs = equations[i][0], signs = equations[i][1], equation = equations[i][2]
-        pairs, signs, equation = equations[i]
-        pairs_tuple = tuple(pairs)
-        if pairs_tuple not in pair_color_mapping:
-            pair_color_mapping[pairs_tuple] = colors[color_index % len(colors)]
-            color_index += 1
-        
-        mode_color = pair_color_mapping[pairs_tuple] if color_plots else 'black'
-        row, col = divmod(i, ncols)
-        plot_title = rf"$N = &#123;start + i&#125;,\; S = &#123;sums_of_squares[i]&#125;$"
-        
-        ax = axs[row, col] if nrows > 1 else axs[col]
-        ax.contour(x, y, equation, levels=[0], colors=mode_color, linewidths=thickness)
-        
-        if title:
-            ax.set_title(plot_title, fontsize=font_title, ha='center', rotation='vertical', x=-0.1, y=0)
-        ax.grid(True)
-        ax.set_aspect('equal')
-        ax.set_xticks([])
-        ax.set_yticks([])
-    
-    plt.tight_layout()
-    fig.subplots_adjust(hspace=0.2, wspace=0.1)
-    plt.show()
+              # Error messages
+              if end_index <= start_index:
+                  print("Error: End_index must be greater than start_index.\n")
+                  return
+              if total_plots > 100:
+                  print("Error: Cannot plot more than 100 plots at a time.\n")
+                  return
 
-# Plotting the sum of squares patterns for all perfect squares
-plot_sum_of_squares(start, end)
-</CodeBox>
+              equations = []
+              descriptions = []
+              sums_of_squares = []
+
+              # Iterating over all possible combinations
+              k = 0
+              found_plots = 0
+              while len(equations) < total_plots:
+                  if exist_sos(k):
+                      pairs = find_pairs(k)
+                      non_zero_pairs = pairs[1:-1]
+                      sign_combinations = generate_sign_combinations(pairs)
+                      for signs in sign_combinations:
+                          found_plots += 1
+                          if start_index <= found_plots <= end_index:
+                              equations.append((pairs, signs, u(x, y, pairs, signs)))
+                              descriptions.append(f"{pairs} {signs}")
+                              sums_of_squares.append(k)
+                          if found_plots >= end_index:
+                              break
+                      if non_zero_pairs:
+                          sign_combinations_0 = generate_sign_combinations(non_zero_pairs)
+                          for signs in sign_combinations_0:
+                              found_plots += 1
+                              if start_index <= found_plots <= end_index:
+                                  equations.append((non_zero_pairs, signs, u(x, y, non_zero_pairs, signs)))
+                                  descriptions.append(f"{non_zero_pairs} {signs}")
+                                  sums_of_squares.append(k)
+                              if found_plots >= end_index:
+                                  break
+                      if found_plots >= end_index:
+                          break
+                  k += 1
+
+              ncols = 9  # Fixed number of columns
+              nrows = (total_plots + ncols - 1) // ncols  # Calculate the number of rows (// = Floor division)
+
+              # Define fig and axis
+              fig, axs = plt.subplots(nrows, ncols, figsize=(1.2 * ncols, 4 * nrows))
+
+              # Colors
+              colors = ['darkblue', 'red', 'darkgreen', 'deeppink', 'darkviolet', 'blue', 'darkgoldenrod', 'teal', 'darkred', 'darkcyan']
+              pair_color_mapping = {}
+              color_index = 0
+
+              # Plotting
+              for i in range(total_plots):
+                  # Print all pairs and signs to the console
+                  print(f"N = {start + i} | S = {sums_of_squares[i]}: {descriptions[i]}")
+
+                  # pairs = equations[i][0], signs = equations[i][1], equation = equations[i][2]
+                  pairs, signs, equation = equations[i]
+                  pairs_tuple = tuple(pairs)
+                  if pairs_tuple not in pair_color_mapping:
+                      pair_color_mapping[pairs_tuple] = colors[color_index % len(colors)]
+                      color_index += 1
+
+                  mode_color = pair_color_mapping[pairs_tuple] if color_plots else 'black'
+                  row, col = divmod(i, ncols)
+                  plot_title = rf"$N = {start + i},\; S = {sums_of_squares[i]}$"
+
+                  ax = axs[row, col] if nrows > 1 else axs[col]
+                  ax.contour(x, y, equation, levels=[0], colors=mode_color, linewidths=thickness)
+
+                  if title:
+                      ax.set_title(plot_title, fontsize=font_title, ha='center', rotation='vertical', x=-0.1, y=0)
+                  ax.grid(True)
+                  ax.set_aspect('equal')
+                  ax.set_xticks([])
+                  ax.set_yticks([])
+
+              plt.tight_layout()
+              fig.subplots_adjust(hspace=0.2, wspace=0.1)
+              plt.show()
+
+          # Plotting the sum of squares patterns for all perfect squares
+          plot_sum_of_squares(start, end)
+        </CodeBox>
       </section>
   
       <section id="circular-plate-code">
@@ -537,15 +543,16 @@ plot_sum_of_squares(start, end)
           kind, $J_n(x)$. For this, we must import <C>jn, jnp_zeros</C> from <C>scipy.special</C>
         </p>
   
-  <CodeBlock language="python"># Function to get the m-th zero of the derivative of the Bessel function of order n
-  def bessel_derivative_zero(n, m):
-      if n == 0: #Redefine the first zero of J_0 prime to be 0
-          zeros = list(jnp_zeros(n, m + 1))
-          zeros.insert(0, 0)
-          return zeros[m]
-      else:
-          return jnp_zeros(n, m + 1)[-1]  # Get the m-th zero, treating first zero as the 0th zero
-  </CodeBlock>
+      <CodeBlock language="python" is:raw>
+        # Function to get the m-th zero of the derivative of the Bessel function of order n
+        def bessel_derivative_zero(n, m):
+            if n == 0: #Redefine the first zero of J_0 prime to be 0
+                zeros = list(jnp_zeros(n, m + 1))
+                zeros.insert(0, 0)
+                return zeros[m]
+            else:
+                return jnp_zeros(n, m + 1)[-1]  # Get the m-th zero, treating first zero as the 0th zero
+      </CodeBlock>
   
         <p>
           One of the weird things about the <C>jnp_zeroes</C> is that it only output zeroes that are greater than zero, but zero itself
@@ -569,21 +576,22 @@ plot_sum_of_squares(start, end)
           We can do this using the built-in methods for double integration: <C>scipy.integrate</C>, <C>dblquad</C>:
         </p>
   
-<CodeBlock language="python"># Define the double integrals for coefficients a_nm and b_nm
-def a_nm(n, m, a):
-    z_nm = bessel_derivative_zero(n, m)
-    numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.cos(n * theta) * 
-                        f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
-    denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
-    return numerator / (2 * np.pi * denominator)
+        <CodeBlock language="python" is:raw>
+          # Define the double integrals for coefficients a_nm and b_nm
+          def a_nm(n, m, a):
+              z_nm = bessel_derivative_zero(n, m)
+              numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.cos(n * theta) * 
+                                  f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
+              denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
+              return numerator / (2 * np.pi * denominator)
 
-def b_nm(n, m, a):
-    z_nm = bessel_derivative_zero(n, m)
-    numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.sin(n * theta) * 
-                        f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
-    denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
-    return numerator / (2 * np.pi * denominator)
-</CodeBlock>
+          def b_nm(n, m, a):
+              z_nm = bessel_derivative_zero(n, m)
+              numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.sin(n * theta) * 
+                                  f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
+              denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
+              return numerator / (2 * np.pi * denominator)
+        </CodeBlock>
   
         <p>
           After calculating the coefficients, the final step is straight forward.
@@ -591,129 +599,130 @@ def b_nm(n, m, a):
           the figure.
         </p>
   
-<CodeBlock language="python"># Plotting function in polar coordinates
-def plot_polar_contour(n_max, m_max, a, resolution=100):
-    r = np.linspace(0, a, resolution)
-    theta = np.linspace(0, 2 * np.pi, resolution)
-    R, Theta = np.meshgrid(r, theta)
-    
-    if n_max &lt; 1 or m_max &lt; 1:
-        print("Columns or lines cannot be less than 1\n")
-        return
+        <CodeBlock language="python" is:raw>
+          # Plotting function in polar coordinates
+          def plot_polar_contour(n_max, m_max, a, resolution=100):
+              r = np.linspace(0, a, resolution)
+              theta = np.linspace(0, 2 * np.pi, resolution)
+              R, Theta = np.meshgrid(r, theta)
 
-    # Define fig and axis
-    fig, axs = plt.subplots(m_max, n_max, figsize=(1.4* n_max, 1.2 * m_max), subplot_kw=
-            &#123;'projection': 'polar'&#125;)
-    
-    for m in range(m_max):
-        for n in range(n_max):
-            Z = u(n, m, R, Theta, a)
-            ax = axs[m, n] if m_max > 1 else axs[n]
-            ax.contour(Theta, R, Z, levels=[0], colors=color, linewidths=thickness)
-            ax.set_xticks([])
-            ax.set_yticks([])
-            ax.grid(False)
-            
-            plot_title = rf"$(n,m) = &#123;n, m&#125;$"
-            if title:
-                ax.set_title(plot_title, fontsize = 9, ha='center', rotation='vertical', 
-                x=-0.1, y=0)
+              if n_max < 1 or m_max < 1:
+                  print("Columns or lines cannot be less than 1\n")
+                  return
 
-    plt.tight_layout()
-    plt.show()
+              # Define fig and axis
+              fig, axs = plt.subplots(m_max, n_max, figsize=(1.4* n_max, 1.2 * m_max), subplot_kw=
+                      {'projection': 'polar'})
 
-plot_polar_contour(columns, rows, a)
-</CodeBlock>
+              for m in range(m_max):
+                  for n in range(n_max):
+                      Z = u(n, m, R, Theta, a)
+                      ax = axs[m, n] if m_max > 1 else axs[n]
+                      ax.contour(Theta, R, Z, levels=[0], colors=color, linewidths=thickness)
+                      ax.set_xticks([])
+                      ax.set_yticks([])
+                      ax.grid(False)
+
+                      plot_title = rf"$(n,m) = {n, m}$"
+                      if title:
+                          ax.set_title(plot_title, fontsize = 9, ha='center', rotation='vertical', 
+                          x=-0.1, y=0)
+
+              plt.tight_layout()
+              plt.show()
+
+          plot_polar_contour(columns, rows, a)
+        </CodeBlock>
         <p>
           Put together all the pieces, and we may arrive at the final code for the
           circular plate, using the 2d wave equation to be:
         </p>
   
-<CodeBox language="python" lineNumbers>
-import matplotlib.pyplot as plt
-import numpy as np
-import scipy.integrate as integrate
-from scipy.special import jn, jnp_zeros
+        <CodeBox language="python" lineNumbers is:raw>
+          import matplotlib.pyplot as plt
+          import numpy as np
+          import scipy.integrate as integrate
+          from scipy.special import jn, jnp_zeros
 
-a = 1.0                 # Radius of the plate
-thickness = 1           # Line thickness
-color = 'darkblue'      # Color
-title = True            # Title?
-columns = 7
-rows = 5
+          a = 1.0                 # Radius of the plate
+          thickness = 1           # Line thickness
+          color = 'darkblue'      # Color
+          title = True            # Title?
+          columns = 7
+          rows = 5
 
-# Function to get the m-th zero of the derivative of the Bessel function of order n
-def bessel_derivative_zero(n, m):
-    if n == 0: #Redefine the first zero of J_0 prime to be 0
-        zeros = list(jnp_zeros(n, m + 1))
-        zeros.insert(0, 0)
-        return zeros[m]
-    else:
-        return jnp_zeros(n, m + 1)[-1]  # Get the m-th zero, treating first zero as the 0th zero
+          # Function to get the m-th zero of the derivative of the Bessel function of order n
+          def bessel_derivative_zero(n, m):
+              if n == 0: #Redefine the first zero of J_0 prime to be 0
+                  zeros = list(jnp_zeros(n, m + 1))
+                  zeros.insert(0, 0)
+                  return zeros[m]
+              else:
+                  return jnp_zeros(n, m + 1)[-1]  # Get the m-th zero, treating first zero as the 0th zero
 
 
-# Initial function f(r, theta)
-def f(r, theta):
-    return r * np.cos(theta)
+          # Initial function f(r, theta)
+          def f(r, theta):
+              return r * np.cos(theta)
 
-# Define the double integrals for coefficients a_nm and b_nm
-def a_nm(n, m, a):
-    z_nm = bessel_derivative_zero(n, m)
-    numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.cos(n * theta) * 
-                        f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
-    denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
-    return numerator / (2 * np.pi * denominator)
+          # Define the double integrals for coefficients a_nm and b_nm
+          def a_nm(n, m, a):
+              z_nm = bessel_derivative_zero(n, m)
+              numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.cos(n * theta) * 
+                                  f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
+              denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
+              return numerator / (2 * np.pi * denominator)
 
-def b_nm(n, m, a):
-    z_nm = bessel_derivative_zero(n, m)
-    numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.sin(n * theta) * 
-                        f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
-    denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
-    return numerator / (2 * np.pi * denominator)
+          def b_nm(n, m, a):
+              z_nm = bessel_derivative_zero(n, m)
+              numerator = integrate.dblquad(lambda theta, r: jn(n, z_nm * r * 1.0/a) * np.sin(n * theta) * 
+                                  f(r, theta) * r, 0, a, lambda r: 0, lambda r: 2 * np.pi)[0]
+              denominator = integrate.quad(lambda r: jn(n, z_nm * r * 1.0/a) ** 2 * r, 0, a)[0]
+              return numerator / (2 * np.pi * denominator)
 
-# Define the function J_n(z_nm * r / a) * (a_nm * cos(n*theta) + b_nm * sin(n*theta))
-def u(n, m, r, theta, a):
-    z_nm = bessel_derivative_zero(n, m)
-    A_nm = a_nm(n, m, a)
-    B_nm = b_nm(n, m, a)
-    return jn(n, z_nm * r * 1.0/a) * (A_nm * np.cos(n * theta) + B_nm * np.sin(n * theta))
+          # Define the function J_n(z_nm * r / a) * (a_nm * cos(n*theta) + b_nm * sin(n*theta))
+          def u(n, m, r, theta, a):
+              z_nm = bessel_derivative_zero(n, m)
+              A_nm = a_nm(n, m, a)
+              B_nm = b_nm(n, m, a)
+              return jn(n, z_nm * r * 1.0/a) * (A_nm * np.cos(n * theta) + B_nm * np.sin(n * theta))
 
-plt.rcParams['mathtext.fontset'] = 'stix'
-plt.rcParams['font.family'] = 'serif'
+          plt.rcParams['mathtext.fontset'] = 'stix'
+          plt.rcParams['font.family'] = 'serif'
 
-# Plotting function in polar coordinates
-def plot_polar_contour(n_max, m_max, a, resolution=100):
-    r = np.linspace(0, a, resolution)
-    theta = np.linspace(0, 2 * np.pi, resolution)
-    R, Theta = np.meshgrid(r, theta)
-    
-    if n_max &lt; 1 or m_max &lt; 1:
-        print("Columns or lines cannot be less than 1\n")
-        return
+          # Plotting function in polar coordinates
+          def plot_polar_contour(n_max, m_max, a, resolution=100):
+              r = np.linspace(0, a, resolution)
+              theta = np.linspace(0, 2 * np.pi, resolution)
+              R, Theta = np.meshgrid(r, theta)
 
-    # Define fig and axis
-    fig, axs = plt.subplots(m_max, n_max, figsize=(1.4* n_max, 1.2 * m_max), subplot_kw=
-            &#123;'projection': 'polar'&#125;)
-    
-    for m in range(m_max):
-        for n in range(n_max):
-            Z = u(n, m, R, Theta, a)
-            ax = axs[m, n] if m_max > 1 else axs[n]
-            ax.contour(Theta, R, Z, levels=[0], colors=color, linewidths=thickness)
-            ax.set_xticks([])
-            ax.set_yticks([])
-            ax.grid(False)
-            
-            plot_title = rf"$(n,m) = &#123;n, m&#125;$"
-            if title:
-                ax.set_title(plot_title, fontsize = 9, ha='center', rotation='vertical', 
-                x=-0.1, y=0)
+              if n_max < 1 or m_max < 1:
+                  print("Columns or lines cannot be less than 1\n")
+                  return
 
-    plt.tight_layout()
-    plt.show()
+              # Define fig and axis
+              fig, axs = plt.subplots(m_max, n_max, figsize=(1.4* n_max, 1.2 * m_max), subplot_kw=
+                      {'projection': 'polar'})
 
-plot_polar_contour(columns, rows, a)
-</CodeBox>
+              for m in range(m_max):
+                  for n in range(n_max):
+                      Z = u(n, m, R, Theta, a)
+                      ax = axs[m, n] if m_max > 1 else axs[n]
+                      ax.contour(Theta, R, Z, levels=[0], colors=color, linewidths=thickness)
+                      ax.set_xticks([])
+                      ax.set_yticks([])
+                      ax.grid(False)
+
+                      plot_title = rf"$(n,m) = {n, m}$"
+                      if title:
+                          ax.set_title(plot_title, fontsize = 9, ha='center', rotation='vertical', 
+                          x=-0.1, y=0)
+
+              plt.tight_layout()
+              plt.show()
+
+          plot_polar_contour(columns, rows, a)
+        </CodeBox>
       </section>
 
     </section>
@@ -755,23 +764,24 @@ plot_polar_contour(columns, rows, a)
           this:
         </p>
   
-<ShellScript>N = 1 | S = 0: [(0, 0)] [1] 
-N = 2 | S = 1: [(0, 1), (1, 0)] [1, 1] 
-N = 3| S = 1: [(0, 1), (1, 0)] [1, -1] 
-N = 4 | S = 2: [(1, 1)] [1] 
-N = 5 | S = 4: [(0, 2), (2, 0)] [1, 1] 
-N = 6 | S = 4: [(0, 2), (2, 0)] [1, -1] 
-N = 7 | S = 5: [(1, 2), (2, 1)] [1, 1] 
-N = 8 | S = 5: [(1, 2), (2, 1)] [1,-1] 
-N = 9 | S = 8: [(2, 2)] [1] 
-N = 10 | S = 9: [(0, 3), (3, 0)] [1, 1]
-N = 11 | S = 9: [(0, 3), (3, 0)] [1, -1] 
-N = 12 | S = 10: [(1, 3), (3, 1)] [1, 1] 
-N = 13 | S = 10: [(1, 3), (3, 1)] [1, -1] 
-N = 14 | S = 13: [(2, 3), (3, 2)] [1, 1] 
-N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1] 
-...and so on</ShellScript
-        >
+        <ShellScript is:raw>
+          N = 1 | S = 0: [(0, 0)] [1] 
+          N = 2 | S = 1: [(0, 1), (1, 0)] [1, 1] 
+          N = 3| S = 1: [(0, 1), (1, 0)] [1, -1] 
+          N = 4 | S = 2: [(1, 1)] [1] 
+          N = 5 | S = 4: [(0, 2), (2, 0)] [1, 1] 
+          N = 6 | S = 4: [(0, 2), (2, 0)] [1, -1] 
+          N = 7 | S = 5: [(1, 2), (2, 1)] [1, 1] 
+          N = 8 | S = 5: [(1, 2), (2, 1)] [1,-1] 
+          N = 9 | S = 8: [(2, 2)] [1] 
+          N = 10 | S = 9: [(0, 3), (3, 0)] [1, 1]
+          N = 11 | S = 9: [(0, 3), (3, 0)] [1, -1] 
+          N = 12 | S = 10: [(1, 3), (3, 1)] [1, 1] 
+          N = 13 | S = 10: [(1, 3), (3, 1)] [1, -1] 
+          N = 14 | S = 13: [(2, 3), (3, 2)] [1, 1] 
+          N = 15 | S = 13: [(2, 3), (3, 2)] [1, -1] 
+          ...and so on
+        </ShellScript>
   
         <p>
           If we continue to set <C>start = 73</C> and <C>end = 144</C>, we will obtain even more mesmerizing patterns like these:

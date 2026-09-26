@@ -337,9 +337,9 @@ use [`C`](#c), which is not a container and is not highlighted.
 | `language` | `string` | `"bash"` |
 | `code` | `string` | — |
 
-`code` replaces the children; use `code={raw`…`}` for the listings in
-[the indentation gotcha](#the-indentation-gotcha). Children must be plain text:
-markup inside a listing fails the build.
+Write the listing with `is:raw` so it can be indented to match the page — see
+[indenting a listing](#the-indentation-gotcha). `code` replaces the children
+with a string (e.g. `code={raw`…`}`).
 
 ### CodeBox
 
@@ -374,7 +374,9 @@ prompts are generated content, so they are never selected or copied.
 ### Sample
 
 Console output or pseudo-code: `<pre class="console"><code>`. **No copy
-button** — deliberately, because the content isn't meant to be run.
+button** — deliberately, because the content isn't meant to be run. Written
+like the highlighted blocks (`is:raw`, indented, `<` literal), but not
+highlighted. The content is plain text, not HTML: tags show as typed.
 
 | Prop | Type | Notes |
 |---|---|---|
@@ -404,8 +406,12 @@ hidden** (`display: none`) — that is not automatic:
   ]}
   tabClass="pseudo-tab"
 >
-<Sample id="Square-Pseudo-Code" class="pseudo-tab" style="margin: 0;" set:html={raw`…`} />
-<Sample id="Circular-Pseudo-Code" class="pseudo-tab" style="margin: 0; display: none;" set:html={raw`…`} />
+  <Sample id="Square-Pseudo-Code" class="pseudo-tab" style="margin: 0;" is:raw>
+    …
+  </Sample>
+  <Sample id="Circular-Pseudo-Code" class="pseudo-tab" style="margin: 0; display: none;" is:raw>
+    …
+  </Sample>
 </TabBox>
 ```
 
@@ -453,30 +459,34 @@ import { raw } from "@components/code/raw.astro";
 
 ### The indentation gotcha
 
-The `<pre>` lives *inside* these components, so slot children are **not**
-whitespace-protected in the calling page, and Astro's HTML compressor collapses
-whitespace that touches a tag. Two shapes lose their indentation as plain
-children:
+The `<pre>` lives *inside* these components, so plain slot children are **not**
+whitespace-protected in the calling page: Astro's HTML compressor collapses
+whitespace that touches a tag, and `{`, `<` are parsed as Astro. That is why a
+plain listing has to start at column 0 against the opening tag, with `<` / `{`
+escaped as `&lt;` / `&#123;`.
 
-- a listing whose **first line is indented** (the leading spaces touch the
-  opening tag), and
-- a listing **containing markup** — `<b>` around pseudo-code keywords, say —
-  where every line's indentation touches a tag.
-
-For `CodeBlock`, `CodeBox` and `ShellScript`, pass the listing through the
-`code` prop with `raw` — it never passes through the compressor, and `<`, `{`
-need no escaping:
+**Add `is:raw` instead.** It is Astro's own directive: the children reach the
+component as literal text — whitespace kept, `<`, `{`, `}` not parsed — and the
+component strips the indentation the lines share. So the block can sit at the
+page's indentation, written exactly as the code reads:
 
 ```astro
-<CodeBox language="python" code={raw`    k = 0
-    while len(equations) < total:
-`} />
+    <p>Here is a minimal program with a definite leak:</p>
+    <CodeBlock language="cpp" is:raw>
+      #include <cstdlib>
+      int main() {
+          return 0;
+      }
+    </CodeBlock>
 ```
 
-(They reject markup outright — there is nothing to highlight in a `<b>`.)
-`Sample`, which does carry markup, takes it through `set:html={raw`…`}`.
+This works the same on `CodeBlock`, `CodeBox`, `ShellScript` and `Sample`.
 
-Listings that start at column 0 and contain no tags are fine as plain children.
+The rule the components apply: a listing that starts on the line **after** its
+opening tag is dedented; one that starts on the tag's own line is taken exactly
+as written, so an excerpt that is deliberately indented stays indented. Inside
+`is:raw`, the one thing to avoid is a literal `&lt;`-style entity in the code —
+it is decoded like an escaped one.
 
 ---
 
@@ -780,9 +790,8 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 
 | Symptom | Cause |
 |---|---|
-| Code loses its indentation | Indented first line — use `code={raw`…`}` ([§3](#the-indentation-gotcha)) |
+| Code loses its indentation, or `{x}` / `<T>` vanish | Plain children — add `is:raw` ([§3](#the-indentation-gotcha)) |
 | Build fails: "Language … not found" | `language` isn't a Shiki language id |
-| Build fails: "Code listing contains HTML markup" | Tags inside a `CodeBlock`/`CodeBox`/`ShellScript` — pass plain text via `code={raw`…`}` |
 | All TabBox panes visible at once | Panes after the first need `display: none` |
 | LaTeX shows up in search results | Display math not wrapped in `<E>` |
 | Backslashes vanish from an equation | LaTeX passed as a quoted attribute instead of `{tex`…`}` |
