@@ -52,7 +52,11 @@ import Table from "@components/article/Table.astro";
       as a sum of squares. If it can be represented as sum(s) of squares, then
       we must search for all possible combinations of $n$ and $m$ such that
     </p>
-    <E>{tex`\begin{equation} n^2 + m^2 = \mathrm{number} \end{equation}`}</E>
+    <E>{tex`
+      \begin{equation}
+        n^2 + m^2 = \mathrm{number}
+      \end{equation}
+    `}</E>
     <p>
       including pairs with zero. The circular wave equation model is simpler
       to implement, as we only need to utilize built-in integration methods,
@@ -222,7 +226,9 @@ import Table from "@components/article/Table.astro";
         computer science. For example, <C>product('ABCD', repeat=2)</C> will output
       </p>
 
-      <ShellScript is:raw>AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD</ShellScript>
+      <ShellScript is:raw>
+        AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD
+      </ShellScript>
 
       <p>
         For our case, <C>.product([1, -1], repeat = (len(pairs) - 1))</C> will generate all possible combinations of 1 and -1 for a length of <C>len(pairs) - 1</C>. We need to use <C>len(pairs) - 1</C> because
@@ -257,7 +263,11 @@ import Table from "@components/article/Table.astro";
         from the <C>generate_sign_combinations</C> function.
         The output is obviously the z-value of the function $u$. For example, if the
         pairs of $n$ and $m$ is given as <C>(n, m) = [[0, 5], [3, 4], [4, 3], [5, 0]]</C>, and the sign combinations is <C>[1, -1, -1]</C>, then the contour equation $u(x, y, t)$ must be
-        <E>{tex`\begin{equation} u(x, y, t_0) = X(x, 0)X(y, 5) - X(x, 3)X(y, 4) - X(x, 4)X(y, 3) - X(x, 5)X(y, 0) = 0 \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u(x, y, t_0) = X(x, 0)X(y, 5) - X(x, 3)X(y, 4) - X(x, 4)X(y, 3) - X(x, 5)X(y, 0) = 0
+          \end{equation}
+        `}</E>
       </p>
 
       <p>
@@ -564,7 +574,12 @@ import Table from "@components/article/Table.astro";
         the rest of the zeroes by one unit. The next step in the algorithm is to
         calculate the coefficients $a_&#123;nm&#125;$ and $b_&#123;nm&#125;$,
       </p>
-      <E>{tex`\begin{align} a_{nm} &= \frac{\langle J_0\cos(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ b_{nm} &= \frac{\langle J_0\sin(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots \end{align}`}</E>
+      <E>{tex`
+        \begin{align}
+          a_{nm} &= \frac{\langle J_0\cos(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\
+          b_{nm} &= \frac{\langle J_0\sin(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots
+        \end{align}
+      `}</E>
       <p>
         We can do this using the built-in methods for double integration: <C>scipy.integrate</C>, <C>dblquad</C>:
       </p>
@@ -856,7 +871,11 @@ import Table from "@components/article/Table.astro";
         table right below. Here, recall from the previous part that the wave
         speed is calculated by the formula
       </p>
-      <E>{tex`\begin{equation} c = \frac{2Lf}{\sqrt{n^2 + m^2}}. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          c = \frac{2Lf}{\sqrt{n^2 + m^2}}.
+        \end{equation}
+      `}</E>
       <p>
         For this experiment, the length of our plate is $24.1\pm 0.1$ cm, and we
         are assuming that the thickness is negligible. For better organization,
@@ -1005,7 +1024,11 @@ import Table from "@components/article/Table.astro";
         From the angular frequency of the plate from the previous part, we can
         easily derive the wave speed equation for the circular plate:
       </p>
-      <E>{tex`\begin{equation} c=\frac{2\pi f r}{z_{nm}} \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          c=\frac{2\pi f r}{z_{nm}}
+        \end{equation}
+      `}</E>
       <p>For our experiment, the plate's radius is $r = 12.1\pm 0.1$ cm.</p>
       <Table id="circle-wave-table">
         <caption>Wave Speed of the Circular Plate</caption>

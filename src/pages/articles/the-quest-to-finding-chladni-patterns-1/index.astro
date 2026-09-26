@@ -109,13 +109,21 @@ import Table from "@components/article/Table.astro";
         By assuming that the plate is supported by tension, one can derive the
         two-dimensional wave equation in the Cartersian coordinate to be
       </p>
-      <E>{tex`\begin{equation} \secondpd{u}{t} = c^2\left(\secondpd{u}{x} + \secondpd{u}{y}\right) +Q(x, y, t),\quad\quad \mathbf{x}\in\Omega \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \secondpd{u}{t} = c^2\left(\secondpd{u}{x} + \secondpd{u}{y}\right) +Q(x, y, t),\quad\quad \mathbf{x}\in\Omega
+        \end{equation}
+      `}</E>
       <p>
         The circular plate is similar, with a slightly different Laplacian
         since we need to convert the wave equation to the polar coordinate
         system:
       </p>
-      <E>{tex`\begin{equation} \nabla^2 := \secondpd{}{r}+\frac{1}{r}\pd{}{r}+\frac{1}{r^2}\secondpd{}{\theta}. \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \nabla^2 := \secondpd{}{r}+\frac{1}{r}\pd{}{r}+\frac{1}{r^2}\secondpd{}{\theta}.
+        \end{equation}
+      `}</E>
       <p>
         In the next <a href="#the-wave-equation-model" class="in-page-link"
           >grand section</a
@@ -169,7 +177,11 @@ import Table from "@components/article/Table.astro";
               proportional to four times the number of rings on the plate
               squared, that is, $f \sim 4n^2$, where $n$ is the number of
               rings (see in Fig. 4). The full formula that he derived is
-              <E>{tex`\begin{equation} f \sim (m+2n)^2, \end{equation}`}</E> where $m$ here is the number of
+              <E>{tex`
+                \begin{equation}
+                  f \sim (m+2n)^2,
+                \end{equation}
+              `}</E> where $m$ here is the number of
               diameter lines. This is called Chladni's law. We don't see any
               $m$'s in the figure below, there is a reason for this, and I'll
               get to that part later.
@@ -242,14 +254,22 @@ import Table from "@components/article/Table.astro";
         The free boundary condition means that there are no forces acting on
         the edges of the plate; that is, expressed mathematically,
       </p>
-      <E>{tex`\begin{equation} \pd{u}{x}(\pm a, y, t) = \pd{u}{y}(x, \pm a, t) = 0 \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \pd{u}{x}(\pm a, y, t) = \pd{u}{y}(x, \pm a, t) = 0
+        \end{equation}
+      `}</E>
       <p>
         which gave us four boundary conditions. The uniqueness of the solution
         requires our equation to have two more initial conditions. Similar to
         ordinary differential equations, these conditions are the initial
         displacement and velocity of the plate at $t=0$. That is,
       </p>
-      <E>{tex`\begin{equation} u(x,y,0) = f(x,y) \quad\text{and}\quad u_t(x,y,0) = g(x,y) \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          u(x,y,0) = f(x,y) \quad\text{and}\quad u_t(x,y,0) = g(x,y)
+        \end{equation}
+      `}</E>
     </section>
 
     <section>
@@ -257,11 +277,23 @@ import Table from "@components/article/Table.astro";
       <p>
         Consider the wave equation on a rectangle $\Omega =
         \&#123;(x,y)\in\R^2\;|\; -a\leq x,y\leq a\&#125;$,
-        <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2u + Q,\quad \mathbf{x}\in\Omega \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u_{tt} = c^2\nabla^2u + Q,\quad \mathbf{x}\in\Omega
+          \end{equation}
+        `}</E>
         with boundary conditions
-        <E>{tex`\begin{equation} u_x(\pm a, y, t) = u_y(x, \pm a, t) = 0 \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u_x(\pm a, y, t) = u_y(x, \pm a, t) = 0
+          \end{equation}
+        `}</E>
         and initial conditions
-        <E>{tex`\begin{equation} u(x,y,0) = f(x,y), \quad\quad u_t(x,y,0) = g(x,y). \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u(x,y,0) = f(x,y), \quad\quad u_t(x,y,0) = g(x,y).
+          \end{equation}
+        `}</E>
       </p>
 
       <p>
@@ -273,9 +305,17 @@ import Table from "@components/article/Table.astro";
         separation of variables. If we assume that $u$ is separable and let
         $u(x,y,t) = X(x)Y(y)T(t)$, the equation becomes
       </p>
-      <E>{tex`\begin{equation} XYT'' = c^2(X''YT + XY''T) \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          XYT'' = c^2(X''YT + XY''T)
+        \end{equation}
+      `}</E>
       <p>Divide both sides by $XYT$, we obtain</p>
-      <E>{tex`\begin{equation} \frac{T''}{c^2T}=\frac{X''}{X}+\frac{Y''}{Y}=-\lambda \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \frac{T''}{c^2T}=\frac{X''}{X}+\frac{Y''}{Y}=-\lambda
+        \end{equation}
+      `}</E>
       <p>
         Notice that
         $\frac&#123;X''&#125;&#123;X&#125;+\frac&#123;Y''&#125;&#123;Y&#125;=-\lambda$
@@ -284,9 +324,18 @@ import Table from "@components/article/Table.astro";
         The two constants above yield two eigenvalue problems with Neumann
         boundary conditions:
       </p>
-      <E>{tex`\begin{align} X''(x)+\mu X(x)&=0, \quad X'(-a)=X'(a)=0 \\ Y''(y)+\nu Y(y)&=0, \quad Y'(-a)=Y'(a)=0, \end{align}`}</E>
+      <E>{tex`
+        \begin{align}
+          X''(x)+\mu X(x)&=0, \quad X'(-a)=X'(a)=0 \\
+          Y''(y)+\nu Y(y)&=0, \quad Y'(-a)=Y'(a)=0,
+        \end{align}
+      `}</E>
       <p>and the time equation yields the third eigenvalue problem:</p>
-      <E>{tex`\begin{equation} T''(t) + c\lambda^2T(t) = 0 \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          T''(t) + c\lambda^2T(t) = 0
+        \end{equation}
+      `}</E>
       <p>
         The detail solution of these eigenvalue problems is beyond the scope
         of this article. For the detail solution, again, please refer to my <a
@@ -297,15 +346,30 @@ import Table from "@components/article/Table.astro";
         problem, since $\lambda = \mu + \nu$. After carrying out all the hard
         work, the eigenvalues for the $X$ and $Y$ equations above are
       </p>
-      <E>{tex`\begin{equation} \mu = \left(\frac{n\pi}{2a}\right)^2 = \left(\frac{n\pi}{L}\right)^2, \quad \nu = \left(\frac{m\pi}{2a}\right)^2 = \left(\frac{m\pi}{L}\right)^2 \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          \mu = \left(\frac{n\pi}{2a}\right)^2 = \left(\frac{n\pi}{L}\right)^2, \quad \nu = \left(\frac{m\pi}{2a}\right)^2 = \left(\frac{m\pi}{L}\right)^2
+        \end{equation}
+      `}</E>
       <p>
         and the solution to the homogeneous equation is the double Fourier
         series
       </p>
-      <E>{tex`\begin{equation} u(x,y,t) = \frac{1}{4}A_{00} + \sum_{n=1}^{\infty}\sum_{m=1}^{\infty}X_n(x)Y_n(y)T_{nm}(t) \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          u(x,y,t) = \frac{1}{4}A_{00} + \sum_{n=1}^{\infty}\sum_{m=1}^{\infty}X_n(x)Y_n(y)T_{nm}(t)
+        \end{equation}
+      `}</E>
       <p>
         where,
-        <E>{tex`\begin{align} X_n(x) &= a_n\cos\left(\frac{n\pi x}{L}\right) + \overline{a_n}\sin\left(\frac{n\pi x}{L}\right)\\[0.5em] Y_m(y) &= a_m\cos\left(\frac{m\pi y}{L}\right) + \overline{a_m}\sin\left(\frac{m\pi y}{L}\right)\\[0.5em] T_{nm}(t) &= A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t)\\[0.5em] \omega &= \frac{\pi}{L}c\sqrt{n^2+m^2}. \end{align}`}</E>
+        <E>{tex`
+          \begin{align}
+            X_n(x) &= a_n\cos\left(\frac{n\pi x}{L}\right) + \overline{a_n}\sin\left(\frac{n\pi x}{L}\right)\\[0.5em]
+            Y_m(y) &= a_m\cos\left(\frac{m\pi y}{L}\right) + \overline{a_m}\sin\left(\frac{m\pi y}{L}\right)\\[0.5em]
+            T_{nm}(t) &= A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t)\\[0.5em]
+            \omega &= \frac{\pi}{L}c\sqrt{n^2+m^2}.
+          \end{align}
+        `}</E>
       </p>
       <p>
         The coefficients $a_n$ and $\overline&#123;a_n&#125;$ are defined as
@@ -313,18 +377,31 @@ import Table from "@components/article/Table.astro";
         (-1)^n&#125;&#123;2&#125;,\overline&#123;a_n&#125; = \frac&#123;1 -
         (-1)^n&#125;&#123;2&#125;$, and,
       </p>
-      <E>{tex`\begin{alignat}{2} A_{nm} &= \frac{4}{L^2}\int_{-L/2}^{L/2}\int_{-L/2}^{L/2} f(x, y)X_n(x)Y_m(y)\;dxdy,\quad && n, m= 0, 1, 2,\ldots\\ B_{nm} &= \frac{4}{L^2} \int_{-L/2}^{L/2}\int_{-L/2}^{L/2} \frac{g(x, y)}{\omega}X_n(x)Y_m(y)\;dxdy,\quad && n, m= 1, 2, 3\ldots \end{alignat}`}</E>
+      <E>{tex`
+        \begin{alignat}{2}
+          A_{nm} &= \frac{4}{L^2}\int_{-L/2}^{L/2}\int_{-L/2}^{L/2} f(x, y)X_n(x)Y_m(y)\;dxdy,\quad && n, m= 0, 1, 2,\ldots\\
+          B_{nm} &= \frac{4}{L^2} \int_{-L/2}^{L/2}\int_{-L/2}^{L/2} \frac{g(x, y)}{\omega}X_n(x)Y_m(y)\;dxdy,\quad && n, m= 1, 2, 3\ldots
+        \end{alignat}
+      `}</E>
       <p>
         The forcing term $Q$ doesn't change the overall shape of the patterns,
         but it does change the displacement of the plate overtime, hence the
         time function $T_&#123;nm&#125;(t)$ becomes
       </p>
-      <E>{tex`\begin{equation} W_{nm}(t) = A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega t-\omega\tau)}{\omega}d\tau \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          W_{nm}(t) = A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega t-\omega\tau)}{\omega}d\tau
+        \end{equation}
+      `}</E>
       <p>
         Here, $q_&#123;nm&#125;$ is a function defined on the disk of radius
         $r$ — the radius of the tip of the wave generator,
       </p>
-      <E>{tex`\begin{equation} q_{nm}(\tau)=\frac{4\alpha}{L^2} \cos(\omega_0 \tau) \iint_{U(r)}X_n(x)Y_m(y)\;dx dy,\quad U(r)=\{(x,y)\in\R^2\;|\; x^2+y^2\leq r^2\} \end{equation}`}</E>
+      <E>{tex`
+        \begin{equation}
+          q_{nm}(\tau)=\frac{4\alpha}{L^2} \cos(\omega_0 \tau) \iint_{U(r)}X_n(x)Y_m(y)\;dx dy,\quad U(r)=\{(x,y)\in\R^2\;|\; x^2+y^2\leq r^2\}
+        \end{equation}
+      `}</E>
     </section>
 
     <section>
@@ -333,9 +410,22 @@ import Table from "@components/article/Table.astro";
         Consider the polar wave equation on a disk $\Omega =
         \&#123;(r,\theta)\in\R^2\;|\; 0 \leq r\leq a, 0 \leq \theta\leq
         2\pi\&#125;,$
-        <E>{tex`\begin{equation} \secondpd{u}{t}=c^2\left(\secondpd{u}{r}+\frac{1}{r}\pd{u}{r}+\frac{1}{r^2}\secondpd{u}{\theta}\right) + Q(r, \theta, t). \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            \secondpd{u}{t}=c^2\left(\secondpd{u}{r}+\frac{1}{r}\pd{u}{r}+\frac{1}{r^2}\secondpd{u}{\theta}\right) + Q(r, \theta, t).
+          \end{equation}
+        `}</E>
         Written in compact form with full boundary conditions:
-        <E>{tex`\begin{equation} \begin{cases} u_{tt} = c^2\lbrac u_{rr} + \dfrac{1}{r}u_r + \dfrac{1}{r^2}u_{\theta\theta}\rbrac + Q, & (r,\theta)\in\Omega\\ u_r(a,\theta, t) = 0\\[0.5em] u(r,\theta, 0) = f(r, \theta)\\[0.5em] u_t(r, \theta, 0) = g(r, \theta) \end{cases} \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            \begin{cases}
+              u_{tt} = c^2\lbrac u_{rr} + \dfrac{1}{r}u_r + \dfrac{1}{r^2}u_{\theta\theta}\rbrac + Q, & (r,\theta)\in\Omega\\
+              u_r(a,\theta, t) = 0\\[0.5em]
+              u(r,\theta, 0) = f(r, \theta)\\[0.5em]
+              u_t(r, \theta, 0) = g(r, \theta)
+            \end{cases}
+          \end{equation}
+        `}</E>
       </p>
 
       <p>
@@ -343,16 +433,33 @@ import Table from "@components/article/Table.astro";
           href="https://www.overleaf.com/read/tgchjdcmwwwp#98e984"
           >hard work</a
         >., we may arrive at the final solution to be
-        <E>{tex`\begin{equation} u(r,\theta, t) = \sum_{n=0}^{\infty}\sum_{m=0}^{\infty}J_n\lbrac kr\rbrac[\Psi_{nm}(\theta)y_1(t) + \Phi_{nm}(\theta)y_2(t)], \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u(r,\theta, t) = \sum_{n=0}^{\infty}\sum_{m=0}^{\infty}J_n\lbrac kr\rbrac[\Psi_{nm}(\theta)y_1(t) + \Phi_{nm}(\theta)y_2(t)],
+          \end{equation}
+        `}</E>
         where
         <E>{tex`
-        \begin{align} \Psi_{nm}(\theta) & = a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)\\ \Phi_{nm}(\theta) &= c_{nm}\cos(n\theta) + d_{nm}\sin(n\theta)\\ y_1(t) &= \alpha\cos(\omega t) + \beta\sin(\omega t) + \int_{0}^{t}p_{nm}(\tau)\frac{\sin(\omega(t-\tau))}{\omega}d\tau\\ y_2(t) &= \gamma\cos(\omega t) + \sigma\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega(t-\tau))}{\omega}d\tau\\ \omega &= \frac{cz_{nm}}{a} = ck. \end{align}
+          \begin{align}
+            \Psi_{nm}(\theta) & = a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)\\
+            \Phi_{nm}(\theta) &= c_{nm}\cos(n\theta) + d_{nm}\sin(n\theta)\\
+            y_1(t) &= \alpha\cos(\omega t) + \beta\sin(\omega t) + \int_{0}^{t}p_{nm}(\tau)\frac{\sin(\omega(t-\tau))}{\omega}d\tau\\
+            y_2(t) &= \gamma\cos(\omega t) + \sigma\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega(t-\tau))}{\omega}d\tau\\
+            \omega &= \frac{cz_{nm}}{a} = ck.
+          \end{align}
         `}</E>
         Here, $z_&#123;nm&#125;$ are the zeros of the m-th derivative of the n-th
         order Bessel function $J_n(x)$. $\alpha, \beta, \gamma, \sigma$ are arbitrary
         constants that satisfies $\alpha + \gamma = 1,$ $\beta + \sigma = 1$, where
         $\alpha^2 + \gamma^2 \neq 0$, $\beta^2 + \sigma^2 \neq 0$, and,
-        <E>{tex`\begin{align} a_{nm} &= \frac{\langle J_0\cos(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ b_{nm} &= \frac{\langle J_0\sin(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ c_{nm} &= \frac{\langle J_0\cos(n\theta), g \rangle_w}{\omega\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) g(r,\theta)r\;drd\theta}{2\pi\omega\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\ d_{nm} &= \frac{\langle J_0\sin(n\theta), g \rangle_w}{\omega\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) g(r,\theta)r\;drd\theta}{2\pi\omega\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots \end{align}`}</E>
+        <E>{tex`
+          \begin{align}
+            a_{nm} &= \frac{\langle J_0\cos(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\
+            b_{nm} &= \frac{\langle J_0\sin(n\theta), f \rangle_w}{\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) f(r,\theta)r\;drd\theta}{2\pi\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\
+            c_{nm} &= \frac{\langle J_0\cos(n\theta), g \rangle_w}{\omega\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\cos(n\theta) g(r,\theta)r\;drd\theta}{2\pi\omega\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots\\
+            d_{nm} &= \frac{\langle J_0\sin(n\theta), g \rangle_w}{\omega\langle J_0, J_0 \rangle_w} = \frac{\int_{0}^{a}\int_{0}^{2\pi}J_n\lbrac kr\rbrac\sin(n\theta) g(r,\theta)r\;drd\theta}{2\pi\omega\int_{0}^{a}J_n^2\lbrac kr\rbrac rdr},\quad n, m = 0, 1, \ldots
+          \end{align}
+        `}</E>
       </p>
     </section>
   </section>
@@ -366,9 +473,20 @@ import Table from "@components/article/Table.astro";
       <p>
         The reason for all those derivations above is to plot our theoretical
         patterns. Recall that our final solution is derived as
-        <E>{tex`\begin{equation} u(x, y, t) = \frac{1}{4}A_{00} + \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} X_n(x)Y_m(y)W_{nm}(t), \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u(x, y, t) = \frac{1}{4}A_{00} + \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} X_n(x)Y_m(y)W_{nm}(t),
+          \end{equation}
+        `}</E>
         where
-        <E>{tex`\begin{align} X_n(x) &= a_n\cos\left(\frac{n\pi x}{L}\right) + \overline{a_n}\sin\left(\frac{n\pi x}{L}\right)\\ Y_m(y) &= a_m\cos\left(\frac{m\pi y}{L}\right) + \overline{a_m}\sin\left(\frac{m\pi y}{L}\right)\\ W_{nm}(t) &= A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega t-\omega\tau)}{\omega}d\tau\\ \omega &= \frac{\pi}{L}c\sqrt{n^2+m^2} \end{align}`}</E>
+        <E>{tex`
+          \begin{align}
+            X_n(x) &= a_n\cos\left(\frac{n\pi x}{L}\right) + \overline{a_n}\sin\left(\frac{n\pi x}{L}\right)\\
+            Y_m(y) &= a_m\cos\left(\frac{m\pi y}{L}\right) + \overline{a_m}\sin\left(\frac{m\pi y}{L}\right)\\
+            W_{nm}(t) &= A_{nm}\cos(\omega t) + B_{nm}\sin(\omega t) + \int_{0}^{t}q_{nm}(\tau)\frac{\sin(\omega t-\omega\tau)}{\omega}d\tau\\
+            \omega &= \frac{\pi}{L}c\sqrt{n^2+m^2}
+          \end{align}
+        `}</E>
       </p>
 
       <p>
@@ -383,7 +501,11 @@ import Table from "@components/article/Table.astro";
             that it does not matter that much for the overall shape of the
             plot, but it only affects the insignificant microscopic height of
             the plate. The solution is now simplified to
-            <E>{tex`\begin{equation} u(\mathbf{x}, t) = \sum_{n\geq 0}\sum_{m\geq 0}X_n(x)Y_m(y)A_{nm}\cos(\omega t). \end{equation}`}</E>
+            <E>{tex`
+              \begin{equation}
+                u(\mathbf{x}, t) = \sum_{n\geq 0}\sum_{m\geq 0}X_n(x)Y_m(y)A_{nm}\cos(\omega t).
+              \end{equation}
+            `}</E>
           </li>
           <li>
             For the initial condition $f(x,y)$, we can pick a function
@@ -402,7 +524,11 @@ import Table from "@components/article/Table.astro";
             $u(\mathbf&#123;x&#125;, t) = 0$, the coefficients
             $A_&#123;nm&#125;$ will be cancelled out, leaving us with the
             contour equation
-            <E>{tex`\begin{equation} u(\mathbf{x}, t) = \sum_{n\geq 0}\sum_{m\geq 0}X_n(x)Y_m(y) = 0. \end{equation}`}</E>
+            <E>{tex`
+              \begin{equation}
+                u(\mathbf{x}, t) = \sum_{n\geq 0}\sum_{m\geq 0}X_n(x)Y_m(y) = 0.
+              \end{equation}
+            `}</E>
           </li>
         </ul>
       </p>
@@ -417,7 +543,11 @@ import Table from "@components/article/Table.astro";
         <ul style="line-height: 1.6;">
           <li>
             Recall that we derived our angular frequency to be
-            <E>{tex`\begin{equation} \omega = \frac{\pi c}{L}\sqrt{n^2 + m^2}. \end{equation}`}</E>
+            <E>{tex`
+              \begin{equation}
+                \omega = \frac{\pi c}{L}\sqrt{n^2 + m^2}.
+              \end{equation}
+            `}</E>
             What we are really interested in is not the general super-position solution,
             but solutions at certain frequencies $\omega$. After all, each frequencies
             must only correspond to some certain shape of the plate. This means
@@ -432,12 +562,20 @@ import Table from "@components/article/Table.astro";
             $|A_&#123;nm&#125;|$ in absolute value, so negative coefficients
             are possible. The two equations that describe the Chladni pattern
             found at this frequency are
-            <E>{tex`\begin{equation} X_1(x)Y_2(y) \pm X_2(x)Y_1(y)=0, \end{equation}`}</E>
+            <E>{tex`
+              \begin{equation}
+                X_1(x)Y_2(y) \pm X_2(x)Y_1(y)=0,
+              \end{equation}
+            `}</E>
             For equations with more sum of squares combinations, there will be more
             combinations for a single mode. For example, for $\omega = \frac&#123;\pi
             c&#125;&#123;L&#125;\sqrt&#123;65&#125;$, all the possible implicit
             functions are
-            <E>{tex`\begin{equation} X_1(x)Y_8(y) \pm X_4(x)Y_7(y) \pm X_7(x)Y_4(y) \pm X_8(x)Y_1(y) =0\ \end{equation}`}</E>
+            <E>{tex`
+              \begin{equation}
+                X_1(x)Y_8(y) \pm X_4(x)Y_7(y) \pm X_7(x)Y_4(y) \pm X_8(x)Y_1(y) =0\
+              \end{equation}
+            `}</E>
             We need not consider the first term due to symmetry. In general, if
             there are $N$ terms in the equation, there will be a total of $2^&#123;N-1&#125;$
             possible plots.
@@ -451,11 +589,19 @@ import Table from "@components/article/Table.astro";
             since we don't know what $f(x,y)$ is, we also don't know whether $A_&#123;00&#125;$
             is 0. If it's zero, then we just plot the regular pairs $(3, 4)$ and
             $(4, 3)$,
-            <E>{tex`\begin{equation} X_3(x)Y_4(y) + X_4(x)Y_3(y)=0,\quad\text{and}\quad X_3(x)Y_4(y) - X_4(x)Y_3(y)=0. \end{equation}`}</E>
+            <E>{tex`
+              \begin{equation}
+                X_3(x)Y_4(y) + X_4(x)Y_3(y)=0,\quad\text{and}\quad X_3(x)Y_4(y) - X_4(x)Y_3(y)=0.
+              \end{equation}
+            `}</E>
             If $A_&#123;00&#125;$ is not zero, meaning that the summation actually
             starts at index $(n,m)=(0,0)$, then we also need to consider eight other
             patterns
-            <E>{tex`\begin{equation} X_0(x)Y_5(y) \pm X_3(x)Y_4(y) \pm X_4(x)Y_3(y) \pm X_5(x)Y_0(y) =0. \end{equation}`}</E>
+            <E>{tex`
+              \begin{equation}
+                X_0(x)Y_5(y) \pm X_3(x)Y_4(y) \pm X_4(x)Y_3(y) \pm X_5(x)Y_0(y) =0.
+              \end{equation}
+            `}</E>
             In total, for the case of $S = 25$, there will be a total of $2+8=10$
             plots.
           </li>
@@ -538,9 +684,19 @@ import Table from "@components/article/Table.astro";
         The circular plate is a bit easier, since we don't need to design an
         algorithm to search for sum of squares and perfect squares exceptions.
         Recall that for a circular plate,
-        <E>{tex`\begin{equation} u(r,\theta, t) = \sum_{n=0}^{\infty}\sum_{m=0}^{\infty}J_n\lbrac kr\rbrac[\Psi_{nm}(\theta)y_1(t) + \Phi_{nm}(\theta)y_2(t)], \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u(r,\theta, t) = \sum_{n=0}^{\infty}\sum_{m=0}^{\infty}J_n\lbrac kr\rbrac[\Psi_{nm}(\theta)y_1(t) + \Phi_{nm}(\theta)y_2(t)],
+          \end{equation}
+        `}</E>
         where
-        <E>{tex`\begin{align} \Psi_{nm}(\theta) & = a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)\\ \Phi_{nm}(\theta) &= c_{nm}\cos(n\theta) + d_{nm}\sin(n\theta)\\ \omega &= \frac{cz_{nm}}{a} = ck \end{align}`}</E>
+        <E>{tex`
+          \begin{align}
+            \Psi_{nm}(\theta) & = a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)\\
+            \Phi_{nm}(\theta) &= c_{nm}\cos(n\theta) + d_{nm}\sin(n\theta)\\
+            \omega &= \frac{cz_{nm}}{a} = ck
+          \end{align}
+        `}</E>
       </p>
 
       <p>
@@ -549,14 +705,22 @@ import Table from "@components/article/Table.astro";
         circular plate is easier to implement because we don't have to search
         for any sum of squares, so each Chladni pattern is simply a pair of
         arbitrary $n$ and $m$. The equations that we need to plot are simply
-        <E>{tex`\begin{equation} u_{nm}(r, \theta, 0) = J_{n}(kr)[a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)] \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            u_{nm}(r, \theta, 0) = J_{n}(kr)[a_{nm}\cos(n\theta) + b_{nm}\sin(n\theta)]
+          \end{equation}
+        `}</E>
         There is one thing to note, however. Unlike the square plate, the coefficient
         that constitutes the pattern depends on the initial function $f(r,\theta)$,
         but after testing out various functions $f(r,\theta)$, I noticed that it
         doesn't actually do anything to the contour plot at $z=0$, only the plot
         in three dimensions. Therefore, for this particular equation, I just choose
         an arbitrary function $f(r,\theta)$ to be
-        <E>{tex`\begin{equation} f(r,\theta) = r\cos(\theta) \end{equation}`}</E>
+        <E>{tex`
+          \begin{equation}
+            f(r,\theta) = r\cos(\theta)
+          \end{equation}
+        `}</E>
       </p>
 
       <span style="font-weight: bold; font-size: 18px; margin: 30px 0;"
