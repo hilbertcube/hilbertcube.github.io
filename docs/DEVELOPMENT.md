@@ -80,8 +80,9 @@ buttons, TOC highlighting, the banner canvas — and the image lightbox, which i
 `Lightbox.astro`, which lazy-loads yet-another-react-lightbox from
 `lightbox/viewer.ts` on the first image click). `public/assets/js/scripts.js` holds only the two site-wide
 behaviours that have no owning component: smooth anchor scrolling, and opening
-body links in a new window — an unclassed `<a>` inside `.content-grid` (or one
-with `class="wrap"`), the same set `css/base/_typography.css` styles as a link.
+body links in a new window — an unclassed `<a>` inside `.content-grid` (the page
+body column `BaseLayout` wraps every page in), or one
+with `class="wrap"` — the same set `css/base/_typography.css` styles as a link.
 
 ---
 
@@ -119,7 +120,9 @@ reference them as `/articles/<slug>/<file>.webp` through `<Figure>`.
 
 **Page conventions** beyond the components themselves:
 
-- Wrap the body in a single `<div class="content-grid">`.
+- Don't wrap the body in `<div class="content-grid">`: `BaseLayout` puts the
+  default slot in that column itself. Full-width content above the column (the
+  homepage banner) goes in the `hero` slot: `<Banner slot="hero" />`.
 - Don't give `<section>`s an `id`: the build generates one from each section's
   heading (§3.1), and that is what the Table of Contents and search deep links
   anchor to.

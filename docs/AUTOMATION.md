@@ -58,6 +58,23 @@ python3 scripts/convert-code-blocks.py src/pages/posts/linux-setup/index.astro
 python3 scripts/convert-code-blocks.py src/pages/posts/linux-setup/index.astro --apply
 ```
 
+#### Page Indentation
+```bash
+# Preview: list pages whose markup isn't indented by nesting (2 spaces)
+python3 scripts/reindent-pages.py
+
+# Apply in-place (optionally pass specific pages instead of all of them)
+python3 scripts/reindent-pages.py --apply
+python3 scripts/reindent-pages.py src/pages/articles/my-slug/index.astro --apply
+```
+
+With no pages given, it covers every page that uses `BaseLayout`. It only
+changes leading whitespace in the template, never the frontmatter.
+Multi-line tags, `{…}` expressions, `<style>`/`<script>` and `is:raw` listings
+move as a block. Listings without `is:raw` (and `<pre>`) stay byte-for-byte,
+since their whitespace is content. A page whose tags don't balance is reported
+as `SKIP` and left alone.
+
 `convert-code-blocks.py` converts raw `<div class="code-container">` blocks
 into `<ShellScript>` (command-line prompts) or `<CodeBlock>` (generic code /
 config) Astro components. Imports are added automatically.

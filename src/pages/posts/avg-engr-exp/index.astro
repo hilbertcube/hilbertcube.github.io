@@ -16,23 +16,21 @@ import Figure from "@components/article/Figure.astro";
   description="This is the homepage"
   keywords="math, physics, programming, coding, computer science"
 >
-  <div class="content-grid">
-    <header>
-      <TopicTags />
-      <PageTitle />
-      <PubDate />
-    </header>
+  <header>
+    <TopicTags />
+    <PageTitle />
+    <PubDate />
+  </header>
 
-    <section>
-      <p>
-        Conversation from a group project for this class (electrical circuits).
-      </p>
-      <Figure
-        src="/posts/avg-engr-exp/engineering.webp"
-        alt="Average Engineering Experience"
-        maxWidth="520px"
-      />
-      <p>Experience rating: absolute dog water</p>
-    </section>
-  </div>
+  <section>
+    <p>
+      Conversation from a group project for this class (electrical circuits).
+    </p>
+    <Figure
+      src="/posts/avg-engr-exp/engineering.webp"
+      alt="Average Engineering Experience"
+      maxWidth="520px"
+    />
+    <p>Experience rating: absolute dog water</p>
+  </section>
 </BaseLayout>

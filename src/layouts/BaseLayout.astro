@@ -143,13 +143,17 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
     </nav>
 
     <main class="general-wrapper" data-pagefind-body>
-      <!-- Page-specific content goes here (rendered in the frontmatter above) -->
-      <Fragment set:html={body} />
+      <!-- Full-width content above the column (e.g. the homepage banner) -->
+      <slot name="hero" />
 
-      {
-        isArticle && (
-          <div class="content-grid" style="margin-top: -100px" data-pagefind-ignore>
-            <section>
+      <!-- The page body (rendered in the frontmatter above) sits in the centred
+           content column; pages don't write this wrapper themselves. -->
+      <div class="content-grid">
+        <Fragment set:html={body} />
+
+        {
+          isArticle && (
+            <section data-pagefind-ignore>
               <h2>More Articles</h2>
               <ArticleCards
                 count={4}
@@ -158,9 +162,9 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
                 excludePath={Astro.url.pathname.replace(/\/$/, "")}
               />
             </section>
-          </div>
-        )
-      }
+          )
+        }
+      </div>
 
       <footer data-pagefind-ignore>
         <Footer />

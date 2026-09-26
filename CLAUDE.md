@@ -23,6 +23,7 @@ its metadata lives separately in `src/data/pages.json`.
 | `npm run preview` | Serves built `dist/`. Use `npm run build && npm run preview` to test anything search-, math-exclusion- or final-HTML-related. |
 | `npm run check` | `astro check` — TypeScript/Astro diagnostics. This is the only "test" gate. |
 | `./scripts/new-article.sh -t article -s <slug> --title "…"` | Scaffolds the page **and** the `pages.json` entry. Both are required. |
+| `python3 scripts/reindent-pages.py [--apply]` | Re-indents page markup by nesting (2 spaces); dry-run without `--apply`. Leading whitespace only. |
 | `./scripts/commit.sh "msg"` | pull `main` → `add .` → commit → push. |
 
 `npm test` is an unimplemented stub — there is no test suite. Verification is
@@ -117,7 +118,9 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
 
 - **Always import through the path aliases** (`@layouts`, `@components`, `@utils`, `@data`,
   `@assets` — see `tsconfig.json`), never relative paths.
-- Wrap a page body in a single `<div class="content-grid">`. Don't write `id`s on `<section>`s:
+- Don't wrap a page body in `<div class="content-grid">` — `BaseLayout` puts the default
+  slot in that column itself (full-width content above it goes in the `hero` slot, as the
+  homepage `<Banner slot="hero" />` does). Don't write `id`s on `<section>`s:
   `BaseLayout` generates one at build time from each section's heading (or `data-toc` label)
   via `assignSectionIds()` in `src/utils/toc.ts` — "Data Analysis" → `#data-analysis`. The TOC
   and search deep links anchor to those, so rewording a heading changes its URL fragment.
