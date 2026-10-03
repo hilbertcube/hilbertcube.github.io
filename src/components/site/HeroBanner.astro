@@ -1,0 +1,209 @@
+---
+/**
+ * HeroBanner.astro
+ * ================
+ * Page hero shared by the homepage and the About page: the site title, tagline
+ * and a caption on a dark panel at the left, and a piece of animated maths art
+ * filling the rest. The art and its caption are picked by `art`; each art
+ * component lives in site/canvas/ with its own script and styles.
+ *
+ *   gradient  GradientCanvas — fills the whole banner, behind an opaque panel.
+ *   preprint  PreprintFigure — sits beside the panel. Below 860px, with no
+ *             room beside it, it moves behind the panel instead.
+ *
+ * Wherever the panel spans the banner (phones, and "beside" art below 860px)
+ * it turns translucent, so the art still shows through — less so for "beside"
+ * art, whose thin lines would vanish under the gradient field's veil.
+ *
+ * Always dark, whatever the site theme.
+ */
+import GradientCanvas from "@components/site/canvas/GradientCanvas.astro";
+import PreprintFigure from "@components/site/canvas/PreprintFigure.astro";
+
+interface Props {
+  art: "gradient" | "preprint";
+}
+
+const ARTS = {
+  gradient: {
+    Art: GradientCanvas,
+    placement: "behind",
+    caption: ["Gradient lines of u, a drifting sum of Neumann modes.", "Each one runs parallel to the walls it meets."],
+  },
+  preprint: {
+    Art: PreprintFigure,
+    placement: "beside",
+    caption: ["Heat in an insulated rod.", "Every curve meets the walls flat: ∂u/∂n = 0."],
+  },
+} as const;
+
+const { Art, placement, caption } = ARTS[Astro.props.art];
+---
+
+<div class={`hero-banner ${placement}`} data-pagefind-ignore="all">
+  <div class="panel">
+    <div class="intro">
+      <div class="banner-title">neumann<span>condition</span></div>
+      <div class="rule"></div>
+      <div class="tagline">Notes on math, programming, &amp; physics.</div>
+    </div>
+    <div class="caption">
+      {caption[0]}<br />
+      {caption[1]}
+    </div>
+  </div>
+  <div class="art">
+    <Art />
+  </div>
+</div>
+
+<style>
+  .hero-banner {
+    --hero-bg: #0f1014;
+    --hero-faint: #8c8f99;
+    --hero-line: #2a2c33;
+    /* --hero-bg, for a panel over the art. The dense gradient field takes a
+       heavy veil; the thin lines of "beside" art vanish under one. */
+    --hero-veil: rgba(15, 16, 20, 0.78);
+    --hero-veil-light: rgba(15, 16, 20, 0.45);
+
+    position: relative;
+    display: grid;
+    /* The panel is sized to its content: Computer Modern Bold is wide, and a
+       fixed width let the title spill onto the art. gradientCanvas.ts watches
+       this width. */
+    grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+    height: 380px;
+    overflow: hidden;
+    background: var(--hero-bg);
+    color: #ffffff;
+    font-family: "Computer-Modern", serif;
+  }
+
+  .panel {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    height: 100%;
+    /* The top padding is generous on purpose: it holds the title where it sat
+       when a formula line stood above it. */
+    padding: 91px 48px 40px 72px;
+    background: var(--hero-bg);
+    border-right: 1px solid var(--hero-line);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .banner-title {
+    font-size: 52px;
+    line-height: 1;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .banner-title span {
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  .rule {
+    width: 56px;
+    height: 3px;
+    background: #ca0000;
+  }
+
+  .tagline {
+    font-size: 20px;
+    line-height: 1.45;
+    color: #c6c6ce;
+  }
+
+  .caption {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--hero-faint);
+  }
+
+  .art {
+    min-width: 0;
+    height: 100%;
+  }
+
+  /* The art spans the banner, out of the grid, under the panel. */
+  .behind .art {
+    position: absolute;
+    inset: 0;
+  }
+
+  @media all and (max-width: 1080px) {
+    .hero-banner {
+      height: 360px;
+    }
+
+    .panel {
+      padding: 75px 36px 32px 40px;
+    }
+
+    .banner-title {
+      font-size: 46px;
+    }
+  }
+
+  /* Too narrow for art beside the panel: the panel takes the banner and the
+     art moves behind it. */
+  @media all and (max-width: 860px) {
+    .beside {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .beside .panel {
+      border-right: 0;
+      background: var(--hero-veil-light);
+    }
+
+    .beside .art {
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  /* Phones: the panel spans the banner, translucent over art behind it. */
+  @media all and (max-width: 580px) {
+    .hero-banner {
+      grid-template-columns: minmax(0, 1fr);
+      height: 240px;
+    }
+
+    .panel {
+      padding: 55px 16px 20px;
+      border-right: 0;
+    }
+
+    .behind .panel {
+      background: var(--hero-veil);
+    }
+
+    .intro {
+      gap: 12px;
+    }
+
+    .banner-title {
+      font-size: min(34px, 9vw);
+    }
+
+    .tagline {
+      font-size: 16px;
+    }
+
+    .caption {
+      font-size: 13px;
+    }
+  }
+</style>

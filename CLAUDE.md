@@ -120,7 +120,7 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   `@assets` — see `tsconfig.json`), never relative paths.
 - Don't wrap a page body in `<div class="content-grid">` — `BaseLayout` puts the default
   slot in that column itself (full-width content above it goes in the `hero` slot, as the
-  homepage `<Banner slot="hero" />` does). Don't write `id`s on `<section>`s:
+  homepage `<HeroBanner slot="hero" art="gradient" />` does). Don't write `id`s on `<section>`s:
   `BaseLayout` generates one at build time from each section's heading (or `data-toc` label)
   via `assignSectionIds()` in `src/utils/toc.ts` — "Data Analysis" → `#data-analysis`. The TOC
   and search deep links anchor to those, so rewording a heading changes its URL fragment.

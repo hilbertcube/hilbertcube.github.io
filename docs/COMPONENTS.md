@@ -50,7 +50,7 @@ rules live in `src/assets/css/`, not in components.
 
 **Two kinds of `<script>`.** A bare `<script>` in a component is bundled and
 hoisted by Astro — it ships once, module-scoped, and is how `TabBox`,
-`CopyButton`, `TableOfContents`, `TopBar`, `Lightbox`, `Banner` and
+`CopyButton`, `TableOfContents`, `TopBar`, `Lightbox`, `GradientCanvas`, `PreprintFigure` and
 `HighlightsAndAttribute` get their behaviour. `<script is:inline>` opts out of
 bundling and is reserved for what must run before first paint (`BaseLayout`'s
 dark-mode / code-theme snippet) and third-party assets loaded by URL (Google
@@ -177,7 +177,7 @@ rule that articles used to repeat in their own `<style>` blocks.
 | `fetchpriority` | `"high" \| "low" \| "auto"` | `"high"` | It's the LCP image on most articles. |
 
 Children become the caption. Article front images **do** open in the lightbox —
-`Lightbox.astro` uses a blacklist (`#logoImage`, `#home-banner img`,
+`Lightbox.astro` uses a blacklist (`#logoImage`,
 `.recommend-img img`, `.no-lightbox`), so add `no-lightbox` to opt an image out. The viewer itself is
 yet-another-react-lightbox, mounted with plain React from
 `components/site/lightbox/viewer.ts` — no React integration, no island.
@@ -646,17 +646,101 @@ under it, and the collapsible sidebar navigation list.
 Copyright with the current year, privacy-policy and license links, and the
 social row. No props.
 
-### Banner
+### HeroBanner
 
-The home/about banner: a `<canvas>` on the left, the banner image and site title
-on the right.
+The hero of the homepage and the About page, in the `hero` slot:
+`<HeroBanner slot="hero" art="gradient" />` / `<HeroBanner slot="hero" art="preprint" />`.
+The left is a shared dark panel (title, red rule, tagline and a monospace
+caption), sized to its content; the rest is a piece of animated maths art. Each
+`art` value picks an art component in `site/canvas/`, its caption (in the `ARTS`
+table at the top of `HeroBanner.astro`) and where it sits:
 
-### bannerCanvas.ts
+| `art` | Component | Placement |
+|---|---|---|
+| `"gradient"` | `GradientCanvas` | **behind**: fills the whole banner under the opaque panel. |
+| `"preprint"` | `PreprintFigure` | **beside**: a second grid column. Below 860px, with no room beside the panel, it moves behind it. |
 
-The canvas animation behind `Banner`. Equation SVGs drift and bounce inside the
-frame, respawn when they leave it, and a click drops a temporary extra one at
-the pointer (`ADDED_LIFETIME_MS`). Speed, rotation, target FPS and the SVG list
-are constants at the top of the file.
+Wherever the panel spans the banner (phones, and "beside" art below 860px) it
+turns translucent, so the art shows through behind the title: `--hero-veil`
+(78%) over the dense gradient field, `--hero-veil-light` (45%) over "beside" art,
+whose thin lines all but vanish under the heavier one.
+
+Three more arts in `site/canvas/`, `EquationsCanvas`, `MazeCanvas` and
+`FluidCanvas`, are not registered yet (see their sections below).
+
+The banner is always dark (`--hero-*` properties), whatever the site theme, and
+carries `data-pagefind-ignore="all"`, so its copy stays out of search.
+
+**Adding an art.** Write a component in `site/canvas/` whose canvas or SVG fills
+its box (`width`/`height: 100%`, measured from its own CSS box, transparent
+where it draws nothing), then add an entry to `ARTS`. `EquationsCanvas`,
+`MazeCanvas` and `FluidCanvas` are built this way and ready to plug in as
+`"beside"` arts; each one's header comment has the `ARTS` entry to paste. Their
+scripts share `watchCanvas.ts` for the wiring: resizes coalesced to one per
+frame, and whether the canvas is on screen and in a visible tab. Every
+registered art's script lands on both pages (one module graph) and returns
+early when its markup is absent, so register only the arts in use.
+
+#### GradientCanvas
+
+A `<canvas>` animating short gradient lines of
+u = Σ cⱼ(t)·cos(pⱼπx/a)·cos(qⱼπy): three Neumann modes on the banner's own
+rectangle mixed by slowly beating coefficients cⱼ(t) = cos(ωⱼt + φⱼ). Every mix
+keeps ∂u/∂n = 0, so the lines stay parallel to the walls as the pattern drifts;
+red dots track the local maxima. It skips the columns hidden behind the panel,
+which it finds as the `.panel` of its enclosing `.hero-banner`.
+
+| File | Role |
+|---|---|
+| `gradientField.ts` | The maths and the draw loop (`createRenderer`). The modes' cos/sin are tabulated per pixel column/row on resize, so a frame is table lookups and ~16 batched strokes. Resizes animate: while the size is changing the field is rebuilt each frame with its mode numbers kept, so it stretches smoothly; once settled, a change of mode numbers crossfades over `CROSSFADE_MS`. The backing store is reallocated only for a settled size (mid-resize the frame is scaled into the old one): reallocating on every frame of the sidebar slide froze the banner in Chrome for seconds. The loop is paced by `requestAnimationFrame` (worker-side where supported), throttled to `DESIRED_FPS`; while it runs, a resize only queues the latest size, which the next frame applies and draws, so a slide gets one draw per display frame rather than doubled, uneven ones. Seeds jitter by a hash of their grid cell, so they stay put as the width changes. |
+| `gradientWorker.ts` | Runs that renderer on an `OffscreenCanvas`, off the main thread. Drawing on the main thread made the sidebar toggle stutter. Contexts are created with `CONTEXT_OPTIONS` (`willReadFrequently`), which keeps Chrome on a CPU canvas: its default GPU canvas is slow at thousands of thin translucent strokes, so the banner lagged in Chrome only. |
+| `gradientCanvas.ts` | Page side: transfers the canvas to the worker (or falls back to the main thread without `OffscreenCanvas`), measures it — every frame of a resize with the worker, plus a settled size `RESIZE_SETTLE_MS` after it stops (only the settled one on the fallback) — and reports visibility and reduced motion. It idles off-screen or in a hidden tab, and shows one still frame under reduced motion. |
+
+#### PreprintFigure
+
+"Fig. 1" — heat in an insulated rod, as an SVG. `preprintFigure.ts` holds the
+figure's geometry and maths: the frontmatter uses it to draw a still frame at
+build time (what reduced-motion and no-JS readers see), and its
+`initPreprintFigure()` animates that SVG — a live curve cools from the red t = 0
+profile with a running clock until it reaches equilibrium — the time
+`equilibriumTime()` computes for that profile, when it is flat to within
+`EQUILIBRIUM_PX` — leaving traces at `TRACE_FRACTIONS` of it, then the plot fades
+and restarts from a random cosine profile. Elements it updates carry `data-fig`.
+It idles off-screen and in a hidden tab.
+
+#### EquationsCanvas (not in use)
+
+Equation SVGs from `public/media/banner-svg/` drift and bounce inside the box,
+and a click drops a temporary extra one at the pointer (`ADDED_LIFETIME_MS`).
+`equationsCanvas.ts` rasterises each SVG once into an offscreen canvas at its
+on-screen size, so a frame only blits bitmaps. Speed, rotation, target FPS and
+the SVG list are constants at the top of the file.
+
+#### MazeCanvas (not in use)
+
+A maze inside a new random blob outline each cycle, in two phases. **Build:** Wilson's algorithm carves the maze
+out of a full grid of walls — loop-erased random walks (drawn in blue), each
+carved in cell by cell when it hits the maze, giving a uniformly random spanning
+tree. A few extra walls are then knocked out so heat can loop. **Heat:** a source
+cell is held at T = 1 and the discrete heat equation (`T ← T + α·ΔT`) spreads it
+through the corridors, coloured blue → green → yellow on a log scale. When the farthest cell warms
+up the field freezes; then hold, fade, and build again. A click moves the heat source, finishing the build first if needed.
+`BUILD_SPEED` paces the whole build; `HEAT_MS` the heat. The canvas is
+transparent around the maze and fades to transparent between cycles.
+
+#### FluidCanvas (not in use)
+
+Jos Stam's stable fluids on a coarse grid (one cell per
+`CELL_PX`, clamped to `MIN_COLS`–`MAX_COLS`), drawn 1:1 into an offscreen canvas
+and upscaled with smoothing. Three emitters on Lissajous paths push the fluid
+along their direction of travel and drop blue, green and purple dye; each step
+adds vorticity confinement, projects, self-advects velocity, projects again and
+advects the dye. `SQUARE_COUNT` black squares at random angles (re-scattered on
+resize) are solid obstacles: velocity and dye are zeroed inside, and the pressure
+solve treats their faces as walls, so the flow parts around them. Moving the
+pointer over the canvas stirs it. Under reduced
+motion it simulates `PRERUN_SECONDS` up front and shows that still. Dye is drawn
+with alpha, so the banner's background shows where there is none.
 
 ### HighlightsAndAttribute
 

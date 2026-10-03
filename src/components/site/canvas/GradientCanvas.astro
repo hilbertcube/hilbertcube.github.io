@@ -1,0 +1,26 @@
+---
+/**
+ * GradientCanvas.astro
+ * ====================
+ * HeroBanner's "gradient" art: animated gradient lines of a drifting sum of
+ * Neumann modes, drawn by gradientCanvas.ts. It fills the whole banner, behind
+ * the title panel. No props.
+ */
+---
+
+<canvas id="gradientCanvas" aria-hidden="true"></canvas>
+
+<script>
+  import { initGradientCanvas } from "./gradientCanvas";
+  initGradientCanvas();
+</script>
+
+<style>
+  /* Sized in CSS; gradientCanvas.ts sets the backing store from this box at
+     the device pixel ratio and rebuilds its tables when it changes. */
+  #gradientCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

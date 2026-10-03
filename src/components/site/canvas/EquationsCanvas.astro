@@ -1,0 +1,36 @@
+---
+/**
+ * EquationsCanvas.astro
+ * =====================
+ * HeroBanner art, not in use yet: equation SVGs (public/media/banner-svg/)
+ * drifting and bouncing off the edges; a click drops a temporary extra one
+ * (equationsCanvas.ts). They roam the whole box, so it is a "beside" art: an
+ * opaque panel over it would hide them. To plug it in, add it to HeroBanner's
+ * ARTS table:
+ *
+ *   equations: {
+ *     Art: EquationsCanvas,
+ *     placement: "beside",
+ *     caption: ["A few favourite equations.", "Each one bounces off the walls."],
+ *   },
+ *
+ * No props.
+ */
+---
+
+<canvas id="equationsCanvas" aria-hidden="true"></canvas>
+
+<script>
+  import { initEquationsCanvas } from "./equationsCanvas";
+  initEquationsCanvas();
+</script>
+
+<style>
+  /* Sized in CSS; equationsCanvas.ts sets the backing store from this box at
+     the device pixel ratio and re-rasterises the SVGs when the scale changes. */
+  #equationsCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

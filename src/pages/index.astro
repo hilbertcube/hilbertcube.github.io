@@ -5,7 +5,7 @@
  * Homepage — migrated from /index.html
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/site/Banner.astro";
+import HeroBanner from "@components/site/HeroBanner.astro";
 import ArticleCards from "@components/listings/ArticleCards.astro";
 import PostList from "@components/listings/PostList.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
@@ -18,7 +18,7 @@ import Figure from "@components/article/Figure.astro";
   description="This is the homepage"
   activeButton="Home-button"
 >
-  <Banner slot="hero" />
+  <HeroBanner slot="hero" art="gradient" />
 
   <header>
     <div class="topic">Homepage</div>
