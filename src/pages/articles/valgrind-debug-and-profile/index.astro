@@ -9,6 +9,7 @@ import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
+import References from "@components/article/References.astro";
 
 ---
 
@@ -808,80 +809,6 @@ import Table from "@components/article/Table.astro";
     </section>
   </section>
 
-  <section>
-    <h2>References</h2>
-
-    <ol class="reference">
-      <li>
-        Nicholas Nethercote and Julian Seward. Valgrind: A framework for
-        heavyweight dynamic binary instrumentation. In <em>Proceedings of the
-          2007 ACM SIGPLAN Conference on Programming Language Design and
-          Implementation (PLDI)</em>, pages 89-100, San Diego, CA, 2007. <a
-            href="https://valgrind.org/docs/valgrind2007.pdf"
-            >https://valgrind.org/docs/valgrind2007.pdf</a
-          >
-      </li>
-      <li>
-        Julian Seward and Nicholas Nethercote. Using Valgrind to detect
-        undefined value errors with bit-precision. In <em>Proceedings of the
-          2005 USENIX Annual Technical Conference</em>, pages 17-30, Anaheim, CA,
-        2005. <a
-          href="https://valgrind.org/docs/memcheck2005.pdf"
-          >https://valgrind.org/docs/memcheck2005.pdf</a
-        >
-      </li>
-      <li>
-        Nicholas Nethercote and Julian Seward. How to shadow every byte of
-        memory used by a program. In <em>Proceedings of the 3rd International
-          Conference on Virtual Execution Environments (VEE)</em>, pages 65-74,
-        San Diego, CA, 2007. <a
-          href="https://valgrind.org/docs/shadow-memory2007.pdf"
-          >https://valgrind.org/docs/shadow-memory2007.pdf</a
-        >
-      </li>
-      <li>
-        Josef Weidendorfer, Markus Kowarschik, and Carsten Trinitis. A tool
-        suite for simulation based analysis of memory access behavior. In <em
-          >Proceedings of the 4th International Conference on Computational
-          Science (ICCS)</em
-        >, pages 440-447, Krakow, Poland, 2004. <a
-          href="https://valgrind.org/docs/callgrind2004.pdf"
-          >https://valgrind.org/docs/callgrind2004.pdf</a
-        >
-      </li>
-      <li>
-        Nicholas Nethercote. <em>Dynamic Binary Analysis and Instrumentation</em
-        >. PhD thesis, University of Cambridge, Cambridge, UK, 2004. <a
-          href="https://valgrind.org/docs/phd2004.pdf"
-          >https://valgrind.org/docs/phd2004.pdf</a
-        >
-      </li>
-      <li>
-        Valgrind User Manual. <a
-          href="https://valgrind.org/docs/manual/manual.html"
-          >https://valgrind.org/docs/manual/manual.html</a
-        > Accessed: 2026-09-07.
-      </li>
-      <li>
-        Memcheck: a memory error detector. <a
-          href="https://valgrind.org/docs/manual/mc-manual.html"
-          >https://valgrind.org/docs/manual/mc-manual.html</a
-        > Accessed: 2026-09-07.
-      </li>
-      <li>
-        Callgrind: a call-graph generating cache and branch prediction profiler.
-        <a
-          href="https://valgrind.org/docs/manual/cl-manual.html"
-          >https://valgrind.org/docs/manual/cl-manual.html</a
-        > Accessed: 2026-09-07.
-      </li>
-      <li>
-        Massif: a heap profiler. <a
-          href="https://valgrind.org/docs/manual/ms-manual.html"
-          >https://valgrind.org/docs/manual/ms-manual.html</a
-        > Accessed: 2026-09-07.
-      </li>
-    </ol>
-  </section>
+  <References />
 
 </BaseLayout>

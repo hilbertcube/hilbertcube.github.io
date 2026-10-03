@@ -1,0 +1,112 @@
+---
+/**
+ * References.astro
+ * ================
+ * The "References" section at the foot of an article: the heading and the
+ * numbered `ol.reference` list, built from the `_references.ts` file that sits
+ * next to the page's `index.astro` instead of citation text typed into it.
+ *
+ *   src/pages/articles/<slug>/index.astro      →  <References />
+ *   src/pages/articles/<slug>/_references.ts   →  export default defineReferences({ … })
+ *
+ * Like PageTitle and PubDate, it takes no props: it finds the page's file from
+ * the URL, and fails the build if there is none. The leading underscore keeps
+ * Astro from routing the .ts file as an endpoint.
+ *
+ * Entries are numbered in the order they are written in the file. Each `<li>`
+ * gets `id="ref-<key>"`, so body text can jump to one with a plain
+ * `<a href="#ref-lowe2004">[3]</a>`.
+ *
+ * The list's styling is scoped to this component (below).
+ */
+import { formatReference, type Reference } from "@utils/references";
+
+interface Props {
+  /** Section heading; also its TOC label and URL fragment. */
+  title?: string;
+}
+
+const { title = "References" } = Astro.props;
+
+const files = import.meta.glob<Record<string, Reference>>(
+  "/src/pages/**/_references.ts",
+  { eager: true, import: "default" },
+);
+
+// "/src/pages/articles/<slug>/_references.ts" → "/articles/<slug>"
+const route = (file: string) =>
+  file.replace(/^\/src\/pages/, "").replace(/\/_references\.ts$/, "");
+const pathname = Astro.url.pathname.replace(/\/(index\.html)?$/, "");
+
+const file = Object.keys(files).find((f) => route(f) === pathname);
+if (!file) {
+  throw new Error(
+    `<References>: no _references.ts next to the page for ${Astro.url.pathname}`,
+  );
+}
+
+const entries = Object.entries(files[file]).map(([key, ref]) => ({
+  key,
+  segments: formatReference(ref),
+}));
+---
+
+<section>
+  <h2>{title}</h2>
+  <ol class="reference">
+    {
+      entries.map(({ key, segments }) => (
+        <li id={`ref-${key}`}>
+          {segments.map((s) =>
+            typeof s === "string" ? (
+              s
+            ) : "em" in s ? (
+              <em>{s.em}</em>
+            ) : (
+              <a href={s.href}>{s.href}</a>
+            ),
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .reference {
+    justify-self: start;
+    line-height: 1.6;
+    counter-reset: item;
+    padding-left: 0;
+  }
+
+  .reference li {
+    display: block;
+    position: relative;
+    text-align: left;
+    margin-bottom: 0.5em;
+    padding-left: 2em;
+    overflow-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  /* The marker is taken out of flow rather than sitting inline at the start of
+     the line. An in-flow inline-block leaves the newline between `<li>` and the
+     citation text as a rendered space, which pushes the first line ~4px right of
+     every wrapped line; out of flow, that whitespace is at the start of the line
+     and collapses away, so the hanging indent lines up exactly on the 2em
+     padding. */
+  .reference li::before {
+    content: "[" counter(item) "]";
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+  }
+
+  /* Body links stay on one line (base/_typography.css); a long URL here has to
+     break instead. The scoped selector outranks `.content-grid a:not([class])`. */
+  .reference a:not([class]) {
+    white-space: normal;
+  }
+</style>

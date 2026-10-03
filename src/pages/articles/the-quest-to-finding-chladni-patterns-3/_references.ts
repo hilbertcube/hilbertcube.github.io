@@ -1,0 +1,71 @@
+import { defineReferences } from "@utils/references";
+
+export default defineReferences({
+  shao2018: {
+    type: "report",
+    authors: "Linqi Shao",
+    title: "Modeling a square vibrating plate",
+    institution: "University of Waterloo",
+    pages: "1-58",
+    year: 2018,
+  },
+  rayleigh1894: {
+    type: "chapter",
+    authors: "Lord Rayleigh",
+    title: "Vibration of Plates",
+    pages: "352-361",
+    publisher: "Princeton University Press",
+    location: "New York, NY",
+    year: 1894,
+  },
+  davis2012: {
+    type: "book",
+    authors: "John M. Davis",
+    title: "Introduction to Applied Partial Differential Equation",
+    publisher: "W. H. Freeman",
+    location: "New York City",
+    edition: 1,
+    year: 2012,
+  },
+  haberman2018: {
+    type: "book",
+    authors: "Richard Haberman",
+    title:
+      "Applied Partial Differential Equations with Fourier Series and Boundary Value Problems",
+    publisher: "Pearson",
+    location: "New York City",
+    edition: 5,
+    year: 2018,
+  },
+  szilard2004: {
+    type: "book",
+    authors: "Rudolph Szilard",
+    title: "Theories and Applications of Plates Analysis",
+    publisher: "John Wiley and Sons, Inc.",
+    location: "Hoboken, NJ",
+    year: 2004,
+  },
+  flexuralDispersion2004: {
+    type: "web",
+    title: "Dispersion of flexural waves",
+    url: "https://www.acs.psu.edu/drussell/Demos/Dispersion/Flexural.html",
+    year: 2004,
+    accessed: "2024-05-26",
+  },
+  rossing2004: {
+    type: "chapter",
+    authors: ["Thomas D. Rossing", "Neville H. Fletcher"],
+    title: "Two-Dimensional Systems: Membranes and Plates",
+    pages: "65-94",
+    publisher: "Springer New York",
+    location: "New York",
+    year: 2004,
+  },
+  bahdanau2020: {
+    type: "report",
+    authors: ["Dzmitry Bahdanau", "Kyunghyun Cho", "Yoshua Bengio"],
+    title: "Stable and accurate numerical methods for generalized kirchhoff-love plates",
+    year: 2020,
+    accessed: "2024-05-26",
+  },
+});

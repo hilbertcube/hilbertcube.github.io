@@ -145,6 +145,10 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 - **Code:** use the `code/` components with `is:raw`, never raw `<pre>`
   ([`COMPONENTS.md` §3](COMPONENTS.md#3-code--code-blocks)).
 - **Images and tables:** `<Figure>` and `<Table>`, never a bare `<img>` or `<table>`.
+- **References:** write entries in `_references.ts` next to the page's
+  `index.astro` and put `<References />` where the section goes — never a
+  hand-written `<ol class="reference">`
+  ([`COMPONENTS.md` §2](COMPONENTS.md#references)).
 - **Search:** new pages are indexed automatically. `data-pagefind-ignore` hides
   an element. Test with `npm run build && npm run preview`.
 - **Styling:** use the `--var` custom properties (they carry dark mode), and no

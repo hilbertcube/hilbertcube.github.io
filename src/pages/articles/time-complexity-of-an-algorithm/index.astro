@@ -18,6 +18,7 @@ import { tex } from "@components/math/tex.astro";
 import Sample from "@components/code/Sample.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
+import References from "@components/article/References.astro";
 ---
 
 <BaseLayout
@@ -1565,32 +1566,6 @@ while j &lt;= length(R) do A[k] &lt;- R[j];  j &lt;- j + 1;  k &lt;- k + 1</Samp
     </Table>
   </section>
 
-  <section>
-    <h2>References</h2>
-    <ol class="reference">
-      <li>
-        Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford
-        Stein. <em>Introduction to Algorithms</em> (CLRS).
-      </li>
-      <li>
-        Robert Sedgewick and Kevin Wayne. <em>Algorithms</em>, 4th edition.
-      </li>
-      <li>
-        Donald E. Knuth. <em>The Art of Computer Programming</em>.
-      </li>
-      <li>
-        Practical algorithm notes and proofs. <a
-          href="https://cp-algorithms.com/"
-          >https://cp-algorithms.com/</a
-        >.
-      </li>
-      <li>
-        Big-O notation. Reference for definitions and properties. <a
-          href="https://en.wikipedia.org/wiki/Big_O_notation"
-          >https://en.wikipedia.org/wiki/Big_O_notation</a
-        >.
-      </li>
-    </ol>
-  </section>
+  <References />
 
 </BaseLayout>
