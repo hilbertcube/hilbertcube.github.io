@@ -12,10 +12,6 @@
 
 /* === DESKTOP (1385px - 1799px) === */
 @media all and (max-width: 1385px) {
-  .equation {
-    overflow-y: hidden;
-  }
-
   .content-grid {
     width: 60vw;
   }
@@ -60,19 +56,8 @@
     font-size: 1.9em;
   }
 
-  h2 {
-    font: 1.4em;
-  }
-
   h3 {
     font-size: 1.3em;
-  }
-
-  /* Navigation */
-  body,
-  body.nav-open {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   /* Code blocks */

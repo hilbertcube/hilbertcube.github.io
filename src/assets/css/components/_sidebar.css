@@ -47,15 +47,12 @@
   }
 }
 
-.navbar.transitions-ready *,
-.navbar.transitions-ready .side-nav ul,
-.navbar.transitions-ready nav ul {
+.navbar.transitions-ready * {
   opacity: 1;
   transition: opacity var(--fade-in-out-time) ease;
 }
 
-.navbar.closed *,
-.navbar.closed ul {
+.navbar.closed * {
   opacity: 0;
 }
 

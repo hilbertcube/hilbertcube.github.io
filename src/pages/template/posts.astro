@@ -6,13 +6,14 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PageTitle from "@components/article/PageTitle.astro";
+import PubDate from "@components/article/PubDate.astro";
 ---
 
 <BaseLayout title="Post" description="This is the homepage">
   <header>
     <div class="topic">Topic Tags</div>
     <PageTitle title="Post Title" variant="post" />
-    <div class="date">Month, Day, Year</div>
+    <PubDate pubDate="2024-06-20" />
   </header>
 
   <section>

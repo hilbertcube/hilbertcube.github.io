@@ -54,13 +54,6 @@ p {
   font-size: 17px;
 }
 
-.date {
-  margin-top: 0;
-  margin-bottom: 60px;
-  color: var(--nav-bar-text-color);
-  font-style: italic;
-}
-
 /* Caption styles */
 caption,
 figcaption {

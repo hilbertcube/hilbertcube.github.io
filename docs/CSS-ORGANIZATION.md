@@ -12,7 +12,7 @@ src/assets/css/
 │   ├── _variables.css     Every --custom-property, plus the dark-mode overrides
 │   ├── _fonts.css         @font-face declarations (fonts self-hosted under public/assets/fonts/)
 │   ├── _reset.css         Browser normalisation and base element styles
-│   └── _typography.css    Headings, body links, figure/table caption numbering, .date
+│   └── _typography.css    Headings, body links, figure/table caption numbering, .topic
 ├── layout/
 │   └── _grid.css          Page structure: .general-wrapper, .content-grid
 ├── components/
@@ -43,7 +43,7 @@ the desktop defaults above them without `!important`.
   Don't fight them with `!important`.
 - **Markup one component owns is styled in that component**, not here — e.g.
   the search bar, results and hamburger in `TopBar.css`, `.title` in
-  `PageTitle`, `.proof` / `.solution` in `Proof` / `Solution`. Rules for slot
+  `PageTitle`, `.date` in `PubDate`, `.proof` / `.solution` in `Proof` / `Solution`. Rules for slot
   content or runtime-built nodes need `:global()`.
 - **Media queries:** sitewide ones go in `utils/_responsive.css`; a component's
   breakpoints stay in its scoped `<style>`. They must move with the rule: a

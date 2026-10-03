@@ -35,7 +35,7 @@
  *   stay page-scoped, so the `td` half still pins the rule to that page.
  * - The cell rules below are scoped, which costs them an extra attribute of
  *   specificity. A global page rule aimed at a cell class needs a matching
- *   bump — `.food .p-table .rating`, not `.p-table .rating` — to outrank them.
+ *   bump — `.table-wrapper .p-table .rating`, not `.p-table .rating` — to outrank them.
  */
 interface Props {
   id?: string;
