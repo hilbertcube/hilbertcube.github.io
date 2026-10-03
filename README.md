@@ -22,7 +22,8 @@ Visit website at [neumanncondition.com](https://neumanncondition.com/) or [hilbe
 5. [Pagefind](https://pagefind.app/): search system
 6. [Yet Another React Lightbox](https://yet-another-react-lightbox.com/): smooth image lightbox
 7. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
-8. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
+8. [Playwright](https://playwright.dev/): headless-Chromium PDF export of articles
+9. [Github API](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) & [Github Actions](https://github.com/features/actions)
 
 ## Change Log
 
