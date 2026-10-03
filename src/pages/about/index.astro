@@ -5,7 +5,7 @@
  * About page — migrated from /about/index.html
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/site/Banner.astro";
+import HeroBanner from "@components/site/HeroBanner.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
 import E from "@components/math/E.astro";
@@ -24,7 +24,7 @@ import { tex } from "@components/math/tex.astro";
 
   <!-- Page content -->
 
-  <Banner slot="hero" />
+  <HeroBanner slot="hero" art="preprint" />
 
   <header>
     <div class="topic">About</div>
@@ -73,7 +73,7 @@ import { tex } from "@components/math/tex.astro";
         src="/about/boelter_3420.webp"
         width="90%"
         alt="Birthplace of the Internet"
-      >
+        >
           A picture I took---birthplace of the internet at UCLA
         </Figure>
       </div>

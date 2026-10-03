@@ -1,16 +1,17 @@
 /**
- * bannerCanvas.ts
- * ===============
- * The drifting-equation animation on the home / about banner. SVGs bounce
- * around inside #bannerCanvas and a click drops a temporary extra one at the
- * pointer.
+ * equationsCanvas.ts
+ * ==================
+ * HeroBanner art (EquationsCanvas.astro): drifting equations. SVGs bounce
+ * around inside #equationsCanvas and a click drops a temporary extra one at the
+ * pointer. The canvas is transparent between them, so the banner's own
+ * background shows through.
  *
  * Performance notes
  * -----------------
  * The equations are MathJax SVGs — hundreds of <path> nodes each. Passing an
  * SVG <img> straight to drawImage() makes the browser re-rasterise those paths
  * on *every* frame, and only some engines cache that (Chromium usually does,
- * Firefox and WebKit largely don't). That was the whole cost of this banner.
+ * Firefox and WebKit largely don't). That was the whole cost of this animation.
  * So each SVG is rasterised once into an offscreen canvas at its final pixel
  * size, and the loop then does nothing but blit those bitmaps. Re-rasterising
  * only happens when the scale or devicePixelRatio actually changes.
@@ -19,6 +20,8 @@
  * (IntersectionObserver), backgrounded tab (visibilitychange), or the reader
  * asked for reduced motion (one static frame, no rAF at all).
  */
+
+import { watchCanvas } from "./watchCanvas";
 
 const SVG_FILES = [
   "LDM.svg",
@@ -63,13 +66,10 @@ interface Sprite {
   expiresAt: number;
 }
 
-export function initBannerCanvas() {
-  const canvas = document.getElementById("bannerCanvas") as HTMLCanvasElement | null;
+export function initEquationsCanvas() {
+  const canvas = document.getElementById("equationsCanvas") as HTMLCanvasElement | null;
   const ctx = canvas?.getContext("2d", { alpha: true });
   if (!canvas || !ctx) return;
-
-  const container = canvas.parentElement;
-  if (!container) return;
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -84,7 +84,6 @@ export function initBannerCanvas() {
 
   let rafId = 0;
   let lastRender = 0;
-  let inView = true;
   let ready = false;
 
   /* ---------------------------------------------------------------- sizing */
@@ -130,12 +129,12 @@ export function initBannerCanvas() {
   }
 
   /**
-   * Match the backing store to the container. Returns true when anything
+   * Match the backing store to the canvas's CSS box. Returns true when anything
    * changed, so callers can skip the (expensive) re-rasterise on no-op resizes.
    */
   function measure(): boolean {
-    const nextWidth = container!.clientWidth;
-    const nextHeight = container!.clientHeight;
+    const nextWidth = canvas!.clientWidth;
+    const nextHeight = canvas!.clientHeight;
     const nextDpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
     const nextScale = scaleForWidth(window.innerWidth);
 
@@ -308,8 +307,7 @@ export function initBannerCanvas() {
   }
 
   function start() {
-    if (rafId || !ready) return;
-    if (reduceMotion.matches || document.hidden || !inView) return;
+    if (rafId || !ready || reduceMotion.matches || !watcher.visible()) return;
     lastRender = performance.now();
     rafId = requestAnimationFrame(frame);
   }
@@ -322,35 +320,13 @@ export function initBannerCanvas() {
 
   /* ----------------------------------------------------------------- wiring */
 
-  let resizePending = false;
-  function onResize() {
-    // ResizeObserver can fire several times per layout pass; coalesce into one.
-    if (resizePending) return;
-    resizePending = true;
-    requestAnimationFrame(() => {
-      resizePending = false;
+  const watcher = watchCanvas(canvas, {
+    onResize() {
       if (!measure()) return;
       if (ready && !rafId) draw(); // Keep the paused/static frame correct
-    });
-  }
-
-  if (typeof ResizeObserver !== "undefined") {
-    new ResizeObserver(onResize).observe(container);
-  } else {
-    window.addEventListener("resize", onResize, { passive: true });
-  }
-
-  if (typeof IntersectionObserver !== "undefined") {
-    new IntersectionObserver((entries) => {
-      inView = entries[entries.length - 1].isIntersecting;
-      if (inView) start();
-      else stop();
-    }).observe(canvas);
-  }
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stop();
-    else start();
+    },
+    onShow: start,
+    onHide: stop,
   });
 
   // Readers can flip the OS setting mid-visit; honour it without a reload.
@@ -383,7 +359,7 @@ export function initBannerCanvas() {
   measure();
 
   // Load the SVGs, then rasterise once and go. Settled-not-all: a missing file
-  // shouldn't take the whole banner down with it.
+  // shouldn't take the whole animation down with it.
   Promise.allSettled(
     SVG_FILES.map(
       (fileName, index) =>

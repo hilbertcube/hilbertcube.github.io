@@ -1,0 +1,35 @@
+---
+/**
+ * MazeCanvas.astro
+ * ================
+ * HeroBanner art, not in use yet: a maze built by Wilson's algorithm, then
+ * flooded by heat (mazeCanvas.ts). The maze is centred in its box, so it is
+ * a "beside" art: an opaque panel over it would hide part of the maze. To
+ * plug it in, add it to HeroBanner's ARTS table:
+ *
+ *   maze: {
+ *     Art: MazeCanvas,
+ *     placement: "beside",
+ *     caption: ["Heat in a random maze.", "Its walls are insulated: ∂u/∂n = 0."],
+ *   },
+ *
+ * No props.
+ */
+---
+
+<canvas id="mazeCanvas" aria-hidden="true"></canvas>
+
+<script>
+  import { initMazeCanvas } from "./mazeCanvas";
+  initMazeCanvas();
+</script>
+
+<style>
+  /* Sized in CSS; mazeCanvas.ts sets the backing store from this box at the
+     device pixel ratio and builds a new maze when it changes. */
+  #mazeCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

@@ -1,0 +1,160 @@
+---
+/**
+ * PreprintFigure.astro
+ * ====================
+ * HeroBanner's "preprint" art: "Fig. 1" — heat flow in an insulated rod. The
+ * figure is drawn here at build time as a still frame, then animated in the
+ * browser by preprintFigure.ts, which shares its maths. A "beside" art: next
+ * to the title panel, or behind it where there is no room. No props.
+ *
+ * Labels are set like TeX, in KaTeX's fonts (loaded on every page by
+ * BaseLayout): variables in a `.var` tspan, math italic; digits, symbols and
+ * words upright.
+ */
+import { FIG, INITIAL_COEF, curvePath, layout, traceTimes } from "@components/site/canvas/preprintFigure";
+
+const { X0, X1, Y0, Y1 } = FIG;
+const initialPath = curvePath(INITIAL_COEF, 0);
+const traces = traceTimes(INITIAL_COEF).map((t, i) => ({ d: curvePath(INITIAL_COEF, t), opacity: 0.77 - i * 0.13 }));
+const { meanY, meanLabelY, startLabelY } = layout(INITIAL_COEF);
+---
+
+<figure class="figure">
+  <svg id="preprint-figure" viewBox="0 0 540 290" aria-hidden="true">
+    <defs>
+      <pattern id="preprint-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <line class="hatch" x1="0" y1="0" x2="0" y2="6" />
+      </pattern>
+    </defs>
+    <rect x={X0 - 10} y={Y0 - 2} width="10" height={Y1 - Y0 + 4} fill="url(#preprint-hatch)" />
+    <rect x={X1} y={Y0 - 2} width="10" height={Y1 - Y0 + 4} fill="url(#preprint-hatch)" />
+    <line class="axis" x1={X0} y1={Y1 + 4} x2={X1} y2={Y1 + 4} />
+    <!-- data-fig marks what preprintFigure.ts updates; the live curve stays
+         empty and the clock hidden in the still frame. -->
+    <g class="plot" data-fig="plot">
+      <line class="mean" data-fig="mean" x1={X0} y1={meanY} x2={X1} y2={meanY} />
+      {traces.map((c) => (
+        <path class="curve trace" data-fig="trace" d={c.d} stroke-opacity={c.opacity} />
+      ))}
+      <path class="curve initial" data-fig="initial" d={initialPath} />
+      <path class="curve live" data-fig="live" d="" />
+      <text class="navy small" data-fig="mean-label" x={X1 - 8} y={meanLabelY} text-anchor="end"><tspan class="var">t</tspan> → ∞: the mean, conserved</text>
+      <text class="red small" data-fig="start-label" x={X0 + 12} y={startLabelY}><tspan class="var">t</tspan> = 0</text>
+    </g>
+    <text class="navy small" data-fig="clock" x={X1 + 10} y="14" text-anchor="end" visibility="hidden"><tspan class="var">t</tspan><tspan data-fig="clock-value"></tspan></text>
+    <text class="ink" x={X0} y="274" text-anchor="middle">0</text>
+    <text class="ink" x={X1} y="274" text-anchor="middle">1</text>
+    <text class="ink" x={(X0 + X1) / 2} y="278" text-anchor="middle"><tspan class="var">x</tspan></text>
+    <text class="ink" x={X0 + 8} y="14"><tspan class="var">u</tspan>(<tspan class="var">x</tspan>, <tspan class="var">t</tspan>)</text>
+  </svg>
+</figure>
+
+<script>
+  import { initPreprintFigure } from "./preprintFigure";
+  initPreprintFigure();
+</script>
+
+<style>
+  /* Always dark, whatever the site theme: --hero-* comes from HeroBanner. */
+  .figure {
+    --pp-ink: #e8e6e0;
+    --pp-navy: #7aa7ff;
+    --pp-red: #e53935; /* Brighter than #ca0000 so the red labels stay legible */
+
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    padding: 24px 24px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  /* Fits the box either way round; the viewBox keeps the aspect ratio. */
+  .figure svg {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+    font-family: "KaTeX_Main", "Computer-Modern", serif;
+  }
+
+  .hatch {
+    stroke: var(--hero-faint);
+    stroke-width: 1.4;
+  }
+
+  .axis {
+    stroke: var(--pp-ink);
+  }
+
+  .mean {
+    stroke: var(--pp-navy);
+    stroke-dasharray: 3 4;
+  }
+
+  .curve {
+    fill: none;
+    stroke: var(--pp-navy);
+    stroke-width: 1.3;
+  }
+
+  .curve.initial {
+    stroke: var(--pp-red);
+    stroke-width: 2;
+  }
+
+  .curve.live {
+    stroke-width: 1.9;
+  }
+
+  /* preprintFigure.ts fades traces in one by one, and the whole plot out and
+     back in between runs; FADE_MS there matches the .plot duration. */
+  .trace {
+    transition: opacity 0.5s;
+  }
+
+  .plot {
+    transition: opacity 0.7s;
+  }
+
+  .trace.hidden,
+  .plot.hidden {
+    opacity: 0;
+  }
+
+  /* SVG units: the figure is drawn scaled down beside the panel, so its
+     labels are set larger than the page text they sit next to. */
+  text {
+    font-size: 16px;
+  }
+
+  .ink {
+    fill: var(--pp-ink);
+  }
+
+  .navy {
+    fill: var(--pp-navy);
+  }
+
+  .red {
+    fill: var(--pp-red);
+  }
+
+  /* KaTeX's math italic, as TeX sets a variable (not slanted roman). */
+  .var {
+    font-family: "KaTeX_Math", "Computer-Modern", serif;
+    font-style: italic;
+  }
+
+  .small {
+    font-size: 15px;
+  }
+
+  @media all and (max-width: 1080px) {
+    .figure {
+      padding: 20px 20px 16px 16px;
+    }
+  }
+</style>

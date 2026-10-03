@@ -122,7 +122,7 @@ reference them as `/articles/<slug>/<file>.webp` through `<Figure>`.
 
 - Don't wrap the body in `<div class="content-grid">`: `BaseLayout` puts the
   default slot in that column itself. Full-width content above the column (the
-  homepage banner) goes in the `hero` slot: `<Banner slot="hero" />`.
+  homepage banner) goes in the `hero` slot: `<HeroBanner slot="hero" art="gradient" />`.
 - Don't give `<section>`s an `id`: the build generates one from each section's
   heading (§3.1), and that is what the Table of Contents and search deep links
   anchor to.

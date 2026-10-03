@@ -1,0 +1,35 @@
+---
+/**
+ * FluidCanvas.astro
+ * =================
+ * HeroBanner art, not in use yet: Stam's stable fluids stirred by coloured
+ * emitters, around a few square obstacles (fluidCanvas.ts). The simulation
+ * spans its box, so it is a "beside" art: an opaque panel over it would hide
+ * part of the flow. To plug it in, add it to HeroBanner's ARTS table:
+ *
+ *   fluid: {
+ *     Art: FluidCanvas,
+ *     placement: "beside",
+ *     caption: ["Stable fluids around solid obstacles.", "No flow through the walls: u · n = 0."],
+ *   },
+ *
+ * No props.
+ */
+---
+
+<canvas id="fluidCanvas" aria-hidden="true"></canvas>
+
+<script>
+  import { initFluidCanvas } from "./fluidCanvas";
+  initFluidCanvas();
+</script>
+
+<style>
+  /* Sized in CSS; fluidCanvas.ts sets the backing store and grid from this box
+     and starts a fresh simulation when it changes. */
+  #fluidCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

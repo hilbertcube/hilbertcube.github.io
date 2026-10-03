@@ -11,7 +11,7 @@
  *
  * Which images are clickable is decided at runtime by the selector in the
  * script, since it has to sweep the finished page. It is a blacklist: the logo,
- * the home banner, card thumbnails and anything carrying `.no-lightbox` opt out,
+ * card thumbnails and anything carrying `.no-lightbox` opt out,
  * and everything else — article front images included — opens.
  */
 ---
@@ -20,7 +20,7 @@
   // Every image except the ones that own their own click behaviour or are
   // chrome rather than content.
   const IMAGE_SELECTOR =
-    "img:not(#logoImage):not(#home-banner img):not(.no-lightbox):not(.recommend-img img)";
+    "img:not(#logoImage):not(.no-lightbox):not(.recommend-img img)";
 
   const images = Array.from(document.querySelectorAll<HTMLImageElement>(IMAGE_SELECTOR));
 
