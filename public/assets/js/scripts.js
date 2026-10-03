@@ -5,8 +5,11 @@
 // HighlightsAndAttribute, CopyButton and TabBox for the rest.
 
 // OPEN BODY LINKS IN NEW WINDOWS
-// Same set of links that _typography.css styles as plain body links.
-document.querySelectorAll(".content-grid a:not([class]), .content-grid a.wrap").forEach(function (element) {
+// Same set of links that _typography.css styles as plain body links, minus
+// jump links to this page's own sections, which scroll in place below.
+document.querySelectorAll(
+  '.content-grid a:not([class]):not([href^="#"]), .content-grid a.wrap:not([href^="#"])'
+).forEach(function (element) {
   element.onclick = function () {
     window.open(this.href);
     return false;
@@ -21,7 +24,8 @@ document.querySelectorAll(".content-grid a:not([class]), .content-grid a.wrap").
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("a").forEach(link => {
     link.addEventListener("click", function (event) {
-      if (this.hash !== "") {
+      // Only links into this page: a hash on another URL must navigate.
+      if (this.hash !== "" && this.origin === location.origin && this.pathname === location.pathname) {
         event.preventDefault();
 
         const target = document.getElementById(this.hash.substring(1));

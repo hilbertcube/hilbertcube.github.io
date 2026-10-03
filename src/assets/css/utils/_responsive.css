@@ -8,10 +8,6 @@
   :root {
     --top-bar-height: 70px;
   }
-
-  .search-bar-container {
-    max-width: 700px;
-  }
 }
 
 /* === DESKTOP (1385px - 1799px) === */
@@ -41,52 +37,6 @@
     padding-left: 0;
     padding-right: 0;
   }
-
-  .toggle-btn:hover .bar {
-    background-color: white;
-  }
-
-  .search-bar {
-    display: none;
-  }
-
-  .search-bar-container {
-    flex: 1 1 auto;
-    width: 100%;
-    min-width: 0;
-    /* Keep the expanded search bar off the screen edges */
-    margin-left: 12px;
-    margin-right: 12px;
-    justify-content: flex-end;
-  }
-
-  /* Show the search icon next to the other control buttons */
-  .buttons-container .search-icon-btn {
-    display: inline-flex;
-  }
-
-
-  /* Search bar starts collapsed and slides open when the icon is tapped */
-  .search-bar-mobile {
-    display: inline-block;
-    width: 0;
-    min-width: 0;
-    padding-left: 0;
-    padding-right: 0;
-    border-width: 0;
-    opacity: 0;
-    pointer-events: none;
-    white-space: nowrap;
-    transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-  }
-
-  .search-bar-container.expanded .search-bar-mobile {
-    width: 100%;
-    padding-left: 35px;
-    border-width: 1px;
-    opacity: 1;
-    pointer-events: auto;
-  }
 }
 
 /* === TABLET PORTRAIT (1080px - 1199px) === */
@@ -95,36 +45,17 @@
     width: 90%;
   }
 
-  .search-bar-container.expanded {
-    width: 100%;
-    max-width: 100%;
-  }
-
 }
 
 /* === MOBILE (580px - 1079px) === */
 @media all and (max-width: 580px) {
-
-  /* Layout adjustments */
-  .rss {
-    display: none;
-  }
 
   :root {
     --side-nav-width: 330px;
     --burger-width: 44px;
   }
 
-  /* Collapsed, the search field is zero-width — drop its reserved gutter too
-     so the space goes to the nav links instead. */
-  .search-bar-container:not(.expanded) {
-    min-width: 0;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
   /* Typography adjustments */
-  h1.title,
   h1.home-title {
     font-size: 1.9em;
   }
@@ -155,56 +86,9 @@
     max-width: 100%;
   }
 
-  /* Layout components */
-  .two-columns-block {
-    flex-direction: column;
-  }
-
   figure {
     padding: 0;
     margin: 0;
-  }
-
-  /* Search dropdown */
-  .autocomplete-dropdown {
-    max-height: 50vh;
-  }
-
-  /* Tags dropdown goes full-width on mobile, and — with no keyboard covering
-     the screen — runs nearly the full height below the navbar (overriding the
-     search dropdown's 50vh cap above via source order at equal specificity). */
-  .tags-dropdown {
-    left: 8px;
-    right: 8px;
-    width: auto;
-    max-height: calc(100vh - var(--top-bar-height) - 16px);
-  }
-
-  /* Bound the tag cloud so it can't fill the mobile dropdown and push results
-     below the fold; it scrolls on its own instead. Roomier now that the tags
-     dropdown runs nearly full-height. */
-  .search-tag-chips {
-    max-height: 40vh;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--search-item-border-color) transparent;
-    /* room for the scrollbar so chips aren't clipped under it */
-    padding-right: 4px;
-  }
-
-  .search-tag-chips::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .search-tag-chips::-webkit-scrollbar-thumb {
-    background-color: var(--search-item-border-color);
-    border-radius: 2px;
-  }
-
-  .search-tag-chips::-webkit-scrollbar-track {
-    background: transparent;
   }
 
   /* Tables */

@@ -78,7 +78,8 @@ p {
   word-wrap: break-word;
 }
 
-ul {
+ul,
+ol {
   line-height: 1.6;
   padding-left: 20px;
 }

@@ -107,7 +107,7 @@ caption::before {
    layout clips its overflow — so labels longer than a few words take
    `class="wrap"` and break normally.
    These are the defaults for a plain <a> in the page body. A link that carries
-   any other class (buttons, cards, `in-page-link`) is styled by that class
+   any other class (buttons, cards) is styled by that class
    instead. */
 .content-grid a:not([class]),
 .content-grid a.wrap {
@@ -135,10 +135,4 @@ ol.reference a:not([class]) {
 .hyperlink:hover {
   text-decoration: underline;
   color: var(--url-hover-color);
-}
-
-.in-page-link {
-  text-decoration: underline;
-  color: var(--url-color);
-  text-decoration-thickness: 1px;
 }

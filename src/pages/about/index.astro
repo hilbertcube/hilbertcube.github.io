@@ -21,6 +21,18 @@ import { tex } from "@components/math/tex.astro";
   activeButton="About-button"
   toc
 >
+  <Fragment slot="head">
+    <style is:inline>
+      .home-h3-headers {
+        font-size: 1.5em;
+        border-bottom: 1px solid var(--contrast-line-color);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    </style>
+  </Fragment>
 
   <!-- Page content -->
 

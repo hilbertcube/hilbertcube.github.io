@@ -10,7 +10,7 @@ runs in the browser. No server.
 | What gets indexed | `BaseLayout.astro` (`data-pagefind-body` / `data-pagefind-ignore`) |
 | Search UI and logic | `src/components/site/topbar/search.ts` (`initSearch()`) |
 | On-page highlight and scroll | `BaseLayout.astro` (inline module) |
-| Styling | `src/assets/css/components/_search.css` |
+| Styling | `src/components/site/TopBar.css` (bar, dropdowns, results); `_search.css` (on-page marks) |
 
 ---
 

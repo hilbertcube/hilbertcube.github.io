@@ -6,7 +6,7 @@
  * opening the first paragraph.
  *
  * As with Quote.astro, the markup carries only the words — the lead-in is
- * supplied by CSS (`.proof > p:first-child::before` in components/_math.css),
+ * supplied by CSS (`.proof > p:first-child::before`, below),
  * so callers never type the label span, and the first paragraph starts with
  * the argument itself. Pass `label` for a different opening ("Proof sketch",
  * "Proof of Lemma 2"); the trailing period is added for you.
@@ -25,3 +25,28 @@ const { label = "Proof" } = Astro.props;
 <div class="proof" style={`--proof-label: "${label}."`}>
   <slot />
 </div>
+
+<style>
+  /* A quiet left rule, opened by an italic lead-in on the first paragraph.
+     The paragraphs are the page's slot content, hence :global(). */
+  .proof {
+    margin: 1.75rem 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--box-border, rgba(128, 128, 128, 0.4));
+    line-height: 1.7;
+  }
+
+  .proof > :global(p:first-child)::before {
+    content: var(--proof-label, "Proof.") " ";
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .proof > :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .proof > :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>
