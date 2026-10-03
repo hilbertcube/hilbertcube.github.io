@@ -1,0 +1,129 @@
+/*
+ * Print Styles
+ * Used by the "Save as PDF" button (SavePdf.astro), the browser's own Print,
+ * and scripts/export-pdf.mjs.
+ * Drops the site chrome, prints the article column full-width in light
+ * colours, and keeps equations, code and figures from splitting across pages.
+ */
+
+@media print {
+  /* The margin boxes repeat on every page: author at the top, site and page
+     number at the bottom. Supported by Chromium (so the "Save as PDF" button
+     in Chrome/Edge, and scripts/export-pdf.mjs); other browsers skip them.
+     The name matches <meta name="author"> in BaseLayout. */
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm;
+
+    @top-right {
+      content: "Don Le";
+      font: italic 9pt "Computer-Modern", serif;
+      color: #666;
+    }
+
+    @bottom-left {
+      content: "neumanncondition.com";
+      font: 8pt "Computer-Modern", serif;
+      color: #666;
+    }
+
+    @bottom-right {
+      content: counter(page) " / " counter(pages);
+      font: 8pt "Computer-Modern", serif;
+      color: #666;
+    }
+  }
+
+  /* Always print light, whatever theme the reader has on screen. */
+  :root,
+  :root.dark-mode {
+    color-scheme: light;
+    --body-background-color: #fff;
+    --grid-text-color: #000;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  /* Site chrome */
+  .top-nav,
+  .navbar,
+  footer,
+  .more-articles,
+  .copy-btn {
+    display: none !important;
+  }
+
+  body,
+  body.nav-open {
+    padding: 0;
+  }
+
+  .general-wrapper {
+    margin-top: 0;
+  }
+
+  /* min-width: 0 stops a wide child (a long code line, an SVG) from
+     stretching this flex item past the page edge. */
+  .content-grid {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .content-grid::after {
+    display: none;
+  }
+
+  .content-grid > header {
+    margin-top: 0;
+  }
+
+  /* Keep short blocks whole and headings with what follows them. Long
+     containers (code, proofs) are left to break: a block that refuses to
+     split gets pushed to a fresh page, leaving a gap behind it. Code
+     blocks short enough to fit get .print-keep at build time (printKeep()
+     in src/utils/highlight.ts). */
+  .equation,
+  figure,
+  .table-wrapper,
+  .theorem,
+  .problem,
+  blockquote,
+  .print-keep {
+    break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Wrap long code lines instead of clipping them at the page edge. */
+  pre,
+  pre code {
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere;
+    overflow: visible !important;
+  }
+
+  .table-wrapper,
+  .equation {
+    overflow: visible !important;
+  }
+
+  img,
+  svg,
+  canvas {
+    max-width: 100% !important;
+  }
+}

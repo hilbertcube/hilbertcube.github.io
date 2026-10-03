@@ -10,6 +10,7 @@ are generated at build time.
 | [`reindent-pages.py`](#reindent-pagespy) | by hand | Re-indent page markup; lay out `<E>` equations |
 | [`commit.sh`](#commitsh) | by hand | Pull, stage everything, commit, push |
 | [`pagefind-ignore-math.mjs`](#pagefind-ignore-mathmjs) | `npm run build` | Hide inline math from the search index |
+| [`export-pdf.mjs`](#export-pdfmjs) | `npm run pdf` | Export articles to PDF with headless Chromium |
 | [`convert-code-blocks.py`](#convert-code-blockspy) | by hand | Legacy: convert raw code containers to components |
 
 ---
@@ -56,6 +57,25 @@ Pull `main` → `git add .` → commit → push (which deploys). It stages
 
 The middle step of `npm run build`: hides inline math from the search index
 ([`SEARCH.md` §4](SEARCH.md#4-excluding-inline-math)).
+
+## export-pdf.mjs
+
+```bash
+npm run build && npm run pdf                          # every article
+npm run pdf -- valgrind-debug-and-profile             # just these slugs
+```
+
+Serves `dist/` locally, opens each article in headless Chromium (Playwright),
+waits for KaTeX, fonts and lazy images, then prints it to `pdf/<slug>.pdf`
+(gitignored): vector text, PDF bookmarks from the headings, always in light mode. Needs Chromium once: `npx playwright install chromium`.
+
+The layout is not the script's: it is the site's own print styling, which the
+"Save as PDF" button readers see beside each date (`SavePdf`) uses too. That is
+the `@media print` block in `src/assets/css/utils/_print.css` (author name atop
+every page and page numbers below it, via `@page` margin boxes, which only
+Chromium renders; hides the site chrome; keeps equations, figures, tables and code blocks of up to 25 lines whole
+via `.print-keep`, set at build time by `printKeep()` in `src/utils/highlight.ts`),
+plus TabBox's own rule that prints every pane under its tab label.
 
 ## convert-code-blocks.py
 

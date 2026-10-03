@@ -96,6 +96,24 @@ const { tabs } = Astro.props;
   .tabbox:not([data-ready]) .tab-panels > :global(:not(:first-child)) {
     display: none;
   }
+
+  /* On paper there are no tabs: print every pane under its tab's label. */
+  @media print {
+    .tab-button-container {
+      display: none;
+    }
+
+    .tab-panels > :global([hidden]) {
+      display: block;
+    }
+
+    .tab-panels > :global([data-tab-label])::before {
+      content: attr(data-tab-label);
+      display: block;
+      font-weight: bold;
+      margin: 1em 0 0.4em;
+    }
+  }
 </style>
 
 <script>
@@ -116,6 +134,8 @@ const { tabs } = Astro.props;
       panel.setAttribute("aria-labelledby", tab.id);
       panel.tabIndex = 0;
       panel.hidden = i !== 0;
+      // Printing shows every pane, headed by this label (see the print rules).
+      panel.dataset.tabLabel = tab.textContent!.trim();
     });
 
     const select = (index: number) => {

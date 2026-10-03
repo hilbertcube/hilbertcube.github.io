@@ -30,6 +30,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Oct 2026:** Articles and posts now have a "Save as PDF" button
 - **Oct 2026:** References are now typed, BibTeX-style entries in a `_references.ts` beside each article, rendered by `<References />` instead of hand-written citations.
 - **Sep 2026:** New banners
 - **Sep 2026:** Pages no longer wrap their body in `<div class="content-grid">` — the layout provides the content column, with a `hero` slot for full-width content above it.

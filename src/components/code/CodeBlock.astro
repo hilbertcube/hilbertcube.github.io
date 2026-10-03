@@ -19,7 +19,7 @@
  */
 
 import CopyButton from "@components/code/CopyButton.astro";
-import { highlight, listing } from "@utils/highlight";
+import { highlight, listing, printKeep } from "@utils/highlight";
 
 interface Props {
   language?: string;
@@ -27,13 +27,14 @@ interface Props {
 }
 
 const { language = "bash", code } = Astro.props;
-const html = await highlight(
-  await listing(code, () => Astro.slots.render("default")),
-  language,
-);
+const text = await listing(code, () => Astro.slots.render("default"));
+const html = await highlight(text, language);
 ---
 
-<div class="code-container" style="margin: 25px auto;">
+<div
+  class:list={["code-container", { "print-keep": printKeep(text) }]}
+  style="margin: 25px auto;"
+>
   <CopyButton />
   <Fragment set:html={html} />
 </div>

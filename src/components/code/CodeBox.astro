@@ -13,7 +13,7 @@
  */
 
 import CopyButton from "@components/code/CopyButton.astro";
-import { highlight, listing } from "@utils/highlight";
+import { highlight, listing, printKeep } from "@utils/highlight";
 
 interface Props {
   language?: string;
@@ -22,8 +22,9 @@ interface Props {
 }
 
 const { language = "bash", lineNumbers = false, code } = Astro.props;
+const text = await listing(code, () => Astro.slots.render("default"));
 const html = await highlight(
-  await listing(code, () => Astro.slots.render("default")),
+  text,
   language,
   lineNumbers
     ? [{ pre(node) { this.addClassToHast(node, "line-numbers"); } }]
@@ -31,7 +32,10 @@ const html = await highlight(
 );
 ---
 
-<div class="box" style="width: auto; max-width: none; margin: 25px auto;">
+<div
+  class:list={["box", { "print-keep": printKeep(text) }]}
+  style="width: auto; max-width: none; margin: 25px auto;"
+>
   <div class="code-container">
     <CopyButton />
     <Fragment set:html={html} />
