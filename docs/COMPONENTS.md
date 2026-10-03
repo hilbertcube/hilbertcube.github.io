@@ -1,203 +1,118 @@
 # Component Reference
 
-Every `.astro` component in `src/components/`, what it renders, and how to call
-it. For the workflow around them (commands, creating a page, search, styling)
-see [`DEVELOPMENT.md`](DEVELOPMENT.md); for the search internals see
-[`SEARCH.md`](SEARCH.md).
-
-Import through the path aliases, never relative paths:
-
-```astro
-import BaseLayout from "@layouts/BaseLayout.astro";
-import Figure from "@components/article/Figure.astro";
-```
-
----
-
-## Contents
+Every component in `src/components/`: what it renders and how to call it.
+Workflow is in [`DEVELOPMENT.md`](DEVELOPMENT.md), search internals in
+[`SEARCH.md`](SEARCH.md). Import through the aliases
+(`@layouts/…`, `@components/…`), never relative paths.
 
 - [§0 Conventions](#0-conventions)
-- [§1 `layouts/` — BaseLayout](#1-layouts--baselayout)
-- [§2 `article/` — page furniture](#2-article--page-furniture)
-- [§3 `code/` — code blocks](#3-code--code-blocks)
-- [§4 `math/` — equations & environments](#4-math--equations--environments)
-- [§5 `listings/` — catalog views](#5-listings--catalog-views)
-- [§6 `site/` — chrome on every page](#6-site--chrome-on-every-page)
-- [§7 `ui/` — primitives](#7-ui--primitives)
+- [§1 BaseLayout](#1-baselayout)
+- [§2 `article/`](#2-article--page-furniture)
+- [§3 `code/`](#3-code--code-blocks)
+- [§4 `math/`](#4-math--equations--environments)
+- [§5 `listings/`](#5-listings--catalog-views)
+- [§6 `site/`](#6-site--chrome-on-every-page)
+- [§7 `ui/`](#7-ui--primitives)
 - [§8 Cheat-sheet](#8-cheat-sheet)
 
 ---
 
 ## 0. Conventions
 
-A few patterns hold across the whole tree; knowing them means most components
-need no explanation beyond their props.
-
-**Props are typed.** Each component declares `interface Props` in its
-frontmatter and destructures `Astro.props` with defaults. TypeScript checks call
-sites, so a typo in a prop name is a build error, not a silent no-op.
-
-**Children are content, props are configuration.** `<Figure>`'s children are its
-caption, `<Theorem>`'s children are its body, `<CodeBox>`'s children are the
-code. Components that take no children (`PageTitle`, `PubDate`, `Icon`) are pure
-configuration.
-
-**Two kinds of `<style>`.** A plain `<style>` block is scoped by Astro to that
-component's own markup (`Figure`, `FrontImage`, `Icon`, `Logo`, `TopicTags`).
-`<style is:global>` escapes scoping and is used where the rules must reach markup
-the component doesn't own (`ContinueButton`, `HighlightsAndAttribute`). Sitewide
-rules live in `src/assets/css/`, not in components.
-
-**Two kinds of `<script>`.** A bare `<script>` in a component is bundled and
-hoisted by Astro — it ships once, module-scoped, and is how `TabBox`,
-`CopyButton`, `TableOfContents`, `TopBar`, `Lightbox`, `GradientCanvas`, `PreprintFigure` and
-`HighlightsAndAttribute` get their behaviour. `<script is:inline>` opts out of
-bundling and is reserved for what must run before first paint (`BaseLayout`'s
-dark-mode / code-theme snippet) and third-party assets loaded by URL (Google
-Analytics).
-
-Because Astro decides which pages a hoisted script lands on from the *module
-graph* — not from whether the markup actually rendered — a component imported by
-`BaseLayout` ships its script site-wide even on pages where it renders nothing.
-Every such script therefore returns early when its markup is absent.
-
-**Styling hooks.** Components that need per-instance sizing set a CSS custom
-property in a `style` attribute (`--figure-img-width`, `--front-img-width`)
-rather than hard-coded inline dimensions, so media queries can still win without
-`!important`.
+- **Props are typed** (`interface Props`), so a misspelt prop is a build error.
+  Children are content (a caption, a body, code); props are configuration.
+- **Styles:** a plain `<style>` is scoped to the component; `<style is:global>`
+  is used only where rules must reach markup the component doesn't own
+  (`ContinueButton`, `HighlightsAndAttribute`). Sitewide rules live in
+  `src/assets/css/` ([`CSS-ORGANIZATION.md`](CSS-ORGANIZATION.md)).
+- **Scripts:** a bare `<script>` is bundled and hoisted. Astro places it by
+  *module graph*, not by whether the markup rendered, so anything imported by
+  `BaseLayout` ships site-wide — **every such script returns early when its
+  markup is absent.** `<script is:inline>` is only for what must run before first
+  paint (the dark-mode snippet) and third-party URLs.
+- **Per-instance sizing** goes through a CSS custom property
+  (`--figure-img-width`), not inline dimensions, so media queries still win.
 
 ---
 
-## 1. `layouts/` — BaseLayout
+## 1. BaseLayout
 
-### BaseLayout
-
-The shell every page renders into: `<head>`, top bar, sidebar, main region,
-"More Articles", footer, and the KaTeX / Pagefind bootstrapping.
+The shell of every page: `<head>`, top bar, sidebar, main region, footer, and
+the KaTeX / Pagefind bootstrapping.
 
 | Prop | Type | Default | Meaning |
 |---|---|---|---|
-| `title` | `string` | — | Page title; rendered as `{title} \| hilbertcube`. |
+| `title` | `string` | — | Rendered as `{title} \| hilbertcube`. |
 | `description` | `string` | `""` | `<meta name="description">`. |
 | `keywords` | `string` | site default | `<meta name="keywords">`. |
-| `activeButton` | `string` | `""` | ID of the nav element to underline. Injects `#<id> { text-decoration: underline }` into the head, so it must be a real id — the nav ids are `Home-button` and `About-button`. |
-| `toc` | `boolean \| TocOptions` | `false` | Build the sidebar Table of Contents from this page's own headings. Covers `<h2>`–`<h4>`; `{ maxLevel: 3 }` to stop at `<h3>`. |
-
-**Slots**
+| `activeButton` | `string` | `""` | Id of the nav link to underline: `Home-button`, `About-button` or `Contact-button`. Unset on articles and posts. |
+| `toc` | `boolean \| TocOptions` | `false` | Build the sidebar TOC from the page's headings (h2–h4; `{ maxLevel: 3 }` stops at h3). |
 
 | Slot | Lands in |
 |---|---|
-| default | `<div class="content-grid">` inside `<main data-pagefind-body>` — the page body, in the centred column. Pages don't write this wrapper. |
-| `hero` | `<main>`, above the column, full width (the homepage banner) |
-| `head` | end of `<head>`, for page-specific stylesheets or meta |
+| default | `<div class="content-grid">` inside `<main data-pagefind-body>`. Pages don't write the wrapper. |
+| `hero` | `<main>`, full width above the column (homepage / About banner) |
+| `head` | end of `<head>` — page-specific CSS or meta |
 | `sidebar` | the left nav, between the TOC and the highlights panel |
-| `scripts` | end of `<body>`, for page-specific scripts (currently unused) |
+| `scripts` | end of `<body>` (currently unused) |
 
-```astro
-<BaseLayout title="Chladni Patterns, Part 2" description="…" activeButton="articles" toc>
-  <header> … </header>
-  <section> … </section>
-</BaseLayout>
-```
-
-**Two behaviours worth knowing.**
-
-*The body is rendered before the sidebar.* `BaseLayout` calls
-`Astro.slots.render("default")` in its frontmatter, runs `extractToc()` over the
-resulting HTML, then injects it with `<Fragment set:html={body} />`. That is what
-lets the TOC be derived from the page's real markup. The cost: the body passes
-through a string, so a **hydrated island (`client:*`) inside a page body would
-not survive**. Every page here is static HTML, so this is a non-issue in
-practice — but it is the reason to keep it that way.
-
-*Articles get a "More Articles" strip for free.* When the pathname starts with
-`/articles/`, `BaseLayout` appends an [`ArticleCards`](#articlecards) block
-(4 cards, shuffled, current page excluded) marked `data-pagefind-ignore`.
+- **The body is rendered to a string first**, so the TOC can be extracted from
+  it, then injected with `set:html`. A hydrated island (`client:*`) in a page
+  body would not survive — keep pages static.
+- **Articles get "More Articles" for free:** on `/articles/*` it appends 4
+  shuffled [`ArticleCards`](#articlecards), excluding the current page.
 
 ---
 
 ## 2. `article/` — page furniture
 
-The header stack of a typical article, in the order it appears:
-
 ```astro
-const meta = await getEntryMeta("articles", Astro.url.pathname);
-
-<TopicTags topics={meta.topics} />
-<PageTitle title={meta.title} />
-<PubDate pubDate={meta.pubDate} />
-<FrontImage src="/articles/<slug>/banner.webp" />
+<header>
+  <TopicTags />
+  <PageTitle />
+  <PubDate />
+  <FrontImage src="/articles/<slug>/banner.webp" />
+</header>
 ```
 
-`getEntryMeta` (in `src/utils/`) finds the page's own entry in the `articles` /
-`posts` collection by matching `Astro.url.pathname` against `data.link`, and
-throws if there is no match — so a page and its `pages.json` entry can't
-drift apart silently.
+`TopicTags`, `PageTitle` and `PubDate` **take no props on an article or post**:
+each looks up the page's own `pages.json` entry from its URL and fails the build
+if there is none. Their props only override that, or serve pages elsewhere.
 
-### TopicTags
-
-Renders `Topics: a, b, c` under the banner.
-
-| Prop | Type | Default |
+| Component | Props (all optional) | Renders |
 |---|---|---|
-| `topics` | `string[]` | `[]` |
-
-Each topic sits in its own `<span data-pagefind-filter="topic">`, which is what
-feeds the top bar's tag browser. **The commas are outside those spans** so they
-never become part of a filter value. Renders nothing for an empty list.
-
-### PageTitle
-
-The page `<h1>`.
-
-| Prop | Type | Default | Notes |
-|---|---|---|---|
-| `title` | `string` | — | |
-| `variant` | `"article" \| "post"` | `"article"` | Picks `.title` vs `.post-title`. |
-
-### PubDate
-
-| Prop | Type |
-|---|---|
-| `pubDate` | `string` (ISO `YYYY-MM-DD`) |
-
-Renders `Posted <date>` in `.date`. It runs `formatDate()` internally, so pages
-hand over the raw `meta.pubDate` and never import the formatter.
+| `TopicTags` | `topics: string[]` | `Topics: a, b, c`. Each topic is a `data-pagefind-filter="topic"` span (commas outside it), which feeds the top bar's tag browser. |
+| `PageTitle` | `title`, `variant: "article" \| "post"` | The `<h1>`: `.title` or `.post-title`, chosen from the collection. |
+| `PubDate` | `pubDate` (ISO) | `Posted <date>` in `.date`. |
 
 ### FrontImage
 
-The banner image under the title. Owns the `figure` wrapper and the `.front-img`
-rule that articles used to repeat in their own `<style>` blocks.
+The banner under the title.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `src` | `string` | — | |
 | `alt` | `string` | `"banner"` | |
-| `width` | `string` | `"100%"` | Desktop width; always collapses to 100% under 580px. |
-| `fetchpriority` | `"high" \| "low" \| "auto"` | `"high"` | It's the LCP image on most articles. |
+| `width` | `string` | `"100%"` | Desktop only; 100% under 580px. |
+| `fetchpriority` | `"high" \| "low" \| "auto"` | `"high"` | It's usually the LCP image. |
 
-Children become the caption. Article front images **do** open in the lightbox —
-`Lightbox.astro` uses a blacklist (`#logoImage`,
-`.recommend-img img`, `.no-lightbox`), so add `no-lightbox` to opt an image out. The viewer itself is
-yet-another-react-lightbox, mounted with plain React from
-`components/site/lightbox/viewer.ts` — no React integration, no island.
+Children become the caption. It opens in the [lightbox](#lightbox) like any
+body image; `class="no-lightbox"` opts out.
 
 ### Figure
 
-**The single way to place an image in article or post body copy.** Width,
-centering, rounding and responsive behaviour are decided here instead of per
-page — it replaced the old `.image-block` / `.image` classes whose sizes had to
-be written inline or hung off per-page ids.
+**The only way to place a body image.** Sizing, centring and responsiveness are
+decided here, not per page.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `src` | `string` | — | |
-| `alt` | `string` | `""` | `""` is correct for decorative figures. |
-| `width` | `string` | `"100%"` | **Desktop only** — 1080px drops everything to 80%, 580px to 100%. |
-| `maxWidth` | `string` | container | Hard cap, e.g. `"520px"`. |
-| `captionWidth` | `string` | full | Narrower caption than the figure. |
-| `flush` | `boolean` | `false` | Drops the figure's margins, for tight columns. |
-| `loading` | `"lazy" \| "eager"` | — | Use `"lazy"` well below the fold. |
+| `src` | `string` | — | Files go in `public/articles/<slug>/`. |
+| `alt` | `string` | `""` | `""` is right for decorative figures. |
+| `width` | `string` | `"100%"` | Desktop only — 80% under 1080px, 100% under 580px. |
+| `maxWidth` | `string` | — | Hard cap, e.g. `"520px"`. |
+| `captionWidth` | `string` | full | Narrower caption. |
+| `flush` | `boolean` | `false` | Drop the margins. |
+| `loading` | `"lazy" \| "eager"` | — | `"lazy"` well below the fold. |
 
 ```astro
 <Figure src="/articles/<slug>/Bessel1st.webp" width="65%">
@@ -205,23 +120,13 @@ be written inline or hung off per-page ids.
 </Figure>
 ```
 
-Children become the `<figcaption>`; figure numbering and caption colors come
-from the global rules in `base/_typography.css`.
+Children become the numbered `<figcaption>`.
 
 ### Table
 
-**The single way to put a table in body copy.** It renders the
-`.table-wrapper` / `.p-table` pair together — the wrapper is what gives the
-table horizontal scroll on a phone, and a hand-written table that omits it
-looks fine on a desktop and overflows the page on mobile with nothing in the
-build to catch it.
-
-| Prop | Type | Notes |
-|---|---|---|
-| `id` | `string` | Lands on the `<table>`. |
-| `class` | `string` | Added alongside `.p-table`. |
-
-Anything else is spread onto the `<table>`.
+**The only way to put a table in body copy.** It emits the `.table-wrapper` /
+`.p-table` pair; without the wrapper a table overflows on mobile and nothing
+catches it. `id` and `class` (plus any other attribute) land on the `<table>`.
 
 ```astro
 <Table id="growth-table">
@@ -231,241 +136,67 @@ Anything else is spread onto the `<table>`.
 </Table>
 ```
 
-Use `<thead>` and `<tbody>`: the header rule is drawn on `thead`, the row rules
-inside `tbody`. A `<caption>` sits below the table and is numbered
-("Table. 1: …") by the global rule in `base/_typography.css`.
+Use `<thead>` and `<tbody>` (the rules are drawn on them); a `<caption>` sits
+below and is numbered. The styles are scoped to `Table.astro`, so page rules
+for a table's *content* need care:
 
-**Per-table rules.** A page styles its own table's *content* — which columns
-centre, which may not wrap — never the look itself. Two gotchas when writing
-them, both from the style now being scoped to this component:
-
-- The `<table>` is `Table.astro`'s element, so it carries *its* scope id, not
-  the page's. A page's scoped `<style>` reaches it with
-  `:global(.p-table) td:first-child { … }` — the cells are slot content and
-  stay page-scoped, so the `td` half still pins the rule to that page
+- From a page's scoped `<style>`: `:global(.p-table) td:first-child { … }`
   (see `articles/time-complexity-of-an-algorithm`).
-- Scoping buys the component's cell rules an extra attribute of specificity,
-  so a *global* page rule aimed at a cell class has to be qualified to outrank
-  them: `.table-wrapper .p-table .rating`, not `.p-table .rating`
-  (see `posts/tested-food-places`).
+- A global rule on a cell class must outrank the scoped ones:
+  `.table-wrapper .p-table .rating` (see `posts/tested-food-places`).
+
+### Quote
+
+The pull quote that opens most articles.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `content` | `string` | Without quotation marks — CSS adds them. |
+| `author` | `string` | Without a dash — CSS adds it. |
 
 ### ContinueButton
 
-Previous/next navigation at the foot of a multi-part article.
+Previous/next links at the foot of a multi-part article.
 
 | Prop | Type | Default |
 |---|---|---|
 | `prevHref` / `nextHref` | `string` | — |
 | `prevLabel` / `nextLabel` | `string` | `"Previous"` / `"Next"` |
 
-```astro
-<ContinueButton
-  prevHref="../the-quest-to-finding-chladni-patterns-1"
-  nextHref="../the-quest-to-finding-chladni-patterns-3"
-/>
-```
-
-A missing href hides that button with `visibility: hidden` rather than removing
-it, so a lone "Next" stays on the right where readers expect it.
+A missing href hides its button but keeps the space, so a lone "Next" stays on
+the right.
 
 ### TableOfContents
 
-**You normally don't render this.** Pass `toc` to `BaseLayout` and it builds the
-list from the page's own `<section>` / `<h2>`–`<h4>` markup — adding a section
-to the page is all it takes to add it to the TOC.
+**Normally not rendered by hand** — pass `toc` to `BaseLayout` and it is built
+from the page's markup ([`DEVELOPMENT.md` §3.1](DEVELOPMENT.md#31-table-of-contents)).
+For a list the markup can't express, pass `items: TocItem[]`
+(`{ label, href, children? }`) and optionally `title`.
 
-| Prop | Type | Default |
-|---|---|---|
-| `items` | `TocItem[]` | — |
-| `title` | `string` | `"Table of Contents"` |
-
-Render it by hand only for a list the markup can't express:
-
-```astro
-<TableOfContents items={[
-  { label: "Introduction", href: "#intro" },
-  { label: "Methods", href: "#methods", children: [{ label: "A", href: "#a" }] },
-]} />
-```
-
-Labels come from page markup, so they are HTML-escaped before being emitted.
-To relabel or skip a heading in the automatic list, use `data-toc="…"` /
-`data-toc="skip"` — see `src/utils/toc.ts`.
-
-### tocHighlight.ts
-
-Not a component — the hoisted script behind `TableOfContents`. It marks the TOC
-entry for the section being read: the last entry starting above a "reading line"
-about a third of the way down the viewport (never above the fixed top bar). Once
-the page runs out of scroll the line slides to the viewport bottom, so trailing
-short sections still get their turn. Positions are re-read every pass and a
-`ResizeObserver` re-runs it, so late layout shifts from images or KaTeX need no
-bookkeeping.
+`tocHighlight.ts` is its script: it marks the entry for the section being read
+(the last one above a line a third of the way down the viewport).
 
 ---
 
 ## 3. `code/` — code blocks
 
-Five containers with different chrome. Pick by what the block *is*:
-
-| Component | Renders | Copy button | Framed box |
+| Component | For | Copy button | Framed |
 |---|---|---|---|
-| [`CodeBlock`](#codeblock) | generic code / config | yes | no |
-| [`CodeBox`](#codebox) | code needing emphasis, optional line numbers | yes | yes |
-| [`ShellScript`](#shellscript) | interactive terminal session, with prompt | yes | no |
-| [`Sample`](#sample) | console output, pseudo-code — not a runnable listing | no | no |
-| [`TabBox`](#tabbox) | tabbed container holding any of the above | — | yes |
+| [`CodeBlock`](#codeblock-codebox-shellscript) | generic code / config | yes | no |
+| [`CodeBox`](#codeblock-codebox-shellscript) | code needing emphasis, optional line numbers | yes | yes |
+| [`ShellScript`](#codeblock-codebox-shellscript) | terminal session with prompts | yes | no |
+| [`Sample`](#sample) | console output, pseudo-code | no | no |
+| [`TabBox`](#tabbox) | tabs holding any of the above | — | yes |
+| [`C`](#c) | inline code in a sentence | — | — |
 
-`CodeBlock`, `CodeBox` and `ShellScript` are highlighted **at build time** by
-Shiki (`src/utils/highlight.ts`): pages ship finished, coloured HTML and need no
-script or language list. `language` is a [Shiki language id](https://shiki.style/languages)
-(`cpp`, `python`, `bash`, `json`, `cmake`, …); an unknown one fails the build.
-Each block is rendered in every code theme at once, and the reader's choice in
-Settings picks one with CSS — see `src/utils/codeThemes.ts` to change the list.
+The first three are highlighted **at build time** by Shiki
+(`src/utils/highlight.ts`), in every theme listed in `src/utils/codeThemes.ts`
+at once; the reader's setting picks one with CSS. `language` is a
+[Shiki language id](https://shiki.style/languages) — an unknown one fails the build.
 
-For a run of code *inside a sentence* — a flag, an identifier, a filename —
-use [`C`](#c), which is not a container and is not highlighted.
-
-> To convert legacy raw `<div class="code-container">` markup, run
-> `python3 scripts/convert-code-blocks.py <file> --apply`
-> (see [`AUTOMATION.md`](AUTOMATION.md)).
-
-### CodeBlock
-
-`<div class="code-container"><CopyButton /><pre class="shiki">…`.
-
-| Prop | Type | Default |
-|---|---|---|
-| `language` | `string` | `"bash"` |
-| `code` | `string` | — |
-
-Write the listing with `is:raw` so it can be indented to match the page — see
-[indenting a listing](#the-indentation-gotcha). `code` replaces the children
-with a string (e.g. `code={raw`…`}`).
-
-### CodeBox
-
-`CodeBlock` inside a `.box` frame, plus optional line numbers (a CSS-counter
-gutter, so they are never selected or copied).
-
-| Prop | Type | Default |
-|---|---|---|
-| `language` | `string` | `"bash"` |
-| `lineNumbers` | `boolean` | `false` |
-| `code` | `string` | — |
+### Writing a listing: use `is:raw`
 
 ```astro
-<CodeBox language="python" lineNumbers>import numpy as np
-…
-</CodeBox>
-```
-
-
-### ShellScript
-
-A bash block with a `[user@host] $` prompt in front of every command. The
-prompts are generated content, so they are never selected or copied.
-
-| Prop | Type | Default | Meaning |
-|---|---|---|---|
-| `host` | `string` | `"pc"` | the hostname in the prompt |
-| `output` | `string` | — | e.g. `"2-5, 8"` — lines that are output, not input: no prompt, no highlighting, dimmed |
-| `continuationStr` | `string` | — | a line ending in this continues onto the next, which gets a `>` prompt (e.g. `{"\\"}`) |
-| `code` | `string` | — | replaces the children, as on `CodeBlock` |
-
-### Sample
-
-Console output or pseudo-code: `<pre class="console"><code>`. **No copy
-button** — deliberately, because the content isn't meant to be run. Written
-like the highlighted blocks (`is:raw`, indented, `<` literal), but not
-highlighted. The content is plain text, not HTML: tags show as typed.
-
-| Prop | Type | Notes |
-|---|---|---|
-| `code` | `string` | Alternative to children. |
-| `id` | `string` | Set on the container. |
-| `class` | `string` | Merged onto the container. |
-| `style` | `string` | Inline style on the container; overrides the default `margin: 25px auto`. |
-
-### TabBox
-
-A tabbed container. Each child is one pane, paired with a label by position.
-
-| Prop | Type | Notes |
-|---|---|---|
-| `tabs` | `string[]` | One label per pane, in pane order. |
-
-```astro
-<TabBox tabs={["Square", "Circular"]}>
-  <Sample is:raw>
-    …
-  </Sample>
-  <Sample is:raw>
-    …
-  </Sample>
-</TabBox>
-```
-
-The first pane shows on load; CSS hides the rest until the script runs, so
-panes need no `id`, shared class or inline `display: none`. The script adds the
-`tablist` / `tab` / `tabpanel` roles and `aria-selected`, supports arrow keys and
-Home/End, and only touches panes inside its own box — several TabBoxes can share
-a page. Panes lose their own margin and get a square top-left corner where they
-meet the tab strip; the tab styling is scoped to `TabBox.astro`.
-
-### C
-
-Inline code — `<code class="inline-code">`, styled but not highlighted. The
-code-side twin of [`M`](#m), and the only member of `code/` that isn't a block.
-
-| Prop | Type | Default |
-|---|---|---|
-| `code` | `string` | — (falls back to the slot) |
-
-```astro
-<p>Compile with <C>-g</C> to embed DWARF debug information.</p>
-<C code={raw`std::vector<T>{}`} />
-```
-
-Plain slot text is fine when the content has no braces or backslashes; braces
-open an Astro expression and quoted attributes eat backslashes, so anything
-carrying either goes through [`raw`](#rawastro), exactly as with `M`/`tex`.
-
-The `.inline-code` rule is **scoped to this component** — a hand-written
-`<code class="inline-code">` in a page renders unstyled. Use `<C>`.
-
-### CopyButton
-
-`<button class="copy-btn">Copy</button>`, already included by `CodeBlock`,
-`CodeBox` and `ShellScript`. Render it directly only in a hand-rolled container.
-It finds its code with `button.closest(".code-container")`, so it copies the
-right block regardless of document order — and containers without a button
-(`Sample`) don't shift it.
-
-### raw.astro
-
-Not a component: `export const raw = String.raw`, the code-block counterpart of
-[`tex`](#texastro).
-
-```astro
-import { raw } from "@components/code/raw.astro";
-```
-
-### The indentation gotcha
-
-The `<pre>` lives *inside* these components, so plain slot children are **not**
-whitespace-protected in the calling page: Astro's HTML compressor collapses
-whitespace that touches a tag, and `{`, `<` are parsed as Astro. That is why a
-plain listing has to start at column 0 against the opening tag, with `<` / `{`
-escaped as `&lt;` / `&#123;`.
-
-**Add `is:raw` instead.** It is Astro's own directive: the children reach the
-component as literal text — whitespace kept, `<`, `{`, `}` not parsed — and the
-component strips the indentation the lines share. So the block can sit at the
-page's indentation, written exactly as the code reads:
-
-```astro
-    <p>Here is a minimal program with a definite leak:</p>
     <CodeBlock language="cpp" is:raw>
       #include <cstdlib>
       int main() {
@@ -474,314 +205,206 @@ page's indentation, written exactly as the code reads:
     </CodeBlock>
 ```
 
-This works the same on `CodeBlock`, `CodeBox`, `ShellScript` and `Sample`.
+With `is:raw` the children arrive as literal text (`<`, `{` not parsed), and a
+listing that starts on the line **after** the tag is dedented, so it can sit at
+the page's indentation. One starting on the tag's own line is taken as written.
+The one thing to avoid inside `is:raw` is a literal entity like `&lt;` — it gets
+decoded.
 
-The rule the components apply: a listing that starts on the line **after** its
-opening tag is dedented; one that starts on the tag's own line is taken exactly
-as written, so an excerpt that is deliberately indented stays indented. Inside
-`is:raw`, the one thing to avoid is a literal `&lt;`-style entity in the code —
-it is decoded like an escaped one.
+Without `is:raw`, the HTML compressor eats whitespace touching the tag, so the
+listing must start at column 0 with `<` / `{` escaped. Works the same on all
+four block components.
+
+### CodeBlock, CodeBox, ShellScript
+
+| Prop | On | Default | Meaning |
+|---|---|---|---|
+| `language` | `CodeBlock`, `CodeBox` | `"bash"` | Shiki language id |
+| `code` | all three | — | String instead of children (e.g. ``code={raw`…`}``) |
+| `lineNumbers` | `CodeBox` | `false` | CSS-counter gutter, never copied |
+| `host` | `ShellScript` | `"pc"` | Hostname in the `[user@host] $` prompt |
+| `output` | `ShellScript` | — | e.g. `"2-5, 8"`: output lines — no prompt, dimmed |
+| `continuationStr` | `ShellScript` | — | A line ending in this gets a `>` prompt on the next (e.g. `{"\\"}`) |
+
+Prompts and line numbers are generated content, so they are never copied.
+
+### Sample
+
+`<pre class="console">`, plain text, **no copy button** — the content isn't
+meant to be run. Props: `code`, `id`, `class`, `style` (overrides the default
+`margin: 25px auto`).
+
+### TabBox
+
+`tabs: string[]` — one label per child pane, in order.
+
+```astro
+<TabBox tabs={["Square", "Circular"]}>
+  <Sample is:raw>…</Sample>
+  <Sample is:raw>…</Sample>
+</TabBox>
+```
+
+Panes need no ids. Keyboard (arrows, Home/End) and ARIA roles are handled, and
+several TabBoxes can share a page.
+
+### C
+
+Inline code, not highlighted: `<p>Compile with <C>-g</C>.</p>`. Anything with
+braces or backslashes goes through `raw`: ``<C code={raw`std::vector<T>{}`} />``.
+The `.inline-code` style is scoped here, so a hand-written
+`<code class="inline-code">` renders unstyled.
+
+### CopyButton, raw.astro
+
+`CopyButton` is already inside `CodeBlock` / `CodeBox` / `ShellScript`; it copies
+from its `closest(".code-container")`. `raw.astro` exports `raw = String.raw`,
+the code counterpart of [`tex`](#texastro).
 
 ---
 
 ## 4. `math/` — equations & environments
 
-Math is typeset by `public/assets/js/katex-render.js`, which `BaseLayout` loads
-on every page — **a page needs no math script of its own.** `\begin{equation}`
-and `\begin{align}` get document-wide sequential numbers (KaTeX restarts its
-counter per render call, so the driver strips that and injects a running
-`\tag{n}`); `$$…$$` and `\[…\]` stay unnumbered.
+Math is typeset by `public/assets/js/katex-render.js`, loaded on every page.
+`\begin{equation}` / `\begin{align}` get document-wide numbers; `$$…$$` and
+`\[…\]` stay unnumbered. Shared macros (`\R`, `\N`, `\pd`, `\lcm`, …) live in the
+`macros` object at the top of that file — add new ones there, not per page.
 
-Shared `\newcommand` / `\DeclareMathOperator` macros — `\R`, `\N`, `\Z`, `\pd`,
-`\lbrac`, `\lcm`, … — live in the `macros` object at the top of
-`katex-render.js`. Add new ones there rather than per page.
-
-**Display math must be wrapped**, never left loose in the page, because
-`.equation` is excluded from the Pagefind index — a bare `$$…$$` would dump
-`\frac`, `\sum` and `\begin` into search results. See
-[`DEVELOPMENT.md` §5](DEVELOPMENT.md#5-math).
+**All display math goes in `<E>`** — it keeps LaTeX out of search results
+([`SEARCH.md` §3](SEARCH.md#3-excluding-display-math)).
 
 ### tex.astro
 
-`export const tex = String.raw`. Astro eats backslashes in quoted attributes and
-treats `{` specially in template text, so LaTeX has to arrive as a raw template
-literal:
+`export const tex = String.raw`. Astro eats backslashes in quoted attributes, so
+LaTeX must arrive as ``{tex`…`}``:
 
 ```astro
 import { tex } from "@components/math/tex.astro";
 ```
 
-### E
+### E and M
 
-Display equation — `<div class="equation">`.
+Display (`<div class="equation">`) and inline (`<span class="inline-math">`)
+math. Both take the LaTeX as children or as `code`.
 
 ```astro
 <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>
-<E code={tex`\begin{equation} c = \frac{2Lf}{\sqrt{n^2 + m^2}} \end{equation}`} />
+<M>{tex`u_{tt}`}</M>   <M>x^2</M>
 ```
 
-| Prop | Type | Notes |
+Plain text works when there are no braces or backslashes, and so does plain
+`$x^2$` in prose. `<Equation>` is a legacy alias of `<E>`.
+
+### Theorem, Problem, Solution, Proof
+
+| Component | Renders | Props |
 |---|---|---|
-| `code` | `string` | Alternative to children. |
+| `Theorem` | `<div class="theorem">` | `name` — shown in parentheses after "Theorem" |
+| `Problem` | `<div class="problem">` | — |
+| `Solution` | `<details class="solution">`, open by default | `summary` (`"Solution"`), `open` (`true`) |
+| `Proof` | `<div class="proof">` with an italic **Proof.** lead-in | `label` (`"Proof"`; the period is added) |
 
-The default slot also accepts the legacy escaped form (`&#123;`, `&#125;`,
-`&amp;`), which is what migrated articles use.
-
-### Equation
-
-Backward-compatible alias of `<E>`, kept so existing usages keep working. Prefer
-`<E>` in new articles.
-
-### M
-
-Inline math — `<span class="inline-math">`, typeset in inline mode.
-
-```astro
-<M>{tex`u_{tt}`}</M>   <M>x^2</M>   <M code={tex`\lambda = \mu + \nu`} />
-```
-
-Plain text is fine when there are no braces or backslashes. Note that ordinary
-`$x^2$` in prose also works: the build's `pagefind-ignore-math.mjs` wraps inline
-math automatically so it stays out of the index.
-
-### Theorem
-
-`<div class="theorem">` with an optional name.
-
-| Prop | Type | Notes |
-|---|---|---|
-| `name` | `string` | Rendered by CSS from `data-theorem-name`, formatted as ` (name)`. |
-
-### Problem
-
-`<div class="problem">`. No props — children are the body.
-
-### Solution
-
-A collapsible `<details class="solution">`, **expanded by default**.
-
-| Prop | Type | Default | Notes |
-|---|---|---|---|
-| `summary` | `string` | `"Solution"` | |
-| `open` | `boolean` | `true` | `open={false}` to start collapsed. |
-
-The `open` attribute is rendered into the markup rather than set by a script after
-load, so the block never renders closed and then pops open.
-
-Prose inside `Theorem` / `Problem` / `Solution` stays searchable; display math
-inside them still belongs in an `<E>`.
+A `Proof` body **must open with a `<p>`** — the lead-in attaches to its first
+paragraph. Prose in all four stays searchable; display math in them still goes
+in `<E>`.
 
 ---
 
 ## 5. `listings/` — catalog views
 
-These read the typed content collections (`src/content.config.ts` over
-`src/data/pages.json`) at build time. Nothing here fetches at
-runtime.
+All read the `pages.json` collections at build time; nothing fetches at runtime.
 
 ### ArticleCards
-
-The article card grid, rendered at build time (it replaced a client-side
-`article()` function).
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `count` | `number` | all | Max cards. |
-| `showDetails` | `boolean` | `true` | Tags, description and date under the title. |
-| `shuffle` | `boolean` | `false` | Fisher-Yates; note this makes the build non-deterministic. |
-| `excludePath` | `string` | `""` | URL path to drop, normally the current page. |
+| `showDetails` | `boolean` | `true` | Tags, description and date. |
+| `shuffle` | `boolean` | `false` | Makes the build non-deterministic. |
+| `excludePath` | `string` | `""` | Path to drop, normally the current page. |
 
-Images resolve against `/media/Images/`. `BaseLayout` already renders this on article pages — see
-[§1](#1-layouts--baselayout).
+Card images resolve against `/media/Images/`.
 
 ### PostList
 
-The full list of posts, in `pages.json` order — the collection does no
-sorting of its own. No props; renders "No posts available" when the collection
-is empty.
+Every post, in `pages.json` order. No props.
 
 ### MaterialCard
 
-A recommended book/material, with cover art and purchase links.
-
-| Prop | Type | Notes |
-|---|---|---|
-| `title` | `string` | |
-| `author` | `string` | Rendered as `by <author>`. |
-| `description` | `string` | |
-| `links` | `{ label, href }[]` | Comma-joined after "You can buy this on:". |
-| `image` | `string` | Cover image path. |
-| `imageId` | `string` | Optional `id` on the `<img>` for CSS overrides. |
+A recommended book: `title`, `author`, `description`, `image`, optional
+`imageId`, and `links: { label, href }[]` (listed after "You can buy this on:").
 
 ---
 
 ## 6. `site/` — chrome on every page
 
-`BaseLayout` renders all of these; pages never touch them.
+`BaseLayout` renders all of these; pages never touch them (except `HeroBanner`).
 
 ### TopBar
 
-The fixed top bar: home/about links, hamburger, search field, tag browser, RSS
-link, share menu, dark-mode toggle, the settings panel, and the reading-progress
-bar. The markup lives in `TopBar.astro`; behaviour is split into `site/topbar/`:
+Home/about links, hamburger, search, tag browser, RSS, share menu, dark-mode
+toggle, settings panel and reading-progress bar. Behaviour lives in
+`site/topbar/`:
 
-| Module | Responsibility |
+| Module | Does |
 |---|---|
-| `nav.ts` | Sidebar open/closed, from the hamburger and from viewport width (opens at ≥1200px). Enables transitions only after first paint so the sidebar doesn't slide in on load. |
-| `theme.ts` | Dark mode and the two code-theme `<select>`s. One `mode` key in localStorage drives the root class and the toggle icon; re-syncs on `pageshow` so bfcache restores don't come back light. The code themes are `data-code-light` / `data-code-dark` on `<html>` — every block already carries every theme's colours, so a change applies instantly and is mirrored to other tabs. |
-| `settings.ts` | Body font, font size and scroll-indicator selects, each persisted and mirrored across tabs; plus the progress bar. |
-| `search.ts` | Search field and tag browser. Pagefind when its index exists, `pages.json` metadata when it doesn't (i.e. `astro dev`). Documented in depth in [`SEARCH.md`](SEARCH.md). |
-| `share.ts` | The share dropdown: opens each platform's share URL for the current page in a new tab, and closes on Escape or an outside click. |
+| `nav.ts` | Sidebar open/closed (opens by default at ≥1200px). |
+| `theme.ts` | Dark mode and the two code-theme selects, persisted and synced across tabs. |
+| `settings.ts` | Font, font size and scroll-indicator selects; the progress bar. |
+| `search.ts` | Search field and tag browser — see [`SEARCH.md`](SEARCH.md). |
+| `share.ts` | Share dropdown. |
 
-A flash-preventing inline script in `BaseLayout`'s `<head>` adds `.dark-mode`
-and the code-theme attributes before first paint; `theme.ts` takes over after.
+An inline script in `BaseLayout`'s `<head>` applies dark mode and the code theme
+before first paint; `theme.ts` takes over after.
 
-### Logo
+**Adding a share platform** takes two edits: an entry in `sharePlatforms` in
+`TopBar.astro` (`{ id, title, icon }`, `icon` a Font Awesome brand name) and the
+same `id` in `SHARE_URLS` in `share.ts`. Without the second it renders but does
+nothing.
 
-The sidebar logo (a responsive `astro:assets` `<Image>`), the GitHub repo badge
-under it, and the collapsible sidebar navigation list.
+### Logo, Footer
 
-### Footer
+`Logo`: the sidebar logo, GitHub badge and collapsible nav list. `Footer`:
+copyright, policy/license links and the social row. No props.
 
-Copyright with the current year, privacy-policy and license links, and the
-social row. No props.
+### Lightbox
+
+Click any content image to view it fullscreen, with prev/next across the page.
+No markup, no props: its script lazy-loads yet-another-react-lightbox
+(`site/lightbox/viewer.ts`, plain React, no island) on first click. Everything
+opens except `#logoImage`, the sidebar highlights' covers and anything with
+`class="no-lightbox"`.
 
 ### HeroBanner
 
-The hero of the homepage and the About page, in the `hero` slot:
-`<HeroBanner slot="hero" art="gradient" />` / `<HeroBanner slot="hero" art="preprint" />`.
-The left is a shared dark panel (title, red rule, tagline and a monospace
-caption), sized to its content; the rest is a piece of animated maths art. Each
-`art` value picks an art component in `site/canvas/`, its caption (in the `ARTS`
-table at the top of `HeroBanner.astro`) and where it sits:
+The homepage / About banner, in the `hero` slot:
+`<HeroBanner slot="hero" art="gradient" />`. A dark panel (title, tagline,
+caption) on the left, animated maths art in the rest. The `ARTS` table at the
+top of `HeroBanner.astro` maps each `art` to a component in `site/canvas/`:
 
 | `art` | Component | Placement |
 |---|---|---|
-| `"gradient"` | `GradientCanvas` | **behind**: fills the whole banner under the opaque panel. |
-| `"preprint"` | `PreprintFigure` | **beside**: a second grid column. Below 860px, with no room beside the panel, it moves behind it. |
+| `"gradient"` | `GradientCanvas` — gradient lines of drifting Neumann modes, run in a worker | behind the panel |
+| `"preprint"` | `PreprintFigure` — "Fig. 1", heat cooling in an insulated rod (SVG) | beside the panel; behind it below 860px |
 
-Wherever the panel spans the banner (phones, and "beside" art below 860px) it
-turns translucent, so the art shows through behind the title: `--hero-veil`
-(78%) over the dense gradient field, `--hero-veil-light` (45%) over "beside" art,
-whose thin lines all but vanish under the heavier one.
+Where the panel covers the art (phones, narrow "beside") it turns translucent.
+The banner is always dark and excluded from search.
 
-Three more arts in `site/canvas/`, `EquationsCanvas`, `MazeCanvas` and
-`FluidCanvas`, are not registered yet (see their sections below).
-
-The banner is always dark (`--hero-*` properties), whatever the site theme, and
-carries `data-pagefind-ignore="all"`, so its copy stays out of search.
-
-**Adding an art.** Write a component in `site/canvas/` whose canvas or SVG fills
-its box (`width`/`height: 100%`, measured from its own CSS box, transparent
-where it draws nothing), then add an entry to `ARTS`. `EquationsCanvas`,
-`MazeCanvas` and `FluidCanvas` are built this way and ready to plug in as
-`"beside"` arts; each one's header comment has the `ARTS` entry to paste. Their
-scripts share `watchCanvas.ts` for the wiring: resizes coalesced to one per
-frame, and whether the canvas is on screen and in a visible tab. Every
-registered art's script lands on both pages (one module graph) and returns
-early when its markup is absent, so register only the arts in use.
-
-#### GradientCanvas
-
-A `<canvas>` animating short gradient lines of
-u = Σ cⱼ(t)·cos(pⱼπx/a)·cos(qⱼπy): three Neumann modes on the banner's own
-rectangle mixed by slowly beating coefficients cⱼ(t) = cos(ωⱼt + φⱼ). Every mix
-keeps ∂u/∂n = 0, so the lines stay parallel to the walls as the pattern drifts;
-red dots track the local maxima. It skips the columns hidden behind the panel,
-which it finds as the `.panel` of its enclosing `.hero-banner`.
-
-| File | Role |
-|---|---|
-| `gradientField.ts` | The maths and the draw loop (`createRenderer`). The modes' cos/sin are tabulated per pixel column/row on resize, so a frame is table lookups and ~16 batched strokes. Resizes animate: while the size is changing the field is rebuilt each frame with its mode numbers kept, so it stretches smoothly; once settled, a change of mode numbers crossfades over `CROSSFADE_MS`. The backing store is reallocated only for a settled size (mid-resize the frame is scaled into the old one): reallocating on every frame of the sidebar slide froze the banner in Chrome for seconds. The loop is paced by `requestAnimationFrame` (worker-side where supported), throttled to `DESIRED_FPS`; while it runs, a resize only queues the latest size, which the next frame applies and draws, so a slide gets one draw per display frame rather than doubled, uneven ones. Seeds jitter by a hash of their grid cell, so they stay put as the width changes. |
-| `gradientWorker.ts` | Runs that renderer on an `OffscreenCanvas`, off the main thread. Drawing on the main thread made the sidebar toggle stutter. Contexts are created with `CONTEXT_OPTIONS` (`willReadFrequently`), which keeps Chrome on a CPU canvas: its default GPU canvas is slow at thousands of thin translucent strokes, so the banner lagged in Chrome only. |
-| `gradientCanvas.ts` | Page side: transfers the canvas to the worker (or falls back to the main thread without `OffscreenCanvas`), measures it — every frame of a resize with the worker, plus a settled size `RESIZE_SETTLE_MS` after it stops (only the settled one on the fallback) — and reports visibility and reduced motion. It idles off-screen or in a hidden tab, and shows one still frame under reduced motion. |
-
-#### PreprintFigure
-
-"Fig. 1" — heat in an insulated rod, as an SVG. `preprintFigure.ts` holds the
-figure's geometry and maths: the frontmatter uses it to draw a still frame at
-build time (what reduced-motion and no-JS readers see), and its
-`initPreprintFigure()` animates that SVG — a live curve cools from the red t = 0
-profile with a running clock until it reaches equilibrium — the time
-`equilibriumTime()` computes for that profile, when it is flat to within
-`EQUILIBRIUM_PX` — leaving traces at `TRACE_FRACTIONS` of it, then the plot fades
-and restarts from a random cosine profile. Elements it updates carry `data-fig`.
-It idles off-screen and in a hidden tab.
-
-#### EquationsCanvas (not in use)
-
-Equation SVGs from `public/media/banner-svg/` drift and bounce inside the box,
-and a click drops a temporary extra one at the pointer (`ADDED_LIFETIME_MS`).
-`equationsCanvas.ts` rasterises each SVG once into an offscreen canvas at its
-on-screen size, so a frame only blits bitmaps. Speed, rotation, target FPS and
-the SVG list are constants at the top of the file.
-
-#### MazeCanvas (not in use)
-
-A maze inside a new random blob outline each cycle, in two phases. **Build:** Wilson's algorithm carves the maze
-out of a full grid of walls — loop-erased random walks (drawn in blue), each
-carved in cell by cell when it hits the maze, giving a uniformly random spanning
-tree. A few extra walls are then knocked out so heat can loop. **Heat:** a source
-cell is held at T = 1 and the discrete heat equation (`T ← T + α·ΔT`) spreads it
-through the corridors, coloured blue → green → yellow on a log scale. When the farthest cell warms
-up the field freezes; then hold, fade, and build again. A click moves the heat source, finishing the build first if needed.
-`BUILD_SPEED` paces the whole build; `HEAT_MS` the heat. The canvas is
-transparent around the maze and fades to transparent between cycles.
-
-#### FluidCanvas (not in use)
-
-Jos Stam's stable fluids on a coarse grid (one cell per
-`CELL_PX`, clamped to `MIN_COLS`–`MAX_COLS`), drawn 1:1 into an offscreen canvas
-and upscaled with smoothing. Three emitters on Lissajous paths push the fluid
-along their direction of travel and drop blue, green and purple dye; each step
-adds vorticity confinement, projects, self-advects velocity, projects again and
-advects the dye. `SQUARE_COUNT` black squares at random angles (re-scattered on
-resize) are solid obstacles: velocity and dye are zeroed inside, and the pressure
-solve treats their faces as walls, so the flow parts around them. Moving the
-pointer over the canvas stirs it. Under reduced
-motion it simulates `PRERUN_SECONDS` up front and shows that still. Dye is drawn
-with alpha, so the banner's background shows where there is none.
+**Adding an art:** a component in `site/canvas/` that fills its box and is
+transparent where it draws nothing, plus an `ARTS` entry. `EquationsCanvas`,
+`MazeCanvas` and `FluidCanvas` are built this way but not registered — each
+one's header comment has the entry to paste. Register only arts in use: every
+registered art's script ships on both pages. How each art works is documented
+in its own source file.
 
 ### HighlightsAndAttribute
 
-The lower sidebar: a build-time repo-stats panel, the highlights list, and the
-site attribution block.
+The lower sidebar: repo stats, featured articles and attribution.
 
-Stats come from `getRepoStats()`, **read from git during the build** rather than
-from the GitHub API in the browser. The panel renders with
-`white-space: pre-line`, so the lines are built without indentation — leading
-spaces would collapse.
-
-"Total Updates" counts every human commit, then splits it in two: "Content
-Updates" are the commits that touched a page a reader reads (articles, posts,
-home, About, privacy policy, their images and their catalog entries), and "Code
-Updates" is the remainder — components, styling, build config, tooling, docs. A
-commit that revises a page *and* the code behind it counts as content, so the
-two never overlap and always add back up to the total.
-
-What counts as content is the `CONTENT_PATHS` / `CONTENT_EXCLUDES` pathspec in
-`src/utils/repoStats.ts`, which lists the pre-Astro top-level `blogs/`,
-`articles/`, `about/` … layout as well as the current one so the count spans the
-whole history. Moving a path between the two buckets means editing that
-pathspec — "Code Updates" is derived by subtraction, never listed directly.
-
-The highlights are a hard-coded list of article links (`highlightLinks`)
-resolved against the `articles` collection. **To change what's featured, edit that array.** Each entry
-expands on click to reveal its cover image, and its link only becomes clickable
-once expanded, so the first tap expands instead of navigating.
-
-### The share menu
-
-**Not a component** — the share button lives in the top bar, not in a floating
-widget of its own. Its markup is the `share-container` block in `TopBar.astro`,
-driven by the `sharePlatforms` array in that file's frontmatter; its behaviour is
-`topbar/share.ts`. Each option opens that platform's share URL, built from
-`location.href` and `document.title`.
-
-To add a platform you must edit **both** halves: an entry in `sharePlatforms`
-(`{ id, title, icon }`, where `icon` is a Font Awesome brand name) and a matching
-`id` key in `SHARE_URLS` in `share.ts`. An option whose `id` has no `SHARE_URLS`
-entry renders but does nothing.
+- **Stats** are read from git at build time (`src/utils/repoStats.ts`).
+  "Content Updates" are commits touching reader-facing pages, as defined by the
+  `CONTENT_PATHS` pathspec there; "Code Updates" is the rest.
+- **Featured articles** are the `highlightLinks` array — edit it to change them.
 
 ---
 
@@ -789,28 +412,37 @@ entry renders but does nothing.
 
 ### Icon
 
-One Font Awesome icon as inline SVG, resolved at build time by
-`getIconSvg()` — no icon font, no client-side FA.
+A Font Awesome icon as inline SVG, resolved at build time. Sized `1em`, filled
+with `currentColor` — style the parent.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `name` | `string` | — | Without the `fa-` prefix: `"moon"`, `"github"`. |
+| `name` | `string` | — | No `fa-` prefix: `"moon"`, `"github"`. |
 | `prefix` | `"fas" \| "fab"` | `"fas"` | Solid vs brands. |
 | `class` / `style` / `id` | `string` | — | |
 
+### FeatureSlider
+
+The homepage's feature carousel.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `slides` | `{ id, title }[]` | — | `id` names the slot holding the slide; `title` becomes its `<h1>`. |
+| `label` | `string` | `"Featured articles"` | Accessible name. |
+
 ```astro
-<Icon name="moon" />
-<Icon name="github" prefix="fab" />
-<Icon name="check" style="color: green;" />
+<FeatureSlider slides={[{ id: "chladni", title: "Chladni Patterns" }]}>
+  <Fragment slot="chladni">…</Fragment>
+</FeatureSlider>
 ```
 
-The SVG is sized to `1em` and filled with `currentColor`, so it inherits font
-size and color from its context — style the parent, not the icon.
+The spot is as tall as its tallest slide, so the page doesn't jump between
+slides. Arrow keys and swipe work; without JS the first slide shows.
 
 ### TwoColumns
 
-`<div class="two-columns-block">` with children. Takes an optional `class` and
-passes any other attributes straight through.
+`<div class="two-columns-block">` around its children; extra attributes pass
+through.
 
 ---
 
@@ -823,52 +455,45 @@ import TopicTags from "@components/article/TopicTags.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
+import Quote from "@components/article/Quote.astro";
 import Figure from "@components/article/Figure.astro";
 import Table from "@components/article/Table.astro";
-import ContinueButton from "@components/article/ContinueButton.astro";
 import E from "@components/math/E.astro";
-import M from "@components/math/M.astro";
 import { tex } from "@components/math/tex.astro";
-import CodeBox from "@components/code/CodeBox.astro";
-import ShellScript from "@components/code/ShellScript.astro";
-import Sample from "@components/code/Sample.astro";
+import CodeBlock from "@components/code/CodeBlock.astro";
 import C from "@components/code/C.astro";
-import { raw } from "@components/code/raw.astro";
 import { getEntryMeta } from "@utils/getEntryMeta";
 
 const meta = await getEntryMeta("articles", Astro.url.pathname);
 ---
 
-<BaseLayout title={meta.title} description={meta.description} activeButton="articles" toc>
+<BaseLayout title={meta.title} description={meta.description} toc>
   <header>
-    <TopicTags topics={meta.topics} />
-    <PageTitle title={meta.title} />
-    <PubDate pubDate={meta.pubDate} />
+    <TopicTags />
+    <PageTitle />
+    <PubDate />
     <FrontImage src="/articles/<slug>/banner.webp" />
   </header>
+
+  <Quote content="…" author="…" />
 
   <section>
     <h2>Introduction</h2>
     <p>Inline math like $x^2$ is fine in prose, and <C>--flag</C> is inline code.</p>
     <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>
     <Figure src="/articles/<slug>/plot.webp" width="70%">A caption.</Figure>
-    <Table>
-      <thead><tr><th>n</th><th>T(n)</th></tr></thead>
-      <tbody><tr><td>1</td><td>O(1)</td></tr></tbody>
-    </Table>
-    <CodeBox language="python" lineNumbers>print("hi")
-</CodeBox>
+    <CodeBlock language="python" is:raw>
+      print("hi")
+    </CodeBlock>
   </section>
 </BaseLayout>
 ```
 
-**Things that bite**
-
 | Symptom | Cause |
 |---|---|
-| Code loses its indentation, or `{x}` / `<T>` vanish | Plain children — add `is:raw` ([§3](#the-indentation-gotcha)) |
-| Build fails: "Language … not found" | `language` isn't a Shiki language id |
-| A TabBox tab shows the wrong pane, or none | `tabs` labels and child panes are out of step: one child per label, in order |
-| LaTeX shows up in search results | Display math not wrapped in `<E>` |
-| Backslashes vanish from an equation | LaTeX passed as a quoted attribute instead of `{tex`…`}` |
-| Build fails: "Entry metadata not found" | Page's path doesn't match any `link` in `pages.json` |
+| Code loses its indentation, or `{x}` / `<T>` vanish | No `is:raw` ([§3](#writing-a-listing-use-israw)) |
+| Build fails: "Language … not found" | `language` isn't a Shiki id |
+| TabBox shows the wrong pane | `tabs` labels and child panes out of step |
+| LaTeX in search results | Display math not wrapped in `<E>` |
+| Backslashes vanish from an equation | LaTeX in a quoted attribute instead of ``{tex`…`}`` |
+| Build fails: "Entry metadata not found" | Page path matches no `link` in `pages.json` |

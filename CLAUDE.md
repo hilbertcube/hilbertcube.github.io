@@ -161,7 +161,7 @@ non-trivial changes:
 | `docs/COMPONENTS.md` | Every component, its props, and its gotchas (has a cheat-sheet + symptom table) |
 | `docs/SEARCH.md` | Pagefind pipeline, snippet building, on-page highlight/scroll |
 | `docs/AUTOMATION.md` | The helper scripts in `scripts/` |
-| `src/assets/css/CSS-ORGANIZATION.md` | CSS file layout |
+| `docs/CSS-ORGANIZATION.md` | CSS file layout |
 
 One live inconsistency they can't fix themselves: `scripts/new-article.sh` still emits
 `<script is:inline src="/assets/js/blogpage-setting.js">`, and that file no longer exists.

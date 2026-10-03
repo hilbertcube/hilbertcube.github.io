@@ -1,196 +1,105 @@
 # Search System
 
-Full-text search across the whole site, powered by [Pagefind](https://pagefind.app)
-— a static, client-side search engine. There is no server: at build time Pagefind
-crawls the rendered HTML and produces a static index + a tiny WASM engine that runs
-entirely in the browser.
-
-This document explains the moving parts. For general dev workflow see
-[DEVELOPMENT.md](./DEVELOPMENT.md); for the components content is authored with
-see [COMPONENTS.md](./COMPONENTS.md); for the helper scripts see
-[AUTOMATION.md](./AUTOMATION.md).
-
----
-
-## 1. The pieces
+Full-text search powered by [Pagefind](https://pagefind.app): at build time it
+crawls the rendered HTML and writes a static index plus a small WASM engine that
+runs in the browser. No server.
 
 | Concern | Where |
 |---|---|
-| Build the index | `package.json` `build` script + `scripts/pagefind-ignore-math.mjs` |
-| What gets indexed | `src/layouts/BaseLayout.astro` (`data-pagefind-body` / `data-pagefind-ignore`) |
-| Search UI + logic | `src/components/site/topbar/search.ts` → `initSearch()`, shipped by `TopBar.astro` |
-| On-page highlight & scroll | `src/layouts/BaseLayout.astro` (inline module) |
+| Build the index | `package.json` `build` script, `scripts/pagefind-ignore-math.mjs` |
+| What gets indexed | `BaseLayout.astro` (`data-pagefind-body` / `data-pagefind-ignore`) |
+| Search UI and logic | `src/components/site/topbar/search.ts` (`initSearch()`) |
+| On-page highlight and scroll | `BaseLayout.astro` (inline module) |
 | Styling | `src/assets/css/components/_search.css` |
-| Offline/dev fallback | `src/data/pages.json` (title-only) |
 
 ---
 
-## 2. Build pipeline
-
-The `build` script runs three steps in order:
+## 1. Build pipeline
 
 ```jsonc
 "build": "astro build && node scripts/pagefind-ignore-math.mjs && pagefind --site dist --exclude-selectors \".equation, .mathjax-definition\""
 ```
 
-1. **`astro build`** — renders every page to static HTML in `dist/`.
-2. **`node scripts/pagefind-ignore-math.mjs`** — wraps inline math so it's excluded
-   from the index (see §5).
-3. **`pagefind --site dist --exclude-selectors "…"`** — crawls `dist/`, builds the
-   index into `dist/pagefind/`, and skips display-math containers.
+1. `astro build` renders every page into `dist/`.
+2. `pagefind-ignore-math.mjs` hides inline math from the index (§4).
+3. `pagefind` builds `dist/pagefind/`, skipping display math (§3).
 
-CI needs no special handling: the GitHub Pages workflow already runs `npm run build`
-and uploads `dist/` (which now includes `dist/pagefind/`).
+`npm run dev` builds **no index**; search there uses the fallback (§6). To test
+real search: `npm run build && npm run preview`.
 
-> **Dev note:** `npm run dev` does **not** produce an index, so search there uses the
-> fallback (§7). To test real search: `npm run build && npm run preview`.
+## 2. What gets indexed
 
----
+Only `<main data-pagefind-body>` in `BaseLayout`: the page body. The top bar and
+sidebar sit outside it; "More Articles", the footer and the hero banner carry
+`data-pagefind-ignore`. Any page using `BaseLayout` is indexed on the next build.
 
-## 3. What gets indexed
+## 3. Excluding display math
 
-Pagefind only indexes the element marked `data-pagefind-body`. In
-`BaseLayout.astro` that's `<main class="general-wrapper" data-pagefind-body>`, so:
+`--exclude-selectors` skips **`.equation`** — every `<E>` — so `\frac` and `\sum`
+never reach the index. That is why all display math must be wrapped in `<E>`.
+(`.mathjax-definition` is a MathJax-era leftover no page uses.)
 
-- **Included:** the article/post/page body.
-- **Excluded automatically** (outside `<main>`): the top nav, the sidebar.
-- **Excluded explicitly** with `data-pagefind-ignore`: the "More Articles" block and
-  the `<footer>` (both live inside `<main>`).
+## 4. Excluding inline math
 
-New pages are indexed automatically — anything rendered through `BaseLayout` inherits
-the `data-pagefind-body` marker. Just rebuild.
+Inline `$…$` / `\(…\)` has no wrapping element, so `pagefind-ignore-math.mjs`
+wraps each run in `<span data-pagefind-ignore>` after the build. It walks the
+HTML as a tag tokenizer — rewriting only text, never markup — inside
+`data-pagefind-body`, and skips `<pre>`, `<code>`, `<script>`, `<style>` and
+`.equation`, so shell `$USER` in code is never taken for math.
 
----
-
-## 4. Excluding equations (display math)
-
-Math would otherwise pollute results with LaTeX tokens (`\frac`, `\sum`, …). Display
-math is excluded centrally via the `--exclude-selectors` flag, which treats these
-containers as if they had `data-pagefind-ignore`:
-
-- **`.equation`** — every `<E>` component (and its `<Equation>` alias). All display
-  math must be wrapped in `<E>` (this is a content rule — see
-  [DEVELOPMENT.md §5](./DEVELOPMENT.md#5-math)).
-- **`.mathjax-definition`** — vestigial. It held the `\newcommand` preamble under
-  MathJax; no page uses it now that KaTeX macros live in `katex-render.js`. Still
-  excluded so old markup stays safe.
-
-## 5. Excluding inline math (`scripts/pagefind-ignore-math.mjs`)
-
-Inline math (`$…$`, `\(…\)`) is woven through prose and has no wrapping element, so a
-post-build step handles it. For each page it:
-
-- Operates only inside `<main data-pagefind-body>`.
-- Walks the HTML as a **tag tokenizer**, rewriting only text runs (never markup).
-- **Skips** `<pre>`, `<code>`, `<script>`, `<style>`, `.equation`, and
-  `.mathjax-definition` — so shell `$USER` / `$(uname -r)` in code is never mistaken
-  for math, and display math is left alone.
-- Wraps each inline-math run in `<span data-pagefind-ignore>…</span>`.
-
-KaTeX still typesets the math normally; the wrapper only tells Pagefind to skip it.
-
-**Net effect:** searches match article *words*, never LaTeX. If equation gibberish
-ever appears in results, it's almost always a display block that wasn't wrapped in
-`<Equation>`.
+**Net effect:** searches match words, never LaTeX. LaTeX in a result almost
+always means a display block not wrapped in `<E>`.
 
 ---
 
-## 6. Client-side search (`initSearch()` in `topbar/search.ts`)
+## 5. The search UI (`topbar/search.ts`)
 
-### Engine loading
-On the first keystroke, `getEngine()` lazily loads the engine:
+**Engine.** On the first keystroke, `getEngine()` imports
+`/pagefind/pagefind.js`; if that fails it uses the fallback (§6).
 
-- **Pagefind** — dynamically imports `/pagefind/pagefind.js` and calls `init()`.
-- **Fallback** — if that import fails (dev / offline / missing index), it imports
-  `pages.json` for a title-only match (§7).
+**Query flow.** Each input runs Pagefind's `debouncedSearch` (180 ms). A
+"Loading…" state appears only if a search is still pending after 250 ms — in
+practice the first, cold query. Superseded or out-of-order results are dropped.
 
-### Query flow (input handler)
-1. Read the trimmed query; empty → hide dropdown.
-2. Start a **250 ms** timer that shows a "Loading…" state **only if** the search is
-   still pending — so it appears mainly on the first (cold WASM) query and never
-   flickers on warm ones.
-3. `await search(query)` and clear the timer.
-4. Ignore the result if it was superseded (Pagefind's `debouncedSearch`, 180 ms) or
-   if the input changed while awaiting (out-of-order guard).
-5. `renderResults(...)`.
+**Results.** Each page is one card (`.search-group`) with one snippet row
+(`.search-hit`) per cluster of matches:
 
-### Building results (`buildPageItem`)
-Each Pagefind result becomes one **card** (`.search-group`): the page title + a type
-badge, then one **snippet row** (`.search-hit`) per matching region:
+- `clusterLocations()` groups match positions; matches more than `CLUSTER_GAP`
+  words apart become separate snippets, each `CONTEXT` words either side.
+- Snippets are ordered by Pagefind's match weights, up to `MAX_SNIPPETS` per page.
+- `sectionFor()` labels each snippet with the nearest heading above it and links
+  to that section.
 
-- **Snippets from match positions.** Pagefind returns every match position
-  (`d.locations` / `d.weighted_locations`) and the full page text (`d.content`).
-  `clusterLocations()` groups nearby matches; matches **far apart** (> `CLUSTER_GAP`
-  words) become **separate snippets**. `buildSnippet()` renders `CONTEXT` words on
-  each side with the matched words highlighted (`escapeHtml`'d first).
-- **Relevance ordering.** Each cluster is scored from Pagefind's match weights and the
-  snippets are sorted by score, so the tightest / most relevant match (e.g. an exact
-  phrase) leads. Capped at `MAX_SNIPPETS` per page.
-- **Section heading + link.** `sectionFor()` maps a match to the nearest heading
-  anchor at/above it (anchors share the same word-index base as matches). The heading
-  text comes from Pagefind's `sub_results` titles, falling back to a prettified
-  section `id`; it's hidden when it would just repeat the page title.
-
-Tunables live at the top of `search.ts`: `CONTEXT` (16), `CLUSTER_GAP` (30),
+Tunables at the top of `search.ts`: `CONTEXT` (16), `CLUSTER_GAP` (30),
 `MAX_SNIPPETS` (4).
 
-### Keyboard & mouse
-- `↑`/`↓` move through `.search-hit` rows (`autocomplete-active`), `Enter` opens the
-  focused row (or the first), `Esc` clears. `/` focuses the bar.
-- All results are shown (no cap); the dropdown scrolls.
+**Keys.** `/` focuses the bar; `↑`/`↓` move through rows; `Enter` opens one;
+`Esc` clears.
+
+## 6. Fallback (dev / offline)
+
+Without an index, `loadEngine()` imports `src/data/pages.json` (code-split, so it
+only downloads on this path) and does a **title-only** substring match in the
+same card layout.
+
+## 7. Opening a result
+
+Results link to `…/#<section-id>?pagefind-highlight=<query>`. Another page opens
+in a new tab; the same page scrolls in place via
+`window.__pagefindGoInPage(url)`, exposed by `BaseLayout`.
+
+On arrival, BaseLayout's inline module runs Pagefind's highlighter (which marks
+matches but doesn't scroll), then scrolls to the first mark inside the linked
+section. It re-scrolls once on `window.load`, since late images shift the
+layout — unless the reader has already scrolled.
 
 ---
 
-## 7. Fallback (dev / offline)
+## 8. Maintenance
 
-When the Pagefind index isn't available, `loadEngine()` dynamically imports
-`src/data/pages.json` — Vite code-splits it into its own chunk, so it is only
-downloaded on this path — and does a **title-only** substring match, rendered
-with the same card layout (topics shown instead of body excerpts). Pagefind does the
-real full-text work in production; this just keeps the bar functional in `dev`.
-
----
-
-## 8. Navigating to a result
-
-Clicking a snippet (or pressing Enter) calls `go(url)`:
-
-- **Different page** → opens in a new tab.
-- **Same page** → `window.__pagefindGoInPage(url)` (exposed by BaseLayout): updates
-  the URL via `history.replaceState`, re-highlights for the new query, and scrolls in
-  place — no reload / new tab.
-
-### The URL
-`withHighlight()` builds `…/#<section-id>?pagefind-highlight=<query>`:
-
-- **`#<section-id>`** — the section the match falls in (from `sectionFor`), so the
-  browser scrolls there.
-- **`?pagefind-highlight=<query>`** — read by `pagefind-highlight.js` on the
-  destination page.
-
-### On-page highlight & scroll (BaseLayout inline module)
-`pagefind-highlight.js` **marks** the matched words (`<mark class="pagefind-highlight">`,
-scoped to `data-pagefind-body`, ignoring `[data-pagefind-ignore]`) but does **not**
-scroll. So the inline module:
-
-1. Instantiates the highlighter (`addStyles: false`; styling is in `_search.css`).
-2. `scrollToMatch(id)` polls until the marks exist, then scrolls to the first mark
-   **inside the linked section** (falling back to the first mark anywhere).
-3. **Re-scrolls on `window.load`** — late-loading images shift layout, so it corrects
-   the position once the page is fully loaded, *unless* the reader has already scrolled
-   (a `userMoved` flag from `wheel`/`touchstart`/`keydown`/`pointerdown`).
-
----
-
-## 9. Maintenance cheat-sheet
-
-- **Add a page** → it's indexed automatically on the next build (uses `BaseLayout`).
-- **Equation noise in results** → wrap the offending display math in `<Equation>`.
-- **Change snippet size / count** → `CONTEXT`, `CLUSTER_GAP`, `MAX_SNIPPETS` in
-  `search.ts`.
-- **Change the search-slow threshold** → the `250` in the input handler's loading
-  timer; the `180` in `debouncedSearch` is the input debounce.
-- **Exclude something else from search** → add `data-pagefind-ignore` to the element,
-  or add a selector to `--exclude-selectors` in the build script.
-- **Test end-to-end** → `npm run build && npm run preview`, search a body-only word,
-  and confirm it jumps to and highlights the exact match.
+| To… | Do |
+|---|---|
+| Hide an element from search | `data-pagefind-ignore`, or a selector in `--exclude-selectors` |
+| Change snippet size or count | `CONTEXT`, `CLUSTER_GAP`, `MAX_SNIPPETS` in `search.ts` |
+| Change the loading delay | the `250` in the input handler (`180` is the debounce) |
+| Test end to end | `npm run build && npm run preview`, search a body-only word, check it jumps and highlights |
