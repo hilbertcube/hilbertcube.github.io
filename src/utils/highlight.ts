@@ -46,6 +46,13 @@ export async function highlight(
   return h.codeToHtml(code, { lang, themes, defaultColor: false, transformers });
 }
 
+/**
+ * Whether a listing is short enough to keep whole on one printed page: such
+ * blocks get `.print-keep` (see utils/_print.css). Longer ones are left to
+ * split, since a block that refuses to break leaves a gap behind it.
+ */
+export const printKeep = (code: string) => code.split("\n").length <= 25;
+
 const ENTITIES: Record<string, string> = {
   lt: "<",
   gt: ">",

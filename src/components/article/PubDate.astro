@@ -10,7 +10,9 @@
  * - The raw collection value is an ISO "YYYY-MM-DD" string, run through
  *   `formatDate` internally so pages never import the formatter themselves.
  * - Styled by the scoped `.date` rule below.
+ * - Carries the "Save as PDF" button (SavePdf), so every article and post has one.
  */
+import SavePdf from "@components/article/SavePdf.astro";
 import { formatDate } from "@utils/formatDate";
 import { resolveEntryMeta } from "@utils/getEntryMeta";
 
@@ -23,12 +25,23 @@ const pubDate =
   pubDateProp ?? (await resolveEntryMeta(Astro.url.pathname)).data.pubDate;
 ---
 
-<div class="date">Posted {formatDate(pubDate)}</div>
+<div class="date-row">
+  <div class="date">Posted {formatDate(pubDate)}</div>
+  <SavePdf />
+</div>
 
 <style>
-  .date {
+  .date-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5em 1em;
     margin-top: 0;
     margin-bottom: 60px;
+  }
+
+  .date {
     color: var(--nav-bar-text-color);
     font-style: italic;
   }

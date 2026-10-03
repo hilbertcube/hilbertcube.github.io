@@ -1,0 +1,71 @@
+---
+/**
+ * SavePdf.astro
+ * =============
+ * "Save as PDF" button, rendered by PubDate beside the date on every article
+ * and post. It opens the browser's print dialog; the @media print rules in
+ * utils/_print.css (plus TabBox's and the code blocks' own) lay the page out
+ * for paper, so choosing "Save as PDF" there gives a clean, paged copy.
+ */
+import Icon from "@components/ui/Icon.astro";
+---
+
+<button type="button" class="save-pdf" data-save-pdf>
+  <Icon name="download" />
+  Save as PDF
+</button>
+
+<style>
+  .save-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.25em 0.7em;
+    font: inherit;
+    font-size: 0.9em;
+    color: var(--nav-bar-text-color);
+    background: none;
+    border: 1px solid var(--box-border);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .save-pdf:hover {
+    border-color: currentColor;
+  }
+
+  @media print {
+    .save-pdf {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Images below the fold are lazy and may not have loaded yet, which would
+  // print them blank: load them first (giving up after a few seconds).
+  function imagesLoaded() {
+    const pending = [...document.images].filter((img) => {
+      img.loading = "eager";
+      return !img.complete;
+    });
+    const loads = pending.map(
+      (img) =>
+        new Promise((resolve) => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        }),
+    );
+    const timeout = new Promise((resolve) => setTimeout(resolve, 4000));
+    return Promise.race([Promise.all(loads), timeout]);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-save-pdf]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      await imagesLoaded();
+      button.disabled = false;
+      window.print();
+    });
+  });
+</script>

@@ -42,3 +42,5 @@ public/media/Images/originals/
 .idea/
 
 !CREATION.txt
+# Generated PDFs (scripts/export-pdf.mjs)
+pdf/

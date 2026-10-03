@@ -83,7 +83,7 @@ if there is none. Their props only override that, or serve pages elsewhere.
 |---|---|---|
 | `TopicTags` | `topics: string[]` | `Topics: a, b, c`. Each topic is a `data-pagefind-filter="topic"` span (commas outside it), which feeds the top bar's tag browser. |
 | `PageTitle` | `title`, `variant: "article" \| "post"` | The `<h1>`: `.title` or `.post-title`, chosen from the collection. |
-| `PubDate` | `pubDate` (ISO) | `Posted <date>` in `.date`. |
+| `PubDate` | `pubDate` (ISO) | `Posted <date>` in `.date`, with the "Save as PDF" button (`SavePdf`, opens the print dialog) beside it |
 
 ### FrontImage
 

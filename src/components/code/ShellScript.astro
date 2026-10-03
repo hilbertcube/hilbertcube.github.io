@@ -17,7 +17,7 @@
 
 import type { ShikiTransformer } from "shiki";
 import CopyButton from "@components/code/CopyButton.astro";
-import { highlight, listing } from "@utils/highlight";
+import { highlight, listing, printKeep } from "@utils/highlight";
 
 interface Props {
   host?: string;
@@ -75,7 +75,10 @@ const prompts: ShikiTransformer = {
 const html = await highlight(text, "bash", [prompts]);
 ---
 
-<div class="code-container" style="margin: 25px auto;">
+<div
+  class:list={["code-container", { "print-keep": printKeep(text) }]}
+  style="margin: 25px auto;"
+>
   <CopyButton />
   <Fragment set:html={html} />
 </div>

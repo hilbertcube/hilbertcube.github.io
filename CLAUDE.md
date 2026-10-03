@@ -24,6 +24,7 @@ its metadata lives separately in `src/data/pages.json`.
 | `npm run check` | `astro check` — TypeScript/Astro diagnostics. This is the only "test" gate. |
 | `./scripts/new-article.sh -t article -s <slug> --title "…"` | Scaffolds the page **and** the `pages.json` entry. Both are required. |
 | `python3 scripts/reindent-pages.py [--apply]` | Re-indents page markup by nesting (2 spaces) and lays out `<E>` equations one row per line; dry-run without `--apply`. Whitespace only. |
+| `npm run build && npm run pdf [-- <slug>…]` | Exports articles to `pdf/<slug>.pdf` via headless Chromium (`scripts/export-pdf.mjs`); print layout is `src/assets/css/utils/_print.css`. |
 | `./scripts/commit.sh "msg"` | pull `main` → `add .` → commit → push. |
 
 `npm test` is an unimplemented stub — there is no test suite. Verification is

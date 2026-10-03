@@ -11,7 +11,8 @@
     "check": "astro check",
     "build": "astro build && node scripts/pagefind-ignore-math.mjs && pagefind --site dist --exclude-selectors \".equation, .mathjax-definition\"",
     "preview": "astro preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pdf": "node scripts/export-pdf.mjs"
   },
   "repository": {
     "type": "git",
@@ -44,6 +45,7 @@
     "@types/react-dom": "^19.3.0",
     "katex": "^0.18.1",
     "pagefind": "^1.4.0",
+    "playwright": "^1.63.0",
     "typescript": "^5.9.3"
   }
 }
