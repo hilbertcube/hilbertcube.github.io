@@ -5,3 +5,40 @@ const { class: className, ...rest } = Astro.props;
 <div class:list={["two-columns-block", className]} {...rest}>
   <slot />
 </div>
+
+<style>
+  .two-columns-block {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    gap: 1em;
+  }
+
+  /* The columns are the page's slot content, hence :global().
+     Each column is a normal block container, not a flex one: as flex items the
+     children shrank to fit their own text, so a one-line paragraph ended up
+     floating in the middle of the column. Block layout lets paragraphs run the
+     full width and inherit the page's justification, while images still centre
+     themselves — Figure gives its <img> `margin-inline: auto`. Anything else
+     that should be centred opts in with `.column-center`.
+     `overflow: hidden` keeps wide content (equations, code boxes) from pushing
+     the column past its share and also suppresses the flex automatic minimum
+     size, so the column can shrink below its content's intrinsic width. */
+  .two-columns-block > :global(div) {
+    overflow: hidden;
+    flex: 1;
+    padding: 0px;
+  }
+
+  .two-columns-block > :global(div > .column-center) {
+    display: block;
+    width: fit-content;
+    margin-inline: auto;
+  }
+
+  @media all and (max-width: 580px) {
+    .two-columns-block {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -41,7 +41,7 @@ import Table from "@components/article/Table.astro";
       \ldots, x_n)$ is an $n$-tuple of real numbers. Also consider a point
       $\mathbf&#123;a&#125; = (a_1, a_2, \ldots, a_n)$ defined in the domain
       $D\subseteq\R^n$.
-      <ol type="a" style="line-height: 1.6;">
+      <ol type="a">
         <li>
           <strong>Local Maximum.</strong> The function $z=f(\mathbf&#123;x&#125;)$
           attains its local maximum at $\mathbf&#123;a&#125;$ if there exists a
@@ -107,7 +107,7 @@ import Table from "@components/article/Table.astro";
       D\subseteq\R^n$.
     </p>
 
-    <ol type="a" style="line-height: 1.6;">
+    <ol type="a">
       <li>
         <strong>Stationary Point.</strong>
         The points where all of the partial derivatives of $f$ equals 0 is called
@@ -204,7 +204,7 @@ import Table from "@components/article/Table.astro";
       if $\phi$ produces both negative and positive values, then $\mathbf&#123;A&#125;$
       is said to be indefinite. There are also other cases such as positive semi-definite
       or negative semi-definite matrices. In general,
-      <ol type="i" style="line-height: 1.6;">
+      <ol type="i">
         <li>
           $\mathbf&#123;A&#125;$ is positive-definite if and only if
           $\mathbf&#123;x&#125;^&#123;\mathsf&#123;T&#125;&#125;\mathbf&#123;A&#125;\mathbf&#123;x&#125;>0,\;\forall
@@ -270,7 +270,7 @@ import Table from "@components/article/Table.astro";
     <p>
       <Theorem name="Silvester's Criterion">
         Let $\mathbf&#123;A&#125;$ be an $n\times n$ symmetric matrix. Then,
-        <ol type="i" style="line-height: 1.6;">
+        <ol type="i">
           <li>
             $\mathbf&#123;A&#125;$ is positive definite, denote
             $\mathbf&#123;A&#125;\succ 0$ if and only if
@@ -310,12 +310,12 @@ import Table from "@components/article/Table.astro";
         <strong>The General Second Derivative Test.</strong> To identify all the
         stationary (and critical points) of $f(\mathbf&#123;x&#125;)$ and test if
         they are the extrema of $f$, we follow the following procedure:
-        <ol class="steps">
-          <li class="step">
+        <ol>
+          <li>
             Find $D(f)$, the domain of $f(\mathbf&#123;x&#125;)$. This is for
             us to determine whether to keep a critical point or not.
           </li>
-          <li class="step">
+          <li>
             Solve the equation $\nabla
             f(\mathbf&#123;x&#125;)=\mathbf&#123;0&#125;$; that is, solve the
             system of $n$-equations
@@ -341,14 +341,14 @@ import Table from "@components/article/Table.astro";
             that need to be considered must lie inside the domain $D$. If not, just
             discard them.
           </li>
-          <li class="step">
+          <li>
             If $\mathbf&#123;a_0&#125;$ is a stationary point, calculate its
             Hessian matrix at $\mathbf&#123;a_0&#125;$; that is, find
             $H_f(\mathbf&#123;a_0&#125;)$. After that, apply Sylvester's
             Criterion on $H_f(\mathbf&#123;a_0&#125;)$ by calculating the
             values of $\Delta_1,\Delta_2,...,\Delta_n$ at
             $\mathbf&#123;a_0&#125;$.
-            <ol type="i" style="line-height: 1.6;">
+            <ol type="i">
               <li>
                 If $\mathrm&#123;H&#125;_f(\mathbf&#123;a_0&#125;)\succ 0$,
                 then $\mathbf&#123;a_0&#125;$ is a minimum of the function
@@ -383,7 +383,7 @@ import Table from "@components/article/Table.astro";
               </li>
             </ol>
           </li>
-          <li class="step">
+          <li>
             Repeat the same process again for the stationary point
             $\mathbf&#123;a_1&#125;$.
           </li>
@@ -398,17 +398,17 @@ import Table from "@components/article/Table.astro";
         can be simplified a bit. After finding all stationary and critical
         points of $f(x,y)$, we can follow these steps to identify the extrema
         of $f$:
-        <ol class="steps">
-          <li class="step">
+        <ol>
+          <li>
             For each stationary point $(x_0,y_0)$, calculate the second
             partial derivatives of $f$ at that point:
             $f_&#123;xx&#125;(x_0,y_0)$, $f_&#123;yy&#125;(x_0,y_0)$, and
             $f_&#123;xy&#125;(x_0,y_0)$.
           </li>
-          <li class="step">
+          <li>
             Calculate
             $\Delta_2(x_0,y_0)=f_&#123;xx&#125;(x_0,y_0)f_&#123;yy&#125;(x_0,y_0)-[f_&#123;xy&#125;(x_0,y_0)]^2$.
-            <ol type="i" style="line-height: 1.6;">
+            <ol type="i">
               <li>
                 If $\Delta_2(x_0,y_0)>0$ and $f_&#123;xx&#125;(x_0,y_0)>0$,
                 then $(x_0,y_0)$ is a minimum of $f(x,y)$.
@@ -596,7 +596,7 @@ import Table from "@components/article/Table.astro";
             \end{equation*}
           `}</E>
           This system branches out to several solutions:
-          <ol type="i" style="line-height: 1.6;">
+          <ol type="i">
             <li>
               If $y=0$, substitute into equation (2), we obtain $x\ln(x^2)=0$,
               and thus $x=0$ (We reject this solution since $(0,0)\notin D$)
@@ -769,7 +769,7 @@ import Table from "@components/article/Table.astro";
           `}</E>
           For $x=k\pi$, since $-1\leq x\leq 7$, we have $x\in \&#123;0,\;\pi,\;2\pi\&#125;$.
           This gives us three stationary points.
-          <ol type="i" style="line-height: 1.6;">
+          <ol type="i">
             <li>
               If $x=0$, then $y=\cos (0)=1\;\Rightarrow\;(0,1)$.
             </li>

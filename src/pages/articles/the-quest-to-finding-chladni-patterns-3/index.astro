@@ -16,6 +16,7 @@ import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
+import TwoColumns from "@components/ui/TwoColumns.astro";
 ---
 
 <BaseLayout
@@ -330,7 +331,7 @@ import Table from "@components/article/Table.astro";
         prediction from our experiments. By counting the number of rings on each pattern listed above, we
         make a table as.
       </p>
-      <div class="two-columns-block">
+      <TwoColumns>
         <div>
           <Figure
             src="/articles/the-quest-to-finding-chladni-patterns-3/circle.webp"
@@ -388,7 +389,7 @@ import Table from "@components/article/Table.astro";
             </tbody>
           </Table>
         </div>
-      </div>
+      </TwoColumns>
     </section>
 
     <section>

@@ -132,7 +132,7 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   classes no longer work in page markup.
 - Body links are plain `<a href="…">` — no class. Inside `.content-grid`, an unclassed `<a>`
   gets the link colour, stays on one line and opens in a new window (`_typography.css` +
-  `scripts.js`); add `class="wrap"` for a long label that should break. Any other class opts
+  `scripts.js`) — except a `href="#…"` jump link, which smooth-scrolls in place; add `class="wrap"` for a long label that should break. Any other class opts
   the link out, so buttons and cards keep their own styling.
 - Lists work the same way: a plain `<ul>`/`<ol>` of plain `<li>` in the body gets the list
   spacing (`_content.css`) — no `class="bullet"` (removed).

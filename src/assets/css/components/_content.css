@@ -3,16 +3,16 @@
  * Common content components used across pages
  */
 
-/* Lists: the defaults for a plain <ul>/<ol> in the page body. A list or item
-   that carries a class (`ol.reference`, `.post-list`, `li.step`) is styled by
-   that class instead. `:where()` keeps these as light as the old `.bullet` /
+/* Lists: the defaults for a plain <ul>/<ol> in the page body — numbered and
+   bulleted lists share them, nested ones included. A list or item that carries
+   a class (`ol.reference`, `.post-list`) is styled by that class instead. `:where()` keeps these as light as the old `.bullet` /
    `.bullet ul` rules, so context rules like `.solution li` still win. */
 :where(.content-grid :is(ul, ol):not([class]) > li):not([class]) {
   margin: var(--in-page-li-spacing) 0;
   padding-left: 0;
 }
 
-:where(.content-grid :is(ul, ol):not([class]) > li:not([class])) ul:not([class]) {
+:where(.content-grid :is(ul, ol):not([class]) > li:not([class])) :is(ul, ol):not([class]) {
   padding-left: 15px;
   margin-left: 0;
 }
@@ -52,20 +52,6 @@ ol.reference li::before {
   counter-increment: item;
   position: absolute;
   left: 0;
-}
-
-/* Step lists */
-ol.steps {
-  line-height: 1.6;
-  counter-reset: step;
-  list-style: none;
-}
-
-ol.steps .step::before {
-  margin: 10px 0;
-  display: inline-block;
-  content: "STEP " counter(step) ".\00a0";
-  counter-increment: step;
 }
 
 /* Tables — the site's table style (.table-wrapper + .p-table) lives in

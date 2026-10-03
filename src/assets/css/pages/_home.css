@@ -6,28 +6,7 @@
 /* The article grid (#rec-article-container) and card styles (.article*) now
    live scoped in components/listings/ArticleCards.astro. */
 
-/* Homepage headers */
-.home-h3-headers {
-  font-size: 1.5em;
-  border-bottom: 1px solid var(--contrast-line-color);
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 .home-title {
   font-size: 2.3em;
   font-family: var(--top-bar-font);
-}
-
-.title {
-  font-family: var(--top-bar-font);
-  padding-bottom: 5px;
-  padding-top: 30px;
-}
-
-.post-title {
-  padding-top: 30px;
-  font-size: 2em;
 }

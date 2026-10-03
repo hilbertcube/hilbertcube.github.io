@@ -22,3 +22,66 @@ const { summary = "Solution", open = true } = Astro.props;
     <slot />
   </div>
 </details>
+
+<style>
+  .solution {
+    border: 1px solid #5b5b5b;
+    border-radius: 4px;
+    box-sizing: border-box;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+
+  .solution > div {
+    padding: 0 1rem 1rem 1rem;
+    line-height: 1.6;
+  }
+
+  .solution summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-weight: bold;
+  }
+
+  .solution summary::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="black" d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" transform="rotate(90 12 12)"/></svg>');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-left: 0.75em;
+  }
+
+  :global(html.dark-mode) .solution summary::after {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23a9a9b3" d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" transform="rotate(90 12 12)"/></svg>');
+  }
+
+  .solution[open] > summary::after {
+    transform: rotate(180deg);
+  }
+
+  .solution summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .solution[open] summary {
+    border-radius: 4px 4px 0 0;
+  }
+
+  /* Lists are the page's slot content, hence :global(). */
+  .solution :global(ol),
+  .solution :global(ul) {
+    margin-left: 2rem;
+    padding-left: 0;
+  }
+
+  .solution :global(li) {
+    padding-left: 0.5rem;
+  }
+</style>
