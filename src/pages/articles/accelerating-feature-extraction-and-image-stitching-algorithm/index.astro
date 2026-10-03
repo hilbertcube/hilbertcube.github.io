@@ -19,6 +19,7 @@ import ShellScript from "@components/code/ShellScript.astro";
 import C from "@components/code/C.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
+import References from "@components/article/References.astro";
 ---
 
 <BaseLayout
@@ -836,69 +837,6 @@ import Table from "@components/article/Table.astro";
     </p>
   </section>
 
-  <section>
-    <h2>References</h2>
-    <ol class="reference">
-      <li>
-        Chris Harris and Mike Stephens. A combined corner and edge detector.
-        In <em>Proceedings of the 4th Alvey Vision Conference</em>, pages
-        147-151, Manchester, UK, 1988.
-      </li>
-      <li>
-        David G. Lowe. Object recognition from local scale-invariant features.
-        In <em>Proceedings of the 7th IEEE International Conference on
-          Computer Vision (ICCV)</em>, pages 1150-1157, Corfu, Greece, 1999. <a
-            href="https://www.cs.ubc.ca/~lowe/papers/iccv99.pdf"
-            >https://www.cs.ubc.ca/~lowe/papers/iccv99.pdf</a
-          >
-      </li>
-      <li>
-        David G. Lowe. Distinctive image features from scale-invariant
-        keypoints. <em>International Journal of Computer Vision</em>,
-        60(2):91-110, 2004. <a
-          href="https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf"
-          >https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf</a
-        >
-      </li>
-      <li>
-        Paul L. Rosin. Measuring corner properties. <em>Computer Vision and
-          Image Understanding</em>, 73(2):291-307, 1999.
-      </li>
-      <li>
-        Edward Rosten and Tom Drummond. Machine learning for high-speed corner
-        detection. In <em>European Conference on Computer Vision (ECCV)</em>,
-        pages 430-443. Springer, Berlin, Heidelberg, 2006.
-      </li>
-      <li>
-        Michael Calonder, Vincent Lepetit, Christoph Strecha, and Pascal Fua.
-        BRIEF: Binary robust independent elementary features. In <em
-          >European Conference on Computer Vision (ECCV)</em
-        >, pages 778-792. Springer, Berlin, Heidelberg, 2010.
-      </li>
-      <li>
-        Ethan Rublee, Vincent Rabaud, Kurt Konolige, and Gary Bradski. ORB: An
-        efficient alternative to SIFT or SURF. In <em>Proceedings of the 2011
-          IEEE International Conference on Computer Vision (ICCV)</em>, pages
-        2564-2571, Barcelona, Spain, 2011. <a
-          href="https://doi.org/10.1109/ICCV.2011.6126544"
-          >https://doi.org/10.1109/ICCV.2011.6126544</a
-        >
-      </li>
-      <li>
-        Carsten Griwodz, Lilian Calvet, and P&#229;l Halvorsen. Popsift: A
-        faithful SIFT implementation for real-time applications. In <em
-          >Proceedings of the 9th ACM Multimedia Systems Conference
-          (MMSys)</em
-        >, pages 415-420, Amsterdam, Netherlands, 2018.
-      </li>
-      <li>
-        Gary Bradski. The OpenCV library. <em>Dr. Dobb's Journal of Software
-          Tools</em>, 2000. CUDA module documentation: <a
-            href="https://docs.opencv.org/4.x/d6/d1d/group__cudafeatures2d.html"
-            >https://docs.opencv.org/4.x/d6/d1d/group__cudafeatures2d.html</a
-          >
-      </li>
-    </ol>
-  </section>
+  <References />
 
 </BaseLayout>

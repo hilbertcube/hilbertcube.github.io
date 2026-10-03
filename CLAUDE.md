@@ -126,6 +126,9 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   and search deep links anchor to those, so rewording a heading changes its URL fragment.
 - Body images go through `<Figure>` (files in `public/articles/<slug>/`), banners through
   `<FrontImage>`. Don't hand-roll `<img>` sizing.
+- References go through `<References />`, which renders the `_references.ts` sitting next to
+  the page's `index.astro` (entries typed per `type` in `src/utils/references.ts`) — never a
+  hand-written `<ol class="reference">`. The `_` prefix keeps Astro from routing the file.
 - Tables go through `<Table>`, which emits the `.table-wrapper` / `.p-table` pair — a
   hand-written table without the wrapper overflows on mobile and nothing catches it.
   Inline code goes through `<C>`; both styles are scoped to their component, so the bare

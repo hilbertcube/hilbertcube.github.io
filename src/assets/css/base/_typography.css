@@ -109,8 +109,7 @@ caption::before {
   white-space: nowrap;
 }
 
-.content-grid a.wrap,
-ol.reference a:not([class]) {
+.content-grid a.wrap {
   white-space: normal;
 }
 

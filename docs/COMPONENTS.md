@@ -166,6 +166,63 @@ Previous/next links at the foot of a multi-part article.
 A missing href hides its button but keeps the space, so a lone "Next" stays on
 the right.
 
+### References
+
+The "References" section at the foot of an article. Citations are **not typed
+into the page**: they live in a `_references.ts` file next to the page's
+`index.astro`, and the page writes one tag where the section goes.
+
+```astro
+<References />
+```
+
+```
+src/pages/articles/<slug>/
+  index.astro       ← <References />
+  _references.ts    ← export default defineReferences({ … })
+```
+
+Like `PageTitle`, it takes no props (only an optional `title`, default
+`"References"`): it finds the file from the page's URL and fails the build if
+there is none. The leading `_` stops Astro routing the file as an endpoint.
+Entries are numbered in the order they are written; each item gets
+`id="ref-<key>"`, so body text can jump to one with `<a href="#ref-lowe2004">[3]</a>`.
+
+An entry picks a `type` and fills that type's fields (all defined, with
+comments, in `src/utils/references.ts`; the editor autocompletes them):
+
+| `type` | Required | Optional |
+|---|---|---|
+| `article` | `journal` | `volume`, `issue`, `pages` |
+| `inproceedings` | `proceedings` | `pages`, `location`, `publisher` |
+| `book` | — | `publisher`, `location`, `edition` |
+| `chapter` | — | `book`, `pages`, `publisher`, `location`, `edition` |
+| `thesis` | `degree`, `institution` | `location` |
+| `report` | — | `institution`, `pages`, `location` |
+| `web` | — | `site` |
+
+Every type takes `title` (required), `authors`, `year`, `note`, `url` / `doi`
+and `accessed`. Compared with BibTeX: `authors` is a list of names as they
+print (`["Edward Rosten", "Tom Drummond"]`, or one string), titles print exactly
+as written (no `{braces}`), `pages: "89-100"` gets its en dash, `edition: 4`
+prints "4th edition", and `doi` becomes a doi.org link.
+
+```ts
+rosten2006: {
+  type: "inproceedings",
+  authors: ["Edward Rosten", "Tom Drummond"],
+  title: "Machine learning for high-speed corner detection",
+  proceedings: "European Conference on Computer Vision (ECCV)",
+  pages: "430-443",
+  publisher: "Springer",
+  location: "Berlin, Heidelberg",
+  year: 2006,
+},
+```
+
+A missing required field or an unknown field is a type error in `npm run check`.
+The file starts with `import { defineReferences } from "@utils/references";`.
+
 ### TableOfContents
 
 **Normally not rendered by hand** — pass `toc` to `BaseLayout` and it is built
@@ -497,3 +554,4 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 | LaTeX in search results | Display math not wrapped in `<E>` |
 | Backslashes vanish from an equation | LaTeX in a quoted attribute instead of ``{tex`…`}`` |
 | Build fails: "Entry metadata not found" | Page path matches no `link` in `pages.json` |
+| Build fails: `<References>: no _references.ts next to the page` | Missing or misnamed `_references.ts` beside `index.astro` ([§2](#references)) |
