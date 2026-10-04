@@ -140,11 +140,11 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   the link out, so buttons and cards keep their own styling.
 - Lists work the same way: a plain `<ul>`/`<ol>` of plain `<li>` in the body gets the list
   spacing (`_content.css`) — no `class="bullet"` (removed).
-- Code blocks use the `code/` components, not raw `<pre>`. Write new listings with **`is:raw`**
+- Code blocks use the `code/` components, not raw `<pre>`. Write every listing with **`is:raw`**
   (`<CodeBlock language="cpp" is:raw>`), indented to match the page and with `<`/`{` written
   literally: a listing starting on the line after the tag is dedented (`dedent()` in
-  `src/utils/highlight.ts`). Without `is:raw`, the HTML compressor eats indentation touching
-  the tag, so plain children must start at column 0 with `<`/`{` escaped.
+  `src/utils/highlight.ts`). The listing is plain text — entities and HTML tags are not
+  interpreted — so there is no non-`is:raw` form.
 - CSS lives in `src/assets/css/`, bundled through `main.css` and imported once by `BaseLayout`.
   Page-specific CSS goes in the `head` slot; component-specific rules in that component's
   scoped `<style>`. Use the existing `--var` custom properties — the site is theme-aware via a

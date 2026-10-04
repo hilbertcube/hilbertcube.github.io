@@ -444,22 +444,22 @@ import References from "@components/article/References.astro";
         subarray $A[p \ldots r]$ in place using an auxiliary buffer. The
         input size is $n = r - p + 1$.
       </p>
-      <Sample>Merge-Sort(A, p, r)                        // sorts A[p..r]
-if p &gt;= r then return                  // 0 or 1 element: already sorted
-q &lt;- floor((p + r) / 2)
+      <Sample is:raw>Merge-Sort(A, p, r)                        // sorts A[p..r]
+if p >= r then return                  // 0 or 1 element: already sorted
+q <- floor((p + r) / 2)
 Merge-Sort(A, p, q)
 Merge-Sort(A, q + 1, r)
 Merge(A, p, q, r)
 
 Merge(A, p, q, r)
-L &lt;- copy of A[p..q];  R &lt;- copy of A[q+1..r]
-i &lt;- 1;  j &lt;- 1;  k &lt;- p
-while i &lt;= length(L) and j &lt;= length(R) do        // loop 1
-    if L[i] &lt;= R[j] then A[k] &lt;- L[i];  i &lt;- i + 1
-    else                 A[k] &lt;- R[j];  j &lt;- j + 1
-    k &lt;- k + 1
-while i &lt;= length(L) do A[k] &lt;- L[i];  i &lt;- i + 1;  k &lt;- k + 1
-while j &lt;= length(R) do A[k] &lt;- R[j];  j &lt;- j + 1;  k &lt;- k + 1</Sample>
+L <- copy of A[p..q];  R <- copy of A[q+1..r]
+i <- 1;  j <- 1;  k <- p
+while i <= length(L) and j <= length(R) do        // loop 1
+    if L[i] <= R[j] then A[k] <- L[i];  i <- i + 1
+    else                 A[k] <- R[j];  j <- j + 1
+    k <- k + 1
+while i <= length(L) do A[k] <- L[i];  i <- i + 1;  k <- k + 1
+while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
 
       <p>
         The analysis proceeds in three steps: the cost of one merge (Lemma
