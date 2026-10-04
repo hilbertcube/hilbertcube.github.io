@@ -81,6 +81,12 @@
   border-radius: 4px;
 }
 
+.lemma::before {
+  counter-increment: lemma;
+  font-weight: bold;
+  content: "Lemma " counter(lemma) attr(data-lemma-name) ": ";
+}
+
 .problem {
   border: 1px solid rgba(113, 0, 212);
 }

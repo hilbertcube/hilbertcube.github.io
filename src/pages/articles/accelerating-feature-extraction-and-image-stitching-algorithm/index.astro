@@ -11,6 +11,7 @@ import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 import Figure from "@components/article/Figure.astro";
 
+import Definition from "@components/math/Definition.astro";
 import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
 import TwoColumns from "@components/ui/TwoColumns.astro";
@@ -647,10 +648,7 @@ import References from "@components/article/References.astro";
     <section>
       <h3>Performance Metrics</h3>
 
-      <div
-        class="definition"
-        data-definition-name=" (Serial and Parallel Runtime)"
-      >
+      <Definition name="Serial and Parallel Runtime">
         The serial and parallel runtime of a program are defined as follows:
         <ol type="i">
           <li>
@@ -664,9 +662,9 @@ import References from "@components/article/References.astro";
             execution. We denote this by $T_P$.
           </li>
         </ol>
-      </div>
+      </Definition>
 
-      <div class="definition" data-definition-name=" (Speedup)">
+      <Definition name="Speedup">
         Speedup is defined as the ratio between the serial runtime to the time
         taken by parallel runtime,
         <E>{tex`
@@ -676,9 +674,9 @@ import References from "@components/article/References.astro";
         `}</E>
         The speedup of a parallel algorithm measures how much faster an algorithm
         is than its sequential counterpart.
-      </div>
+      </Definition>
 
-      <div class="definition" data-definition-name=" (Cost)">
+      <Definition name="Cost">
         The cost of processing a program on a parallel system is defined as
         the product of run time and the number of processors,
         <E>{tex`
@@ -687,9 +685,9 @@ import References from "@components/article/References.astro";
           \end{equation}
         `}</E>
         where $p$ denotes the number of processors.
-      </div>
+      </Definition>
 
-      <div class="definition" data-definition-name=" (Efficiency)">
+      <Definition name="Efficiency">
         The efficiency of a parallel program that uses $p$ processors is
         defined by
         <E>{tex`
@@ -697,7 +695,7 @@ import References from "@components/article/References.astro";
             E = \frac{T_S}{p\cdot T_P}=\frac{S}{p}
           \end{equation}
         `}</E>
-      </div>
+      </Definition>
     </section>
 
     <section>

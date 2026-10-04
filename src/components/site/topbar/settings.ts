@@ -8,6 +8,8 @@ const FONT_SIZE_TARGETS = [
   "p",
   ".material-description",
   ".theorem",
+  ".lemma",
+  ".definition",
   ".solution",
   ".problem",
   ".content-grid",
