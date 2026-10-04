@@ -33,25 +33,23 @@
 .theorem,
 .problem,
 .definition {
-  position: relative;
   border-radius: 4px;
   margin: 30px 0;
   padding: 1rem;
-  padding-top: 3.5rem;
   box-sizing: border-box;
   overflow: hidden;
 }
 
+/* The header bar stays in flow, bleeding to the box edges, so a label that
+   wraps pushes the body down instead of overlapping it. */
 .theorem::before,
 .problem::before,
 .definition::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 0.5rem;
+  display: block;
+  margin: -1rem -1rem 1rem;
+  padding: 0.5rem 1rem;
+  text-align: left;
   font-weight: bold;
-  box-sizing: border-box;
 }
 
 .theorem {
