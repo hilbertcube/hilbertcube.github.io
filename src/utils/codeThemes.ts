@@ -1,18 +1,10 @@
 /**
  * codeThemes.ts
  * =============
- * The code themes a reader can pick in Settings, and the CSS that applies them.
- *
- * Every code block is highlighted once, at build time, with ALL of these
- * themes (src/utils/highlight.ts): each token carries one colour per theme as a
- * `--shiki-<id>` custom property, and the rules below pick which one shows.
- * Switching theme is therefore just an attribute on <html> — instant, no
- * reload, no stylesheet download.
- *
- * The cost is HTML size: every theme adds a custom property to every token, so
- * keep this list short (4 + 4 adds ~8 KB gzipped to the heaviest article).
- * The first entry of each list is the default. Ids are Shiki's bundled theme
- * names: https://shiki.style/themes
+ * The code themes offered in Settings (first of each list is the default; ids
+ * are Shiki theme names) and the CSS that picks one. Every block carries every
+ * theme as `--shiki-<id>` properties, so each theme adds to every page's HTML
+ * size — keep the lists short.
  */
 
 export const LIGHT_THEMES = [
@@ -42,11 +34,8 @@ function themeRules(scope: string, id: string) {
 }
 
 /**
- * The theme-selection stylesheet, inlined by BaseLayout.
- *
- * The defaults are the least specific rules, so a missing or unknown
- * `data-code-light` / `data-code-dark` value (a stale localStorage entry, no
- * JS) falls back to them rather than to unstyled code.
+ * The theme-selection stylesheet, inlined by BaseLayout. The defaults are the
+ * least specific rules, so an unknown `data-code-*` value falls back to them.
  */
 export function codeThemeCss() {
   return [

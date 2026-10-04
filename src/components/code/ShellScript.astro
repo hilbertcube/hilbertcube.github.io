@@ -1,18 +1,12 @@
 ---
 /**
- * src/components/code/ShellScript.astro
- * =====================================
- * Code container for interactive shell snippets: bash highlighting (Shiki, at
- * build time) with a command-line prompt in front of every command.
+ * ShellScript.astro — a bash session highlighted by Shiki, with a prompt before
+ * each command.
  *
- * Props
- * -----
- * - host            : hostname shown in the prompt, `[user@host] $` (default: "pc")
- * - output          : 1-based lines that are program output, e.g. "1, 4-5".
- *                     They get no prompt and no highlighting.
- * - continuationStr : a line ending in this continues onto the next, which
- *                     gets a `>` prompt instead (e.g. "\\")
- * - code            : the listing, instead of slot children (see CodeBlock)
+ * - host            : hostname in the `[user@host] $` prompt (default "pc")
+ * - output          : 1-based output lines, e.g. "1, 4-5" (no prompt, plain)
+ * - continuationStr : a line ending in this gives the next a `>` prompt
+ * - code            : the listing, instead of children
  */
 
 import type { ShikiTransformer } from "shiki";

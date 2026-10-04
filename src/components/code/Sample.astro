@@ -1,21 +1,7 @@
 ---
 /**
- * src/components/code/Sample.astro
- * =================================
- * Console output / sample block displayed as preformatted text.
- * Wraps content in <pre class="console"><code>…</code></pre>.
- *
- * Written like the highlighted blocks: `is:raw`, indented to match the page,
- * with `<`, `{`, `}` literal — the shared indentation is stripped (see
- * listing() in utils/highlight.ts). The content is plain text, not HTML.
- *
- *   <Sample is:raw>
- *     Function Foo(x)
- *         while lo <= hi do …
- *   </Sample>
- *
- * `id` / `class` / `style` land on the container. Inside a TabBox, the box
- * removes the margin itself.
+ * Sample.astro — console output or pseudo-code as plain preformatted text, no
+ * highlighting or copy button. Written with `is:raw` like the other blocks.
  */
 import { listing } from "@utils/highlight";
 

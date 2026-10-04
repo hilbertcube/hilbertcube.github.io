@@ -1,21 +1,10 @@
 /**
  * tocHighlight.ts
  * ===============
- * Marks the Table of Contents entry for the section being read.
- *
- * The current entry is the last one that starts above a "reading line" — the
- * height in the viewport past which a section counts as the one being read.
- * Two things about that line matter:
- *
- *   * It sits about a third of the way down the viewport, never above the
- *     fixed top bar. A line pinned near the very top (what this used to do)
- *     only crosses a short section once the section is already scrolling out,
- *     so short sections lit up late or not at all.
- *   * Once the page runs out of scrolling, the line slides down to the bottom
- *     of the viewport instead. The trailing sections can never be pushed up to
- *     a fixed line, so they would otherwise never become current — the shorter
- *     the last sections, the more of them stayed dark. Sliding the line hands
- *     each of them its turn over the final screenful of scrolling.
+ * Marks the TOC entry for the section being read: the last one starting above
+ * a "reading line" about a third of the way down the viewport (never above the
+ * top bar). Once the page can't scroll further, the line slides to the bottom
+ * so the trailing short sections still get their turn.
  */
 
 // Anchors land 120px down (scroll-padding-top), so the line stays below that.

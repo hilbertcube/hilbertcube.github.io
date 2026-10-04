@@ -1,41 +1,11 @@
 ---
 /**
- * Table.astro
- * ===========
- * The site's table: a `.p-table` already wrapped in the `.table-wrapper` that
- * gives it horizontal scroll on a narrow screen. The pairing is the reason
- * this is a component — a hand-written `<table class="p-table">` that forgets
- * the wrapper looks fine on a desktop and overflows the page on a phone, with
- * nothing in the build to catch it.
+ * Table.astro — a `.p-table` inside the `.table-wrapper` that scrolls it on
+ * narrow screens. `id`, `class` and other attributes land on the `<table>`.
  *
- *   <Table>
- *     <thead><tr><th>n</th><th>T(n)</th></tr></thead>
- *     <tbody><tr><td>1</td><td>O(1)</td></tr></tbody>
- *     <caption>Growth of the running time.</caption>
- *   </Table>
- *
- * Tables want `<thead>` and `<tbody>`: the header rule is drawn on `thead`,
- * the row rules inside `tbody`. `<caption>` is numbered ("Table. 1: …") by the
- * global rule in base/_typography.css and sits below the table.
- *
- * Props
- * -----
- * - id    : lands on the `<table>`, where it used to be written by hand
- * - class : added alongside `.p-table`
- * Anything else is spread onto the `<table>`.
- *
- * Per-table rules
- * ---------------
- * A page styles its own table's *content* — which columns centre, which may
- * not wrap — and never the look itself. Two things to know when writing them:
- *
- * - The `<table>` lives in here, so it carries this component's scope id, not
- *   the page's. A page's scoped `<style>` must reach it with
- *   `:global(.p-table) td:first-child { … }` — the cells are slot content and
- *   stay page-scoped, so the `td` half still pins the rule to that page.
- * - The cell rules below are scoped, which costs them an extra attribute of
- *   specificity. A global page rule aimed at a cell class needs a matching
- *   bump — `.table-wrapper .p-table .rating`, not `.p-table .rating` — to outrank them.
+ * Page rules for cell content: from a scoped style use
+ * `:global(.p-table) td { … }`; a global rule needs
+ * `.table-wrapper .p-table .cls` to outrank the scoped rules below.
  */
 interface Props {
   id?: string;
@@ -52,21 +22,12 @@ const { id, class: className, ...rest } = Astro.props;
 </div>
 
 <style>
-  /* Moved here from assets/css/components/_content.css. Everything the table
-     contains arrives through the slot and therefore carries the *page's* scope
-     id, not this component's — so every descendant rule opts out of scoping
-     with :global(), the same way TableOfContents reaches into its set:html
-     list. Only .table-wrapper and .p-table are real template elements. */
+  /* Table contents are slot content (page-scoped), hence :global(). */
 
   .table-wrapper {
     overflow-x: auto;
   }
 
-  /* A full grid of hairlines, headers centred, body cells top-aligned and
-     left-aligned so wrapped sentences in one column stay level with short
-     entries in the next. Width is shrink-to-fit and centred, so a three-column
-     table of numbers stays compact while a table of prose grows to the text
-     column. */
   .p-table {
     width: auto;
     max-width: 100%;

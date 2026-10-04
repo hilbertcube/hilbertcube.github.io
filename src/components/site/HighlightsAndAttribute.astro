@@ -20,9 +20,7 @@ const posts = await getCollection("posts");
 const SLOTS = 4;
 const normalize = (link: string) => link.replace(/\/$/, "");
 
-// Keyed on `link`, the catalog's primary key. Unlike the previous hard-coded
-// list, a typo no longer drops the entry — it just sorts last — so keep this in
-// sync with src/data/pages.json by hand.
+// Keyed on `link`; a typo just sorts last, so keep in sync with pages.json.
 const curatedRank = new Map(
   [
     "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
@@ -95,8 +93,6 @@ const commitInfo = [
         margin: 20px auto;
         border-radius: 6px;
         padding: 5px 16px;
-      }
-      .light-mode .commit-log-container {
         background: #f5f5f5;
         border: 1px solid #d0d0d0;
       }
@@ -111,14 +107,12 @@ const commitInfo = [
         white-space: pre-line;
         word-wrap: break-word;
         overflow-wrap: break-word;
-      }
-      .light-mode .commit-log-content {
         color: #2e2e2e;
       }
       .dark-mode .commit-log-content {
         color: #d4d4d4;
       }
-      .light-mode .commit-log-header {
+      .commit-log-header {
         color: #22863a;
       }
       .dark-mode .commit-log-header {

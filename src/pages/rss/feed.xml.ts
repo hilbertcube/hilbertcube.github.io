@@ -1,11 +1,7 @@
 /**
  * src/pages/rss/feed.xml.ts
  * =========================
- * Build-time RSS 2.0 endpoint. Replaces the old generate-rss.sh script:
- * this reads the same `articles` and `posts` collections defined in
- * content.config.ts (backed by src/data/pages.json), so the
- * feed can never drift out of sync with the catalog again — it's produced
- * fresh on every `astro build`.
+ * Build-time RSS 2.0 feed over the `articles` and `posts` collections.
  */
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";

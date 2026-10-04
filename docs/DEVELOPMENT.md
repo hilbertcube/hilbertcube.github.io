@@ -23,7 +23,7 @@ the workflow; the other docs:
 | `npm run check` | `astro check` | Before committing — there is no test suite |
 
 Pushing to `main` deploys: `.github/workflows/static-pages.yml` builds and
-publishes `dist/` (gitignored — never commit it).
+publishes `dist/` (gitignored).
 
 ---
 
@@ -71,7 +71,6 @@ drives the homepage cards, RSS, search and "More Articles".
 > | `../../../` relative imports | `@layouts` / `@components` aliases |
 > | `<div class="topic">`, `<h1 class="title">`, `<div class="date">` | `<TopicTags />`, `<PageTitle />`, `<PubDate />` (no props) |
 > | a "More Articles" `<section>` | nothing — `BaseLayout` adds it |
-> | `blogpage-setting.js` and MathJax `<script>`s | nothing — neither is needed |
 > | body indented 4 spaces | `python3 scripts/reindent-pages.py <page> --apply` |
 
 **Page conventions:**
@@ -149,8 +148,8 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
   `index.astro` and put `<References />` where the section goes — never a
   hand-written `<ol class="reference">`
   ([`COMPONENTS.md` §2](COMPONENTS.md#references)).
-- **Search:** new pages are indexed automatically. `data-pagefind-ignore` hides
-  an element. Test with `npm run build && npm run preview`.
+- **Search:** new pages are indexed automatically; `data-pagefind-ignore` hides
+  an element.
 - **Styling:** use the `--var` custom properties (they carry dark mode), and no
   `!important` — readers override fonts and code themes at runtime.
 

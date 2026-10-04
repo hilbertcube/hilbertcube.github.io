@@ -1,31 +1,11 @@
-// Project snippets for the component library.
+// Project snippets for the component library (scope "astro").
 //
-// Why this file exists, and why it is named this way:
-//
-//   - Project snippets are only read from `.vscode/*.code-snippets`. The old
-//     `.vscode/html.json` sat in a path VS Code never looks at, so nothing in
-//     it ever fired. Its MathJax snippet is carried over below.
-//   - `.astro` files report language id `astro`, not `html`, so snippets in
-//     `~/.config/Code/User/snippets/html.json` don't reach them either. Hence
-//     `"scope": "astro"`.
-//
-// How to trigger: type the component name *without* the angle bracket, then
-// accept — `Table`, not `<Table`. The astro word pattern treats `<` as a
-// separator, so a leading `<` would survive the expansion and give `<<Table>`.
-//
-// These write markup only; they cannot add the import. That comes from the
-// language server's auto-import completion, which is what
-// `astro.auto-import-cache.enabled: false` in settings.json restores for
-// newly created components.
-//
-// The code snippets write `is:raw` for you and put the cursor on the line
-// below the tag: a listing that starts there, indented like the page, is
-// dedented by the component (see "the indentation gotcha" in COMPONENTS.md).
-//
-// Props here mirror docs/COMPONENTS.md — if a component's props change, this
-// file does not follow on its own.
+// Trigger by typing the component name without `<` (`Table`, not `<Table`) —
+// a leading `<` survives the expansion. Snippets write markup only; the import
+// comes from the language server's auto-import. Props mirror docs/COMPONENTS.md
+// and must be updated by hand.
 {
-  "MathJax inline math": {
+  "Inline math \\( \\)": {
     "scope": "astro",
     "prefix": "\\(",
     "body": ["\\($1\\)"],

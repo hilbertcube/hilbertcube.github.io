@@ -1,21 +1,8 @@
 ---
 /**
- * src/components/code/CodeBlock.astro
- * ===================================
- * Generic code container for displaying source code, config files,
- * or any non-interactive snippet, highlighted at build time by Shiki.
- *
- * Props
- * -----
- * - language : Shiki language id (default: "bash"); an unknown one fails the build
- * - code     : the listing as a string, instead of slot children
- *
- * Write the listing with `is:raw`, indented to match the page; `<` and `{` are
- * literal inside it, and the shared indentation is stripped:
- *
- *   <CodeBlock language="cpp" is:raw>
- *     #include <cstdlib>
- *   </CodeBlock>
+ * CodeBlock.astro — a listing highlighted at build time by Shiki, with a copy
+ * button. Props: `language` (Shiki id, default "bash"), `code` (instead of
+ * children). Write children with `is:raw`.
  */
 
 import CopyButton from "@components/code/CopyButton.astro";
