@@ -29,7 +29,6 @@
   /* Button colors */
   --next-text: black;
   --next-border: #a9a9b3;
-  --toggle-bar: #dddddd;
   
   /* Dropdown colors */
   --highlight-dropdown-color: rgb(0, 0, 130);
@@ -44,17 +43,9 @@
   /* Fill for a selected tag chip; tracks the accent in light mode. */
   --search-chip-active-bg: var(--autocomplete-dropdown-left-border);
 
-  /* Search input: sits on the always-dark top nav, so it stays dark
-     in both light and dark mode to blend with the bar. */
-  --search-bar-bg: #242424;
-  --search-bar-border: #3a3a3a;
-  --search-bar-text: #e0e0e0;
-  --search-bar-placeholder: #808080;
-  --search-bar-focus: #0091ff;
   
   /* Code and content colors */
   --code-box-color: #fff;
-  --inline-code-color: rgb(247, 247, 247);
   --inline-code-text: black;
   --box-border: #bfbfbf;
   --pre-color: #fcfcfc;
@@ -71,22 +62,9 @@
   --general-wrapper-width: 60rem;
   --side-nav-width: 375px;
   --top-bar-height: 60px;
-  /* Hit area of every top-bar icon button, and the glyph inside it. The share
-     dropdown derives its drop from the first, so shrinking these keeps the
-     panel aligned with the bottom of the bar. */
-  --topbar-icon-size: 34px;
-  --topbar-icon-font-size: 20px;
-  /* The burger's bars are the glyph inside its --topbar-icon-size box, so this
-     is its counterpart to --topbar-icon-font-size. Bar height, spacing and
-     rounding are all derived from it, keeping the burger in proportion at
-     every size. */
-  --burger-bar-width: 20px;
-  /* Width of the burger button's container — the top bar's first slot */
-  --burger-width: 60px;
   --in-page-li-spacing: 15px;
   
   /* Progress bar — flat red accent to match the site's Wikipedia-like theme */
-  --progressive-bar-height: 2px;
   --progress-bar-color: #ca0000;
   
   /* Settings panel — theme-aware surface matching the site's other content
@@ -102,7 +80,6 @@
   /* === ANIMATIONS & TRANSITIONS === */
   --fade-in-out-time: 0.5s;
   --slide-time: 0.5s;
-  --highlight-drop-time: 0.8s;
 }
 
 /* === DARK MODE OVERRIDES === */
@@ -135,7 +112,6 @@ html.dark-mode {
   
   /* Code */
   --code-box-color: #2a2a2a;
-  --inline-code-color: rgb(55, 55, 55);
   --inline-code-text: rgb(0, 194, 0);
   --box-border: #424242;
   --pre-color: #1a1a1a;
@@ -146,11 +122,10 @@ html.dark-mode {
   --article-date-color: #aaa;
   
   /* Progress bar — slightly brighter red for contrast on dark backgrounds */
-  --progressive-bar-height: 2px;
   --progress-bar-color: #e53935;
   
 
-  --url-color: #18e9e9;
+  --url-color: #00a2ff;
 
   /* Settings panel */
   --settings-bg: #1c1c1c;
@@ -178,10 +153,5 @@ html.dark-mode {
 @media all and (max-width: 580px) {
   :root {
     --side-nav-width: 330px;
-    /* The icon row shares the bar with the burger and the home/about links at
-       this width, so the buttons come down a size to keep it off the edges. */
-    --topbar-icon-size: 28px;
-    --topbar-icon-font-size: 17px;
-    --burger-bar-width: 17px;
   }
 }

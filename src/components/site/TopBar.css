@@ -6,6 +6,35 @@
  * Media queries stay beside their rules: a global one can't outrank a scoped rule.
  */
 
+/* === VARIABLES === */
+
+.top-nav {
+  /* The search input stays dark in both themes, like the bar. */
+  --search-bar-bg: #242424;
+  --search-bar-border: #3a3a3a;
+  --search-bar-text: #e0e0e0;
+  --search-bar-placeholder: #808080;
+  --search-bar-focus: #0091ff;
+  /* Icon button hit area and glyph; the share dropdown's drop derives from it. */
+  --topbar-icon-size: 34px;
+  --topbar-icon-font-size: 20px;
+  /* Burger bar width; bar height, spacing and rounding derive from it. */
+  --burger-bar-width: 20px;
+  --burger-width: 60px;
+  --toggle-bar: #dddddd;
+  --progressive-bar-height: 2px;
+}
+
+@media all and (max-width: 580px) {
+  /* Smaller icons so the row fits beside the burger and home/about links. */
+  .top-nav {
+    --topbar-icon-size: 28px;
+    --topbar-icon-font-size: 17px;
+    --burger-bar-width: 17px;
+    --burger-width: 44px;
+  }
+}
+
 /* === SETTINGS WINDOW === */
 
 .custom-select {
