@@ -265,12 +265,10 @@ at once; the reader's setting picks one with CSS. `language` is a
 With `is:raw` the children arrive as literal text (`<`, `{` not parsed), and a
 listing that starts on the line **after** the tag is dedented, so it can sit at
 the page's indentation. One starting on the tag's own line is taken as written.
-The one thing to avoid inside `is:raw` is a literal entity like `&lt;` — it gets
-decoded.
-
-Without `is:raw`, the HTML compressor eats whitespace touching the tag, so the
-listing must start at column 0 with `<` / `{` escaped. Works the same on all
-four block components.
+The listing is plain text: an entity like `&lt;` shows up as written, and HTML
+tags are not rendered. `is:raw` is required on all four block components —
+without it, Astro parses the children as markup and the listing comes out
+mangled.
 
 ### CodeBlock, CodeBox, ShellScript
 
@@ -548,7 +546,7 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 
 | Symptom | Cause |
 |---|---|
-| Code loses its indentation, or `{x}` / `<T>` vanish | No `is:raw` ([§3](#writing-a-listing-use-israw)) |
+| Code loses its indentation, `{x}` / `<T>` vanish, or `&lt;` shows literally | No `is:raw` ([§3](#writing-a-listing-use-israw)) |
 | Build fails: "Language … not found" | `language` isn't a Shiki id |
 | TabBox shows the wrong pane | `tabs` labels and child panes out of step |
 | LaTeX in search results | Display math not wrapped in `<E>` |

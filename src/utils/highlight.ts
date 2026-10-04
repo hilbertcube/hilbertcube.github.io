@@ -9,20 +9,15 @@
  * first time a block asks for it. An unknown `language` makes `loadLanguage`
  * throw, which fails the build, so a typo can't silently leave a block plain.
  *
- * A listing can be written two ways:
+ * Write a listing with `is:raw` on the component: indent the block to match
+ * the page, and write `<`, `{`, `}` literally. Astro leaves raw children
+ * untouched — they are plain text, never HTML — and `dedent()` strips the
+ * shared indentation.
  *
- *   - `is:raw` on the component: indent the block to match the page, and write
- *     `<`, `{`, `}` literally. Astro leaves raw children untouched, and
- *     `dedent()` strips the shared indentation.
- *
- *       <CodeBlock language="cpp" is:raw>
- *         #include <cstdlib>
- *         int main() { return 0; }
- *       </CodeBlock>
- *
- *   - plain children: start at column 0 against the opening tag, and escape
- *     `<` / `{` as `&lt;` / `&#123;`. Astro's HTML compressor eats whitespace
- *     that touches a tag, so an indented block loses its first line's indent.
+ *   <CodeBlock language="cpp" is:raw>
+ *     #include <cstdlib>
+ *     int main() { return 0; }
+ *   </CodeBlock>
  */
 import { createHighlighter, type BundledLanguage, type ShikiTransformer } from "shiki";
 import { CODE_THEMES } from "@utils/codeThemes";
@@ -53,31 +48,6 @@ export async function highlight(
  */
 export const printKeep = (code: string) => code.split("\n").length <= 25;
 
-const ENTITIES: Record<string, string> = {
-  lt: "<",
-  gt: ">",
-  amp: "&",
-  quot: '"',
-  apos: "'",
-  nbsp: "\u00a0",
-};
-
-/**
- * A code component's slot as plain text.
- *
- * Listings arrive as slot children, which Astro hands over as rendered HTML:
- * `&lt;` / `&#123;` written in the page to get `<` / `{` past the compiler are
- * still entities. Shiki needs the real characters. (Inside `is:raw` the text is
- * already literal; the only casualty is code that contains a literal `&lt;`.)
- */
-export function slotText(html: string) {
-  return html.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (match, entity: string) => {
-    if (entity[0] !== "#") return ENTITIES[entity.toLowerCase()] ?? match;
-    const hex = entity[1] === "x" || entity[1] === "X";
-    return String.fromCodePoint(parseInt(entity.slice(hex ? 2 : 1), hex ? 16 : 10));
-  });
-}
-
 /**
  * Trims the blank lines around a listing and removes the indentation every
  * line shares, so a block indented to match the page renders flush left.
@@ -107,5 +77,5 @@ export function dedent(text: string) {
  * otherwise its slot, dedented.
  */
 export async function listing(code: string | undefined, slot: () => Promise<string>) {
-  return dedent(code ?? slotText(await slot()));
+  return dedent(code ?? (await slot()));
 }
