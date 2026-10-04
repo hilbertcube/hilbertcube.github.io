@@ -1,16 +1,7 @@
 ---
 /**
- * Quote.astro
- * ===========
- * The pull quote that opens most articles — the italic serif block with a rule
- * down its left edge and an attribution beneath it.
- *
- * The markup carries only the words: the curly quotes around the content and
- * the em-dash before the author are supplied by CSS, so callers never type
- * them. That also removes the old whitespace trap — the text used to have to
- * sit flush against the `<div class="Quote-content">` tags or the collapsed
- * newline showed up as a gap next to the opening quote mark. Here the
- * expression is rendered tight against the tags once, for every page.
+ * Quote.astro — the pull quote that opens most articles. CSS supplies the
+ * quotation marks and the dash before the author.
  */
 interface Props {
   /** The quote itself, without surrounding quotation marks. */

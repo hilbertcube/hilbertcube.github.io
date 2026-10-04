@@ -1,18 +1,7 @@
 ---
 /**
- * FrontImage.astro
- * ================
- * The banner image that sits under the title/date at the top of an article.
- *
- * - Owns the `figure` wrapper and the `.front-img` rule that every article used
- *   to repeat in its own `<style>` block, so pages only pass the image itself.
- * - `width` is the one thing that varied between pages; it is applied through a
- *   custom property and always collapses to 100% on narrow screens.
- * - The `front-img` class stays on the `img`, but only as a styling hook now.
- *   It used to double as the lightbox's opt-out; the viewer moved to
- *   components/site/Lightbox.astro and banners open like any other image, so
- *   keeping a banner out means giving it `no-lightbox` instead.
- * - Anything passed as children is rendered as the figure's caption.
+ * FrontImage.astro — the banner under an article's title. `width` (desktop
+ * only) goes through a custom property; children become the caption.
  */
 interface Props {
   src: string;

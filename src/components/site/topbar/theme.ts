@@ -21,8 +21,7 @@ export function initCodeThemeSelect(
   const root = document.documentElement;
 
   const apply = (value: string | null) => {
-    // A saved value from the Prism era (a stylesheet URL) matches no option:
-    // drop it, and let the CSS default (the first option) stand.
+    // A saved value matching no option is dropped; the CSS default stands.
     const valid = [...select.options].some((option) => option.value === value);
     select.value = valid ? value! : select.options[0].value;
     if (valid) {

@@ -1,30 +1,18 @@
 /*!
- * Neumann Condition Website Styles
- * Organized CSS architecture for better maintainability
- * Created: June 2024, Reorganized: November 2025
- * 
- * Architecture:
- * - base/: Foundational styles (variables, fonts, reset, typography)
- * - layout/: Grid systems and page structure
- * - components/: Reusable UI components
- * - pages/: Page-specific styles
- * - utils/: Utilities (responsive, animations)
- * - vendors/: Third-party CSS imports
+ * Neumann Condition Website Styles — import manifest, imported once by BaseLayout.
+ * Order: base → layout → components → pages → utils (later files win ties).
  */
 
 /* === BASE === */
-/* Core foundation styles */
 @import url("base/_variables.css");
 @import url("base/_fonts.css");
 @import url("base/_reset.css");
 @import url("base/_typography.css");
 
 /* === LAYOUT === */
-/* Grid systems and page structure */
 @import url("layout/_grid.css");
 
 /* === COMPONENTS === */
-/* Reusable UI components */
 @import url("components/_search.css");
 @import url("components/_sidebar.css");
 @import url("components/_math.css");
@@ -32,11 +20,9 @@
 @import url("components/_content.css");
 
 /* === PAGES === */
-/* Page-specific styles */
 @import url("pages/_home.css");
 
 /* === UTILITIES === */
-/* Responsive design and utilities - loaded last to override as needed */
 @import url("utils/_responsive.css");
 @import url("utils/_print.css");
 

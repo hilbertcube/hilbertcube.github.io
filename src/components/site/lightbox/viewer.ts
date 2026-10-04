@@ -1,18 +1,7 @@
 /**
- * The image viewer itself: yet-another-react-lightbox, mounted imperatively.
- *
- * Lightbox.astro imports this module lazily, on the first click, so React and
- * the viewer only download for readers who actually open an image — the
- * component ships on every page via BaseLayout, and most visits never do.
- *
- * There is no @astrojs/react integration and no `client:*` island: the viewer
- * lives in its own root appended to <body>, outside the page markup that
- * BaseLayout round-trips through a string (see CLAUDE.md). Plain
- * `createElement` rather than JSX keeps this an ordinary .ts file.
- *
- * Everything the old hand-built overlay did — scroll lock, focus trap and
- * restore, Esc / arrow keys, wrap-around, the loading spinner, hiding the
- * arrows on a single image — is the library's default behaviour.
+ * The image viewer: yet-another-react-lightbox, mounted imperatively in its own
+ * root on <body> (no island — see CLAUDE.md). Lightbox.astro imports this lazily
+ * on the first click, so React only downloads when someone opens an image.
  */
 import { createElement } from "react";
 import { createRoot } from "react-dom/client";

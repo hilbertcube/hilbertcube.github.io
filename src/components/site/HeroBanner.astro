@@ -69,9 +69,8 @@ const { Art, placement, caption } = ARTS[Astro.props.art];
 
     position: relative;
     display: grid;
-    /* The panel is sized to its content: Computer Modern Bold is wide, and a
-       fixed width let the title spill onto the art. gradientCanvas.ts watches
-       this width. */
+    /* The panel is sized to its content so the wide title never spills onto
+       the art. gradientCanvas.ts watches this width. */
     grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
     height: 380px;
     overflow: hidden;
@@ -85,8 +84,6 @@ const { Art, placement, caption } = ARTS[Astro.props.art];
     z-index: 1;
     box-sizing: border-box;
     height: 100%;
-    /* The top padding is generous on purpose: it holds the title where it sat
-       when a formula line stood above it. */
     padding: 91px 48px 40px 72px;
     background: var(--hero-bg);
     border-right: 1px solid var(--hero-line);

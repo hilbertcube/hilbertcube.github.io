@@ -1,19 +1,13 @@
 /**
  * pagefind-ignore-math.mjs
  * ========================
- * Post-build step (runs after `astro build`, before `pagefind`).
+ * Post-build step (after `astro build`, before `pagefind`). Display math is
+ * excluded by `--exclude-selectors ".equation"`; this wraps each inline-math run
+ * ($...$, \(...\)) in <span data-pagefind-ignore> so it isn't indexed either.
  *
- * Display math is already excluded from the Pagefind index via
- * `--exclude-selectors ".equation, .mathjax-definition"`. This step handles the
- * remaining INLINE math ($...$ and \(...\)) woven through the prose, which would
- * otherwise index as noise ("frac", "nabla", single letters, …).
- *
- * It wraps each inline-math run in <span data-pagefind-ignore> so Pagefind skips
- * it. To stay safe against inconsistently-authored HTML it works as a tiny tag
- * tokenizer: it only rewrites TEXT runs (never markup) and skips the contents of
- * <pre>/<code>/<script>/<style> (shell `$USER`, `$(uname -r)`, …) and the already
- * excluded .equation / .mathjax-definition containers. MathJax still typesets the
- * math normally — the wrapper is invisible to the reader.
+ * Works as a tag tokenizer: rewrites only text, never markup, and skips
+ * <pre>/<code>/<script>/<style> (so shell `$USER` isn't taken for math) and
+ * .equation blocks.
  */
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -62,8 +56,7 @@ function processMain(main) {
       else if (t.startsWith("<code")) skipUntil = "</code";
       else if (t.startsWith("<script")) skipUntil = "</script";
       else if (t.startsWith("<style")) skipUntil = "</style";
-      else if (/^<div class="equation"/.test(tok) || /^<div class="mathjax-definition"/.test(tok))
-        skipUntil = "</div";
+      else if (/^<div class="equation"/.test(tok)) skipUntil = "</div";
       out += tok;
     } else {
       out += wrapInline(tok);

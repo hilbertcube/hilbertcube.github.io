@@ -58,16 +58,14 @@ async function loadEngine(): Promise<any> {
   } catch (err) {
     console.warn("Pagefind unavailable, falling back to pages.json:", err);
     try {
-      // Dynamic import so Vite code-splits the catalog into its own chunk:
-      // it is only fetched when Pagefind is missing, exactly like the old
-      // fetch() of the file when it lived under public/.
+      // Dynamic import: the catalog is code-split and only fetched here.
       const data = (await import("@data/pages.json")).default;
       const suggestions = [
         ...(data.articles || []),
         ...(data.others || []),
         ...(data.posts || []),
       ];
-      // Tag browsing mirrors the old /tags cloud: articles + posts only.
+      // Tags cover articles + posts only.
       const taggable = [...(data.articles || []), ...(data.posts || [])];
       const facets: Record<string, number> = {};
       taggable.forEach((item: any) =>
@@ -265,7 +263,7 @@ async function search(query: string) {
 }
 
 // Search constrained to the active tags. AND semantics: a page must carry
-// every active tag — matching the old /tags page. For Pagefind we run one
+// every active tag. For Pagefind we run one
 // filtered search per tag and intersect by id. Called only with a non-empty
 // tag list (the tags menu has no text input), so there's no query to apply.
 async function searchWithTags(activeTags: string[]) {

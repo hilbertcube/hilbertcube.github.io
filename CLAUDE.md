@@ -6,13 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A personal technical blog (math, programming, food) published to
 [neumanncondition.com](https://neumanncondition.com) — an **Astro 5 static site**
-(`output: 'static'`). It began as a hand-built HTML/CSS/vanilla-JS site and was
-migrated to Astro; some of that lineage still shows in `public/assets/js/`.
+(`output: 'static'`).
 
-**Content is authored as hand-written `.astro` pages, not Markdown.** There is no
-content-collection-of-Markdown model here: each article/post is
-`src/pages/articles/<slug>/index.astro` composed from the component library, and
-its metadata lives separately in `src/data/pages.json`.
+**Content is hand-written `.astro` pages, not Markdown**: each article/post is
+`src/pages/{articles,posts}/<slug>/index.astro`, composed from the component library,
+with its metadata in `src/data/pages.json`.
 
 ## Commands
 
@@ -27,8 +25,8 @@ its metadata lives separately in `src/data/pages.json`.
 | `npm run build && npm run pdf [-- <slug>…]` | Exports articles to `pdf/<slug>.pdf` via headless Chromium (`scripts/export-pdf.mjs`); print layout is `src/assets/css/utils/_print.css`. |
 | `./scripts/commit.sh "msg"` | pull `main` → `add .` → commit → push. |
 
-`npm test` is an unimplemented stub — there is no test suite. Verification is
-`npm run check` plus `npm run build`, which fails loudly on schema and alias errors.
+There is no test suite (`npm test` is a stub). Verify with `npm run check` and
+`npm run build`, which fails on schema and alias errors.
 
 Deployment is automatic: `.github/workflows/static-pages.yml` builds and publishes
 `dist/` on every push to `main`. It checks out with `fetch-depth: 0` because
@@ -44,21 +42,19 @@ arrays: `articles` (carry `image`), `posts`, and `others` (standing pages). `lin
 the primary key everywhere — `src/content.config.ts` derives each collection entry's
 loader id from it.
 
-`content.config.ts` wraps that JSON in typed, **Zod-validated** Astro collections.
-Consequences worth internalising:
+`content.config.ts` wraps it in **Zod-validated** Astro collections:
 
 - Read the catalog through `getCollection("articles" | "posts" | "others")` — **never**
   `fs.readFileSync`.
 - A page looks up **its own** entry via `getEntryMeta(collection, Astro.url.pathname)`,
   which matches on `link` and **throws** if there is no match. `TopicTags`, `PageTitle`
   and `PubDate` do this internally, so pages usually pass no props at all.
-- A missing/misspelled field fails the build with a Zod error. This is deliberate: it
-  stops a page from silently vanishing from the homepage, RSS and search.
+- A missing/misspelled field fails the build, so a page can't silently vanish from the
+  homepage, RSS and search.
 - Collection order is array order (newest first; `new-article.sh` inserts at the top).
   Nothing re-sorts.
 
-`src/pages/rss/feed.xml.ts` is a build-time endpoint over those same collections, so
-the feed cannot drift from the site. There is no RSS script to run.
+`src/pages/rss/feed.xml.ts` is a build-time endpoint over the same collections.
 
 ### BaseLayout renders the body before the sidebar
 
@@ -90,10 +86,10 @@ Top-bar behaviour is split across `src/components/site/topbar/{nav,theme,setting
 
 `CodeBlock`, `CodeBox` and `ShellScript` run their listing through Shiki (`src/utils/highlight.ts`)
 at build time — pages ship coloured HTML and carry no highlighting script or language list.
-`language` is a Shiki language id; an unknown one fails the build. Every block is rendered in **all** the themes in `src/utils/codeThemes.ts` at once
-(one `--shiki-<id>` custom property per theme per token), and CSS generated from that same list
-picks one via `data-code-light` / `data-code-dark` on `<html>` — so switching is instant. Each
-theme adds to every page's HTML size: keep the list short.
+`language` is a Shiki language id; an unknown one fails the build. Every block is rendered
+in **all** the themes in `src/utils/codeThemes.ts` (one `--shiki-<id>` custom property per
+theme per token), and generated CSS picks one via `data-code-light` / `data-code-dark` on
+`<html>`. Each theme adds to every page's HTML size: keep the list short.
 
 ### Math and search are coupled
 
@@ -104,7 +100,7 @@ script. Shared macros (`\R`, `\N`, `\pd`, …) live in the `macros` object at th
 The build's search step is why the math *authoring rules* matter:
 
 1. **All display math must be wrapped in `<E>`** (`<div class="equation">`), which the build
-   excludes via `pagefind --exclude-selectors ".equation, .mathjax-definition"`. A bare
+   excludes via `pagefind --exclude-selectors ".equation"`. A bare
    `$$…$$` dumps `\frac`, `\sum`, `\begin` straight into search results.
 2. **Inline math needs nothing** — `scripts/pagefind-ignore-math.mjs` wraps every inline run
    in `<span data-pagefind-ignore>` post-build. It tokenizes tags rather than pattern-matching
@@ -132,14 +128,14 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   hand-written `<ol class="reference">`. The `_` prefix keeps Astro from routing the file.
 - Tables go through `<Table>`, which emits the `.table-wrapper` / `.p-table` pair — a
   hand-written table without the wrapper overflows on mobile and nothing catches it.
-  Inline code goes through `<C>`; both styles are scoped to their component, so the bare
-  classes no longer work in page markup.
+  Inline code goes through `<C>`. Both styles are scoped to their component, so the bare
+  classes don't work in page markup.
 - Body links are plain `<a href="…">` — no class. Inside `.content-grid`, an unclassed `<a>`
   gets the link colour, stays on one line and opens in a new window (`_typography.css` +
   `scripts.js`) — except a `href="#…"` jump link, which smooth-scrolls in place; add `class="wrap"` for a long label that should break. Any other class opts
   the link out, so buttons and cards keep their own styling.
 - Lists work the same way: a plain `<ul>`/`<ol>` of plain `<li>` in the body gets the list
-  spacing (`_content.css`) — no `class="bullet"` (removed).
+  spacing (`_content.css`) — no class needed.
 - Code blocks use the `code/` components, not raw `<pre>`. Write every listing with **`is:raw`**
   (`<CodeBlock language="cpp" is:raw>`), indented to match the page and with `<`/`{` written
   literally: a listing starting on the line after the tag is dedented (`dedent()` in
@@ -152,12 +148,11 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   at runtime, so don't fight them with `!important`.
 - The `new-article.sh` template **predates the component library**. After scaffolding, replace
   its header with the canonical shape from `docs/COMPONENTS.md` §8 (aliases, `getEntryMeta`,
-  `<TopicTags>/<PageTitle>/<PubDate>`, no hand-written "More Articles", no MathJax script).
+  `<TopicTags>/<PageTitle>/<PubDate>`, no hand-written "More Articles").
 
 ## Detailed docs
 
-This repo carries unusually thorough documentation — read the relevant one before making
-non-trivial changes:
+Read the relevant one before non-trivial changes:
 
 | Doc | Covers |
 |---|---|
@@ -167,9 +162,8 @@ non-trivial changes:
 | `docs/AUTOMATION.md` | The helper scripts in `scripts/` |
 | `docs/CSS-ORGANIZATION.md` | CSS file layout |
 
-One live inconsistency they can't fix themselves: `scripts/new-article.sh` still emits
-`<script is:inline src="/assets/js/blogpage-setting.js">`, and that file no longer exists.
-Delete that line from any scaffolded page (`docs/DEVELOPMENT.md` §3 lists the rest of the
-scaffolder's outdated output).
+Keep `README.md`'s Change Log updated for important user-visible changes; it is the
+project's history.
 
-Keep `README.md`'s Change Log updated for user-visible changes; it is the project's history.
+Docs and code comments describe only what exists **now**, concisely. When a feature is
+removed, delete its documentation rather than noting the removal.

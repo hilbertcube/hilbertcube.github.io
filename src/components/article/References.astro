@@ -1,23 +1,8 @@
 ---
 /**
- * References.astro
- * ================
- * The "References" section at the foot of an article: the heading and the
- * numbered `ol.reference` list, built from the `_references.ts` file that sits
- * next to the page's `index.astro` instead of citation text typed into it.
- *
- *   src/pages/articles/<slug>/index.astro      →  <References />
- *   src/pages/articles/<slug>/_references.ts   →  export default defineReferences({ … })
- *
- * Like PageTitle and PubDate, it takes no props: it finds the page's file from
- * the URL, and fails the build if there is none. The leading underscore keeps
- * Astro from routing the .ts file as an endpoint.
- *
- * Entries are numbered in the order they are written in the file. Each `<li>`
- * gets `id="ref-<key>"`, so body text can jump to one with a plain
- * `<a href="#ref-lowe2004">[3]</a>`.
- *
- * The list's styling is scoped to this component (below).
+ * References.astro — the "References" section, rendered from the
+ * `_references.ts` beside the page's `index.astro` (found from the URL; the
+ * build fails if missing). Each item gets `id="ref-<key>"`.
  */
 import { formatReference, type Reference } from "@utils/references";
 

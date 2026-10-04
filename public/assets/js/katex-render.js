@@ -1,22 +1,16 @@
 /**
  * katex-render.js
  * ===============
- * Client-side KaTeX rendering. Replaces the old runtime MathJax setup.
+ * Client-side KaTeX rendering, loaded on every page.
  *
- * - Display equations authored via <Equation> land in `.equation` divs whose
- *   textContent is raw LaTeX (e.g. `\begin{equation}...\end{equation}`). We
- *   render each one in display mode.
- * - Inline math in prose uses `$...$` / `\(...\)` (and `$$`/`\[...\]` for
- *   display), handled by KaTeX's auto-render extension.
+ * - `.equation` divs (<E>) hold raw LaTeX and render in display mode.
+ * - Inline `$...$` / `\(...\)` (and `$$` / `\[...\]`) go through auto-render.
  *
- * Equation numbering: KaTeX numbers `equation`/`align` environments, but each
- * `.equation` is a separate render call, so its counter restarts at 1 every
- * time (every block would show "(1)"). To get MathJax-style document-wide
- * numbers we strip that per-block numbering and inject a running `\tag{n}`.
- * Set NUMBER_EQUATIONS = false to turn equation numbers off entirely.
+ * Each `.equation` is a separate render, so KaTeX would restart numbering at
+ * (1) every time; per-block numbers are stripped and a running `\tag{n}`
+ * injected instead. NUMBER_EQUATIONS = false turns numbering off.
  *
- * Custom macros mirror the old per-page `\newcommand` / `\DeclareMathOperator`
- * definitions that used to live in the hidden `.mathjax-definition` divs.
+ * Shared macros are in `macros` below.
  */
 (function () {
   var NUMBER_EQUATIONS = true;

@@ -195,10 +195,6 @@ import ArticleCards from "../../../components/listings/ArticleCards.astro";
       <ArticleCards count={4} showDetails={true} shuffle={true} excludePath="/articles/$SLUG" />
     </section>
 
-  <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"><\/script>
-    <script is:inline src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async><\/script>
-  </Fragment>
 </BaseLayout>
 ASTRO_EOF
 
@@ -235,10 +231,6 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     <style>
       /* page-specific styles */
     </style>
-  </Fragment>
-
-  <Fragment slot="scripts">
-    <script is:inline src="/assets/js/blogpage-setting.js"><\/script>
   </Fragment>
 
     <header>

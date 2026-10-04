@@ -45,12 +45,9 @@ const {
 const isArticle = Astro.url.pathname.startsWith("/articles/");
 const tex = String.raw;
 
-// The page body is rendered here (rather than left to `<slot />` below) so the
-// TOC can be derived from the finished HTML before the sidebar is emitted. The
-// body is then injected as markup, which is fine for this site because every
-// page is static HTML — a hydrated island (`client:*`) would not survive it.
-// Sections get their ids here too, from their headings, so pages never write
-// them; search deep links need them even on pages without a TOC.
+// The body is rendered here so the TOC can be built from its HTML, then
+// injected as markup (so no `client:*` islands in pages). Section ids are
+// generated here too; search deep links need them even without a TOC.
 const body = assignSectionIds(
   Astro.slots.has("default") ? await Astro.slots.render("default") : "",
 );
@@ -123,7 +120,7 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
     </script>
   </head>
 
-  <body class="light-mode">
+  <body>
     <TopBar />
     <Lightbox />
 

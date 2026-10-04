@@ -1,24 +1,13 @@
 ---
 /**
- * Lightbox.astro
- * ==============
- * Click any content image to open it fullscreen, with prev/next across every
- * image on the page. Rendered once by BaseLayout; there is nothing to pass.
- *
- * The viewer is yet-another-react-lightbox (./lightbox/viewer.ts). This
- * component renders no markup: its script only marks which images open and
- * loads the viewer on the first click.
- *
- * Which images are clickable is decided at runtime by the selector in the
- * script, since it has to sweep the finished page. It is a blacklist: the logo,
- * sidebar highlights' covers and anything carrying `.no-lightbox` opt out,
- * and everything else — article front images included — opens.
+ * Lightbox.astro — click a content image to view it fullscreen, with prev/next
+ * across the page. Renders no markup: the script marks matching images and
+ * loads the viewer (./lightbox/viewer.ts) on first click.
  */
 ---
 
 <script>
-  // Every image except the ones that own their own click behaviour or are
-  // chrome rather than content.
+  // Every image except site chrome and opt-outs.
   const IMAGE_SELECTOR =
     "img:not(#logoImage):not(.no-lightbox):not(.recommend-img img)";
 
@@ -40,8 +29,6 @@
 </script>
 
 <style>
-  /* Applied by the script to every image it wired up, so the pointer only
-     appears on images that actually open. */
   :global(.lightbox-source) {
     cursor: pointer;
   }

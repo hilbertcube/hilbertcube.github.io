@@ -1,24 +1,10 @@
 /**
  * references.ts
  * =============
- * The types behind each article's `_references.ts` (next to its index.astro),
- * and the formatter that turns one entry into the citation text the `<References>`
- * component renders.
- *
- * It does the job of BibTeX without BibTeX's traps:
- *
- * - `authors` is a plain list of names as they should print ("David G. Lowe"),
- *   not one string joined with `and` that has to be parsed back apart.
- * - Titles print exactly as written; there are no `{braces}` to protect
- *   capitals.
- * - Each `type` has its own required fields, so an inproceedings entry without
- *   `proceedings` is a type error in the editor and in `npm run check`, rather
- *   than a silently half-empty citation.
- * - `pages: "89-100"` gets its en dash, `edition: 4` becomes "4th edition",
- *   and `doi` becomes a https://doi.org link: no `--` or `\url{}` to write.
- *
- * Every type also takes `note` (a free sentence placed before the link), `url`
- * or `doi`, and `accessed` (ISO date, for pages that can change).
+ * Types for each article's `_references.ts` and the formatter behind
+ * `<References>`. Each `type` has its own required fields (a type error if
+ * missing); `authors` is a list of printed names, titles print as written,
+ * page ranges get an en dash, `edition: 4` → "4th edition", `doi` → doi.org link.
  */
 
 type Authors = string | string[];

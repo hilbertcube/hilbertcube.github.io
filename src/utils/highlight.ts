@@ -1,23 +1,9 @@
 /**
  * highlight.ts
  * ============
- * Build-time syntax highlighting with Shiki, for the `code/` block components
- * (CodeBlock, CodeBox, ShellScript). Pages ship finished, coloured HTML — no
- * highlighter script, no per-page language list.
- *
- * One highlighter serves the whole build; a language grammar is loaded the
- * first time a block asks for it. An unknown `language` makes `loadLanguage`
- * throw, which fails the build, so a typo can't silently leave a block plain.
- *
- * Write a listing with `is:raw` on the component: indent the block to match
- * the page, and write `<`, `{`, `}` literally. Astro leaves raw children
- * untouched — they are plain text, never HTML — and `dedent()` strips the
- * shared indentation.
- *
- *   <CodeBlock language="cpp" is:raw>
- *     #include <cstdlib>
- *     int main() { return 0; }
- *   </CodeBlock>
+ * Build-time Shiki highlighting for CodeBlock, CodeBox and ShellScript. One
+ * highlighter serves the build; grammars load on first use, and an unknown
+ * `language` throws, failing the build.
  */
 import { createHighlighter, type BundledLanguage, type ShikiTransformer } from "shiki";
 import { CODE_THEMES } from "@utils/codeThemes";
@@ -49,14 +35,9 @@ export async function highlight(
 export const printKeep = (code: string) => code.split("\n").length <= 25;
 
 /**
- * Trims the blank lines around a listing and removes the indentation every
- * line shares, so a block indented to match the page renders flush left.
- * Blank lines don't count toward the shared indentation.
- *
- * Only a listing that starts on the line AFTER its opening tag is dedented —
- * that is the indented `is:raw` style. One that starts on the tag's own line
- * is taken as written: its indentation is deliberate (an excerpt from inside a
- * function, say), and dedenting it would shift it left.
+ * Trims surrounding blank lines and removes the shared indentation. Only a
+ * listing that starts on the line after its opening tag is dedented; one that
+ * starts on the tag's line is taken as written.
  */
 export function dedent(text: string) {
   const trimmed = text.replace(/\s+$/, "");

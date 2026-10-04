@@ -1,33 +1,16 @@
 /**
  * src/utils/toc.ts
  * ================
- * Builds a Table of Contents from already-rendered page HTML, so pages never
- * have to repeat their section list by hand.
+ * Builds the Table of Contents from rendered page HTML.
  *
- * How a heading gets into the TOC
- * ------------------------------
- * Every `<h2>`–`<h4>` (configurable) in the page body becomes an entry, as long
- * as an anchor can be found for it:
+ * Every `<h2>`–`<h4>` (configurable) becomes an entry, anchored to its own `id`
+ * or else to the innermost enclosing `<section>` not yet claimed (ids generated
+ * by assignSectionIds()). Unanchored headings are skipped. Nesting follows
+ * heading level, not DOM nesting.
  *
- *   1. an `id` on the heading itself   -> `<h2 id="books">Books</h2>`
- *   2. otherwise, the `id` of the innermost enclosing `<section>` that no
- *      earlier heading has already claimed. Pages don't write these:
- *      assignSectionIds() below generates them from the headings first.
- *          <section><h2>Data Analysis</h2> ...  -> #data-analysis
- *
- * A heading with no anchor is skipped: a TOC row that can't be linked is dead
- * weight. Nesting follows heading level (h3 nests under the preceding h2), not
- * DOM nesting, which matches how the articles are actually written.
- *
- * Overrides, on a heading or on a `<section>`:
- *   data-toc="Short label"   -> use this text instead of the heading text; on a
- *                               section with no heading of its own (e.g. one
- *                               holding a `<Problem>`), this is what puts it in
- *                               the TOC at all
- *   data-toc="skip"          -> leave it out
- *
- * Only the *rendered* HTML is inspected, so headings produced by components or
- * `.map()` loops are picked up like any other, and commented-out markup is not.
+ * Overrides on a heading or `<section>`:
+ *   data-toc="Short label"   use this text; on a heading-less section, adds it
+ *   data-toc="skip"          leave it out
  */
 
 export interface TocItem {

@@ -8,13 +8,10 @@
  *
  * Performance notes
  * -----------------
- * The equations are MathJax SVGs — hundreds of <path> nodes each. Passing an
- * SVG <img> straight to drawImage() makes the browser re-rasterise those paths
- * on *every* frame, and only some engines cache that (Chromium usually does,
- * Firefox and WebKit largely don't). That was the whole cost of this animation.
- * So each SVG is rasterised once into an offscreen canvas at its final pixel
- * size, and the loop then does nothing but blit those bitmaps. Re-rasterising
- * only happens when the scale or devicePixelRatio actually changes.
+ * The equations are SVGs of hundreds of <path> nodes, which drawImage() would
+ * re-rasterise every frame in most engines. Each is rasterised once into an
+ * offscreen canvas at its final pixel size and the loop only blits those,
+ * re-rasterising when the scale or devicePixelRatio changes.
  *
  * On top of that the loop is idle whenever it can't be seen: off-screen
  * (IntersectionObserver), backgrounded tab (visibilitychange), or the reader
@@ -239,12 +236,9 @@ export function initEquationsCanvas() {
    * Reflect one axis off the frame edges, snapping the sprite back to the edge
    * it crossed.
    *
-   * Both halves matter. Reflecting by direction (rather than flipping the sign
-   * every frame the sprite is out of range) is what stops it from vibrating in
-   * place: a sprite that lands more than one step outside — a click near the
-   * edge spawns one there, and so does shrinking the window — used to flip back
-   * and forth forever without ever walking its way back in. Snapping to the
-   * edge then guarantees it is never outside for more than a single frame.
+   * Reflecting by direction (not flipping the sign every out-of-range frame)
+   * stops a sprite spawned or left far outside from vibrating in place; the
+   * snap keeps it outside for at most one frame.
    */
   function bounce(sprite: Sprite, axis: "x" | "y", side: "w" | "h", extent: number) {
     const velocity = axis === "x" ? sprite.dx : sprite.dy;

@@ -24,6 +24,7 @@ src/assets/css/
 ├── pages/
 │   └── _home.css          .home-title (homepage, About, FeatureSlider)
 └── utils/
+    ├── _print.css         @media print layout (Save as PDF button, npm run pdf)
     └── _responsive.css    Sitewide media queries, largest breakpoint first
 ```
 

@@ -1,17 +1,9 @@
 /**
  * getEntryMeta.ts
  * ===============
- * Every article/post page looks up its own collection entry by matching
- * its URL against `data.link`. This centralizes that lookup (and the
- * "entry not found" guard) so page files don't repeat it.
- *
- * Two entry points:
- * - `getEntryMeta(collection, pathname)` — explicit lookup, when the caller
- *   already knows which collection it wants.
- * - `resolveEntryMeta(pathname)` — infers the collection from the URL and
- *   memoizes the result. This is what the header components
- *   (TopicTags/PageTitle/PubDate) use so a page doesn't have to do the
- *   lookup itself.
+ * Look up a page's catalog entry by matching its URL against `data.link`.
+ * `getEntryMeta` takes the collection; `resolveEntryMeta` infers it from the
+ * path and memoizes (used by TopicTags/PageTitle/PubDate).
  */
 import { getCollection, type CollectionEntry } from "astro:content";
 
@@ -43,18 +35,10 @@ export async function getEntryMeta<C extends EntryKind>(
   return entry.data;
 }
 
-// One lookup per pathname per build, shared by the three header components
-// rendered on the same page. Promises are cached (not values) so concurrent
-// callers await the same work.
+// One lookup per pathname per build; promises are cached so concurrent callers share it.
 const cache = new Map<string, Promise<ResolvedEntry>>();
 
-/**
- * Resolve the collection entry for a page from its own URL.
- *
- * The collection is inferred from the path prefix, the same way BaseLayout
- * derives `isArticle`. Pages outside /articles/ and /posts/ have no catalog
- * entry, so callers there must pass values explicitly instead.
- */
+/** Resolve a page's entry from its URL; only /articles/* and /posts/* have one. */
 export function resolveEntryMeta(pathname: string): Promise<ResolvedEntry> {
   const slug = pathname.replace(/\/$/, "");
 

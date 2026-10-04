@@ -17,7 +17,7 @@ runs in the browser. No server.
 ## 1. Build pipeline
 
 ```jsonc
-"build": "astro build && node scripts/pagefind-ignore-math.mjs && pagefind --site dist --exclude-selectors \".equation, .mathjax-definition\""
+"build": "astro build && node scripts/pagefind-ignore-math.mjs && pagefind --site dist --exclude-selectors \".equation\""
 ```
 
 1. `astro build` renders every page into `dist/`.
@@ -37,7 +37,6 @@ sidebar sit outside it; "More Articles", the footer and the hero banner carry
 
 `--exclude-selectors` skips **`.equation`** — every `<E>` — so `\frac` and `\sum`
 never reach the index. That is why all display math must be wrapped in `<E>`.
-(`.mathjax-definition` is a MathJax-era leftover no page uses.)
 
 ## 4. Excluding inline math
 

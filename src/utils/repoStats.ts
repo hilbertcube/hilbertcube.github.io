@@ -1,26 +1,15 @@
 /**
  * repoStats.ts
  * ============
- * Build-time repository statistics for the "Website's Data" sidebar panel
- * (see HighlightsAndAttribute.astro).
- *
- * This used to be a client-side job: scripts.js hit the GitHub API on every page
- * load for the commit count / repo age / file tree, and read the last commit out
- * of `public/assets/json/latest_commit.json`, which a bot workflow committed back
- * to the repo every hour. Astro builds in Node inside a real checkout, so the
- * same numbers can just be read from git at build time — no API rate limits for
- * visitors, no bot commits, and the file-size heuristic can be replaced with an
- * actual line count.
- *
- * Requires an unshallow checkout (`fetch-depth: 0`) for the commit count and the
- * repository age; see .github/workflows/static-pages.yml. Every stat degrades to
- * a placeholder rather than failing the build.
+ * Repository statistics for the "Website's Data" sidebar panel, read from git
+ * at build time. Needs a full checkout (`fetch-depth: 0` in
+ * .github/workflows/static-pages.yml); each stat falls back to a placeholder
+ * rather than failing the build.
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
-/** Author name used by the (now removed) latest-commit workflow. Its commits are
- *  still in history, so they are discounted to keep "Total Updates" honest. */
+/** Bot commits in history, excluded from the counts. */
 const BOT_AUTHOR = "github-actions";
 
 /** Binary/asset files have no meaningful line count. */
@@ -32,21 +21,16 @@ const BINARY_EXTENSIONS = [
 /** Machine-generated, and big enough to dominate the total. */
 const GENERATED_FILES = ["package-lock.json"];
 
-/** Paths that hold what a reader actually reads: the article and post bodies,
- *  the standing pages (home, About, privacy policy), the catalog entry that
- *  describes each of them, and their images. The site predates Astro — it was
- *  hand-written HTML in top-level `blogs/`, `articles/`, `about/` and friends
- *  until the migration — so the historical layout is listed too, otherwise the
- *  count would start at the rewrite instead of at the first article. */
+/** Paths holding reader-facing content, in the current layout and in the
+ *  older top-level layout that is still in git history. */
 const CONTENT_PATHS = [
-  // Current layout.
   "src/pages",
   "src/data/pages.json",
   "public/articles",
   "public/posts",
   "public/about",
   "public/media/Images",
-  // Pre-Astro layout, still in history.
+  // Older layout.
   "index.html",
   "articles",
   "posts",

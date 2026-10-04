@@ -1,22 +1,8 @@
 ---
 /**
- * src/components/code/TabBox.astro
- * =================================
- * Tabbed container. Each child is one pane, paired with a label by position.
- *
- *   <TabBox tabs={["Square", "Circular"]}>
- *     <Sample is:raw>…</Sample>
- *     <Sample is:raw>…</Sample>
- *   </TabBox>
- *
- * The first pane is shown on load; the rest are hidden by CSS until the script
- * takes over. The script adds the ARIA tab roles and keyboard support (arrow
- * keys, Home/End) and only ever touches panes inside its own box, so several
- * TabBoxes can share a page.
- *
- * Props
- * -----
- * - tabs : one label per pane, in pane order
+ * TabBox.astro — tabbed container; each child is a pane, labelled by position
+ * from `tabs`. CSS shows the first pane until the script adds ARIA roles and
+ * keyboard support; it only touches its own box.
  */
 
 interface Props {

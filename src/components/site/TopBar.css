@@ -1,15 +1,9 @@
 /*
  * TopBar.astro component styles
  * =============================
- * Imported from TopBar.astro's <style> block, so every rule here is scoped to
- * TopBar's own markup — an @import inside a scoped <style> is scoped just like
- * inline CSS. Anything that must reach outside this component's template
- * (the <body>, or nodes search.ts builds at runtime) needs :global().
- *
- * Media queries live beside the rules they override rather than in
- * utils/_responsive.css: a scoped selector carries an extra
- * [data-astro-cid-*] of specificity, so a global media query can no longer
- * override a rule that lives here.
+ * Imported from TopBar.astro's scoped <style>, so rules are scoped; anything
+ * reaching outside its markup (<body>, nodes search.ts builds) needs :global().
+ * Media queries stay beside their rules: a global one can't outrank a scoped rule.
  */
 
 /* === SETTINGS WINDOW === */
