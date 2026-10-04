@@ -10,7 +10,9 @@ import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import FrontImage from "@components/article/FrontImage.astro";
 
+import Definition from "@components/math/Definition.astro";
 import E from "@components/math/E.astro";
+import Lemma from "@components/math/Lemma.astro";
 import M from "@components/math/M.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Proof from "@components/math/Proof.astro";
@@ -132,7 +134,7 @@ import References from "@components/article/References.astro";
 
       <section>
         <h4>The Big O Notation</h4>
-        <div class="definition" data-definition-name=". The Big O">
+        <Definition name="The Big O">
           Let $f$ and $g$ be real-valued and not necessarily continuous
           functions. We say that $f$ is the big O of $g$, written
           <E>{tex`
@@ -147,7 +149,7 @@ import References from "@components/article/References.astro";
             \end{equation}
           `}</E>
           for some constant $M > 0$.
-        </div>
+        </Definition>
 
         <p>
           For example, $f(n) = 3n \in O(n)$ because $|3n| \le M|n|$ for $n \ge
@@ -175,7 +177,7 @@ import References from "@components/article/References.astro";
 
       <section>
         <h4>The Big Omega Notation</h4>
-        <div class="definition" data-definition-name=". The Big Omega">
+        <Definition name="The Big Omega">
           Big Omega provides a lower bound on the growth of a function. We say
           that $f$ is the big Omega of $g$, written
           <E>{tex`
@@ -190,7 +192,7 @@ import References from "@components/article/References.astro";
             \end{equation}
           `}</E>
           for some constant $M > 0$.
-        </div>
+        </Definition>
 
         <p>
           For example, $5n \in \Omega(n)$ since $|5n| \ge M|n|$ with $M = 5$
@@ -209,7 +211,7 @@ import References from "@components/article/References.astro";
 
       <section>
         <h4>The Big Theta Notation</h4>
-        <div class="definition" data-definition-name=". The Big Theta">
+        <Definition name="The Big Theta">
           Big Theta describes a tight bound on the growth of a function. We
           say that $f$ is the big Theta of $g$, written
           <E>{tex`
@@ -223,7 +225,7 @@ import References from "@components/article/References.astro";
               M_1|g(n)| \le |f(n)| \le M_2|g(n)|,\quad \forall n \ge n_0.
             \end{equation}
           `}</E>
-        </div>
+        </Definition>
 
         <p>
           For example, $7n + 4 \in \Theta(n)$ because the linear term
@@ -351,7 +353,7 @@ import References from "@components/article/References.astro";
 
     <section>
       <h3>Preliminaries: The Cost Model</h3>
-      <div class="definition" data-definition-name=" (The RAM model)">
+      <Definition name="The RAM model">
         The <em>random-access machine</em> (RAM) has an unbounded sequence
         of memory cells, each holding one word of $w = \Theta(\log n)$ bits.
         The following are <em>primitive operations</em> and each costs one
@@ -362,9 +364,9 @@ import References from "@components/article/References.astro";
         <M>{tex`T_{\mathcal{A}}(x)`}</M> of an algorithm <M>{tex`\mathcal{A}`}</M>
         on an input $x$ is the number of primitive operations it executes before
         halting.
-      </div>
+      </Definition>
 
-      <div class="definition" data-definition-name=" (Worst-case complexity)">
+      <Definition name="Worst-case complexity">
         Fix a size measure <M>{tex`|\cdot|`}</M> on inputs. The worst-case
         running time of <M>{tex`\mathcal{A}`}</M> is
         <E
@@ -376,7 +378,7 @@ import References from "@components/article/References.astro";
         <M>{tex`n \ge n_0`}</M>: the upper bound must hold for
         <em>every</em> input of size $n$, while the lower bound need only be
         witnessed by <em>one</em> input of each size.
-      </div>
+      </Definition>
 
       <p>
         Two elementary facts are used repeatedly and are worth isolating.
@@ -385,15 +387,15 @@ import References from "@components/article/References.astro";
         survives the floors and ceilings that real code introduces.
       </p>
 
-      <div class="lemma">
-        <strong>Lemma 1 (Handshake lemma for digraphs).</strong> Let $G=(V,E)$
+      <Lemma name="Handshake lemma for digraphs">
+        Let $G=(V,E)$
         be a directed graph, and for a vertex $v$ let <M
           >{tex`\deg^+(v)`}</M
         > and <M>{tex`\deg^-(v)`}</M> denote its out-degree and in-degree. Then
         <E
           >{tex`\begin{equation}\sum_{v \in V} \deg^+(v) \;=\; \sum_{v \in V} \deg^-(v) \;=\; |E|.\end{equation}`}</E
         >
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -410,13 +412,13 @@ import References from "@components/article/References.astro";
         </p>
       </Proof>
 
-      <div class="lemma">
-        <strong>Lemma 2 (Nested floors and ceilings).</strong> For every real
+      <Lemma name="Nested floors and ceilings">
+        For every real
         $x$ and all positive integers $a,b$,
         <E
           >{tex`\begin{equation}\left\lfloor \frac{\lfloor x/a \rfloor}{b} \right\rfloor = \left\lfloor \frac{x}{ab} \right\rfloor, \qquad \left\lceil \frac{\lceil x/a \rceil}{b} \right\rceil = \left\lceil \frac{x}{ab} \right\rceil.\end{equation}`}</E
         >
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -468,8 +470,8 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         that tree (Theorem 1).
       </p>
 
-      <div class="lemma">
-        <strong>Lemma 3 (Cost of merging).</strong> Let <M
+      <Lemma name="Cost of merging">
+        Let <M
           >{tex`n_1 = \operatorname{length}(L)`}</M
         >, <M>{tex`n_2 = \operatorname{length}(R)`}</M> and $m = n_1 + n_2 \ge
         1$. Then a call to <code>Merge</code> performs exactly $m$ writes into
@@ -479,7 +481,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         <E
           >{tex`\begin{equation}a_1 m \;\le\; M(m) \;\le\; a_2 m.\end{equation}`}</E
         >
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -534,8 +536,8 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         "the nodes at depth $k$" is always a partition of the original array.
       </p>
 
-      <div class="lemma">
-        <strong>Lemma 4 (Shape of the recursion tree).</strong> For every
+      <Lemma name="Shape of the recursion tree">
+        For every
         $k \ge 0$, every node at depth $k$ has size either <M
           >{tex`\lfloor n/2^k \rfloor`}</M
         > or <M>{tex`\lceil n/2^k \rceil`}</M>, the sizes of the depth-$k$ nodes
@@ -544,7 +546,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         >. Moreover the depth of the tree is exactly <M
           >{tex`\lceil \log_2 n \rceil`}</M
         >.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -650,12 +652,12 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         <M>{tex`T(n) = 2T(n/2) + cn`}</M>, and it can be solved exactly.
       </p>
 
-      <div class="lemma">
-        <strong>Lemma 5 (Exact solution at powers of two).</strong> If
+      <Lemma name="Exact solution at powers of two">
+        If
         $T(1) = d$ and <M>{tex`T(n) = 2T(n/2) + cn`}</M> for every even $n$,
         then <M>{tex`T(2^m) = c\, m\, 2^m + d\, 2^m`}</M> for all integers
         $m \ge 0$.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -745,13 +747,13 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         >.
       </p>
 
-      <div class="lemma">
-        <strong>Lemma 6 (One iteration).</strong> Suppose iteration $k+1$ is
+      <Lemma name="One iteration">
+        Suppose iteration $k+1$ is
         entered (so <M>{tex`s_k \ge 1`}</M>) and does not return. Then
         <E
           >{tex`\begin{equation}s_{k+1} \in \left\{ \left\lfloor \frac{s_k - 1}{2} \right\rfloor,\; \left\lceil \frac{s_k - 1}{2} \right\rceil \right\}, \qquad\text{hence}\qquad \frac{s_k - 2}{2} \;\le\; s_{k+1} \;\le\; \frac{s_k}{2}.\end{equation}`}</E
         >
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -789,7 +791,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           <em>Upper bound.</em> We claim <M>{tex`s_k \le n/2^k`}</M> for every
           $k$ at which the loop is still running. This is an induction: <M
             >{tex`s_0 = n`}</M
-          >, and if <M>{tex`s_k \le n/2^k`}</M> then by Lemma 6 <M
+          >, and if <M>{tex`s_k \le n/2^k`}</M> then by Lemma 3 <M
             >{tex`s_{k+1} \le s_k/2 \le n/2^{k+1}`}</M
           >. Now iteration $k+1$ is entered only if <M>{tex`s_k \ge 1`}</M>,
           which forces <M>{tex`n/2^k \ge 1`}</M>, i.e. <M
@@ -810,7 +812,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           <em>Lower bound.</em> Take the input in which $x$ is strictly
           smaller than every $A[i]$. Then no comparison can report equality,
           the algorithm never returns early, and every iteration takes the
-          branch <M>{tex`\mathit{hi} \leftarrow \mathit{mid}-1`}</M>, so by Lemma 6 <M
+          branch <M>{tex`\mathit{hi} \leftarrow \mathit{mid}-1`}</M>, so by Lemma 3 <M
             >{tex`s_{k+1} = \lfloor (s_k-1)/2 \rfloor \ge (s_k-2)/2`}</M
           >. We claim <M>{tex`s_k \ge n/2^k - 2`}</M> for every $k$ reached.
           Indeed <M>{tex`s_0 = n \ge n - 2`}</M>, and if the claim holds at
@@ -850,10 +852,10 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         of any particular algorithm.
       </p>
 
-      <div class="lemma">
-        <strong>Lemma 7 (Leaves of a binary tree).</strong> A binary tree of
+      <Lemma name="Leaves of a binary tree">
+        A binary tree of
         height $h$ has at most <M>{tex`2^h`}</M> leaves.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -891,7 +893,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           between consecutive elements including the two ends, and every one
           of them occurs for some input. Two different answers cannot share a
           leaf, since all inputs reaching a leaf receive the same output;
-          hence the tree has at least $n+1$ leaves, and by Lemma 7 its height
+          hence the tree has at least $n+1$ leaves, and by Lemma 4 its height
           $h$ satisfies <M>{tex`2^h \ge n+1`}</M>, i.e. <M
             >{tex`h \ge \lceil \log_2(n+1) \rceil`}</M
           >. A root-to-leaf path of that length is an input on which <M
@@ -948,11 +950,11 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           if count < |V| then report "G has a cycle" else return L
       </Sample>
 
-      <div class="lemma">
-        <strong>Lemma 8 (Each vertex is enqueued at most once).</strong> Over
+      <Lemma name="Each vertex is enqueued at most once">
+        Over
         the whole execution, <code>Enqueue(S, v)</code> is executed at most
         once for each vertex $v$.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -971,12 +973,11 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         </p>
       </Proof>
 
-      <div class="lemma">
-        <strong>Lemma 9 (Each adjacency list is scanned at most once).</strong
-        > The inner loop of the main loop scans <M>{tex`\mathit{Adj}[u]`}</M> at most once
+      <Lemma name="Each adjacency list is scanned at most once">
+        The inner loop of the main loop scans <M>{tex`\mathit{Adj}[u]`}</M> at most once
         for each $u$; consequently the main loop performs at most
         <M>{tex`\sum_{u \in V} \deg^+(u) = E`}</M> decrements in total.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -985,19 +986,18 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           > is executed only in the iteration of the main loop that dequeues
           $u$. Since the queue is a set of enqueued items and each dequeue
           removes one item, the number of dequeues of $u$ is at most the
-          number of enqueues of $u$, which is at most one by Lemma 8. The
+          number of enqueues of $u$, which is at most one by Lemma 5. The
           count of decrements follows from the handshake identity of Lemma 1.
 
         </p>
       </Proof>
 
-      <div class="lemma">
-        <strong>Lemma 10 (Termination with all vertices, on a DAG).</strong>
+      <Lemma name="Termination with all vertices, on a DAG">
         If $G$ is acyclic, then at termination $count = |V|$; every vertex is
         enqueued and dequeued exactly once. If $G$ has a cycle, then <M
           >{tex`\mathit{count} < |V|`}</M
         >, so the final test is a correct acyclicity test.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -1051,7 +1051,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           >: a dequeue, an append, an increment, and one pass over <M
             >{tex`\mathit{Adj}[u]`}</M
           > doing $O(1)$ work per entry. Each vertex is dequeued at most once
-          (Lemma 9), so summing over the dequeued vertices and applying Lemma
+          (Lemma 6), so summing over the dequeued vertices and applying Lemma
           1 again bounds the main loop by
           <E
             >{tex`\begin{equation}\sum_{u \in V} \left( c_1 + c_2 \deg^+(u) \right) \;=\; c_1 V + c_2 E.\end{equation}`}</E
@@ -1152,14 +1152,14 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
                       Decrease-Key(Q, v, d[v])
       </Sample>
 
-      <div class="lemma">
-        <strong>Lemma 11 (Operation counts).</strong> On a graph with $V$
+      <Lemma name="Operation counts">
+        On a graph with $V$
         vertices and $E$ edges, one execution of <code>Dijkstra</code>
         performs exactly $V$ <code>Extract-Min</code> operations, at most $E$
         <code>Decrease-Key</code> operations, one queue construction of $V$
         elements, and $\Theta(V+E)$ additional primitive operations outside
         the queue.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -1191,14 +1191,14 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         here, not independent.
       </p>
 
-      <div class="lemma">
-        <strong>Lemma 12 (Binary heap operations).</strong> A binary
+      <Lemma name="Binary heap operations">
+        A binary
         min-heap holding $h$ elements in a complete binary tree has height
         <M>{tex`\lfloor \log_2 h \rfloor`}</M>, and <code>Insert</code>,
         <code>Extract-Min</code> and <code>Decrease-Key</code> each run in
         <M>{tex`O(\log h)`}</M> time; building a heap of $h$ elements costs
         $\Theta(h)$.
-      </div>
+      </Lemma>
 
       <Proof>
         <p>
@@ -1255,13 +1255,13 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       <Proof>
         <p>
           The displayed identity is
-          Lemma 11 together with the observation that the algorithm's work
+          Lemma 8 together with the observation that the algorithm's work
           splits into queue operations and everything else, and that the costs
           are additive. The three cases are then substitutions.
         </p>
         <p>
           <em>Binary heap.</em> The queue never holds more than $V$ elements,
-          so by Lemma 12 <M
+          so by Lemma 9 <M
             >{tex`C_{\text{ext}}, C_{\text{dec}} \in O(\log V)`}</M
           > and <M>{tex`C_{\text{build}} = \Theta(V)`}</M>. Substituting,
           <E
@@ -1294,7 +1294,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
             >{tex`\gamma = V`}</M
           > and $h \le V$, the queue's total contribution is <M
             >{tex`O(V + E + V \log V)`}</M
-          >, and adding the $\Theta(V+E)$ of Lemma 11 gives <M
+          >, and adding the $\Theta(V+E)$ of Lemma 8 gives <M
             >{tex`O(E + V\log V)`}</M
           >.
         </p>
@@ -1303,7 +1303,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       <p>
         <strong>Why $O$ and not $\Theta$ for the heap variant.</strong> The
         bound <M>{tex`\Theta((V+E)\log V)`}</M> is quoted so often that it is
-        worth saying exactly why it is an abuse of notation. Lemma 11 bounds
+        worth saying exactly why it is an abuse of notation. Lemma 8 bounds
         the number of decrease-keys by $E$, but on many inputs almost none of
         them fire: if the edges are scanned in an order that never improves a
         tentative distance, the cost is <M>{tex`\Theta(V \log V + E)`}</M>,

@@ -274,11 +274,13 @@ LaTeX as children or `code`. Plain `$x^2$` in prose also works.
 <M>{tex`u_{tt}`}</M>   <M>x^2</M>
 ```
 
-### Theorem, Problem, Solution, Proof
+### Theorem, Lemma, Definition, Problem, Solution, Proof
 
 | Component | Renders | Props |
 |---|---|---|
 | `Theorem` | `<div class="theorem">` | `name` (after "Theorem") |
+| `Lemma` | `<div class="lemma">` | `name` (after "Lemma") |
+| `Definition` | `<div class="definition">` | `name` (after "Definition") |
 | `Problem` | `<div class="problem">` | — |
 | `Solution` | `<details class="solution">` | `summary` (`"Solution"`), `open` (`true`) |
 | `Proof` | `<div class="proof">`, italic **Proof.** lead-in | `label` (`"Proof"`) |
