@@ -31,6 +31,7 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
+- **Oct 2026:** Page `<title>`, description and keywords now come from `pages.json` (with an optional `shortTitle` for the tab) instead of being repeated in each page.
 - **Oct 2026:** `npm run new` scaffolds a ready-to-write article or post — no more rebuilding the template's header by hand.
 - **Oct 2026:** Articles and posts now have a "Save as PDF" button
 - **Oct 2026:** References are now typed, BibTeX-style entries in a `_references.ts` beside each article, rendered by `<References />` instead of hand-written citations.

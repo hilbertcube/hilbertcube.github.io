@@ -2,6 +2,7 @@
   "articles": [
     {
       "title": "Debugging and Profiling C and C++ with Valgrind",
+      "shortTitle": "Valgrind",
       "image": "valgrind.webp",
       "link": "/articles/valgrind-debug-and-profile",
       "topics": [
@@ -16,6 +17,7 @@
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 1: Theory and Algorithms",
+      "shortTitle": "Chladni Patterns, Part 1",
       "image": "dark_chladni.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-1",
       "topics": [
@@ -29,6 +31,7 @@
     },
     {
       "title": "Accelerating Feature Extraction and Image Stitching Algorithm Using Nvidia CUDA",
+      "shortTitle": "Accelerate ORB with CUDA",
       "image": "CUDA_process_0_serial_30_imgs.webp",
       "link": "/articles/accelerating-feature-extraction-and-image-stitching-algorithm",
       "topics": [
@@ -46,6 +49,7 @@
     },
     {
       "title": "Maxima and Minima of an n-th Dimensional Function - The Hessian Matrix",
+      "shortTitle": "The Hessian Matrix",
       "image": "plot2.webp",
       "link": "/articles/maximum-and-minimum",
       "topics": [
@@ -58,6 +62,7 @@
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 2: Codes and Results",
+      "shortTitle": "Chladni Patterns, Part 2",
       "image": "dark_polar.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-2",
       "topics": [
@@ -71,6 +76,7 @@
     },
     {
       "title": "My Favorite Problems of All Time",
+      "shortTitle": "Favorite Problems",
       "image": "favorite-problems.webp",
       "link": "/articles/favorite-problem-of-all-time",
       "topics": [
@@ -83,6 +89,7 @@
     },
     {
       "title": "The Quest to Finding Chladni Patterns, Part 3: The Biharmonic Wave Equation",
+      "shortTitle": "Chladni Patterns, Part 3",
       "image": "chladni-patterns.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-3",
       "topics": [
@@ -97,6 +104,7 @@
     },
     {
       "title": "Theoretical Runtime Analysis of an Algorithm",
+      "shortTitle": "The Big O Notation",
       "image": "time-complexity.webp",
       "link": "/articles/time-complexity-of-an-algorithm",
       "topics": [
@@ -111,6 +119,7 @@
   "posts": [
     {
       "title": "Linux development environment setup",
+      "shortTitle": "Linux Setup",
       "link": "/posts/linux-setup/",
       "topics": [
         "Ubuntu",
@@ -124,6 +133,7 @@
     },
     {
       "title": "A list of places to munch",
+      "shortTitle": "Tested Food Places",
       "link": "/posts/tested-food-places/",
       "topics": [
         "Life",
@@ -138,6 +148,7 @@
     },
     {
       "title": "A list of tools that I use",
+      "shortTitle": "Favorite Tools",
       "link": "/posts/favorite-tools/",
       "topics": [
         "VS Code",
@@ -152,6 +163,7 @@
     },
     {
       "title": "Recommended materials",
+      "shortTitle": "Recommended Materials",
       "link": "/posts/resources/",
       "topics": [
         "Books",
@@ -170,6 +182,7 @@
     },
     {
       "title": "Average engineering experience",
+      "shortTitle": "Average Engineering Experience",
       "link": "/posts/avg-engr-exp",
       "topics": [
         "Electrical Engineering"

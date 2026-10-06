@@ -35,9 +35,9 @@ The shell of every page: `<head>`, top bar, sidebar, main region, footer, KaTeX 
 
 | Prop | Type | Default | Meaning |
 |---|---|---|---|
-| `title` | `string` | — | Rendered as `{title} \| hilbertcube`. |
-| `description` | `string` | `""` | `<meta name="description">`. |
-| `keywords` | `string` | site default | `<meta name="keywords">`. |
+| `title` | `string` | entry's `shortTitle ?? title` | Rendered as `{title} \| hilbertcube`; posts get a `Post - ` prefix. Required off `/articles/*` and `/posts/*`. |
+| `description` | `string` | entry's `description` | `<meta name="description">`. |
+| `keywords` | `string` | entry's `topics` | `<meta name="keywords">`; site default off the catalog. |
 | `activeButton` | `string` | `""` | Nav link to underline: `Home-button`, `About-button`, `Contact-button`. |
 | `toc` | `boolean \| TocOptions` | `false` | Sidebar TOC from the page's h2–h4 (`{ maxLevel: 3 }` stops at h3). |
 
@@ -411,12 +411,9 @@ import E from "@components/math/E.astro";
 import { tex } from "@components/math/tex.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import C from "@components/code/C.astro";
-import { getEntryMeta } from "@utils/getEntryMeta";
-
-const meta = await getEntryMeta("articles", Astro.url.pathname);
 ---
 
-<BaseLayout title={meta.title} description={meta.description} toc>
+<BaseLayout toc>
   <header>
     <TopicTags />
     <PageTitle />

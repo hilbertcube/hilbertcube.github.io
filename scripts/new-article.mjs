@@ -22,6 +22,7 @@ const USAGE = `Usage: npm run new -- [options]
   -t, --type <article|post>
   -s, --slug <slug>            lowercase letters, digits and hyphens
       --title <title>          defaults to the slug in Title Case
+      --short-title <title>    browser-tab title, if --title is long
       --topics <a, b, …>       comma-separated
       --description <text>
       --references             also create an empty _references.ts
@@ -41,6 +42,7 @@ try {
       type: { type: "string", short: "t" },
       slug: { type: "string", short: "s" },
       title: { type: "string" },
+      "short-title": { type: "string" },
       topics: { type: "string" },
       description: { type: "string" },
       references: { type: "boolean", default: false },
@@ -71,6 +73,7 @@ while (!opts.slug) {
 }
 if (rl) {
   opts.title ??= await ask("Title (Enter to derive from slug): ");
+  opts["short-title"] ??= await ask("Tab title (Enter to use the title): ");
   opts.topics ??= await ask("Topics (comma-separated, optional): ");
   opts.description ??= await ask("Description (optional): ");
   rl.close();
@@ -116,7 +119,6 @@ const imports = [
   `import PubDate from "@components/article/PubDate.astro";`,
   isArticle && `import FrontImage from "@components/article/FrontImage.astro";`,
   opts.references && `import References from "@components/article/References.astro";`,
-  `import { getEntryMeta } from "@utils/getEntryMeta";`,
 ].filter(Boolean);
 
 const page = `---
@@ -126,11 +128,9 @@ const page = `---
  * ${isArticle ? "Article" : "Post"}: ${title}
  */
 ${imports.join("\n")}
-
-const meta = await getEntryMeta("${collection}", Astro.url.pathname);
 ---
 
-<BaseLayout title={${isArticle ? "meta.title" : "`Post - ${meta.title}`"}} description={meta.description} toc>
+<BaseLayout toc>
   <header>
     <TopicTags />
     <PageTitle />
@@ -161,6 +161,7 @@ const pubDate = [
 
 const entry = {
   title,
+  ...(opts["short-title"] && { shortTitle: opts["short-title"] }),
   ...(isArticle && { image: `${slug}.webp` }),
   link,
   topics,
