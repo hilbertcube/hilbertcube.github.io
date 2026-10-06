@@ -127,6 +127,13 @@
     "description": "Proof environment — body must open with a <p>"
   },
 
+  "Cross-reference": {
+    "scope": "astro",
+    "prefix": "Ref",
+    "body": ["<Ref to=\"$1\" />"],
+    "description": "\"Lemma 3\" / \"Figure 2\" link to the block with that id — numbered at build time"
+  },
+
   "Section": {
     "scope": "astro",
     "prefix": "section",

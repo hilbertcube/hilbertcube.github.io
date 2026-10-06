@@ -280,14 +280,34 @@ LaTeX as children or `code`. Plain `$x^2$` in prose also works.
 
 | Component | Renders | Props |
 |---|---|---|
-| `Theorem` | `<div class="theorem">` | `name` (after "Theorem") |
-| `Lemma` | `<div class="lemma">` | `name` (after "Lemma") |
-| `Definition` | `<div class="definition">` | `name` (after "Definition") |
-| `Problem` | `<div class="problem">` | — |
+| `Theorem` | `<div class="theorem">` | `name` (after "Theorem"), `id` |
+| `Lemma` | `<div class="lemma">` | `name` (after "Lemma"), `id` |
+| `Definition` | `<div class="definition">` | `name` (after "Definition"), `id` |
+| `Problem` | `<div class="problem">` | `id` |
 | `Solution` | `<details class="solution">` | `summary` (`"Solution"`), `open` (`true`) |
 | `Proof` | `<div class="proof">`, italic **Proof.** lead-in | `label` (`"Proof"`) |
 
 A `Proof` body must open with a `<p>` — the lead-in attaches to it.
+
+### Numbering and Ref
+
+Theorems, lemmas, definitions and problems — and captioned figures and tables — are
+numbered per kind, in page order, **at build time** (`src/utils/numbering.ts`, run by
+`BaseLayout`): each gets `data-number`, which its CSS label reads. Never type a number in
+prose; give the block an `id` and cite it:
+
+```astro
+<Lemma id="handshake" name="Handshake lemma">…</Lemma>
+…by <Ref to="handshake" />…            <!-- → <a href="#handshake">Lemma 1</a> -->
+<Figure id="circular-plates" src="circles.webp">Patterns on circular plates.</Figure>
+…(see <Ref to="circular-plates" />)    <!-- → Figure 4 -->
+```
+
+A `<Table id="…">` is cited the same way. Insert or move a block and every number and
+reference follows. An unknown or duplicate id fails the build; a figure or table without
+a caption isn't numbered, so it can't be cited. A `<section>` with no heading and no
+`data-toc` takes its TOC label from its first numbered block ("Problem 2"). Equations are
+still numbered in the browser by `katex-render.js` and can't be cited yet.
 
 ---
 
@@ -446,3 +466,4 @@ import C from "@components/code/C.astro";
 | Backslashes vanish from an equation | LaTeX in a quoted attribute instead of ``{tex`…`}`` |
 | Build fails: "Entry metadata not found" | Page path matches no `link` in `pages.json` |
 | Build fails: `<References>: no _references.ts next to the page` | Missing `_references.ts` |
+| Build fails: `numbering (…): <Ref to="x"> matches no numbered block` | No block has `id="x"`, or it's a figure/table without a caption |

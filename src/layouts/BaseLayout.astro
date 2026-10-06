@@ -13,6 +13,7 @@ import ArticleCards from "@components/listings/ArticleCards.astro";
 import TableOfContents from "@components/article/TableOfContents.astro";
 import { assignSectionIds, extractToc, type TocOptions } from "@utils/toc";
 import { codeThemeCss } from "@utils/codeThemes";
+import { numberBlocks } from "@utils/numbering";
 import { resolveEntryMeta, type ResolvedEntry } from "@utils/getEntryMeta";
 
 
@@ -64,9 +65,14 @@ const tex = String.raw;
 
 // The body is rendered here so the TOC can be built from its HTML, then
 // injected as markup (so no `client:*` islands in pages). Section ids are
-// generated here too; search deep links need them even without a TOC.
+// generated here too; search deep links need them even without a TOC. Numbered
+// blocks and <Ref> links are resolved first, so a heading-less section can take
+// its label (and id) from its first block.
 const body = assignSectionIds(
-  Astro.slots.has("default") ? await Astro.slots.render("default") : "",
+  numberBlocks(
+    Astro.slots.has("default") ? await Astro.slots.render("default") : "",
+    Astro.url.pathname,
+  ),
 );
 const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
 ---

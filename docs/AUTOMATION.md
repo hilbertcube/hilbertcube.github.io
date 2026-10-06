@@ -45,6 +45,7 @@ build doesn't catch, printing `file:line  message  [rule]` and exiting non-zero:
 | `section-id` | `id` on a `<section>` |
 | `content-grid` | a `content-grid` wrapper |
 | `references` | a hand-written `<ol class="reference">` |
+| `hand-ref` | a typed "Lemma 3", "Fig. 2", "Table 1"… — cite with `<Ref>` |
 | `is-raw` | `<CodeBlock>`/`<CodeBox>`/`<ShellScript>`/`<Sample>` without `is:raw` |
 | `alias-import` | a relative import in the frontmatter |
 

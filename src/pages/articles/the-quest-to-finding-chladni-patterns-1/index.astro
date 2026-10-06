@@ -21,6 +21,7 @@ import Sample from "@components/code/Sample.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 import References from "@components/article/References.astro";
+import Ref from "@components/math/Ref.astro";
 ---
 
 <BaseLayout toc>
@@ -171,7 +172,7 @@ import References from "@components/article/References.astro";
               Part of the formula states that the vibrating frequency is
               proportional to four times the number of rings on the plate
               squared, that is, $f \sim 4n^2$, where $n$ is the number of
-              rings (see in Fig. 4). The full formula that he derived is
+              rings (see in <Ref to="circular-plates" />). The full formula that he derived is
               <E>{tex`
                 \begin{equation}
                   f \sim (m+2n)^2,
@@ -200,7 +201,7 @@ import References from "@components/article/References.astro";
           </Figure>
         </div>
       </TwoColumns>
-      <Figure
+      <Figure id="circular-plates"
         src="Similar_Circle.webp"
         alt="circular plates"
         width="80%"

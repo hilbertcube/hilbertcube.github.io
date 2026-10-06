@@ -7,6 +7,8 @@
 import { pageAsset } from "@utils/pageAsset";
 
 interface Props {
+  /** Lets <Ref to="…" /> cite the figure (only a captioned figure is numbered). */
+  id?: string;
   /** Image source; a relative path ("plot.webp") is in the page's own public/ folder. */
   src: string;
   /** Alt text; pass "" for purely decorative figures. */
@@ -27,6 +29,7 @@ interface Props {
 }
 
 const {
+  id,
   src,
   alt = "",
   width = "100%",
@@ -45,7 +48,7 @@ const style = [
   .join("; ");
 ---
 
-<figure class:list={["article-figure", { flush }]} style={style}>
+<figure id={id} class:list={["article-figure", { flush }]} style={style}>
   <img class="article-img" src={pageAsset(src, Astro.url.pathname)} alt={alt} loading={loading} />
   {
     Astro.slots.has("default") && (

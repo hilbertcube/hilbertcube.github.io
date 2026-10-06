@@ -69,6 +69,12 @@ overrides) with no list to maintain.
 **The cost: a hydrated island (`client:*`) inside a page body would not survive the string
 round-trip.** Every page here is static HTML — keep it that way.
 
+The same string pass numbers theorems, lemmas, definitions, problems and captioned
+figures/tables (`numberBlocks()` in `src/utils/numbering.ts` writes `data-number`, which
+the CSS labels read) and resolves `<Ref to="id" />` into "Lemma 3" links — so prose never
+types a number, and a dangling `Ref` fails the build. Equations are still numbered
+client-side by `katex-render.js`.
+
 `BaseLayout` also appends a shuffled "More Articles" strip on any `/articles/*` path, and
 marks `<main data-pagefind-body>`, which is what makes new pages searchable automatically.
 
@@ -151,6 +157,7 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   at runtime, so don't fight them with `!important`.
 
 - `scripts/lint-pages.mjs` enforces the markup rules above (raw `<table>`/`<pre>`/`<code>`/`<img>`,
+  hand-typed "Lemma 3" / "Fig. 2" instead of `<Ref>`,
   `$$`/`\begin` outside `<E>`, `<section id>`, `content-grid`, listings without `is:raw`,
   relative imports). A page opts out of one rule with a frontmatter line
   `// lint-allow: <rule> — reason`; use it only for a genuine exception.

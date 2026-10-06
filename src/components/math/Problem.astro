@@ -1,7 +1,15 @@
 ---
+/**
+ * Problem.astro — a numbered problem (the number is assigned at build time by
+ * @utils/numbering). Give it an `id` to cite it with <Ref to="…" />.
+ */
+interface Props {
+  id?: string;
+}
 
+const { id } = Astro.props;
 ---
 
-<div class="problem">
+<div class="problem" id={id} data-num="problem">
   <slot />
 </div>

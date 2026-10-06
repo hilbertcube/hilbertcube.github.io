@@ -31,8 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const target = document.getElementById(this.hash.substring(1));
         if (!target) return;
 
+        // Page position, not offsetTop: that is relative to the nearest positioned
+        // ancestor (e.g. a Lemma inside a <Solution>), which sends the scroll to the top.
         const navbarOffset = 120;
-        const targetOffset = target.offsetTop - navbarOffset;
+        const targetOffset = target.getBoundingClientRect().top + window.scrollY - navbarOffset;
 
         window.scrollTo({
           top: targetOffset,

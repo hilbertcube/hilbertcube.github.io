@@ -1,12 +1,17 @@
 ---
+/**
+ * Lemma.astro — a numbered lemma (the number is assigned at build time by
+ * @utils/numbering). Give it an `id` to cite it with <Ref to="…" />.
+ */
 interface Props {
   name?: string;
+  id?: string;
 }
 
-const { name } = Astro.props;
+const { name, id } = Astro.props;
 const dataName = name ? ` (${name})` : "";
 ---
 
-<div class="lemma" data-lemma-name={dataName}>
+<div class="lemma" id={id} data-num="lemma" data-lemma-name={dataName}>
   <slot />
 </div>

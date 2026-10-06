@@ -55,6 +55,11 @@ const RULES = [
     msg: "hand-written reference list — use <References /> with _references.ts",
   },
   {
+    id: "hand-ref",
+    re: /\b(?:Theorem|Lemma|Definition|Problem|Figure|Fig\.|Table)s?\s+\(?\d+\b/g,
+    msg: 'hand-typed number — cite the block with <Ref to="its-id" /> so it follows renumbering',
+  },
+  {
     id: "is-raw",
     re: new RegExp(`<(?:${CODE_COMPONENTS})\\b(?![^>]*\\bis:raw\\b)[^>]*>`, "g"),
     msg: "code listing without is:raw — indentation, < and { get mangled",
