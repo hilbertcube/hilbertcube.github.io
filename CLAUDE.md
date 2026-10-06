@@ -28,8 +28,8 @@ with its metadata in `src/data/pages.json`.
 There is no test suite (`npm test` is a stub). Verify with `npm run check` and
 `npm run build`, which fails on lint, schema and alias errors.
 
-Deployment is automatic: `.github/workflows/static-pages.yml` builds and publishes
-`dist/` on every push to `main`. It checks out with `fetch-depth: 0` because
+Deployment is automatic: `.github/workflows/static-pages.yml` (Node 24) runs `astro check`, builds
+and publishes `dist/` on every push to `main`; if either fails, nothing is deployed. It checks out with `fetch-depth: 0` because
 `src/utils/repoStats.ts` reads commit history from git **at build time** — shallow
 clones would produce wrong sidebar stats.
 
