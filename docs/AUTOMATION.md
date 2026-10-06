@@ -16,7 +16,7 @@ The helper scripts in `scripts/`; `npm` commands are in [`DEVELOPMENT.md`](DEVEL
 
 ```bash
 npm run new                                                # prompts for everything
-npm run new -- -t article -s my-slug --title "My Title" --topics "C++, Math"
+npm run new -- -t article -s my-slug --title "My Long Title" --short-title "Tab Title" --topics "C++, Math"
 npm run new -- --type post --slug my-slug --description "…" --references
 ```
 

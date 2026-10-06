@@ -46,9 +46,11 @@ loader id from it.
 
 - Read the catalog through `getCollection("articles" | "posts" | "others")` — **never**
   `fs.readFileSync`.
-- A page looks up **its own** entry via `getEntryMeta(collection, Astro.url.pathname)`,
-  which matches on `link` and **throws** if there is no match. `TopicTags`, `PageTitle`
-  and `PubDate` do this internally, so pages usually pass no props at all.
+- A page's own entry is found from its URL via `getEntryMeta` / `resolveEntryMeta`
+  (`src/utils/getEntryMeta.ts`), which match on `link` and **throw** if there is no match.
+  `BaseLayout` (`<title>` from `shortTitle ?? title`, description, keywords = `topics`),
+  `TopicTags`, `PageTitle` and `PubDate` do this internally, so an article or post passes
+  no metadata props at all — `<BaseLayout toc>`.
 - A missing/misspelled field fails the build, so a page can't silently vanish from the
   homepage, RSS and search.
 - Collection order is array order (newest first; `npm run new` inserts at the top).

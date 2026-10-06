@@ -13,13 +13,19 @@ import ArticleCards from "@components/listings/ArticleCards.astro";
 import TableOfContents from "@components/article/TableOfContents.astro";
 import { assignSectionIds, extractToc, type TocOptions } from "@utils/toc";
 import { codeThemeCss } from "@utils/codeThemes";
+import { resolveEntryMeta, type ResolvedEntry } from "@utils/getEntryMeta";
 
 
 // Vite bundles all @import statements into one minified CSS file
 import "@assets/css/main.css";
 
+/**
+ * On /articles/* and /posts/* the title, description and keywords come from the
+ * page's pages.json entry (`shortTitle ?? title`, posts prefixed "Post - ";
+ * keywords = topics). These props override that; other pages must pass `title`.
+ */
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
   keywords?: string;
   /** ID of the nav button to highlight, e.g. "Home-button" */
@@ -34,15 +40,26 @@ interface Props {
   toc?: boolean | TocOptions;
 }
 
-const {
-  title,
-  description = "",
-  keywords = "math, physics, programming, coding, computer science, computer simulation",
-  activeButton = "",
-  toc = false,
-} = Astro.props;
+const { activeButton = "", toc = false } = Astro.props;
 
 const isArticle = Astro.url.pathname.startsWith("/articles/");
+const isPost = Astro.url.pathname.startsWith("/posts/");
+
+const entry: ResolvedEntry | null =
+  isArticle || isPost ? await resolveEntryMeta(Astro.url.pathname) : null;
+const entryTitle = entry && (entry.data.shortTitle ?? entry.data.title);
+
+const title =
+  Astro.props.title ??
+  (entryTitle && (entry!.kind === "posts" ? `Post - ${entryTitle}` : entryTitle));
+if (!title) {
+  throw new Error(`<BaseLayout>: ${Astro.url.pathname} has no catalog entry; pass \`title\``);
+}
+const description = Astro.props.description ?? entry?.data.description ?? "";
+const keywords =
+  Astro.props.keywords ??
+  entry?.data.topics.join(", ") ??
+  "math, physics, programming, coding, computer science, computer simulation";
 const tex = String.raw;
 
 // The body is rendered here so the TOC can be built from its HTML, then

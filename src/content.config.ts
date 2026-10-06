@@ -12,6 +12,8 @@ const JSON_PATH = "src/data/pages.json";
 // Shared fields every catalog entry carries.
 const common = {
   title: z.string(),
+  /** Browser-tab title when `title` is too long for one; BaseLayout falls back to `title`. */
+  shortTitle: z.string().optional(),
   link: z.string(),
   topics: z.array(z.string()),
   description: z.string(),

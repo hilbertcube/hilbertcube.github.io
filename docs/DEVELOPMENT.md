@@ -77,7 +77,7 @@ Pass `toc` to `BaseLayout` and the sidebar TOC is built from the page's
 rendered markup — no list to maintain.
 
 ```astro
-<BaseLayout title="…" toc>            <!-- h2–h4; toc={{ maxLevel: 3 }} stops at h3 -->
+<BaseLayout toc>                      <!-- h2–h4; toc={{ maxLevel: 3 }} stops at h3 -->
   <section>
     <h2>Data Analysis</h2>            <!-- entry "Data Analysis" → #data-analysis -->
     <section>
@@ -107,21 +107,17 @@ The code is `src/utils/toc.ts`.
 Zod-validated collections.
 
 - Every entry needs `title`, `link`, `topics[]`, `description` and `pubDate`
-  (`YYYY-MM-DD`); articles also need `image`. A missing field **fails the
+  (`YYYY-MM-DD`); articles also need `image`. Optional `shortTitle` is the
+  browser-tab title when `title` is long. A missing field **fails the
   build**, deliberately, so a page can't silently vanish from the lists.
 - `link` is the primary key and must be unique.
 - Order is array order, newest first; nothing re-sorts.
 - Read it through `getCollection("articles" | "posts" | "others")`, never
-  `fs.readFileSync`. A page reads **its own** entry with `getEntryMeta`, which
-  throws if none matches its URL:
-
-```astro
----
-import { getEntryMeta } from "@utils/getEntryMeta";
-const meta = await getEntryMeta("articles", Astro.url.pathname);
----
-<BaseLayout title={meta.title} description={meta.description} toc>
-```
+  `fs.readFileSync`. A page's **own** entry is found from its URL
+  (`getEntryMeta` in `src/utils/getEntryMeta.ts`, which throws if none matches).
+  `BaseLayout`, `TopicTags`, `PageTitle` and `PubDate` do this themselves, so an
+  article or post passes no metadata — its `<title>`, description and keywords
+  come from the entry ([`COMPONENTS.md` §1](COMPONENTS.md#1-baselayout)).
 
 ---
 
