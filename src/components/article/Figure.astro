@@ -4,8 +4,10 @@
  * through a custom property, so the breakpoints below (80% at 1080px, 100% at
  * 580px) win. Children become the caption, numbered by base/_typography.css.
  */
+import { pageAsset } from "@utils/pageAsset";
+
 interface Props {
-  /** Image source. */
+  /** Image source; a relative path ("plot.webp") is in the page's own public/ folder. */
   src: string;
   /** Alt text; pass "" for purely decorative figures. */
   alt?: string;
@@ -44,7 +46,7 @@ const style = [
 ---
 
 <figure class:list={["article-figure", { flush }]} style={style}>
-  <img class="article-img" src={src} alt={alt} loading={loading} />
+  <img class="article-img" src={pageAsset(src, Astro.url.pathname)} alt={alt} loading={loading} />
   {
     Astro.slots.has("default") && (
       <figcaption class="article-caption">

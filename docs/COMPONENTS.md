@@ -62,7 +62,7 @@ so a `client:*` island in a page body would not survive. On `/articles/*` it app
   <TopicTags />
   <PageTitle />
   <PubDate />
-  <FrontImage src="/articles/<slug>/banner.webp" />
+  <FrontImage src="banner.webp" />
 </header>
 ```
 
@@ -83,7 +83,7 @@ The banner under the title. Children become the caption; it opens in the
 
 | Prop | Default | Notes |
 |---|---|---|
-| `src` | — | |
+| `src` | — | Relative to the page's `public/` folder (below). |
 | `alt` | `"banner"` | |
 | `width` | `"100%"` | Desktop only; 100% under 580px. |
 | `fetchpriority` | `"high"` | Usually the LCP image. |
@@ -94,7 +94,7 @@ The banner under the title. Children become the caption; it opens in the
 
 | Prop | Default | Notes |
 |---|---|---|
-| `src` | — | Files in `public/articles/<slug>/`. |
+| `src` | — | A relative path is in the page's own `public/` folder: on `/articles/<slug>`, `"plot.webp"` → `/articles/<slug>/plot.webp` (subfolders work). Absolute paths and URLs pass through. |
 | `alt` | `""` | |
 | `width` | `"100%"` | Desktop only — 80% under 1080px, 100% under 580px. |
 | `maxWidth` | — | Hard cap, e.g. `"520px"`. |
@@ -103,7 +103,7 @@ The banner under the title. Children become the caption; it opens in the
 | `loading` | — | `"lazy"` well below the fold. |
 
 ```astro
-<Figure src="/articles/<slug>/Bessel1st.webp" width="65%">
+<Figure src="Bessel1st.webp" width="65%">
   First few Bessel functions of the 1st kind.
 </Figure>
 ```
@@ -131,9 +131,11 @@ Pull quote. `content` and `author`, without quotation marks or dash — CSS adds
 
 ### ContinueButton
 
-Previous/next links at the foot of a multi-part article: `prevHref` / `nextHref`,
-`prevLabel` / `nextLabel` (default `"Previous"` / `"Next"`). A missing href hides
-its button but keeps the space.
+Previous/next links at the foot of a multi-part article. `<ContinueButton />` links
+the entries in `pages.json` that share this page's `series`, in `pubDate` order (the
+build fails if it has none). `prevHref` / `nextHref` override that;
+`prevLabel` / `nextLabel` default to `"Previous"` / `"Next"`. A missing neighbour
+hides its button but keeps the space.
 
 ### References
 
@@ -418,7 +420,7 @@ import C from "@components/code/C.astro";
     <TopicTags />
     <PageTitle />
     <PubDate />
-    <FrontImage src="/articles/<slug>/banner.webp" />
+    <FrontImage src="banner.webp" />
   </header>
 
   <Quote content="…" author="…" />
@@ -427,7 +429,7 @@ import C from "@components/code/C.astro";
     <h2>Introduction</h2>
     <p>Inline math like $x^2$ is fine in prose, and <C>--flag</C> is inline code.</p>
     <E>{tex`\begin{equation} u_{tt} = c^2\nabla^2 u \end{equation}`}</E>
-    <Figure src="/articles/<slug>/plot.webp" width="70%">A caption.</Figure>
+    <Figure src="plot.webp" width="70%">A caption.</Figure>
     <CodeBlock language="python" is:raw>
       print("hi")
     </CodeBlock>

@@ -1,4 +1,12 @@
 ---
+/**
+ * ContinueButton.astro — previous/next links between the parts of a series.
+ * With no hrefs, the neighbours come from the entries in pages.json that share
+ * this page's `series`, in pubDate order; the build fails if it has none.
+ */
+import { getCollection } from "astro:content";
+import { resolveEntryMeta } from "@utils/getEntryMeta";
+
 interface Props {
   prevHref?: string;
   prevLabel?: string;
@@ -6,12 +14,24 @@ interface Props {
   nextLabel?: string;
 }
 
-const {
-  prevHref,
-  prevLabel = "Previous",
-  nextHref,
-  nextLabel = "Next",
-} = Astro.props;
+const { prevLabel = "Previous", nextLabel = "Next" } = Astro.props;
+let { prevHref, nextHref } = Astro.props;
+
+if (prevHref === undefined && nextHref === undefined) {
+  const { kind, data } = await resolveEntryMeta(Astro.url.pathname);
+  if (!data.series) {
+    throw new Error(
+      `<ContinueButton>: ${data.link} has no \`series\` in pages.json; add one or pass prevHref/nextHref`,
+    );
+  }
+  const parts = (await getCollection(kind))
+    .map((e) => e.data)
+    .filter((e) => e.series === data.series)
+    .sort((a, b) => a.pubDate.localeCompare(b.pubDate));
+  const i = parts.findIndex((e) => e.link === data.link);
+  prevHref = parts[i - 1]?.link;
+  nextHref = parts[i + 1]?.link;
+}
 
 const hasPrev = !!prevHref;
 const hasNext = !!nextHref;

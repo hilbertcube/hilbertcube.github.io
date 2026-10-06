@@ -108,7 +108,8 @@ Zod-validated collections.
 
 - Every entry needs `title`, `link`, `topics[]`, `description` and `pubDate`
   (`YYYY-MM-DD`); articles also need `image`. Optional `shortTitle` is the
-  browser-tab title when `title` is long. A missing field **fails the
+  browser-tab title when `title` is long; optional `series` groups the parts
+  of a multi-part article for `<ContinueButton />`. A missing field **fails the
   build**, deliberately, so a page can't silently vanish from the lists.
 - `link` is the primary key and must be unique.
 - Order is array order, newest first; nothing re-sorts.
@@ -157,7 +158,7 @@ Zod-validated collections.
 ## Checklist for a new article
 
 - [ ] `npm run new -- --type article --slug … --title …`
-- [ ] Write; images in `public/articles/<slug>/` via `<Figure>`
+- [ ] Write; images in `public/articles/<slug>/` via `<Figure src="name.webp">`
 - [ ] Every section has a heading (or `data-toc`); display math in `<E>`
 - [ ] `npm run check`, then `npm run build && npm run preview`
 - [ ] `./scripts/commit.sh "Add: <title>"`

@@ -3,7 +3,10 @@
  * FrontImage.astro — the banner under an article's title. `width` (desktop
  * only) goes through a custom property; children become the caption.
  */
+import { pageAsset } from "@utils/pageAsset";
+
 interface Props {
+  /** Image source; a relative path ("banner.webp") is in the page's own public/ folder. */
   src: string;
   alt?: string;
   width?: string;
@@ -19,7 +22,7 @@ const {
 ---
 
 <figure class="front-img-figure" style={`--front-img-width: ${width};`}>
-  <img class="front-img" src={src} alt={alt} fetchpriority={fetchpriority} />
+  <img class="front-img" src={pageAsset(src, Astro.url.pathname)} alt={alt} fetchpriority={fetchpriority} />
   {
     Astro.slots.has("default") && (
       <figcaption>

@@ -20,6 +20,7 @@
       "shortTitle": "Chladni Patterns, Part 1",
       "image": "dark_chladni.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-1",
+      "series": "chladni-patterns",
       "topics": [
         "Python",
         "Eigenvalue Problems",
@@ -65,6 +66,7 @@
       "shortTitle": "Chladni Patterns, Part 2",
       "image": "dark_polar.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-2",
+      "series": "chladni-patterns",
       "topics": [
         "Python",
         "Eigenvalue Problems",
@@ -92,6 +94,7 @@
       "shortTitle": "Chladni Patterns, Part 3",
       "image": "chladni-patterns.webp",
       "link": "/articles/the-quest-to-finding-chladni-patterns-3",
+      "series": "chladni-patterns",
       "topics": [
         "Python",
         "Eigenvalue Problems",

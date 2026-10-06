@@ -123,8 +123,9 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   `BaseLayout` generates one at build time from each section's heading (or `data-toc` label)
   via `assignSectionIds()` in `src/utils/toc.ts` — "Data Analysis" → `#data-analysis`. The TOC
   and search deep links anchor to those, so rewording a heading changes its URL fragment.
-- Body images go through `<Figure>` (files in `public/articles/<slug>/`), banners through
-  `<FrontImage>`. Don't hand-roll `<img>` sizing.
+- Body images go through `<Figure>`, banners through `<FrontImage>`. Don't hand-roll `<img>`
+  sizing. Their files live in the page's own folder under `public/` (`public/articles/<slug>/`)
+  and `src` is written relative to it — `src="plot.webp"` (`src/utils/pageAsset.ts`).
 - References go through `<References />`, which renders the `_references.ts` sitting next to
   the page's `index.astro` (entries typed per `type` in `src/utils/references.ts`) — never a
   hand-written `<ol class="reference">`. The `_` prefix keeps Astro from routing the file.
