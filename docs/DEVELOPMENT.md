@@ -22,8 +22,9 @@ the workflow; the other docs:
 | `npm run preview` | Serves `dist/` | After `build` |
 | `npm run check` | `lint-pages.mjs` → `astro check` | Before committing — there is no test suite |
 
-Pushing to `main` deploys: `.github/workflows/static-pages.yml` builds and
-publishes `dist/` (gitignored).
+Pushing to `main` deploys: `.github/workflows/static-pages.yml` (Node 24) runs
+`astro check`, then builds and publishes `dist/` (gitignored). A failure in either
+step skips the deploy and the live site keeps the last good build.
 
 ---
 
