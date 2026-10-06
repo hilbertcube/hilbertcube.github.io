@@ -16,6 +16,7 @@ import E from "@components/math/E.astro";
 import Lemma from "@components/math/Lemma.astro";
 import { tex } from "@components/math/tex.astro";
 import Quote from "@components/article/Quote.astro";
+import Ref from "@components/math/Ref.astro";
 ---
 
 <BaseLayout toc>
@@ -77,10 +78,10 @@ import Quote from "@components/article/Quote.astro";
       for each $r\in\Z^+$. We will now show that $p_&#123;r+1&#125;-p_r$ is indeed
       strictly less than $p_r-1$. To do this, we need to recall a useful lemma
       that we will not prove formally:
-      <Lemma>
+      <Lemma id="primes-3k-plus-2">
         There are infinitely primes of the form $3k+2$.
       </Lemma>
-      Lemma (1) simply states that for infinitely many primes $p_r$, it holds
+      <Ref to="primes-3k-plus-2" /> simply states that for infinitely many primes $p_r$, it holds
       that $p_r\equiv 2\;(\modular 3)$. Now, note that if $p_&#123;r+1&#125;-p_r=p_r-1$,
       then $p_&#123;r+1&#125;-2\equiv 1\;(\modular 3)$, which means that $p_&#123;r+1&#125;\equiv
       0\;(\modular 3)$, and is indeed true for $3$, but not true for infinitely
@@ -194,7 +195,7 @@ import Quote from "@components/article/Quote.astro";
           2^{u(x)} + u(x) \geq 2^{v(x)} + v(x)
         \end{equation}
       `}</E> To proceed, let's introduce a useful property of monotonic functions:
-      <Lemma>
+      <Lemma id="monotone-composition">
         Let $f: D \to \mathbb&#123;R&#125;$ be a function
         defined on a subset $D \subseteq \mathbb&#123;R&#125;$. Let $u(x)$ and
         $v(x)$ be functions such that for all $x$, $u(x), v(x) \in D$ and $u(x)
@@ -231,7 +232,7 @@ import Quote from "@components/article/Quote.astro";
           2^{\log_2(4yx^6)} + \log_2(4yx^6) \geq 2^{[\log_2(2x)]^2} + [\log_2(2x)]^2,
         \end{equation}
       `}</E>
-      Let $f(x) = 2^x + x$, a strictly increasing function. Then, by Lemma 3:
+      Let $f(x) = 2^x + x$, a strictly increasing function. Then, by <Ref to="monotone-composition" />:
       <E>{tex`
         \begin{equation}
           \log_2(4yx^6) \geq [\log_2(2x)]^2

@@ -23,7 +23,6 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
-  counter-reset: fig table_ theorem lemma problem def;
 }
 
 /* Custom scrollbar for body */

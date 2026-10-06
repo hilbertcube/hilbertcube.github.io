@@ -129,6 +129,9 @@ Zod-validated collections.
   `$$…$$` or `\begin{…}` puts raw LaTeX into search results
   ([`SEARCH.md` §3](SEARCH.md#3-excluding-display-math)). Components and
   macros: [`COMPONENTS.md` §4](COMPONENTS.md#4-math--equations--environments).
+- **Cross-references:** never type "Lemma 3" or "Fig. 2" — give the block an `id`
+  and write `<Ref to="…" />`; numbers are assigned at build time
+  ([`COMPONENTS.md` §4](COMPONENTS.md#numbering-and-ref)).
 - **Code:** use the `code/` components with `is:raw`, never raw `<pre>`
   ([`COMPONENTS.md` §3](COMPONENTS.md#3-code--code-blocks)).
 - **Images and tables:** `<Figure>` and `<Table>`, never a bare `<img>` or `<table>`.

@@ -22,6 +22,7 @@ import C from "@components/code/C.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 import References from "@components/article/References.astro";
+import Ref from "@components/math/Ref.astro";
 ---
 
 <BaseLayout toc>
@@ -383,7 +384,7 @@ import References from "@components/article/References.astro";
         survives the floors and ceilings that real code introduces.
       </p>
 
-      <Lemma name="Handshake lemma for digraphs">
+      <Lemma id="handshake" name="Handshake lemma for digraphs">
         Let $G=(V,E)$
         be a directed graph, and for a vertex $v$ let <M
           >{tex`\deg^+(v)`}</M
@@ -743,7 +744,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         >.
       </p>
 
-      <Lemma name="One iteration">
+      <Lemma id="bsearch-iteration" name="One iteration">
         Suppose iteration $k+1$ is
         entered (so <M>{tex`s_k \ge 1`}</M>) and does not return. Then
         <E
@@ -787,7 +788,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           <em>Upper bound.</em> We claim <M>{tex`s_k \le n/2^k`}</M> for every
           $k$ at which the loop is still running. This is an induction: <M
             >{tex`s_0 = n`}</M
-          >, and if <M>{tex`s_k \le n/2^k`}</M> then by Lemma 3 <M
+          >, and if <M>{tex`s_k \le n/2^k`}</M> then by <Ref to="bsearch-iteration" /> <M
             >{tex`s_{k+1} \le s_k/2 \le n/2^{k+1}`}</M
           >. Now iteration $k+1$ is entered only if <M>{tex`s_k \ge 1`}</M>,
           which forces <M>{tex`n/2^k \ge 1`}</M>, i.e. <M
@@ -808,7 +809,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           <em>Lower bound.</em> Take the input in which $x$ is strictly
           smaller than every $A[i]$. Then no comparison can report equality,
           the algorithm never returns early, and every iteration takes the
-          branch <M>{tex`\mathit{hi} \leftarrow \mathit{mid}-1`}</M>, so by Lemma 3 <M
+          branch <M>{tex`\mathit{hi} \leftarrow \mathit{mid}-1`}</M>, so by <Ref to="bsearch-iteration" /> <M
             >{tex`s_{k+1} = \lfloor (s_k-1)/2 \rfloor \ge (s_k-2)/2`}</M
           >. We claim <M>{tex`s_k \ge n/2^k - 2`}</M> for every $k$ reached.
           Indeed <M>{tex`s_0 = n \ge n - 2`}</M>, and if the claim holds at
@@ -848,7 +849,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         of any particular algorithm.
       </p>
 
-      <Lemma name="Leaves of a binary tree">
+      <Lemma id="tree-leaves" name="Leaves of a binary tree">
         A binary tree of
         height $h$ has at most <M>{tex`2^h`}</M> leaves.
       </Lemma>
@@ -889,7 +890,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           between consecutive elements including the two ends, and every one
           of them occurs for some input. Two different answers cannot share a
           leaf, since all inputs reaching a leaf receive the same output;
-          hence the tree has at least $n+1$ leaves, and by Lemma 4 its height
+          hence the tree has at least $n+1$ leaves, and by <Ref to="tree-leaves" /> its height
           $h$ satisfies <M>{tex`2^h \ge n+1`}</M>, i.e. <M
             >{tex`h \ge \lceil \log_2(n+1) \rceil`}</M
           >. A root-to-leaf path of that length is an input on which <M
@@ -946,7 +947,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           if count < |V| then report "G has a cycle" else return L
       </Sample>
 
-      <Lemma name="Each vertex is enqueued at most once">
+      <Lemma id="enqueue-once" name="Each vertex is enqueued at most once">
         Over
         the whole execution, <C>Enqueue(S, v)</C> is executed at most
         once for each vertex $v$.
@@ -969,7 +970,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         </p>
       </Proof>
 
-      <Lemma name="Each adjacency list is scanned at most once">
+      <Lemma id="adj-scan-once" name="Each adjacency list is scanned at most once">
         The inner loop of the main loop scans <M>{tex`\mathit{Adj}[u]`}</M> at most once
         for each $u$; consequently the main loop performs at most
         <M>{tex`\sum_{u \in V} \deg^+(u) = E`}</M> decrements in total.
@@ -982,8 +983,8 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           > is executed only in the iteration of the main loop that dequeues
           $u$. Since the queue is a set of enqueued items and each dequeue
           removes one item, the number of dequeues of $u$ is at most the
-          number of enqueues of $u$, which is at most one by Lemma 5. The
-          count of decrements follows from the handshake identity of Lemma 1.
+          number of enqueues of $u$, which is at most one by <Ref to="enqueue-once" />. The
+          count of decrements follows from the handshake identity of <Ref to="handshake" />.
 
         </p>
       </Proof>
@@ -1038,7 +1039,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         <p>
           <em>Upper bound.</em> Pass 1 and pass 3 execute $O(1)$ work per
           vertex, so $O(V)$ each. Pass 2 executes $O(1)$ work per adjacency
-          entry, so by Lemma 1 it costs <M
+          entry, so by <Ref to="handshake" /> it costs <M
             >{tex`O\!\left(V + \sum_u \deg^+(u)\right) = O(V+E)`}</M
           >, the $V$ accounting for the per-vertex loop overhead even at
           vertices with empty lists. In the main loop, the work of the
@@ -1047,8 +1048,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           >: a dequeue, an append, an increment, and one pass over <M
             >{tex`\mathit{Adj}[u]`}</M
           > doing $O(1)$ work per entry. Each vertex is dequeued at most once
-          (Lemma 6), so summing over the dequeued vertices and applying Lemma
-          1 again bounds the main loop by
+          (<Ref to="adj-scan-once" />), so summing over the dequeued vertices and applying <Ref to="handshake" /> again bounds the main loop by
           <E
             >{tex`\begin{equation}\sum_{u \in V} \left( c_1 + c_2 \deg^+(u) \right) \;=\; c_1 V + c_2 E.\end{equation}`}</E
           >
@@ -1102,7 +1102,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         only when $u$ is white and colors it gray on entry, and colors are
         never reset, so it is called at most once per vertex; it then scans
         <M>{tex`\mathit{Adj}[u]`}</M> exactly once, doing $O(1)$ work per entry, and
-        the outer loop contributes $O(V)$. Summing with Lemma 1 gives
+        the outer loop contributes $O(V)$. Summing with <Ref to="handshake" /> gives
         $O(V+E)$, and the outer loop's unconditional pass over $V$ plus the
         scan of every adjacency list gives $\Omega(V+E)$. The order produced
         is correct because for every edge $(u,v)$ one has $f(v) &lt; f(u)$ for
@@ -1148,7 +1148,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
                       Decrease-Key(Q, v, d[v])
       </Sample>
 
-      <Lemma name="Operation counts">
+      <Lemma id="dijkstra-op-counts" name="Operation counts">
         On a graph with $V$
         vertices and $E$ edges, one execution of <C>Dijkstra</C>
         performs exactly $V$ <C>Extract-Min</C> operations, at most $E$
@@ -1166,7 +1166,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           extracted exactly once. The scan of <M>{tex`\mathit{Adj}[u]`}</M> occurs only
           in the iteration that extracts $u$, hence at most once per vertex,
           so each edge $(u,v)$ is relaxed at most once and each relaxation
-          issues at most one <C>Decrease-Key</C>. By Lemma 1 the number
+          issues at most one <C>Decrease-Key</C>. By <Ref to="handshake" /> the number
           of relaxations is <M>{tex`\sum_u \deg^+(u) = E`}</M>, bounding the
           decrease-keys by $E$. Outside the queue, the initialization is
           $\Theta(V)$, the main loop's per-iteration bookkeeping is $O(1)$,
@@ -1187,7 +1187,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         here, not independent.
       </p>
 
-      <Lemma name="Binary heap operations">
+      <Lemma id="heap-ops" name="Binary heap operations">
         A binary
         min-heap holding $h$ elements in a complete binary tree has height
         <M>{tex`\lfloor \log_2 h \rfloor`}</M>, and <C>Insert</C>,
@@ -1251,13 +1251,13 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       <Proof>
         <p>
           The displayed identity is
-          Lemma 8 together with the observation that the algorithm's work
+          <Ref to="dijkstra-op-counts" /> together with the observation that the algorithm's work
           splits into queue operations and everything else, and that the costs
           are additive. The three cases are then substitutions.
         </p>
         <p>
           <em>Binary heap.</em> The queue never holds more than $V$ elements,
-          so by Lemma 9 <M
+          so by <Ref to="heap-ops" /> <M
             >{tex`C_{\text{ext}}, C_{\text{dec}} \in O(\log V)`}</M
           > and <M>{tex`C_{\text{build}} = \Theta(V)`}</M>. Substituting,
           <E
@@ -1290,7 +1290,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
             >{tex`\gamma = V`}</M
           > and $h \le V$, the queue's total contribution is <M
             >{tex`O(V + E + V \log V)`}</M
-          >, and adding the $\Theta(V+E)$ of Lemma 8 gives <M
+          >, and adding the $\Theta(V+E)$ of <Ref to="dijkstra-op-counts" /> gives <M
             >{tex`O(E + V\log V)`}</M
           >.
         </p>
@@ -1299,7 +1299,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       <p>
         <strong>Why $O$ and not $\Theta$ for the heap variant.</strong> The
         bound <M>{tex`\Theta((V+E)\log V)`}</M> is quoted so often that it is
-        worth saying exactly why it is an abuse of notation. Lemma 8 bounds
+        worth saying exactly why it is an abuse of notation. <Ref to="dijkstra-op-counts" /> bounds
         the number of decrease-keys by $E$, but on many inputs almost none of
         them fire: if the edges are scanned in an order that never improves a
         tentative distance, the cost is <M>{tex`\Theta(V \log V + E)`}</M>,

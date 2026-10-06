@@ -81,14 +81,13 @@ figcaption {
   margin-bottom: 0;
 }
 
-figcaption::before {
-  counter-increment: fig;
-  content: "Fig. " counter(fig) ": ";
+/* data-number is assigned at build time (src/utils/numbering.ts). */
+figcaption[data-number]::before {
+  content: "Fig. " attr(data-number) ": ";
 }
 
-caption::before {
-  counter-increment: table_;
-  content: "Table. " counter(table_) ": ";
+caption[data-number]::before {
+  content: "Table. " attr(data-number) ": ";
 }
 
 /* Link styles */

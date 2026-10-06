@@ -56,10 +56,10 @@
   border: 1px solid #008195;
 }
 
+/* data-number is assigned at build time (src/utils/numbering.ts). */
 .theorem::before {
-  counter-increment: theorem;
   background-color: rgba(0, 184, 212, 0.2);
-  content: "Theorem " counter(theorem) attr(data-theorem-name) ". ";
+  content: "Theorem " attr(data-number) attr(data-theorem-name) ". ";
 }
 
 .definition {
@@ -67,9 +67,8 @@
 }
 
 .definition::before {
-  counter-increment: def;
   background-color: rgba(0, 212, 28, 0.2);
-  content: "Definition " counter(def) attr(data-definition-name) ". ";
+  content: "Definition " attr(data-number) attr(data-definition-name) ". ";
 }
 
 .lemma {
@@ -80,9 +79,8 @@
 }
 
 .lemma::before {
-  counter-increment: lemma;
   font-weight: bold;
-  content: "Lemma " counter(lemma) attr(data-lemma-name) ": ";
+  content: "Lemma " attr(data-number) attr(data-lemma-name) ": ";
 }
 
 .problem {
@@ -90,7 +88,6 @@
 }
 
 .problem::before {
-  counter-increment: problem;
   background-color: rgba(113, 0, 212, 0.2);
-  content: "Problem " counter(problem) ". ";
+  content: "Problem " attr(data-number) ". ";
 }

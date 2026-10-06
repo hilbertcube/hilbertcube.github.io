@@ -1,0 +1,15 @@
+---
+/**
+ * Ref.astro — a cross-reference: <Ref to="handshake" /> becomes a link reading
+ * "Lemma 1" to the numbered block with that id. The number and the check that
+ * the id exists happen at build time, in @utils/numbering (run by BaseLayout).
+ */
+interface Props {
+  /** `id` of a Theorem, Lemma, Definition, Problem, captioned Figure or captioned Table. */
+  to: string;
+}
+
+const { to } = Astro.props;
+---
+
+<a data-ref={to}></a>
