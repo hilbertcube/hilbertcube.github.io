@@ -17,16 +17,16 @@ with its metadata in `src/data/pages.json`.
 | Command | Notes |
 |---|---|
 | `npm run dev` | Astro dev server. **No Pagefind index exists in dev** — the search bar silently falls back to a title-only match over `pages.json`. |
-| `npm run build` | `astro build` → `scripts/pagefind-ignore-math.mjs` → `pagefind`. Output in `dist/` (gitignored). |
+| `npm run build` | `scripts/lint-pages.mjs` → `astro build` → `scripts/pagefind-ignore-math.mjs` → `pagefind`. Output in `dist/` (gitignored). |
 | `npm run preview` | Serves built `dist/`. Use `npm run build && npm run preview` to test anything search-, math-exclusion- or final-HTML-related. |
-| `npm run check` | `astro check` — TypeScript/Astro diagnostics. This is the only "test" gate. |
+| `npm run check` | `scripts/lint-pages.mjs` (page-authoring rules below) → `astro check` (TypeScript/Astro diagnostics). This is the only "test" gate. |
 | `npm run new [-- -t article -s <slug> --title "…"]` | Scaffolds the page in the canonical shape **and** its `pages.json` entry (prompts for anything missing). Both are required. |
 | `python3 scripts/reindent-pages.py [--apply]` | Re-indents page markup by nesting (2 spaces) and lays out `<E>` equations one row per line; dry-run without `--apply`. Whitespace only. |
 | `npm run build && npm run pdf [-- <slug>…]` | Exports articles to `pdf/<slug>.pdf` via headless Chromium (`scripts/export-pdf.mjs`); print layout is `src/assets/css/utils/_print.css`. |
 | `./scripts/commit.sh "msg"` | pull `main` → `add .` → commit → push. |
 
 There is no test suite (`npm test` is a stub). Verify with `npm run check` and
-`npm run build`, which fails on schema and alias errors.
+`npm run build`, which fails on lint, schema and alias errors.
 
 Deployment is automatic: `.github/workflows/static-pages.yml` builds and publishes
 `dist/` on every push to `main`. It checks out with `fetch-depth: 0` because
@@ -129,7 +129,7 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   the page's `index.astro` (entries typed per `type` in `src/utils/references.ts`) — never a
   hand-written `<ol class="reference">`. The `_` prefix keeps Astro from routing the file.
 - Tables go through `<Table>`, which emits the `.table-wrapper` / `.p-table` pair — a
-  hand-written table without the wrapper overflows on mobile and nothing catches it.
+  hand-written table without the wrapper overflows on mobile.
   Inline code goes through `<C>`. Both styles are scoped to their component, so the bare
   classes don't work in page markup.
 - Body links are plain `<a href="…">` — no class. Inside `.content-grid`, an unclassed `<a>`
@@ -148,6 +148,11 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   scoped `<style>`. Use the existing `--var` custom properties — the site is theme-aware via a
   `dark-mode` class applied before first paint, and readers can override font/size/code theme
   at runtime, so don't fight them with `!important`.
+
+- `scripts/lint-pages.mjs` enforces the markup rules above (raw `<table>`/`<pre>`/`<code>`/`<img>`,
+  `$$`/`\begin` outside `<E>`, `<section id>`, `content-grid`, listings without `is:raw`,
+  relative imports). A page opts out of one rule with a frontmatter line
+  `// lint-allow: <rule> — reason`; use it only for a genuine exception.
 
 ## Detailed docs
 
