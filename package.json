@@ -12,7 +12,8 @@
     "build": "astro build && node scripts/pagefind-ignore-math.mjs && pagefind --site dist --exclude-selectors \".equation\"",
     "preview": "astro preview",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pdf": "node scripts/export-pdf.mjs"
+    "pdf": "node scripts/export-pdf.mjs",
+    "new": "node scripts/new-article.mjs"
   },
   "repository": {
     "type": "git",
