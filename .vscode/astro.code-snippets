@@ -55,13 +55,13 @@
   "Figure": {
     "scope": "astro",
     "prefix": "Figure",
-    "body": ["<Figure src=\"/articles/$1/$2.webp\" width=\"${3:70%}\">$4</Figure>"],
+    "body": ["<Figure src=\"$1.webp\" width=\"${2:70%}\">$3</Figure>"],
     "description": "Body image with a numbered caption"
   },
   "FrontImage": {
     "scope": "astro",
     "prefix": "FrontImage",
-    "body": ["<FrontImage src=\"/articles/$1/banner.webp\" />"],
+    "body": ["<FrontImage src=\"${1:banner}.webp\" />"],
     "description": "Article banner"
   },
   "Two columns": {

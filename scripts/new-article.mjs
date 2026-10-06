@@ -134,7 +134,7 @@ ${imports.join("\n")}
   <header>
     <TopicTags />
     <PageTitle />
-    <PubDate />${isArticle ? `\n    <FrontImage src="/${collection}/${slug}/banner.webp" />` : ""}
+    <PubDate />${isArticle ? `\n    <FrontImage src="banner.webp" />` : ""}
   </header>
 
   <section>
