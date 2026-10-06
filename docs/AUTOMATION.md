@@ -5,6 +5,7 @@ The helper scripts in `scripts/`; `npm` commands are in [`DEVELOPMENT.md`](DEVEL
 | Script | Runs | Purpose |
 |---|---|---|
 | [`new-article.mjs`](#new-articlemjs) | `npm run new` | Scaffold a page and its `pages.json` entry |
+| [`lint-pages.mjs`](#lint-pagesmjs) | `npm run check`, `npm run build` | Enforce the page-authoring rules |
 | [`reindent-pages.py`](#reindent-pagespy) | by hand | Re-indent page markup; lay out `<E>` equations |
 | [`commit.sh`](#commitsh) | by hand | Pull, stage everything, commit, push |
 | [`pagefind-ignore-math.mjs`](#pagefind-ignore-mathmjs) | `npm run build` | Hide inline math from the search index |
@@ -27,6 +28,32 @@ adds an empty `_references.ts` and `<References />`. Refuses an existing folder 
 
 An article's entry gets `"image": "<slug>.webp"` — the homepage card, served from
 `public/media/Images/` — and its page a `<FrontImage>` at `public/articles/<slug>/banner.webp`.
+
+## lint-pages.mjs
+
+```bash
+node scripts/lint-pages.mjs       # also the first step of `npm run check` and `npm run build`
+```
+
+Scans `src/pages/**/*.astro` (except `src/pages/test/`) for authoring-rule breaks the
+build doesn't catch, printing `file:line  message  [rule]` and exiting non-zero:
+
+| Rule | Flags |
+|---|---|
+| `display-math` | `$$…$$` or `\begin{` outside an `<E>{tex`…`}</E>` |
+| `table` / `pre` / `code` / `img` | the raw tag — use `<Table>`, a `code/` component, `<C>`, `<Figure>` |
+| `section-id` | `id` on a `<section>` |
+| `content-grid` | a `content-grid` wrapper |
+| `references` | a hand-written `<ol class="reference">` |
+| `is-raw` | `<CodeBlock>`/`<CodeBox>`/`<ShellScript>`/`<Sample>` without `is:raw` |
+| `alias-import` | a relative import in the frontmatter |
+
+`<style>`, `<script>`, comments, `is:raw` listings and template literals are skipped.
+A page opts out of a rule with a frontmatter line naming it and the reason:
+
+```astro
+// lint-allow: img — the Gallery is a grid of lightbox thumbnails, not captioned figures
+```
 
 ## reindent-pages.py
 

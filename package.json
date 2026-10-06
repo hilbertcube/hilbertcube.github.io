@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "check": "astro check",
-    "build": "astro build && node scripts/pagefind-ignore-math.mjs && pagefind --site dist --exclude-selectors \".equation\"",
+    "check": "node scripts/lint-pages.mjs && astro check",
+    "build": "node scripts/lint-pages.mjs && astro build && node scripts/pagefind-ignore-math.mjs && pagefind --site dist --exclude-selectors \".equation\"",
     "preview": "astro preview",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pdf": "node scripts/export-pdf.mjs",

@@ -18,9 +18,9 @@ the workflow; the other docs:
 | Command | Does | Use for |
 |---|---|---|
 | `npm run dev` | Dev server, hot reload. **No search index** — search falls back to title-only. | Writing and styling |
-| `npm run build` | `astro build` → `pagefind-ignore-math.mjs` → `pagefind`, into `dist/` | Testing real search and the final HTML |
+| `npm run build` | `lint-pages.mjs` → `astro build` → `pagefind-ignore-math.mjs` → `pagefind`, into `dist/` | Testing real search and the final HTML |
 | `npm run preview` | Serves `dist/` | After `build` |
-| `npm run check` | `astro check` | Before committing — there is no test suite |
+| `npm run check` | `lint-pages.mjs` → `astro check` | Before committing — there is no test suite |
 
 Pushing to `main` deploys: `.github/workflows/static-pages.yml` builds and
 publishes `dist/` (gitignored).

@@ -18,6 +18,7 @@ import Theorem from "@components/math/Theorem.astro";
 import Proof from "@components/math/Proof.astro";
 import { tex } from "@components/math/tex.astro";
 import Sample from "@components/code/Sample.astro";
+import C from "@components/code/C.astro";
 import Quote from "@components/article/Quote.astro";
 import Table from "@components/article/Table.astro";
 import References from "@components/article/References.astro";
@@ -772,7 +773,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       </Proof>
 
       <Theorem name="Running time of binary search">
-        The worst-case running time of <code>Binary-Search</code> satisfies
+        The worst-case running time of <C>Binary-Search</C> satisfies
         <M>{tex`T(n) \in \Theta(\log n)`}</M>. More precisely, the loop
         executes at most <M>{tex`\lfloor \log_2 n \rfloor + 1`}</M>
         iterations on every input, and at least <M
@@ -947,14 +948,14 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
 
       <Lemma name="Each vertex is enqueued at most once">
         Over
-        the whole execution, <code>Enqueue(S, v)</code> is executed at most
+        the whole execution, <C>Enqueue(S, v)</C> is executed at most
         once for each vertex $v$.
       </Lemma>
 
       <Proof>
         <p>
           After pass 2 the counter
-          <code>indeg[v]</code> holds <M>{tex`\deg^-(v)`}</M>, and from that
+          <C>indeg[v]</C> holds <M>{tex`\deg^-(v)`}</M>, and from that
           moment on it is only ever decremented; it is therefore a strictly
           decreasing function of time on the (finite) set of instants at which
           it changes. A strictly decreasing integer-valued function takes the
@@ -1029,7 +1030,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       </Proof>
 
       <Theorem name="Running time of Kahn's algorithm">
-        <code>Kahn</code> runs in time $\Theta(V+E)$ on every input, in the
+        <C>Kahn</C> runs in time $\Theta(V+E)$ on every input, in the
         adjacency-list representation.
       </Theorem>
 
@@ -1097,7 +1098,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         <strong>The DFS formulation.</strong> The alternative algorithm runs
         a depth-first search over all vertices and prepends each vertex to a
         list when it is finished. Its cost is $\Theta(V+E)$ for the same
-        reason in a different disguise: <code>DFS-Visit(u)</code> is called
+        reason in a different disguise: <C>DFS-Visit(u)</C> is called
         only when $u$ is white and colors it gray on entry, and colors are
         never reset, so it is called at most once per vertex; it then scans
         <M>{tex`\mathit{Adj}[u]`}</M> exactly once, doing $O(1)$ work per entry, and
@@ -1149,9 +1150,9 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
 
       <Lemma name="Operation counts">
         On a graph with $V$
-        vertices and $E$ edges, one execution of <code>Dijkstra</code>
-        performs exactly $V$ <code>Extract-Min</code> operations, at most $E$
-        <code>Decrease-Key</code> operations, one queue construction of $V$
+        vertices and $E$ edges, one execution of <C>Dijkstra</C>
+        performs exactly $V$ <C>Extract-Min</C> operations, at most $E$
+        <C>Decrease-Key</C> operations, one queue construction of $V$
         elements, and $\Theta(V+E)$ additional primitive operations outside
         the queue.
       </Lemma>
@@ -1165,7 +1166,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
           extracted exactly once. The scan of <M>{tex`\mathit{Adj}[u]`}</M> occurs only
           in the iteration that extracts $u$, hence at most once per vertex,
           so each edge $(u,v)$ is relaxed at most once and each relaxation
-          issues at most one <code>Decrease-Key</code>. By Lemma 1 the number
+          issues at most one <C>Decrease-Key</C>. By Lemma 1 the number
           of relaxations is <M>{tex`\sum_u \deg^+(u) = E`}</M>, bounding the
           decrease-keys by $E$. Outside the queue, the initialization is
           $\Theta(V)$, the main loop's per-iteration bookkeeping is $O(1)$,
@@ -1176,7 +1177,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
 
       <p>
         Note what this proof did <em>not</em> use: non-negativity of the
-        weights. The counting holds because of the <code>done</code> flag,
+        weights. The counting holds because of the <C>done</C> flag,
         which lets a vertex be extracted only once. Non-negativity is what
         makes that safe: it is needed for correctness, to guarantee that
         <M>{tex`d[u]`}</M> is already final when $u$ is extracted. A
@@ -1189,8 +1190,8 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       <Lemma name="Binary heap operations">
         A binary
         min-heap holding $h$ elements in a complete binary tree has height
-        <M>{tex`\lfloor \log_2 h \rfloor`}</M>, and <code>Insert</code>,
-        <code>Extract-Min</code> and <code>Decrease-Key</code> each run in
+        <M>{tex`\lfloor \log_2 h \rfloor`}</M>, and <C>Insert</C>,
+        <C>Extract-Min</C> and <C>Decrease-Key</C> each run in
         <M>{tex`O(\log h)`}</M> time; building a heap of $h$ elements costs
         $\Theta(h)$.
       </Lemma>
@@ -1203,16 +1204,16 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
             >{tex`2^{\eta} \le h \le 2^{\eta+1} - 1`}</M
           >, whence <M>{tex`\eta \le \log_2 h < \eta + 1`}</M> and <M
             >{tex`\eta = \lfloor \log_2 h \rfloor`}</M
-          >. <code>Sift-Up</code> compares an element with its parent and, if
+          >. <C>Sift-Up</C> compares an element with its parent and, if
           they are out of order, swaps and repeats one level higher; each
           iteration strictly decreases the element's depth, so there are at
-          most $\eta$ iterations of $O(1)$ work each. <code>Sift-Down</code>
+          most $\eta$ iterations of $O(1)$ work each. <C>Sift-Down</C>
           likewise strictly increases the depth by one per iteration. Since
-          <code>Insert</code> is an append followed by a
-          <code>Sift-Up</code>, <code>Decrease-Key</code> is a key update
-          followed by a <code>Sift-Up</code> (the heap property can only be
-          violated upwards), and <code>Extract-Min</code> moves the last
-          element to the root and calls <code>Sift-Down</code>, all three cost
+          <C>Insert</C> is an append followed by a
+          <C>Sift-Up</C>, <C>Decrease-Key</C> is a key update
+          followed by a <C>Sift-Up</C> (the heap property can only be
+          violated upwards), and <C>Extract-Min</C> moves the last
+          element to the root and calls <C>Sift-Down</C>, all three cost
           <M>{tex`O(\eta) = O(\log h)`}</M>. For the construction, sifting
           down every node from the bottom up costs at most
           <E
@@ -1227,7 +1228,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
       </Proof>
 
       <Theorem name="Running time of Dijkstra's algorithm">
-        With adjacency lists, <code>Dijkstra</code> runs in time
+        With adjacency lists, <C>Dijkstra</C> runs in time
         <E
           >{tex`\begin{equation}T \;=\; \Theta(V+E) \;+\; V \cdot C_{\text{ext}} \;+\; O(E) \cdot C_{\text{dec}} \;+\; C_{\text{build}},\end{equation}`}</E
         >
