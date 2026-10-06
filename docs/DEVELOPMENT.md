@@ -57,21 +57,12 @@ Import through the aliases in `tsconfig.json` — `@layouts`, `@components`,
 ## 3. Creating an article or post
 
 ```bash
-./scripts/new-article.sh --type article --slug "my-slug" --title "My Title"
+npm run new -- --type article --slug "my-slug" --title "My Title"
 ```
 
 It creates the page **and** its `pages.json` entry. Both are required: the entry
-drives the homepage cards, RSS, search and "More Articles".
-
-> ⚠️ **The scaffolder's template is outdated.** Rebuild its header on the
-> [`COMPONENTS.md` §8](COMPONENTS.md#8-cheat-sheet) skeleton:
->
-> | Scaffold emits | Should be |
-> |---|---|
-> | `../../../` relative imports | `@layouts` / `@components` aliases |
-> | `<div class="topic">`, `<h1 class="title">`, `<div class="date">` | `<TopicTags />`, `<PageTitle />`, `<PubDate />` (no props) |
-> | a "More Articles" `<section>` | nothing — `BaseLayout` adds it |
-> | body indented 4 spaces | `python3 scripts/reindent-pages.py <page> --apply` |
+drives the homepage cards, RSS, search and "More Articles". Options are in
+[`AUTOMATION.md`](AUTOMATION.md#new-articlemjs).
 
 **Page conventions:**
 
@@ -169,8 +160,7 @@ const meta = await getEntryMeta("articles", Astro.url.pathname);
 
 ## Checklist for a new article
 
-- [ ] `./scripts/new-article.sh --type article --slug … --title …`
-- [ ] Fix the scaffolded header (§3), then `reindent-pages.py --apply`
+- [ ] `npm run new -- --type article --slug … --title …`
 - [ ] Write; images in `public/articles/<slug>/` via `<Figure>`
 - [ ] Every section has a heading (or `data-toc`); display math in `<E>`
 - [ ] `npm run check`, then `npm run build && npm run preview`

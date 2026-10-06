@@ -20,7 +20,7 @@ with its metadata in `src/data/pages.json`.
 | `npm run build` | `astro build` → `scripts/pagefind-ignore-math.mjs` → `pagefind`. Output in `dist/` (gitignored). |
 | `npm run preview` | Serves built `dist/`. Use `npm run build && npm run preview` to test anything search-, math-exclusion- or final-HTML-related. |
 | `npm run check` | `astro check` — TypeScript/Astro diagnostics. This is the only "test" gate. |
-| `./scripts/new-article.sh -t article -s <slug> --title "…"` | Scaffolds the page **and** the `pages.json` entry. Both are required. |
+| `npm run new [-- -t article -s <slug> --title "…"]` | Scaffolds the page in the canonical shape **and** its `pages.json` entry (prompts for anything missing). Both are required. |
 | `python3 scripts/reindent-pages.py [--apply]` | Re-indents page markup by nesting (2 spaces) and lays out `<E>` equations one row per line; dry-run without `--apply`. Whitespace only. |
 | `npm run build && npm run pdf [-- <slug>…]` | Exports articles to `pdf/<slug>.pdf` via headless Chromium (`scripts/export-pdf.mjs`); print layout is `src/assets/css/utils/_print.css`. |
 | `./scripts/commit.sh "msg"` | pull `main` → `add .` → commit → push. |
@@ -51,7 +51,7 @@ loader id from it.
   and `PubDate` do this internally, so pages usually pass no props at all.
 - A missing/misspelled field fails the build, so a page can't silently vanish from the
   homepage, RSS and search.
-- Collection order is array order (newest first; `new-article.sh` inserts at the top).
+- Collection order is array order (newest first; `npm run new` inserts at the top).
   Nothing re-sorts.
 
 `src/pages/rss/feed.xml.ts` is a build-time endpoint over the same collections.
@@ -146,9 +146,6 @@ LaTeX must reach components as a raw template literal — `{tex`…`}` from
   scoped `<style>`. Use the existing `--var` custom properties — the site is theme-aware via a
   `dark-mode` class applied before first paint, and readers can override font/size/code theme
   at runtime, so don't fight them with `!important`.
-- The `new-article.sh` template **predates the component library**. After scaffolding, replace
-  its header with the canonical shape from `docs/COMPONENTS.md` §8 (aliases, `getEntryMeta`,
-  `<TopicTags>/<PageTitle>/<PubDate>`, no hand-written "More Articles").
 
 ## Detailed docs
 

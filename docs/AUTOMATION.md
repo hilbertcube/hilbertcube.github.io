@@ -4,7 +4,7 @@ The helper scripts in `scripts/`; `npm` commands are in [`DEVELOPMENT.md`](DEVEL
 
 | Script | Runs | Purpose |
 |---|---|---|
-| [`new-article.sh`](#new-articlesh) | by hand | Scaffold a page and its `pages.json` entry |
+| [`new-article.mjs`](#new-articlemjs) | `npm run new` | Scaffold a page and its `pages.json` entry |
 | [`reindent-pages.py`](#reindent-pagespy) | by hand | Re-indent page markup; lay out `<E>` equations |
 | [`commit.sh`](#commitsh) | by hand | Pull, stage everything, commit, push |
 | [`pagefind-ignore-math.mjs`](#pagefind-ignore-mathmjs) | `npm run build` | Hide inline math from the search index |
@@ -12,16 +12,21 @@ The helper scripts in `scripts/`; `npm` commands are in [`DEVELOPMENT.md`](DEVEL
 
 ---
 
-## new-article.sh
+## new-article.mjs
 
 ```bash
-./scripts/new-article.sh                                   # interactive
-./scripts/new-article.sh -t article -s my-slug --title "My Title"
-./scripts/new-article.sh --type post --slug my-slug --title "My Title" --description "…"
+npm run new                                                # prompts for everything
+npm run new -- -t article -s my-slug --title "My Title" --topics "C++, Math"
+npm run new -- --type post --slug my-slug --description "…" --references
 ```
 
-Creates the page and inserts its `pages.json` entry (today's `pubDate`) at the top.
-The template is outdated — see [`DEVELOPMENT.md` §3](DEVELOPMENT.md#3-creating-an-article-or-post).
+Creates `src/pages/<type>s/<slug>/index.astro` in the
+[`COMPONENTS.md` §8](COMPONENTS.md#8-cheat-sheet) shape, an empty `public/<type>s/<slug>/`
+for images, and the `pages.json` entry (today's `pubDate`) at the top. `--references`
+adds an empty `_references.ts` and `<References />`. Refuses an existing folder or `link`.
+
+An article's entry gets `"image": "<slug>.webp"` — the homepage card, served from
+`public/media/Images/` — and its page a `<FrontImage>` at `public/articles/<slug>/banner.webp`.
 
 ## reindent-pages.py
 
