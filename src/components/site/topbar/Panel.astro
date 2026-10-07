@@ -1,0 +1,287 @@
+---
+/**
+ * Panel.astro
+ * ===========
+ * The frame every top-bar panel (tags, share, settings) is built on: a fixed
+ * popup just below the bar at its right edge — all panels open in the same
+ * spot, under the icon row — with a titled header, the panel's sections, and
+ * a muted footer.
+ *
+ * - `id` is the element the icon's `aria-controls` names; the panel's script
+ *   wires the two together with `initPanel()` (panel.ts).
+ * - Slots: `actions` (header buttons beside ×), the default slot (sections),
+ *   `footer`. `escHint` adds "Esc to close" to the footer.
+ * - Closing hint: "Esc to close" on desktop, the × on phones.
+ * - Content builds on `.tb-panel-section` / `-label` / `-row` / `-field` /
+ *   `-action` (the global styles below); a panel's own scoped rules override
+ *   them.
+ */
+import Icon from "@components/ui/Icon.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  /** Width in px, below the phone breakpoint's full width. */
+  width: number;
+  escHint?: boolean;
+}
+
+const { id, title, width, escHint = false } = Astro.props;
+const hasFooter = Astro.slots.has("footer");
+---
+
+<div
+  class="tb-panel"
+  id={id}
+  role="dialog"
+  aria-labelledby={`${id}Title`}
+  style={`--panel-width: ${width}px`}
+>
+  <div class="tb-panel-head">
+    <h2 class="tb-panel-title" id={`${id}Title`}>{title}</h2>
+    <div class="tb-panel-actions">
+      <slot name="actions" />
+      <button type="button" class="tb-panel-close" data-panel-close aria-label="close">
+        <Icon name="xmark" />
+      </button>
+    </div>
+  </div>
+  <slot />
+  {
+    (hasFooter || escHint) && (
+      <div class:list={["tb-panel-foot", { "hint-only": !hasFooter }]}>
+        <slot name="footer" />
+        {escHint && (
+          <span class="tb-panel-esc">
+            <kbd>Esc</kbd> to close
+          </span>
+        )}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .tb-panel {
+    position: fixed;
+    top: calc(var(--top-bar-height) + 6px);
+    right: 12px;
+    width: min(var(--panel-width), calc(100vw - 24px));
+    max-height: calc(100vh - var(--top-bar-height) - 30px);
+    box-sizing: border-box;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    color: var(--panel-text);
+    font-family: var(--top-bar-font);
+    font-size: 15px;
+    text-align: left;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 4px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    z-index: 10000;
+    animation: panel-in 0.15s ease-out;
+    scrollbar-width: thin;
+    scrollbar-color: var(--panel-field-border) transparent;
+  }
+
+  .tb-panel.open {
+    display: flex;
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .tb-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 8px 12px 16px;
+  }
+
+  /* Bold title over a short red rule, like the sidebar's section headings. */
+  .tb-panel-title {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  .tb-panel-title::after {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 2px;
+    margin-top: 6px;
+    background: var(--panel-accent);
+  }
+
+  .tb-panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  /* Hidden on desktop: see the phone rules below. */
+  .tb-panel-close {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    color: var(--panel-muted);
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  .tb-panel-close:hover {
+    color: var(--panel-text);
+    background-color: var(--panel-hover);
+  }
+
+  .tb-panel-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 32px;
+    padding: 4px 8px 4px 16px;
+    border-top: 1px solid var(--panel-rule);
+    font-size: 12px;
+    color: var(--panel-muted);
+  }
+
+  .tb-panel-esc {
+    margin-left: auto;
+  }
+
+  .tb-panel-esc kbd {
+    padding: 1px 5px;
+    border: 1px solid var(--panel-border);
+    border-radius: 3px;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+  }
+
+  /* Phones: full width under the bar, and the × instead of "Esc to close" —
+     there is no Escape key, and little page left around a panel to tap. */
+  @media all and (max-width: 580px) {
+    .tb-panel {
+      left: 8px;
+      right: 8px;
+      width: auto;
+      max-height: calc(100vh - var(--top-bar-height) - 22px);
+    }
+
+    .tb-panel-close {
+      display: inline-flex;
+    }
+
+    .tb-panel-esc,
+    .tb-panel-foot.hint-only {
+      display: none;
+    }
+  }
+</style>
+
+<!-- Building blocks for the panels' own markup, which is scoped to each panel
+     component, so these are global. :where() keeps them at class
+     specificity, so a panel's scoped rules override them. -->
+<style is:global>
+  :where(.tb-panel) .tb-panel-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 16px 14px;
+    border-top: 1px solid var(--panel-rule);
+  }
+
+  :where(.tb-panel-head) + .tb-panel-section {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  /* Section label, in the Courier of the page-topic label. */
+  :where(.tb-panel) .tb-panel-label {
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--panel-muted);
+  }
+
+  /* Text button in the header or footer (Clear, Reset). */
+  :where(.tb-panel) .tb-panel-action {
+    height: 32px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    color: var(--panel-link);
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  :where(.tb-panel) .tb-panel-action:hover {
+    background-color: var(--panel-hover);
+  }
+
+  /* Label + control row. */
+  :where(.tb-panel) .tb-panel-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 32px;
+  }
+
+  :where(.tb-panel) .tb-panel-field {
+    flex: none;
+    width: 184px;
+    height: 30px;
+    box-sizing: border-box;
+    border: 1px solid var(--panel-field-border);
+    border-radius: 4px;
+    background-color: var(--panel-field);
+    color: var(--panel-text);
+    font-family: inherit;
+    font-size: 14px;
+  }
+
+  :where(.tb-panel) select.tb-panel-field {
+    padding: 0 28px 0 10px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="none" stroke="%23888888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+  }
+
+  :where(.tb-panel) select.tb-panel-field:hover {
+    background-color: var(--panel-hover);
+  }
+
+  :where(.tb-panel) .tb-panel-field:focus-visible,
+  :where(.tb-panel) button:focus-visible {
+    outline: 2px solid var(--panel-selected);
+    outline-offset: 1px;
+  }
+</style>

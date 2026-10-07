@@ -88,7 +88,8 @@ every page by `BaseLayout`) and `scripts.js` (smooth anchor scroll, new-window b
 whether the markup rendered.** Anything imported by `BaseLayout` therefore ships site-wide,
 so every such script must return early when its markup is absent. Follow that pattern.
 
-Top-bar behaviour is split across `src/components/site/topbar/{nav,theme,settings,search,share}.ts`.
+Top-bar behaviour is split across `src/components/site/topbar/*.ts`; its three panels are
+components there too (`TagsPanel`, `SharePanel`, `SettingsPanel`, on the shared `Panel` frame).
 
 ### Code is highlighted at build time (Shiki)
 

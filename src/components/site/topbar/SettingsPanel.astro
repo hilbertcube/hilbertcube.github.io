@@ -1,0 +1,174 @@
+---
+/**
+ * SettingsPanel.astro
+ * ===================
+ * Reading settings: body font, font size, both code themes, the
+ * reading-progress bar, and Reset. Behaviour in settings.ts (code themes in
+ * theme.ts).
+ */
+import Panel from "@components/site/topbar/Panel.astro";
+import { LIGHT_THEMES, DARK_THEMES } from "@utils/codeThemes";
+---
+
+<Panel id="settingsPanel" title="Reading settings" width={380}>
+  <div class="tb-panel-section">
+    <span class="tb-panel-label">Text</span>
+    <div class="tb-panel-row">
+      <label for="font-select">Body font</label>
+      <select id="font-select" class="tb-panel-field">
+        <option value="Computer-Modern">Computer Modern</option>
+        <option value="et-book">ET Book</option>
+        <option value="sans-serif">Arial</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Verdana">Verdana</option>
+      </select>
+    </div>
+    <div class="tb-panel-row">
+      <span id="fontSizeLabel">Font size</span>
+      <div class="tb-panel-field font-size-stepper" role="group" aria-labelledby="fontSizeLabel">
+        <button type="button" id="fontSizeDown" aria-label="smaller text">A−</button>
+        <span class="font-size-value" aria-live="polite">
+          <span id="fontSizeValue">16 px</span>
+          <span class="font-size-default" id="fontSizeDefault">default</span>
+        </span>
+        <button type="button" id="fontSizeUp" aria-label="larger text">A+</button>
+      </div>
+    </div>
+  </div>
+  <div class="tb-panel-section">
+    <span class="tb-panel-label">Code theme</span>
+    <div class="tb-panel-row">
+      <label for="light-theme-select">Light mode</label>
+      <select id="light-theme-select" class="tb-panel-field">
+        {LIGHT_THEMES.map((t) => <option value={t.id}>{t.label}</option>)}
+      </select>
+    </div>
+    <div class="tb-panel-row">
+      <label for="dark-theme-select">Dark mode</label>
+      <select id="dark-theme-select" class="tb-panel-field">
+        {DARK_THEMES.map((t) => <option value={t.id}>{t.label}</option>)}
+      </select>
+    </div>
+  </div>
+  <div class="tb-panel-section">
+    <span class="tb-panel-label">Page</span>
+    <div class="tb-panel-row">
+      <span id="progressSwitchLabel">Reading progress bar</span>
+      <button
+        type="button"
+        class="progress-switch"
+        id="progressSwitch"
+        role="switch"
+        aria-checked="false"
+        aria-labelledby="progressSwitchLabel"
+      ></button>
+    </div>
+  </div>
+  <span slot="footer">Saved in this browser</span>
+  <button type="button" class="tb-panel-action" id="settingsReset" slot="footer">Reset</button>
+</Panel>
+
+<script>
+  import { initSettings } from "./settings";
+  import { initCodeThemeSelect } from "./theme";
+
+  initCodeThemeSelect("light-theme-select", "lightTheme", "codeLight");
+  initCodeThemeSelect("dark-theme-select", "darkTheme", "codeDark");
+  initSettings();
+</script>
+
+<style>
+  /* Rows sit closer than the panels' default section spacing. */
+  .tb-panel-section {
+    gap: 2px;
+    padding-bottom: 10px;
+  }
+
+  .font-size-stepper {
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--panel-bg);
+  }
+
+  .font-size-stepper button {
+    flex: none;
+    width: 36px;
+    padding: 0;
+    border: none;
+    background-color: var(--panel-field);
+    color: var(--panel-text);
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .font-size-stepper button:hover:not(:disabled) {
+    background-color: var(--panel-hover);
+  }
+
+  .font-size-stepper button:disabled {
+    color: var(--panel-muted);
+    cursor: default;
+  }
+
+  #fontSizeDown {
+    border-right: 1px solid var(--panel-field-border);
+    font-size: 13px;
+  }
+
+  #fontSizeUp {
+    border-left: 1px solid var(--panel-field-border);
+    font-size: 17px;
+  }
+
+  .font-size-value {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .font-size-default {
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--panel-muted);
+  }
+
+  .progress-switch {
+    flex: none;
+    position: relative;
+    width: 40px;
+    height: 22px;
+    padding: 0;
+    border: 1px solid var(--panel-field-border);
+    border-radius: 11px;
+    background-color: var(--panel-field);
+    cursor: pointer;
+  }
+
+  .progress-switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--panel-muted);
+    transition: left 0.15s ease;
+  }
+
+  .progress-switch[aria-checked="true"] {
+    border-color: var(--panel-selected);
+    background-color: var(--panel-selected);
+  }
+
+  .progress-switch[aria-checked="true"]::after {
+    left: 20px;
+    background-color: #ffffff;
+  }
+</style>

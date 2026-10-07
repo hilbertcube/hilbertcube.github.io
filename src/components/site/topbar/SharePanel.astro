@@ -1,0 +1,140 @@
+---
+/**
+ * SharePanel.astro
+ * ================
+ * The page's link with a Copy button, and one button per platform. Behaviour
+ * in share.ts.
+ *
+ * Adding a platform: an entry in `sharePlatforms` below and the same `id` in
+ * `SHARE_URLS` in share.ts.
+ */
+import Icon from "@components/ui/Icon.astro";
+import Panel from "@components/site/topbar/Panel.astro";
+
+// `color` is the brand colour of the icon; none = the panel's text colour.
+const sharePlatforms = [
+  { id: "facebook", title: "Facebook", icon: "facebook", color: "#1877f2" },
+  { id: "twitter", title: "X", icon: "x-twitter" },
+  { id: "whatsapp", title: "WhatsApp", icon: "whatsapp", color: "#25d366" },
+  { id: "reddit", title: "Reddit", icon: "reddit", color: "#ff4500" },
+  { id: "hackernews", title: "Hacker News", icon: "hacker-news", color: "#ff6600" },
+  { id: "telegram", title: "Telegram", icon: "telegram", color: "#26a5e4" },
+];
+---
+
+<Panel id="sharePanel" title="Share this page" width={300} escHint>
+  <div class="tb-panel-section">
+    <span class="tb-panel-label">Link</span>
+    <div class="share-link">
+      <span class="share-url" id="shareUrl"></span>
+      <button type="button" class="share-copy" id="shareCopy">
+        <Icon name="copy" />
+        <span id="shareCopyLabel">Copy</span>
+      </button>
+    </div>
+  </div>
+  <div class="tb-panel-section">
+    <span class="tb-panel-label">Share to</span>
+    <div class="share-platforms">
+      {
+        sharePlatforms.map((platform) => (
+          <button
+            type="button"
+            class="share-option"
+            data-share={platform.id}
+            style={platform.color ? `--brand: ${platform.color}` : undefined}
+          >
+            <Icon name={platform.icon} prefix="fab" class="share-option-icon" />
+            {platform.title}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</Panel>
+
+<script>
+  import { initShare } from "./share";
+
+  initShare();
+</script>
+
+<style>
+  .share-link {
+    display: flex;
+    align-items: stretch;
+    height: 34px;
+    border: 1px solid var(--panel-field-border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .share-url {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    background-color: var(--panel-field);
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .share-copy {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    border: none;
+    border-left: 1px solid var(--panel-field-border);
+    background-color: var(--panel-bg);
+    color: var(--panel-link);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .share-copy:hover {
+    background-color: var(--panel-hover);
+  }
+
+  .share-platforms {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px;
+    margin: 0 -8px;
+  }
+
+  .share-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 32px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    color: var(--panel-text);
+    font-family: inherit;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .share-option:hover {
+    background-color: var(--panel-hover);
+  }
+
+  /* The platform's brand colour, set inline per option. Icon renders the span,
+     so the class arrives unscoped. */
+  .share-option :global(.share-option-icon) {
+    flex: none;
+    font-size: 19px;
+    color: var(--brand, var(--panel-text));
+  }
+</style>

@@ -8,9 +8,11 @@ runs in the browser. No server.
 |---|---|
 | Build the index | `package.json` `build` script, `scripts/pagefind-ignore-math.mjs` |
 | What gets indexed | `BaseLayout.astro` (`data-pagefind-body` / `data-pagefind-ignore`) |
-| Search UI and logic | `src/components/site/topbar/search.ts` (`initSearch()`) |
+| Engine, queries, snippets | `src/components/site/topbar/searchIndex.ts` |
+| Search bar and dropdown | `src/components/site/topbar/search.ts` (`initSearch()`) |
+| Tags panel | `src/components/site/topbar/TagsPanel.astro`, `tags.ts` |
 | On-page highlight and scroll | `BaseLayout.astro` (inline module) |
-| Styling | `src/components/site/TopBar.css` (bar, dropdowns, results); `_search.css` (on-page marks) |
+| Styling | `src/components/site/TopBar.css` (bar, dropdown, results); `_search.css` (on-page marks) |
 
 ---
 
@@ -51,7 +53,7 @@ always means a display block not wrapped in `<E>`.
 
 ---
 
-## 5. The search UI (`topbar/search.ts`)
+## 5. The search UI (`topbar/search.ts`, `searchIndex.ts`)
 
 **Engine.** On the first keystroke, `getEngine()` imports
 `/pagefind/pagefind.js`; if that fails it uses the fallback (§6).
@@ -69,7 +71,7 @@ practice the first, cold query. Superseded or out-of-order results are dropped.
 - `sectionFor()` labels each snippet with the nearest heading above it and links
   to that section.
 
-Tunables at the top of `search.ts`: `CONTEXT` (16), `CLUSTER_GAP` (30),
+Tunables in `searchIndex.ts`: `CONTEXT` (16), `CLUSTER_GAP` (30),
 `MAX_SNIPPETS` (4).
 
 **Keys.** `/` focuses the bar; `↑`/`↓` move through rows; `Enter` opens one;
@@ -99,6 +101,6 @@ layout — unless the reader has already scrolled.
 | To… | Do |
 |---|---|
 | Hide an element from search | `data-pagefind-ignore`, or a selector in `--exclude-selectors` |
-| Change snippet size or count | `CONTEXT`, `CLUSTER_GAP`, `MAX_SNIPPETS` in `search.ts` |
+| Change snippet size or count | `CONTEXT`, `CLUSTER_GAP`, `MAX_SNIPPETS` in `searchIndex.ts` |
 | Change the loading delay | the `250` in the input handler (`180` is the debounce) |
 | Test end to end | `npm run build && npm run preview`, search a body-only word, check it jumps and highlights |

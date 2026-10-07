@@ -35,145 +35,6 @@
   }
 }
 
-/* === SETTINGS WINDOW === */
-
-.custom-select {
-  position: relative;
-  width: auto;
-}
-
-.custom-select select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.4em 2em 0.4em 0.7em;
-  font-family: var(--top-bar-font);
-  font-size: inherit;
-  font-weight: 550;
-  color: var(--settings-text);
-  background-color: var(--settings-select-bg);
-  border: 1px solid var(--settings-border);
-  border-radius: 4px;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23888888" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 16px;
-}
-
-.custom-select select:hover {
-  background-color: var(--settings-select-hover);
-}
-
-.custom-select select:focus {
-  outline: none;
-  border-color: var(--settings-accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--settings-accent) 25%, transparent);
-}
-
-#settings_window {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 460px;
-  max-width: calc(100vw - 32px);
-  height: auto;
-  padding: 0;
-  color: var(--settings-text);
-  font-family: var(--top-bar-font);
-  background-color: var(--settings-bg);
-  border: 1px solid var(--settings-border);
-  border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  z-index: 5000;
-}
-
-/* Header — title with a subtle neutral divider */
-.settings-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--settings-border);
-}
-
-.settings-title {
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-
-.settings-close {
-  font-size: 22px;
-  line-height: 1;
-  color: var(--settings-muted);
-  cursor: pointer;
-  padding: 0 4px;
-  border-radius: 4px;
-}
-
-.settings-close:hover {
-  color: var(--settings-accent);
-  background-color: var(--settings-select-hover);
-}
-
-.settings_window-container {
-  display: grid;
-  grid-template-columns: 190px 1fr;
-  grid-template-rows: repeat(5, auto);
-  column-gap: 16px;
-  padding: 6px 20px 16px;
-  font-size: 14px;
-}
-
-/* Both columns share the parent's rows via subgrid so each label
-   lines up exactly with its control. */
-.setting-window-right {
-  display: grid;
-  grid-row: 1 / -1;
-  grid-template-rows: subgrid;
-}
-
-.setting-window-right:first-child {
-  grid-column: 1;
-}
-
-.setting-window-right:last-child {
-  grid-column: 2;
-  overflow: hidden;
-}
-
-.sw_1st_column_items {
-  display: flex;
-  align-items: center;
-  font-size: inherit;
-  color: var(--settings-muted);
-  padding: 4px 0;
-}
-
-.setting-window-right:last-child .custom-select {
-  display: flex;
-  align-items: center;
-  padding: 3px 0;
-}
-
-@media all and (max-width: 580px) {
-  #settings_window {
-    width: 92%;
-    max-width: 92%;
-  }
-
-  .settings_window-container {
-    grid-template-columns: 130px 1fr;
-    font-size: 12px;
-  }
-}
-
 /* === TOP NAVIGATION BAR === */
 
 .top-nav {
@@ -359,8 +220,7 @@
 }
 
 .topbar-icon-btn:hover,
-.tags-icon-btn.active,
-.share-icon-btn.active {
+.topbar-icon-btn.active {
   color: #ffffff;
 }
 
@@ -370,107 +230,13 @@
   color: #fdd835;
 }
 
-/* === SHARE MENU === */
-
-/* Anchors the dropdown to the share icon rather than to the bar, so the panel
-   drops directly under the button wherever the icon row ends up. */
-.share-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-/* Same surface as the search/tags dropdowns. The offset lines the panel up
-   with the bottom of the bar: the button is centred in it, so half the
-   leftover height sits below the button. */
-.share-dropdown {
-  position: absolute;
-  top: calc(100% + (var(--top-bar-height) - var(--topbar-icon-size)) / 2);
-  right: 0;
-  left: auto;
-  display: none;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 2px;
-  width: max-content;
-  max-width: min(calc(6 * var(--topbar-icon-size) + 24px), calc(100vw - 24px));
-  padding: 6px;
-  border: 1px solid var(--autocomplete-dropdown-border);
-  border-radius: 4px;
-  background-color: var(--autocomplete-dropdown-color);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 10000;
-  animation: share-dropdown-in 0.15s ease-out;
-}
-
-.share-dropdown.open {
-  display: flex;
-}
-
-@keyframes share-dropdown-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.share-option {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: calc(var(--topbar-icon-size) - 2px);
-  height: calc(var(--topbar-icon-size) - 2px);
-  padding: 0;
-  border: none;
-  border-radius: 4px;
-  background: none;
-  color: var(--autocomplete-dropdown-text-color);
-  font-size: calc(var(--topbar-icon-font-size) - 3px);
-  line-height: 1;
-  cursor: pointer;
-  outline: none;
-  transition: color 0.15s ease, background-color 0.15s ease;
-}
-
-.share-option:hover {
-  background-color: var(--settings-select-hover);
-}
-
-/* Each platform lights up in its own brand colour on hover. */
-#share-facebook:hover { color: #1877f2; }
-#share-twitter:hover { color: #1da1f2; }
-#share-whatsapp:hover { color: #25d366; }
-#share-reddit:hover { color: #ff4500; }
-#share-hackernews:hover { color: #ff6600; }
-#share-telegram:hover { color: #26a5e4; }
-
-/* === SETTINGS GEAR === */
-
-/* The gear's checkbox is the open/closed state for #settings_window; the
-   <label> is the visible control, so the input itself never shows. */
-input[type="checkbox"] {
-  display: none;
-}
-
-/* Spin the gear a quarter turn while the settings panel is open */
-#toggleButton {
+/* The gear turns a quarter while its panel is open. */
+.settings-icon-btn {
   transition: transform 0.4s ease, color 0.15s ease;
 }
 
-input#toggle:checked + #toggleButton {
+.settings-icon-btn.active {
   transform: rotate(90deg);
-}
-
-input#toggle:checked ~ div#settings_window {
-  display: block;
-}
-
-.setting-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 @media all and (max-width: 1200px) {
@@ -720,24 +486,23 @@ input.search-bar:focus {
   }
 }
 
-/* === SEARCH & TAGS DROPDOWNS === */
+/* === SEARCH DROPDOWN === */
 
-/* Attaches directly beneath the search bar (matching the topbar's own
-   dropdown menus). Angular corners and a flat elevation keep it in line
-   with the site's mostly square, academic aesthetic. */
+/* Attaches directly beneath the search bar. Type and colours are the
+   top-bar panels' (the --panel-* tokens, Panel.astro); the layout is its own. */
 .autocomplete-dropdown {
-  font-family: var(--body-font);
+  font-family: var(--top-bar-font);
   font-size: 15px;
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  color: var(--autocomplete-dropdown-text-color);
-  border: 1px solid var(--autocomplete-dropdown-border);
+  color: var(--panel-text);
+  border: 1px solid var(--panel-border);
   text-decoration: none;
   border-top: none;
   border-radius: 0 0 4px 4px;
-  background-color: var(--autocomplete-dropdown-color);
+  background-color: var(--panel-bg);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   max-height: 70vh;
   overflow-y: auto;
@@ -746,7 +511,7 @@ input.search-bar:focus {
   display: none;
   animation: search-dropdown-in 0.15s ease-out;
   scrollbar-width: thin;
-  scrollbar-color: var(--search-item-border-color) transparent;
+  scrollbar-color: var(--panel-field-border) transparent;
 }
 
 @keyframes search-dropdown-in {
@@ -762,42 +527,17 @@ input.search-bar:focus {
   width: 8px;
 }
 .autocomplete-dropdown::-webkit-scrollbar-thumb {
-  background-color: var(--search-item-border-color);
+  background-color: var(--panel-field-border);
   border-radius: 2px;
-  border: 2px solid var(--autocomplete-dropdown-color);
+  border: 2px solid var(--panel-bg);
 }
 .autocomplete-dropdown::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Reuses the search dropdown's visuals but is anchored to the top bar (dropping
-   from the tags icon) rather than to a search input. Fixed so it sits below the
-   navbar regardless of where the markup lives in the flow. */
-.tags-dropdown {
-  position: fixed;
-  top: var(--top-bar-height);
-  right: 12px;
-  left: auto;
-  width: min(440px, calc(100vw - 24px));
-  border-top: 1px solid var(--autocomplete-dropdown-border);
-  border-radius: 4px;
-  /* No text input here, so nothing overlaps the viewport — let the panel run
-     nearly the full height below the navbar instead of the search bar's 70vh. */
-  max-height: calc(100vh - var(--top-bar-height) - 24px);
-}
-
 @media all and (max-width: 580px) {
   .autocomplete-dropdown {
     max-height: 50vh;
-  }
-
-  /* Full-width, and — with no keyboard covering the screen — nearly the full
-     height below the navbar (overriding the 50vh cap above by source order). */
-  .tags-dropdown {
-    left: 8px;
-    right: 8px;
-    width: auto;
-    max-height: calc(100vh - var(--top-bar-height) - 16px);
   }
 }
 
@@ -805,14 +545,15 @@ input.search-bar:focus {
    Everything below is built at runtime by topbar/search.ts, so it carries no
    scope attribute and every rule is :global(). */
 
-/* Loading state (shown while Pagefind's index loads on the first query) */
+/* Loading state (shown while Pagefind's index loads on the first query; the
+   tags panel uses it too) */
 :global(.search-loading) {
   padding: 16px 14px;
   text-align: center;
-  font-size: 0.85em;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--article-date-color);
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--panel-muted);
   animation: search-loading-pulse 1s ease-in-out infinite;
 }
 @keyframes search-loading-pulse {
@@ -828,21 +569,20 @@ input.search-bar:focus {
 /* Grouped results: one card per page, one row per section match */
 :global(.search-count) {
   padding: 10px 14px;
-  font-size: 0.72em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--article-date-color);
-  border-bottom: 1px solid var(--search-item-border-color);
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--panel-muted);
+  border-bottom: 1px solid var(--panel-rule);
   position: sticky;
   top: 0;
-  background-color: var(--autocomplete-dropdown-color);
+  background-color: var(--panel-bg);
   z-index: 1;
 }
 
 :global(.search-group) {
   padding: 8px 0 10px;
-  border-bottom: 1px solid var(--search-item-border-color);
+  border-bottom: 1px solid var(--panel-rule);
 }
 :global(.search-group:last-child) {
   border-bottom: none;
@@ -857,10 +597,10 @@ input.search-bar:focus {
 :global(.search-group-title) {
   flex: 1;
   min-width: 0;
-  font-weight: 700;
-  font-size: 1.02em;
+  font-weight: bold;
+  font-size: 15px;
   line-height: 1.3;
-  color: var(--highlight-dropdown-color);
+  color: var(--panel-link);
   cursor: pointer;
   transition: color 0.15s ease;
 }
@@ -870,24 +610,23 @@ input.search-bar:focus {
 }
 :global(.search-type-badge) {
   flex: none;
-  font-size: 0.62em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: bold;
   padding: 3px 8px;
   border-radius: 3px;
-  color: var(--highlight-dropdown-color);
-  background-color: var(--autocomplete-item-container-hover);
-  border: 1px solid var(--search-item-border-color);
+  color: var(--panel-muted);
+  background-color: var(--panel-field);
+  border: 1px solid var(--panel-field-border);
 }
 :global(.search-group-tags) {
   padding: 2px 14px 4px;
-  font-size: 0.8em;
-  color: var(--article-date-color);
+  font-size: 13px;
+  color: var(--panel-muted);
 }
 :global(.search-group-tags strong) {
-  color: var(--autocomplete-dropdown-text-color);
-  font-weight: 700;
+  color: var(--panel-text);
+  font-weight: bold;
 }
 
 :global(.search-hit) {
@@ -900,133 +639,21 @@ input.search-bar:focus {
 }
 :global(.search-hit:hover),
 :global(.search-hit.autocomplete-active) {
-  border-left: 3px solid var(--autocomplete-dropdown-left-border);
-  background-color: var(--autocomplete-item-container-hover);
+  border-left: 3px solid var(--panel-selected);
+  background-color: var(--panel-hover);
 }
 :global(.search-hit-heading) {
-  font-size: 0.8em;
-  font-weight: 600;
-  color: var(--highlight-dropdown-color);
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--panel-link);
   margin-bottom: 2px;
 }
 :global(.search-hit-excerpt) {
-  font-size: 0.85em;
+  font-size: 14px;
   line-height: 1.45;
-  color: var(--autocomplete-dropdown-text-color);
+  color: var(--panel-text);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-/* "Browse by tag" panel: chip cloud shown on focus and while tag-filtering */
-:global(.search-tag-panel) {
-  padding: 10px 14px 12px;
-  border-bottom: 1px solid var(--search-item-border-color);
-}
-
-:global(.search-tag-head) {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
-  font-size: 0.72em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--article-date-color);
-}
-
-:global(.search-tag-clear) {
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--highlight-dropdown-color);
-}
-:global(.search-tag-clear:hover) {
-  text-decoration: underline;
-}
-
-:global(.search-tag-chips) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-:global(.search-tag-chip) {
-  font-family: inherit;
-  font-size: 0.72em;
-  cursor: pointer;
-  padding: 2px 7px;
-  border-radius: 3px;
-  border: 1px solid var(--search-item-border-color);
-  background-color: var(--autocomplete-item-container-hover);
-  color: var(--autocomplete-dropdown-text-color);
-  /* No transition: the color/background change on dark-mode toggle must be
-     instant rather than fading over 0.15s. */
-  transition: none;
-}
-:global(.search-tag-chip:hover) {
-  border-color: var(--autocomplete-dropdown-left-border);
-}
-:global(.search-tag-chip.active) {
-  color: #fff;
-  background-color: var(--search-chip-active-bg);
-  border-color: var(--search-chip-active-bg);
-}
-/* While a chip's filtered results are being fetched, pulse it with the same
-   rhythm as the dropdown's "Loading…" row so the click reads as "working". */
-:global(.search-tag-chip.loading) {
-  animation: search-loading-pulse 1s ease-in-out infinite;
-  cursor: progress;
-}
-
-/* The shared --autocomplete-dropdown-text-color is dimmed (#aaa) for excerpts;
-   on the small chips over the #3b3b3b fill that's too low-contrast to read, so
-   brighten the chip label in dark mode. Exclude .active — it keeps its white
-   text on the accent fill. */
-:global(.dark-mode .search-tag-chip:not(.active)) {
-  color: #e8e8e8;
-}
-:global(.search-tag-count) {
-  opacity: 0.7;
-  font-size: 0.9em;
-}
-:global(.dark-mode .search-tag-count) {
-  opacity: 0.85;
-}
-
-@media all and (max-width: 580px) {
-  /* Bound the tag cloud so it can't fill the mobile dropdown and push results
-     below the fold; it scrolls on its own instead. */
-  :global(.search-tag-chips) {
-    max-height: 40vh;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--search-item-border-color) transparent;
-    /* room for the scrollbar so chips aren't clipped under it */
-    padding-right: 4px;
-  }
-
-  :global(.search-tag-chips::-webkit-scrollbar) {
-    width: 6px;
-  }
-
-  :global(.search-tag-chips::-webkit-scrollbar-thumb) {
-    background-color: var(--search-item-border-color);
-    border-radius: 2px;
-  }
-
-  :global(.search-tag-chips::-webkit-scrollbar-track) {
-    background: transparent;
-  }
 }

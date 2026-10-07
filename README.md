@@ -31,7 +31,8 @@ A history of the features, fixes, and smaller tweaks made over the life of the b
 
 ### 2026
 
-- **Oct 2026:** Theorems, lemmas, definitions, problems, figures and tables are numbered at build time, and `<Ref to="…" />` cites them as linked "Lemma 3" / "Figure 2" that stay correct when blocks are added or moved.
+- **Oct 2026:** Redesigned the top bar's tags, share and settings panels as one matching set.
+- **Oct 2026:** Theorems, lemmas, definitions, problems, figures and tables are numbered at build time.
 - **Oct 2026:** Images are written by file name relative to the page's folder (`<Figure src="plot.webp">`), and multi-part articles link their parts through a `series` field in `pages.json`.
 - **Oct 2026:** Page `<title>`, description and keywords now come from `pages.json` (with an optional `shortTitle` for the tab) instead of being repeated in each page.
 - **Oct 2026:** `npm run new` scaffolds a ready-to-write article or post — no more rebuilding the template's header by hand.
