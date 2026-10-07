@@ -18,6 +18,7 @@ import Table from "@components/article/Table.astro";
   <Fragment slot="head">
     <style is:inline>
       .image-container {
+        margin: 1.5rem 0;
         display: flex;
         flex-wrap: wrap;
         gap: 5px;
@@ -308,7 +309,7 @@ import Table from "@components/article/Table.astro";
 
     <section>
       <h3>
-        Have Yet to Try <Icon name="xmark" style="font-size: 15px;" />
+        Have Yet to Try <Icon name="xmark" />
       </h3>
       <Table>
         <thead>
@@ -390,7 +391,7 @@ import Table from "@components/article/Table.astro";
   <section>
     <h2>Gallery</h2>
     <p>Click on image to view full size.</p>
-    <div class="image-container" style="margin: 25px 0">
+    <div class="image-container">
       <img
         class="food-img"
         loading="lazy"

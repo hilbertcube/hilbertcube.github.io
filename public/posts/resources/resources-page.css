@@ -136,3 +136,10 @@
     padding-right: 0;
   }
 }
+
+/* Each embedded video, centred, with a figure's spacing above it. */
+.fav-vids > div {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}

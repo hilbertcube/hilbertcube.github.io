@@ -258,7 +258,7 @@ import References from "@components/article/References.astro";
         serves as a CUDA implementation of the SIFT algorithm.
       </p>
 
-      <p style="margin-top: 30px">
+      <p>
         <strong>Oriented FAST and Rotated BRIEF.</strong>
         FAST, short for &#8220;Features from Accelerated Segment Test,&#8221; is
         a widely recognized corner detection algorithm introduced by Edward Rosten
@@ -572,13 +572,10 @@ import References from "@components/article/References.astro";
         problem.
       </p>
 
-      <TwoColumns style="margin: 30px 0 10px; column-gap: 1.2em;">
+      <TwoColumns>
         <div>
-          <span style="font-size: large;"
-            ><strong>Performance Testing without CUDA Acceleration</strong
-            ></span
-          >
-          <ul style="line-height: 1.6;">
+          <h4 data-toc="skip">Performance Testing without CUDA Acceleration</h4>
+          <ul>
             <li>
               <strong>Benchmark Test:</strong> Record the processing speed of 64 images
               without any optimization, which will serve as the initial benchmark
@@ -610,10 +607,8 @@ import References from "@components/article/References.astro";
           </ul>
         </div>
         <div>
-          <span style="font-size: large;"
-            ><strong>Performance Testing with CUDA Acceleration</strong></span
-          >
-          <ul style="line-height: 1.6;">
+          <h4 data-toc="skip">Performance Testing with CUDA Acceleration</h4>
+          <ul>
             <li>
               <strong>Benchmark Test:</strong> Record the processing speed of 64 images
               under the optimized design of 1 core and 1 threads with CUDA was recorded
