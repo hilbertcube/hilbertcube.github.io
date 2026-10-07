@@ -20,7 +20,7 @@ search in [`SEARCH.md`](SEARCH.md). Import through the aliases (`@layouts/…`,
 
 - **Props are typed** (`interface Props`), so a misspelt prop fails the check.
 - **Styles:** `<style>` is scoped; `<style is:global>` only where rules must reach
-  markup the component doesn't own. Sitewide rules: [`CSS-ORGANIZATION.md`](CSS-ORGANIZATION.md).
+  markup the component doesn't own. Sitewide rules live in `src/assets/css/`.
 - **Scripts:** a bare `<script>` is bundled and placed by *module graph*, so anything
   imported by `BaseLayout` ships site-wide — **such scripts return early when their
   markup is absent.** `<script is:inline>` only for pre-paint code and third-party URLs.
