@@ -31,7 +31,7 @@ const text = await listing(code, () => Astro.slots.render("default"));
   .console {
     line-height: 2;
     background-color: var(--pre-color);
-    font-size: 12px;
+    font-size: calc(12px * var(--font-scale));
     text-align: left;
     position: relative;
     box-sizing: border-box;

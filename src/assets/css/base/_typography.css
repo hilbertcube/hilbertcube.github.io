@@ -13,7 +13,7 @@ h1 {
 
 h2 {
   margin: 80px 0 20px;
-  font-size: 25px;
+  font-size: calc(25px * var(--font-scale));
   border-bottom: 1px solid var(--contrast-line-color);
 }
 
@@ -52,7 +52,7 @@ p {
   min-width: 50%;
   margin-top: 0px;
   margin-left: 0px;
-  font-size: 17px;
+  font-size: calc(17px * var(--font-scale));
 }
 
 /* Caption styles */
@@ -71,13 +71,13 @@ figcaption {
 }
 
 caption {
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 figcaption {
-  font-size: 14px;
+  font-size: calc(14px * var(--font-scale));
   margin-top: 10px;
   margin-bottom: 0;
 }

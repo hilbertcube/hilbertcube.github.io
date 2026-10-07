@@ -5,7 +5,7 @@
 
 code {
   color: var(--inline-code-text);
-  font-size: 13px;
+  font-size: calc(13px * var(--font-scale));
 }
 
 /* Inline code lives in components/code/C.astro, scoped to that component. */
@@ -23,7 +23,7 @@ code {
 .shiki,
 .shiki code {
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  font-size: 12px;
+  font-size: calc(12px * var(--font-scale));
   line-height: 1.5;
 }
 

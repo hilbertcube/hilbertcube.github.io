@@ -62,7 +62,7 @@
   /* Code blocks */
   .shiki,
   .shiki code {
-    font-size: 10px;
+    font-size: calc(10px * var(--font-scale));
   }
 
   .box {

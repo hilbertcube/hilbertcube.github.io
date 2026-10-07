@@ -161,7 +161,9 @@ Zod-validated collections.
 - **Search:** new pages are indexed automatically; `data-pagefind-ignore` hides
   an element.
 - **Styling:** use the `--var` custom properties (they carry dark mode), and no
-  `!important` — readers override fonts and code themes at runtime.
+  `!important` — readers override fonts and code themes at runtime. Size body
+  text in `em`, or as `calc(<n>px * var(--font-scale))` for a fixed size, so it
+  follows the reader's font-size setting.
 
 ---
 

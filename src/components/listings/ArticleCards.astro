@@ -132,7 +132,7 @@ if (count !== undefined) {
   }
 
   .article-name {
-    font-size: 19px;
+    font-size: calc(19px * var(--font-scale));
     margin: 10px 0 0;
     text-align: left;
     color: var(--article-name-color);
@@ -142,7 +142,7 @@ if (count !== undefined) {
   }
 
   .article-topic {
-    font-size: 12px;
+    font-size: calc(12px * var(--font-scale));
     color: var(--article-date-color);
     margin-top: 2px;
     margin-right: 2px;
@@ -153,7 +153,7 @@ if (count !== undefined) {
   .article-description {
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 15px;
+    font-size: calc(15px * var(--font-scale));
     line-height: 1.4;
     color: var(--grid-text-color);
     text-align: justify;
@@ -166,7 +166,7 @@ if (count !== undefined) {
   .article-date {
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: calc(12px * var(--font-scale));
     text-align: left;
     color: var(--article-date-color);
   }
