@@ -233,7 +233,7 @@ import Ref from "@components/math/Ref.astro";
       </section>
 
       <p>With adjacency lists and a binary heap priority queue:</p>
-      <ul style="line-height: 1.6;">
+      <ul>
         <li>
           Extract-min occurs $V$ times at $\Theta(\log V)$ each.
         </li>
@@ -253,7 +253,7 @@ import Ref from "@components/math/Ref.astro";
 
       <section>
         <h4>Useful Properties</h4>
-        <ul style="line-height: 1.6;">
+        <ul>
           <li>
             <b>Ignore constants:</b> $c\,f(n) \in \Theta(f(n))$ for any constant
             $c>0$.
@@ -295,7 +295,7 @@ import Ref from "@components/math/Ref.astro";
           for splitting/merging work. The Master Theorem gives asymptotic
           solutions:
         </p>
-        <ul style="line-height: 1.6;">
+        <ul>
           <li>
             <b>Case 1:</b> If $f(n) \in O\big(n^&#123;\log_b a - \varepsilon&#125;\big)$
             for some $\varepsilon>0$, then $T(n) \in \Theta\big(n^&#123;\log_b a&#125;\big)$.
@@ -1235,7 +1235,7 @@ while j <= length(R) do A[k] <- R[j];  j <- j + 1;  k <- k + 1</Sample>
         where <M>{tex`C_{\text{ext}}, C_{\text{dec}}, C_{\text{build}}`}</M>
         are the costs of an extract-min, a decrease-key and building the queue.
         In particular:
-        <ul style="line-height: 1.6; margin-top: 0.75rem;">
+        <ul>
           <li>
             binary heap: <M>{tex`T \in O\big((V+E)\log V\big)`}</M>;
           </li>

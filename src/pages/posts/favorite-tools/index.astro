@@ -11,6 +11,7 @@ import PubDate from "@components/article/PubDate.astro";
 import Figure from "@components/article/Figure.astro";
 
 import CodeBlock from "@components/code/CodeBlock.astro";
+import C from "@components/code/C.astro";
 ---
 
 <BaseLayout toc>
@@ -68,7 +69,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
             Workspace Settings. Note that the HTML autocomplete does not
             work with React or Next js by default, so you should enable it
             manually via
-            <span style="text-decoration: underline">settings.json</span>. I
+            <C>settings.json</C>. I
             also use an indentation of 2 spaces instead of 4 when writing
             web projects.
             <CodeBlock language="json" is:raw>
@@ -95,7 +96,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
             indentations. When you first install it, it will have very thick
             indentation lines. This look a bit ugly to me, but fortunately,
             you can adjust that in
-            <span style="text-decoration: underline">settings.json</span>.
+            <C>settings.json</C>.
             This is my ideal setting:
 
             <CodeBlock language="json" is:raw>
@@ -193,7 +194,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
 
       <li>
         <strong>Dev Tools</strong>
-        <ul style="line-height: 1.6">
+        <ul>
           <li>
             IntelliCode and IntelliCode API Usage Examples.
           </li>
@@ -210,7 +211,7 @@ import CodeBlock from "@components/code/CodeBlock.astro";
 
       <li>
         <strong>Others</strong>
-        <ul style="line-height: 1.6">
+        <ul>
           <li>
             audio-preview: play and display audio files' information.
           </li>
