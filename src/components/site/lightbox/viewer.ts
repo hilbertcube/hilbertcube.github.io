@@ -9,6 +9,7 @@ import Lightbox, { type SlideImage } from "yet-another-react-lightbox";
 import Counter from "yet-another-react-lightbox/plugins/counter";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import { SPINNER_SVG } from "@utils/spinner";
 // Imported as URLs, not as CSS: Astro hoists a plain CSS import into a
 // render-blocking <link> on every page, even from a lazily imported module.
 import stylesUrl from "yet-another-react-lightbox/styles.css?url";
@@ -32,7 +33,7 @@ const container = document.createElement("div");
 document.body.append(container);
 const root = createRoot(container);
 
-function render(slides: SlideImage[], index: number, open: boolean) {
+function render(slides: SlideImage[], index: number, open: boolean, onShown?: () => void) {
   root.render(
     createElement(Lightbox, {
       open,
@@ -64,14 +65,28 @@ function render(slides: SlideImage[], index: number, open: boolean) {
         // the viewer to scroll.
         scrollToZoom: true,
       },
+      // A slide still downloading shows the site's loader (.spinner, in white
+      // via Lightbox.astro) rather than the library's own icon.
+      render: {
+        iconLoading: () =>
+          createElement("span", { className: "spinner", dangerouslySetInnerHTML: { __html: SPINNER_SVG } }),
+      },
+      on: { entered: onShown },
       // Unmounting on close hands the page back the way it was (scroll lock
       // and focus trap released); reopening re-renders from these props.
-      close: () => render(slides, index, false),
+      close: () => {
+        onShown?.();
+        render(slides, index, false);
+      },
       labels: { Lightbox: "Image viewer" },
     }),
   );
 }
 
-export function openViewer(slides: SlideImage[], index: number) {
-  render(slides, index, true);
+/**
+ * `onShown` runs once the viewer has faded in and covers the page — or on
+ * close, if that comes first — so a caller's loading overlay can't outlive it.
+ */
+export function openViewer(slides: SlideImage[], index: number, onShown?: () => void) {
+  render(slides, index, true, onShown);
 }
