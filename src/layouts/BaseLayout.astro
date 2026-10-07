@@ -140,6 +140,11 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
       var codeDark = localStorage.getItem("darkTheme");
       if (codeLight) document.documentElement.dataset.codeLight = codeLight;
       if (codeDark) document.documentElement.dataset.codeDark = codeDark;
+      // Font-size setting (see topbar/settings.ts), e.g. "18px" → 1.125.
+      var fontSize = parseFloat(localStorage.getItem("fontSize"));
+      if (fontSize) {
+        document.documentElement.style.setProperty("--font-scale", fontSize / 16);
+      }
     </script>
   </head>
 

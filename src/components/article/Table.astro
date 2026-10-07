@@ -38,7 +38,7 @@ const { id, class: className, ...rest } = Astro.props;
 
   .p-table :global(caption) {
     caption-side: bottom;
-    font-size: 14px;
+    font-size: calc(14px * var(--font-scale));
     padding-top: 10px;
     text-align: center;
   }

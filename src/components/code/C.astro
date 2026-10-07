@@ -14,7 +14,7 @@ const { code } = Astro.props;
 <style>
   /* Keeps a flag or identifier on one line. */
   .inline-code {
-    font-size: 13px;
+    font-size: calc(13px * var(--font-scale));
     color: var(--inline-code-text);
     padding: 2px;
     border-radius: 4px;

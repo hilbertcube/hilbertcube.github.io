@@ -20,6 +20,7 @@
 
 .content-grid {
   font-family: var(--body-font);
+  font-size: calc(16px * var(--font-scale));
   width: var(--general-wrapper-width);
   margin-left: auto;
   margin-right: auto;
