@@ -1,0 +1,81 @@
+/*
+ * .spinner — the one loader, used by FrontImage (on the page) and the lightbox
+ * (on its black backdrop): the logo's Hilbert curve drawing itself. The markup
+ * comes from src/utils/spinner.ts; each owner positions the box. The colours
+ * are two settings (defaults in base/_variables.css, theme-aware):
+ *   --spinner-track   the faint full curve
+ *   --spinner-head    the stroke that draws along it
+ * The fade-in sits out the first 0.25s, so a load that finishes quickly is
+ * done before the loader is ever visible.
+ */
+.spinner {
+  display: block;
+  width: 48px;
+  height: 48px;
+  animation: spinner-delayed-in 0.2s ease-out 0.25s both;
+}
+
+.spinner svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner-track,
+.spinner-head {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.spinner-track {
+  stroke: var(--spinner-track);
+  stroke-width: 2;
+}
+
+.spinner-head {
+  stroke: var(--spinner-head);
+  stroke-width: 3.5;
+  /* 567 = the curve's length: 63 steps of 9 (src/utils/spinner.ts). Literal on
+     purpose: an offset of calc(-1 * var(…)) doesn't interpolate, so the erase
+     would jump instead of sweeping. */
+  stroke-dasharray: 567;
+  stroke-dashoffset: 567;
+  animation: spinner-draw 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* Draw the whole curve, hold, then erase it from the start. */
+@keyframes spinner-draw {
+  0% {
+    stroke-dashoffset: 567;
+  }
+  46%,
+  54% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -567;
+  }
+}
+
+/* Also used by the lightbox's loading backdrop, so it appears with the loader. */
+@keyframes spinner-delayed-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner-head {
+    animation-duration: 6s;
+  }
+}
+
+@media print {
+  .spinner {
+    display: none;
+  }
+}

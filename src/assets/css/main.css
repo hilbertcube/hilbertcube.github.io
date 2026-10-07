@@ -18,6 +18,7 @@
 @import url("components/_math.css");
 @import url("components/_code-blocks.css");
 @import url("components/_content.css");
+@import url("components/_spinner.css");
 
 /* === PAGES === */
 @import url("pages/_home.css");

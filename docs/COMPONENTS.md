@@ -79,7 +79,10 @@ Props only override that.
 ### FrontImage
 
 The banner under the title. Children become the caption; it opens in the
-[lightbox](#lightbox) (`class="no-lightbox"` opts out).
+[lightbox](#lightbox) (`class="no-lightbox"` opts out). Its `width`/`height` are read from
+the file in `public/` at build time, so the box is reserved before the image arrives and a
+loader (the logo's Hilbert curve drawing itself) shows there while it loads — only after
+0.25s, so a cached banner never flashes it.
 
 | Prop | Default | Notes |
 |---|---|---|
@@ -367,8 +370,11 @@ Sidebar logo and nav list; footer links. No props.
 ### Lightbox
 
 Click a content image to view it fullscreen. Its script lazy-loads
-yet-another-react-lightbox (`site/lightbox/viewer.ts`) on first click. Excluded:
-`#logoImage`, sidebar highlight covers, `class="no-lightbox"`.
+yet-another-react-lightbox (`site/lightbox/viewer.ts`) on first click. While that
+downloads, a black backdrop with the loader, in white, covers the page — after
+0.25s, so a fast open never shows it; a click or Escape cancels. The viewer shows the same
+loader for a slide still downloading. Excluded: `#logoImage`, sidebar highlight covers,
+`class="no-lightbox"`.
 
 ### HeroBanner
 

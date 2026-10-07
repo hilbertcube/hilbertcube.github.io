@@ -2,11 +2,14 @@
 /**
  * Lightbox.astro — click a content image to view it fullscreen, with prev/next
  * across the page. Renders no markup: the script marks matching images and
- * loads the viewer (./lightbox/viewer.ts) on first click.
+ * loads the viewer (./lightbox/viewer.ts) on first click, showing a spinner
+ * over a backdrop while it downloads.
  */
 ---
 
 <script>
+  import { SPINNER_SVG } from "@utils/spinner";
+
   // Every image except site chrome and opt-outs.
   const IMAGE_SELECTOR =
     "img:not(#logoImage):not(.no-lightbox):not(.recommend-img img)";
@@ -18,11 +21,46 @@
     // settled once the browser has picked a candidate for it.
     const slides = () => images.map((image) => ({ src: image.currentSrc || image.src, alt: image.alt }));
 
+    // Covers the page from the click until the viewer has faded in over it.
+    // Clicking it or pressing Escape gives up on that open.
+    let pending: HTMLElement | null = null;
+    const hidePending = () => {
+      pending?.remove();
+      pending = null;
+      document.removeEventListener("keydown", onKey);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") hidePending();
+    };
+    const showPending = () => {
+      hidePending();
+      const overlay = document.createElement("div");
+      overlay.className = "lightbox-pending";
+      overlay.setAttribute("role", "status");
+      overlay.setAttribute("aria-label", "Loading image viewer");
+      overlay.innerHTML = `<span class="spinner">${SPINNER_SVG}</span>`;
+      overlay.addEventListener("click", hidePending);
+      document.addEventListener("keydown", onKey);
+      document.body.append(overlay);
+      pending = overlay;
+      return overlay;
+    };
+
     images.forEach((image, index) => {
       image.classList.add("lightbox-source");
       image.addEventListener("click", async () => {
-        const { openViewer } = await import("./lightbox/viewer");
-        openViewer(slides(), index);
+        const overlay = showPending();
+        try {
+          const { openViewer } = await import("./lightbox/viewer");
+          // Cancelled (or superseded by another click) while downloading.
+          if (pending !== overlay) return;
+          // Ready before the overlay began to show: drop it now. A visible one
+          // stays until the viewer has faded in over it.
+          if (getComputedStyle(overlay).opacity === "0") hidePending();
+          openViewer(slides(), index, hidePending);
+        } catch {
+          hidePending();
+        }
       });
     });
   }
@@ -31,5 +69,27 @@
 <style>
   :global(.lightbox-source) {
     cursor: pointer;
+  }
+
+  /* The viewer's own backdrop (yarl's default #000), so handing over to it is
+     seamless. It fades in with the ring after 0.25s: when the viewer is
+     already cached it opens before either is ever visible. */
+  :global(.lightbox-pending) {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    animation: spinner-delayed-in 0.2s ease-out 0.25s both;
+  }
+
+  /* The shared loader (components/_spinner.css) on black: white, like the
+     viewer's controls — here and for a slide still downloading in the viewer. */
+  :global(.lightbox-pending),
+  :global(.yarl__portal) {
+    --spinner-track: rgba(255, 255, 255, 0.15);
+    --spinner-head: #fff;
   }
 </style>

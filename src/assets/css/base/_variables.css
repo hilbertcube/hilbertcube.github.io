@@ -74,6 +74,10 @@
   --settings-muted: #595959;
   --settings-border: #d4d4d4;
   --settings-accent: #0954b6;
+
+  /* Loader (components/_spinner.css): faint curve, and the stroke drawing it. */
+  --spinner-track: #d6d6d6;
+  --spinner-head: var(--settings-accent);
   --settings-select-bg: #f7f7f7;
   --settings-select-hover: #ededed;
   
@@ -133,6 +137,7 @@ html.dark-mode {
   --settings-muted: #a9a9b3;
   --settings-border: #3a3a3a;
   --settings-accent: #0091ff;
+  --spinner-track: #3a3a3a;
   --settings-select-bg: #262626;
   --settings-select-hover: #303030;
 }

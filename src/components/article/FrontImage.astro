@@ -2,8 +2,15 @@
 /**
  * FrontImage.astro — the banner under an article's title. `width` (desktop
  * only) goes through a custom property; children become the caption.
+ *
+ * The image's size is read from public/ at build time, so its box is reserved
+ * before it arrives; a spinner sits behind it in that box until it loads.
  */
+import fs from "node:fs";
+import path from "node:path";
+import { imageMetadata } from "astro/assets/utils";
 import { pageAsset } from "@utils/pageAsset";
+import { SPINNER_SVG } from "@utils/spinner";
 
 interface Props {
   /** Image source; a relative path ("banner.webp") is in the page's own public/ folder. */
@@ -19,10 +26,31 @@ const {
   width = "100%",
   fetchpriority = "high",
 } = Astro.props;
+
+const url = pageAsset(src, Astro.url.pathname);
+
+// Intrinsic size for local files, so the box (and the spinner in it) exists
+// before the image does. A file that isn't there yet just goes without.
+let size: { width?: number; height?: number } = {};
+const file = path.join(process.cwd(), "public", decodeURI(url));
+if (url.startsWith("/") && fs.existsSync(file)) {
+  const meta = await imageMetadata(fs.readFileSync(file), url);
+  size = { width: meta.width, height: meta.height };
+}
 ---
 
 <figure class="front-img-figure" style={`--front-img-width: ${width};`}>
-  <img class="front-img" src={pageAsset(src, Astro.url.pathname)} alt={alt} fetchpriority={fetchpriority} />
+  <div class="front-img-frame">
+    <span class="spinner front-img-spinner" aria-hidden="true" set:html={SPINNER_SVG} />
+    <img
+      class="front-img"
+      src={url}
+      alt={alt}
+      width={size.width}
+      height={size.height}
+      fetchpriority={fetchpriority}
+    />
+  </div>
   {
     Astro.slots.has("default") && (
       <figcaption>
@@ -32,21 +60,64 @@ const {
   }
 </figure>
 
+<script>
+  // The spinner already sits behind the image, which covers it as it paints;
+  // this also clears it for a transparent or broken image.
+  for (const frame of document.querySelectorAll<HTMLElement>(".front-img-frame")) {
+    const img = frame.querySelector("img");
+    if (!img) continue;
+    const done = () => frame.classList.add("is-loaded");
+    if (img.complete) {
+      done();
+    } else {
+      img.addEventListener("load", done, { once: true });
+      img.addEventListener("error", done, { once: true });
+    }
+  }
+</script>
+
 <style>
   .front-img-figure {
     margin: 0;
   }
 
-  .front-img {
-    display: block;
+  /* Sized like the image, so the spinner centres on the banner's box. */
+  .front-img-frame {
+    position: relative;
     width: var(--front-img-width, 100%);
-    border-radius: var(--image-radius);
-    height: auto;
     margin: auto;
+    border-radius: var(--image-radius);
+    background-color: var(--pre-color);
+  }
+
+  .front-img-frame.is-loaded {
+    background-color: transparent;
+  }
+
+  .front-img {
+    /* Above the spinner: the image hides it as soon as it paints. */
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--image-radius);
+  }
+
+  /* The shared loader (components/_spinner.css) in its default theme colours,
+     centred on the banner's box. */
+  .front-img-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .is-loaded .front-img-spinner {
+    display: none;
   }
 
   @media all and (max-width: 580px) {
-    .front-img {
+    .front-img-frame {
       width: 100%;
     }
   }
