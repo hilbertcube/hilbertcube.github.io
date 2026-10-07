@@ -9,7 +9,8 @@
  *   explicitly to override, or to use this outside /articles/ and /posts/.
  * - The raw collection value is an ISO "YYYY-MM-DD" string, run through
  *   `formatDate` internally so pages never import the formatter themselves.
- * - Styled by the scoped `.date` rule below.
+ * - Styled by the scoped `.date` rule below. The date is Pagefind's `date`
+ *   meta, which the top bar's tags panel lists under each page.
  * - Carries the "Save as PDF" button (SavePdf), so every article and post has one.
  */
 import SavePdf from "@components/article/SavePdf.astro";
@@ -26,7 +27,7 @@ const pubDate =
 ---
 
 <div class="date-row">
-  <div class="date">Posted {formatDate(pubDate)}</div>
+  <div class="date">Posted <span data-pagefind-meta="date">{formatDate(pubDate)}</span></div>
   <SavePdf />
 </div>
 

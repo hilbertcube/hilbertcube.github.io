@@ -4,20 +4,13 @@
  * ============
  */
 import Icon from '@components/ui/Icon.astro';
+import TagsPanel from '@components/site/topbar/TagsPanel.astro';
+import SharePanel from '@components/site/topbar/SharePanel.astro';
+import SettingsPanel from '@components/site/topbar/SettingsPanel.astro';
 import { getIconSvg } from '@utils/fontawesome';
-import { LIGHT_THEMES, DARK_THEMES } from '@utils/codeThemes';
 
 const moonSvg = getIconSvg('fas', 'moon');
 const sunSvg = getIconSvg('fas', 'sun');
-
-const sharePlatforms = [
-  { id: 'facebook', title: 'Facebook', icon: 'facebook' },
-  { id: 'twitter', title: 'Twitter', icon: 'x-twitter' },
-  { id: 'whatsapp', title: 'Whatsapp', icon: 'whatsapp' },
-  { id: 'reddit', title: 'Reddit', icon: 'reddit' },
-  { id: 'hackernews', title: 'Hacker News', icon: 'hacker-news' },
-  { id: 'telegram', title: 'Telegram', icon: 'telegram' },
-];
 ---
 
 <div class="top-nav">
@@ -65,37 +58,25 @@ const sharePlatforms = [
         <button
           type="button"
           id="tagsBtn"
-          class="topbar-icon-btn tags-icon-btn"
+          class="topbar-icon-btn"
           aria-label="browse-tags"
+          aria-controls="tagsPanel"
+          aria-expanded="false"
         >
           <Icon name="tags" />
         </button>
       </abbr>
-      <abbr title="share this page" class="share-container">
+      <abbr title="share this page">
         <button
           type="button"
           id="shareBtn"
-          class="topbar-icon-btn share-icon-btn"
+          class="topbar-icon-btn"
           aria-label="share-page"
+          aria-controls="sharePanel"
+          aria-expanded="false"
         >
           <Icon name="share-nodes" />
         </button>
-        <div class="share-dropdown" id="shareDropdown">
-          {
-            sharePlatforms.map((platform) => (
-              <button
-                type="button"
-                class="share-option"
-                data-share={platform.id}
-                id={`share-${platform.id}`}
-                title={platform.title}
-                aria-label={`share-on-${platform.id}`}
-              >
-                <Icon name={platform.icon} prefix="fab" />
-              </button>
-            ))
-          }
-        </div>
       </abbr>
       <abbr title="RSS" class="rss">
         <a aria-label="rss" href="/rss/feed.xml" class="topbar-icon-btn">
@@ -116,76 +97,23 @@ const sharePlatforms = [
           window.__iconSvg = { moon: moonSvg, sun: sunSvg };
         </script>
       </abbr>
-      <abbr title="settings" class="setting-container">
-        <input id="toggle" type="checkbox" />
-        <label for="toggle" id="toggleButton" class="topbar-icon-btn">
+      <abbr title="settings">
+        <button
+          type="button"
+          id="settingsBtn"
+          class="topbar-icon-btn settings-icon-btn"
+          aria-label="settings"
+          aria-controls="settingsPanel"
+          aria-expanded="false"
+        >
           <Icon name="gear" />
-        </label>
-        <div class="hidden" id="settings_window">
-          <div class="settings-header">
-            <span class="settings-title">Settings</span>
-            <label
-              for="toggle"
-              class="settings-close"
-              aria-label="close-settings">&times;</label
-            >
-          </div>
-          <div class="settings_window-container">
-            <div class="setting-window-right">
-              <div class="sw_1st_column_items">Body Font</div>
-              <div class="sw_1st_column_items">Font Size</div>
-              <div class="sw_1st_column_items">Scroll Indicator</div>
-              <div class="sw_1st_column_items">Code Theme (Light Mode)</div>
-              <div class="sw_1st_column_items">Code Theme (Dark Mode)</div>
-            </div>
-            <div class="setting-window-right">
-              <div class="custom-select">
-                <select id="font-select">
-                  <option value="Computer-Modern"
-                    >Computer Modern, serif: Default</option
-                  >
-                  <option value="et-book">et book, palantino</option>
-                  <option value="sans-serif">Arial, sans-serif</option>
-                  <option value="Georgia">Georgia, serif</option>
-                  <option value="Times New Roman">Times New Roman, serif</option>
-                  <option value="Verdana">Verdana, sans-serif</option>
-                </select>
-              </div>
-              <div class="custom-select">
-                <select id="font-size-select">
-                  <option value="14px">Small (14px)</option>
-                  <option value="15px">Low Medium (15px)</option>
-                  <option value="16px">Medium: Default (16px)</option>
-                  <option value="17px">High Medium (17px)</option>
-                  <option value="18px">Large (18px)</option>
-                  <option value="20px">Extra Large (20px)</option>
-                  <option value="22px">Ultra Large (22px)</option>
-                </select>
-              </div>
-              <div class="custom-select">
-                <select id="indicator-select">
-                  <option value="block">Show</option>
-                  <option value="none">Hide</option>
-                </select>
-              </div>
-              <div class="custom-select">
-                <select id="light-theme-select">
-                  {LIGHT_THEMES.map((t) => <option value={t.id}>{t.label}</option>)}
-                </select>
-              </div>
-              <div class="custom-select">
-                <select id="dark-theme-select">
-                  {DARK_THEMES.map((t) => <option value={t.id}>{t.label}</option>)}
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
+        </button>
       </abbr>
     </div>
 
-    <div class="autocomplete-dropdown tags-dropdown" id="tags-dropdown"></div>
-    <div class="search-overlay" id="tagsOverlay"></div>
+    <TagsPanel />
+    <SharePanel />
+    <SettingsPanel />
   </div>
 
   <div class="progress-container">
@@ -195,21 +123,14 @@ const sharePlatforms = [
 
 <script>
   import { initNav } from "./topbar/nav";
-  import { initCodeThemeSelect, initDarkMode } from "./topbar/theme";
-  import { initSettings, initProgressBar } from "./topbar/settings";
+  import { initDarkMode } from "./topbar/theme";
+  import { initProgressBar } from "./topbar/settings";
   import { initSearch } from "./topbar/search";
-  import { initShare } from "./topbar/share";
 
   initNav();
-
-  initCodeThemeSelect("light-theme-select", "lightTheme", "codeLight");
-  initCodeThemeSelect("dark-theme-select", "darkTheme", "codeDark");
   initDarkMode();
-
-  initSettings();
   initProgressBar();
   initSearch();
-  initShare();
 </script>
 
 <style>

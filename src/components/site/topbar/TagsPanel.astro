@@ -1,0 +1,133 @@
+---
+/**
+ * TagsPanel.astro
+ * ===============
+ * Every topic as a chip, and the pages carrying all of the selected ones.
+ * The chips and pages are built at runtime by tags.ts.
+ */
+import Panel from "@components/site/topbar/Panel.astro";
+---
+
+<Panel id="tagsPanel" title="Browse by tag" width={420} escHint>
+  <button type="button" class="tb-panel-action" id="tagsClear" slot="actions" hidden>
+    Clear
+  </button>
+  <div class="tb-panel-section">
+    <span class="tb-panel-label">Topics</span>
+    <div class="tags-chips" id="tagsChips"></div>
+  </div>
+  <div class="tb-panel-section tags-results-section">
+    <span class="tb-panel-label" id="tagsResultLabel">Pages</span>
+    <p class="tags-hint" id="tagsHint">
+      Pick one or more topics.
+    </p>
+    <div class="tags-results" id="tagsResults"></div>
+  </div>
+  <span id="tagsTotal" slot="footer"></span>
+</Panel>
+
+<script>
+  import { initTagsPanel } from "./tags";
+
+  initTagsPanel();
+</script>
+
+<style>
+  .tags-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-height: 260px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Chips and results are built by tags.ts, so they carry no scope. */
+  .tags-chips :global(.tag-chip) {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 2px 7px;
+    border: 1px solid var(--panel-field-border);
+    border-radius: 3px;
+    background-color: var(--panel-field);
+    color: var(--panel-text);
+    font-family: inherit;
+    font-size: 13.5px;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+
+  .tags-chips :global(.tag-chip:hover) {
+    border-color: var(--panel-selected);
+  }
+
+  .tags-chips :global(.tag-chip[aria-pressed="true"]) {
+    color: #ffffff;
+    background-color: var(--panel-selected);
+    border-color: var(--panel-selected);
+  }
+
+  .tags-chips :global(.tag-chip-count) {
+    font-size: 11.5px;
+    opacity: 0.75;
+  }
+
+  /* While the chip's filtered results load, it pulses like "Loading…". */
+  .tags-chips :global(.tag-chip.loading) {
+    animation: search-loading-pulse 1s ease-in-out infinite;
+    cursor: progress;
+  }
+
+  .tags-results-section {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 8px;
+  }
+
+  .tags-results-section > .tb-panel-label {
+    padding: 0 16px;
+  }
+
+  .tags-results {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tags-results :global(.tag-result) {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
+  .tags-results :global(.tag-result:hover) {
+    background-color: var(--panel-hover);
+  }
+
+  .tags-results :global(.tag-result-title) {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.3;
+    color: var(--panel-link);
+  }
+
+  .tags-results :global(.tag-result-meta) {
+    font-size: 13px;
+    color: var(--panel-muted);
+  }
+
+  .tags-results :global(.tag-result-type) {
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+  }
+
+  .tags-hint {
+    margin: 0;
+    padding: 0 16px 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--panel-muted);
+  }
+</style>

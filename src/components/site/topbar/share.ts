@@ -1,9 +1,11 @@
 /**
  * share.ts
  * ========
- * The top bar's share menu: a dropdown of social platforms, each opening that
- * platform's share URL for the current page in a new tab.
+ * The top bar's share panel: the page's link with a Copy button, and one
+ * button per platform opening that platform's share URL in a new tab.
  */
+
+import { initPanel } from "./panel";
 
 const SHARE_URLS: Record<string, (url: string, title: string) => string> = {
   facebook: (url) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
@@ -18,50 +20,41 @@ const SHARE_URLS: Record<string, (url: string, title: string) => string> = {
 };
 
 export function initShare() {
-  const button = document.getElementById("shareBtn");
-  const dropdown = document.getElementById("shareDropdown");
-  if (!button || !dropdown) return;
+  const panel = initPanel("shareBtn", "sharePanel");
+  if (!panel) return;
 
-  let open = false;
+  const url = document.getElementById("shareUrl");
+  if (url) url.textContent = location.host + location.pathname;
 
-  const setOpen = (next: boolean) => {
-    open = next;
-    button.classList.toggle("active", open);
-    dropdown.classList.toggle("open", open);
-  };
-
-  button.addEventListener("click", (event) => {
-    event.preventDefault();
-    setOpen(!open);
+  const copy = document.getElementById("shareCopy");
+  const copyLabel = document.getElementById("shareCopyLabel");
+  let resetLabel: ReturnType<typeof setTimeout> | undefined;
+  copy?.addEventListener("click", async () => {
+    if (!copyLabel) return;
+    try {
+      await navigator.clipboard.writeText(location.href);
+      copyLabel.textContent = "Copied";
+    } catch {
+      copyLabel.textContent = "Failed";
+    }
+    clearTimeout(resetLabel);
+    resetLabel = setTimeout(() => (copyLabel.textContent = "Copy"), 1500);
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && open) setOpen(false);
-  });
-
-  // Close on a click outside the button/dropdown. Guarded by `open` so it's a
-  // no-op when already closed.
-  document.addEventListener("click", (event) => {
-    if (!open) return;
-    const target = event.target as Node;
-    if (!target.isConnected) return;
-    if (button.contains(target) || dropdown.contains(target)) return;
-    setOpen(false);
-  });
-
-  dropdown.querySelectorAll<HTMLElement>(".share-option").forEach((option) => {
-    option.addEventListener("click", (event) => {
-      event.preventDefault();
-      const build = SHARE_URLS[option.dataset.share ?? ""];
-      if (!build) return;
-      window.open(
-        build(
-          encodeURIComponent(window.location.href),
-          encodeURIComponent(document.title),
-        ),
-        "_blank",
-      );
-      setOpen(false);
+  document
+    .querySelectorAll<HTMLElement>("#sharePanel .share-option")
+    .forEach((option) => {
+      option.addEventListener("click", () => {
+        const build = SHARE_URLS[option.dataset.share ?? ""];
+        if (!build) return;
+        window.open(
+          build(
+            encodeURIComponent(location.href),
+            encodeURIComponent(document.title),
+          ),
+          "_blank",
+        );
+        panel.close();
+      });
     });
-  });
 }

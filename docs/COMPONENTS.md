@@ -346,22 +346,34 @@ Rendered by `BaseLayout`; pages only use `HeroBanner`.
 
 ### TopBar
 
-Links, hamburger, search, tag browser, RSS, share menu, dark-mode toggle, settings
-panel, reading-progress bar. Behaviour in `site/topbar/`:
+Links, hamburger, search, RSS, dark-mode toggle, reading-progress bar, and three
+panels — tags, share, reading settings — each its own component in `site/topbar/`:
+
+| Component | Is |
+|---|---|
+| `Panel` | The shared frame: `id`, `title`, `width`, `escHint`; slots `actions`, default, `footer`. Places the panel just below the bar at its right edge (full width on phones), and holds the global `.tb-panel-section` / `-label` / `-row` / `-field` / `-action` building blocks (colours: the `--panel-*` tokens) |
+| `TagsPanel` | Topic chips and the pages carrying all selected ones |
+| `SharePanel` | The page link with Copy, and the platforms |
+| `SettingsPanel` | Body font, font size, code themes, progress-bar switch, Reset |
+
+Behaviour, in `site/topbar/`:
 
 | Module | Does |
 |---|---|
 | `nav.ts` | Sidebar open/closed (open by default at ≥1200px) |
 | `theme.ts` | Dark mode and the two code-theme selects |
-| `settings.ts` | Font, font size, scroll indicator; progress bar |
-| `search.ts` | Search and tag browser ([`SEARCH.md`](SEARCH.md)) |
-| `share.ts` | Share dropdown |
+| `panel.ts` | Panel open/close: icon toggles; Escape, × or a click outside closes; opening search closes all |
+| `settings.ts` | Settings panel (font, font size, progress-bar switch, Reset); progress bar |
+| `search.ts` | Search bar and dropdown ([`SEARCH.md`](SEARCH.md)) |
+| `searchIndex.ts` | Pagefind / `pages.json` engine, queries and facets, shared by search and tags |
+| `tags.ts` | Tags panel |
+| `share.ts` | Share panel (Copy link, platforms) |
 
 Dark mode is a `dark-mode` class on `<html>`, stored in `localStorage.mode`; an inline
 script in `BaseLayout`'s `<head>` applies it and the code theme before first paint.
 
-**Adding a share platform:** an entry in `sharePlatforms` in `TopBar.astro`
-(`{ id, title, icon }`) and the same `id` in `SHARE_URLS` in `share.ts`.
+**Adding a share platform:** an entry in `sharePlatforms` in `SharePanel.astro`
+(`{ id, title, icon, color? }`) and the same `id` in `SHARE_URLS` in `share.ts`.
 
 ### Logo, Footer
 
