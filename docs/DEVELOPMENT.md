@@ -9,18 +9,36 @@ the workflow; the other docs:
 | [`COMPONENTS.md`](COMPONENTS.md) | Every component, its props and gotchas |
 | [`SEARCH.md`](SEARCH.md) | How search is built, indexed and served |
 | [`AUTOMATION.md`](AUTOMATION.md) | The scripts in `scripts/` |
-| [`CSS-ORGANIZATION.md`](CSS-ORGANIZATION.md) | How `src/assets/css/` is laid out |
 
 ---
 
 ## 1. Commands
 
-| Command | Does | Use for |
-|---|---|---|
-| `npm run dev` | Dev server, hot reload. **No search index** — search falls back to title-only. | Writing and styling |
-| `npm run build` | `lint-pages.mjs` → `astro build` → `pagefind-ignore-math.mjs` → `pagefind`, into `dist/` | Testing real search and the final HTML |
-| `npm run preview` | Serves `dist/` | After `build` |
-| `npm run check` | `lint-pages.mjs` → `astro check` | Before committing — there is no test suite |
+Dev server with hot reload, for writing and styling. **No search index** — search
+falls back to title-only.
+
+```bash
+npm run dev
+```
+
+`lint-pages.mjs` → `astro build` → `pagefind-ignore-math.mjs` → `pagefind`, into
+`dist/`. For testing real search and the final HTML.
+
+```bash
+npm run build
+```
+
+Serves `dist/`, after a `build`.
+
+```bash
+npm run preview
+```
+
+`lint-pages.mjs` → `astro check`. Run before committing — there is no test suite.
+
+```bash
+npm run check
+```
 
 Pushing to `main` deploys: `.github/workflows/static-pages.yml` (Node 24) runs
 `astro check`, then builds and publishes `dist/` (gitignored). A failure in either

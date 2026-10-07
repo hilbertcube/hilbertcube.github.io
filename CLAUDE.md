@@ -172,7 +172,6 @@ Read the relevant one before non-trivial changes:
 | `docs/COMPONENTS.md` | Every component, its props, and its gotchas (has a cheat-sheet + symptom table) |
 | `docs/SEARCH.md` | Pagefind pipeline, snippet building, on-page highlight/scroll |
 | `docs/AUTOMATION.md` | The helper scripts in `scripts/` |
-| `docs/CSS-ORGANIZATION.md` | CSS file layout |
 
 Keep `README.md`'s Change Log updated for important user-visible changes; it is the
 project's history.
