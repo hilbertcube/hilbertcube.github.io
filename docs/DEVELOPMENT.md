@@ -163,7 +163,8 @@ Zod-validated collections.
 - **Styling:** use the `--var` custom properties (they carry dark mode), and no
   `!important` — readers override fonts and code themes at runtime. Size body
   text in `em`, or as `calc(<n>px * var(--font-scale))` for a fixed size, so it
-  follows the reader's font-size setting.
+  follows the reader's font-size setting. Reading text that sets its own
+  `font-family` uses `var(--body-font)`, so it follows the body-font setting.
 
 ---
 

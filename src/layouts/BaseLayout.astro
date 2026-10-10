@@ -140,6 +140,11 @@ const tocItems = toc ? extractToc(body, toc === true ? {} : toc) : [];
       var codeDark = localStorage.getItem("darkTheme");
       if (codeLight) document.documentElement.dataset.codeLight = codeLight;
       if (codeDark) document.documentElement.dataset.codeDark = codeDark;
+      // Body-font setting (see topbar/settings.ts).
+      var fontFamily = localStorage.getItem("fontFamily");
+      if (fontFamily && fontFamily !== "Computer-Modern") {
+        document.documentElement.style.setProperty("--body-font", fontFamily);
+      }
       // Font-size setting (see topbar/settings.ts), e.g. "18px" → 1.125.
       var fontSize = parseFloat(localStorage.getItem("fontSize"));
       if (fontSize) {

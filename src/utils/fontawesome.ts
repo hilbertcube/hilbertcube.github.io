@@ -9,7 +9,6 @@ import {
   faCheck,
   faChevronLeft,
   faChevronRight,
-  faCopy,
   faDownload,
   faEnvelope,
   faGear,
@@ -24,6 +23,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import {
+  faBluesky,
   faFacebook,
   faGithub,
   faHackerNews,
@@ -39,7 +39,6 @@ library.add(
   faCheck,
   faChevronLeft,
   faChevronRight,
-  faCopy,
   faDownload,
   faEnvelope,
   faGear,
@@ -53,6 +52,7 @@ library.add(
   faUpRightFromSquare,
   faXmark,
   // Brands
+  faBluesky,
   faFacebook,
   faGithub,
   faHackerNews,

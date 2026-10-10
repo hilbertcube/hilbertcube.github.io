@@ -2,8 +2,7 @@
  * panel.ts
  * ========
  * Open/close for the top bar's panels (tags, share, settings): the icon
- * toggles its panel; Escape, a [data-panel-close] button or a click outside
- * the icon and panel closes it. While open, the icon carries `.active` and
+ * toggles its panel; Escape or a click outside the icon and panel closes it. While open, the icon carries `.active` and
  * `aria-expanded="true"`. Opening the search bar closes them all
  * (closePanels()).
  */
@@ -43,10 +42,6 @@ export function initPanel(
     event.preventDefault();
     setOpen(!open);
   });
-
-  panel
-    .querySelectorAll<HTMLElement>("[data-panel-close]")
-    .forEach((el) => el.addEventListener("click", () => setOpen(false)));
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && open) setOpen(false);

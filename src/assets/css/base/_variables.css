@@ -9,7 +9,10 @@
      Body text sizes multiply by it so the whole content column scales. */
   --font-scale: 1;
   --paragraph-font-size: calc(16px * var(--font-scale));
+  /* Reader's body-font setting, set on <html> by topbar/settings.ts. Every
+     reading surface (top bar, sidebar, page, footer) uses it. */
   --body-font: "Computer-Modern", sans-serif;
+  /* Fixed font for the top-bar panels and search dropdown. */
   --top-bar-font: "Computer-Modern", serif;
   
   
@@ -98,7 +101,7 @@ html.dark-mode {
   
   /* Code */
   --code-box-color: #2a2a2a;
-  --inline-code-text: rgb(0, 194, 0);
+  --inline-code-text: rgb(0, 180, 0);
   --box-border: #424242;
   --pre-color: #1a1a1a;
   --tab-color: black;

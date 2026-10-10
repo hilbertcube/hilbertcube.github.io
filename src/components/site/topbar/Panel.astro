@@ -9,25 +9,22 @@
  *
  * - `id` is the element the icon's `aria-controls` names; the panel's script
  *   wires the two together with `initPanel()` (panel.ts).
- * - Slots: `actions` (header buttons beside ×), the default slot (sections),
- *   `footer`. `escHint` adds "Esc to close" to the footer.
- * - Closing hint: "Esc to close" on desktop, the × on phones.
+ * - Slots: `actions` (header buttons), the default slot (sections),
+ *   `footer` (omitted when empty).
+ * - Every font size in a panel is `calc(<n>px * var(--panel-scale))`, so
+ *   phones shrink all panel text by the same factor.
  * - Content builds on `.tb-panel-section` / `-label` / `-row` / `-field` /
  *   `-action` (the global styles below); a panel's own scoped rules override
  *   them.
  */
-import Icon from "@components/ui/Icon.astro";
-
 interface Props {
   id: string;
   title: string;
   /** Width in px, below the phone breakpoint's full width. */
   width: number;
-  escHint?: boolean;
 }
 
-const { id, title, width, escHint = false } = Astro.props;
-const hasFooter = Astro.slots.has("footer");
+const { id, title, width } = Astro.props;
 ---
 
 <div
@@ -41,21 +38,13 @@ const hasFooter = Astro.slots.has("footer");
     <h2 class="tb-panel-title" id={`${id}Title`}>{title}</h2>
     <div class="tb-panel-actions">
       <slot name="actions" />
-      <button type="button" class="tb-panel-close" data-panel-close aria-label="close">
-        <Icon name="xmark" />
-      </button>
     </div>
   </div>
   <slot />
   {
-    (hasFooter || escHint) && (
-      <div class:list={["tb-panel-foot", { "hint-only": !hasFooter }]}>
+    Astro.slots.has("footer") && (
+      <div class="tb-panel-foot">
         <slot name="footer" />
-        {escHint && (
-          <span class="tb-panel-esc">
-            <kbd>Esc</kbd> to close
-          </span>
-        )}
       </div>
     )
   }
@@ -63,6 +52,7 @@ const hasFooter = Astro.slots.has("footer");
 
 <style>
   .tb-panel {
+    --panel-scale: 1;
     position: fixed;
     top: calc(var(--top-bar-height) + 6px);
     right: 12px;
@@ -75,7 +65,7 @@ const hasFooter = Astro.slots.has("footer");
     overscroll-behavior: contain;
     color: var(--panel-text);
     font-family: var(--top-bar-font);
-    font-size: 15px;
+    font-size: calc(15px * var(--panel-scale));
     text-align: left;
     background-color: var(--panel-bg);
     border: 1px solid var(--panel-border);
@@ -113,7 +103,7 @@ const hasFooter = Astro.slots.has("footer");
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 17px;
+    font-size: calc(17px * var(--panel-scale));
     font-weight: bold;
     line-height: 1.2;
   }
@@ -133,27 +123,6 @@ const hasFooter = Astro.slots.has("footer");
     gap: 2px;
   }
 
-  /* Hidden on desktop: see the phone rules below. */
-  .tb-panel-close {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    border: none;
-    border-radius: 4px;
-    background: none;
-    color: var(--panel-muted);
-    font-size: 15px;
-    cursor: pointer;
-  }
-
-  .tb-panel-close:hover {
-    color: var(--panel-text);
-    background-color: var(--panel-hover);
-  }
-
   .tb-panel-foot {
     display: flex;
     align-items: center;
@@ -162,39 +131,18 @@ const hasFooter = Astro.slots.has("footer");
     min-height: 32px;
     padding: 4px 8px 4px 16px;
     border-top: 1px solid var(--panel-rule);
-    font-size: 12px;
+    font-size: calc(12px * var(--panel-scale));
     color: var(--panel-muted);
   }
 
-  .tb-panel-esc {
-    margin-left: auto;
-  }
-
-  .tb-panel-esc kbd {
-    padding: 1px 5px;
-    border: 1px solid var(--panel-border);
-    border-radius: 3px;
-    font-family: "Courier New", monospace;
-    font-weight: bold;
-  }
-
-  /* Phones: full width under the bar, and the × instead of "Esc to close" —
-     there is no Escape key, and little page left around a panel to tap. */
+  /* Phones: full width under the bar, and smaller text. */
   @media all and (max-width: 580px) {
     .tb-panel {
+      --panel-scale: 0.9;
       left: 8px;
       right: 8px;
       width: auto;
       max-height: calc(100vh - var(--top-bar-height) - 22px);
-    }
-
-    .tb-panel-close {
-      display: inline-flex;
-    }
-
-    .tb-panel-esc,
-    .tb-panel-foot.hint-only {
-      display: none;
     }
   }
 </style>
@@ -219,7 +167,7 @@ const hasFooter = Astro.slots.has("footer");
   /* Section label, in the Courier of the page-topic label. */
   :where(.tb-panel) .tb-panel-label {
     font-family: "Courier New", monospace;
-    font-size: 13px;
+    font-size: calc(13px * var(--panel-scale));
     font-weight: bold;
     color: var(--panel-muted);
   }
@@ -233,7 +181,7 @@ const hasFooter = Astro.slots.has("footer");
     background: none;
     color: var(--panel-link);
     font-family: "Courier New", monospace;
-    font-size: 13px;
+    font-size: calc(13px * var(--panel-scale));
     font-weight: bold;
     cursor: pointer;
   }
@@ -261,7 +209,7 @@ const hasFooter = Astro.slots.has("footer");
     background-color: var(--panel-field);
     color: var(--panel-text);
     font-family: inherit;
-    font-size: 14px;
+    font-size: calc(14px * var(--panel-scale));
   }
 
   :where(.tb-panel) select.tb-panel-field {
