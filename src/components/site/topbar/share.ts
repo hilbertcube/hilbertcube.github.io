@@ -1,8 +1,8 @@
 /**
  * share.ts
  * ========
- * The top bar's share panel: the page's link with a Copy button, and one
- * button per platform opening that platform's share URL in a new tab.
+ * The top bar's share panel: one button per platform, opening that
+ * platform's share URL in a new tab.
  */
 
 import { initPanel } from "./panel";
@@ -11,6 +11,8 @@ const SHARE_URLS: Record<string, (url: string, title: string) => string> = {
   facebook: (url) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
   twitter: (url) =>
     `https://twitter.com/intent/tweet?url=${url}&text=Check%20this%20out!`,
+  bluesky: (url, title) =>
+    `https://bsky.app/intent/compose?text=${title}%20${url}`,
   whatsapp: (url) => `https://api.whatsapp.com/send?text=${url}`,
   reddit: (url) =>
     `https://www.reddit.com/submit?url=${url}&title=Interesting%20page`,
@@ -22,24 +24,6 @@ const SHARE_URLS: Record<string, (url: string, title: string) => string> = {
 export function initShare() {
   const panel = initPanel("shareBtn", "sharePanel");
   if (!panel) return;
-
-  const url = document.getElementById("shareUrl");
-  if (url) url.textContent = location.host + location.pathname;
-
-  const copy = document.getElementById("shareCopy");
-  const copyLabel = document.getElementById("shareCopyLabel");
-  let resetLabel: ReturnType<typeof setTimeout> | undefined;
-  copy?.addEventListener("click", async () => {
-    if (!copyLabel) return;
-    try {
-      await navigator.clipboard.writeText(location.href);
-      copyLabel.textContent = "Copied";
-    } catch {
-      copyLabel.textContent = "Failed";
-    }
-    clearTimeout(resetLabel);
-    resetLabel = setTimeout(() => (copyLabel.textContent = "Copy"), 1500);
-  });
 
   document
     .querySelectorAll<HTMLElement>("#sharePanel .share-option")

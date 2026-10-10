@@ -8,6 +8,7 @@
  */
 import Panel from "@components/site/topbar/Panel.astro";
 import { LIGHT_THEMES, DARK_THEMES } from "@utils/codeThemes";
+import { MIN_FONT_SIZE, MAX_FONT_SIZE, DEFAULT_FONT_SIZE } from "@components/site/topbar/fontSizes";
 ---
 
 <Panel id="settingsPanel" title="Reading settings" width={380}>
@@ -25,11 +26,20 @@ import { LIGHT_THEMES, DARK_THEMES } from "@utils/codeThemes";
       </select>
     </div>
     <div class="tb-panel-row">
-      <span id="fontSizeLabel">Font size</span>
-      <div class="tb-panel-field font-size-stepper" role="group" aria-labelledby="fontSizeLabel">
+      <label for="fontSizeInput">Font size</label>
+      <div class="tb-panel-field font-size-stepper">
         <button type="button" id="fontSizeDown" aria-label="smaller text">A−</button>
-        <span class="font-size-value" aria-live="polite">
-          <span id="fontSizeValue">16 px</span>
+        <span class="font-size-value">
+          <input
+            type="number"
+            id="fontSizeInput"
+            min={MIN_FONT_SIZE}
+            max={MAX_FONT_SIZE}
+            step="1"
+            value={DEFAULT_FONT_SIZE}
+            inputmode="numeric"
+          />
+          px
           <span class="font-size-default" id="fontSizeDefault">default</span>
         </span>
         <button type="button" id="fontSizeUp" aria-label="larger text">A+</button>
@@ -115,27 +125,53 @@ import { LIGHT_THEMES, DARK_THEMES } from "@utils/codeThemes";
 
   #fontSizeDown {
     border-right: 1px solid var(--panel-field-border);
-    font-size: 13px;
+    font-size: calc(13px * var(--panel-scale));
   }
 
   #fontSizeUp {
     border-left: 1px solid var(--panel-field-border);
-    font-size: 17px;
+    font-size: calc(17px * var(--panel-scale));
   }
 
+  /* The typed size and its unit, centred between the buttons. */
   .font-size-value {
     flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 3px;
   }
 
   .font-size-default {
+    margin-left: 3px;
     font-family: "Courier New", monospace;
-    font-size: 11px;
+    font-size: calc(11px * var(--panel-scale));
     font-weight: bold;
     color: var(--panel-muted);
+  }
+
+  #fontSizeInput {
+    width: 3ch;
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: right;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  /* The buttons beside it already step, so no spinner arrows. */
+  #fontSizeInput::-webkit-inner-spin-button,
+  #fontSizeInput::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+  }
+
+  #fontSizeInput:focus-visible {
+    outline: 2px solid var(--panel-selected);
+    outline-offset: 1px;
   }
 
   .progress-switch {

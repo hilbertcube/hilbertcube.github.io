@@ -2,7 +2,8 @@
 /**
  * SharePanel.astro
  * ================
- * The page's link with a Copy button, and one button per platform. Behaviour
+ * A row of icon-only platform buttons (the name is their tooltip and
+ * aria-label). Behaviour
  * in share.ts.
  *
  * Adding a platform: an entry in `sharePlatforms` below and the same `id` in
@@ -15,6 +16,7 @@ import Panel from "@components/site/topbar/Panel.astro";
 const sharePlatforms = [
   { id: "facebook", title: "Facebook", icon: "facebook", color: "#1877f2" },
   { id: "twitter", title: "X", icon: "x-twitter" },
+  { id: "bluesky", title: "Bluesky", icon: "bluesky", color: "#1185fe" },
   { id: "whatsapp", title: "WhatsApp", icon: "whatsapp", color: "#25d366" },
   { id: "reddit", title: "Reddit", icon: "reddit", color: "#ff4500" },
   { id: "hackernews", title: "Hacker News", icon: "hacker-news", color: "#ff6600" },
@@ -22,19 +24,8 @@ const sharePlatforms = [
 ];
 ---
 
-<Panel id="sharePanel" title="Share this page" width={300} escHint>
+<Panel id="sharePanel" title="Share this page" width={300}>
   <div class="tb-panel-section">
-    <span class="tb-panel-label">Link</span>
-    <div class="share-link">
-      <span class="share-url" id="shareUrl"></span>
-      <button type="button" class="share-copy" id="shareCopy">
-        <Icon name="copy" />
-        <span id="shareCopyLabel">Copy</span>
-      </button>
-    </div>
-  </div>
-  <div class="tb-panel-section">
-    <span class="tb-panel-label">Share to</span>
     <div class="share-platforms">
       {
         sharePlatforms.map((platform) => (
@@ -42,10 +33,11 @@ const sharePlatforms = [
             type="button"
             class="share-option"
             data-share={platform.id}
+            aria-label={`Share to ${platform.title}`}
+            title={platform.title}
             style={platform.color ? `--brand: ${platform.color}` : undefined}
           >
             <Icon name={platform.icon} prefix="fab" class="share-option-icon" />
-            {platform.title}
           </button>
         ))
       }
@@ -60,69 +52,24 @@ const sharePlatforms = [
 </script>
 
 <style>
-  .share-link {
-    display: flex;
-    align-items: stretch;
-    height: 34px;
-    border: 1px solid var(--panel-field-border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .share-url {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    background-color: var(--panel-field);
-    font-family: "Courier New", monospace;
-    font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .share-copy {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0 12px;
-    border: none;
-    border-left: 1px solid var(--panel-field-border);
-    background-color: var(--panel-bg);
-    color: var(--panel-link);
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .share-copy:hover {
-    background-color: var(--panel-hover);
-  }
-
+  /* All platforms on one row, one equal cell each. */
   .share-platforms {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
     gap: 2px;
-    margin: 0 -8px;
+    margin: 0 -6px;
   }
 
   .share-option {
     display: flex;
     align-items: center;
-    gap: 10px;
-    height: 32px;
-    padding: 0 8px;
+    justify-content: center;
+    height: 40px;
+    padding: 0;
     border: none;
     border-radius: 4px;
     background: none;
-    color: var(--panel-text);
-    font-family: inherit;
-    font-size: 15px;
-    text-align: left;
     cursor: pointer;
   }
 
@@ -134,7 +81,7 @@ const sharePlatforms = [
      so the class arrives unscoped. */
   .share-option :global(.share-option-icon) {
     flex: none;
-    font-size: 19px;
+    font-size: calc(20px * var(--panel-scale));
     color: var(--brand, var(--panel-text));
   }
 </style>

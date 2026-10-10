@@ -6,19 +6,7 @@
  */
 
 import { initPanel } from "./panel";
-
-// The body font covers the page chrome too, not just the article body.
-// Widgets that pin their own font (settings panel, search bar, code blocks)
-// declare font-family on themselves and so stay put.
-const FONT_FAMILY_TARGETS = [
-  ".content-grid",
-  ".navbar",
-  ".top-nav",
-  ".footer-container",
-];
-
-const FONT_SIZES = [14, 15, 16, 17, 18, 20, 22];
-const DEFAULT_FONT_SIZE = 16;
+import { DEFAULT_FONT_SIZE, MAX_FONT_SIZE, MIN_FONT_SIZE } from "./fontSizes";
 
 /**
  * A setting persisted under `key` in localStorage: applies the saved value (or
@@ -41,17 +29,23 @@ function persisted(key: string, fallback: string, apply: (value: string) => void
   };
 }
 
+/**
+ * The body font is `--body-font` on <html> (see _variables.css): every
+ * reading surface uses it, so the whole page follows; the top-bar panels,
+ * search dropdown, code and math keep their own. BaseLayout applies the saved
+ * value before first paint. The first option is the stylesheet's default.
+ */
 function initFontFamily() {
   const select = document.getElementById("font-select") as HTMLSelectElement | null;
   if (!select) return null;
 
-  const set = persisted("fontFamily", select.options[0].value, (value) => {
+  const fallback = select.options[0].value;
+  const set = persisted("fontFamily", fallback, (value) => {
     select.value = value;
-    FONT_FAMILY_TARGETS.forEach((selector) =>
-      document
-        .querySelectorAll<HTMLElement>(selector)
-        .forEach((element) => (element.style.fontFamily = value)),
-    );
+    if (select.selectedIndex === -1) select.value = fallback;
+    const root = document.documentElement.style;
+    if (select.value === fallback) root.removeProperty("--body-font");
+    else root.setProperty("--body-font", select.value);
   });
   select.addEventListener("change", () => set(select.value));
   return () => set(select.options[0].value);
@@ -63,31 +57,42 @@ function initFontFamily() {
  * BaseLayout applies the saved value before first paint. Stored as "16px".
  */
 function initFontSize() {
+  const input = document.getElementById("fontSizeInput") as HTMLInputElement | null;
   const down = document.getElementById("fontSizeDown") as HTMLButtonElement | null;
   const up = document.getElementById("fontSizeUp") as HTMLButtonElement | null;
-  const value = document.getElementById("fontSizeValue");
   const isDefault = document.getElementById("fontSizeDefault");
-  if (!down || !up || !value || !isDefault) return null;
+  if (!input || !down || !up || !isDefault) return null;
 
-  let index = FONT_SIZES.indexOf(DEFAULT_FONT_SIZE);
+  /** A whole size within range, or the default for anything unreadable. */
+  const clamp = (px: number) =>
+    Number.isFinite(px)
+      ? Math.min(MAX_FONT_SIZE, Math.max(MIN_FONT_SIZE, Math.round(px)))
+      : DEFAULT_FONT_SIZE;
+
+  let current = DEFAULT_FONT_SIZE;
 
   const set = persisted("fontSize", `${DEFAULT_FONT_SIZE}px`, (stored) => {
-    const found = FONT_SIZES.indexOf(parseFloat(stored));
-    index = found === -1 ? FONT_SIZES.indexOf(DEFAULT_FONT_SIZE) : found;
-    const px = FONT_SIZES[index];
-    document.documentElement.style.setProperty("--font-scale", String(px / 16));
-    value.textContent = `${px} px`;
-    isDefault.hidden = px !== DEFAULT_FONT_SIZE;
-    down.disabled = index === 0;
-    up.disabled = index === FONT_SIZES.length - 1;
+    current = clamp(parseFloat(stored));
+    document.documentElement.style.setProperty("--font-scale", String(current / 16));
+    if (document.activeElement !== input) input.value = String(current);
+    isDefault.hidden = current !== DEFAULT_FONT_SIZE;
+    down.disabled = current === MIN_FONT_SIZE;
+    up.disabled = current === MAX_FONT_SIZE;
   });
 
-  const step = (by: number) => {
-    const next = Math.min(FONT_SIZES.length - 1, Math.max(0, index + by));
-    set(`${FONT_SIZES[next]}px`);
-  };
-  down.addEventListener("click", () => step(-1));
-  up.addEventListener("click", () => step(1));
+  // Applied as the reader types once the number is in range ("1" on the way
+  // to "18" is not); on Enter or blur, anything else snaps into range.
+  input.addEventListener("input", () => {
+    const px = parseFloat(input.value);
+    if (px >= MIN_FONT_SIZE && px <= MAX_FONT_SIZE) set(`${clamp(px)}px`);
+  });
+  input.addEventListener("change", () => {
+    set(`${clamp(parseFloat(input.value))}px`);
+    input.value = String(current);
+  });
+
+  down.addEventListener("click", () => set(`${clamp(current - 1)}px`));
+  up.addEventListener("click", () => set(`${clamp(current + 1)}px`));
   return () => set(`${DEFAULT_FONT_SIZE}px`);
 }
 

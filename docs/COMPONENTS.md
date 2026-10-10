@@ -351,9 +351,9 @@ panels — tags, share, reading settings — each its own component in `site/top
 
 | Component | Is |
 |---|---|
-| `Panel` | The shared frame: `id`, `title`, `width`, `escHint`; slots `actions`, default, `footer`. Places the panel just below the bar at its right edge (full width on phones), and holds the global `.tb-panel-section` / `-label` / `-row` / `-field` / `-action` building blocks (colours: the `--panel-*` tokens) |
+| `Panel` | The shared frame: `id`, `title`, `width`; slots `actions`, default, `footer`. Places the panel just below the bar at its right edge (full width on phones), and holds the global `.tb-panel-section` / `-label` / `-row` / `-field` / `-action` building blocks (colours: the `--panel-*` tokens) |
 | `TagsPanel` | Topic chips and the pages carrying all selected ones |
-| `SharePanel` | The page link with Copy, and the platforms |
+| `SharePanel` | One row of platform icons |
 | `SettingsPanel` | Body font, font size, code themes, progress-bar switch, Reset |
 
 Behaviour, in `site/topbar/`:
@@ -362,12 +362,13 @@ Behaviour, in `site/topbar/`:
 |---|---|
 | `nav.ts` | Sidebar open/closed (open by default at ≥1200px) |
 | `theme.ts` | Dark mode and the two code-theme selects |
-| `panel.ts` | Panel open/close: icon toggles; Escape, × or a click outside closes; opening search closes all |
+| `panel.ts` | Panel open/close: icon toggles; Escape or a click outside closes; opening search closes all |
 | `settings.ts` | Settings panel (font, font size, progress-bar switch, Reset); progress bar |
+| `fontSizes.ts` | The font size range (14–22 px), shared by `SettingsPanel` and `settings.ts` |
 | `search.ts` | Search bar and dropdown ([`SEARCH.md`](SEARCH.md)) |
 | `searchIndex.ts` | Pagefind / `pages.json` engine, queries and facets, shared by search and tags |
 | `tags.ts` | Tags panel |
-| `share.ts` | Share panel (Copy link, platforms) |
+| `share.ts` | Share panel (platform buttons) |
 
 Dark mode is a `dark-mode` class on `<html>`, stored in `localStorage.mode`; an inline
 script in `BaseLayout`'s `<head>` applies it and the code theme before first paint.

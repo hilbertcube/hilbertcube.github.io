@@ -28,10 +28,17 @@ const text = await listing(code, () => Astro.slots.render("default"));
     margin: 25px auto;
   }
 
+  /* Same type as the highlighted blocks (.shiki in _code-blocks.css). The
+     inner <code> is listed too, or the global `code` rule (13px) wins. */
+  .console,
+  .console code {
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-size: calc(12px * var(--font-scale));
+  }
+
   .console {
     line-height: 2;
     background-color: var(--pre-color);
-    font-size: calc(12px * var(--font-scale));
     text-align: left;
     position: relative;
     box-sizing: border-box;
