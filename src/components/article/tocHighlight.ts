@@ -5,6 +5,9 @@
  * a "reading line" about a third of the way down the viewport (never above the
  * top bar). Once the page can't scroll further, the line slides to the bottom
  * so the trailing short sections still get their turn.
+ *
+ * Its link gets `.active`; its <li> and every enclosing <li> (the sections it
+ * sits in) get `.current`.
  */
 
 // Anchors land 120px down (scroll-padding-top), so the line stays below that.
@@ -46,6 +49,7 @@ export function initTocHighlight() {
   );
 
   let active: Entry | null = null;
+  let trail: HTMLLIElement[] = [];
 
   function setActive(entry: Entry | null) {
     if (entry === active) return;
@@ -54,10 +58,22 @@ export function initTocHighlight() {
       active.link.classList.remove("active");
       active.link.removeAttribute("aria-current");
     }
+    trail.forEach((li) => li.classList.remove("current"));
+    trail = [];
+
     active = entry;
     if (active) {
       active.link.classList.add("active");
       active.link.setAttribute("aria-current", "true");
+
+      for (
+        let li = active.link.closest(".toc li");
+        li;
+        li = li.parentElement!.closest(".toc li")
+      ) {
+        li.classList.add("current");
+        trail.push(li as HTMLLIElement);
+      }
     }
   }
 

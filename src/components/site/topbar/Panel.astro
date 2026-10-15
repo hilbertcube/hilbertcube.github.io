@@ -20,7 +20,7 @@
 interface Props {
   id: string;
   title: string;
-  /** Width in px, below the phone breakpoint's full width. */
+  /** Width in px; on phones, capped at the screen width. */
   width: number;
 }
 
@@ -135,13 +135,13 @@ const { id, title, width } = Astro.props;
     color: var(--panel-muted);
   }
 
-  /* Phones: full width under the bar, and smaller text. */
+  /* Phones: tighter margins (a panel wider than the screen spans it), and
+     smaller text. */
   @media all and (max-width: 580px) {
     .tb-panel {
       --panel-scale: 0.9;
-      left: 8px;
       right: 8px;
-      width: auto;
+      width: min(var(--panel-width), calc(100vw - 16px));
       max-height: calc(100vh - var(--top-bar-height) - 22px);
     }
   }

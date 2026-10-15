@@ -182,7 +182,8 @@ All types take `title` (required), `authors` (list or string), `year`, `note`,
 Built by `BaseLayout` from `toc` ([`DEVELOPMENT.md` §3.1](DEVELOPMENT.md#31-table-of-contents)).
 By hand only for a custom list: `items: TocItem[]` (`{ label, href, children? }`),
 optional `title`. `tocHighlight.ts` marks the entry for the section a third of the
-way down the viewport.
+way down the viewport (`a.active`), and gives its `<li>` and every enclosing one
+`.current` — the same depth-coloured left border as hover.
 
 ---
 
@@ -351,7 +352,7 @@ panels — tags, share, reading settings — each its own component in `site/top
 
 | Component | Is |
 |---|---|
-| `Panel` | The shared frame: `id`, `title`, `width`; slots `actions`, default, `footer`. Places the panel just below the bar at its right edge (full width on phones), and holds the global `.tb-panel-section` / `-label` / `-row` / `-field` / `-action` building blocks (colours: the `--panel-*` tokens) |
+| `Panel` | The shared frame: `id`, `title`, `width`; slots `actions`, default, `footer`. Places the panel just below the bar at its right edge (never wider than the screen, so the wider panels span a phone), and holds the global `.tb-panel-section` / `-label` / `-row` / `-field` / `-action` building blocks (colours: the `--panel-*` tokens) |
 | `TagsPanel` | Topic chips and the pages carrying all selected ones |
 | `SharePanel` | One row of platform icons |
 | `SettingsPanel` | Body font, font size, code themes, progress-bar switch, Reset |

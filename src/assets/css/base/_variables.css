@@ -31,6 +31,11 @@
   --nav-bar-text-color: rgb(0, 0, 130);
   --li-border-color: rgb(183, 183, 183);
   --toc-focus-color: #007BFF;
+  /* TOC entry's left border when hovered or current, by nesting depth: the
+     site's red accent, link blue, then grey. */
+  --toc-border-1: var(--progress-bar-color);
+  --toc-border-2: var(--url-color);
+  --toc-border-3: #5c5c5c;
   
   /* Button colors */
   --next-text: black;
@@ -98,6 +103,7 @@ html.dark-mode {
   --nav-bar-text-color: #c6c6ce;
   --li-border-color: rgb(0, 71, 171);
   --toc-focus-color: rgb(0, 194, 0);
+  --toc-border-3: #a3a3a3;
   
   /* Code */
   --code-box-color: #2a2a2a;

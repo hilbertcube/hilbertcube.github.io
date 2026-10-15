@@ -115,18 +115,23 @@ function renderItems(items: TocItem[]): string {
     border-left: 1.5px solid var(--li-border-color);
   }
 
-  /* Hover colour deepens with nesting, so the depth of the entry you are
-     pointing at is readable at a glance. */
-  .toc ul :global(li:hover) {
-    border-left: 2px solid red;
+  /* The entry pointed at, and the section being read with the sections
+     enclosing it (.current, set by tocHighlight.ts). The colour changes with
+     nesting, so the depth is readable at a glance (--toc-border-*,
+     _variables.css). */
+  .toc ul :global(li:hover),
+  .toc ul :global(li.current) {
+    border-left: 2px solid var(--toc-border-1);
   }
 
-  .toc ul :global(li li:hover) {
-    border-left: 2px solid blueviolet;
+  .toc ul :global(li li:hover),
+  .toc ul :global(li li.current) {
+    border-left: 2px solid var(--toc-border-2);
   }
 
-  .toc ul :global(li li li:hover) {
-    border-left: 2px solid green;
+  .toc ul :global(li li li:hover),
+  .toc ul :global(li li li.current) {
+    border-left: 2px solid var(--toc-border-3);
   }
 
   .toc :global(a) {
