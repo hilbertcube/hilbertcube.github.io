@@ -2,7 +2,8 @@
 /**
  * PubDate.astro
  * =============
- * Renders an article/post's publication date under the title.
+ * Renders an article/post's byline and publication date under the title. The
+ * author link is ignored by Pagefind, so it doesn't match on every page.
  *
  * - `pubDate` is optional: with no prop, the component resolves the page's own
  *   collection entry from its URL (see @utils/getEntryMeta). Pass `pubDate`
@@ -27,7 +28,7 @@ const pubDate =
 ---
 
 <div class="date-row">
-  <div class="date">Posted <span data-pagefind-meta="date">{formatDate(pubDate)}</span></div>
+  <div class="date"><a href="https://ddonle.com/" data-pagefind-ignore>Don D. Le</a> · Posted <span data-pagefind-meta="date">{formatDate(pubDate)}</span></div>
   <SavePdf />
 </div>
 

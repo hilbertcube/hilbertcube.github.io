@@ -74,7 +74,7 @@ Props only override that.
 |---|---|---|
 | `TopicTags` | `topics: string[]` | `Topics: a, b, c`; each topic is a `data-pagefind-filter="topic"` span (feeds the tag browser) |
 | `PageTitle` | `title`, `variant: "article" \| "post"` | The `<h1>` (`.title` / `.post-title`) |
-| `PubDate` | `pubDate` (ISO) | `Posted <date>` plus the "Save as PDF" button (`SavePdf`) |
+| `PubDate` | `pubDate` (ISO) | `Don D. Le · Posted <date>` (the name links to ddonle.com) plus the "Save as PDF" button (`SavePdf`) |
 
 ### FrontImage
 
