@@ -179,3 +179,36 @@ project's history.
 
 Docs and code comments describe only what exists **now**, concisely. When a feature is
 removed, delete its documentation rather than noting the removal.
+
+## Standards
+
+### Authorship
+
+Don D. Le is the only author. Never add Claude or any other AI as an author or
+co-author, in commits, PRs, docs, code comments or page content: no `Co-Authored-By`
+trailers and no "Generated with" lines. `.claude/settings.json` turns off the automatic
+attribution; don't re-enable it.
+
+### Commits
+
+- Write the subject as a specific imperative sentence that says what changed: `Add a
+  Table component`, not `updates` or `fix`. Keep it under about 72 characters, with no
+  trailing period.
+- Keep each commit to one logical change. Add a body only when the reason isn't obvious
+  from the diff.
+- Run `npm run check` before committing.
+- Commit or push only when asked. Pushing to `main` deploys the site.
+- The sidebar's public stats count commits and read the latest subject, so subjects are
+  reader-visible.
+
+### History
+
+- Don't rewrite pushed history or force-push unless explicitly asked. When asked, keep a
+  backup branch and use `--force-with-lease`.
+- Don't move or re-push `v1.2.0` or `v1.3.0`: those commits still contain the old
+  `fetch-commit.yml`, and pushing the tag runs it.
+
+### Scope
+
+Change only what the task needs. If a feature has a limit, accept it rather than
+changing other parts of the site to work around it.
