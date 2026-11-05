@@ -115,23 +115,12 @@ function renderItems(items: TocItem[]): string {
     border-left: 1.5px solid var(--li-border-color);
   }
 
-  /* The entry pointed at, and the section being read with the sections
-     enclosing it (.current, set by tocHighlight.ts). The colour changes with
-     nesting, so the depth is readable at a glance (--toc-border-*,
-     _variables.css). */
+  /* The entry pointed at, and the sections enclosing the one being read
+     (.current, set by tocHighlight.ts). Neutral, so only the active entry
+     below carries the accent; the indentation already shows depth. */
   .toc ul :global(li:hover),
   .toc ul :global(li.current) {
-    border-left: 2px solid var(--toc-border-1);
-  }
-
-  .toc ul :global(li li:hover),
-  .toc ul :global(li li.current) {
-    border-left: 2px solid var(--toc-border-2);
-  }
-
-  .toc ul :global(li li li:hover),
-  .toc ul :global(li li li.current) {
-    border-left: 2px solid var(--toc-border-3);
+    border-left: 2px solid var(--toc-trail-color);
   }
 
   .toc :global(a) {
@@ -139,8 +128,12 @@ function renderItems(items: TocItem[]): string {
     color: inherit;
   }
 
-  /* Set by tocHighlight.ts on the entry for the section now in view. */
+  /* The entry for the section now in view (.active, set by tocHighlight.ts). */
+  .toc ul :global(li:has(> a.active)) {
+    border-left-color: var(--url-color);
+  }
+
   .toc :global(a.active) {
-    color: var(--toc-focus-color);
+    color: var(--url-color);
   }
 </style>

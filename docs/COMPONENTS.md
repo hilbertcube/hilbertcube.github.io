@@ -183,7 +183,8 @@ Built by `BaseLayout` from `toc` ([`DEVELOPMENT.md` §3.1](DEVELOPMENT.md#31-tab
 By hand only for a custom list: `items: TocItem[]` (`{ label, href, children? }`),
 optional `title`. `tocHighlight.ts` marks the entry for the section a third of the
 way down the viewport (`a.active`), and gives its `<li>` and every enclosing one
-`.current` — the same depth-coloured left border as hover.
+`.current` — the same neutral left border as hover. Only the active entry takes the
+accent (`--url-color`), on its text and border.
 
 ---
 
