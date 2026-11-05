@@ -10,8 +10,108 @@ import Icon from "@components/ui/Icon.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import Table from "@components/article/Table.astro";
+import PlaceRows from "@components/listings/PlaceRows.astro";
 
 // lint-allow: img — the Gallery is a grid of lightbox thumbnails, not captioned figures
+
+const tried = [
+  {
+    category: "Restaurants",
+    places: [
+      { name: "Raku Udon", location: "Queen St., Downtown Toronto, Canada", rating: "9.5/10", notes: "Best udon I've ever had" },
+      { name: "Sea Harbor", location: "Rosemead, CA", rating: "9.5/10", notes: "Best dim sum, one Michelin star" },
+      { name: "Taco El Pastor", location: "Las Vegas, NV", rating: "9/10", notes: "" },
+      { name: "Los Amigos", location: "Walnut, CA", rating: "9/10", notes: "Cheap and delicious tacos" },
+      { name: "Pepper Lunch", location: "Irvine, CA", rating: "9/10", notes: "" },
+      { name: "Happy Harbor", location: "Rowland Heights, CA", rating: "9/10", notes: "" },
+      { name: "Hokaido Sushi", location: "Saigon, 1st District, Vietnam", rating: "9/10", notes: "" },
+      { name: "PiChaiYuan Hotpot", location: "Rowland Heights, CA", rating: "8.5/10", notes: "Reasonable price" },
+      { name: "LA District Market", location: "Los Angeles, CA", rating: "8.5/10", notes: "A large variety of delicious food. A bit pricey though" },
+      { name: "Euporium Thai", location: "Los Angeles, CA", rating: "8.5/10", notes: "Free sticky rice cake for birthdays" },
+      { name: "Pho Thin by SOL", location: "Saigon, 2nd District, Vietnam", rating: "8.5/10", notes: "" },
+      { name: "Shang Artisan Noodle", location: "Las Vegas, NV", rating: "8/10", notes: "" },
+      { name: "Gladiator Burger", location: "Waterloo, Canada", rating: "8/10", notes: "" },
+      { name: "Tokyo Ramen & Sushi", location: "Diamond Bar, CA", rating: "8/10", notes: "" },
+      { name: "Din Tai Fung", location: "Arcadia, CA", rating: "8/10", notes: "" },
+      { name: "Tatsu Ramen", location: "Los Angeles, CA", rating: "8/10", notes: "" },
+      { name: "Taiko Japanese Restaurant", location: "Irvine, CA", rating: "8/10", notes: "Decent food, too much rice" },
+      { name: "Coco Ichibanya", location: "LA, Irvine, CA", rating: "8/10", notes: "" },
+      { name: "Chubby Cattle BBQ", location: "Rowland Heights, CA", rating: "8/10", notes: "Horrible wait time, but good food" },
+      { name: "Thumbling", location: "West Covina, CA", rating: "7.5/10", notes: "" },
+      { name: "88Q Korean BBQ", location: "Rowland Heights, CA", rating: "7.5/10", notes: "" },
+      { name: "Slurpin Ramen Bar", location: "City of Industry, CA", rating: "7/10", notes: "" },
+      { name: "Lotus of Siam", location: "Las Vegas, NV", rating: "7/10", notes: "" },
+      { name: "Young Dong Tofu", location: "Chino Hills, CA", rating: "5/10", notes: "" },
+    ],
+  },
+  {
+    category: "Boba & Café",
+    places: [
+      { name: "The Coffee (ザ•コーヒー)", location: "King St. W, Downtown Toronto, Canada", rating: "9/10", notes: "" },
+      { name: "3Catea", location: "Irvine, CA", rating: "9/10", notes: "" },
+      { name: "Molly Tea", location: "Rosemead, CA", rating: "8.5/10", notes: "Good shit" },
+      { name: "Gong Cha", location: "City of Industry, CA", rating: "8/10", notes: "" },
+      { name: "GOOMO boba tea shop", location: "Walnut, CA", rating: "8/10", notes: "" },
+      { name: "Torotea", location: "Diamond Bar, CA", rating: "7.5/10", notes: "" },
+      { name: "Phuc Long", location: "Garden Grove, CA", rating: "6/10", notes: "" },
+    ],
+  },
+  {
+    category: "Bars",
+    places: [
+      { name: "Ghost Bar", location: "Las Vegas, NV", rating: "9.5/10", notes: "" },
+      { name: "Spire 73", location: "InterContinental LA", rating: "9/10", notes: "" },
+      { name: "The Gallery Lounge", location: "Downtown LA", rating: "8/10", notes: "" },
+      { name: "The Grayson Bar", location: "Downtown LA", rating: "8/10", notes: "" },
+    ],
+  },
+];
+
+const wanted = [
+  {
+    category: "Restaurants",
+    places: [
+      { name: "dPot", location: "Irvine, CA" },
+      { name: "Kokiyo Ramen", location: "NPB" },
+      { name: "Niku X", location: "Los Angeles, CA" },
+      { name: "Noodle Nest", location: "Irvine, CA" },
+      { name: "Tijuana Taco", location: "OC, CA" },
+      { name: "Koyi Sushi", location: "Costa Mesa, CA" },
+      { name: "Izakaya Taiko", location: "Fountain Valley, CA" },
+      { name: "Happy Lamb Hotpot", location: "Westminster, CA" },
+      { name: "Japan Village", location: "NYC, Industry City" },
+      { name: "BBQ Chung Dam", location: "Los Angeles, CA" },
+      { name: "Chubby Sushi & Ramen", location: "OC, CA" },
+      { name: "Story Bar + Kitchen", location: "Anaheim, CA" },
+    ],
+  },
+  {
+    category: "Desserts",
+    places: [
+      { name: "Nostimo Coffee", location: "Westminster, CA" },
+      { name: "Heybings Desserts & Café", location: "Costa Mesa, CA" },
+      { name: "Sweetheart's Dessert Lounge", location: "Anaheim, CA" },
+    ],
+  },
+];
+
+const gallery = [
+  { file: "coco.webp", alt: "Japanese Curry" },
+  { file: "boba.webp", alt: "Boba" },
+  { file: "ramen.webp", alt: "Ramen" },
+  { file: "takoyaki.webp", alt: "Takoyaki" },
+  { file: "thai.webp", alt: "Euporium Thai" },
+  { file: "bar1.webp", alt: "Grayson Bar" },
+  { file: "taco.webp", alt: "LA Taco" },
+  { file: "burger.webp", alt: "Hawaiian Burger" },
+  { file: "los_amigos.webp", alt: "Los Amigos Taco" },
+  { file: "white_whine.webp", alt: "Sky Bar" },
+  { file: "tokyo_ramen.webp", alt: "Tokyo Ramen & Sushi" },
+  { file: "piyaiyuan.webp", alt: "piyaiyuan hotpot" },
+  { file: "raku_udon.webp", alt: "Raku Udon" },
+  { file: "gladiator_burger.webp", alt: "Gladiator Burger" },
+  { file: "the_coffee.webp", alt: "The Coffee" },
+];
 ---
 
 <BaseLayout toc>
@@ -90,219 +190,7 @@ import Table from "@components/article/Table.astro";
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="category" rowspan="24">Restaurants</td>
-            <td>Raku Udon</td>
-            <td>Queen St., Downtown Toronto, Canada</td>
-            <td class="rating">9.5/10</td>
-            <td>Best udon I've ever had</td>
-          </tr>
-          <tr>
-            <td>Sea Harbor</td>
-            <td>Rosemead, CA</td>
-            <td class="rating">9.5/10</td>
-            <td>Best dim sum, one Michelin star</td>
-          </tr>
-          <tr>
-            <td>Taco El Pastor</td>
-            <td>Las Vegas, NV</td>
-            <td class="rating">9/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Los Amigos</td>
-            <td>Walnut, CA</td>
-            <td class="rating">9/10</td>
-            <td>Cheap and delicious tacos</td>
-          </tr>
-          <tr>
-            <td>Pepper Lunch</td>
-            <td>Irvine, CA</td>
-            <td class="rating">9/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Happy Harbor</td>
-            <td>Rowland Heights, CA</td>
-            <td class="rating">9/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Hokaido Sushi</td>
-            <td>Saigon, 1st District, Vietnam</td>
-            <td class="rating">9/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>PiChaiYuan Hotpot</td>
-            <td>Rowland Heights, CA</td>
-            <td class="rating">8.5/10</td>
-            <td>Reasonable price</td>
-          </tr>
-          <tr>
-            <td>LA District Market</td>
-            <td>Los Angeles, CA</td>
-            <td class="rating">8.5/10</td>
-            <td>A large variety of delicious food. A bit pricey though</td>
-          </tr>
-          <tr>
-            <td>Euporium Thai</td>
-            <td>Los Angeles, CA</td>
-            <td class="rating">8.5/10</td>
-            <td>Free sticky rice cake for birthdays</td>
-          </tr>
-          <tr>
-            <td>Pho Thin by SOL</td>
-            <td>Saigon, 2nd District, Vietnam</td>
-            <td class="rating">8.5/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Shang Artisan Noodle</td>
-            <td>Las Vegas, NV</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Gladiator Burger</td>
-            <td>Waterloo, Canada</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Tokyo Ramen &amp; Sushi</td>
-            <td>Diamond Bar, CA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Din Tai Fung</td>
-            <td>Arcadia, CA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Tatsu Ramen</td>
-            <td>Los Angeles, CA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Taiko Japanese Restaurant</td>
-            <td>Irvine, CA</td>
-            <td class="rating">8/10</td>
-            <td>Decent food, too much rice</td>
-          </tr>
-          <tr>
-            <td>Coco Ichibanya</td>
-            <td>LA, Irvine, CA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Chubby Cattle BBQ</td>
-            <td>Rowland Heights, CA</td>
-            <td class="rating">8/10</td>
-            <td>Horrible wait time, but good food</td>
-          </tr>
-          <tr>
-            <td>Thumbling</td>
-            <td>West Covina, CA</td>
-            <td class="rating">7.5/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>88Q Korean BBQ</td>
-            <td>Rowland Heights, CA</td>
-            <td class="rating">7.5/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Slurpin Ramen Bar</td>
-            <td>City of Industry, CA</td>
-            <td class="rating">7/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Lotus of Siam</td>
-            <td>Las Vegas, NV</td>
-            <td class="rating">7/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Young Dong Tofu</td>
-            <td>Chino Hills, CA</td>
-            <td class="rating">5/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td class="category" rowspan="7">Boba &amp; Caf&eacute;</td>
-            <td>The Coffee (ザ•コーヒー)</td>
-            <td>King St. W, Downtown Toronto, Canada</td>
-            <td class="rating">9/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>3Catea</td>
-            <td>Irvine, CA</td>
-            <td class="rating">9/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Molly Tea</td>
-            <td>Rosemead, CA</td>
-            <td class="rating">8.5/10</td>
-            <td>Good shit</td>
-          </tr>
-          <tr>
-            <td>Gong Cha</td>
-            <td>City of Industry, CA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>GOOMO boba tea shop</td>
-            <td>Walnut, CA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Torotea</td>
-            <td>Diamond Bar, CA</td>
-            <td class="rating">7.5/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Phuc Long</td>
-            <td>Garden Grove, CA</td>
-            <td class="rating">6/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td class="category" rowspan="4">Bars</td>
-            <td>Ghost Bar</td>
-            <td>Las Vegas, NV</td>
-            <td class="rating">9.5/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Spire 73</td>
-            <td>InterContinental LA</td>
-            <td class="rating">9/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>The Gallery Lounge</td>
-            <td>Downtown LA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>The Grayson Bar</td>
-            <td>Downtown LA</td>
-            <td class="rating">8/10</td>
-            <td></td>
-          </tr>
+          <PlaceRows groups={tried} />
         </tbody>
       </Table>
     </section>
@@ -320,68 +208,7 @@ import Table from "@components/article/Table.astro";
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="category" rowspan="12">Restaurants</td>
-            <td>dPot</td>
-            <td>Irvine, CA</td>
-          </tr>
-          <tr>
-            <td>Kokiyo Ramen</td>
-            <td>NPB</td>
-          </tr>
-          <tr>
-            <td>Niku X</td>
-            <td>Los Angeles, CA</td>
-          </tr>
-          <tr>
-            <td>Noodle Nest</td>
-            <td>Irvine, CA</td>
-          </tr>
-          <tr>
-            <td>Tijuana Taco</td>
-            <td>OC, CA</td>
-          </tr>
-          <tr>
-            <td>Koyi Sushi</td>
-            <td>Costa Mesa, CA</td>
-          </tr>
-          <tr>
-            <td>Izakaya Taiko</td>
-            <td>Fountain Valley, CA</td>
-          </tr>
-          <tr>
-            <td>Happy Lamb Hotpot</td>
-            <td>Westminster, CA</td>
-          </tr>
-          <tr>
-            <td>Japan Village</td>
-            <td>NYC, Industry City</td>
-          </tr>
-          <tr>
-            <td>BBQ Chung Dam</td>
-            <td>Los Angeles, CA</td>
-          </tr>
-          <tr>
-            <td>Chubby Sushi &amp; Ramen</td>
-            <td>OC, CA</td>
-          </tr>
-          <tr>
-            <td>Story Bar + Kitchen</td>
-            <td>Anaheim, CA</td>
-          </tr>
-          <tr>
-            <td class="category" rowspan="3">Desserts</td>
-            <td>Nostimo Coffee</td>
-            <td>Westminster, CA</td>
-          </tr>
-          <tr>
-            <td>Heybings Desserts &amp; Caf&eacute;</td>
-            <td>Costa Mesa, CA</td>
-          </tr>
-          <tr>
-            <td>Sweetheart's Dessert Lounge</td>
-            <td>Anaheim, CA</td>
-          </tr>
+          <PlaceRows groups={wanted} />
         </tbody>
       </Table>
     </section>
@@ -392,96 +219,14 @@ import Table from "@components/article/Table.astro";
     <h2>Gallery</h2>
     <p>Click on image to view full size.</p>
     <div class="image-container">
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/coco.webp"
-        alt="Japanese Curry"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/boba.webp"
-        alt="Boba"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/ramen.webp"
-        alt="Ramen"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/takoyaki.webp"
-        alt="Takoyaki"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/thai.webp"
-        alt="Euporium Thai"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/bar1.webp"
-        alt="Grayson Bar"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/taco.webp"
-        alt="LA Taco"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/burger.webp"
-        alt="Hawaiian Burger"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/los_amigos.webp"
-        alt="Los Amigos Taco"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/white_whine.webp"
-        alt="Sky Bar"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/tokyo_ramen.webp"
-        alt="Tokyo Ramen & Sushi"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/piyaiyuan.webp"
-        alt="piyaiyuan hotpot"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/raku_udon.webp"
-        alt="Raku Udon"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/gladiator_burger.webp"
-        alt="Gladiator Burger"
-      />
-      <img
-        class="food-img"
-        loading="lazy"
-        src="/posts/tested-food-places/the_coffee.webp"
-        alt="The Coffee"
-      />
+      {gallery.map(({ file, alt }) => (
+        <img
+          class="food-img"
+          loading="lazy"
+          src={`/posts/tested-food-places/${file}`}
+          {alt}
+        />
+      ))}
     </div>
   </section>
 </BaseLayout>

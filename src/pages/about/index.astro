@@ -5,6 +5,8 @@
  * About page
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
+import PageLabel from "@components/ui/PageLabel.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
 import HeroBanner from "@components/site/HeroBanner.astro";
 import Theorem from "@components/math/Theorem.astro";
 import Solution from "@components/math/Solution.astro";
@@ -39,9 +41,9 @@ import { tex } from "@components/math/tex.astro";
   <HeroBanner slot="hero" art="preprint" />
 
   <header>
-    <div class="topic">About</div>
+    <PageLabel>About</PageLabel>
   </header>
-  <h1 class="home-title">Some Information</h1>
+  <PageHeading>Some Information</PageHeading>
 
   <section>
     <h2 class="home-h3-headers">About me</h2>

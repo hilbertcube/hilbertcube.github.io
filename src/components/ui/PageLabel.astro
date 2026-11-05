@@ -1,0 +1,13 @@
+---
+/**
+ * PageLabel.astro — the small label at the top of a standing page's header.
+ * Articles and posts use TopicTags instead.
+ */
+interface Props {
+  as?: "div" | "h1";
+}
+
+const { as: Tag = "div" } = Astro.props;
+---
+
+<Tag class="topic"><slot /></Tag>

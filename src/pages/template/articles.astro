@@ -5,12 +5,13 @@
  * Article template page
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
+import PageLabel from "@components/ui/PageLabel.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 ---
 
 <BaseLayout title="Template" description="Template Page" keywords="">
   <header>
-    <div class="topic">Topics: Template</div>
+    <PageLabel>Topics: Template</PageLabel>
     <PageTitle title="Article Title" variant="article" />
   </header>
 

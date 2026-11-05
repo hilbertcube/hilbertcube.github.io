@@ -340,6 +340,12 @@ Every post, in `pages.json` order. No props.
 A recommended book: `title`, `author`, `description`, `image`, optional `imageId`,
 `links: { label, href }[]`.
 
+### PlaceRows
+
+The `<tr>`s of a food places table, for use inside `<tbody>`.
+`groups: { category, places: { name, location, rating?, notes? }[] }[]`; each category
+cell spans its group's rows.
+
 ---
 
 ## 6. `site/` — chrome on every page
@@ -435,6 +441,16 @@ Homepage carousel. `slides: { id, title }[]` (`id` names the slot), `label`
 ### TwoColumns
 
 `<div class="two-columns-block">` around its children.
+
+### PageLabel, PageHeading, ReadMoreButton
+
+For standing pages, which have no catalog-driven `TopicTags` or `PageTitle`.
+
+| Component | Renders | Props |
+|---|---|---|
+| `PageLabel` | The small label at the top of the header | `as` (`"div"` \| `"h1"`, default `"div"`) |
+| `PageHeading` | A large `<h1>` | none |
+| `ReadMoreButton` | A "Read More" link, centred inside `TwoColumns` | `href` |
 
 ---
 

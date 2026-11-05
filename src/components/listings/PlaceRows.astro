@@ -1,0 +1,32 @@
+---
+/**
+ * PlaceRows.astro — the `<tr>`s of a food places table, grouped by category.
+ * Each category cell spans its group's rows. `rating` and `notes` render only
+ * when a place has them. Lives outside the page because Astro's compiler
+ * misplaces closing tags around a `{…}` directly in a second `<tbody>`.
+ */
+interface Place {
+  name: string;
+  location: string;
+  rating?: string;
+  notes?: string;
+}
+
+interface Props {
+  groups: { category: string; places: Place[] }[];
+}
+
+const { groups } = Astro.props;
+---
+
+{groups.map(({ category, places }) =>
+  places.map(({ name, location, rating, notes }, i) => (
+    <tr>
+      {i === 0 && <td class="category" rowspan={places.length}>{category}</td>}
+      <td>{name}</td>
+      <td>{location}</td>
+      {rating !== undefined && <td class="rating">{rating}</td>}
+      {notes !== undefined && <td>{notes}</td>}
+    </tr>
+  ))
+)}
