@@ -10,20 +10,34 @@ Blog website about math, programming, and food. Initial prototype built from scr
 
 Visit website at [neumanncondition.com](https://neumanncondition.com/) or [hilbertcube.github.io](https://hilbertcube.github.io)
 
-1.  [About](https://neumanncondition.com/about/)
-2.  [Privacy Policy](https://neumanncondition.com/privacy-policy/)
+1. [About](https://neumanncondition.com/about/)
+2. [Privacy Policy](https://neumanncondition.com/privacy-policy/)
+3. [Contact](https://www.ddonle.com/)
 
-## Tools used:
+## Tools used
+
+### Third-parties
 
 1. [Astro](https://astro.build/): static site generator
 2. [Astro RSS](https://www.npmjs.com/package/@astrojs/rss): RSS generation
-3. [KaTeX](https://katex.org/): display LaTeX math equations
-4. [Shiki](https://shiki.style/): build-time code syntax-highlighting
-5. [Pagefind](https://pagefind.app/): search system
-6. [Yet Another React Lightbox](https://yet-another-react-lightbox.com/): smooth image lightbox
-7. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
-8. [Playwright](https://playwright.dev/): headless-Chromium PDF export of articles
-9. [GitHub Actions](https://github.com/features/actions): build and deploy
+3. [Astro Sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/): sitemap generation
+4. [KaTeX](https://katex.org/): display LaTeX math equations
+5. [Shiki](https://shiki.style/): build-time code syntax-highlighting
+6. [Pagefind](https://pagefind.app/): search system
+7. [Yet Another React Lightbox](https://yet-another-react-lightbox.com/) (on [React](https://react.dev/)): smooth image lightbox
+8. [Font Awesome](https://fontawesome.com/): icons
+9. [Google Fonts](https://fonts.google.com/): Orbitron on the 404 page
+10. Self-hosted fonts: Computer Modern, ET Book and Jura
+11. [Google Analytics](https://marketingplatform.google.com/about/analytics/): analyze page usage
+12. [Playwright](https://playwright.dev/): headless-Chromium PDF export of articles
+13. [GitHub Actions](https://github.com/features/actions): build and deploy
+
+### VS Code extensions
+
+The workspace settings in `.vscode/settings.json` are written for these extensions:
+
+1. [Astro](https://marketplace.visualstudio.com/items?itemName=astro-build.astro-vscode) (`astro-build.astro-vscode`): `.astro` syntax, IntelliSense and diagnostics; the formatter for `.astro` files
+2. [CSS Peek](https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek) (`pranaygp.vscode-css-peek`): go-to-definition from class names in `.astro` files to the CSS in `src/assets/css/`
 
 ## Change Log
 
