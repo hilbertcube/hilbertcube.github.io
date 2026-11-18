@@ -43,7 +43,7 @@ const { Art, placement, caption } = ARTS[Astro.props.art];
 <div class={`hero-banner ${placement}`} data-pagefind-ignore="all">
   <div class="panel">
     <div class="intro">
-      <div class="banner-title">neumann<span>condition</span></div>
+      <div class="banner-title">hilbert<span>cube</span></div>
       <div class="rule"></div>
       <div class="tagline">Notes on math, programming, &amp; physics.</div>
     </div>
@@ -107,7 +107,8 @@ const { Art, placement, caption } = ARTS[Astro.props.art];
 
   .banner-title span {
     font-weight: normal;
-    font-style: italic;
+    /* The site's link blue, softened for the always-dark banner. */
+    color: #7fb2e5;
   }
 
   .rule {

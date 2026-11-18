@@ -24,8 +24,8 @@ export async function GET(context: APIContext) {
     .sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf());
 
   return rss({
-    title: "neumanncondition",
-    description: "Recent articles and posts from neumanncondition.com",
+    title: "hilbertcube",
+    description: "Recent articles and posts from hilbertcube.github.io",
     site: context.site!,
     items,
   });

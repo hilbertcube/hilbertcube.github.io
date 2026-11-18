@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A personal technical blog (math, programming, food) published to
-[neumanncondition.com](https://neumanncondition.com) — an **Astro 5 static site**
+[hilbertcube.github.io](https://hilbertcube.github.io) — an **Astro 5 static site**
 (`output: 'static'`).
 
 **Content is hand-written `.astro` pages, not Markdown**: each article/post is

@@ -8,10 +8,10 @@
 
 Blog website about math, programming, and food. Initial prototype built from scratch using HTML5, CSS3, and vanilla JS. Migrated to Astro for portability and performance.
 
-Visit website at [neumanncondition.com](https://neumanncondition.com/) or [hilbertcube.github.io](https://hilbertcube.github.io)
+Visit website at [hilbertcube.github.io](https://hilbertcube.github.io)
 
-1. [About](https://neumanncondition.com/about/)
-2. [Privacy Policy](https://neumanncondition.com/privacy-policy/)
+1. [About](https://hilbertcube.github.io/about/)
+2. [Privacy Policy](https://hilbertcube.github.io/privacy-policy/)
 3. [Contact](https://www.ddonle.com/)
 
 ## Tools used
@@ -44,6 +44,8 @@ The workspace settings in `.vscode/settings.json` are written for these extensio
 A history of the major changes made over the life of the blog.
 
 ### 2026
+
+- **Nov 2026:** The site moved from neumanncondition.com to [hilbertcube.github.io](https://hilbertcube.github.io).
 
 - **Oct 2026:** Redesigned the top bar's tags, share and settings panels as one matching set.
 - **Oct 2026:** Theorems, lemmas, definitions, problems, figures and tables are numbered at build time.

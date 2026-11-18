@@ -9,7 +9,7 @@ export default defineConfig({
   outDir: 'dist',
 
   // Your site URL for canonical links, sitemaps, etc.
-  site: 'https://neumanncondition.com',
+  site: 'https://hilbertcube.github.io',
 
   // The resources page used to live at the root; keep old links working.
   redirects: {
