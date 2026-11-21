@@ -10,7 +10,6 @@ import Icon from "@components/ui/Icon.astro";
 import PageTitle from "@components/article/PageTitle.astro";
 import PubDate from "@components/article/PubDate.astro";
 import Table from "@components/article/Table.astro";
-import PlaceRows from "@components/listings/PlaceRows.astro";
 
 // lint-allow: img — the Gallery is a grid of lightbox thumbnails, not captioned figures
 
@@ -112,6 +111,16 @@ const gallery = [
   { file: "gladiator_burger.webp", alt: "Gladiator Burger" },
   { file: "the_coffee.webp", alt: "The Coffee" },
 ];
+
+// Table groups: one row per place, with only the columns the place has.
+type Place = { name: string; location: string; rating?: string; notes?: string };
+const toGroups = (list: { category: string; places: Place[] }[]) =>
+  list.map(({ category, places }) => ({
+    label: category,
+    rows: places.map(({ name, location, rating, notes }) =>
+      [name, location, rating, notes].filter((v): v is string => v !== undefined)
+    ),
+  }));
 ---
 
 <BaseLayout toc>
@@ -131,31 +140,12 @@ const gallery = [
         object-fit: cover;
         border-radius: var(--image-radius);
       }
-      /* The table style itself lives in components/article/Table.astro;
-         only the column-specific rules for these tables are below.
-         Ratings read better centred; the category cell spans its whole block,
-         so it carries its own right rule (rows below it start at "Place" and
-         would otherwise leave the column edge unruled).
-         Qualified through .table-wrapper — Table.astro's cell rules are
-         scoped, which buys them an extra attribute of specificity, and a bare
-         .p-table .rating would now lose to them. */
-      .table-wrapper .p-table .rating {
-        text-align: center;
-        white-space: nowrap;
-      }
-      .table-wrapper .p-table .category {
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        font-weight: 600;
-        border-right: 1px solid var(--grid-text-color);
-      }
       @media (max-width: 768px) {
         .food-img {
           width: calc(50% - 5px);
         }
         /* Qualified through .content-grid so these outrank Table.astro's
-           scoped rules, which the browser sees after this block. */
+           scoped rules. */
         .content-grid .table-wrapper .p-table {
           font-size: 0.9em;
         }
@@ -179,38 +169,17 @@ const gallery = [
       <h3>
         Have Tried <Icon name="check" />
       </h3>
-      <Table>
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Place</th>
-            <th>Location</th>
-            <th>Rating</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <PlaceRows groups={tried} />
-        </tbody>
-      </Table>
+      <Table
+        columns={["Category", "Place", "Location", { label: "Rating", align: "center", nowrap: true }, "Notes"]}
+        groups={toGroups(tried)}
+      />
     </section>
 
     <section>
       <h3>
         Have Yet to Try <Icon name="xmark" />
       </h3>
-      <Table>
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Place</th>
-            <th>Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          <PlaceRows groups={wanted} />
-        </tbody>
-      </Table>
+      <Table columns={["Category", "Place", "Location"]} groups={toGroups(wanted)} />
     </section>
   </section>
 

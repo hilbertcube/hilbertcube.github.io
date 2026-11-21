@@ -124,7 +124,20 @@ pair (without the wrapper a table overflows on mobile). Attributes land on the `
 </Table>
 ```
 
-Use `<thead>`/`<tbody>`; a `<caption>` sits below and is numbered. Styles are scoped,
+Use `<thead>`/`<tbody>`; a `<caption>` sits below and is numbered.
+
+For a table grouped by category, pass `columns` and `groups` instead of writing rows;
+the first column holds each group's label once, in a cell spanning its rows. A column
+is a label or `{ label, align?: "center", nowrap? }`. The slot still takes a `<caption>`.
+
+```astro
+<Table
+  columns={["Category", "Place", { label: "Rating", align: "center", nowrap: true }]}
+  groups={[{ label: "Restaurants", rows: [["Raku Udon", "9.5/10"]] }]}
+/>
+```
+
+Styles are scoped,
 so page rules for cell content need `:global(.p-table) td { … }` in a scoped style,
 or `.table-wrapper .p-table .cls` globally.
 
@@ -339,12 +352,6 @@ Every post, in `pages.json` order. No props.
 
 A recommended book: `title`, `author`, `description`, `image`, optional `imageId`,
 `links: { label, href }[]`.
-
-### PlaceRows
-
-The `<tr>`s of a food places table, for use inside `<tbody>`.
-`groups: { category, places: { name, location, rating?, notes? }[] }[]`; each category
-cell spans its group's rows.
 
 ---
 

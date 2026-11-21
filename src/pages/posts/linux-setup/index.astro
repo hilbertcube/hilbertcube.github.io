@@ -13,6 +13,127 @@ import Figure from "@components/article/Figure.astro";
 import ShellScript from "@components/code/ShellScript.astro";
 import CodeBlock from "@components/code/CodeBlock.astro";
 import C from "@components/code/C.astro";
+import Table from "@components/article/Table.astro";
+
+// Summary table at the end of the page, one group per section.
+const summary = [
+  {
+    label: "Setup",
+    rows: [
+      ["NVIDIA drivers", "Proprietary GPU drivers"],
+      ["Powertop, TLP", "Laptop power tuning and battery life"],
+      ["GNOME Tweaks", "Themes, fonts and desktop settings"],
+      ["GNOME extensions", "Dock, sleep inhibitor, blur effects, system monitor"],
+      ["GDM settings", "Login screen customization"],
+      ["bash-completion", "Tab completion for commands and their options"],
+      ["keyd", "Key remapping (Copilot key to Ctrl)"],
+    ],
+  },
+  {
+    label: "Rice",
+    rows: [
+      ["fastfetch", "System info in the terminal"],
+      ["chafa", "Images in the terminal"],
+      ["cava", "Audio visualizer in the terminal"],
+    ],
+  },
+  {
+    label: "DevOps and editors",
+    rows: [
+      ["VSCode", "Code editor"],
+      ["Neovim", "Terminal text editor"],
+      ["Git", "Version control"],
+      ["Docker", "Containers"],
+    ],
+  },
+  {
+    label: "C/C++",
+    rows: [
+      ["build-essential, GDB, LLDB, Clang, Ninja", "Compilers, debuggers and build tool"],
+      ["CMake", "Build system generator"],
+      ["clang-format, clang-tidy", "Code formatter and linter"],
+      ["NASM", "x86 assembler"],
+      ["vcpkg, Conan", "C++ package managers"],
+      ["CUDA Toolkit", "GPU programming"],
+      ["cuDNN", "Deep learning primitives for CUDA"],
+      ["Nsight Compute", "CUDA kernel profiler"],
+      ["Valgrind", "Memory debugging and leak detection"],
+      ["perf", "CPU performance profiler"],
+      ["Boost", "General-purpose C++ libraries"],
+      ["Eigen", "Linear algebra"],
+      ["OpenMPI", "Parallel computing across processes"],
+      ["fmt", "String formatting"],
+      ["SFML", "2D graphics, windows, audio"],
+      ["GLFW, GLM", "OpenGL windows and math"],
+    ],
+  },
+  {
+    label: "Python",
+    rows: [
+      ["Anaconda", "Python environments and packages"],
+      ["Jupyter", "Interactive notebooks"],
+    ],
+  },
+  {
+    label: "Rust",
+    rows: [
+      ["Rust, Cargo", "Systems language and its package manager"],
+    ],
+  },
+  {
+    label: "JavaScript",
+    rows: [
+      ["Node.js, npm", "JavaScript runtime and package manager"],
+      ["nvm", "Node version manager"],
+      ["Yarn", "Alternative package manager"],
+      ["Lighthouse", "Web page performance and accessibility audits"],
+      ["Yeoman, generator-code", "VSCode extension scaffolding"],
+      ["@expo/ngrok", "Public URL for a local dev server"],
+      ["cwebp", "WebP image conversion"],
+    ],
+  },
+  {
+    label: "C#",
+    rows: [
+      [".NET SDK", "C# compiler, runtime and CLI"],
+    ],
+  },
+  {
+    label: "Engineering",
+    rows: [
+      ["MATLAB", "Numerical computing"],
+      ["KiCad", "PCB design"],
+      ["LTspice", "Circuit simulation"],
+      ["AMD Vivado", "FPGA design"],
+      ["Audacity", "Audio editing"],
+      ["TeX Live, latexmk", "LaTeX typesetting and builds"],
+      ["Pandoc", "Document format conversion"],
+    ],
+  },
+  {
+    label: "Media",
+    rows: [
+      ["FFmpeg", "Audio and video conversion"],
+      ["VLC", "Media player"],
+      ["ImageMagick", "Command-line image editing"],
+      ["darktable", "RAW photo editing"],
+      ["Shotwell", "Photo library"],
+      ["Kdenlive", "Video editing"],
+      ["Flameshot", "Screenshots with annotation"],
+      ["Cheese", "Webcam photos and video"],
+    ],
+  },
+  {
+    label: "Other",
+    rows: [
+      ["Firefox", "Web browser"],
+      ["Spotify", "Music streaming"],
+      ["Master PDF Editor", "PDF editing"],
+      ["Telegram", "Messaging"],
+      ["Steam", "Games"],
+    ],
+  },
+];
 ---
 
 <BaseLayout toc>
@@ -48,9 +169,11 @@ import C from "@components/code/C.astro";
         with:
         <ShellScript is:raw>
           sudo apt update && sudo apt upgrade -y
-          sudo apt install powertop -y
+          sudo apt install powertop tlp -y
           sudo systemctl enable tlp
         </ShellScript>
+        Installing TLP removes <C>power-profiles-daemon</C>, so the power-mode
+        selector in GNOME's quick settings goes away; TLP manages that instead.
       </li>
 
       <li>
@@ -102,7 +225,7 @@ import C from "@components/code/C.astro";
         <a href="https://gdm-settings.github.io/">GDM settings</a
         >: lock screen customization, auto login, etc. Install GDM settings
         with:
-        <ShellScript is:raw>sudo apt install gdm3setup -y</ShellScript>
+        <ShellScript is:raw>sudo apt install gdm-settings -y</ShellScript>
       </li>
     </ul>
   </section>
@@ -112,9 +235,7 @@ import C from "@components/code/C.astro";
     <p>
       Simple GNOME desktop rice using <a
         href="https://github.com/fastfetch-cli/fastfetch">fastfetch</a
-      >. Link to my config: <a
-        href="https://github.com/hilbertcube/fastfetch-config">github</a
-      >
+      >.
     </p>
     <Figure src="rice.webp" alt="GNOME desktop rice" width="70%" />
     Display any image on the terminal using <a
@@ -129,6 +250,15 @@ import C from "@components/code/C.astro";
           echo -e "$LOGO"
       }
     </CodeBlock>
+    <p>
+      <a href="https://github.com/karlstav/cava">cava</a>: Audio visualizer
+      that draws bars in the terminal from whatever is playing. Install with:
+    </p>
+    <ShellScript is:raw>sudo apt install cava -y</ShellScript>
+    <p>
+      Run it with <C>cava</C>, and press <C>q</C> to quit. Colors, bar width
+      and the number of bars are set in <C>~/.config/cava/config</C>.
+    </p>
   </section>
 
   <section>
@@ -205,9 +335,11 @@ import C from "@components/code/C.astro";
         Laptops made in recent years is that they come with the copilot key,
         which is located where the right Ctrl key should be. To remap it back
         to Ctrl, first install keyd to tell which keycode corresponds to the
-        copilot key:
+        copilot key. keyd isn't in Ubuntu 24.04's repositories, so add its PPA
+        first:
         <ShellScript is:raw>
-          sudo apt install keyd -y
+          sudo add-apt-repository ppa:keyd-team/ppa
+          sudo apt update && sudo apt install keyd -y
           sudo systemctl enable keyd
           sudo systemctl start keyd
         </ShellScript>
@@ -239,17 +371,13 @@ import C from "@components/code/C.astro";
       <li>
         <a href="https://code.visualstudio.com/">VSCode</a>: My
         primary code editor. Simply use the Software Center to install it via
-        snap. If you dislike snap, install with:
-        <ShellScript continuationStr={"\\"} is:raw>
-          sudo apt update && sudo apt upgrade -y
-          sudo apt install wget gpg -y
-          wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-          sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-          sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] \
-          https://packages.microsoft.com/repos/code stable main" \
-          > /etc/apt/sources.list.d/vscode.list'
-          sudo apt install apt-transport-https -y
-          sudo apt update && sudo apt install code -y
+        snap. If you dislike snap, download the <C>.deb</C> from the <a
+          href="https://code.visualstudio.com/download">VSCode website</a
+        > and install it; this also adds Microsoft's apt repository, so
+        VSCode updates with the rest of the system:
+        <ShellScript is:raw>
+          cd ~/Downloads
+          sudo apt install ./code_*.deb
         </ShellScript>
 
         <strong>Settings:</strong> on Linux, again, copy and paste is defaulted
@@ -307,31 +435,9 @@ import C from "@components/code/C.astro";
         <a href="https://www.docker.com/">Docker</a>:
         Containerization platform. Follow the <a
           href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a
-        >:
-        <ShellScript output="1, 4-5, 7-8, 12-13, 18-19, 22-23" continuationStr={"\\"} is:raw>
-          # update and remove old versions
-          sudo apt update
-          sudo apt remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
-
-          # install dependencies
-          sudo apt install ca-certificates curl gnupg
-
-          # add Docker's official GPG key
-          sudo install -m 0755 -d /etc/apt/keyrings
-          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-          sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-          # add Docker apt repository
-          echo \
-            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-          # install Docker Engine
-          sudo apt update
-          sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-          # verify installation
+        > (install from Docker's apt repository rather than Ubuntu's older
+        <C>docker.io</C> package). Then verify the installation:
+        <ShellScript is:raw>
           sudo systemctl status docker
           sudo docker run hello-world
         </ShellScript>
@@ -355,6 +461,18 @@ import C from "@components/code/C.astro";
           <ShellScript is:raw>sudo apt install cmake cmake-qt-gui -y</ShellScript>
         </li>
         <li>
+          <a href="https://clang.llvm.org/docs/ClangFormat.html">clang-format</a> and
+          <a href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a>: Code
+          formatter and linter. Both pick up a <C>.clang-format</C> /
+          <C>.clang-tidy</C> file in the project root, and VSCode's C/C++
+          extension uses them automatically. Install with:
+          <ShellScript is:raw>sudo apt install clang-format clang-tidy -y</ShellScript>
+        </li>
+        <li>
+          <a href="https://www.nasm.us/">NASM</a>: x86 assembler. Install with:
+          <ShellScript is:raw>sudo apt install nasm -y</ShellScript>
+        </li>
+        <li>
           Package Managers:
           <ul>
             <li>
@@ -371,8 +489,13 @@ import C from "@components/code/C.astro";
             </li>
             <li>
               <a href="https://conan.io/">Conan</a>: Alternative C++
-              package manager. Install with:
-              <ShellScript is:raw>pip install conan</ShellScript>
+              package manager. Ubuntu blocks <C>pip install</C> into the system
+              Python, so install it as a standalone tool with pipx:
+              <ShellScript is:raw>
+                sudo apt install pipx -y
+                pipx ensurepath
+                pipx install conan
+              </ShellScript>
             </li>
           </ul>
         </li>
@@ -402,6 +525,14 @@ import C from "@components/code/C.astro";
                 >: Deep learning library. Follow the instructions on the <a
                   href="https://developer.nvidia.com/cudnn">NVIDIA cuDNN website</a
                 >.
+              </li>
+              <li>
+                <a href="https://developer.nvidia.com/nsight-compute">Nsight Compute</a
+                >: Kernel-level profiler for CUDA. Download the Linux installer from
+                NVIDIA and run it; it installs to
+                <C>/usr/local/NVIDIA-Nsight-Compute</C>. Profile from the
+                terminal with <C>ncu ./my_program</C>, or open the GUI with
+                <C>ncu-ui</C>.
               </li>
             </li>
           </ul>
@@ -436,6 +567,23 @@ import C from "@components/code/C.astro";
                 <a href="https://www.open-mpi.org/">OpenMPI</a>:
                 Parallel programming framework. Install with:
                 <ShellScript is:raw>sudo apt install libopenmpi-dev openmpi-bin -y</ShellScript>
+              </li>
+              <li>
+                <a href="https://fmt.dev/">fmt</a>: Fast, type-safe string
+                formatting (the library <C>std::format</C> is based on). Install with:
+                <ShellScript is:raw>sudo apt install libfmt-dev -y</ShellScript>
+              </li>
+              <li>
+                <a href="https://www.sfml-dev.org/">SFML</a>: Simple 2D graphics,
+                window, audio and input library, good for small games and
+                visualizations. Install with:
+                <ShellScript is:raw>sudo apt install libsfml-dev -y</ShellScript>
+              </li>
+              <li>
+                OpenGL: <a href="https://www.glfw.org/">GLFW</a> for windows and
+                input, <a href="https://github.com/g-truc/glm">GLM</a> for vector
+                and matrix math, and the Mesa OpenGL headers. Install with:
+                <ShellScript is:raw>sudo apt install libglfw3-dev libglm-dev libgl1-mesa-dev -y</ShellScript>
               </li>
             </ul>
           </li>
@@ -474,7 +622,7 @@ import C from "@components/code/C.astro";
             <li>
               Prevent Auto-Activation: If you don't want the (base)
               environment to start every time you open a terminal, run:
-              <ShellScript is:raw>conda config --set auto_activate_base false</ShellScript>
+              <ShellScript is:raw>conda config --set auto_activate false</ShellScript>
             </li>
             <li>
               Create a New Environment: To create a new environment with a
@@ -495,6 +643,14 @@ import C from "@components/code/C.astro";
           can interfere with pip usage inside Anaconda environments. To temporarily
           override it, prefix your pip commands with:
           <ShellScript is:raw>PIP_REQUIRE_VIRTUALENV=false</ShellScript>
+        </li>
+        <li>
+          <a href="https://jupyter.org/">Jupyter</a>: Notebooks for interactive
+          Python. Anaconda's base environment already includes JupyterLab; in
+          another conda environment, install it with:
+          <ShellScript is:raw>conda install jupyterlab</ShellScript>
+          Then start it from your project folder with <C>jupyter lab</C>. VSCode
+          can also open <C>.ipynb</C> files directly with the Jupyter extension.
         </li>
       </ul>
     </section>
@@ -528,8 +684,43 @@ import C from "@components/code/C.astro";
           <ShellScript is:raw>sudo apt install nodejs npm -y</ShellScript>
         </li>
         <li>
+          <a href="https://github.com/nvm-sh/nvm">nvm</a>: Node version manager.
+          Ubuntu's <C>nodejs</C> package lags behind; nvm installs any Node
+          version per user and switches between them. Install it with the
+          one-line script in the <a
+            href="https://github.com/nvm-sh/nvm#installing-and-updating">nvm README</a
+          > (the URL changes with every release), run <C>source ~/.bashrc</C>,
+          then install and use the latest LTS release:
+          <ShellScript is:raw>
+            nvm install --lts
+            nvm use --lts
+            node --version
+          </ShellScript>
+        </li>
+        <li>
           Yarn: Alternative JavaScript package manager. Install with:
           <ShellScript is:raw>npm install -g yarn</ShellScript>
+        </li>
+        <li>
+          Global npm tools I use:
+          <ul>
+            <li>
+              <a href="https://github.com/GoogleChrome/lighthouse">Lighthouse</a>:
+              Audits a web page's performance, accessibility and SEO from the
+              terminal, e.g. <C>lighthouse https://example.com --view</C>.
+            </li>
+            <li>
+              <a href="https://yeoman.io/">Yeoman</a> and
+              <a href="https://www.npmjs.com/package/generator-code">generator-code</a>:
+              Scaffold a new VSCode extension with <C>yo code</C>.
+            </li>
+            <li>
+              <a href="https://www.npmjs.com/package/@expo/ngrok">@expo/ngrok</a>:
+              Tunnels a local dev server to a public URL, used by Expo to test
+              apps on a phone.
+            </li>
+          </ul>
+          <ShellScript is:raw>npm install -g lighthouse yo generator-code @expo/ngrok</ShellScript>
         </li>
         <li>
           Cwebp: WebP image conversion tool. Install with:
@@ -543,6 +734,24 @@ import C from "@components/code/C.astro";
             # Batch convert all PNGs
             for file in *.png; do cwebp "$file" -o "${file%.png}.webp"; done
           </CodeBlock>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>C# and .NET</h3>
+      <ul>
+        <li>
+          <a href="https://dotnet.microsoft.com/">.NET SDK</a>: Compiler, runtime
+          and <C>dotnet</C> CLI for C#. Ubuntu 24.04 ships it in its own
+          repositories. Install with:
+          <ShellScript is:raw>sudo apt install dotnet-sdk-10.0 -y</ShellScript>
+          Verify, then create and run a console app:
+          <ShellScript is:raw>
+            dotnet --version
+            dotnet new console -o hello
+            cd hello && dotnet run
+          </ShellScript>
         </li>
       </ul>
     </section>
@@ -565,11 +774,12 @@ import C from "@components/code/C.astro";
           Type=Application
           Name=MATLAB
           Comment=MATLAB Numerical Computing Environment
-          Exec=/usr/local/MATLAB/R2024a/bin/matlab -desktop
-          Icon=/usr/local/MATLAB/R2024a/bin/glnxa64/cef_resources/matlab_icon.png
+          Exec=/usr/local/MATLAB/R2025b/bin/matlab -desktop
+          Icon=/usr/local/MATLAB/R2025b/bin/glnxa64/cef_resources/matlab_icon.png
           Terminal=false
           Categories=Development;Science;Engineering;
         </CodeBlock>
+        Replace "R2025b" here and below with your installed release.
 
         Then, refresh the application menu by running:
         <ShellScript is:raw>update-desktop-database ~/.local/share/applications/</ShellScript>
@@ -621,35 +831,126 @@ import C from "@components/code/C.astro";
         >: FPGA design suite (synthesis, implementation, simulation) for AMD/Xilinx
         boards. Download the Linux self-extracting web installer from the <a
           href="https://www.xilinx.com/support/download.html">AMD download page</a
-        > (requires a free AMD account). Vivado expects a few legacy libraries,
-        without which the installer can hang at "Generating installed device list":
-        <ShellScript is:raw>sudo apt install libtinfo5 libncurses5 -y</ShellScript>
-        On Ubuntu 24.04 and later these are no longer in the repositories; install
-        the <C>.deb</C> packages from Ubuntu 22.04 instead. Then run the installer:
-        <ShellScript is:raw>
-          cd ~/Downloads
-          chmod +x FPGAs_AdaptiveSoCs_Unified_*_Lin64.bin
-          sudo ./FPGAs_AdaptiveSoCs_Unified_*_Lin64.bin
-        </ShellScript>
-        Choose Vivado (the free Standard edition covers most hobby and student
-        boards) and keep the default install location <C>/tools/Xilinx</C>. To
-        program a board over USB, install the cable drivers:
-        <ShellScript is:raw>
-          cd /tools/Xilinx/Vivado/2024.2/data/xicom/cable_drivers/lin64/install_script/install_drivers
-          sudo ./install_drivers
-        </ShellScript>
-        Finally, load the environment and launch it:
-        <ShellScript is:raw>
-          source /tools/Xilinx/Vivado/2024.2/settings64.sh
-          vivado &
-        </ShellScript>
-        Replace "2024.2" with your installed version, and add the
-        <C>source</C> line to your <C>~/.bashrc</C> to make it permanent.
+        > (requires a free AMD account) and follow the installation guide for
+        your release; the free Standard edition covers most hobby and student
+        boards. Check that your Ubuntu version is on the release's supported
+        list, and install the cable drivers too if you want to program a board
+        over USB.
       </li>
       <li>
         <a href="https://www.audacityteam.org/">Audacity</a>:
         Audio editing software. Install with:
         <ShellScript is:raw>sudo apt install audacity -y</ShellScript>
+      </li>
+      <li>
+        <a href="https://tug.org/texlive/">TeX Live</a> and
+        <a href="https://ctan.org/pkg/latexmk">latexmk</a>: LaTeX distribution
+        and build tool. Rather than the multi-gigabyte <C>texlive-full</C>, I
+        install the collections I actually use (math, science, XeTeX, journal
+        classes):
+        <ShellScript is:raw>sudo apt install texlive-latex-extra texlive-science texlive-xetex texlive-fonts-recommended texlive-publishers texlive-plain-generic texlive-extra-utils latexmk -y</ShellScript>
+        Then build a document, rerunning BibTeX and cross-references as
+        needed, with:
+        <ShellScript is:raw>latexmk -pdf main.tex</ShellScript>
+        Use <C>latexmk -xelatex</C> for documents that need system fonts, and
+        <C>latexmk -pvc -pdf main.tex</C> to rebuild on every save.
+      </li>
+      <li>
+        <a href="https://pandoc.org/">Pandoc</a>: Converts documents between
+        formats: Markdown, LaTeX, HTML, Word and more. Install with:
+        <ShellScript is:raw>sudo apt install pandoc -y</ShellScript>
+        For example:
+        <CodeBlock is:raw>
+          # Markdown to PDF (uses TeX Live)
+          pandoc notes.md -o notes.pdf
+
+          # Word to Markdown
+          pandoc report.docx -o report.md
+        </CodeBlock>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Media and Graphics</h2>
+    <ul>
+      <li>
+        <a href="https://ffmpeg.org/">FFmpeg</a>: Converts, trims and compresses
+        audio and video from the terminal. Install with:
+        <ShellScript is:raw>sudo apt install ffmpeg -y</ShellScript>
+        For example:
+        <CodeBlock is:raw>
+          # Convert a video to MP4 (H.264)
+          ffmpeg -i input.mov -c:v libx264 -crf 23 -c:a aac output.mp4
+
+          # Extract the audio track
+          ffmpeg -i input.mp4 -vn -c:a libmp3lame audio.mp3
+        </CodeBlock>
+      </li>
+      <li>
+        <a href="https://www.videolan.org/vlc/"
+          >VLC Media Player</a
+        >: Versatile media player. Install with:
+        <ShellScript is:raw>sudo apt install vlc</ShellScript>
+      </li>
+      <li>
+        <a href="https://imagemagick.org/">ImageMagick</a>: Command-line image
+        editing: resize, crop, convert between formats. Install with:
+        <ShellScript is:raw>sudo apt install imagemagick -y</ShellScript>
+        For example:
+        <CodeBlock is:raw>
+          # Resize to 50%
+          convert input.jpg -resize 50% output.jpg
+
+          # Resize every JPG in place to at most 1600px wide
+          mogrify -resize '1600x>' *.jpg
+        </CodeBlock>
+      </li>
+      <li>
+        <a href="https://www.darktable.org/">darktable</a>: RAW photo editor,
+        an open-source alternative to Lightroom. Install with:
+        <ShellScript is:raw>sudo apt install darktable -y</ShellScript>
+      </li>
+      <li>
+        <a href="https://shotwell-project.org/">Shotwell</a>: Photo manager for
+        organizing and importing photos from a camera. Install with:
+        <ShellScript is:raw>sudo apt install shotwell -y</ShellScript>
+      </li>
+      <li>
+        <a href="https://kdenlive.org/">Kdenlive</a>: Video editor. The snap
+        is more up to date than the apt package. Install with:
+        <ShellScript is:raw>sudo snap install kdenlive</ShellScript>
+      </li>
+      <li>
+        <a href="https://flameshot.org/">Flameshot</a>: Screenshot tool
+        with in-place annotation (arrows, boxes, blur, text) before you save
+        or copy. Install with:
+        <ShellScript is:raw>sudo apt install flameshot -y</ShellScript>
+        To bind it to a key, open Settings &gt; Keyboard &gt; View and Customize
+        Shortcuts &gt; Custom Shortcuts, add a shortcut with the command
+        <C>flameshot gui</C>, and assign it a key such as Print Screen
+        (remove that key from the built-in screenshot shortcut first).
+      </li>
+      <li>
+        <a href="https://wiki.gnome.org/Apps/Cheese">Cheese</a>: Webcam app for
+        photos and videos, handy for checking that the camera works. Install with:
+        <ShellScript is:raw>sudo apt install cheese -y</ShellScript>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Other Softwares</h2>
+    <ul>
+      <li>
+        <a href="https://www.mozilla.org/firefox/">Firefox</a>
+      </li>
+      <li>
+        <a href="https://www.spotify.com/">Spotify</a>: Install the snap from the
+        Software Center, or add Spotify's apt repository with the commands on
+        their <a href="https://www.spotify.com/download/linux/">Linux download page</a
+        >. Spotify replaces its signing key every year, so copy the commands
+        from that page rather than from an old guide.
       </li>
       <li>
         <a href="https://code-industry.net/masterpdfeditor/"
@@ -677,59 +978,25 @@ import C from "@components/code/C.astro";
           </li>
         </ul>
       </li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Other Useful Softwares</h2>
-    <ul>
-      <li>
-        <a href="https://www.mozilla.org/firefox/">Firefox</a>
-      </li>
-      <li>
-        <a href="https://www.spotify.com/">Spotify</a>:
-        <ShellScript is:raw>
-          sudo apt update && sudo apt upgrade -y
-          curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive.gpg
-          echo "deb [signed-by=/usr/share/keyrings/spotify-archive.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-          sudo apt update && sudo apt install spotify-client -y
-        </ShellScript>
-      </li>
-      <li>
-        <a href="https://www.videolan.org/vlc/"
-          >VLC Media Player</a
-        >: Versatile media player. Install with:
-        <ShellScript is:raw>sudo apt install vlc</ShellScript>
-      </li>
-      <li>
-        <a href="https://flameshot.org/">Flameshot</a>: Screenshot tool
-        with in-place annotation (arrows, boxes, blur, text) before you save
-        or copy. Install with:
-        <ShellScript is:raw>sudo apt install flameshot -y</ShellScript>
-        To bind it to a key, open Settings &gt; Keyboard &gt; View and Customize
-        Shortcuts &gt; Custom Shortcuts, add a shortcut with the command
-        <C>flameshot gui</C>, and assign it a key such as Print Screen
-        (remove that key from the built-in screenshot shortcut first).
-      </li>
       <li>
         <a href="https://telegram.org/">Telegram</a>:
         Messaging app. Install with:
-        <ShellScript is:raw>sudo apt install telegram-desktop -y</ShellScript>
+        <ShellScript is:raw>sudo snap install telegram-desktop</ShellScript>
+      </li>
+      <li>
+        <a href="https://store.steampowered.com/">Steam</a>: Game store and
+        launcher. Windows-only games run through Proton, which Steam enables by
+        default for verified titles (Settings &gt; Compatibility to enable it
+        for all games). Install with:
+        <ShellScript is:raw>sudo snap install steam</ShellScript>
       </li>
     </ul>
   </section>
 
   <section>
-    <h2 >Final Words</h2>
-    <p>
-      Try not to worry too much about what other people say. Choose what
-      works best for you, but take some time to research before settling
-      on a distro. Some people prefer Arch's rolling release, while I
-      value the stability and long-term support that Ubuntu provides.
-      The best way to learn is by exploring different options and
-      discovering what fits your workflow and preferences. Linux is
-      built around choice and customization, so experiment freely and
-      shape it into something that feels right for you.
-    </p>
+    <h2>Summary</h2>
+    <Table columns={["Category", "Software", "Description"]} groups={summary}>
+      <caption>All the software in this post.</caption>
+    </Table>
   </section>
 </BaseLayout>

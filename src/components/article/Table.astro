@@ -3,26 +3,62 @@
  * Table.astro — a `.p-table` inside the `.table-wrapper` that scrolls it on
  * narrow screens. `id`, `class` and other attributes land on the `<table>`.
  *
+ * Either write the `<thead>`/`<tbody>` in the slot, or pass `columns` and
+ * `groups` and the table renders them: the first column is the group label,
+ * shown once in a cell spanning its group's rows. The slot still renders
+ * (for a `<caption>`).
+ *
  * Page rules for cell content: from a scoped style use
  * `:global(.p-table) td { … }`; a global rule needs
  * `.table-wrapper .p-table .cls` to outrank the scoped rules below.
  */
+type Column = string | { label: string; align?: "center"; nowrap?: boolean };
+
 interface Props {
   id?: string;
   class?: string;
+  /** Header labels; the first one heads the group column when `groups` is set. */
+  columns?: Column[];
+  /** Rows grouped under a label; each row lists the cells after the group column. */
+  groups?: { label: string; rows: string[][] }[];
+  [attr: string]: unknown;
 }
 
-const { id, class: className, ...rest } = Astro.props;
+const { id, class: className, columns, groups, ...rest } = Astro.props;
+
+const cols = (columns ?? []).map((c) => (typeof c === "string" ? { label: c } : c));
+// Data cells follow the group column, so they take their style from cols[i + 1].
+const cellClass = (i: number) => {
+  const c = groups ? cols[i + 1] : cols[i];
+  return [c?.align === "center" && "center", c?.nowrap && "nowrap"];
+};
 ---
 
 <div class="table-wrapper">
   <table id={id} class:list={["p-table", className]} {...rest}>
+    {cols.length > 0 && (
+      <thead>
+        <tr>{cols.map((c) => <th>{c.label}</th>)}</tr>
+      </thead>
+    )}
+    {groups && (
+      <tbody>
+        {groups.map(({ label, rows }) =>
+          rows.map((row, r) => (
+            <tr>
+              {r === 0 && <td class="group" rowspan={rows.length}>{label}</td>}
+              {row.map((cell, i) => <td class:list={cellClass(i)}>{cell}</td>)}
+            </tr>
+          ))
+        )}
+      </tbody>
+    )}
     <slot />
   </table>
 </div>
 
 <style>
-  /* Table contents are slot content (page-scoped), hence :global(). */
+  /* Slot contents are page-scoped, hence :global(). */
 
   .table-wrapper {
     overflow-x: auto;
@@ -65,5 +101,23 @@ const { id, class: className, ...rest } = Astro.props;
 
   .p-table :global(tbody tr + tr) {
     border-top: 1px solid var(--box-border, rgba(128, 128, 128, 0.3));
+  }
+
+  /* The group cell spans its block, so the rows below it start at the second
+     column and leave the column edge unruled: the group cell draws it. */
+  .p-table td.group {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: 600;
+    border-right: 1px solid var(--grid-text-color);
+  }
+
+  .p-table td.center {
+    text-align: center;
+  }
+
+  .p-table td.nowrap {
+    white-space: nowrap;
   }
 </style>
