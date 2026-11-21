@@ -5,8 +5,10 @@
  */
 import { createElement } from "react";
 import { createRoot } from "react-dom/client";
-import Lightbox, { type SlideImage } from "yet-another-react-lightbox";
+import Lightbox from "yet-another-react-lightbox";
+import Captions from "yet-another-react-lightbox/plugins/captions";
 import Counter from "yet-another-react-lightbox/plugins/counter";
+import Download from "yet-another-react-lightbox/plugins/download";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import { SPINNER_SVG } from "@utils/spinner";
@@ -14,11 +16,12 @@ import { SPINNER_SVG } from "@utils/spinner";
 // render-blocking <link> on every page, even from a lazily imported module.
 import stylesUrl from "yet-another-react-lightbox/styles.css?url";
 import counterStylesUrl from "yet-another-react-lightbox/plugins/counter.css?url";
+import captionsStylesUrl from "yet-another-react-lightbox/plugins/captions.css?url";
 
 // Wait for the stylesheets before the first render, so the viewer never paints
 // unstyled.
 await Promise.all(
-  [stylesUrl, counterStylesUrl].map(
+  [stylesUrl, counterStylesUrl, captionsStylesUrl].map(
     (href) =>
       new Promise((resolve) => {
         const link = Object.assign(document.createElement("link"), { rel: "stylesheet", href });
@@ -33,17 +36,73 @@ const container = document.createElement("div");
 document.body.append(container);
 const root = createRoot(container);
 
-function render(slides: SlideImage[], index: number, open: boolean, onShown?: () => void) {
+// Centres each caption in the gap between its picture's lower edge and the
+// screen's. Measured from layout offsets, which ignore the zoom transform, so
+// zooming in leaves the caption where it is.
+function placeCaptions() {
+  document.querySelectorAll<HTMLElement>(".yarl__portal .yarl__slide").forEach((slide) => {
+    const caption = slide.querySelector<HTMLElement>(".yarl__slide_description_container");
+    const image = slide.querySelector<HTMLImageElement>(".yarl__slide_image");
+    if (!caption || !image?.offsetHeight) return;
+    // The image is letterboxed in its box (object-fit: contain), so the
+    // picture's lower edge sits halfway into the box's spare height.
+    const pictureHeight = image.naturalWidth
+      ? Math.min(image.offsetHeight, (image.offsetWidth * image.naturalHeight) / image.naturalWidth)
+      : image.offsetHeight;
+    let imageBottom = (image.offsetHeight + pictureHeight) / 2;
+    let el: HTMLElement | null = image;
+    while (el && el !== slide) {
+      imageBottom += el.offsetTop;
+      el = el.offsetParent as HTMLElement | null;
+    }
+    if (el !== slide) return;
+    const gap = slide.clientHeight - imageBottom;
+    caption.style.bottom = `${Math.max(0, (gap - caption.offsetHeight) / 2)}px`;
+  });
+}
+
+// Re-place on anything that moves an image: a slide mounting, an image
+// finishing loading (`load` doesn't bubble, hence capture) or a resize.
+const schedulePlacement = () => requestAnimationFrame(placeCaptions);
+new MutationObserver(schedulePlacement).observe(document.body, { childList: true, subtree: true });
+document.addEventListener("load", schedulePlacement, true);
+window.addEventListener("resize", schedulePlacement);
+
+/**
+ * An image on the page. `caption` is its <figcaption> as HTML; `details`
+ * (plain text) shows in its place when there is none.
+ */
+export interface Slide {
+  src: string;
+  alt: string;
+  caption?: string;
+  details?: string;
+}
+
+function render(slides: Slide[], index: number, open: boolean, onShown?: () => void) {
+  const single = slides.length <= 1;
   root.render(
     createElement(Lightbox, {
       open,
       index,
-      slides,
-      // Zoom adds the magnifier +/- buttons to the toolbar, plus wheel, pinch
+      slides: slides.map(({ src, alt, caption, details }) => ({
+        src,
+        alt,
+        description: caption
+          ? createElement("span", { dangerouslySetInnerHTML: { __html: caption } })
+          : details && createElement("span", { className: "lightbox-details" }, details),
+      })),
+      // Download adds a button that saves the current image under its own file
+      // name. Zoom adds the magnifier +/- buttons to the toolbar, plus wheel, pinch
       // and double-click zoom. Fullscreen adds the enter/exit fullscreen button
       // (hidden automatically where the Fullscreen API is unavailable, e.g.
       // iPhone Safari).
-      plugins: [Counter, Zoom, Fullscreen],
+      plugins: [Captions, Counter, Download, Zoom, Fullscreen],
+      // Captions sit under the image (Lightbox.astro makes room for them).
+      // No toggle button: a caption is never long enough to need hiding.
+      captions: { descriptionTextAlign: "center", descriptionMaxLines: 4, showToggle: false },
+      // One image has nowhere to go: no arrows, and no wrap-around swipe.
+      carousel: { finite: single },
       // The viewer mounts outside the page's font styling, so the counter
       // would fall back to the browser's default serif. A system sans-serif
       // matches the toolbar's Material icons; weight 500 matches their stroke.
@@ -68,6 +127,7 @@ function render(slides: SlideImage[], index: number, open: boolean, onShown?: ()
       // A slide still downloading shows the site's loader (.spinner, in white
       // via Lightbox.astro) rather than the library's own icon.
       render: {
+        ...(single && { buttonPrev: () => null, buttonNext: () => null }),
         iconLoading: () =>
           createElement("span", { className: "spinner", dangerouslySetInnerHTML: { __html: SPINNER_SVG } }),
       },
@@ -87,6 +147,6 @@ function render(slides: SlideImage[], index: number, open: boolean, onShown?: ()
  * `onShown` runs once the viewer has faded in and covers the page — or on
  * close, if that comes first — so a caller's loading overlay can't outlive it.
  */
-export function openViewer(slides: SlideImage[], index: number, onShown?: () => void) {
+export function openViewer(slides: Slide[], index: number, onShown?: () => void) {
   render(slides, index, true, onShown);
 }

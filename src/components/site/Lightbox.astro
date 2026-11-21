@@ -17,9 +17,31 @@
   const images = Array.from(document.querySelectorAll<HTMLImageElement>(IMAGE_SELECTOR));
 
   if (images.length) {
+    // A <Figure>'s caption, as HTML (it may hold math or links). Its "Fig. N:"
+    // label is a CSS ::before on the page, so it is written out here.
+    const captionOf = (image: HTMLImageElement) => {
+      const caption = image.closest("figure")?.querySelector("figcaption");
+      if (!caption) return undefined;
+      const number = caption.dataset.number;
+      return (number ? `Fig. ${number}: ` : "") + caption.innerHTML.trim();
+    };
+
+    // Shown in place of a caption: alt text and pixel size, as plain text.
+    // The size is left out for an image that hasn't loaded yet.
+    const detailsOf = (image: HTMLImageElement) => {
+      const size = image.naturalWidth ? `${image.naturalWidth} × ${image.naturalHeight}` : "";
+      return [image.alt.trim(), size].filter(Boolean).join("  ·  ");
+    };
+
     // Read at click time rather than now: a lazy image's `currentSrc` is only
     // settled once the browser has picked a candidate for it.
-    const slides = () => images.map((image) => ({ src: image.currentSrc || image.src, alt: image.alt }));
+    const slides = () =>
+      images.map((image) => ({
+        src: image.currentSrc || image.src,
+        alt: image.alt,
+        caption: captionOf(image),
+        details: detailsOf(image),
+      }));
 
     // Covers the page from the click until the viewer has faded in over it.
     // Clicking it or pressing Escape gives up on that open.
@@ -91,5 +113,54 @@
   :global(.yarl__portal) {
     --spinner-track: rgba(255, 255, 255, 0.15);
     --spinner-head: #fff;
+  }
+
+  /* Every slide leaves room around the image: at the top for the toolbar, and
+     at the bottom so the caption (or the image's details) sits under the image
+     instead of over it. Qualified through .yarl__portal to outrank the viewer's stylesheet,
+     which loads after this one. */
+  :global(.yarl__portal .yarl__slide) {
+    padding: max(64px, 13vh) 8vw calc(6.5em + 7vh);
+  }
+
+  /* Every image fills that area, scaled up if it is smaller and letterboxed
+     (object-fit) if its shape differs, so images display at one consistent
+     size; only a strip wider than the screen ends up shorter. The viewer caps
+     each image at its natural size with an inline style, which only
+     !important can override. */
+  :global(.yarl__portal .yarl__slide_image) {
+    width: 100%;
+    height: 100%;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain;
+  }
+
+  :global(.yarl__portal .yarl__slide_captions_container) {
+    background: none;
+  }
+
+  :global(.yarl__portal .yarl__slide_description) {
+    font-family: var(--body-font);
+    font-size: calc(16px * var(--font-scale, 1));
+    line-height: 1.4;
+  }
+
+  :global(.yarl__portal .lightbox-details) {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875em;
+  }
+
+  /* The page's link colour is chosen for the page background, not black. */
+  :global(.yarl__portal .yarl__slide_description a) {
+    color: #8ab4f8;
+  }
+
+  /* Touch screens swipe between images, so the arrows only cover the image. */
+  @media (hover: none) and (pointer: coarse) {
+    :global(.yarl__portal .yarl__navigation_prev),
+    :global(.yarl__portal .yarl__navigation_next) {
+      display: none;
+    }
   }
 </style>

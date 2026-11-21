@@ -397,7 +397,11 @@ Sidebar logo and nav list; footer links. No props.
 
 ### Lightbox
 
-Click a content image to view it fullscreen. Its script lazy-loads
+Click a content image to view it fullscreen, with a `<Figure>`'s caption centred in the
+space under it — or, for an image without one, its alt text and size. The toolbar has download, zoom and fullscreen buttons. Every
+image is scaled (up, if small) to fill the same area above that space, so all display at
+one size; only a strip wider than the screen ends up shorter. Arrows show only when the page has more than one image,
+and never on touch screens, which swipe. Its script lazy-loads
 yet-another-react-lightbox (`site/lightbox/viewer.ts`) on first click. While that
 downloads, a black backdrop with the loader, in white, covers the page — after
 0.25s, so a fast open never shows it; a click or Escape cancels. The viewer shows the same
